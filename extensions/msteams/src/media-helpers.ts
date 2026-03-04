@@ -8,7 +8,7 @@ import {
   extensionForMime,
   extractOriginalFilename,
   getFileExtension,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 
 /**
  * Detect MIME type from URL extension or data URL.
@@ -103,3 +103,4 @@ export function extractMessageId(response: unknown): string | null {
   }
   return id;
 }
+

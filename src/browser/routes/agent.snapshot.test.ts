@@ -115,3 +115,4 @@ describe("resolveTargetIdAfterNavigate", () => {
     expect(result).toBe("old-123");
   });
 });
+

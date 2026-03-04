@@ -33,9 +33,9 @@ function hasFinding(
 }
 
 async function createAuditFixture(): Promise<AuditFixture> {
-  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-secrets-audit-"));
-  const stateDir = path.join(rootDir, ".openclaw");
-  const configPath = path.join(stateDir, "openclaw.json");
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-secrets-audit-"));
+  const stateDir = path.join(rootDir, ".IronCliw");
+  const configPath = path.join(stateDir, "IronCliw.json");
   const authStorePath = path.join(stateDir, "agents", "main", "agent", "auth-profiles.json");
   const authJsonPath = path.join(stateDir, "agents", "main", "agent", "auth.json");
   const envPath = path.join(stateDir, ".env");
@@ -51,8 +51,8 @@ async function createAuditFixture(): Promise<AuditFixture> {
     authJsonPath,
     envPath,
     env: {
-      OPENCLAW_STATE_DIR: stateDir,
-      OPENCLAW_CONFIG_PATH: configPath,
+      IronCliw_STATE_DIR: stateDir,
+      IronCliw_CONFIG_PATH: configPath,
       OPENAI_API_KEY: "env-openai-key",
       PATH: resolveRuntimePathEnv(),
     },
@@ -255,3 +255,4 @@ describe("secrets audit", () => {
     expect(callCount).toBe(1);
   });
 });
+

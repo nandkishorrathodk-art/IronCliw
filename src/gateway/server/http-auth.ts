@@ -115,3 +115,4 @@ export async function enforcePluginRouteGatewayAuth(params: {
 }): Promise<boolean> {
   return await authorizeGatewayBearerRequestOrReply(params);
 }
+

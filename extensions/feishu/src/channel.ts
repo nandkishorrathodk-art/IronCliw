@@ -1,4 +1,4 @@
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import {
   buildBaseChannelStatusSummary,
   createDefaultChannelRuntimeState,
@@ -6,7 +6,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   resolveAllowlistProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
-} from "openclaw/plugin-sdk/feishu";
+} from "IronCliw/plugin-sdk/feishu";
 import {
   resolveFeishuAccount,
   resolveFeishuCredentials,
@@ -382,3 +382,4 @@ export const feishuPlugin: ChannelPlugin<ResolvedFeishuAccount> = {
     },
   },
 };
+

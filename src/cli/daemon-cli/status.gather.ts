@@ -5,7 +5,7 @@ import {
   resolveStateDir,
 } from "../../config/config.js";
 import type {
-  OpenClawConfig,
+  IronCliwConfig,
   GatewayBindMode,
   GatewayControlUiConfig,
 } from "../../config/types.js";
@@ -111,11 +111,11 @@ function trimToUndefined(value: unknown): string | undefined {
 }
 
 function readGatewayTokenEnv(env: Record<string, string | undefined>): string | undefined {
-  return trimToUndefined(env.OPENCLAW_GATEWAY_TOKEN) ?? trimToUndefined(env.CLAWDBOT_GATEWAY_TOKEN);
+  return trimToUndefined(env.IronCliw_GATEWAY_TOKEN) ?? trimToUndefined(env.CLAWDBOT_GATEWAY_TOKEN);
 }
 
 async function resolveDaemonProbePassword(params: {
-  daemonCfg: OpenClawConfig;
+  daemonCfg: IronCliwConfig;
   mergedDaemonEnv: Record<string, string | undefined>;
   explicitToken?: string;
   explicitPassword?: string;
@@ -124,7 +124,7 @@ async function resolveDaemonProbePassword(params: {
   if (explicitPassword) {
     return explicitPassword;
   }
-  const envPassword = trimToUndefined(params.mergedDaemonEnv.OPENCLAW_GATEWAY_PASSWORD);
+  const envPassword = trimToUndefined(params.mergedDaemonEnv.IronCliw_GATEWAY_PASSWORD);
   if (envPassword) {
     return envPassword;
   }
@@ -296,7 +296,7 @@ export async function gatherDaemonStatus(
         url: probeUrl,
         token:
           opts.rpc.token ||
-          mergedDaemonEnv.OPENCLAW_GATEWAY_TOKEN ||
+          mergedDaemonEnv.IronCliw_GATEWAY_TOKEN ||
           daemonCfg.gateway?.auth?.token,
         password: daemonProbePassword,
         tlsFingerprint:
@@ -368,3 +368,4 @@ export function resolvePortListeningAddresses(status: DaemonStatus): string[] {
   );
   return addrs;
 }
+

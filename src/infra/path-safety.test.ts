@@ -14,3 +14,4 @@ describe("path-safety", () => {
     expect(isWithinDir("/tmp/demo", "/tmp/demo/../escape.txt")).toBe(false);
   });
 });
+

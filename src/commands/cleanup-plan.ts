@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import {
   loadConfig,
   resolveConfigPath,
@@ -8,7 +8,7 @@ import {
 import { buildCleanupPlan } from "./cleanup-utils.js";
 
 export function resolveCleanupPlanFromDisk(): {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   stateDir: string;
   configPath: string;
   oauthDir: string;
@@ -23,3 +23,4 @@ export function resolveCleanupPlanFromDisk(): {
   const plan = buildCleanupPlan({ cfg, stateDir, configPath, oauthDir });
   return { cfg, stateDir, configPath, oauthDir, ...plan };
 }
+

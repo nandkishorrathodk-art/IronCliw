@@ -36,3 +36,4 @@ describe("minimaxUnderstandImage apiKey normalization", () => {
     expect(fetchSpy).toHaveBeenCalled();
   });
 });
+

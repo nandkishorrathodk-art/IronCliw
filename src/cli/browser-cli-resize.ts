@@ -35,3 +35,4 @@ export async function runBrowserResizeWithOutput(params: {
   }
   defaultRuntime.log(params.successMessage);
 }
+

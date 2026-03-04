@@ -145,3 +145,4 @@ describe("web_fetch Cloudflare Markdown for Agents", () => {
     expect(tokenLogs).toHaveLength(0);
   });
 });
+

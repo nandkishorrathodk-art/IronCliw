@@ -83,3 +83,4 @@ describe("resolveSharedMatrixClient startup behavior", () => {
     expect(startMock).toHaveBeenCalledTimes(2);
   });
 });
+

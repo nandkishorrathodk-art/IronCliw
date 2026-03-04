@@ -16,3 +16,4 @@ describe("buildControlUiCspHeader", () => {
     expect(csp).toContain("font-src 'self' https://fonts.gstatic.com");
   });
 });
+

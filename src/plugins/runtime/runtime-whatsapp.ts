@@ -107,3 +107,4 @@ export function createRuntimeWhatsApp(): PluginRuntime["channel"]["whatsapp"] {
     createLoginTool: createWhatsAppLoginTool,
   };
 }
+

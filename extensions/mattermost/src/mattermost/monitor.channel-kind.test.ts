@@ -18,3 +18,4 @@ describe("mapMattermostChannelTypeToChatType", () => {
     expect(mapMattermostChannelTypeToChatType(undefined)).toBe("channel");
   });
 });
+

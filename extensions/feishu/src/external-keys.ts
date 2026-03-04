@@ -17,3 +17,4 @@ export function normalizeFeishuExternalKey(value: unknown): string | undefined {
   }
   return normalized;
 }
+

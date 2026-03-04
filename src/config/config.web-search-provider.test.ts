@@ -131,3 +131,4 @@ describe("web search provider auto-detection", () => {
     ).toBe("gemini");
   });
 });
+

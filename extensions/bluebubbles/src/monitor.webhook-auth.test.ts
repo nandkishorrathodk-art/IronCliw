@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/bluebubbles";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createPluginRuntimeMock } from "../../test-utils/plugin-runtime-mock.js";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
@@ -264,7 +264,7 @@ describe("BlueBubbles webhook monitor", () => {
   describe("webhook parsing + auth handling", () => {
     it("rejects non-POST requests", async () => {
       const account = createMockAccount();
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -287,7 +287,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("accepts POST requests with valid JSON payload", async () => {
       const account = createMockAccount();
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -323,7 +323,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("rejects requests with invalid JSON", async () => {
       const account = createMockAccount();
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -346,7 +346,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("accepts URL-encoded payload wrappers", async () => {
       const account = createMockAccount();
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -387,7 +387,7 @@ describe("BlueBubbles webhook monitor", () => {
       vi.useFakeTimers();
       try {
         const account = createMockAccount();
-        const config: OpenClawConfig = {};
+        const config: IronCliwConfig = {};
         const core = createMockRuntime();
         setBlueBubblesRuntime(core);
 
@@ -427,7 +427,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("rejects unauthorized requests before reading the body", async () => {
       const account = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -458,7 +458,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("authenticates via password query parameter", async () => {
       const account = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -494,7 +494,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("authenticates via x-password header", async () => {
       const account = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -534,7 +534,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("rejects unauthorized requests with wrong password", async () => {
       const account = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -570,7 +570,7 @@ describe("BlueBubbles webhook monitor", () => {
     it("rejects ambiguous routing when multiple targets match the same password", async () => {
       const accountA = createMockAccount({ password: "secret-token" });
       const accountB = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -624,7 +624,7 @@ describe("BlueBubbles webhook monitor", () => {
     it("ignores targets without passwords when a password-authenticated target matches", async () => {
       const accountStrict = createMockAccount({ password: "secret-token" });
       const accountWithoutPassword = createMockAccount({ password: undefined });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -677,7 +677,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("requires authentication for loopback requests when password is configured", async () => {
       const account = createMockAccount({ password: "secret-token" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
       for (const remoteAddress of ["127.0.0.1", "::1", "::ffff:127.0.0.1"]) {
@@ -714,7 +714,7 @@ describe("BlueBubbles webhook monitor", () => {
 
     it("rejects targets without passwords for loopback and proxied-looking requests", async () => {
       const account = createMockAccount({ password: undefined });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -771,7 +771,7 @@ describe("BlueBubbles webhook monitor", () => {
       vi.mocked(resolveChatGuidForTarget).mockClear();
 
       const account = createMockAccount({ groupPolicy: "open" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -820,7 +820,7 @@ describe("BlueBubbles webhook monitor", () => {
       });
 
       const account = createMockAccount({ groupPolicy: "open" });
-      const config: OpenClawConfig = {};
+      const config: IronCliwConfig = {};
       const core = createMockRuntime();
       setBlueBubblesRuntime(core);
 
@@ -860,3 +860,4 @@ describe("BlueBubbles webhook monitor", () => {
     });
   });
 });
+

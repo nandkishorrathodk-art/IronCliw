@@ -22,3 +22,4 @@ export function resolveZaloProxyFetch(proxyUrl?: string | null): ZaloFetch | und
   proxyCache.set(trimmed, fetcher);
   return fetcher;
 }
+

@@ -40,3 +40,4 @@ describe("cmd argv helpers", () => {
     expect(() => quoteCmdScriptArg("bad\rarg")).toThrow(/Command argument cannot contain CR or LF/);
   });
 });
+

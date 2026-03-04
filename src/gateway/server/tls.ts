@@ -12,3 +12,4 @@ export async function loadGatewayTlsRuntime(
 ): Promise<GatewayTlsRuntime> {
   return await loadGatewayTlsRuntimeConfig(cfg, log);
 }
+

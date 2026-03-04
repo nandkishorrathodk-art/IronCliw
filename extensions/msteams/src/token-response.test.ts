@@ -21,3 +21,4 @@ describe("readAccessToken", () => {
     expect(readAccessToken(undefined)).toBeNull();
   });
 });
+

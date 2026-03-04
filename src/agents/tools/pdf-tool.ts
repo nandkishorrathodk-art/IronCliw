@@ -1,6 +1,6 @@
 import { type Context, complete } from "@mariozechner/pi-ai";
 import { Type } from "@sinclair/typebox";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { extractPdfContent, type PdfExtractedContent } from "../../media/pdf-extract.js";
 import { resolveUserPath } from "../../utils.js";
 import { loadWebMediaRaw } from "../../web/media.js";
@@ -30,7 +30,7 @@ import {
   createSandboxBridgeReadFile,
   discoverAuthStorage,
   discoverModels,
-  ensureOpenClawModelsJson,
+  ensureIronCliwModelsJson,
   resolveSandboxedBridgeMediaPath,
   runWithImageModelFallback,
   type AnyAgentTool,
@@ -58,7 +58,7 @@ const PDF_MAX_PIXELS = 4_000_000;
  * Falls back to the image model config, then to provider-specific defaults.
  */
 export function resolvePdfModelConfigForTool(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   agentDir: string;
 }): ImageModelConfig | null {
   // Check for explicit PDF model config first
@@ -166,7 +166,7 @@ type PdfSandboxConfig = {
 };
 
 async function runPdfPrompt(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   agentDir: string;
   pdfModelConfig: ImageModelConfig;
   modelOverride?: string;
@@ -183,7 +183,7 @@ async function runPdfPrompt(params: {
 }> {
   const effectiveCfg = applyImageModelConfigDefaults(params.cfg, params.pdfModelConfig);
 
-  await ensureOpenClawModelsJson(effectiveCfg, params.agentDir);
+  await ensureIronCliwModelsJson(effectiveCfg, params.agentDir);
   const authStorage = discoverAuthStorage(params.agentDir);
   const modelRegistry = discoverModels(authStorage, params.agentDir);
 
@@ -293,7 +293,7 @@ async function runPdfPrompt(params: {
 // ---------------------------------------------------------------------------
 
 export function createPdfTool(options?: {
-  config?: OpenClawConfig;
+  config?: IronCliwConfig;
   agentDir?: string;
   workspaceDir?: string;
   sandbox?: PdfSandboxConfig;
@@ -556,3 +556,4 @@ export function createPdfTool(options?: {
     },
   };
 }
+

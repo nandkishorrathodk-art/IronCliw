@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import { SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { loadConfig } from "../../config/config.js";
 import { textToSpeech } from "../../tts/tts.js";
 import type { GatewayMessageChannel } from "../../utils/message-channel.js";
@@ -15,7 +15,7 @@ const TtsToolSchema = Type.Object({
 });
 
 export function createTtsTool(opts?: {
-  config?: OpenClawConfig;
+  config?: IronCliwConfig;
   agentChannel?: GatewayMessageChannel;
 }): AnyAgentTool {
   return {
@@ -59,3 +59,4 @@ export function createTtsTool(opts?: {
     },
   };
 }
+

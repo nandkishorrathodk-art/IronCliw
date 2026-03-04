@@ -25,3 +25,4 @@ describe("irc config schema", () => {
     expect(parsed.groups?.["#ops"]?.allowFrom).toEqual([42, "alice"]);
   });
 });
+

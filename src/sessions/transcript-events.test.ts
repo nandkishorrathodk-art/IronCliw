@@ -33,3 +33,4 @@ describe("transcript events", () => {
     expect(second).toHaveBeenCalledTimes(1);
   });
 });
+

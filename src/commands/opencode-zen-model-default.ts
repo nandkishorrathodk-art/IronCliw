@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { applyAgentDefaultPrimaryModel } from "./model-default.js";
 
 export const OPENCODE_ZEN_DEFAULT_MODEL = "opencode/claude-opus-4-6";
@@ -7,8 +7,8 @@ const LEGACY_OPENCODE_ZEN_DEFAULT_MODELS = new Set([
   "opencode-zen/claude-opus-4-5",
 ]);
 
-export function applyOpencodeZenModelDefault(cfg: OpenClawConfig): {
-  next: OpenClawConfig;
+export function applyOpencodeZenModelDefault(cfg: IronCliwConfig): {
+  next: IronCliwConfig;
   changed: boolean;
 } {
   return applyAgentDefaultPrimaryModel({
@@ -17,3 +17,4 @@ export function applyOpencodeZenModelDefault(cfg: OpenClawConfig): {
     legacyModels: LEGACY_OPENCODE_ZEN_DEFAULT_MODELS,
   });
 }
+

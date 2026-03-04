@@ -198,3 +198,4 @@ describe("agents bind/unbind commands", () => {
     expect(runtime.exit).not.toHaveBeenCalled();
   });
 });
+

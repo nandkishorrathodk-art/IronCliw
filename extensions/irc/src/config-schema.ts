@@ -7,7 +7,7 @@ import {
   ReplyRuntimeConfigSchemaShape,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "openclaw/plugin-sdk/irc";
+} from "IronCliw/plugin-sdk/irc";
 import { z } from "zod";
 
 const IrcGroupSchema = z
@@ -90,3 +90,4 @@ export const IrcConfigSchema = IrcAccountSchemaBase.extend({
     message: 'channels.irc.dmPolicy="open" requires channels.irc.allowFrom to include "*"',
   });
 });
+

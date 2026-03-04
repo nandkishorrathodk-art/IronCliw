@@ -76,3 +76,4 @@ describe("pw-tools-core.snapshot navigate guard", () => {
     expect(result.url).toBe("https://example.com/recovered");
   });
 });
+

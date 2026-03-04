@@ -239,3 +239,4 @@ describe("resolveAuthProfileOrder", () => {
     expect(order).not.toContain("anthropic:oauth-cred");
   });
 });
+

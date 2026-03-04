@@ -64,3 +64,4 @@ describe("readSlackMessages", () => {
     expect(result.messages.map((message) => message.ts)).toEqual(["1"]);
   });
 });
+

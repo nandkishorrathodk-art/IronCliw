@@ -56,3 +56,4 @@ describe("resolveDiscordAccount allowFrom precedence", () => {
     expect(resolved.config.allowFrom).toBeUndefined();
   });
 });
+

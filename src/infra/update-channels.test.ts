@@ -17,3 +17,4 @@ describe("update-channels tag detection", () => {
     expect(isStableTag("v2026.2.24")).toBe(true);
   });
 });
+

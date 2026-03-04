@@ -28,16 +28,16 @@ import {
   TelegramConfigSchema,
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
-  type OpenClawConfig,
+  type IronCliwConfig,
   type ResolvedTelegramAccount,
   type TelegramProbe,
-} from "openclaw/plugin-sdk/telegram";
+} from "IronCliw/plugin-sdk/telegram";
 import { getTelegramRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("telegram");
 
 function findTelegramTokenOwnerAccountId(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   accountId: string;
 }): string | null {
   const normalizedAccountId = normalizeAccountId(params.accountId);
@@ -503,7 +503,7 @@ export const telegramPlugin: ChannelPlugin<ResolvedTelegramAccount, TelegramProb
     },
     logoutAccount: async ({ accountId, cfg }) => {
       const envToken = process.env.TELEGRAM_BOT_TOKEN?.trim() ?? "";
-      const nextCfg = { ...cfg } as OpenClawConfig;
+      const nextCfg = { ...cfg } as IronCliwConfig;
       const nextTelegram = cfg.channels?.telegram ? { ...cfg.channels.telegram } : undefined;
       let cleared = false;
       let changed = false;
@@ -571,3 +571,4 @@ export const telegramPlugin: ChannelPlugin<ResolvedTelegramAccount, TelegramProb
     },
   },
 };
+

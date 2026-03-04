@@ -17,3 +17,4 @@ describe("scp remote host", () => {
     expect(isSafeScpRemoteHost("bot@@host")).toBe(false);
   });
 });
+

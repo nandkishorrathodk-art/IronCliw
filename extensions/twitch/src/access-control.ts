@@ -164,3 +164,4 @@ export function extractMentions(message: string): string[] {
 
   return mentions;
 }
+

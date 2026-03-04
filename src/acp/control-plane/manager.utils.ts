@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import type { SessionAcpMeta } from "../../config/sessions/types.js";
 import { normalizeAgentId, parseAgentSessionKey } from "../../routing/session-key.js";
 import { ACP_ERROR_CODES, AcpRuntimeError } from "../runtime/errors.js";
@@ -46,7 +46,7 @@ export function createUnsupportedControlError(params: {
   );
 }
 
-export function resolveRuntimeIdleTtlMs(cfg: OpenClawConfig): number {
+export function resolveRuntimeIdleTtlMs(cfg: IronCliwConfig): number {
   const ttlMinutes = cfg.acp?.runtime?.ttlMinutes;
   if (typeof ttlMinutes !== "number" || !Number.isFinite(ttlMinutes) || ttlMinutes <= 0) {
     return 0;
@@ -62,3 +62,4 @@ export function hasLegacyAcpIdentityProjection(meta: SessionAcpMeta): boolean {
     Object.hasOwn(raw, "sessionIdsProvisional")
   );
 }
+

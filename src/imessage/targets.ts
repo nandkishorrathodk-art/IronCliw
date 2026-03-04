@@ -163,3 +163,4 @@ export function formatIMessageChatTarget(chatId?: number | null): string {
   }
   return `chat_id:${chatId}`;
 }
+

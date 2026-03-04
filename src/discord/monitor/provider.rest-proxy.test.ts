@@ -60,3 +60,4 @@ describe("resolveDiscordRestFetch", () => {
     expect(runtime.log).not.toHaveBeenCalled();
   });
 });
+

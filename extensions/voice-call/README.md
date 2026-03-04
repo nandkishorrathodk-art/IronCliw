@@ -1,6 +1,6 @@
-# @openclaw/voice-call
+# @IronCliw/voice-call
 
-Official Voice Call plugin for **OpenClaw**.
+Official Voice Call plugin for **IronCliw**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.openclaw.ai/plugins/voice-call`
-Plugin system: `https://docs.openclaw.ai/plugin`
+Docs: `https://docs.IronCliw.ai/plugins/voice-call`
+Plugin system: `https://docs.IronCliw.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via OpenClaw (recommended)
+### Option A: install via IronCliw (recommended)
 
 ```bash
-openclaw plugins install @openclaw/voice-call
+IronCliw plugins install @IronCliw/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.openclaw/extensions
-cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
-cd ~/.openclaw/extensions/voice-call && pnpm install
+mkdir -p ~/.IronCliw/extensions
+cp -R extensions/voice-call ~/.IronCliw/extensions/voice-call
+cd ~/.IronCliw/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -143,13 +143,13 @@ Notes:
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall continue --call-id <id> --message "Any questions?"
-openclaw voicecall speak --call-id <id> --message "One moment"
-openclaw voicecall end --call-id <id>
-openclaw voicecall status --call-id <id>
-openclaw voicecall tail
-openclaw voicecall expose --mode funnel
+IronCliw voicecall call --to "+15555550123" --message "Hello from IronCliw"
+IronCliw voicecall continue --call-id <id> --message "Any questions?"
+IronCliw voicecall speak --call-id <id> --message "One moment"
+IronCliw voicecall end --call-id <id>
+IronCliw voicecall status --call-id <id>
+IronCliw voicecall tail
+IronCliw voicecall expose --mode funnel
 ```
 
 ## Tool
@@ -179,3 +179,4 @@ Actions:
 - Twilio speech turns include a per-turn token so stale/replayed callbacks cannot complete a newer turn.
 - `responseModel` / `responseSystemPrompt` control AI auto-responses.
 - Media streaming requires `ws` and OpenAI Realtime API key.
+

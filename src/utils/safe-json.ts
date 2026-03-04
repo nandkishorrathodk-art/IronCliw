@@ -19,3 +19,4 @@ export function safeJsonStringify(value: unknown): string | null {
     return null;
   }
 }
+

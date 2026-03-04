@@ -70,3 +70,4 @@ export function generateNextcloudTalkSignature(params: { body: string; secret: s
     .digest("hex");
   return { random, signature };
 }
+

@@ -4,7 +4,7 @@ import { agentCommand, installGatewayTestHooks, withGatewayServer } from "./test
 installGatewayTestHooks({ scope: "test" });
 
 describe("OpenAI HTTP message channel", () => {
-  it("passes x-openclaw-message-channel through to agentCommand", async () => {
+  it("passes x-IronCliw-message-channel through to agentCommand", async () => {
     agentCommand.mockReset();
     agentCommand.mockResolvedValueOnce({ payloads: [{ text: "ok" }] } as never);
 
@@ -15,10 +15,10 @@ describe("OpenAI HTTP message channel", () => {
           headers: {
             "content-type": "application/json",
             authorization: "Bearer secret",
-            "x-openclaw-message-channel": "custom-client-channel",
+            "x-IronCliw-message-channel": "custom-client-channel",
           },
           body: JSON.stringify({
-            model: "openclaw",
+            model: "IronCliw",
             messages: [{ role: "user", content: "hi" }],
           }),
         });
@@ -54,7 +54,7 @@ describe("OpenAI HTTP message channel", () => {
             authorization: "Bearer secret",
           },
           body: JSON.stringify({
-            model: "openclaw",
+            model: "IronCliw",
             messages: [{ role: "user", content: "hi" }],
           }),
         });
@@ -77,3 +77,4 @@ describe("OpenAI HTTP message channel", () => {
     );
   });
 });
+

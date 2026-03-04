@@ -38,3 +38,4 @@ describe("resolveConversationIdFromTargets", () => {
     expect(resolved).toBeUndefined();
   });
 });
+

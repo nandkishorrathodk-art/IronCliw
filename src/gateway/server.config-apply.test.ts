@@ -71,3 +71,4 @@ describe("gateway config.apply", () => {
     }
   });
 });
+

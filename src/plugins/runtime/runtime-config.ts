@@ -7,3 +7,4 @@ export function createRuntimeConfig(): PluginRuntime["config"] {
     writeConfigFile,
   };
 }
+

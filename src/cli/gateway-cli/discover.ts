@@ -109,3 +109,4 @@ export function renderBeaconLines(beacon: GatewayBonjourBeacon, rich: boolean): 
   }
   return lines;
 }
+

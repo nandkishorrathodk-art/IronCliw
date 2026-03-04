@@ -58,3 +58,4 @@ export function createDiscordClient(
 export function resolveDiscordRest(opts: DiscordClientOpts) {
   return createDiscordRestClient(opts).rest;
 }
+

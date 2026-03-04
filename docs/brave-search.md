@@ -8,7 +8,7 @@ title: "Brave Search"
 
 # Brave Search API
 
-OpenClaw supports Brave Search as a web search provider for `web_search`.
+IronCliw supports Brave Search as a web search provider for `web_search`.
 
 ## Get an API key
 
@@ -78,3 +78,4 @@ await web_search({
 - Results are cached for 15 minutes by default (configurable via `cacheTtlMinutes`).
 
 See [Web tools](/tools/web) for the full web_search configuration.
+

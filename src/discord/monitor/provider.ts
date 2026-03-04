@@ -27,7 +27,7 @@ import {
   resolveNativeCommandsEnabled,
   resolveNativeSkillsEnabled,
 } from "../../config/commands.js";
-import type { OpenClawConfig, ReplyToMode } from "../../config/config.js";
+import type { IronCliwConfig, ReplyToMode } from "../../config/config.js";
 import { loadConfig } from "../../config/config.js";
 import { isDangerousNameMatchingEnabled } from "../../config/dangerous-name-matching.js";
 import {
@@ -93,7 +93,7 @@ import { formatThreadBindingDurationLabel } from "./thread-bindings.messages.js"
 export type MonitorDiscordOpts = {
   token?: string;
   accountId?: string;
-  config?: OpenClawConfig;
+  config?: IronCliwConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   mediaMaxMb?: number;
@@ -206,7 +206,7 @@ function classifyAcpStatusProbeError(params: { error: unknown; isStaleRunning: b
 }
 
 async function probeDiscordAcpBindingHealth(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   sessionKey: string;
   storedState?: "idle" | "running" | "error";
   lastActivityAt?: number;
@@ -825,3 +825,4 @@ export const __testing = {
   resolveDiscordRestFetch,
   resolveThreadBindingsEnabled,
 };
+

@@ -248,3 +248,4 @@ output report = session "Format report"
     Format as markdown.
   """
   context: { evidence, trace, classification, root_cause, fixes }
+

@@ -24,3 +24,4 @@ export function extractGeminiResponse(raw: string): string | null {
   const trimmed = response.trim();
   return trimmed || null;
 }
+

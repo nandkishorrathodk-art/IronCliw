@@ -1,1 +1,2 @@
-export { withFileLock } from "openclaw/plugin-sdk/msteams";
+export { withFileLock } from "IronCliw/plugin-sdk/msteams";
+

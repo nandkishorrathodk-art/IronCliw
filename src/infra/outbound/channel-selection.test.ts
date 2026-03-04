@@ -89,3 +89,4 @@ describe("resolveMessageChannelSelection", () => {
     ).rejects.toThrow("Unknown channel: channel:c123");
   });
 });
+

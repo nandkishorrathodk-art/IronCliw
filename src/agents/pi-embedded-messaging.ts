@@ -40,3 +40,4 @@ export function isMessagingToolSendAction(
   }
   return Boolean(plugin.actions.extractToolSend({ args })?.to);
 }
+

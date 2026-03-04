@@ -22,7 +22,7 @@ function winRuntime(env: NodeJS.ProcessEnv) {
 }
 
 async function createTempDir(): Promise<string> {
-  const dir = await mkdtemp(path.join(tmpdir(), "openclaw-acpx-process-test-"));
+  const dir = await mkdtemp(path.join(tmpdir(), "IronCliw-acpx-process-test-"));
   tempDirs.push(dir);
   return dir;
 }
@@ -290,3 +290,4 @@ describe("spawnAndCollect", () => {
     expect(result.error?.name).toBe("AbortError");
   });
 });
+

@@ -41,3 +41,4 @@ export const callGatewayCli = async (method: string, opts: GatewayRpcOpts, param
         mode: GATEWAY_CLIENT_MODES.CLI,
       }),
   );
+

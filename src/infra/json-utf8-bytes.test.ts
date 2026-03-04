@@ -14,3 +14,4 @@ describe("jsonUtf8Bytes", () => {
     expect(jsonUtf8Bytes(circular)).toBe(Buffer.byteLength("[object Object]", "utf8"));
   });
 });
+

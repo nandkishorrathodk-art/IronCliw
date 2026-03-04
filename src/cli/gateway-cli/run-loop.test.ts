@@ -360,3 +360,4 @@ describe("gateway discover routing helpers", () => {
     expect(pickGatewayPort(beacon)).toBe(18789);
   });
 });
+

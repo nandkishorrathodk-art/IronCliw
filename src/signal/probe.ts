@@ -54,3 +54,4 @@ export async function probeSignal(baseUrl: string, timeoutMs: number): Promise<S
     elapsedMs: Date.now() - started,
   };
 }
+

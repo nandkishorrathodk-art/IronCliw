@@ -67,3 +67,4 @@ describe("core gateway method classification", () => {
     expect(unclassified).toEqual([]);
   });
 });
+

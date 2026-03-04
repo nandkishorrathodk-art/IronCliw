@@ -52,3 +52,4 @@ export function resolveBundledInstallPlanForNpmFailure(params: {
     warning: `npm package unavailable for ${params.rawSpec}; using bundled plugin at ${shortenHomePath(bundledSource.localPath)}.`,
   };
 }
+

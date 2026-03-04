@@ -10,3 +10,4 @@ export function resolveReactionMessageId(params: {
 }): string | number | undefined {
   return readStringOrNumberParam(params.args, "messageId") ?? params.toolContext?.currentMessageId;
 }
+

@@ -56,3 +56,4 @@ export function applyLegacyMigrations(raw: unknown): {
   }
   return { next, changes };
 }
+

@@ -18,3 +18,4 @@ parallel for topic in topics:
     context: topic
 
 session "Synthesize all research into a business plan"
+

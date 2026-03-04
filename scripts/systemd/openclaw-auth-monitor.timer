@@ -1,5 +1,5 @@
 [Unit]
-Description=Check OpenClaw auth expiry every 30 minutes
+Description=Check IronCliw auth expiry every 30 minutes
 
 [Timer]
 OnBootSec=5min
@@ -8,3 +8,4 @@ Persistent=true
 
 [Install]
 WantedBy=timers.target
+

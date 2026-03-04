@@ -190,3 +190,4 @@ describe("resolveTelegramReactionVariant", () => {
     expect(result).toBeUndefined();
   });
 });
+

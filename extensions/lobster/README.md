@@ -5,7 +5,7 @@ Adds the `lobster` agent tool as an **optional** plugin tool.
 ## What this is
 
 - Lobster is a standalone workflow shell (typed JSON-first pipelines + approvals/resume).
-- This plugin integrates Lobster with OpenClaw _without core changes_.
+- This plugin integrates Lobster with IronCliw _without core changes_.
 
 ## Enable
 
@@ -30,19 +30,19 @@ Enable it in an agent allowlist:
 }
 ```
 
-## Using `openclaw.invoke` (Lobster → OpenClaw tools)
+## Using `IronCliw.invoke` (Lobster → IronCliw tools)
 
-Some Lobster pipelines may include a `openclaw.invoke` step to call back into OpenClaw tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
+Some Lobster pipelines may include a `IronCliw.invoke` step to call back into IronCliw tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
 
-For this to work, the OpenClaw Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
+For this to work, the IronCliw Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
 
-- OpenClaw provides an HTTP endpoint: `POST /tools/invoke`.
+- IronCliw provides an HTTP endpoint: `POST /tools/invoke`.
 - The request is gated by **gateway auth** (e.g. `Authorization: Bearer …` when token auth is enabled).
-- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, OpenClaw returns `404 Tool not available`.
+- The invoked tool is gated by **tool policy** (global + per-agent + provider + group policy). If the tool is not allowed, IronCliw returns `404 Tool not available`.
 
 ### Allowlisting recommended
 
-To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `openclaw.invoke`.
+To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `IronCliw.invoke`.
 
 Example (allow only a small set of tools):
 
@@ -73,3 +73,4 @@ Notes:
 - Does not manage OAuth/tokens.
 - Uses timeouts, stdout caps, and strict JSON envelope parsing.
 - Ensure `lobster` is available on `PATH` for the gateway process.
+

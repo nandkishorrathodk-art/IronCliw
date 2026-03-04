@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/msteams";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/msteams";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getMSTeamsRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

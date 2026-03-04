@@ -77,3 +77,4 @@ export function clearDeviceAuthTokenFromStore(params: {
   delete next.tokens[role];
   params.adapter.writeStore(next);
 }
+

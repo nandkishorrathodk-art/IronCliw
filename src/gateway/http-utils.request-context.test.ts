@@ -7,10 +7,10 @@ function createReq(headers: Record<string, string> = {}): IncomingMessage {
 }
 
 describe("resolveGatewayRequestContext", () => {
-  it("uses normalized x-openclaw-message-channel when enabled", () => {
+  it("uses normalized x-IronCliw-message-channel when enabled", () => {
     const result = resolveGatewayRequestContext({
-      req: createReq({ "x-openclaw-message-channel": " Custom-Channel " }),
-      model: "openclaw",
+      req: createReq({ "x-IronCliw-message-channel": " Custom-Channel " }),
+      model: "IronCliw",
       sessionPrefix: "openai",
       defaultMessageChannel: "webchat",
       useMessageChannelHeader: true,
@@ -21,8 +21,8 @@ describe("resolveGatewayRequestContext", () => {
 
   it("uses default messageChannel when header support is disabled", () => {
     const result = resolveGatewayRequestContext({
-      req: createReq({ "x-openclaw-message-channel": "custom-channel" }),
-      model: "openclaw",
+      req: createReq({ "x-IronCliw-message-channel": "custom-channel" }),
+      model: "IronCliw",
       sessionPrefix: "openresponses",
       defaultMessageChannel: "webchat",
       useMessageChannelHeader: false,
@@ -34,7 +34,7 @@ describe("resolveGatewayRequestContext", () => {
   it("includes session prefix and user in generated session key", () => {
     const result = resolveGatewayRequestContext({
       req: createReq(),
-      model: "openclaw",
+      model: "IronCliw",
       user: "alice",
       sessionPrefix: "openresponses",
       defaultMessageChannel: "webchat",
@@ -43,3 +43,4 @@ describe("resolveGatewayRequestContext", () => {
     expect(result.sessionKey).toContain("openresponses-user:alice");
   });
 });
+

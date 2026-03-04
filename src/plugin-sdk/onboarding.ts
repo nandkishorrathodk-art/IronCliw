@@ -1,13 +1,13 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
 export type PromptAccountIdParams = {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: OpenClawConfig) => string[];
+  listAccountIds: (cfg: IronCliwConfig) => string[];
   defaultAccountId: string;
 };
 
@@ -43,3 +43,4 @@ export async function promptAccountId(params: PromptAccountIdParams): Promise<st
   }
   return normalized;
 }
+

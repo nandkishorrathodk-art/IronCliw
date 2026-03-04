@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/zalo";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/zalo";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getZaloRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

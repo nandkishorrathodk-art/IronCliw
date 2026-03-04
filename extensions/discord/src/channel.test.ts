@@ -1,4 +1,4 @@
-import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk/discord";
+import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/discord";
 import { describe, expect, it, vi } from "vitest";
 import { discordPlugin } from "./channel.js";
 import { setDiscordRuntime } from "./runtime.js";
@@ -15,7 +15,7 @@ describe("discordPlugin outbound", () => {
     } as unknown as PluginRuntime);
 
     const result = await discordPlugin.outbound!.sendMedia!({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
       to: "channel:123",
       text: "hi",
       mediaUrl: "/tmp/image.png",
@@ -34,3 +34,4 @@ describe("discordPlugin outbound", () => {
     expect(result).toMatchObject({ channel: "discord", messageId: "m1" });
   });
 });
+

@@ -60,3 +60,4 @@ describe("compaction-timeout helpers", () => {
     expect(selected.messagesSnapshot).toEqual(current);
   });
 });
+

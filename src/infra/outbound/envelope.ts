@@ -42,3 +42,4 @@ export function buildOutboundResultEnvelope(
     ...(params.delivery ? { delivery: params.delivery } : {}),
   };
 }
+

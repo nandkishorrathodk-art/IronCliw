@@ -47,3 +47,4 @@ describe("stripAssistantInternalScaffolding", () => {
     expect(stripAssistantInternalScaffolding(input)).toBe("Hello\n");
   });
 });
+

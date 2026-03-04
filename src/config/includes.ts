@@ -344,3 +344,4 @@ export function resolveConfigIncludes(
 ): unknown {
   return new IncludeProcessor(configPath, resolver).process(obj);
 }
+

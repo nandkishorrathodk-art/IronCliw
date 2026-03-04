@@ -1,23 +1,23 @@
 ---
-summary: "CLI reference for `openclaw qr` (generate iOS pairing QR + setup code)"
+summary: "CLI reference for `IronCliw qr` (generate iOS pairing QR + setup code)"
 read_when:
   - You want to pair the iOS app with a gateway quickly
   - You need setup-code output for remote/manual sharing
 title: "qr"
 ---
 
-# `openclaw qr`
+# `IronCliw qr`
 
 Generate an iOS pairing QR and setup code from your current Gateway configuration.
 
 ## Usage
 
 ```bash
-openclaw qr
-openclaw qr --setup-code-only
-openclaw qr --json
-openclaw qr --remote
-openclaw qr --url wss://gateway.example/ws --token '<token>'
+IronCliw qr
+IronCliw qr --setup-code-only
+IronCliw qr --json
+IronCliw qr --remote
+IronCliw qr --url wss://gateway.example/ws --token '<token>'
 ```
 
 ## Options
@@ -38,5 +38,6 @@ openclaw qr --url wss://gateway.example/ws --token '<token>'
 - Without `--remote`, local `gateway.auth.password` SecretRefs are resolved when password auth can win (explicit `gateway.auth.mode="password"` or inferred password mode with no winning token from auth/env), and no CLI auth override is passed.
 - Gateway version skew note: this command path requires a gateway that supports `secrets.resolve`; older gateways return an unknown-method error.
 - After scanning, approve device pairing with:
-  - `openclaw devices list`
-  - `openclaw devices approve <requestId>`
+  - `IronCliw devices list`
+  - `IronCliw devices approve <requestId>`
+

@@ -54,7 +54,7 @@ describe("runBootOnce", () => {
     options: BootWorkspaceOptions,
     run: (workspaceDir: string) => Promise<void>,
   ) => {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-boot-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-boot-"));
     try {
       const bootPath = path.join(workspaceDir, "BOOT.md");
       if (options.bootAsDirectory) {
@@ -261,3 +261,4 @@ describe("runBootOnce", () => {
     });
   });
 });
+

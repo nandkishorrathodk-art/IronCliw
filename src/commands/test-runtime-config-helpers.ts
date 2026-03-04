@@ -3,7 +3,7 @@ import type { RuntimeEnv } from "../runtime.js";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
 
 export const baseConfigSnapshot = {
-  path: "/tmp/openclaw.json",
+  path: "/tmp/IronCliw.json",
   exists: true,
   raw: "{}",
   parsed: {},
@@ -29,3 +29,4 @@ export function createTestRuntime(): TestRuntime {
     exit,
   };
 }
+

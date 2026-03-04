@@ -33,3 +33,4 @@ export function registerMessagePinCommands(message: Command, helpers: MessageCli
 
   void pins;
 }
+

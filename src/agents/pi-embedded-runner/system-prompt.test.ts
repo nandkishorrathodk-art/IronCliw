@@ -49,3 +49,4 @@ describe("applySystemPromptOverrideToSession", () => {
     expect(mutable._rebuildSystemPrompt?.(["tool1"])).toBe("rebuild test");
   });
 });
+

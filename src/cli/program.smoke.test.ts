@@ -71,3 +71,4 @@ describe("cli program (smoke)", () => {
     expect(onboardCommand).toHaveBeenCalledTimes(1);
   });
 });
+

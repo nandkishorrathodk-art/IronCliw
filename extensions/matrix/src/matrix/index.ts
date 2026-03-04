@@ -9,3 +9,4 @@ export {
   sendTypingMatrix,
 } from "./send.js";
 export { resolveMatrixAuth, resolveSharedMatrixClient } from "./client.js";
+

@@ -18,7 +18,7 @@ type ToolContentBlock = AgentToolResult<unknown>["content"][number];
 type ImageContentBlock = Extract<ToolContentBlock, { type: "image" }>;
 type TextContentBlock = Extract<ToolContentBlock, { type: "text" }>;
 
-// Anthropic Messages API limitations (observed in OpenClaw sessions):
+// Anthropic Messages API limitations (observed in IronCliw sessions):
 // - Images over ~2000px per side can fail in multi-image requests.
 // - Images over 5MB are rejected by the API.
 //
@@ -360,3 +360,4 @@ export async function sanitizeToolResultImages(
   const next = await sanitizeContentBlocksImages(content, label, opts);
   return { ...result, content: next };
 }
+

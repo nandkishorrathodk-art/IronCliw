@@ -56,3 +56,4 @@ export async function resolveAnnounceTarget(params: {
 
   return fallback;
 }
+

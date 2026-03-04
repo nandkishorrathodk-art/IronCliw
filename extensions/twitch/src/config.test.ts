@@ -85,3 +85,4 @@ describe("getAccountConfig", () => {
     expect(result).toBeNull();
   });
 });
+

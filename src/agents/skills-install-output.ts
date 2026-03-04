@@ -38,3 +38,4 @@ export function formatInstallFailureMessage(result: InstallCommandResult): strin
   }
   return `Install failed (${code}): ${summary}`;
 }
+

@@ -118,3 +118,4 @@ export function parseTelegramTarget(to: string): TelegramTarget {
 export function resolveTelegramTargetChatType(target: string): "direct" | "group" | "unknown" {
   return parseTelegramTarget(target).chatType;
 }
+

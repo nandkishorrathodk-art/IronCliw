@@ -1,6 +1,6 @@
 import type { MsgContext } from "../auto-reply/templating.js";
 import { applyTemplate } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { LinkModelConfig, LinkToolsConfig } from "../config/types.tools.js";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
 import { CLI_OUTPUT_MAX_BUFFER } from "../media-understanding/defaults.js";
@@ -105,7 +105,7 @@ async function runLinkEntries(params: {
 }
 
 export async function runLinkUnderstanding(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   ctx: MsgContext;
   message?: string;
 }): Promise<LinkUnderstandingResult> {
@@ -148,3 +148,4 @@ export async function runLinkUnderstanding(params: {
 
   return { urls: links, outputs };
 }
+

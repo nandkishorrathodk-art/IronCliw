@@ -94,3 +94,4 @@ export async function resolveNode(opts: NodesRpcOpts, query: string): Promise<No
   }
   return resolveNodeFromNodeList(nodes, query);
 }
+

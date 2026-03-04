@@ -9,9 +9,9 @@ import {
   resolveDefaultGroupPolicy,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-  type OpenClawConfig,
+  type IronCliwConfig,
   type ChannelSetupInput,
-} from "openclaw/plugin-sdk/nextcloud-talk";
+} from "IronCliw/plugin-sdk/nextcloud-talk";
 import { waitForAbortSignal } from "../../../src/infra/abort-signal.js";
 import {
   listNextcloudTalkAccountIds,
@@ -230,7 +230,7 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> = 
                     : {}),
             },
           },
-        } as OpenClawConfig;
+        } as IronCliwConfig;
       }
       return {
         ...namedConfig,
@@ -254,7 +254,7 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> = 
             },
           },
         },
-      } as OpenClawConfig;
+      } as IronCliwConfig;
     },
   },
   outbound: {
@@ -340,7 +340,7 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> = 
       stop();
     },
     logoutAccount: async ({ accountId, cfg }) => {
-      const nextCfg = { ...cfg } as OpenClawConfig;
+      const nextCfg = { ...cfg } as IronCliwConfig;
       const nextSection = cfg.channels?.["nextcloud-talk"]
         ? { ...cfg.channels["nextcloud-talk"] }
         : undefined;
@@ -394,7 +394,7 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> = 
           const nextChannels = { ...nextCfg.channels } as Record<string, unknown>;
           delete nextChannels["nextcloud-talk"];
           if (Object.keys(nextChannels).length > 0) {
-            nextCfg.channels = nextChannels as OpenClawConfig["channels"];
+            nextCfg.channels = nextChannels as IronCliwConfig["channels"];
           } else {
             delete nextCfg.channels;
           }
@@ -419,3 +419,4 @@ export const nextcloudTalkPlugin: ChannelPlugin<ResolvedNextcloudTalkAccount> = 
     },
   },
 };
+

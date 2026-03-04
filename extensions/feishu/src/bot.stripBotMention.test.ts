@@ -120,3 +120,4 @@ describe("normalizeMentions (via parseFeishuMessageEvent)", () => {
     expect(ctx.content).toBe('<at user_id="ou_x">&lt;script&gt;</at> test');
   });
 });
+

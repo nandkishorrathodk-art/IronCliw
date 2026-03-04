@@ -1,4 +1,4 @@
-import type { OpenClawPluginConfigSchema } from "./types.js";
+import type { IronCliwPluginConfigSchema } from "./types.js";
 
 type Issue = { path: Array<string | number>; message: string };
 
@@ -10,7 +10,7 @@ function error(message: string): SafeParseResult {
   return { success: false, error: { issues: [{ path: [], message }] } };
 }
 
-export function emptyPluginConfigSchema(): OpenClawPluginConfigSchema {
+export function emptyPluginConfigSchema(): IronCliwPluginConfigSchema {
   return {
     safeParse(value: unknown): SafeParseResult {
       if (value === undefined) {
@@ -31,3 +31,4 @@ export function emptyPluginConfigSchema(): OpenClawPluginConfigSchema {
     },
   };
 }
+

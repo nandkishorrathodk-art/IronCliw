@@ -21,10 +21,10 @@ agent (with a session switcher for other sessions).
 - Auto‑open for testing:
 
   ```bash
-  dist/OpenClaw.app/Contents/MacOS/OpenClaw --webchat
+  dist/IronCliw.app/Contents/MacOS/IronCliw --webchat
   ```
 
-- Logs: `./scripts/clawlog.sh` (subsystem `ai.openclaw`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `ai.IronCliw`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 
@@ -41,3 +41,4 @@ agent (with a session switcher for other sessions).
 ## Known limitations
 
 - The UI is optimized for chat sessions (not a full browser sandbox).
+

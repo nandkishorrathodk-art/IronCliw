@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
 export type ToolFsPolicy = {
@@ -11,7 +11,7 @@ export function createToolFsPolicy(params: { workspaceOnly?: boolean }): ToolFsP
   };
 }
 
-export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: string }): {
+export function resolveToolFsConfig(params: { cfg?: IronCliwConfig; agentId?: string }): {
   workspaceOnly?: boolean;
 } {
   const cfg = params.cfg;
@@ -24,8 +24,9 @@ export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: st
 }
 
 export function resolveEffectiveToolFsWorkspaceOnly(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   agentId?: string;
 }): boolean {
   return resolveToolFsConfig(params).workspaceOnly === true;
 }
+

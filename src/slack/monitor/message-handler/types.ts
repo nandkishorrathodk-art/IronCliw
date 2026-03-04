@@ -22,3 +22,4 @@ export type PreparedSlackMessage = {
   ackReactionValue: string;
   ackReactionPromise: Promise<boolean> | null;
 };
+

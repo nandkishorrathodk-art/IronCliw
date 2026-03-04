@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CONTEXT_WINDOW_HARD_MIN_TOKENS } from "../agents/context-window-guard.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { defaultRuntime } from "../runtime.js";
 import {
   applyCustomApiConfig,
@@ -79,7 +79,7 @@ function expectOpenAiCompatResult(params: {
 
 function buildCustomProviderConfig(contextWindow?: number) {
   if (contextWindow === undefined) {
-    return {} as OpenClawConfig;
+    return {} as IronCliwConfig;
   }
   return {
     models: {
@@ -101,7 +101,7 @@ function buildCustomProviderConfig(contextWindow?: number) {
         },
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
 function applyCustomModelConfigWithContextWindow(contextWindow?: number) {
@@ -345,7 +345,7 @@ describe("promptCustomApiConfig", () => {
         providers: {
           filemain: {
             source: "file",
-            path: "/tmp/openclaw-missing-provider.json",
+            path: "/tmp/IronCliw-missing-provider.json",
             mode: "json",
           },
         },
@@ -462,3 +462,4 @@ describe("parseNonInteractiveCustomApiFlags", () => {
     expect(() => parseNonInteractiveCustomApiFlags(flags)).toThrow(expectedMessage);
   });
 });
+

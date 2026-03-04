@@ -81,3 +81,4 @@ export function rewriteDiscordKnownMentions(
   rewritten += rewritePlainTextMentions(text.slice(offset), params.accountId);
   return rewritten;
 }
+

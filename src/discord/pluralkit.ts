@@ -56,3 +56,4 @@ export async function fetchPluralKitMessageInfo(params: {
   }
   return (await res.json()) as PluralKitMessageInfo;
 }
+

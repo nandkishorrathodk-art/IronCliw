@@ -1,9 +1,9 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
 export function applyNonInteractiveSkillsConfig(params: {
-  nextConfig: OpenClawConfig;
+  nextConfig: IronCliwConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
 }) {
@@ -29,3 +29,4 @@ export function applyNonInteractiveSkillsConfig(params: {
     },
   };
 }
+

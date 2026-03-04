@@ -1,6 +1,6 @@
 type CustomEntryLike = { type?: unknown; customType?: unknown; data?: unknown };
 
-export const CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
+export const CACHE_TTL_CUSTOM_TYPE = "IronCliw.cache-ttl";
 
 export type CacheTtlEntryData = {
   timestamp: number;
@@ -74,3 +74,4 @@ export function appendCacheTtlTimestamp(sessionManager: unknown, data: CacheTtlE
     // ignore persistence failures
   }
 }
+

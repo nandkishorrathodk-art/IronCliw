@@ -94,3 +94,4 @@ describe("modelsListCommand forward-compat", () => {
     expect(codex?.tags).not.toContain("missing");
   });
 });
+

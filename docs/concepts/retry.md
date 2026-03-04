@@ -38,7 +38,7 @@ title: "Retry Policy"
 
 ## Configuration
 
-Set retry policy per provider in `~/.openclaw/openclaw.json`:
+Set retry policy per provider in `~/.IronCliw/IronCliw.json`:
 
 ```json5
 {
@@ -67,3 +67,4 @@ Set retry policy per provider in `~/.openclaw/openclaw.json`:
 
 - Retries apply per request (message send, media upload, reaction, poll, sticker).
 - Composite flows do not retry completed steps.
+

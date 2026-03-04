@@ -169,3 +169,4 @@ function substituteAny(value: unknown, env: NodeJS.ProcessEnv, path: string): un
 export function resolveConfigEnvVars(obj: unknown, env: NodeJS.ProcessEnv = process.env): unknown {
   return substituteAny(obj, env, "");
 }
+

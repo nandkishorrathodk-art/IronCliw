@@ -222,3 +222,4 @@ describe("compaction hook wiring", () => {
     expect(assistant.usage).toEqual({ totalTokens: 184_297, input: 130_000, output: 2_000 });
   });
 });
+

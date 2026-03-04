@@ -99,3 +99,4 @@ export async function agentsDeleteCommand(
     runtime.log(`Deleted agent: ${agentId}`);
   }
 }
+

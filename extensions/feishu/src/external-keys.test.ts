@@ -18,3 +18,4 @@ describe("normalizeFeishuExternalKey", () => {
     expect(normalizeFeishuExternalKey("abc\u0000def")).toBeUndefined();
   });
 });
+

@@ -21,3 +21,4 @@ export function resolveTelegramGroupPromptSettings(params: {
     systemPromptParts.length > 0 ? systemPromptParts.join("\n\n") : undefined;
   return { skillFilter, groupSystemPrompt };
 }
+

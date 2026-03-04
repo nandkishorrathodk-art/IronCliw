@@ -1,8 +1,8 @@
 import type {
   ChannelAccountSnapshot,
   ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/bluebubbles";
+  IronCliwConfig,
+} from "IronCliw/plugin-sdk/bluebubbles";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -17,7 +17,7 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "IronCliw/plugin-sdk/bluebubbles";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,
@@ -267,7 +267,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
               ...(input.webhookPath ? { webhookPath: input.webhookPath } : {}),
             },
           },
-        } as OpenClawConfig;
+        } as IronCliwConfig;
       }
       return {
         ...next,
@@ -288,7 +288,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as IronCliwConfig;
     },
   },
   pairing: {
@@ -409,3 +409,4 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
     },
   },
 };
+

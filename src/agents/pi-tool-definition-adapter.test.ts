@@ -98,3 +98,4 @@ describe("pi tool definition adapter", () => {
     expect((result.content[0] as { text?: string }).text).toContain('"count"');
   });
 });
+

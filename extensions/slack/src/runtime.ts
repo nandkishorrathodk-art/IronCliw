@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/slack";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/slack";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getSlackRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

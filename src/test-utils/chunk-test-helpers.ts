@@ -20,3 +20,4 @@ export function hasBalancedFences(chunk: string): boolean {
   }
   return open === null;
 }
+

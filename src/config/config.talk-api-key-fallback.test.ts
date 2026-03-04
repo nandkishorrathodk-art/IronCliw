@@ -43,3 +43,4 @@ describe("talk api key fallback", () => {
     expect(readFileSync).not.toHaveBeenCalled();
   });
 });
+

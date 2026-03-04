@@ -1,6 +1,6 @@
 import { RefreshingAuthProvider, StaticAuthProvider } from "@twurple/auth";
 import { ChatClient, LogLevel } from "@twurple/chat";
-import type { OpenClawConfig } from "openclaw/plugin-sdk/twitch";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
 import { resolveTwitchToken } from "./token.js";
 import type { ChannelLogSink, TwitchAccountConfig, TwitchChatMessage } from "./types.js";
 import { normalizeToken } from "./utils/twitch.js";
@@ -76,7 +76,7 @@ export class TwitchClientManager {
    */
   async getClient(
     account: TwitchAccountConfig,
-    cfg?: OpenClawConfig,
+    cfg?: IronCliwConfig,
     accountId?: string,
   ): Promise<ChatClient> {
     const key = this.getAccountKey(account);
@@ -92,7 +92,7 @@ export class TwitchClientManager {
 
     if (!tokenResolution.token) {
       this.logger.error(
-        `Missing Twitch token for account ${account.username} (set channels.twitch.accounts.${account.username}.token or OPENCLAW_TWITCH_ACCESS_TOKEN for default)`,
+        `Missing Twitch token for account ${account.username} (set channels.twitch.accounts.${account.username}.token or IronCliw_TWITCH_ACCESS_TOKEN for default)`,
       );
       throw new Error("Missing Twitch token");
     }
@@ -236,7 +236,7 @@ export class TwitchClientManager {
     account: TwitchAccountConfig,
     channel: string,
     message: string,
-    cfg?: OpenClawConfig,
+    cfg?: IronCliwConfig,
     accountId?: string,
   ): Promise<{ ok: boolean; error?: string; messageId?: string }> {
     try {
@@ -275,3 +275,4 @@ export class TwitchClientManager {
     this.messageHandlers.clear();
   }
 }
+

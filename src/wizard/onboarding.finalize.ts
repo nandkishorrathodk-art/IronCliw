@@ -21,7 +21,7 @@ import {
   resolveControlUiLinks,
 } from "../commands/onboard-helpers.js";
 import type { OnboardOptions } from "../commands/onboard-types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import { isSystemdUserServiceAvailable } from "../daemon/systemd.js";
 import { ensureControlUiAssetsBuilt } from "../infra/control-ui-assets.js";
@@ -37,8 +37,8 @@ import type { WizardPrompter } from "./prompts.js";
 type FinalizeOnboardingOptions = {
   flow: WizardFlow;
   opts: OnboardOptions;
-  baseConfig: OpenClawConfig;
-  nextConfig: OpenClawConfig;
+  baseConfig: IronCliwConfig;
+  nextConfig: IronCliwConfig;
   workspaceDir: string;
   settings: GatewayWizardSettings;
   prompter: WizardPrompter;
@@ -216,8 +216,8 @@ export async function finalizeOnboardingWizard(
       await prompter.note(
         [
           "Docs:",
-          "https://docs.openclaw.ai/gateway/health",
-          "https://docs.openclaw.ai/gateway/troubleshooting",
+          "https://docs.IronCliw.ai/gateway/health",
+          "https://docs.IronCliw.ai/gateway/troubleshooting",
         ].join("\n"),
         "Health check help",
       );
@@ -301,7 +301,7 @@ export async function finalizeOnboardingWizard(
         : undefined,
       `Gateway WS: ${links.wsUrl}`,
       gatewayStatusLine,
-      "Docs: https://docs.openclaw.ai/web/control-ui",
+      "Docs: https://docs.IronCliw.ai/web/control-ui",
     ]
       .filter(Boolean)
       .join("\n"),
@@ -330,11 +330,11 @@ export async function finalizeOnboardingWizard(
     await prompter.note(
       [
         "Gateway token: shared auth for the Gateway + Control UI.",
-        "Stored in: ~/.openclaw/openclaw.json (gateway.auth.token) or OPENCLAW_GATEWAY_TOKEN.",
-        `View token: ${formatCliCommand("openclaw config get gateway.auth.token")}`,
-        `Generate token: ${formatCliCommand("openclaw doctor --generate-gateway-token")}`,
-        "Web UI stores a copy in this browser's localStorage (openclaw.control.settings.v1).",
-        `Open the dashboard anytime: ${formatCliCommand("openclaw dashboard --no-open")}`,
+        "Stored in: ~/.IronCliw/IronCliw.json (gateway.auth.token) or IronCliw_GATEWAY_TOKEN.",
+        `View token: ${formatCliCommand("IronCliw config get gateway.auth.token")}`,
+        `Generate token: ${formatCliCommand("IronCliw doctor --generate-gateway-token")}`,
+        "Web UI stores a copy in this browser's localStorage (IronCliw.control.settings.v1).",
+        `Open the dashboard anytime: ${formatCliCommand("IronCliw dashboard --no-open")}`,
         "If prompted: paste the token into Control UI settings (or use the tokenized dashboard URL).",
       ].join("\n"),
       "Token",
@@ -383,8 +383,8 @@ export async function finalizeOnboardingWizard(
         [
           `Dashboard link (with token): ${authedUrl}`,
           controlUiOpened
-            ? "Opened in your browser. Keep that tab to control OpenClaw."
-            : "Copy/paste this URL in a browser on this machine to control OpenClaw.",
+            ? "Opened in your browser. Keep that tab to control IronCliw."
+            : "Copy/paste this URL in a browser on this machine to control IronCliw.",
           controlUiOpenHint,
         ]
           .filter(Boolean)
@@ -393,7 +393,7 @@ export async function finalizeOnboardingWizard(
       );
     } else {
       await prompter.note(
-        `When you're ready: ${formatCliCommand("openclaw dashboard --no-open")}`,
+        `When you're ready: ${formatCliCommand("IronCliw dashboard --no-open")}`,
         "Later",
       );
     }
@@ -404,13 +404,13 @@ export async function finalizeOnboardingWizard(
   await prompter.note(
     [
       "Back up your agent workspace.",
-      "Docs: https://docs.openclaw.ai/concepts/agent-workspace",
+      "Docs: https://docs.IronCliw.ai/concepts/agent-workspace",
     ].join("\n"),
     "Workspace backup",
   );
 
   await prompter.note(
-    "Running agents on your computer is risky — harden your setup: https://docs.openclaw.ai/security",
+    "Running agents on your computer is risky — harden your setup: https://docs.IronCliw.ai/security",
     "Security",
   );
 
@@ -444,8 +444,8 @@ export async function finalizeOnboardingWizard(
       [
         `Dashboard link (with token): ${authedUrl}`,
         controlUiOpened
-          ? "Opened in your browser. Keep that tab to control OpenClaw."
-          : "Copy/paste this URL in a browser on this machine to control OpenClaw.",
+          ? "Opened in your browser. Keep that tab to control IronCliw."
+          : "Copy/paste this URL in a browser on this machine to control IronCliw.",
         controlUiOpenHint,
       ]
         .filter(Boolean)
@@ -473,33 +473,34 @@ export async function finalizeOnboardingWizard(
           webSearchKey
             ? `API key: stored in config (tools.web.search.${webSearchProvider === "perplexity" ? "perplexity.apiKey" : "apiKey"}).`
             : `API key: provided via ${webSearchProvider === "perplexity" ? "PERPLEXITY_API_KEY" : "BRAVE_API_KEY"} env var (Gateway environment).`,
-          "Docs: https://docs.openclaw.ai/tools/web",
+          "Docs: https://docs.IronCliw.ai/tools/web",
         ].join("\n")
       : [
           "To enable web search, your agent will need an API key for either Perplexity Search or Brave Search.",
           "",
           "Set it up interactively:",
-          `- Run: ${formatCliCommand("openclaw configure --section web")}`,
+          `- Run: ${formatCliCommand("IronCliw configure --section web")}`,
           "- Choose a provider and paste your API key",
           "",
           "Alternative: set PERPLEXITY_API_KEY or BRAVE_API_KEY in the Gateway environment (no config changes).",
-          "Docs: https://docs.openclaw.ai/tools/web",
+          "Docs: https://docs.IronCliw.ai/tools/web",
         ].join("\n"),
     "Web search (optional)",
   );
 
   await prompter.note(
-    'What now: https://openclaw.ai/showcase ("What People Are Building").',
+    'What now: https://IronCliw.ai/showcase ("What People Are Building").',
     "What now",
   );
 
   await prompter.outro(
     controlUiOpened
-      ? "Onboarding complete. Dashboard opened; keep that tab to control OpenClaw."
+      ? "Onboarding complete. Dashboard opened; keep that tab to control IronCliw."
       : seededInBackground
         ? "Onboarding complete. Web UI seeded in the background; open it anytime with the dashboard link above."
-        : "Onboarding complete. Use the dashboard link above to control OpenClaw.",
+        : "Onboarding complete. Use the dashboard link above to control IronCliw.",
   );
 
   return { launchedTui };
 }
+

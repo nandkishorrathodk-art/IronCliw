@@ -478,3 +478,4 @@ describe("event creation edge cases", () => {
     expect(parsed.about).toContain("\\");
   });
 });
+

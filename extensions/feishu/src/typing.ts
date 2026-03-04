@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { getFeishuRuntime } from "./runtime.js";
@@ -208,3 +208,4 @@ export async function removeTypingIndicator(params: {
     }
   }
 }
+

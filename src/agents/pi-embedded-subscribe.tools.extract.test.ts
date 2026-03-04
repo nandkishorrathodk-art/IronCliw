@@ -48,3 +48,4 @@ describe("extractMessagingToolSend", () => {
     expect(result?.to).toBe("telegram:123");
   });
 });
+

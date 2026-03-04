@@ -48,7 +48,7 @@ title: "Menu Bar"
 ## Status row text (menu)
 
 - While work is active: `<Session role> · <activity label>`
-  - Examples: `Main · exec: pnpm test`, `Other · read: apps/macos/Sources/OpenClaw/AppState.swift`.
+  - Examples: `Main · exec: pnpm test`, `Other · read: apps/macos/Sources/IronCliw/AppState.swift`.
 - When idle: falls back to the health summary.
 
 ## Event ingestion
@@ -79,3 +79,4 @@ title: "Menu Bar"
 - Start main while other active: icon flips to main instantly.
 - Rapid tool bursts: ensure badge does not flicker (TTL grace on tool results).
 - Health row reappears once all sessions idle.
+

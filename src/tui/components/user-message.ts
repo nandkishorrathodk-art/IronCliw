@@ -9,3 +9,4 @@ export class UserMessageComponent extends MarkdownMessageComponent {
     });
   }
 }
+

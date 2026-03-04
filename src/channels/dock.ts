@@ -627,3 +627,4 @@ export function getChannelDock(id: ChannelId): ChannelDock | undefined {
   }
   return pluginEntry.dock ?? buildDockFromPlugin(pluginEntry.plugin);
 }
+

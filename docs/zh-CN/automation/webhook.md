@@ -1,7 +1,7 @@
 ---
 read_when:
   - 添加或更改 webhook 端点
-  - 将外部系统接入 OpenClaw
+  - 将外部系统接入 IronCliw
 summary: 用于唤醒和隔离智能体运行的 Webhook 入口
 title: Webhooks
 x-i18n:
@@ -39,7 +39,7 @@ Gateway 网关可以暴露一个小型 HTTP webhook 端点用于外部触发。
 每个请求必须包含 hook 令牌。推荐使用请求头：
 
 - `Authorization: Bearer <token>`（推荐）
-- `x-openclaw-token: <token>`
+- `x-IronCliw-token: <token>`
 - `?token=<token>`（已弃用；会记录警告日志，将在未来的主要版本中移除）
 
 ## 端点
@@ -109,7 +109,7 @@ Gateway 网关可以暴露一个小型 HTTP webhook 端点用于外部触发。
 - TS 转换需要 TS 加载器（例如 `bun` 或 `tsx`）或运行时预编译的 `.js`。
 - 在映射上设置 `deliver: true` + `channel`/`to` 可将回复路由到聊天界面（`channel` 默认为 `last`，回退到 WhatsApp）。
 - `allowUnsafeExternalContent: true` 禁用该 hook 的外部内容安全包装（危险；仅用于受信任的内部来源）。
-- `openclaw webhooks gmail setup` 为 `openclaw webhooks gmail run` 写入 `hooks.gmail` 配置。完整的 Gmail 监听流程请参阅 [Gmail Pub/Sub](/automation/gmail-pubsub)。
+- `IronCliw webhooks gmail setup` 为 `IronCliw webhooks gmail run` 写入 `hooks.gmail` 配置。完整的 Gmail 监听流程请参阅 [Gmail Pub/Sub](/automation/gmail-pubsub)。
 
 ## 响应
 
@@ -130,7 +130,7 @@ curl -X POST http://127.0.0.1:18789/hooks/wake \
 
 ```bash
 curl -X POST http://127.0.0.1:18789/hooks/agent \
-  -H 'x-openclaw-token: SECRET' \
+  -H 'x-IronCliw-token: SECRET' \
   -H 'Content-Type: application/json' \
   -d '{"message":"Summarize inbox","name":"Email","wakeMode":"next-heartbeat"}'
 ```
@@ -141,7 +141,7 @@ curl -X POST http://127.0.0.1:18789/hooks/agent \
 
 ```bash
 curl -X POST http://127.0.0.1:18789/hooks/agent \
-  -H 'x-openclaw-token: SECRET' \
+  -H 'x-IronCliw-token: SECRET' \
   -H 'Content-Type: application/json' \
   -d '{"message":"Summarize inbox","name":"Email","model":"openai/gpt-5.2-mini"}'
 ```
@@ -161,3 +161,4 @@ curl -X POST http://127.0.0.1:18789/hooks/gmail \
 - 使用专用的 hook 令牌；不要复用 Gateway 网关认证令牌。
 - 避免在 webhook 日志中包含敏感的原始请求体。
 - Hook 请求体默认被视为不受信任并使用安全边界包装。如果你必须为特定 hook 禁用此功能，请在该 hook 的映射中设置 `allowUnsafeExternalContent: true`（危险）。
+

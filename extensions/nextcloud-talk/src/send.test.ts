@@ -102,3 +102,4 @@ describe("nextcloud-talk send cfg threading", () => {
     });
   });
 });
+

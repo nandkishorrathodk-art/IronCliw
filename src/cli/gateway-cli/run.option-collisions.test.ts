@@ -21,7 +21,7 @@ const runGatewayLoop = vi.fn(async ({ start }: { start: () => Promise<unknown> }
 const { runtimeErrors, defaultRuntime, resetRuntimeCapture } = createCliRuntimeCapture();
 
 vi.mock("../../config/config.js", () => ({
-  getConfigPath: () => "/tmp/openclaw-test-missing-config.json",
+  getConfigPath: () => "/tmp/IronCliw-test-missing-config.json",
   loadConfig: () => ({}),
   readConfigFileSnapshot: async () => ({ exists: false }),
   resolveStateDir: () => "/tmp",
@@ -31,7 +31,7 @@ vi.mock("../../config/config.js", () => ({
 vi.mock("../../gateway/auth.js", () => ({
   resolveGatewayAuth: (params: { authConfig?: { token?: string }; env?: NodeJS.ProcessEnv }) => ({
     mode: "token",
-    token: params.authConfig?.token ?? params.env?.OPENCLAW_GATEWAY_TOKEN,
+    token: params.authConfig?.token ?? params.env?.IronCliw_GATEWAY_TOKEN,
     password: undefined,
     allowTailscale: false,
   }),
@@ -191,3 +191,4 @@ describe("gateway run option collisions", () => {
     );
   });
 });
+

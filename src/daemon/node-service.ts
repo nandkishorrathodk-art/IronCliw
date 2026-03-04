@@ -14,13 +14,13 @@ function withNodeServiceEnv(
 ): Record<string, string | undefined> {
   return {
     ...env,
-    OPENCLAW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    OPENCLAW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    OPENCLAW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    OPENCLAW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    OPENCLAW_LOG_PREFIX: "node",
-    OPENCLAW_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    OPENCLAW_SERVICE_KIND: NODE_SERVICE_KIND,
+    IronCliw_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    IronCliw_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    IronCliw_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    IronCliw_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    IronCliw_LOG_PREFIX: "node",
+    IronCliw_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    IronCliw_SERVICE_KIND: NODE_SERVICE_KIND,
   };
 }
 
@@ -30,13 +30,13 @@ function withNodeInstallEnv(args: GatewayServiceInstallArgs): GatewayServiceInst
     env: withNodeServiceEnv(args.env),
     environment: {
       ...args.environment,
-      OPENCLAW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-      OPENCLAW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-      OPENCLAW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-      OPENCLAW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-      OPENCLAW_LOG_PREFIX: "node",
-      OPENCLAW_SERVICE_MARKER: NODE_SERVICE_MARKER,
-      OPENCLAW_SERVICE_KIND: NODE_SERVICE_KIND,
+      IronCliw_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+      IronCliw_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+      IronCliw_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+      IronCliw_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+      IronCliw_LOG_PREFIX: "node",
+      IronCliw_SERVICE_MARKER: NODE_SERVICE_MARKER,
+      IronCliw_SERVICE_KIND: NODE_SERVICE_KIND,
     },
   };
 }
@@ -64,3 +64,4 @@ export function resolveNodeService(): GatewayService {
     readRuntime: (env) => base.readRuntime(withNodeServiceEnv(env)),
   };
 }
+

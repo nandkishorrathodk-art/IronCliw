@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 
 const { getMemorySearchManagerMock } = vi.hoisted(() => ({
   getMemorySearchManagerMock: vi.fn(),
@@ -11,11 +11,11 @@ vi.mock("../memory/index.js", () => ({
 
 import { startGatewayMemoryBackend } from "./server-startup-memory.js";
 
-function createQmdConfig(agents: OpenClawConfig["agents"]): OpenClawConfig {
+function createQmdConfig(agents: IronCliwConfig["agents"]): IronCliwConfig {
   return {
     agents,
     memory: { backend: "qmd", qmd: {} },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
 function createGatewayLogMock() {
@@ -31,7 +31,7 @@ describe("startGatewayMemoryBackend", () => {
     const cfg = {
       agents: { list: [{ id: "main", default: true }] },
       memory: { backend: "builtin" },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
     const log = { info: vi.fn(), warn: vi.fn() };
 
     await startGatewayMemoryBackend({ cfg, log });
@@ -100,3 +100,4 @@ describe("startGatewayMemoryBackend", () => {
     expect(log.warn).not.toHaveBeenCalled();
   });
 });
+

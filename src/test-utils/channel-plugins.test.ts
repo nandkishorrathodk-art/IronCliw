@@ -48,3 +48,4 @@ describe("createOutboundTestPlugin", () => {
     expect(plugin.config.listAccountIds(cfg)).toEqual([]);
   });
 });
+

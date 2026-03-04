@@ -34,3 +34,4 @@ export function registerMessageSendCommand(message: Command, helpers: MessageCli
       await helpers.runMessageAction("send", opts);
     });
 }
+

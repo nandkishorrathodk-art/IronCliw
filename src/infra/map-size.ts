@@ -13,3 +13,4 @@ export function pruneMapToMaxSize<K, V>(map: Map<K, V>, maxSize: number): void {
     map.delete(oldest.value);
   }
 }
+

@@ -15,7 +15,7 @@ vi.mock("../config/config.js", async (importOriginal) => {
 });
 
 import "./test-helpers/fast-core-tools.js";
-import { createOpenClawTools } from "./openclaw-tools.js";
+import { createIronCliwTools } from "./IronCliw-tools.js";
 
 describe("agents_list", () => {
   type AgentConfig = NonNullable<NonNullable<typeof configOverride.agents>["list"]>[number];
@@ -30,7 +30,7 @@ describe("agents_list", () => {
   }
 
   function requireAgentsListTool() {
-    const tool = createOpenClawTools({
+    const tool = createIronCliwTools({
       agentSessionKey: "main",
     }).find((candidate) => candidate.name === "agents_list");
     if (!tool) {
@@ -127,3 +127,4 @@ describe("agents_list", () => {
     expect(research?.configured).toBe(false);
   });
 });
+

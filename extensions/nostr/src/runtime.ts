@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/nostr";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/nostr";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getNostrRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

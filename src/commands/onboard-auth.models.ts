@@ -225,3 +225,4 @@ export function buildKilocodeModelDefinition(): ModelDefinitionConfig {
     maxTokens: KILOCODE_DEFAULT_MAX_TOKENS,
   };
 }
+

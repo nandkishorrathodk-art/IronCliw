@@ -55,7 +55,7 @@ type NodeDaemonStatusOptions = {
 };
 
 function renderNodeServiceStartHints(): string[] {
-  const base = [formatCliCommand("openclaw node install"), formatCliCommand("openclaw node start")];
+  const base = [formatCliCommand("IronCliw node install"), formatCliCommand("IronCliw node start")];
   switch (process.platform) {
     case "darwin":
       return [
@@ -143,7 +143,7 @@ export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
     });
     if (!json) {
       defaultRuntime.log(`Node service already ${service.loadedText}.`);
-      defaultRuntime.log(`Reinstall with: ${formatCliCommand("openclaw node install --force")}`);
+      defaultRuntime.log(`Reinstall with: ${formatCliCommand("IronCliw node install --force")}`);
     }
     return;
   }
@@ -284,7 +284,7 @@ export async function runNodeDaemonStatus(opts: NodeDaemonStatusOptions = {}) {
   };
   const hintEnv = {
     ...baseEnv,
-    OPENCLAW_LOG_PREFIX: baseEnv.OPENCLAW_LOG_PREFIX ?? "node",
+    IronCliw_LOG_PREFIX: baseEnv.IronCliw_LOG_PREFIX ?? "node",
   } as NodeJS.ProcessEnv;
 
   if (runtime?.missingUnit) {
@@ -302,3 +302,4 @@ export async function runNodeDaemonStatus(opts: NodeDaemonStatusOptions = {}) {
     }
   }
 }
+

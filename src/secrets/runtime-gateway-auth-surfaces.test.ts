@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { evaluateGatewayAuthSurfaceStates } from "./runtime-gateway-auth-surfaces.js";
 
 const EMPTY_ENV = {} as NodeJS.ProcessEnv;
@@ -8,7 +8,7 @@ function envRef(id: string) {
   return { source: "env", provider: "default", id } as const;
 }
 
-function evaluate(config: OpenClawConfig, env: NodeJS.ProcessEnv = EMPTY_ENV) {
+function evaluate(config: IronCliwConfig, env: NodeJS.ProcessEnv = EMPTY_ENV) {
   return evaluateGatewayAuthSurfaceStates({
     config,
     env,
@@ -24,7 +24,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           password: envRef("GW_AUTH_PASSWORD"),
         },
       },
-    } as OpenClawConfig);
+    } as IronCliwConfig);
 
     expect(states["gateway.auth.password"]).toMatchObject({
       hasSecretRef: true,
@@ -41,8 +41,8 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
             password: envRef("GW_AUTH_PASSWORD"),
           },
         },
-      } as OpenClawConfig,
-      { OPENCLAW_GATEWAY_TOKEN: "env-token" } as NodeJS.ProcessEnv,
+      } as IronCliwConfig,
+      { IronCliw_GATEWAY_TOKEN: "env-token" } as NodeJS.ProcessEnv,
     );
 
     expect(states["gateway.auth.password"]).toMatchObject({
@@ -61,7 +61,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           token: envRef("GW_REMOTE_TOKEN"),
         },
       },
-    } as OpenClawConfig);
+    } as IronCliwConfig);
 
     expect(states["gateway.remote.token"]).toMatchObject({
       hasSecretRef: true,
@@ -81,7 +81,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           token: envRef("GW_REMOTE_TOKEN"),
         },
       },
-    } as OpenClawConfig);
+    } as IronCliwConfig);
 
     expect(states["gateway.remote.token"]).toMatchObject({
       hasSecretRef: true,
@@ -99,7 +99,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           password: envRef("GW_REMOTE_PASSWORD"),
         },
       },
-    } as OpenClawConfig);
+    } as IronCliwConfig);
 
     expect(states["gateway.remote.password"].hasSecretRef).toBe(true);
     expect(states["gateway.remote.password"].active).toBe(true);
@@ -118,7 +118,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           password: envRef("GW_REMOTE_PASSWORD"),
         },
       },
-    } as OpenClawConfig);
+    } as IronCliwConfig);
 
     expect(states["gateway.remote.password"]).toMatchObject({
       hasSecretRef: true,
@@ -127,3 +127,4 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
     });
   });
 });
+

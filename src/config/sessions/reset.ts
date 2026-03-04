@@ -174,3 +174,4 @@ function normalizeResetAtHour(value: number | undefined): number {
   }
   return normalized;
 }
+

@@ -83,3 +83,4 @@ describe("ssh-config", () => {
     expect(config).toBeNull();
   });
 });
+

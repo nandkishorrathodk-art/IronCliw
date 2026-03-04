@@ -33,3 +33,4 @@ describe("helpText", () => {
     expect(output).toContain("/elev <on|off|ask|full>");
   });
 });
+

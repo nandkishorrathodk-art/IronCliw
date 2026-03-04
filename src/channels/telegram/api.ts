@@ -22,3 +22,4 @@ export async function fetchTelegramChatId(params: {
     return null;
   }
 }
+

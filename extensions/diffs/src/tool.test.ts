@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/diffs";
+import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/diffs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { DiffScreenshotter } from "./browser.js";
 import { DEFAULT_DIFFS_TOOL_DEFAULTS } from "./config.js";
@@ -14,7 +14,7 @@ describe("diffs tool", () => {
   let store: DiffArtifactStore;
 
   beforeEach(async () => {
-    rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-diffs-tool-"));
+    rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-diffs-tool-"));
     store = new DiffArtifactStore({ rootDir });
   });
 
@@ -414,7 +414,7 @@ describe("diffs tool", () => {
   });
 });
 
-function createApi(): OpenClawPluginApi {
+function createApi(): IronCliwPluginApi {
   return {
     id: "diffs",
     name: "Diffs",
@@ -426,7 +426,7 @@ function createApi(): OpenClawPluginApi {
         bind: "loopback",
       },
     },
-    runtime: {} as OpenClawPluginApi["runtime"],
+    runtime: {} as IronCliwPluginApi["runtime"],
     logger: {
       info() {},
       warn() {},
@@ -497,3 +497,4 @@ function readTextContent(result: unknown, index: number): string {
   const entry = content?.[index];
   return entry?.type === "text" ? (entry.text ?? "") : "";
 }
+

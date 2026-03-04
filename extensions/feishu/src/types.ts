@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk/feishu";
+import type { BaseProbeResult } from "IronCliw/plugin-sdk/feishu";
 import type {
   FeishuConfigSchema,
   FeishuGroupSchema,
@@ -87,3 +87,4 @@ export type DynamicAgentCreationConfig = {
   agentDirTemplate?: string;
   maxAgents?: number;
 };
+

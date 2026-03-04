@@ -28,3 +28,4 @@ func (s *PlaceholderState) Next() string {
 		return candidate
 	}
 }
+

@@ -561,8 +561,8 @@ export async function spawnSubagentDirect(
 
     const attachmentId = crypto.randomUUID();
     const childWorkspaceDir = resolveAgentWorkspaceDir(cfg, targetAgentId);
-    const absRootDir = path.join(childWorkspaceDir, ".openclaw", "attachments");
-    const relDir = path.posix.join(".openclaw", "attachments", attachmentId);
+    const absRootDir = path.join(childWorkspaceDir, ".IronCliw", "attachments");
+    const relDir = path.posix.join(".IronCliw", "attachments", attachmentId);
     const absDir = path.join(absRootDir, attachmentId);
     attachmentAbsDir = absDir;
     attachmentRootDir = absRootDir;
@@ -878,3 +878,4 @@ export async function spawnSubagentDirect(
     attachments: attachmentsReceipt,
   };
 }
+

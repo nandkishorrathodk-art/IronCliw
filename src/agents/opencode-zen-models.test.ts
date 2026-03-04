@@ -99,3 +99,4 @@ describe("OPENCODE_ZEN_MODEL_ALIASES", () => {
     expect(OPENCODE_ZEN_MODEL_ALIASES["gemini-2.5"]).toBe("gemini-3-pro");
   });
 });
+

@@ -8,3 +8,4 @@ export const openaiProvider: MediaUnderstandingProvider = {
   describeImage: describeImageWithModel,
   transcribeAudio: transcribeOpenAiCompatibleAudio,
 };
+

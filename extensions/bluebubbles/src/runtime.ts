@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/bluebubbles";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/bluebubbles";
 
 let runtime: PluginRuntime | null = null;
 type LegacyRuntimeLogShape = { log?: (message: string) => void };
@@ -32,3 +32,4 @@ export function warnBlueBubbles(message: string): void {
   }
   console.warn(formatted);
 }
+

@@ -134,3 +134,4 @@ describe("createFeishuWSClient proxy handling", () => {
     expect(options.agent).toEqual({ proxyUrl: "http://upper-http:8999" });
   });
 });
+

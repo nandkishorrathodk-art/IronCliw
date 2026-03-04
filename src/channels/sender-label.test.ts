@@ -43,3 +43,4 @@ describe("listSenderLabelCandidates", () => {
     ).toEqual(["Alice", "alice", "+15551234567", "user-123", "Alice (+15551234567)"]);
   });
 });
+

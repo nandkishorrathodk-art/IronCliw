@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 import { makeModelFallbackCfg } from "./test-helpers/model-fallback-config-fixture.js";
 
@@ -60,7 +60,7 @@ describe("runWithModelFallback – probe logic", () => {
   const NOW = 1_700_000_000_000;
 
   const runPrimaryCandidate = (
-    cfg: OpenClawConfig,
+    cfg: IronCliwConfig,
     run: (provider: string, model: string) => Promise<unknown>,
   ) =>
     runWithModelFallback({
@@ -173,7 +173,7 @@ describe("runWithModelFallback – probe logic", () => {
           },
         },
       },
-    } as Partial<OpenClawConfig>);
+    } as Partial<IronCliwConfig>);
 
     // Override: ALL providers in cooldown for this test
     mockedIsProfileInCooldown.mockReturnValue(true);
@@ -276,7 +276,7 @@ describe("runWithModelFallback – probe logic", () => {
           },
         },
       },
-    } as Partial<OpenClawConfig>);
+    } as Partial<IronCliwConfig>);
 
     const almostExpired = NOW + 30 * 1000;
     mockedGetSoonestCooldownExpiry.mockReturnValue(almostExpired);
@@ -323,3 +323,4 @@ describe("runWithModelFallback – probe logic", () => {
     expect(run).toHaveBeenNthCalledWith(2, "openai", "gpt-4.1-mini");
   });
 });
+

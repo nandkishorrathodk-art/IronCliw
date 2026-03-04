@@ -13,3 +13,4 @@ describe("extractToolErrorMessage", () => {
     expect(extractToolErrorMessage({ details: { status: "timeout" } })).toBe("timeout");
   });
 });
+

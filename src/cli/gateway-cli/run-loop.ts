@@ -75,7 +75,7 @@ export async function runGatewayLoop(params: {
         `full process restart failed (${respawn.detail ?? "unknown error"}); falling back to in-process restart`,
       );
     } else {
-      gatewayLog.info("restart mode: in-process restart (OPENCLAW_NO_RESPAWN)");
+      gatewayLog.info("restart mode: in-process restart (IronCliw_NO_RESPAWN)");
     }
     if (hadLock && !(await reacquireLockForInProcessRestart())) {
       return;
@@ -198,3 +198,4 @@ export async function runGatewayLoop(params: {
     cleanupSignals();
   }
 }
+

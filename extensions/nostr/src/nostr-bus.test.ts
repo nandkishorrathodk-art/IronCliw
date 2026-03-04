@@ -197,3 +197,4 @@ describe("pubkeyToNpub", () => {
     expect(pubkeyToNpub(lower)).toBe(pubkeyToNpub(upper));
   });
 });
+

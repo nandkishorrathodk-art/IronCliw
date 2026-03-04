@@ -3,7 +3,7 @@ import type {
   ChannelResolveKind,
   ChannelResolveResult,
   RuntimeEnv,
-} from "openclaw/plugin-sdk/matrix";
+} from "IronCliw/plugin-sdk/matrix";
 import { listMatrixDirectoryGroupsLive, listMatrixDirectoryPeersLive } from "./directory-live.js";
 
 function findExactDirectoryMatches(
@@ -124,3 +124,4 @@ export async function resolveMatrixTargets(params: {
   }
   return results;
 }
+

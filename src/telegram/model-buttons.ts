@@ -282,3 +282,4 @@ export function calculateTotalPages(totalModels: number, pageSize?: number): num
   const size = pageSize ?? MODELS_PAGE_SIZE;
   return size > 0 ? Math.ceil(totalModels / size) : 1;
 }
+

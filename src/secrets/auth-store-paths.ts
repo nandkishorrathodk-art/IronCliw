@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
 import { resolveAuthStorePath } from "../agents/auth-profiles/paths.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveUserPath } from "../utils.js";
 
-export function collectAuthStorePaths(config: OpenClawConfig, stateDir: string): string[] {
+export function collectAuthStorePaths(config: IronCliwConfig, stateDir: string): string[] {
   const paths = new Set<string>();
   // Scope default auth store discovery to the provided stateDir instead of
   // ambient process env, so callers do not touch unrelated host-global stores.
@@ -34,3 +34,4 @@ export function collectAuthStorePaths(config: OpenClawConfig, stateDir: string):
 
   return [...paths];
 }
+

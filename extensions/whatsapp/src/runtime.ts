@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/whatsapp";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/whatsapp";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getWhatsAppRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

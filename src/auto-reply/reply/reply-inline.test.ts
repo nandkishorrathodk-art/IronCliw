@@ -52,3 +52,4 @@ describe("extractInlineSimpleCommand", () => {
     expect(extractInlineSimpleCommand(undefined)).toBeNull();
   });
 });
+

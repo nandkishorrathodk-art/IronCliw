@@ -31,3 +31,4 @@ describe("markdownToMatrixHtml", () => {
     expect(html).toContain("<br");
   });
 });
+

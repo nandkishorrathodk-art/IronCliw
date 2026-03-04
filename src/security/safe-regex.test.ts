@@ -40,3 +40,4 @@ describe("safe regex", () => {
     );
   });
 });
+

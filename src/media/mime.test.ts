@@ -137,3 +137,4 @@ describe("mediaKindFromMime", () => {
     expect(kindFromMime(" Audio/Ogg; codecs=opus ")).toBe("audio");
   });
 });
+

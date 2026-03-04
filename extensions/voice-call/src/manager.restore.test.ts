@@ -128,3 +128,4 @@ describe("CallManager verification on restore", () => {
     expect(manager.getActiveCalls()).toHaveLength(1);
   });
 });
+

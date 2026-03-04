@@ -159,3 +159,4 @@ export const PROTECTED_PLUGIN_ROUTE_PREFIXES = ["/api/channels"] as const;
 export function isProtectedPluginRoutePath(pathname: string): boolean {
   return isPathProtectedByPrefixes(pathname, PROTECTED_PLUGIN_ROUTE_PREFIXES);
 }
+

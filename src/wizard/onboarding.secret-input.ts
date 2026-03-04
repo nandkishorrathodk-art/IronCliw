@@ -1,8 +1,8 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { normalizeSecretInputString, resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveSecretRefString } from "../secrets/resolve.js";
 
-type SecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
+type SecretDefaults = NonNullable<IronCliwConfig["secrets"]>["defaults"];
 
 function formatSecretResolutionError(error: unknown): string {
   if (error instanceof Error && error.message.trim().length > 0) {
@@ -12,7 +12,7 @@ function formatSecretResolutionError(error: unknown): string {
 }
 
 export async function resolveOnboardingSecretInputString(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   value: unknown;
   path: string;
   defaults?: SecretDefaults;
@@ -39,3 +39,4 @@ export async function resolveOnboardingSecretInputString(params: {
 
   return normalizeSecretInputString(params.value);
 }
+

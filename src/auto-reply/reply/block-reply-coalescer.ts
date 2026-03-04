@@ -147,3 +147,4 @@ export function createBlockReplyCoalescer(params: {
     stop: () => clearIdleTimer(),
   };
 }
+

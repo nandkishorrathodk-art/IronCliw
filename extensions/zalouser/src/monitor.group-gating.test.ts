@@ -1,4 +1,4 @@
-import type { OpenClawConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk/zalouser";
+import type { IronCliwConfig, PluginRuntime, RuntimeEnv } from "IronCliw/plugin-sdk/zalouser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { __testing } from "./monitor.js";
 import { setZalouserRuntime } from "./runtime.js";
@@ -31,7 +31,7 @@ function createAccount(): ResolvedZalouserAccount {
   };
 }
 
-function createConfig(): OpenClawConfig {
+function createConfig(): IronCliwConfig {
   return {
     channels: {
       zalouser: {
@@ -84,7 +84,7 @@ function installRuntime(params: { commandAuthorized: boolean }) {
       },
       groups: {
         resolveRequireMention: vi.fn((input) => {
-          const cfg = input.cfg as OpenClawConfig;
+          const cfg = input.cfg as IronCliwConfig;
           const groupCfg = cfg.channels?.zalouser?.groups ?? {};
           const groupEntry = input.groupId ? groupCfg[input.groupId] : undefined;
           const defaultEntry = groupCfg["*"];
@@ -214,3 +214,4 @@ describe("zalouser monitor group mention gating", () => {
     expect(callArg?.ctx?.WasMentioned).toBe(true);
   });
 });
+

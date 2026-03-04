@@ -48,3 +48,4 @@ let relationships = do analyze(items, relation, 2)
 output map = session: mapper
   prompt: "Build {relation} map"
   context: { items, relationships }
+

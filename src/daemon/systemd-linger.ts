@@ -71,3 +71,4 @@ export async function enableSystemdUserLinger(params: {
     return { ok: false, stdout: "", stderr: message, code: 1 };
   }
 }
+

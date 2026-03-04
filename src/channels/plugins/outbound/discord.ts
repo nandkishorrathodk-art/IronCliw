@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import {
   getThreadBindingManager,
   type ThreadBindingRecord,
@@ -39,7 +39,7 @@ function resolveDiscordWebhookIdentity(params: {
 }
 
 async function maybeSendDiscordWebhookText(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   text: string;
   threadId?: string | number | null;
   accountId?: string | null;
@@ -145,3 +145,4 @@ export const discordOutbound: ChannelOutboundAdapter = {
     });
   },
 };
+

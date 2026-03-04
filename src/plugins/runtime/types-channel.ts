@@ -162,3 +162,4 @@ export type PluginRuntimeChannel = {
     monitorLineProvider: typeof import("../../line/monitor.js").monitorLineProvider;
   };
 };
+

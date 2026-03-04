@@ -16,3 +16,4 @@ describe("mergeStreamingText", () => {
     expect(mergeStreamingText("line1", "line2")).toBe("line1line2");
   });
 });
+

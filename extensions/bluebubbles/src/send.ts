@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
-import type { OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
-import { stripMarkdown } from "openclaw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import { stripMarkdown } from "IronCliw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 import {
   getCachedBlueBubblesPrivateApiStatus,
@@ -21,7 +21,7 @@ export type BlueBubblesSendOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   /** Message GUID to reply to (reply threading) */
   replyToMessageGuid?: string;
   /** Part index for reply (default: 0) */
@@ -475,3 +475,4 @@ export async function sendMessageBlueBubbles(
     return { messageId: "ok" };
   }
 }
+

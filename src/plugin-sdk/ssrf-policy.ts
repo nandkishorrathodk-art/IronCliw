@@ -83,3 +83,4 @@ export function buildHostnameAllowlistPolicyFromSuffixAllowlist(
   }
   return { hostnameAllowlist: Array.from(patterns) };
 }
+

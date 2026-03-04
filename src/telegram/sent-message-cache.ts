@@ -61,3 +61,4 @@ export function wasSentByBot(chatId: number | string, messageId: number): boolea
 export function clearSentMessageCache(): void {
   sentMessages.clear();
 }
+

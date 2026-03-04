@@ -126,3 +126,4 @@ describe("tool image sanitizing", () => {
     ]);
   });
 });
+

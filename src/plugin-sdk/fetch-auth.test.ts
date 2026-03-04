@@ -94,3 +94,4 @@ describe("fetchWithBearerAuthScopeFallback", () => {
     expect(tokenProvider.getAccessToken).toHaveBeenNthCalledWith(2, "https://second.example");
   });
 });
+

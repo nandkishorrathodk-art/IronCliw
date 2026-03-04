@@ -76,3 +76,4 @@ test("process submit sends Enter for pty sessions", async () => {
 
   await waitForSessionCompletion({ processTool, sessionId, expectedText: "submitted" });
 });
+

@@ -27,3 +27,4 @@ export function normalizeZaloReactionIcon(raw: string): string {
     REACTION_ALIAS_MAP.get(trimmed.toLowerCase()) ?? REACTION_ALIAS_MAP.get(trimmed) ?? trimmed
   );
 }
+

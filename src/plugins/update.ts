@@ -1,6 +1,6 @@
 import fsSync from "node:fs";
 import path from "node:path";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import type { UpdateChannel } from "../infra/update-channels.js";
 import { resolveUserPath } from "../utils.js";
@@ -30,7 +30,7 @@ export type PluginUpdateOutcome = {
 };
 
 export type PluginUpdateSummary = {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   changed: boolean;
   outcomes: PluginUpdateOutcome[];
 };
@@ -53,7 +53,7 @@ export type PluginChannelSyncSummary = {
 };
 
 export type PluginChannelSyncResult = {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   changed: boolean;
   summary: PluginChannelSyncSummary;
 };
@@ -173,7 +173,7 @@ function createPluginUpdateIntegrityDriftHandler(params: {
 }
 
 export async function updateNpmInstalledPlugins(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   logger?: PluginUpdateLogger;
   pluginIds?: string[];
   skipIds?: Set<string>;
@@ -372,7 +372,7 @@ export async function updateNpmInstalledPlugins(params: {
 }
 
 export async function syncPluginsForUpdateChannel(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   channel: UpdateChannel;
   workspaceDir?: string;
   logger?: PluginUpdateLogger;
@@ -492,3 +492,4 @@ export async function syncPluginsForUpdateChannel(params: {
 
   return { config: next, changed, summary };
 }
+

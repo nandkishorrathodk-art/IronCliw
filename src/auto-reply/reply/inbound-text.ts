@@ -16,3 +16,4 @@ export function sanitizeInboundSystemTags(input: string): string {
     .replace(BRACKETED_SYSTEM_TAG_RE, (_match, tag: string) => `(${tag})`)
     .replace(LINE_SYSTEM_PREFIX_RE, "$1System (untrusted):");
 }
+

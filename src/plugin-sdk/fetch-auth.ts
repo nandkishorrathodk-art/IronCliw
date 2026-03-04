@@ -69,3 +69,4 @@ export async function fetchWithBearerAuthScopeFallback(params: {
 
   return firstAttempt;
 }
+

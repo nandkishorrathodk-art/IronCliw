@@ -42,3 +42,4 @@ describe("ChatLog", () => {
     expect(chatLog.children.length).toBe(20);
   });
 });
+

@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "openclaw/plugin-sdk/msteams";
+import type { MSTeamsConfig } from "IronCliw/plugin-sdk/msteams";
 import { GRAPH_ROOT } from "./attachments/shared.js";
 import { loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { readAccessToken } from "./token-response.js";
@@ -79,3 +79,4 @@ export async function listChannelsForTeam(token: string, teamId: string): Promis
   const res = await fetchGraphJson<GraphResponse<GraphChannel>>({ token, path });
   return res.value ?? [];
 }
+

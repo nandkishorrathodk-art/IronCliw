@@ -16,3 +16,4 @@ export function resolveEmojiAndHomepage(params: {
   const homepage = homepageRaw?.trim() ? homepageRaw.trim() : undefined;
   return { ...(emoji ? { emoji } : {}), ...(homepage ? { homepage } : {}) };
 }
+

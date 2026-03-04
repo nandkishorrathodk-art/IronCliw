@@ -61,3 +61,4 @@ export function resolveGroupActivationFor(params: {
   const defaultActivation = !requireMention ? "always" : "mention";
   return normalizeGroupActivation(entry?.groupActivation) ?? defaultActivation;
 }
+

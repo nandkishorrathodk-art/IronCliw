@@ -18,10 +18,10 @@ vi.mock("../config/config.js", async (importOriginal) => {
 });
 
 import "./test-helpers/fast-core-tools.js";
-import { createOpenClawTools } from "./openclaw-tools.js";
+import { createIronCliwTools } from "./IronCliw-tools.js";
 
 function getSessionsHistoryTool(options?: { sandboxed?: boolean }) {
-  const tool = createOpenClawTools({
+  const tool = createIronCliwTools({
     agentSessionKey: "main",
     sandboxed: options?.sandboxed,
   }).find((candidate) => candidate.name === "sessions_history");
@@ -116,3 +116,4 @@ describe("sessions tools visibility", () => {
     expect(denied.details).toMatchObject({ status: "forbidden" });
   });
 });
+

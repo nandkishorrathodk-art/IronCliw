@@ -1,4 +1,4 @@
-import { normalizeWebhookPath, type OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
+import { normalizeWebhookPath, type IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
 import { getBlueBubblesRuntime } from "./runtime.js";
 import type { BlueBubblesAccountConfig } from "./types.js";
@@ -12,7 +12,7 @@ export type BlueBubblesRuntimeEnv = {
 
 export type BlueBubblesMonitorOptions = {
   account: ResolvedBlueBubblesAccount;
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   runtime: BlueBubblesRuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -23,7 +23,7 @@ export type BlueBubblesCoreRuntime = ReturnType<typeof getBlueBubblesRuntime>;
 
 export type WebhookTarget = {
   account: ResolvedBlueBubblesAccount;
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   runtime: BlueBubblesRuntimeEnv;
   core: BlueBubblesCoreRuntime;
   path: string;
@@ -39,3 +39,4 @@ export function resolveWebhookPathFromConfig(config?: BlueBubblesAccountConfig):
   }
   return DEFAULT_WEBHOOK_PATH;
 }
+

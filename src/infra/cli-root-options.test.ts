@@ -14,3 +14,4 @@ describe("consumeRootOptionToken", () => {
     expect(consumeRootOptionToken(["--profile", "--"], 0)).toBe(1);
   });
 });
+

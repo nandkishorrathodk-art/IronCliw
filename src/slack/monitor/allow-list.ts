@@ -107,3 +107,4 @@ export function resolveSlackUserAllowed(params: {
     allowNameMatching: params.allowNameMatching,
   });
 }
+

@@ -153,7 +153,7 @@ const PluginEntrySchema = z
   })
   .strict();
 
-export const OpenClawSchema = z
+export const IronCliwSchema = z
   .object({
     $schema: z.string().optional(),
     meta: z
@@ -864,3 +864,4 @@ export const OpenClawSchema = z
       }
     }
   });
+

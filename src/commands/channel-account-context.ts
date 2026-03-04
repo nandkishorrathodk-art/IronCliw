@@ -1,6 +1,6 @@
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 
 export type ChannelDefaultAccountContext = {
   accountIds: string[];
@@ -12,7 +12,7 @@ export type ChannelDefaultAccountContext = {
 
 export async function resolveDefaultChannelAccountContext(
   plugin: ChannelPlugin,
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
 ): Promise<ChannelDefaultAccountContext> {
   const accountIds = plugin.config.listAccountIds(cfg);
   const defaultAccountId = resolveChannelDefaultAccountId({
@@ -27,3 +27,4 @@ export async function resolveDefaultChannelAccountContext(
     : true;
   return { accountIds, defaultAccountId, account, enabled, configured };
 }
+

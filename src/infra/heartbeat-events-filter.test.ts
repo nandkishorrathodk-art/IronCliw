@@ -19,3 +19,4 @@ describe("heartbeat event prompts", () => {
     expect(prompt).not.toContain("Please relay the command output to the user");
   });
 });
+

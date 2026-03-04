@@ -70,3 +70,4 @@ export function resolveGitHeadPath(
     return gitDir ? path.join(gitDir, "HEAD") : null;
   });
 }
+

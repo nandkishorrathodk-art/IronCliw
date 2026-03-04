@@ -51,3 +51,4 @@ export class WizardCancelledError extends Error {
     this.name = "WizardCancelledError";
   }
 }
+

@@ -202,3 +202,4 @@ describe("cron schedule error isolation", () => {
     expect(badJob.state.scheduleErrorCount).toBe(1);
   });
 });
+

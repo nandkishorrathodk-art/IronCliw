@@ -22,3 +22,4 @@ export function resolveSignalRpcContext(
   const account = opts.account?.trim() || resolvedAccount?.config.account?.trim();
   return { baseUrl, account };
 }
+

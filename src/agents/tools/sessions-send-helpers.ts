@@ -3,7 +3,7 @@ import {
   normalizeChannelId as normalizeAnyChannelId,
 } from "../../channels/plugins/index.js";
 import { normalizeChannelId as normalizeChatChannelId } from "../../channels/registry.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 
 const ANNOUNCE_SKIP_TOKEN = "ANNOUNCE_SKIP";
 const REPLY_SKIP_TOKEN = "REPLY_SKIP";
@@ -155,7 +155,7 @@ export function isReplySkip(text?: string) {
   return (text ?? "").trim() === REPLY_SKIP_TOKEN;
 }
 
-export function resolvePingPongTurns(cfg?: OpenClawConfig) {
+export function resolvePingPongTurns(cfg?: IronCliwConfig) {
   const raw = cfg?.session?.agentToAgent?.maxPingPongTurns;
   const fallback = DEFAULT_PING_PONG_TURNS;
   if (typeof raw !== "number" || !Number.isFinite(raw)) {
@@ -164,3 +164,4 @@ export function resolvePingPongTurns(cfg?: OpenClawConfig) {
   const rounded = Math.floor(raw);
   return Math.max(0, Math.min(MAX_PING_PONG_TURNS, rounded));
 }
+

@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/mattermost",
+  "name": "@IronCliw/mattermost",
   "version": "2026.3.2",
-  "description": "OpenClaw Mattermost channel plugin",
+  "description": "IronCliw Mattermost channel plugin",
   "type": "module",
   "dependencies": {
     "ws": "^8.19.0",
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,9 +21,10 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@openclaw/mattermost",
+      "npmSpec": "@IronCliw/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }
   }
 }
+

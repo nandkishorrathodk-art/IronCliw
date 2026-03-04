@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/nextcloud-talk",
+  "name": "@IronCliw/nextcloud-talk",
   "version": "2026.3.2",
-  "description": "OpenClaw Nextcloud Talk channel plugin",
+  "description": "IronCliw Nextcloud Talk channel plugin",
   "type": "module",
   "dependencies": {
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,9 +25,10 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/nextcloud-talk",
+      "npmSpec": "@IronCliw/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
   }
 }
+

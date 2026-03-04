@@ -110,3 +110,4 @@ export type GatewayRequestHandlerOptions = {
 export type GatewayRequestHandler = (opts: GatewayRequestHandlerOptions) => Promise<void> | void;
 
 export type GatewayRequestHandlers = Record<string, GatewayRequestHandler>;
+

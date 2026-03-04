@@ -16,7 +16,7 @@ describe("log file size cap", () => {
   let logPath = "";
 
   beforeEach(() => {
-    logPath = path.join(os.tmpdir(), `openclaw-log-cap-${crypto.randomUUID()}.log`);
+    logPath = path.join(os.tmpdir(), `IronCliw-log-cap-${crypto.randomUUID()}.log`);
     resetLogger();
     setLoggerOverride(null);
   });
@@ -66,3 +66,4 @@ describe("log file size cap", () => {
     expect(capWarnings).toHaveLength(1);
   });
 });
+

@@ -34,3 +34,4 @@ describe("NextcloudTalkConfigSchema SecretInput", () => {
     expect(result.success).toBe(true);
   });
 });
+

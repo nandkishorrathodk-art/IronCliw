@@ -16,7 +16,7 @@ async function withTempDir<T>(prefix: string, run: (dir: string) => Promise<T>):
 
 describe("openVerifiedFileSync", () => {
   it("rejects directories by default", async () => {
-    await withTempDir("openclaw-safe-open-", async (root) => {
+    await withTempDir("IronCliw-safe-open-", async (root) => {
       const targetDir = path.join(root, "nested");
       await fsp.mkdir(targetDir, { recursive: true });
 
@@ -29,7 +29,7 @@ describe("openVerifiedFileSync", () => {
   });
 
   it("accepts directories when allowedType is directory", async () => {
-    await withTempDir("openclaw-safe-open-", async (root) => {
+    await withTempDir("IronCliw-safe-open-", async (root) => {
       const targetDir = path.join(root, "nested");
       await fsp.mkdir(targetDir, { recursive: true });
 
@@ -47,3 +47,4 @@ describe("openVerifiedFileSync", () => {
     });
   });
 });
+

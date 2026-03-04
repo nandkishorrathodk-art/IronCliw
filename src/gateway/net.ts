@@ -439,3 +439,4 @@ export function isSecureWebSocketUrl(
   }
   return false;
 }
+

@@ -56,3 +56,4 @@ export function resolveAcpCommandBindingContext(params: HandleCommandsParams): {
     conversationId: resolveAcpCommandConversationId(params),
   };
 }
+

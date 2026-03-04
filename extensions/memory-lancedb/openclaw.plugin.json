@@ -27,7 +27,7 @@
     },
     "dbPath": {
       "label": "Database Path",
-      "placeholder": "~/.openclaw/memory/lancedb",
+      "placeholder": "~/.IronCliw/memory/lancedb",
       "advanced": true
     },
     "autoCapture": {
@@ -86,3 +86,4 @@
     "required": ["embedding"]
   }
 }
+

@@ -3,9 +3,9 @@ import path from "node:path";
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  OpenClawConfig,
+  IronCliwConfig,
   WizardPrompter,
-} from "openclaw/plugin-sdk/zalouser";
+} from "IronCliw/plugin-sdk/zalouser";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
@@ -14,8 +14,8 @@ import {
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-  resolvePreferredOpenClawTmpDir,
-} from "openclaw/plugin-sdk/zalouser";
+  resolvePreferredIronCliwTmpDir,
+} from "IronCliw/plugin-sdk/zalouser";
 import {
   listZalouserAccountIds,
   resolveDefaultZalouserAccountId,
@@ -33,11 +33,11 @@ import {
 const channel = "zalouser" as const;
 
 function setZalouserAccountScopedConfig(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId: string,
   defaultPatch: Record<string, unknown>,
   accountPatch: Record<string, unknown> = defaultPatch,
-): OpenClawConfig {
+): IronCliwConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -49,7 +49,7 @@ function setZalouserAccountScopedConfig(
           ...defaultPatch,
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
   }
   return {
     ...cfg,
@@ -68,13 +68,13 @@ function setZalouserAccountScopedConfig(
         },
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
 function setZalouserDmPolicy(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
-): OpenClawConfig {
+): IronCliwConfig {
   const allowFrom =
     dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.zalouser?.allowFrom) : undefined;
   return {
@@ -87,7 +87,7 @@ function setZalouserDmPolicy(
         ...(allowFrom ? { allowFrom } : {}),
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
 async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
@@ -97,7 +97,7 @@ async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
       "",
       "This plugin uses zca-js directly (no external CLI dependency).",
       "",
-      "Docs: https://docs.openclaw.ai/channels/zalouser",
+      "Docs: https://docs.IronCliw.ai/channels/zalouser",
     ].join("\n"),
     "Zalo Personal Setup",
   );
@@ -115,18 +115,18 @@ async function writeQrDataUrlToTempFile(
   }
   const safeProfile = profile.replace(/[^a-zA-Z0-9_-]+/g, "-") || "default";
   const filePath = path.join(
-    resolvePreferredOpenClawTmpDir(),
-    `openclaw-zalouser-qr-${safeProfile}.png`,
+    resolvePreferredIronCliwTmpDir(),
+    `IronCliw-zalouser-qr-${safeProfile}.png`,
   );
   await fsp.writeFile(filePath, Buffer.from(base64, "base64"));
   return filePath;
 }
 
 async function promptZalouserAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<OpenClawConfig> {
+}): Promise<IronCliwConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZalouserAccountSync({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -178,20 +178,20 @@ async function promptZalouserAllowFrom(params: {
 }
 
 function setZalouserGroupPolicy(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): OpenClawConfig {
+): IronCliwConfig {
   return setZalouserAccountScopedConfig(cfg, accountId, {
     groupPolicy,
   });
 }
 
 function setZalouserGroupAllowlist(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId: string,
   groupKeys: string[],
-): OpenClawConfig {
+): IronCliwConfig {
   const groups = Object.fromEntries(groupKeys.map((key) => [key, { allow: true }]));
   return setZalouserAccountScopedConfig(cfg, accountId, {
     groups,
@@ -394,3 +394,4 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
     return { cfg: next, accountId };
   },
 };
+

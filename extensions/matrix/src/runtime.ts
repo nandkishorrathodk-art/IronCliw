@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/matrix";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/matrix";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getMatrixRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

@@ -72,3 +72,4 @@ describe("buildStatusAllReportLines", () => {
     expect(output).toContain("ABSENT");
   });
 });
+

@@ -107,3 +107,4 @@ export type TuiStateAccess = {
   statusTimeout: ReturnType<typeof setTimeout> | null;
   lastCtrlCAt: number;
 };
+

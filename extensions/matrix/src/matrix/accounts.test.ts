@@ -129,3 +129,4 @@ describe("resolveDefaultMatrixAccountId", () => {
     expect(resolveDefaultMatrixAccountId(cfg)).toBe("default");
   });
 });
+

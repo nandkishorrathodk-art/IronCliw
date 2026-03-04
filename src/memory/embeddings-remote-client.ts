@@ -37,3 +37,4 @@ export async function resolveRemoteEmbeddingBearerClient(params: {
   };
   return { baseUrl, headers, ssrfPolicy: buildRemoteBaseUrlPolicy(baseUrl) };
 }
+

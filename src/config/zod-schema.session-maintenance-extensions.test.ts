@@ -55,3 +55,4 @@ describe("SessionSchema maintenance extensions", () => {
     ).toThrow(/maxDiskBytes|size/i);
   });
 });
+

@@ -717,3 +717,4 @@ export function pubkeyToNpub(hexPubkey: string): string {
   // npubEncode expects a hex string, not Uint8Array
   return nip19.npubEncode(normalized);
 }
+

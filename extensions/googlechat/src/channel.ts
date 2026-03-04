@@ -18,9 +18,9 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ChannelStatusIssue,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/googlechat";
-import { GoogleChatConfigSchema } from "openclaw/plugin-sdk/googlechat";
+  type IronCliwConfig,
+} from "IronCliw/plugin-sdk/googlechat";
+import { GoogleChatConfigSchema } from "IronCliw/plugin-sdk/googlechat";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,
@@ -356,7 +356,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
               ...configPatch,
             },
           },
-        } as OpenClawConfig;
+        } as IronCliwConfig;
       }
       return {
         ...next,
@@ -375,7 +375,7 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as IronCliwConfig;
     },
   },
   outbound: {
@@ -595,3 +595,4 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
     },
   },
 };
+

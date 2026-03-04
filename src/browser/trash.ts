@@ -20,3 +20,4 @@ export async function movePathToTrash(targetPath: string): Promise<string> {
     return dest;
   }
 }
+

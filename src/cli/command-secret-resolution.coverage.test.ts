@@ -26,3 +26,4 @@ describe("command secret resolution coverage", () => {
     },
   );
 });
+

@@ -149,3 +149,4 @@ describe("sessionsCommand", () => {
     fs.rmSync(store);
   });
 });
+

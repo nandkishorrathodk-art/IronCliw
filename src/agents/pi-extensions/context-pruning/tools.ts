@@ -24,3 +24,4 @@ export function makeToolPrunablePredicate(
     return matchesAnyGlobPattern(normalized, allow);
   };
 }
+

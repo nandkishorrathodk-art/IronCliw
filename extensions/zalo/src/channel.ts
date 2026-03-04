@@ -2,8 +2,8 @@ import type {
   ChannelAccountSnapshot,
   ChannelDock,
   ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/zalo";
+  IronCliwConfig,
+} from "IronCliw/plugin-sdk/zalo";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -20,7 +20,7 @@ import {
   resolveOpenProviderRuntimeGroupPolicy,
   resolveChannelAccountConfigBasePath,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/zalo";
+} from "IronCliw/plugin-sdk/zalo";
 import {
   listZaloAccountIds,
   resolveDefaultZaloAccountId,
@@ -261,7 +261,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
                     : {}),
             },
           },
-        } as OpenClawConfig;
+        } as IronCliwConfig;
       }
       return {
         ...next,
@@ -284,7 +284,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as IronCliwConfig;
     },
   },
   pairing: {
@@ -431,3 +431,4 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     },
   },
 };
+

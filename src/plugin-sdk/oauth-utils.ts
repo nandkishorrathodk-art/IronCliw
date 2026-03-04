@@ -11,3 +11,4 @@ export function generatePkceVerifierChallenge(): { verifier: string; challenge: 
   const challenge = createHash("sha256").update(verifier).digest("base64url");
   return { verifier, challenge };
 }
+

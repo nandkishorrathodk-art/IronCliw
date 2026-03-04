@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 
 export type IMessageAttachment = {
@@ -31,10 +31,11 @@ export type MonitorIMessageOpts = {
   cliPath?: string;
   dbPath?: string;
   accountId?: string;
-  config?: OpenClawConfig;
+  config?: IronCliwConfig;
   allowFrom?: Array<string | number>;
   groupAllowFrom?: Array<string | number>;
   includeAttachments?: boolean;
   mediaMaxMb?: number;
   requireMention?: boolean;
 };
+

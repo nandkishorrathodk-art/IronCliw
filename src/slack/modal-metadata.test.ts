@@ -57,3 +57,4 @@ describe("encodeSlackModalPrivateMetadata", () => {
     ).toThrow(/cannot exceed 3000 chars/i);
   });
 });
+

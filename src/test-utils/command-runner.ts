@@ -8,3 +8,4 @@ export async function runRegisteredCli(params: {
   params.register(program);
   await program.parseAsync(params.argv, { from: "user" });
 }
+

@@ -54,3 +54,4 @@ x-i18n:
 - `gateway.auth.mode`、`gateway.auth.token`、`gateway.auth.password`：WebSocket 认证。
 - `gateway.remote.url`、`gateway.remote.token`、`gateway.remote.password`：远程 Gateway 网关目标。
 - `session.*`：会话存储和主键默认值。
+

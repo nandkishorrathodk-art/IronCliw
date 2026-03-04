@@ -3,7 +3,7 @@ import {
   TtsConfigSchema,
   TtsModeSchema,
   TtsProviderSchema,
-} from "openclaw/plugin-sdk/voice-call";
+} from "IronCliw/plugin-sdk/voice-call";
 import { z } from "zod";
 
 // -----------------------------------------------------------------------------
@@ -475,3 +475,4 @@ export function validateProviderConfig(config: VoiceCallConfig): {
 
   return { valid: errors.length === 0, errors };
 }
+

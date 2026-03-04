@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import {
   resolveChannelGroupRequireMention,
   resolveChannelGroupToolsPolicy,
@@ -40,7 +40,7 @@ function parseTelegramGroupId(value?: string | null) {
 }
 
 function resolveTelegramRequireMention(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   chatId?: string;
   topicId?: string;
 }): boolean | undefined {
@@ -322,3 +322,4 @@ export function resolveBlueBubblesGroupToolPolicy(
 ): GroupToolPolicyConfig | undefined {
   return resolveChannelToolPolicyForSender(params, "bluebubbles");
 }
+

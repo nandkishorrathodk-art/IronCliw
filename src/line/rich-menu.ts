@@ -391,3 +391,4 @@ export function createDefaultMenuConfig(): CreateRichMenuParams {
 
 // Re-export types
 export type { RichMenuRequest, RichMenuResponse, RichMenuArea, Action };
+

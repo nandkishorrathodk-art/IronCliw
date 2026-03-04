@@ -22,3 +22,4 @@ describe("resolveProviderAuthOverview", () => {
     expect(overview.profiles.labels[0]).toContain("token:ref(env:GITHUB_TOKEN)");
   });
 });
+

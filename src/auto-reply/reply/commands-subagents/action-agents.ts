@@ -53,3 +53,4 @@ export function handleSubagentsAgentsAction(ctx: SubagentsCommandContext): Comma
 
   return stopWithText(lines.join("\n"));
 }
+

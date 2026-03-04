@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 
 const hoisted = vi.hoisted(() => {
   const getThreadBindingManagerMock = vi.fn();
@@ -27,7 +27,7 @@ const { buildCommandTestParams } = await import("./commands.test-harness.js");
 
 const baseCfg = {
   session: { mainKey: "main", scope: "per-sender" },
-} satisfies OpenClawConfig;
+} satisfies IronCliwConfig;
 
 type FakeBinding = {
   accountId: string;
@@ -196,3 +196,4 @@ describe("/session idle and /session max-age", () => {
     expect(result?.reply?.text).toContain("Only owner-1 can update session lifecycle settings");
   });
 });
+

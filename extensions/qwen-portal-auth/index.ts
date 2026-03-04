@@ -1,8 +1,8 @@
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type IronCliwPluginApi,
   type ProviderAuthContext,
-} from "openclaw/plugin-sdk/qwen-portal-auth";
+} from "IronCliw/plugin-sdk/qwen-portal-auth";
 import { loginQwenPortalOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "qwen-portal";
@@ -40,7 +40,7 @@ const qwenPortalPlugin = {
   name: "Qwen OAuth",
   description: "OAuth flow for Qwen (free-tier) models",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: IronCliwPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,
@@ -132,3 +132,4 @@ const qwenPortalPlugin = {
 };
 
 export default qwenPortalPlugin;
+

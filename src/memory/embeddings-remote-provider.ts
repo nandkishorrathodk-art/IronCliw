@@ -61,3 +61,4 @@ export async function resolveRemoteEmbeddingClient(params: {
   const model = params.normalizeModel(params.options.model);
   return { baseUrl, headers, ssrfPolicy, model };
 }
+

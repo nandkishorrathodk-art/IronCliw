@@ -3,7 +3,7 @@ import { resolveSessionAgentIds } from "../../agents/agent-scope.js";
 import { resolveBootstrapContextForRun } from "../../agents/bootstrap-files.js";
 import { resolveDefaultModelForAgent } from "../../agents/model-selection.js";
 import type { EmbeddedContextFile } from "../../agents/pi-embedded-helpers.js";
-import { createOpenClawCodingTools } from "../../agents/pi-tools.js";
+import { createIronCliwCodingTools } from "../../agents/pi-tools.js";
 import { resolveSandboxRuntimeStatus } from "../../agents/sandbox.js";
 import { buildWorkspaceSkillSnapshot } from "../../agents/skills.js";
 import { getSkillsSnapshotVersion } from "../../agents/skills/refresh.js";
@@ -52,7 +52,7 @@ export async function resolveCommandsSystemPromptBundle(
   });
   const tools = (() => {
     try {
-      return createOpenClawCodingTools({
+      return createIronCliwCodingTools({
         config: params.cfg,
         agentId: params.agentId,
         workspaceDir,
@@ -134,3 +134,4 @@ export async function resolveCommandsSystemPromptBundle(
 
   return { systemPrompt, tools, skillsPrompt, bootstrapFiles, injectedFiles, sandboxRuntime };
 }
+

@@ -1,4 +1,4 @@
-const warningFilterKey = Symbol.for("openclaw.warning-filter");
+const warningFilterKey = Symbol.for("IronCliw.warning-filter");
 
 export type ProcessWarning = {
   code?: string;
@@ -83,3 +83,4 @@ export function installProcessWarningFilter(): void {
     installed: true,
   };
 }
+

@@ -83,3 +83,4 @@ describe("resolveChannelIdForBinding", () => {
     expect(resolved).toBe("forum-1");
   });
 });
+

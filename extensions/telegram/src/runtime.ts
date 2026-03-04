@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/telegram";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/telegram";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getTelegramRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

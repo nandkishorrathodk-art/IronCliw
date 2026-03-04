@@ -19,7 +19,7 @@ export type DiscordMessageEvent = import("./listeners.js").DiscordMessageEvent;
 export type DiscordMessagePreflightContext = {
   cfg: LoadedConfig;
   discordConfig: NonNullable<
-    import("../../config/config.js").OpenClawConfig["channels"]
+    import("../../config/config.js").IronCliwConfig["channels"]
   >["discord"];
   accountId: string;
   token: string;
@@ -114,3 +114,4 @@ export type DiscordMessagePreflightParams = {
   data: DiscordMessageEvent;
   client: Client;
 };
+

@@ -47,3 +47,4 @@ describe("COMMAND_ARG_FORMATTERS", () => {
     ).toBe("fifo debounce:10 cap:2 drop:Symbol(tail)");
   });
 });
+

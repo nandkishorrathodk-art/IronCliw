@@ -10,7 +10,7 @@ import {
 import { resolveHeartbeatPrompt } from "../../auto-reply/heartbeat.js";
 import type { ReasoningLevel, ThinkLevel } from "../../auto-reply/thinking.js";
 import { resolveChannelCapabilities } from "../../config/channel-capabilities.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { getMachineDisplayName } from "../../infra/machine-name.js";
 import { generateSecureToken } from "../../infra/secure-random.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
@@ -23,16 +23,16 @@ import { buildTtsSystemPromptHint } from "../../tts/tts.js";
 import { resolveUserPath } from "../../utils.js";
 import { normalizeMessageChannel } from "../../utils/message-channel.js";
 import { isReasoningTagProvider } from "../../utils/provider-utils.js";
-import { resolveOpenClawAgentDir } from "../agent-paths.js";
+import { resolveIronCliwAgentDir } from "../agent-paths.js";
 import { resolveSessionAgentIds } from "../agent-scope.js";
 import type { ExecElevatedDefaults } from "../bash-tools.js";
 import { makeBootstrapWarn, resolveBootstrapContextForRun } from "../bootstrap-files.js";
 import { listChannelSupportedActions, resolveChannelMessageToolHints } from "../channel-tools.js";
 import { formatUserTime, resolveUserTimeFormat, resolveUserTimezone } from "../date-time.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
-import { resolveOpenClawDocsPath } from "../docs-path.js";
+import { resolveIronCliwDocsPath } from "../docs-path.js";
 import { getApiKeyForModel, resolveModelAuthMode } from "../model-auth.js";
-import { ensureOpenClawModelsJson } from "../models-config.js";
+import { ensureIronCliwModelsJson } from "../models-config.js";
 import { resolveOwnerDisplaySetting } from "../owner-display.js";
 import {
   ensureSessionHeader,
@@ -40,7 +40,7 @@ import {
   validateGeminiTurns,
 } from "../pi-embedded-helpers.js";
 import { createPreparedEmbeddedPiSettingsManager } from "../pi-project-settings.js";
-import { createOpenClawCodingTools } from "../pi-tools.js";
+import { createIronCliwCodingTools } from "../pi-tools.js";
 import { resolveSandboxContext } from "../sandbox.js";
 import { repairSessionFileIfNeeded } from "../session-file-repair.js";
 import { guardSessionManager } from "../session-tool-result-guard-wrapper.js";
@@ -106,7 +106,7 @@ export type CompactEmbeddedPiSessionParams = {
   sessionFile: string;
   workspaceDir: string;
   agentDir?: string;
-  config?: OpenClawConfig;
+  config?: IronCliwConfig;
   skillsSnapshot?: SkillSnapshot;
   provider?: string;
   model?: string;
@@ -271,8 +271,8 @@ export async function compactEmbeddedPiSessionDirect(
       reason,
     };
   };
-  const agentDir = params.agentDir ?? resolveOpenClawAgentDir();
-  await ensureOpenClawModelsJson(params.config, agentDir);
+  const agentDir = params.agentDir ?? resolveIronCliwAgentDir();
+  await ensureIronCliwModelsJson(params.config, agentDir);
   const { model, error, authStorage, modelRegistry } = resolveModel(
     provider,
     modelId,
@@ -363,7 +363,7 @@ export async function compactEmbeddedPiSessionDirect(
       warn: makeBootstrapWarn({ sessionLabel, warn: (message) => log.warn(message) }),
     });
     const runAbortController = new AbortController();
-    const toolsRaw = createOpenClawCodingTools({
+    const toolsRaw = createIronCliwCodingTools({
       exec: {
         elevated: params.bashElevated,
       },
@@ -477,7 +477,7 @@ export async function compactEmbeddedPiSessionDirect(
       isSubagentSessionKey(params.sessionKey) || isCronSessionKey(params.sessionKey)
         ? "minimal"
         : "full";
-    const docsPath = await resolveOpenClawDocsPath({
+    const docsPath = await resolveIronCliwDocsPath({
       workspaceDir: effectiveWorkspace,
       argv1: process.argv[1],
       cwd: process.cwd(),
@@ -762,3 +762,4 @@ export async function compactEmbeddedPiSession(
     enqueueGlobal(async () => compactEmbeddedPiSessionDirect(params)),
   );
 }
+

@@ -107,3 +107,4 @@ export function normalizeReplyPayload(
 
   return { ...enrichedPayload, text };
 }
+

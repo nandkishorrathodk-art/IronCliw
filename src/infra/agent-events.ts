@@ -81,3 +81,4 @@ export function onAgentEvent(listener: (evt: AgentEventPayload) => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
+

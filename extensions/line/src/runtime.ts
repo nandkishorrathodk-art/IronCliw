@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/line";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/line";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getLineRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

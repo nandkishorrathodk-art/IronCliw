@@ -37,3 +37,4 @@ describe("cron tool flat-params", () => {
     expect(params.sessionKey).toBe("agent:main:telegram:group:-100123:topic:99");
   });
 });
+

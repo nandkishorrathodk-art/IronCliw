@@ -1,4 +1,4 @@
-import { resolveOpenClawAgentDir } from "../agents/agent-paths.js";
+import { resolveIronCliwAgentDir } from "../agents/agent-paths.js";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
 import type { AuthProfileStore } from "../agents/auth-profiles.js";
 import {
@@ -9,7 +9,7 @@ import {
 import {
   clearRuntimeConfigSnapshot,
   setRuntimeConfigSnapshot,
-  type OpenClawConfig,
+  type IronCliwConfig,
 } from "../config/config.js";
 import { resolveUserPath } from "../utils.js";
 import {
@@ -28,8 +28,8 @@ import {
 export type { SecretResolverWarning } from "./runtime-shared.js";
 
 export type PreparedSecretsRuntimeSnapshot = {
-  sourceConfig: OpenClawConfig;
-  config: OpenClawConfig;
+  sourceConfig: IronCliwConfig;
+  config: IronCliwConfig;
   authStores: Array<{ agentDir: string; store: AuthProfileStore }>;
   warnings: SecretResolverWarning[];
 };
@@ -48,9 +48,9 @@ function cloneSnapshot(snapshot: PreparedSecretsRuntimeSnapshot): PreparedSecret
   };
 }
 
-function collectCandidateAgentDirs(config: OpenClawConfig): string[] {
+function collectCandidateAgentDirs(config: IronCliwConfig): string[] {
   const dirs = new Set<string>();
-  dirs.add(resolveUserPath(resolveOpenClawAgentDir()));
+  dirs.add(resolveUserPath(resolveIronCliwAgentDir()));
   for (const agentId of listAgentIds(config)) {
     dirs.add(resolveUserPath(resolveAgentDir(config, agentId)));
   }
@@ -58,7 +58,7 @@ function collectCandidateAgentDirs(config: OpenClawConfig): string[] {
 }
 
 export async function prepareSecretsRuntimeSnapshot(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   env?: NodeJS.ProcessEnv;
   agentDirs?: string[];
   loadAuthStore?: (agentDir?: string) => AuthProfileStore;
@@ -159,3 +159,4 @@ export function clearSecretsRuntimeSnapshot(): void {
   clearRuntimeConfigSnapshot();
   clearRuntimeAuthProfileStoreSnapshots();
 }
+

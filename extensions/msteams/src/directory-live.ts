@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "openclaw/plugin-sdk/msteams";
+import type { ChannelDirectoryEntry } from "IronCliw/plugin-sdk/msteams";
 import { searchGraphUsers } from "./graph-users.js";
 import {
   type GraphChannel,
@@ -106,3 +106,4 @@ export async function listMSTeamsDirectoryGroupsLive(params: {
 
   return results;
 }
+

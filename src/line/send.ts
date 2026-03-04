@@ -1,6 +1,6 @@
 import { messagingApi } from "@line/bot-sdk";
 import { loadConfig } from "../config/config.js";
-import type { OpenClawConfig } from "../config/types.openclaw.js";
+import type { IronCliwConfig } from "../config/types.IronCliw.js";
 import { logVerbose } from "../globals.js";
 import { recordChannelActivity } from "../infra/channel-activity.js";
 import { resolveLineAccount } from "./accounts.js";
@@ -26,7 +26,7 @@ const userProfileCache = new Map<
 const PROFILE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 interface LineSendOpts {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   channelAccessToken?: string;
   accountId?: string;
   verbose?: boolean;
@@ -472,3 +472,4 @@ export async function getUserDisplayName(
   const profile = await getUserProfile(userId, opts);
   return profile?.displayName ?? userId;
 }
+

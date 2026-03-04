@@ -46,3 +46,4 @@ export function formatApiKeyPreview(
   }
   return `${trimmed.slice(0, head)}…${trimmed.slice(-tail)}`;
 }
+

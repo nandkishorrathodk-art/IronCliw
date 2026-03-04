@@ -381,3 +381,4 @@ function extractProjectNumber(clientId: string | null): string | null {
   const match = clientId.match(/^(\d+)-/);
   return match?.[1] ?? null;
 }
+

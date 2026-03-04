@@ -31,3 +31,4 @@ export function registerMessageReactionsCommands(message: Command, helpers: Mess
       await helpers.runMessageAction("reactions", opts);
     });
 }
+

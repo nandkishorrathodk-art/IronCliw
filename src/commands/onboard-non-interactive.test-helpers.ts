@@ -52,3 +52,4 @@ export async function runNonInteractiveOnboardingWithDefaults(
 export async function readJsonFile<T>(filePath: string): Promise<T> {
   return JSON.parse(await fs.readFile(filePath, "utf8")) as T;
 }
+

@@ -115,3 +115,4 @@ describe("fetchBrowserJson loopback auth", () => {
     expect(headers.get("authorization")).toBe("Bearer loopback-token");
   });
 });
+

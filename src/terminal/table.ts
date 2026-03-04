@@ -417,3 +417,4 @@ export function renderTable(opts: RenderTableOptions): string {
   lines.push(hLine(box.bl, box.b, box.br));
   return `${lines.join("\n")}\n`;
 }
+

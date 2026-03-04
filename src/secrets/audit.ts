@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { normalizeProviderId } from "../agents/model-selection.js";
-import { resolveStateDir, type OpenClawConfig } from "../config/config.js";
+import { resolveStateDir, type IronCliwConfig } from "../config/config.js";
 import { resolveSecretInputRef, type SecretRef } from "../config/types.secrets.js";
 import { resolveConfigDir, resolveUserPath } from "../utils.js";
 import { runTasksWithConcurrency } from "../utils/run-with-concurrency.js";
@@ -160,7 +160,7 @@ function collectEnvPlaintext(params: { envPath: string; collector: AuditCollecto
 }
 
 function collectConfigSecrets(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   configPath: string;
   collector: AuditCollector;
 }): void {
@@ -317,7 +317,7 @@ function collectAuthJsonResidue(params: { stateDir: string; collector: AuditColl
 
 async function collectUnresolvedRefFindings(params: {
   collector: AuditCollector;
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   env: NodeJS.ProcessEnv;
 }): Promise<void> {
   const cache: SecretRefResolveCache = {};
@@ -443,7 +443,7 @@ function collectShadowingFindings(collector: AuditCollector): void {
       addFinding(collector, {
         code: "REF_SHADOWED",
         severity: "warn",
-        file: "openclaw.json",
+        file: "IronCliw.json",
         jsonPath: configPath,
         message: `Auth profile credentials (${modeText}) take precedence for provider "${provider}", so this config ref may never be used.`,
         provider,
@@ -482,7 +482,7 @@ export async function runSecretsAudit(
 
   const stateDir = resolveStateDir(env, os.homedir);
   const envPath = path.join(resolveConfigDir(env, os.homedir), ".env");
-  const config = snapshot.valid ? snapshot.config : ({} as OpenClawConfig);
+  const config = snapshot.valid ? snapshot.config : ({} as IronCliwConfig);
 
   if (snapshot.valid) {
     collectConfigSecrets({
@@ -548,3 +548,4 @@ export function resolveSecretsAuditExitCode(report: SecretsAuditReport, check: b
   }
   return 0;
 }
+

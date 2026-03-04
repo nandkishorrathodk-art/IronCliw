@@ -194,3 +194,4 @@ describe("probeTwitch", () => {
     mockConnect.mockImplementation(defaultConnectImpl);
   });
 });
+

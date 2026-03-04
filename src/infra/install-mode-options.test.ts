@@ -49,3 +49,4 @@ describe("install mode option helpers", () => {
     expect(result.timeoutMs).toBe(5000);
   });
 });
+

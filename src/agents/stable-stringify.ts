@@ -10,3 +10,4 @@ export function stableStringify(value: unknown): string {
   const entries = keys.map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`);
   return `{${entries.join(",")}}`;
 }
+

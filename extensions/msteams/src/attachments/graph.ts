@@ -1,4 +1,4 @@
-import { fetchWithSsrFGuard, type SsrFPolicy } from "openclaw/plugin-sdk/msteams";
+import { fetchWithSsrFGuard, type SsrFPolicy } from "IronCliw/plugin-sdk/msteams";
 import { getMSTeamsRuntime } from "../runtime.js";
 import { downloadMSTeamsAttachments } from "./download.js";
 import { downloadAndStoreMSTeamsRemoteMedia } from "./remote-media.js";
@@ -391,3 +391,4 @@ export async function downloadMSTeamsGraphMedia(params: {
     messageUrl,
   };
 }
+

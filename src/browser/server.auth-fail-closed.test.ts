@@ -80,3 +80,4 @@ describe("browser control auth bootstrap failures", () => {
     expect(mocks.ensureExtensionRelayForProfiles).not.toHaveBeenCalled();
   });
 });
+

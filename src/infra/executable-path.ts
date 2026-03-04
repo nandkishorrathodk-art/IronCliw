@@ -73,3 +73,4 @@ export function resolveExecutablePath(
     options?.env?.PATH ?? options?.env?.Path ?? process.env.PATH ?? process.env.Path ?? "";
   return resolveExecutableFromPathEnv(expanded, envPath, options?.env);
 }
+

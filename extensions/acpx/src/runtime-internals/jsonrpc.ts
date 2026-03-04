@@ -45,3 +45,4 @@ export function isAcpJsonRpcMessage(value: unknown): value is Record<string, unk
 
   return false;
 }
+

@@ -14,3 +14,4 @@ export function shouldFallbackToAuthHeuristics(err: unknown): boolean {
   const code = (err as { code?: unknown }).code;
   return code === MODEL_AVAILABILITY_UNAVAILABLE_CODE;
 }
+

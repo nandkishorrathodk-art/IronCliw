@@ -3,10 +3,10 @@ import {
   createTypingCallbacks,
   logTypingFailure,
   resolveChannelMediaMaxBytes,
-  type OpenClawConfig,
+  type IronCliwConfig,
   type MSTeamsReplyStyle,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import {
@@ -26,7 +26,7 @@ import { getMSTeamsRuntime } from "./runtime.js";
 import type { MSTeamsTurnContext } from "./sdk-types.js";
 
 export function createMSTeamsReplyDispatcher(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   agentId: string;
   accountId?: string;
   runtime: RuntimeEnv;
@@ -158,3 +158,4 @@ export function createMSTeamsReplyDispatcher(params: {
     markDispatchIdle,
   };
 }
+

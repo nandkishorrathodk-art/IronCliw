@@ -18,3 +18,4 @@ describe("maskApiKey", () => {
     expect(maskApiKey("1234567890abcdefghijklmnop")).toBe("12345678...ijklmnop");
   });
 });
+

@@ -107,3 +107,4 @@ export function buildUsageAggregateTail<
     daily: Array.from(params.dailyMap.values()).toSorted((a, b) => a.date.localeCompare(b.date)),
   };
 }
+

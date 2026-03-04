@@ -797,3 +797,4 @@ export const FIELD_LABELS: Record<string, string> = {
   "plugins.installs.*.resolvedAt": "Plugin Resolution Time",
   "plugins.installs.*.installedAt": "Plugin Install Time",
 };
+

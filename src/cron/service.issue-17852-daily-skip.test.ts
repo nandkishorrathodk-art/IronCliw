@@ -72,3 +72,4 @@ describe("issue #17852 - daily cron jobs should not skip days", () => {
     expect(job.state.nextRunAtMs).toBe(tomorrowThreeAM);
   });
 });
+

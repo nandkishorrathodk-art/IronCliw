@@ -11,7 +11,7 @@ const BLOCKED_ENV_VAR_PATTERNS: ReadonlyArray<RegExp> = [
   /^SLACK_(BOT|APP)_TOKEN$/i,
   /^LINE_CHANNEL_SECRET$/i,
   /^LINE_CHANNEL_ACCESS_TOKEN$/i,
-  /^OPENCLAW_GATEWAY_(TOKEN|PASSWORD)$/i,
+  /^IronCliw_GATEWAY_(TOKEN|PASSWORD)$/i,
   /^AWS_(SECRET_ACCESS_KEY|SECRET_KEY|SESSION_TOKEN)$/i,
   /^(GH|GITHUB)_TOKEN$/i,
   /^(AZURE|AZURE_OPENAI|COHERE|AI_GATEWAY|OPENROUTER)_API_KEY$/i,
@@ -108,3 +108,4 @@ export function getBlockedPatterns(): string[] {
 export function getAllowedPatterns(): string[] {
   return ALLOWED_ENV_VAR_PATTERNS.map((pattern) => pattern.source);
 }
+

@@ -45,3 +45,4 @@ vi.mock("../../pairing/pairing-store.js", () => ({
   readChannelAllowFromStore: (...args: unknown[]) => readAllowFromStoreMock(...args),
   upsertChannelPairingRequest: (...args: unknown[]) => upsertPairingRequestMock(...args),
 }));
+

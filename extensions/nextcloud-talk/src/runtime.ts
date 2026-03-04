@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/nextcloud-talk";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/nextcloud-talk";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getNextcloudTalkRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

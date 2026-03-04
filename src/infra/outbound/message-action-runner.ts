@@ -12,7 +12,7 @@ import type {
   ChannelMessageActionName,
   ChannelThreadingToolContext,
 } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { getAgentScopedMediaLocalRoots } from "../../media/local-roots.js";
 import { buildChannelAccountBindings } from "../../routing/bindings.js";
 import { normalizeAgentId } from "../../routing/session-key.js";
@@ -86,7 +86,7 @@ function resolveAndApplyOutboundThreadId(
 }
 
 export type RunMessageActionParams = {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   action: ChannelMessageActionName;
   params: Record<string, unknown>;
   defaultAccountId?: string;
@@ -180,7 +180,7 @@ function applyCrossContextMessageDecoration({
 }
 
 async function maybeApplyCrossContextMarker(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channel: ChannelId;
   action: ChannelMessageActionName;
   target: string;
@@ -212,7 +212,7 @@ async function maybeApplyCrossContextMarker(params: {
 }
 
 async function resolveChannel(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   params: Record<string, unknown>,
   toolContext?: { currentChannelProvider?: string },
 ) {
@@ -228,7 +228,7 @@ async function resolveChannel(
 }
 
 async function resolveActionTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channel: ChannelId;
   action: ChannelMessageActionName;
   args: Record<string, unknown>;
@@ -273,7 +273,7 @@ async function resolveActionTarget(params: {
 }
 
 type ResolvedActionContext = {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   params: Record<string, unknown>;
   channel: ChannelId;
   accountId?: string | null;
@@ -807,3 +807,4 @@ export async function runMessageAction(
     abortSignal: input.abortSignal,
   });
 }
+

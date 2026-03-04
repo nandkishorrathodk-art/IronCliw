@@ -22,12 +22,12 @@ export function createPiToolsSandboxContext(params: PiToolsSandboxContextParams)
     workspaceDir,
     agentWorkspaceDir: params.agentWorkspaceDir ?? workspaceDir,
     workspaceAccess: params.workspaceAccess ?? "rw",
-    containerName: params.containerName ?? "openclaw-sbx-test",
+    containerName: params.containerName ?? "IronCliw-sbx-test",
     containerWorkdir: params.containerWorkdir ?? "/workspace",
     fsBridge: params.fsBridge,
     docker: {
-      image: "openclaw-sandbox:bookworm-slim",
-      containerPrefix: "openclaw-sbx-",
+      image: "IronCliw-sandbox:bookworm-slim",
+      containerPrefix: "IronCliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: true,
       tmpfs: [],
@@ -41,3 +41,4 @@ export function createPiToolsSandboxContext(params: PiToolsSandboxContextParams)
     browserAllowHostControl: params.browserAllowHostControl ?? false,
   };
 }
+

@@ -77,3 +77,4 @@ export function resolveBrewExecutable(opts?: {
 
   return undefined;
 }
+

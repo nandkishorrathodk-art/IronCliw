@@ -41,3 +41,4 @@ export function deriveDefaultBrowserCdpPortRange(browserControlPort: number): Po
   }
   return { start, end };
 }
+

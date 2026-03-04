@@ -94,3 +94,4 @@ describe("resolveDiscordAllowlistConfig", () => {
     expect(logs).toContain("discord users resolved: 387→Peter (id:387)");
   });
 });
+

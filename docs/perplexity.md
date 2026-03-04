@@ -8,7 +8,7 @@ title: "Perplexity Search"
 
 # Perplexity Search API
 
-OpenClaw uses Perplexity Search API for the `web_search` tool when `provider: "perplexity"` is set.
+IronCliw uses Perplexity Search API for the `web_search` tool when `provider: "perplexity"` is set.
 Perplexity Search returns structured results (title, URL, snippet) for fast research.
 
 ## Getting a Perplexity API key
@@ -53,12 +53,12 @@ Perplexity Search returns structured results (title, URL, snippet) for fast rese
 
 ## Where to set the key (recommended)
 
-**Recommended:** run `openclaw configure --section web`. It stores the key in
-`~/.openclaw/openclaw.json` under `tools.web.search.perplexity.apiKey`.
+**Recommended:** run `IronCliw configure --section web`. It stores the key in
+`~/.IronCliw/IronCliw.json` under `tools.web.search.perplexity.apiKey`.
 
 **Environment alternative:** set `PERPLEXITY_API_KEY` in the Gateway process
-environment. For a gateway install, put it in `~/.openclaw/.env` (or your
-service environment). See [Env vars](/help/faq#how-does-openclaw-load-environment-variables).
+environment. For a gateway install, put it in `~/.IronCliw/.env` (or your
+service environment). See [Env vars](/help/faq#how-does-IronCliw-load-environment-variables).
 
 ## Tool parameters
 
@@ -131,3 +131,4 @@ await web_search({
 
 See [Web tools](/tools/web) for the full web_search configuration.
 See [Perplexity Search API docs](https://docs.perplexity.ai/docs/search/quickstart) for more details.
+

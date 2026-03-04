@@ -70,3 +70,4 @@ describe("hasConfiguredMSTeamsCredentials", () => {
     expect(configured).toBe(true);
   });
 });
+

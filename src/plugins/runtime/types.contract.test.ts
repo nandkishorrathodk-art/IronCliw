@@ -9,3 +9,4 @@ describe("plugin runtime type contract", () => {
     expectTypeOf<PluginRuntime>().toMatchTypeOf(runtime);
   });
 });
+

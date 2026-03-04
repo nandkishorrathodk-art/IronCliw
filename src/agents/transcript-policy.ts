@@ -133,3 +133,4 @@ export function resolveTranscriptPolicy(params: {
     allowSyntheticToolResults: !isOpenAi && (isGoogle || isAnthropic),
   };
 }
+

@@ -1,6 +1,6 @@
 import { listAgentIds, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolveStorePath } from "../config/sessions.js";
-import type { OpenClawConfig } from "../config/types.openclaw.js";
+import type { IronCliwConfig } from "../config/types.IronCliw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import type { RuntimeEnv } from "../runtime.js";
 
@@ -26,7 +26,7 @@ function dedupeTargetsByStorePath(targets: SessionStoreTarget[]): SessionStoreTa
 }
 
 export function resolveSessionStoreTargets(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   opts: SessionStoreSelectionOptions,
 ): SessionStoreTarget[] {
   const defaultAgentId = resolveDefaultAgentId(cfg);
@@ -61,7 +61,7 @@ export function resolveSessionStoreTargets(
     const requested = normalizeAgentId(opts.agent ?? "");
     if (!knownAgents.includes(requested)) {
       throw new Error(
-        `Unknown agent id "${opts.agent}". Use "openclaw agents list" to see configured agents.`,
+        `Unknown agent id "${opts.agent}". Use "IronCliw agents list" to see configured agents.`,
       );
     }
     return [
@@ -81,7 +81,7 @@ export function resolveSessionStoreTargets(
 }
 
 export function resolveSessionStoreTargetsOrExit(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   opts: SessionStoreSelectionOptions;
   runtime: RuntimeEnv;
 }): SessionStoreTarget[] | null {
@@ -93,3 +93,4 @@ export function resolveSessionStoreTargetsOrExit(params: {
     return null;
   }
 }
+

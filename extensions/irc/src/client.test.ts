@@ -41,3 +41,4 @@ describe("irc client nickserv", () => {
     ).toEqual(["PRIVMSG NickServ :IDENTIFY secret JOIN #bad"]);
   });
 });
+

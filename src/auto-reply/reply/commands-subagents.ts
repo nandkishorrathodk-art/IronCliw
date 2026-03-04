@@ -89,3 +89,4 @@ export const handleSubagentsCommand: CommandHandler = async (params, allowTextCo
       return handleSubagentsHelpAction();
   }
 };
+

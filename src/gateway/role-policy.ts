@@ -21,3 +21,4 @@ export function isRoleAuthorizedForMethod(role: GatewayRole, method: string): bo
   }
   return role === "operator";
 }
+

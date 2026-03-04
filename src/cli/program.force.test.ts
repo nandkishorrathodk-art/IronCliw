@@ -296,3 +296,4 @@ describe("gateway --force helpers (Windows netstat path)", () => {
     expect(killed).toEqual<PortProcess[]>([{ pid: 42 }, { pid: 99 }]);
   });
 });
+

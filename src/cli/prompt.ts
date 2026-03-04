@@ -19,3 +19,4 @@ export async function promptYesNo(question: string, defaultYes = false): Promise
   }
   return answer.startsWith("y");
 }
+

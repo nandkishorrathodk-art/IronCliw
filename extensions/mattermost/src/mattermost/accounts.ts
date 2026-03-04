@@ -2,8 +2,8 @@ import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   normalizeOptionalAccountId,
-} from "openclaw/plugin-sdk/account-id";
-import type { OpenClawConfig } from "openclaw/plugin-sdk/mattermost";
+} from "IronCliw/plugin-sdk/account-id";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/mattermost";
 import { normalizeResolvedSecretInputString, normalizeSecretInputString } from "../secret-input.js";
 import type { MattermostAccountConfig, MattermostChatMode } from "../types.js";
 import { normalizeMattermostBaseUrl } from "./client.js";
@@ -28,7 +28,7 @@ export type ResolvedMattermostAccount = {
   blockStreamingCoalesce?: MattermostAccountConfig["blockStreamingCoalesce"];
 };
 
-function listConfiguredAccountIds(cfg: OpenClawConfig): string[] {
+function listConfiguredAccountIds(cfg: IronCliwConfig): string[] {
   const accounts = cfg.channels?.mattermost?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return [];
@@ -36,7 +36,7 @@ function listConfiguredAccountIds(cfg: OpenClawConfig): string[] {
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listMattermostAccountIds(cfg: OpenClawConfig): string[] {
+export function listMattermostAccountIds(cfg: IronCliwConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) {
     return [DEFAULT_ACCOUNT_ID];
@@ -44,7 +44,7 @@ export function listMattermostAccountIds(cfg: OpenClawConfig): string[] {
   return ids.toSorted((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultMattermostAccountId(cfg: OpenClawConfig): string {
+export function resolveDefaultMattermostAccountId(cfg: IronCliwConfig): string {
   const preferred = normalizeOptionalAccountId(cfg.channels?.mattermost?.defaultAccount);
   if (
     preferred &&
@@ -60,7 +60,7 @@ export function resolveDefaultMattermostAccountId(cfg: OpenClawConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId: string,
 ): MattermostAccountConfig | undefined {
   const accounts = cfg.channels?.mattermost?.accounts;
@@ -71,7 +71,7 @@ function resolveAccountConfig(
 }
 
 function mergeMattermostAccountConfig(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId: string,
 ): MattermostAccountConfig {
   const {
@@ -114,7 +114,7 @@ function resolveMattermostRequireMention(config: MattermostAccountConfig): boole
 }
 
 export function resolveMattermostAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   accountId?: string | null;
   allowUnresolvedSecretRef?: boolean;
 }): ResolvedMattermostAccount {
@@ -159,8 +159,9 @@ export function resolveMattermostAccount(params: {
   };
 }
 
-export function listEnabledMattermostAccounts(cfg: OpenClawConfig): ResolvedMattermostAccount[] {
+export function listEnabledMattermostAccounts(cfg: IronCliwConfig): ResolvedMattermostAccount[] {
   return listMattermostAccountIds(cfg)
     .map((accountId) => resolveMattermostAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
+

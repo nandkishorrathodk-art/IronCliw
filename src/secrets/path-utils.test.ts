@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import {
   deletePathStrict,
   getPath,
@@ -7,8 +7,8 @@ import {
   setPathExistingStrict,
 } from "./path-utils.js";
 
-function asConfig(value: unknown): OpenClawConfig {
-  return value as OpenClawConfig;
+function asConfig(value: unknown): IronCliwConfig {
+  return value as IronCliwConfig;
 }
 
 describe("secrets path utils", () => {
@@ -88,3 +88,4 @@ describe("secrets path utils", () => {
     ).toThrow(/Path segment does not exist/);
   });
 });
+

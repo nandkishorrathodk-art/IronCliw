@@ -94,3 +94,4 @@ describe("security-path protected-prefix matching", () => {
     expect(isProtectedPluginRoutePath("/api/channel")).toBe(false);
   });
 });
+

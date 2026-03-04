@@ -1,7 +1,7 @@
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export type { ResolvedIMessageAccount } from "../imessage/accounts.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 
@@ -47,3 +47,4 @@ export { imessageOnboardingAdapter } from "../channels/plugins/onboarding/imessa
 export { IMessageConfigSchema } from "../config/zod-schema.providers-core.js";
 
 export { resolveChannelMediaMaxBytes } from "../channels/plugins/media-limits.js";
+

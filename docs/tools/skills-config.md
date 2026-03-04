@@ -8,7 +8,7 @@ title: "Skills Config"
 
 # Skills Config
 
-All skills-related configuration lives under `skills` in `~/.openclaw/openclaw.json`.
+All skills-related configuration lives under `skills` in `~/.IronCliw/IronCliw.json`.
 
 ```json5
 {
@@ -61,7 +61,7 @@ Per-skill fields:
 ## Notes
 
 - Keys under `entries` map to the skill name by default. If a skill defines
-  `metadata.openclaw.skillKey`, use that key instead.
+  `metadata.IronCliw.skillKey`, use that key instead.
 - Changes to skills are picked up on the next agent turn when the watcher is enabled.
 
 ### Sandboxed skills + env vars
@@ -75,3 +75,4 @@ Use one of:
 - bake the env into your custom sandbox image
 
 Global `env` and `skills.entries.<skill>.env/apiKey` apply to **host** runs only.
+

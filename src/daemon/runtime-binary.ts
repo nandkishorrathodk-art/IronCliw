@@ -22,3 +22,4 @@ export function isBunRuntime(execPath: string): boolean {
   const base = normalizeRuntimeBasename(execPath);
   return base === "bun" || base === "bun.exe";
 }
+

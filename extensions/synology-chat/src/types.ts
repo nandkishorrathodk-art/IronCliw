@@ -2,7 +2,7 @@
  * Type definitions for the Synology Chat channel plugin.
  */
 
-/** Raw channel config from openclaw.json channels.synology-chat */
+/** Raw channel config from IronCliw.json channels.synology-chat */
 export interface SynologyChatChannelConfig {
   enabled?: boolean;
   token?: string;
@@ -58,3 +58,4 @@ export interface SynologyWebhookPayload {
   text: string;
   trigger_word?: string;
 }
+

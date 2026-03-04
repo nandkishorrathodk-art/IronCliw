@@ -43,3 +43,4 @@ export function parseSlackBlocksInput(raw: unknown): (Block | KnownBlock)[] | un
   const parsed = typeof raw === "string" ? parseBlocksJson(raw) : raw;
   return validateSlackBlocksArray(parsed);
 }
+

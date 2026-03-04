@@ -8,3 +8,4 @@ export const stylePromptTitle = (title?: string): string | undefined =>
 
 export const stylePromptHint = (hint?: string): string | undefined =>
   hint && isRich() ? theme.muted(hint) : hint;
+

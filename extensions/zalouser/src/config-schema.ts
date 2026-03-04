@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "openclaw/plugin-sdk/zalouser";
+import { MarkdownConfigSchema, ToolPolicySchema } from "IronCliw/plugin-sdk/zalouser";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);
@@ -27,3 +27,4 @@ export const ZalouserConfigSchema = zalouserAccountSchema.extend({
   accounts: z.object({}).catchall(zalouserAccountSchema).optional(),
   defaultAccount: z.string().optional(),
 });
+

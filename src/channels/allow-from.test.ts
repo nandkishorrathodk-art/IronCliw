@@ -122,3 +122,4 @@ describe("isSenderIdAllowed", () => {
     ).toBe(true);
   });
 });
+

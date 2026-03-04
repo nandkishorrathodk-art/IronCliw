@@ -22,3 +22,4 @@ export function canvasSnapshotTempPath(opts: { ext: string; tmpDir?: string; id?
   const cliName = resolveCliName();
   return path.join(tmpDir, `${cliName}-canvas-snapshot-${id}${ext}`);
 }
+

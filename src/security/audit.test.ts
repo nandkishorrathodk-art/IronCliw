@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { withEnvAsync } from "../test-utils/env.js";
 import {
   collectInstalledSkillsCodeSafetyFindings,
@@ -29,8 +29,8 @@ const execDockerRawUnavailable: NonNullable<SecurityAuditOptions["execDockerRawF
 function stubChannelPlugin(params: {
   id: "discord" | "slack" | "telegram";
   label: string;
-  resolveAccount: (cfg: OpenClawConfig, accountId: string | null | undefined) => unknown;
-  listAccountIds?: (cfg: OpenClawConfig) => string[];
+  resolveAccount: (cfg: IronCliwConfig, accountId: string | null | undefined) => unknown;
+  listAccountIds?: (cfg: IronCliwConfig) => string[];
 }): ChannelPlugin {
   return {
     id: params.id,
@@ -121,7 +121,7 @@ function successfulProbeResult(url: string) {
 }
 
 async function audit(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   extra?: Omit<SecurityAuditOptions, "config">,
 ): Promise<SecurityAuditReport> {
   return runSecurityAudit({
@@ -166,7 +166,7 @@ describe("security audit", () => {
     const tmp = await makeTmpDir(label);
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true, mode: 0o700 });
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     if (!isWindows) {
       await fs.chmod(configPath, 0o600);
@@ -178,7 +178,7 @@ describe("security audit", () => {
     const credentialsDir = path.join(sharedChannelSecurityStateDir, "credentials");
     await fs.rm(credentialsDir, { recursive: true, force: true }).catch(() => undefined);
     await fs.mkdir(credentialsDir, { recursive: true, mode: 0o700 });
-    await withEnvAsync({ OPENCLAW_STATE_DIR: sharedChannelSecurityStateDir }, () =>
+    await withEnvAsync({ IronCliw_STATE_DIR: sharedChannelSecurityStateDir }, () =>
       fn(sharedChannelSecurityStateDir),
     );
   };
@@ -194,7 +194,7 @@ describe("security audit", () => {
       path.join(pluginDir, "package.json"),
       JSON.stringify({
         name: "evil-plugin",
-        openclaw: { extensions: [".hidden/index.js"] },
+        IronCliw: { extensions: [".hidden/index.js"] },
       }),
     );
     await fs.writeFile(
@@ -224,7 +224,7 @@ description: test skill
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-security-audit-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-security-audit-"));
     channelSecurityRoot = path.join(fixtureRoot, "channel-security");
     await fs.mkdir(channelSecurityRoot, { recursive: true, mode: 0o700 });
     sharedChannelSecurityStateDir = path.join(channelSecurityRoot, "state-shared");
@@ -252,7 +252,7 @@ description: test skill
   });
 
   it("includes an attack surface summary (info)", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { whatsapp: { groupPolicy: "open" }, telegram: { groupPolicy: "allowlist" } },
       tools: { elevated: { enabled: true, allowFrom: { whatsapp: ["+1"] } } },
       hooks: { enabled: true },
@@ -272,13 +272,13 @@ description: test skill
 
   it("flags non-loopback bind without auth as critical", async () => {
     // Clear env tokens so resolveGatewayAuth defaults to mode=none
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    const prevPassword = process.env.OPENCLAW_GATEWAY_PASSWORD;
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
+    const prevPassword = process.env.IronCliw_GATEWAY_PASSWORD;
+    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IronCliw_GATEWAY_PASSWORD;
 
     try {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         gateway: {
           bind: "lan",
           auth: {},
@@ -291,27 +291,27 @@ description: test skill
     } finally {
       // Restore env
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.IronCliw_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
       }
       if (prevPassword === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+        delete process.env.IronCliw_GATEWAY_PASSWORD;
       } else {
-        process.env.OPENCLAW_GATEWAY_PASSWORD = prevPassword;
+        process.env.IronCliw_GATEWAY_PASSWORD = prevPassword;
       }
     }
   });
 
   it("does not flag non-loopback bind without auth when gateway password uses SecretRef", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         bind: "lan",
         auth: {
           password: {
             source: "env",
             provider: "default",
-            id: "OPENCLAW_GATEWAY_PASSWORD",
+            id: "IronCliw_GATEWAY_PASSWORD",
           },
         },
       },
@@ -324,7 +324,7 @@ description: test skill
   it("evaluates gateway auth rate-limit warning based on configuration", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectWarn: boolean;
     }> = [
       {
@@ -364,7 +364,7 @@ description: test skill
   it("scores dangerous gateway.tools.allow over HTTP by exposure", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
     }> = [
       {
@@ -404,7 +404,7 @@ description: test skill
   it("warns when sandbox exec host is selected while sandbox mode is off", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       checkId:
         | "tools.exec.host_sandbox_no_sandbox_defaults"
         | "tools.exec.host_sandbox_no_sandbox_agents";
@@ -467,7 +467,7 @@ description: test skill
   it("warns for interpreter safeBins only when explicit profiles are missing", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expected: boolean;
     }> = [
       {
@@ -542,8 +542,8 @@ description: test skill
     const riskyGlobalTrustedDirs =
       process.platform === "win32"
         ? [String.raw`C:\Users\ci-user\bin`, String.raw`C:\Users\ci-user\.local\bin`]
-        : ["/usr/local/bin", "/tmp/openclaw-safe-bins"];
-    const cfg: OpenClawConfig = {
+        : ["/usr/local/bin", "/tmp/IronCliw-safe-bins"];
+    const cfg: IronCliwConfig = {
       tools: {
         exec: {
           safeBinTrustedDirs: riskyGlobalTrustedDirs,
@@ -574,7 +574,7 @@ description: test skill
   });
 
   it("does not warn for non-risky absolute safeBinTrustedDirs entries", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       tools: {
         exec: {
           safeBinTrustedDirs: ["/usr/libexec"],
@@ -589,7 +589,7 @@ description: test skill
   it("evaluates loopback control UI and logging exposure findings", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       checkId:
         | "gateway.trusted_proxies_missing"
         | "gateway.loopback_no_auth"
@@ -642,7 +642,7 @@ description: test skill
     const tmp = await makeTmpDir("win");
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
 
     const user = "DESKTOP-TEST\\Tester";
@@ -680,7 +680,7 @@ description: test skill
     const tmp = await makeTmpDir("win-open");
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
 
     const user = "DESKTOP-TEST\\Tester";
@@ -723,19 +723,19 @@ description: test skill
     const execDockerRawFn = (async (args: string[]) => {
       if (args[0] === "ps") {
         return {
-          stdout: Buffer.from("openclaw-sbx-browser-old\nopenclaw-sbx-browser-missing-hash\n"),
+          stdout: Buffer.from("IronCliw-sbx-browser-old\nIronCliw-sbx-browser-missing-hash\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "openclaw-sbx-browser-old") {
+      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-old") {
         return {
           stdout: Buffer.from("abc123\tepoch-v0\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "openclaw-sbx-browser-missing-hash") {
+      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-missing-hash") {
         return {
           stdout: Buffer.from("<no value>\t<no value>\n"),
           stderr: Buffer.alloc(0),
@@ -763,7 +763,7 @@ description: test skill
     const staleEpoch = res.findings.find(
       (f) => f.checkId === "sandbox.browser_container.hash_epoch_stale",
     );
-    expect(staleEpoch?.detail).toContain("openclaw-sbx-browser-old");
+    expect(staleEpoch?.detail).toContain("IronCliw-sbx-browser-old");
   });
 
   it("skips sandbox browser hash label checks when docker inspect is unavailable", async () => {
@@ -794,19 +794,19 @@ description: test skill
     const execDockerRawFn = (async (args: string[]) => {
       if (args[0] === "ps") {
         return {
-          stdout: Buffer.from("openclaw-sbx-browser-exposed\n"),
+          stdout: Buffer.from("IronCliw-sbx-browser-exposed\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "openclaw-sbx-browser-exposed") {
+      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-exposed") {
         return {
           stdout: Buffer.from("hash123\t2026-02-21-novnc-auth-default\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "port" && args.at(-1) === "openclaw-sbx-browser-exposed") {
+      if (args[0] === "port" && args.at(-1) === "IronCliw-sbx-browser-exposed") {
         return {
           stdout: Buffer.from("6080/tcp -> 0.0.0.0:49101\n9222/tcp -> 127.0.0.1:49100\n"),
           stderr: Buffer.alloc(0),
@@ -843,11 +843,11 @@ description: test skill
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true, mode: 0o700 });
 
-    const targetConfigPath = path.join(tmp, "managed-openclaw.json");
+    const targetConfigPath = path.join(tmp, "managed-IronCliw.json");
     await fs.writeFile(targetConfigPath, "{}\n", "utf-8");
     await fs.chmod(targetConfigPath, 0o444);
 
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.symlink(targetConfigPath, configPath);
 
     const res = await runSecurityAudit({
@@ -884,7 +884,7 @@ description: test skill
     await fs.writeFile(outsideSkillPath, "# outside\n", "utf-8");
     await fs.symlink(outsideSkillPath, path.join(workspaceDir, "skills", "leak", "SKILL.md"));
 
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     await fs.chmod(configPath, 0o600);
 
@@ -914,7 +914,7 @@ description: test skill
       "utf-8",
     );
 
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     if (!isWindows) {
       await fs.chmod(configPath, 0o600);
@@ -935,7 +935,7 @@ description: test skill
   it("scores small-model risk by tool/sandbox exposure", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "info" | "critical";
       detailIncludes: string[];
     }> = [
@@ -977,7 +977,7 @@ description: test skill
   it("checks sandbox docker mode-off findings with/without agent override", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedPresent: boolean;
     }> = [
       {
@@ -1021,7 +1021,7 @@ description: test skill
   });
 
   it("flags dangerous sandbox docker config (binds/network/seccomp/apparmor)", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -1059,7 +1059,7 @@ description: test skill
   });
 
   it("flags container namespace join network mode in sandbox config", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -1086,7 +1086,7 @@ description: test skill
   it("checks sandbox browser bridge-network restrictions", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedPresent: boolean;
       expectedSeverity?: "warn";
       detailIncludes?: string;
@@ -1140,7 +1140,7 @@ description: test skill
   });
 
   it("flags ineffective gateway.nodes.denyCommands entries", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         nodes: {
           denyCommands: ["system.*", "system.runx"],
@@ -1161,7 +1161,7 @@ description: test skill
   });
 
   it("suggests prefix-matching commands for unknown denyCommands entries", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         nodes: {
           denyCommands: ["system.run.prep"],
@@ -1180,7 +1180,7 @@ description: test skill
   });
 
   it("keeps unknown denyCommands entries without suggestions when no close command exists", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         nodes: {
           denyCommands: ["zzzzzzzzzzzzzz"],
@@ -1200,7 +1200,7 @@ description: test skill
   it("scores dangerous gateway.nodes.allowCommands by exposure", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
     }> = [
       {
@@ -1239,7 +1239,7 @@ description: test skill
   });
 
   it("does not flag dangerous allowCommands entries when denied again", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         nodes: {
           allowCommands: ["camera.snap", "screen.record"],
@@ -1253,7 +1253,7 @@ description: test skill
   });
 
   it("flags agent profile overrides when global tools.profile is minimal", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       tools: {
         profile: "minimal",
       },
@@ -1273,7 +1273,7 @@ description: test skill
   });
 
   it("flags tools.elevated allowFrom wildcard as critical", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       tools: {
         elevated: {
           allowFrom: { whatsapp: ["*"] },
@@ -1287,7 +1287,7 @@ description: test skill
   });
 
   it("flags browser control without auth when browser is enabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         controlUi: { enabled: false },
         auth: {},
@@ -1303,7 +1303,7 @@ description: test skill
   });
 
   it("does not flag browser control auth when gateway token is configured", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         controlUi: { enabled: false },
         auth: { token: "very-long-browser-token-0123456789" },
@@ -1319,14 +1319,14 @@ description: test skill
   });
 
   it("does not flag browser control auth when gateway password uses SecretRef", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         controlUi: { enabled: false },
         auth: {
           password: {
             source: "env",
             provider: "default",
-            id: "OPENCLAW_GATEWAY_PASSWORD",
+            id: "IronCliw_GATEWAY_PASSWORD",
           },
         },
       },
@@ -1340,7 +1340,7 @@ description: test skill
   });
 
   it("warns when remote CDP uses HTTP", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       browser: {
         profiles: {
           remote: { cdpUrl: "http://example.com:9222", color: "#0066CC" },
@@ -1354,7 +1354,7 @@ description: test skill
   });
 
   it("warns when control UI allows insecure auth", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         controlUi: { allowInsecureAuth: true },
       },
@@ -1378,7 +1378,7 @@ description: test skill
   });
 
   it("warns when control UI device auth is disabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         controlUi: { dangerouslyDisableDeviceAuth: true },
       },
@@ -1402,7 +1402,7 @@ description: test skill
   });
 
   it("warns when insecure/dangerous debug flags are enabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       hooks: {
         gmail: { allowUnsafeExternalContent: true },
         mappings: [{ allowUnsafeExternalContent: true }],
@@ -1427,7 +1427,7 @@ description: test skill
   });
 
   it("flags non-loopback Control UI without allowed origins", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         bind: "lan",
         auth: { mode: "token", token: "very-long-browser-token-0123456789" },
@@ -1439,13 +1439,13 @@ description: test skill
   });
 
   it("flags wildcard Control UI origins by exposure level", async () => {
-    const loopbackCfg: OpenClawConfig = {
+    const loopbackCfg: IronCliwConfig = {
       gateway: {
         bind: "loopback",
         controlUi: { allowedOrigins: ["*"] },
       },
     };
-    const exposedCfg: OpenClawConfig = {
+    const exposedCfg: IronCliwConfig = {
       gateway: {
         bind: "lan",
         auth: { mode: "token", token: "very-long-browser-token-0123456789" },
@@ -1462,7 +1462,7 @@ description: test skill
   });
 
   it("flags dangerous host-header origin fallback and suppresses missing allowed-origins finding", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         bind: "lan",
         auth: { mode: "token", token: "very-long-browser-token-0123456789" },
@@ -1482,7 +1482,7 @@ description: test skill
   });
 
   it("warns when Feishu doc tool is enabled because create can grant requester access", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         feishu: {
           appId: "cli_test",
@@ -1496,7 +1496,7 @@ description: test skill
   });
 
   it("treats Feishu SecretRef appSecret as configured for doc tool risk detection", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         feishu: {
           appId: "cli_test",
@@ -1514,7 +1514,7 @@ description: test skill
   });
 
   it("does not warn for Feishu doc grant risk when doc tools are disabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         feishu: {
           appId: "cli_test",
@@ -1529,7 +1529,7 @@ description: test skill
   });
 
   it("scores X-Real-IP fallback risk by gateway exposure", async () => {
-    const trustedProxyCfg = (trustedProxies: string[]): OpenClawConfig => ({
+    const trustedProxyCfg = (trustedProxies: string[]): IronCliwConfig => ({
       gateway: {
         bind: "loopback",
         allowRealIpFallback: true,
@@ -1545,7 +1545,7 @@ description: test skill
 
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
     }> = [
       {
@@ -1614,7 +1614,7 @@ description: test skill
   it("scores mDNS full mode risk by gateway bind mode", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
     }> = [
       {
@@ -1665,7 +1665,7 @@ description: test skill
   it("evaluates trusted-proxy auth guardrails", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedCheckId: string;
       expectedSeverity: "warn" | "critical";
       suppressesGenericSharedSecretFindings?: boolean;
@@ -1752,7 +1752,7 @@ description: test skill
   });
 
   it("warns when multiple DM senders share the main session", async () => {
-    const cfg: OpenClawConfig = { session: { dmScope: "main" } };
+    const cfg: IronCliwConfig = { session: { dmScope: "main" } };
     const plugins: ChannelPlugin[] = [
       {
         id: "whatsapp",
@@ -1802,7 +1802,7 @@ description: test skill
 
   it("flags Discord native commands without a guild user allowlist", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -1839,7 +1839,7 @@ description: test skill
 
   it("does not flag Discord slash commands when dm.allowFrom includes a Discord snowflake id", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -1880,7 +1880,7 @@ description: test skill
         path.join(tmp, "credentials", "discord-allowFrom.json"),
         JSON.stringify({ version: 1, allowFrom: ["team.owner"] }),
       );
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -1918,7 +1918,7 @@ description: test skill
         "channels.discord.guilds.123.channels.general.users:security-team",
       );
       expect(finding?.detail).toContain(
-        "~/.openclaw/credentials/discord-allowFrom.json:team.owner",
+        "~/.IronCliw/credentials/discord-allowFrom.json:team.owner",
       );
       expect(finding?.detail).not.toContain("<@123456789012345678>");
     });
@@ -1926,7 +1926,7 @@ description: test skill
 
   it("marks Discord name-based allowlists as break-glass when dangerous matching is enabled", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -1963,7 +1963,7 @@ description: test skill
 
   it("audits non-default Discord accounts for dangerous name matching", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -2000,7 +2000,7 @@ description: test skill
 
   it("audits name-based allowlists on non-default Discord accounts", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -2036,7 +2036,7 @@ description: test skill
 
   it("does not warn when Discord allowlists use ID-style entries only", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -2079,7 +2079,7 @@ description: test skill
 
   it("flags Discord slash commands when access-group enforcement is disabled and no users allowlist exists", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         commands: { useAccessGroups: false },
         channels: {
           discord: {
@@ -2117,7 +2117,7 @@ description: test skill
 
   it("flags Slack slash commands without a channel users allowlist", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           slack: {
             enabled: true,
@@ -2149,7 +2149,7 @@ description: test skill
 
   it("flags Slack slash commands when access-group enforcement is disabled", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         commands: { useAccessGroups: false },
         channels: {
           slack: {
@@ -2182,7 +2182,7 @@ description: test skill
 
   it("flags Telegram group commands without a sender allowlist", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           telegram: {
             enabled: true,
@@ -2213,7 +2213,7 @@ description: test skill
 
   it("warns when Telegram allowFrom entries are non-numeric (legacy @username configs)", async () => {
     await withChannelSecurityStateDir(async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           telegram: {
             enabled: true,
@@ -2244,7 +2244,7 @@ description: test skill
   });
 
   it("adds probe_failed warnings for deep probe failure modes", async () => {
-    const cfg: OpenClawConfig = { gateway: { mode: "local" } };
+    const cfg: IronCliwConfig = { gateway: { mode: "local" } };
     const cases: Array<{
       name: string;
       probeGatewayFn: NonNullable<SecurityAuditOptions["probeGatewayFn"]>;
@@ -2328,7 +2328,7 @@ description: test skill
   });
 
   it("warns when hooks token looks short", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       hooks: { enabled: true, token: "short" },
     };
 
@@ -2338,9 +2338,9 @@ description: test skill
   });
 
   it("flags hooks token reuse of the gateway env token as critical", async () => {
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "shared-gateway-token-1234567890";
-    const cfg: OpenClawConfig = {
+    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
+    process.env.IronCliw_GATEWAY_TOKEN = "shared-gateway-token-1234567890";
+    const cfg: IronCliwConfig = {
       hooks: { enabled: true, token: "shared-gateway-token-1234567890" },
     };
 
@@ -2349,15 +2349,15 @@ description: test skill
       expectFinding(res, "hooks.token_reuse_gateway_token", "critical");
     } finally {
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.IronCliw_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
       }
     }
   });
 
   it("warns when hooks.defaultSessionKey is unset", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       hooks: { enabled: true, token: "shared-gateway-token-1234567890" },
     };
 
@@ -2372,10 +2372,10 @@ description: test skill
       token: "shared-gateway-token-1234567890",
       defaultSessionKey: "hook:ingress",
       allowRequestSessionKey: true,
-    } satisfies NonNullable<OpenClawConfig["hooks"]>;
+    } satisfies NonNullable<IronCliwConfig["hooks"]>;
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
       expectsPrefixesMissing?: boolean;
     }> = [
@@ -2408,7 +2408,7 @@ description: test skill
   it("scores gateway HTTP no-auth findings by exposure", async () => {
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IronCliwConfig;
       expectedSeverity: "warn" | "critical";
       detailIncludes?: string[];
     }> = [
@@ -2452,7 +2452,7 @@ description: test skill
   });
 
   it("does not report gateway.http.no_auth when auth mode is token", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         bind: "loopback",
         auth: { mode: "token", token: "secret" },
@@ -2470,7 +2470,7 @@ description: test skill
   });
 
   it("reports HTTP API session-key override surfaces when enabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         http: {
           endpoints: {
@@ -2487,11 +2487,11 @@ description: test skill
   });
 
   it("warns when state/config look like a synced folder", async () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
 
     const res = await audit(cfg, {
-      stateDir: "/Users/test/Dropbox/.openclaw",
-      configPath: "/Users/test/Dropbox/.openclaw/openclaw.json",
+      stateDir: "/Users/test/Dropbox/.IronCliw",
+      configPath: "/Users/test/Dropbox/.IronCliw/IronCliw.json",
     });
 
     expectFinding(res, "fs.synced_dir", "warn");
@@ -2512,11 +2512,11 @@ description: test skill
       await fs.chmod(includePath, 0o644);
     }
 
-    const configPath = path.join(stateDir, "openclaw.json");
+    const configPath = path.join(stateDir, "IronCliw.json");
     await fs.writeFile(configPath, `{ "$include": "./extra.json5" }\n`, "utf-8");
     await fs.chmod(configPath, 0o600);
 
-    const cfg: OpenClawConfig = { logging: { redactSensitive: "off" } };
+    const cfg: IronCliwConfig = { logging: { redactSensitive: "off" } };
     const user = "DESKTOP-TEST\\Tester";
     const execIcacls = isWindows
       ? async (_cmd: string, args: string[]) => {
@@ -2570,13 +2570,13 @@ description: test skill
     const stateDir = sharedExtensionsStateDir;
 
     try {
-      const cfg: OpenClawConfig = {};
+      const cfg: IronCliwConfig = {};
       const res = await runSecurityAudit({
         config: cfg,
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "openclaw.json"),
+        configPath: path.join(stateDir, "IronCliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2610,12 +2610,12 @@ description: test skill
   });
 
   it("warns on unpinned npm install specs and missing integrity metadata", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       plugins: {
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@openclaw/voice-call",
+            spec: "@IronCliw/voice-call",
           },
         },
       },
@@ -2624,7 +2624,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@openclaw/test-hooks",
+              spec: "@IronCliw/test-hooks",
             },
           },
         },
@@ -2636,7 +2636,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir: sharedInstallMetadataStateDir,
-      configPath: path.join(sharedInstallMetadataStateDir, "openclaw.json"),
+      configPath: path.join(sharedInstallMetadataStateDir, "IronCliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2647,12 +2647,12 @@ description: test skill
   });
 
   it("does not warn on pinned npm install specs with integrity metadata", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       plugins: {
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@openclaw/voice-call@1.2.3",
+            spec: "@IronCliw/voice-call@1.2.3",
             integrity: "sha512-plugin",
           },
         },
@@ -2662,7 +2662,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@openclaw/test-hooks@1.2.3",
+              spec: "@IronCliw/test-hooks@1.2.3",
               integrity: "sha512-hook",
             },
           },
@@ -2675,7 +2675,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir: sharedInstallMetadataStateDir,
-      configPath: path.join(sharedInstallMetadataStateDir, "openclaw.json"),
+      configPath: path.join(sharedInstallMetadataStateDir, "IronCliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2694,21 +2694,21 @@ description: test skill
     await fs.mkdir(hookDir, { recursive: true });
     await fs.writeFile(
       path.join(pluginDir, "package.json"),
-      JSON.stringify({ name: "@openclaw/voice-call", version: "9.9.9" }),
+      JSON.stringify({ name: "@IronCliw/voice-call", version: "9.9.9" }),
       "utf-8",
     );
     await fs.writeFile(
       path.join(hookDir, "package.json"),
-      JSON.stringify({ name: "@openclaw/test-hooks", version: "8.8.8" }),
+      JSON.stringify({ name: "@IronCliw/test-hooks", version: "8.8.8" }),
       "utf-8",
     );
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       plugins: {
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@openclaw/voice-call@1.2.3",
+            spec: "@IronCliw/voice-call@1.2.3",
             integrity: "sha512-plugin",
             resolvedVersion: "1.2.3",
           },
@@ -2719,7 +2719,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@openclaw/test-hooks@1.2.3",
+              spec: "@IronCliw/test-hooks@1.2.3",
               integrity: "sha512-hook",
               resolvedVersion: "1.2.3",
             },
@@ -2733,7 +2733,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "openclaw.json"),
+      configPath: path.join(stateDir, "IronCliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2744,7 +2744,7 @@ description: test skill
   it("flags enabled extensions when tool policy can expose plugin tools", async () => {
     const stateDir = sharedExtensionsStateDir;
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       plugins: { allow: ["some-plugin"] },
     };
     const res = await runSecurityAudit({
@@ -2752,7 +2752,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "openclaw.json"),
+      configPath: path.join(stateDir, "IronCliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2769,7 +2769,7 @@ description: test skill
   it("does not flag plugin tool reachability when profile is restrictive", async () => {
     const stateDir = sharedExtensionsStateDir;
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       plugins: { allow: ["some-plugin"] },
       tools: { profile: "coding" },
     };
@@ -2778,7 +2778,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "openclaw.json"),
+      configPath: path.join(stateDir, "IronCliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2793,7 +2793,7 @@ description: test skill
     const stateDir = sharedExtensionsStateDir;
 
     try {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: { enabled: true, token: "t" },
         },
@@ -2803,7 +2803,7 @@ description: test skill
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "openclaw.json"),
+        configPath: path.join(stateDir, "IronCliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2830,7 +2830,7 @@ description: test skill
     const stateDir = sharedExtensionsStateDir;
 
     try {
-      const cfg: OpenClawConfig = {
+      const cfg: IronCliwConfig = {
         channels: {
           discord: {
             enabled: true,
@@ -2847,7 +2847,7 @@ description: test skill
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "openclaw.json"),
+        configPath: path.join(stateDir, "IronCliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2869,7 +2869,7 @@ description: test skill
   });
 
   it("does not scan plugin code safety findings when deep audit is disabled", async () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const nonDeepRes = await runSecurityAudit({
       config: cfg,
       includeFilesystem: true,
@@ -2884,7 +2884,7 @@ description: test skill
   });
 
   it("reports detailed code-safety issues for both plugins and skills", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       agents: { defaults: { workspace: sharedCodeSafetyWorkspaceDir } },
     };
     const [pluginFindings, skillFindings] = await Promise.all([
@@ -2915,7 +2915,7 @@ description: test skill
       path.join(pluginDir, "package.json"),
       JSON.stringify({
         name: "escape-plugin",
-        openclaw: { extensions: ["../outside.js"] },
+        IronCliw: { extensions: ["../outside.js"] },
       }),
     );
     await fs.writeFile(path.join(pluginDir, "index.js"), "export {};");
@@ -2937,7 +2937,7 @@ description: test skill
         path.join(pluginDir, "package.json"),
         JSON.stringify({
           name: "scanfail-plugin",
-          openclaw: { extensions: ["index.js"] },
+          IronCliw: { extensions: ["index.js"] },
         }),
       );
       await fs.writeFile(path.join(pluginDir, "index.js"), "export {};");
@@ -2950,7 +2950,7 @@ description: test skill
   });
 
   it("flags open groupPolicy when tools.elevated is enabled", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       tools: { elevated: { enabled: true, allowFrom: { whatsapp: ["+1"] } } },
       channels: { whatsapp: { groupPolicy: "open" } },
     };
@@ -2968,7 +2968,7 @@ description: test skill
   });
 
   it("flags open groupPolicy when runtime/filesystem tools are exposed without guards", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { whatsapp: { groupPolicy: "open" } },
       tools: { elevated: { enabled: false } },
     };
@@ -2986,7 +2986,7 @@ description: test skill
   });
 
   it("does not flag runtime/filesystem exposure for open groups when sandbox mode is all", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { whatsapp: { groupPolicy: "open" } },
       tools: {
         elevated: { enabled: false },
@@ -3007,7 +3007,7 @@ description: test skill
   });
 
   it("does not flag runtime/filesystem exposure for open groups when runtime is denied and fs is workspace-only", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { whatsapp: { groupPolicy: "open" } },
       tools: {
         elevated: { enabled: false },
@@ -3025,7 +3025,7 @@ description: test skill
   });
 
   it("warns when config heuristics suggest a likely multi-user setup", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         discord: {
           groupPolicy: "allowlist",
@@ -3055,7 +3055,7 @@ description: test skill
   });
 
   it("does not warn for multi-user heuristic when no shared-user signals are configured", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         discord: {
           groupPolicy: "allowlist",
@@ -3087,10 +3087,10 @@ description: test skill
     const makeProbeEnv = (env?: { token?: string; password?: string }) => {
       const probeEnv: NodeJS.ProcessEnv = {};
       if (env?.token !== undefined) {
-        probeEnv.OPENCLAW_GATEWAY_TOKEN = env.token;
+        probeEnv.IronCliw_GATEWAY_TOKEN = env.token;
       }
       if (env?.password !== undefined) {
-        probeEnv.OPENCLAW_GATEWAY_PASSWORD = env.password;
+        probeEnv.IronCliw_GATEWAY_PASSWORD = env.password;
       }
       return probeEnv;
     };
@@ -3098,7 +3098,7 @@ description: test skill
     it("applies token precedence across local/remote gateway modes", async () => {
       const cases: Array<{
         name: string;
-        cfg: OpenClawConfig;
+        cfg: IronCliwConfig;
         env?: { token?: string };
         expectedToken: string;
       }> = [
@@ -3171,7 +3171,7 @@ description: test skill
     it("applies password precedence for remote gateways", async () => {
       const cases: Array<{
         name: string;
-        cfg: OpenClawConfig;
+        cfg: IronCliwConfig;
         env?: { password?: string };
         expectedPassword: string;
       }> = [
@@ -3213,3 +3213,4 @@ description: test skill
     });
   });
 });
+

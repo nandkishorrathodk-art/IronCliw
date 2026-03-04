@@ -27,3 +27,4 @@ export type AuthConfig = {
     failureWindowHours?: number;
   };
 };
+

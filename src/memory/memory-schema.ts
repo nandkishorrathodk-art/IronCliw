@@ -94,3 +94,4 @@ function ensureColumn(
   }
   db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
 }
+

@@ -105,7 +105,7 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     }
     const commandPath = getCommandPathWithRootOptions(argv, 2);
     const hideBanner =
-      isTruthyEnvValue(process.env.OPENCLAW_HIDE_BANNER) ||
+      isTruthyEnvValue(process.env.IronCliw_HIDE_BANNER) ||
       commandPath[0] === "update" ||
       commandPath[0] === "completion" ||
       (commandPath[0] === "plugins" && commandPath[1] === "update");
@@ -116,7 +116,7 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     setVerbose(verbose);
     const cliLogLevel = getCliLogLevel(actionCommand);
     if (cliLogLevel) {
-      process.env.OPENCLAW_LOG_LEVEL = cliLogLevel;
+      process.env.IronCliw_LOG_LEVEL = cliLogLevel;
     }
     if (!verbose) {
       process.env.NODE_NO_WARNINGS ??= "1";
@@ -138,3 +138,4 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     }
   });
 }
+

@@ -57,3 +57,4 @@ export async function resolveOpenAiEmbeddingClient(
     normalizeModel: normalizeOpenAiModel,
   });
 }
+

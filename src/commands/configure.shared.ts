@@ -92,3 +92,4 @@ export const select = <T>(params: Parameters<typeof clackSelect<T>>[0]) =>
       opt.hint === undefined ? opt : { ...opt, hint: stylePromptHint(opt.hint) },
     ),
   });
+

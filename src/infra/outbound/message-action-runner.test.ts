@@ -7,12 +7,12 @@ import { telegramPlugin } from "../../../extensions/telegram/src/channel.js";
 import { whatsappPlugin } from "../../../extensions/whatsapp/src/channel.js";
 import { jsonResult } from "../../agents/tools/common.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createOutboundTestPlugin, createTestRegistry } from "../../test-utils/channel-plugins.js";
 import { createIMessageTestPlugin } from "../../test-utils/imessage-test-plugin.js";
 import { loadWebMedia } from "../../web/media.js";
-import { resolvePreferredOpenClawTmpDir } from "../tmp-openclaw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../tmp-IronCliw-dir.js";
 import { runMessageAction } from "./message-action-runner.js";
 
 vi.mock("../../web/media.js", async () => {
@@ -30,7 +30,7 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as OpenClawConfig;
+} as IronCliwConfig;
 
 const whatsappConfig = {
   channels: {
@@ -38,7 +38,7 @@ const whatsappConfig = {
       allowFrom: ["*"],
     },
   },
-} as OpenClawConfig;
+} as IronCliwConfig;
 
 async function withSandbox(test: (sandboxDir: string) => Promise<void>) {
   const sandboxDir = await fs.mkdtemp(path.join(os.tmpdir(), "msg-sandbox-"));
@@ -50,7 +50,7 @@ async function withSandbox(test: (sandboxDir: string) => Promise<void>) {
 }
 
 const runDryAction = (params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   action: "send" | "thread-reply" | "broadcast";
   actionParams: Record<string, unknown>;
   toolContext?: Record<string, unknown>;
@@ -68,7 +68,7 @@ const runDryAction = (params: {
   });
 
 const runDrySend = (params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   actionParams: Record<string, unknown>;
   toolContext?: Record<string, unknown>;
   abortSignal?: AbortSignal;
@@ -335,7 +335,7 @@ describe("runMessageAction context isolation", () => {
           token: "tg-test",
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const result = await runDrySend({
       cfg: multiConfig,
@@ -404,7 +404,7 @@ describe("runMessageAction context isolation", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     await expect(
       runDrySend({
@@ -463,7 +463,7 @@ describe("runMessageAction sendAttachment hydration", () => {
         password: "test-password",
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
   const attachmentPlugin: ChannelPlugin = {
     id: "bluebubbles",
     meta: {
@@ -714,8 +714,8 @@ describe("runMessageAction sandboxed media validation", () => {
     });
   });
 
-  it("allows media paths under preferred OpenClaw tmp root", async () => {
-    const tmpRoot = resolvePreferredOpenClawTmpDir();
+  it("allows media paths under preferred IronCliw tmp root", async () => {
+    const tmpRoot = resolvePreferredIronCliwTmpDir();
     await fs.mkdir(tmpRoot, { recursive: true });
     const sandboxDir = await fs.mkdtemp(path.join(os.tmpdir(), "msg-sandbox-"));
     try {
@@ -739,7 +739,7 @@ describe("runMessageAction sandboxed media validation", () => {
       }
       // runMessageAction normalizes media paths through platform resolution.
       expect(result.sendResult?.mediaUrl).toBe(path.resolve(tmpFile));
-      const hostTmpOutsideOpenClaw = path.join(os.tmpdir(), "outside-openclaw", "test-media.png");
+      const hostTmpOutsideIronCliw = path.join(os.tmpdir(), "outside-IronCliw", "test-media.png");
       await expect(
         runMessageAction({
           cfg: slackConfig,
@@ -747,7 +747,7 @@ describe("runMessageAction sandboxed media validation", () => {
           params: {
             channel: "slack",
             target: "#C12345678",
-            media: hostTmpOutsideOpenClaw,
+            media: hostTmpOutsideIronCliw,
             message: "",
           },
           sandboxRoot: sandboxDir,
@@ -797,7 +797,7 @@ describe("runMessageAction media caption behavior", () => {
           enabled: true,
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const result = await runMessageAction({
       cfg,
@@ -873,7 +873,7 @@ describe("runMessageAction card-only send behavior", () => {
           enabled: true,
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const card = {
       type: "AdaptiveCard",
@@ -952,7 +952,7 @@ describe("runMessageAction components parsing", () => {
       buttons: [{ label: "A", customId: "a" }],
     };
     const result = await runMessageAction({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
       action: "send",
       params: {
         channel: "discord",
@@ -971,7 +971,7 @@ describe("runMessageAction components parsing", () => {
   it("throws on invalid components JSON strings", async () => {
     await expect(
       runMessageAction({
-        cfg: {} as OpenClawConfig,
+        cfg: {} as IronCliwConfig,
         action: "send",
         params: {
           channel: "discord",
@@ -1029,7 +1029,7 @@ describe("runMessageAction accountId defaults", () => {
 
   it("propagates defaultAccountId into params", async () => {
     await runMessageAction({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
       action: "send",
       params: {
         channel: "discord",
@@ -1057,7 +1057,7 @@ describe("runMessageAction accountId defaults", () => {
     await runMessageAction({
       cfg: {
         bindings: [{ agentId: "agent-b", match: { channel: "discord", accountId: "account-b" } }],
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       action: "send",
       params: {
         channel: "discord",
@@ -1081,3 +1081,4 @@ describe("runMessageAction accountId defaults", () => {
     expect(ctx.params.accountId).toBe("account-b");
   });
 });
+

@@ -16,3 +16,4 @@ export function createEmptyInstallChecks() {
     install: [],
   };
 }
+

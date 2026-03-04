@@ -35,3 +35,4 @@ export function levelToMinLevel(level: LogLevel): number {
   };
   return map[level];
 }
+

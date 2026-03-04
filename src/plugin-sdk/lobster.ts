@@ -8,7 +8,8 @@ export {
 } from "./windows-spawn.js";
 export type {
   AnyAgentTool,
-  OpenClawPluginApi,
-  OpenClawPluginToolContext,
-  OpenClawPluginToolFactory,
+  IronCliwPluginApi,
+  IronCliwPluginToolContext,
+  IronCliwPluginToolFactory,
 } from "../plugins/types.js";
+

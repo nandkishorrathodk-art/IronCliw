@@ -164,3 +164,4 @@ export const toolsCatalogHandlers: GatewayRequestHandlers = {
     );
   },
 };
+

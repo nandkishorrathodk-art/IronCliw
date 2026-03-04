@@ -27,7 +27,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "openclaw/plugin-sdk/signal";
+} from "IronCliw/plugin-sdk/signal";
 import { getSignalRuntime } from "./runtime.js";
 
 const signalMessageActions: ChannelMessageActionAdapter = {
@@ -323,3 +323,4 @@ export const signalPlugin: ChannelPlugin<ResolvedSignalAccount> = {
     },
   },
 };
+

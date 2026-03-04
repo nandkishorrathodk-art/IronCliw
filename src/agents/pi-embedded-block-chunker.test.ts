@@ -121,3 +121,4 @@ describe("EmbeddedBlockChunker", () => {
     expect(chunker.bufferedText).toBe("After fence");
   });
 });
+

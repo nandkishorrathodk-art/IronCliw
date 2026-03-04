@@ -6,3 +6,4 @@ const loadPluginFromRegistry = createChannelRegistryLoader<ChannelPlugin>((entry
 export async function loadChannelPlugin(id: ChannelId): Promise<ChannelPlugin | undefined> {
   return loadPluginFromRegistry(id);
 }
+

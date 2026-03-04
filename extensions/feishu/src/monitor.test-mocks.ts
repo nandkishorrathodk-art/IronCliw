@@ -10,3 +10,4 @@ vi.mock("./client.js", () => ({
   createFeishuWSClient: vi.fn(() => ({ start: vi.fn() })),
   createEventDispatcher: vi.fn(() => ({ register: vi.fn() })),
 }));
+

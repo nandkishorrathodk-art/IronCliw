@@ -16,3 +16,4 @@ describe("fireAndForgetHook", () => {
     expect(logger).not.toHaveBeenCalled();
   });
 });
+

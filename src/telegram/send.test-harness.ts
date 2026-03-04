@@ -91,3 +91,4 @@ export function installTelegramSendTestHooks() {
 export async function importTelegramSendModule() {
   return await import("./send.js");
 }
+

@@ -59,3 +59,4 @@ describe("dropThinkingBlocks", () => {
     expect(assistant.content).toEqual([{ type: "text", text: "" }]);
   });
 });
+

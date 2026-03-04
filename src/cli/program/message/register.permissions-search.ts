@@ -28,3 +28,4 @@ export function registerMessageSearchCommand(message: Command, helpers: MessageC
       await helpers.runMessageAction("search", opts);
     });
 }
+

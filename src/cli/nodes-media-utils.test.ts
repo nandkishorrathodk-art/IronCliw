@@ -28,3 +28,4 @@ describe("cli/nodes-media-utils", () => {
     expect(resolveTempPathParts({ ext: ".jpg", tmpDir: "/tmp", id: "id2" }).ext).toBe(".jpg");
   });
 });
+

@@ -121,3 +121,4 @@ export function resolveIrcAllowlistMatch(params: {
   }
   return { allowed: false };
 }
+

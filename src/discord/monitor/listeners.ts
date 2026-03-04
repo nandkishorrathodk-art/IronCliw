@@ -8,7 +8,7 @@ import {
   ThreadUpdateListener,
   type User,
 } from "@buape/carbon";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { danger, logVerbose } from "../../globals.js";
 import { formatDurationSeconds } from "../../infra/format-time/format-duration.ts";
 import { enqueueSystemEvent } from "../../infra/system-events.js";
@@ -737,7 +737,7 @@ type ThreadUpdateEvent = Parameters<ThreadUpdateListener["handle"]>[0];
 
 export class DiscordThreadUpdateListener extends ThreadUpdateListener {
   constructor(
-    private cfg: OpenClawConfig,
+    private cfg: IronCliwConfig,
     private accountId: string,
     private logger?: Logger,
   ) {
@@ -778,3 +778,4 @@ export class DiscordThreadUpdateListener extends ThreadUpdateListener {
     });
   }
 }
+

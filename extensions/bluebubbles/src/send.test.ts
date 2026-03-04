@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/bluebubbles";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/bluebubbles";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import "./test-mocks.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";
@@ -782,3 +782,4 @@ describe("send", () => {
     });
   });
 });
+

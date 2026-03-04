@@ -18,3 +18,4 @@ export function normalizeWorkspaceDir(workspaceDir?: string): string | null {
 export function resolveWorkspaceRoot(workspaceDir?: string): string {
   return normalizeWorkspaceDir(workspaceDir) ?? process.cwd();
 }
+

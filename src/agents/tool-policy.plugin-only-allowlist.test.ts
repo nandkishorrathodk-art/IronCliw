@@ -54,3 +54,4 @@ describe("stripPluginOnlyAllowlist", () => {
     expect(policy.unknownAllowlist).toEqual(["lobster"]);
   });
 });
+

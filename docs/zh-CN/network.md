@@ -16,7 +16,7 @@ x-i18n:
 
 # 网络中心
 
-本中心汇集了 OpenClaw 如何在 localhost、局域网和 tailnet 之间连接、配对和保护设备的核心文档。
+本中心汇集了 IronCliw 如何在 localhost、局域网和 tailnet 之间连接、配对和保护设备的核心文档。
 
 ## 核心模型
 
@@ -57,3 +57,4 @@ x-i18n:
 - [Gateway 网关配置参考](/gateway/configuration)
 - [故障排除](/gateway/troubleshooting)
 - [Doctor](/gateway/doctor)
+

@@ -11,3 +11,4 @@ export const maskApiKey = (value: string): string => {
   }
   return `${trimmed.slice(0, 8)}...${trimmed.slice(-8)}`;
 };
+

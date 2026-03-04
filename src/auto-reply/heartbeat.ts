@@ -169,3 +169,4 @@ export function stripHeartbeatToken(
 
   return { shouldSkip: false, text: rest, didStrip: true };
 }
+

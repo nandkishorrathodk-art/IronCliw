@@ -30,3 +30,4 @@ block refine(content, depth):
   output do refine(improved, depth - 1)
 
 output result = do refine(artifact, 5)
+

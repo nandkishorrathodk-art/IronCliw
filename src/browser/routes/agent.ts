@@ -11,3 +11,4 @@ export function registerBrowserAgentRoutes(app: BrowserRouteRegistrar, ctx: Brow
   registerBrowserAgentDebugRoutes(app, ctx);
   registerBrowserAgentStorageRoutes(app, ctx);
 }
+

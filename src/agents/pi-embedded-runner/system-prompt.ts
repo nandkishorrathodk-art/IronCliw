@@ -106,3 +106,4 @@ export function applySystemPromptOverrideToSession(
   mutableSession._baseSystemPrompt = prompt;
   mutableSession._rebuildSystemPrompt = () => prompt;
 }
+

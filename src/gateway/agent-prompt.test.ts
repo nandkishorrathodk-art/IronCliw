@@ -95,3 +95,4 @@ describe("gateway agent prompt", () => {
     expect(buildAgentMessageFromConversationEntries([...entries])).toBe(expected);
   });
 });
+

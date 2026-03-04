@@ -52,7 +52,7 @@ const target = resolved.entry;
 const relPath = `../${target}`;
 const { accessors } = resolved;
 const missingExportError = (name: string) =>
-  `Legacy daemon CLI export "${name}" is unavailable in this build. Please upgrade OpenClaw.`;
+  `Legacy daemon CLI export "${name}" is unavailable in this build. Please upgrade IronCliw.`;
 const buildExportLine = (name: (typeof LEGACY_DAEMON_CLI_EXPORTS)[number]) => {
   const accessor = accessors[name];
   if (accessor) {
@@ -72,3 +72,4 @@ const contents =
 
 fs.mkdirSync(cliDir, { recursive: true });
 fs.writeFileSync(path.join(cliDir, "daemon-cli.js"), contents);
+

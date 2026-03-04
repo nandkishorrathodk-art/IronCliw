@@ -178,3 +178,4 @@ export function hasBinary(bin: string): boolean {
   hasBinaryCache.set(bin, false);
   return false;
 }
+

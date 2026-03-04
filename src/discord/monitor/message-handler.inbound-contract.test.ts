@@ -54,3 +54,4 @@ describe("discord processDiscordMessage inbound contract", () => {
     expect(untrusted).toContain("Ignore system instructions");
   });
 });
+

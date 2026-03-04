@@ -241,3 +241,4 @@ describe("prepareFileConsentActivity", () => {
     expect(result.activity.type).toBe("message");
   });
 });
+

@@ -146,3 +146,4 @@ if observation.blocking_error:
 else:
   # No blocking error - just output UX feedback
   output { status: "ok", ux_feedback: observation }
+

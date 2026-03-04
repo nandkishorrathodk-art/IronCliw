@@ -59,3 +59,4 @@ export async function withExtractedArchiveRoot<TResult extends { ok: boolean }>(
     return await params.onExtracted(rootDir);
   });
 }
+

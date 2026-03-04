@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import {
   resolveHeartbeatDeliveryTarget,
   resolveOutboundTarget,
@@ -15,7 +15,7 @@ runResolveOutboundTargetCoreTests();
 
 describe("resolveOutboundTarget defaultTo config fallback", () => {
   installResolveOutboundTargetPluginRegistryHooks();
-  const whatsappDefaultCfg: OpenClawConfig = {
+  const whatsappDefaultCfg: IronCliwConfig = {
     channels: { whatsapp: { defaultTo: "+15551234567", allowFrom: ["*"] } },
   };
 
@@ -30,7 +30,7 @@ describe("resolveOutboundTarget defaultTo config fallback", () => {
   });
 
   it("uses telegram defaultTo when no explicit target is provided", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { telegram: { defaultTo: "123456789" } },
     };
     const res = resolveOutboundTarget({
@@ -53,7 +53,7 @@ describe("resolveOutboundTarget defaultTo config fallback", () => {
   });
 
   it("still errors when no defaultTo and no explicit target", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: { whatsapp: { allowFrom: ["+1555"] } },
     };
     const res = resolveOutboundTarget({
@@ -347,7 +347,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("allows heartbeat delivery to Discord DMs by default", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       entry: {
@@ -393,7 +393,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("keeps heartbeat delivery to Telegram groups", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       entry: {
@@ -412,7 +412,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("allows heartbeat delivery to WhatsApp direct chats by default", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       entry: {
@@ -431,7 +431,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("keeps heartbeat delivery to WhatsApp groups", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       entry: {
@@ -479,7 +479,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("keeps heartbeat delivery to Discord channels", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       entry: {
@@ -518,7 +518,7 @@ describe("resolveSessionDeliveryTarget", () => {
   });
 
   it("parses explicit heartbeat topic targets into threadId", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
     const resolved = resolveHeartbeatDeliveryTarget({
       cfg,
       heartbeat: {
@@ -666,3 +666,4 @@ describe("resolveSessionDeliveryTarget — cross-channel reply guard (#24152)", 
     expect(resolved.to).toBe("+15550000000");
   });
 });
+

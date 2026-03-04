@@ -54,7 +54,7 @@ export type {
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export { createReplyPrefixOptions } from "../channels/reply-prefix.js";
 export { createTypingCallbacks } from "../channels/typing.js";
-export type { OpenClawConfig } from "../config/config.js";
+export type { IronCliwConfig } from "../config/config.js";
 export {
   GROUP_POLICY_BLOCKED_LABEL,
   resolveAllowlistProviderRuntimeGroupPolicy,
@@ -79,7 +79,7 @@ export { fetchWithSsrFGuard } from "../infra/net/fetch-guard.js";
 export { issuePairingChallenge } from "../pairing/pairing-challenge.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 export type { PluginRuntime, RuntimeLogger } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 export type { PollInput } from "../polls.js";
 export { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 export type { RuntimeEnv } from "../runtime.js";
@@ -94,3 +94,4 @@ export { formatResolvedUnresolvedNote } from "./resolution-notes.js";
 export { runPluginCommandWithTimeout } from "./run-command.js";
 export { createLoggerBackedRuntime } from "./runtime.js";
 export { buildProbeChannelStatusSummary } from "./status-helpers.js";
+

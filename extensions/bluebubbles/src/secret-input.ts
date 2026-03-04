@@ -2,7 +2,7 @@ import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   normalizeSecretInputString,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "IronCliw/plugin-sdk/bluebubbles";
 import { z } from "zod";
 
 export { hasConfiguredSecretInput, normalizeResolvedSecretInputString, normalizeSecretInputString };
@@ -17,3 +17,4 @@ export function buildSecretInputSchema() {
     }),
   ]);
 }
+

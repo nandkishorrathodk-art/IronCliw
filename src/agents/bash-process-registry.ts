@@ -307,3 +307,4 @@ function stopSweeper() {
   clearInterval(sweeper);
   sweeper = null;
 }
+

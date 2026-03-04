@@ -25,3 +25,4 @@ describe("summarizeAllowedValues", () => {
     expect(summary.values[0]).not.toBe(summary.values[1]);
   });
 });
+

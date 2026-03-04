@@ -38,3 +38,4 @@ export function noteSourceInstallIssues(root: string | null) {
     note(warnings.join("\n"), "Install");
   }
 }
+

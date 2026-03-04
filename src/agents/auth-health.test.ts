@@ -124,3 +124,4 @@ describe("formatRemainingShort", () => {
     expect(formatRemainingShort(20_000, { underMinuteLabel: "soon" })).toBe("soon");
   });
 });
+

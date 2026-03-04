@@ -2,7 +2,7 @@
 read_when:
   - 你想在云端运行 Gateway 网关
   - 你需要 VPS/托管指南的快速索引
-summary: OpenClaw 的 VPS 托管中心（Oracle/Fly/Hetzner/GCP/exe.dev）
+summary: IronCliw 的 VPS 托管中心（Oracle/Fly/Hetzner/GCP/exe.dev）
 title: VPS 托管
 x-i18n:
   generated_at: "2026-02-03T10:12:57Z"
@@ -45,3 +45,4 @@ x-i18n:
 你可以将 Gateway 网关保持在云端，并在本地设备（Mac/iOS/Android/无头）上配对**节点**。节点提供本地屏幕/摄像头/canvas 和 `system.run` 功能，而 Gateway 网关保持在云端。
 
 文档：[节点](/nodes)，[节点 CLI](/cli/nodes)
+

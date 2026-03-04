@@ -28,3 +28,4 @@ export type PluginsConfig = {
   installs?: Record<string, PluginInstallRecord>;
 };
 import type { InstallRecordBase } from "./types.installs.js";
+

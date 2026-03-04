@@ -170,3 +170,4 @@ export function deriveSessionMetaPatch(params: {
 
   return Object.keys(patch).length > 0 ? patch : null;
 }
+

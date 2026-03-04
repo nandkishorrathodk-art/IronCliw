@@ -12,3 +12,4 @@ export async function applyAuthChoiceCopilotProxy(
     label: "Copilot Proxy",
   });
 }
+

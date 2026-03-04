@@ -4,15 +4,15 @@ import { parseFrontmatterBlock } from "../../markdown/frontmatter.js";
 import {
   getFrontmatterString,
   normalizeStringList,
-  parseOpenClawManifestInstallBase,
+  parseIronCliwManifestInstallBase,
   parseFrontmatterBool,
-  resolveOpenClawManifestBlock,
-  resolveOpenClawManifestInstall,
-  resolveOpenClawManifestOs,
-  resolveOpenClawManifestRequires,
+  resolveIronCliwManifestBlock,
+  resolveIronCliwManifestInstall,
+  resolveIronCliwManifestOs,
+  resolveIronCliwManifestRequires,
 } from "../../shared/frontmatter.js";
 import type {
-  OpenClawSkillMetadata,
+  IronCliwSkillMetadata,
   ParsedSkillFrontmatter,
   SkillEntry,
   SkillInstallSpec,
@@ -108,7 +108,7 @@ function normalizeSafeDownloadUrl(raw: unknown): string | undefined {
 }
 
 function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
-  const parsed = parseOpenClawManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
+  const parsed = parseIronCliwManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
   if (!parsed) {
     return undefined;
   }
@@ -189,16 +189,16 @@ function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
   return spec;
 }
 
-export function resolveOpenClawMetadata(
+export function resolveIronCliwMetadata(
   frontmatter: ParsedSkillFrontmatter,
-): OpenClawSkillMetadata | undefined {
-  const metadataObj = resolveOpenClawManifestBlock({ frontmatter });
+): IronCliwSkillMetadata | undefined {
+  const metadataObj = resolveIronCliwManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveOpenClawManifestRequires(metadataObj);
-  const install = resolveOpenClawManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveOpenClawManifestOs(metadataObj);
+  const requires = resolveIronCliwManifestRequires(metadataObj);
+  const install = resolveIronCliwManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveIronCliwManifestOs(metadataObj);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
     emoji: typeof metadataObj.emoji === "string" ? metadataObj.emoji : undefined,
@@ -226,3 +226,4 @@ export function resolveSkillInvocationPolicy(
 export function resolveSkillKey(skill: Skill, entry?: SkillEntry): string {
   return entry?.metadata?.skillKey ?? skill.name;
 }
+

@@ -9,7 +9,7 @@ export * from "./types.base.js";
 export * from "./types.browser.js";
 export * from "./types.channels.js";
 export * from "./types.cli.js";
-export * from "./types.openclaw.js";
+export * from "./types.IronCliw.js";
 export * from "./types.cron.js";
 export * from "./types.discord.js";
 export * from "./types.googlechat.js";
@@ -33,3 +33,4 @@ export * from "./types.tts.js";
 export * from "./types.tools.js";
 export * from "./types.whatsapp.js";
 export * from "./types.memory.js";
+

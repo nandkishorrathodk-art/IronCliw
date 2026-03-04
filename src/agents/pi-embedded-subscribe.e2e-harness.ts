@@ -228,3 +228,4 @@ export function expectSingleAgentEventText(calls: Array<unknown[]>, text: string
   expect(payloads[0]?.text).toBe(text);
   expect(payloads[0]?.delta).toBe(text);
 }
+

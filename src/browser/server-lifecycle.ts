@@ -43,6 +43,7 @@ export async function stopKnownBrowserProfiles(params: {
       }
     }
   } catch (err) {
-    params.onWarn(`openclaw browser stop failed: ${String(err)}`);
+    params.onWarn(`IronCliw browser stop failed: ${String(err)}`);
   }
 }
+

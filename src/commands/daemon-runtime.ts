@@ -17,3 +17,4 @@ export const GATEWAY_DAEMON_RUNTIME_OPTIONS: Array<{
 export function isGatewayDaemonRuntime(value: string | undefined): value is GatewayDaemonRuntime {
   return value === "node" || value === "bun";
 }
+

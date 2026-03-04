@@ -13,3 +13,4 @@ export function stripDsrRequests(input: string): { cleaned: string; requests: nu
 export function buildCursorPositionResponse(row = 1, col = 1): string {
   return `\x1b[${row};${col}R`;
 }
+

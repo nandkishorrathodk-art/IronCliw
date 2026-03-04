@@ -13,3 +13,4 @@ export function isPathInsideContainerRoot(root: string, target: string): boolean
   }
   return normalizedTarget === normalizedRoot || normalizedTarget.startsWith(`${normalizedRoot}/`);
 }
+

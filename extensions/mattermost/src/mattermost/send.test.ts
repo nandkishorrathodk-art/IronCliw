@@ -18,7 +18,7 @@ const mockState = vi.hoisted(() => ({
   uploadMattermostFile: vi.fn(),
 }));
 
-vi.mock("openclaw/plugin-sdk/mattermost", () => ({
+vi.mock("IronCliw/plugin-sdk/mattermost", () => ({
   loadOutboundMediaFromUrl: mockState.loadOutboundMediaFromUrl,
 }));
 
@@ -148,3 +148,4 @@ describe("sendMessageMattermost", () => {
     );
   });
 });
+

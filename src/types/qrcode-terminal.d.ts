@@ -7,3 +7,4 @@ declare module "qrcode-terminal/vendor/QRCode/QRErrorCorrectLevel.js" {
   const QRErrorCorrectLevel: Record<string, unknown>;
   export default QRErrorCorrectLevel;
 }
+

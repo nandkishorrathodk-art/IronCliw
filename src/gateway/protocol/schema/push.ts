@@ -25,3 +25,4 @@ export const PushTestResultSchema = Type.Object(
   },
   { additionalProperties: false },
 );
+

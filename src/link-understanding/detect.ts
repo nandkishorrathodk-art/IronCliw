@@ -62,3 +62,4 @@ export function extractLinksFromMessage(message: string, opts?: { maxLinks?: num
 
   return results;
 }
+

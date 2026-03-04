@@ -30,3 +30,4 @@ describe("formatUnavailableBatchError", () => {
     expect(formatUnavailableBatchError("unreachable")).toBe("error file unavailable: unreachable");
   });
 });
+

@@ -22,3 +22,4 @@ export function buildAgentMediaPayload(
     MediaTypes: mediaTypes.length > 0 ? mediaTypes : undefined,
   };
 }
+

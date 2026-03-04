@@ -15,3 +15,4 @@ export function buildControlUiCspHeader(): string {
     "connect-src 'self' ws: wss:",
   ].join("; ");
 }
+

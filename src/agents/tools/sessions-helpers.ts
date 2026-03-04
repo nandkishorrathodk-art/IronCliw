@@ -169,3 +169,4 @@ export function extractAssistantText(message: unknown): string | undefined {
 
   return joined ? sanitizeUserFacingText(joined, { errorContext }) : undefined;
 }
+

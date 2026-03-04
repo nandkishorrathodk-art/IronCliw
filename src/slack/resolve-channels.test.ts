@@ -40,3 +40,4 @@ describe("resolveSlackChannelAllowlist", () => {
     expect(res[0]?.resolved).toBe(false);
   });
 });
+

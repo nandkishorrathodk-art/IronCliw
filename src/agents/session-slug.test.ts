@@ -24,3 +24,4 @@ describe("session slug", () => {
     expect(slug).toBe("amber-atlas-atlas");
   });
 });
+

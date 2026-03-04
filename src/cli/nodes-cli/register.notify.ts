@@ -55,3 +55,4 @@ export function registerNodesNotifyCommand(nodes: Command) {
       }),
   );
 }
+

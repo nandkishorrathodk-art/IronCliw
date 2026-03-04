@@ -152,3 +152,4 @@ export function createRunRegistry(options?: { maxExitedRecords?: number }): RunR
     delete: del,
   };
 }
+

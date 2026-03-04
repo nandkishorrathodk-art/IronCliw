@@ -89,3 +89,4 @@ describe("formatMediaUnderstandingBody", () => {
     expect(body).toBe("[Image]\nDescription:\na cat");
   });
 });
+

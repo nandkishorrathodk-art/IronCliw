@@ -83,3 +83,4 @@ describe("resolveSlackAccount allowFrom precedence", () => {
     expect(resolved.config.dm?.allowFrom).toEqual(["U123"]);
   });
 });
+

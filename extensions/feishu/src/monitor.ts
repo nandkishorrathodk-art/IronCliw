@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import { listEnabledFeishuAccounts, resolveFeishuAccount } from "./accounts.js";
 import {
   monitorSingleAccount,
@@ -93,3 +93,4 @@ export async function monitorFeishuProvider(opts: MonitorFeishuOpts = {}): Promi
 export function stopFeishuMonitor(accountId?: string): void {
   stopFeishuMonitorState(accountId);
 }
+

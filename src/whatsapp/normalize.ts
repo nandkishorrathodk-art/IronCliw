@@ -78,3 +78,4 @@ export function normalizeWhatsAppTarget(value: string): string | null {
   const normalized = normalizeE164(candidate);
   return normalized.length > 1 ? normalized : null;
 }
+

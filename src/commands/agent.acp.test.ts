@@ -5,7 +5,7 @@ import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.j
 import * as acpManagerModule from "../acp/control-plane/manager.js";
 import { AcpRuntimeError } from "../acp/runtime/errors.js";
 import * as embeddedModule from "../agents/pi-embedded.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import * as configModule from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { agentCommand } from "./agent.js";
@@ -23,10 +23,10 @@ const runtime: RuntimeEnv = {
 };
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "openclaw-agent-acp-" });
+  return withTempHomeBase(fn, { prefix: "IronCliw-agent-acp-" });
 }
 
-function createAcpEnabledConfig(home: string, storePath: string): OpenClawConfig {
+function createAcpEnabledConfig(home: string, storePath: string): IronCliwConfig {
   return {
     acp: {
       enabled: true,
@@ -38,7 +38,7 @@ function createAcpEnabledConfig(home: string, storePath: string): OpenClawConfig
       defaults: {
         model: { primary: "openai/gpt-5.3-codex" },
         models: { "openai/gpt-5.3-codex": {} },
-        workspace: path.join(home, "openclaw"),
+        workspace: path.join(home, "IronCliw"),
       },
     },
     session: { store: storePath, mainKey: "main" },
@@ -52,7 +52,7 @@ function mockConfig(home: string, storePath: string) {
 function mockConfigWithAcpOverrides(
   home: string,
   storePath: string,
-  acpOverrides: Partial<NonNullable<OpenClawConfig["acp"]>>,
+  acpOverrides: Partial<NonNullable<IronCliwConfig["acp"]>>,
 ) {
   const cfg = createAcpEnabledConfig(home, storePath);
   cfg.acp = {
@@ -109,7 +109,7 @@ function resolveReadySession(
 function mockAcpManager(params: {
   runTurn: (params: unknown) => Promise<void>;
   resolveSession?: (params: {
-    cfg: OpenClawConfig;
+    cfg: IronCliwConfig;
     sessionKey: string;
   }) => ReturnType<ReturnType<typeof acpManagerModule.getAcpSessionManager>["resolveSession"]>;
 }) {
@@ -124,7 +124,7 @@ function mockAcpManager(params: {
 }
 
 async function runAcpSessionWithPolicyOverrides(params: {
-  acpOverrides: Partial<NonNullable<OpenClawConfig["acp"]>>;
+  acpOverrides: Partial<NonNullable<IronCliwConfig["acp"]>>;
   resolveSession?: Parameters<typeof mockAcpManager>[0]["resolveSession"];
 }) {
   await withTempHome(async (home) => {
@@ -243,13 +243,13 @@ describe("agentCommand ACP runtime routing", () => {
   it.each([
     {
       name: "blocks ACP turns when ACP is disabled by policy",
-      acpOverrides: { enabled: false } satisfies Partial<NonNullable<OpenClawConfig["acp"]>>,
+      acpOverrides: { enabled: false } satisfies Partial<NonNullable<IronCliwConfig["acp"]>>,
     },
     {
       name: "blocks ACP turns when ACP dispatch is disabled by policy",
       acpOverrides: {
         dispatch: { enabled: false },
-      } satisfies Partial<NonNullable<OpenClawConfig["acp"]>>,
+      } satisfies Partial<NonNullable<IronCliwConfig["acp"]>>,
     },
   ])("$name", async ({ acpOverrides }) => {
     await runAcpSessionWithPolicyOverrides({ acpOverrides });
@@ -306,3 +306,4 @@ describe("agentCommand ACP runtime routing", () => {
     });
   });
 });
+

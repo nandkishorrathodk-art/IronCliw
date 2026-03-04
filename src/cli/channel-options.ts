@@ -48,7 +48,7 @@ function loadPrecomputedChannelOptions(): string[] | null {
 }
 
 export function resolveCliChannelOptions(): string[] {
-  if (isTruthyEnvValue(process.env.OPENCLAW_EAGER_CHANNEL_OPTIONS)) {
+  if (isTruthyEnvValue(process.env.IronCliw_EAGER_CHANNEL_OPTIONS)) {
     const catalog = listChannelPluginCatalogEntries().map((entry) => entry.id);
     const base = dedupe([...CHAT_CHANNEL_ORDER, ...catalog]);
     ensurePluginRegistryLoaded();
@@ -66,3 +66,4 @@ export function resolveCliChannelOptions(): string[] {
 export function formatCliChannelOptions(extra: string[] = []): string {
   return [...extra, ...resolveCliChannelOptions()].join("|");
 }
+

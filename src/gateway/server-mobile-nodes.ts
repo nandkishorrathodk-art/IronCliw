@@ -12,3 +12,4 @@ export function hasConnectedMobileNode(registry: NodeRegistry): boolean {
   const connected = registry.listConnected();
   return connected.some((n) => isMobilePlatform(n.platform));
 }
+

@@ -46,3 +46,4 @@ export const whatsappOutbound: ChannelOutboundAdapter = {
       cfg,
     }),
 };
+

@@ -173,3 +173,4 @@ export const handleAbortTrigger: CommandHandler = async (params, allowTextComman
   });
   return { shouldContinue: false, reply: { text: "⚙️ Agent was aborted." } };
 };
+

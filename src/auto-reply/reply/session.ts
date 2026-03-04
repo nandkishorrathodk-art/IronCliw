@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import path from "node:path";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { normalizeChatType } from "../../channels/chat-type.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import {
   DEFAULT_RESET_TRIGGERS,
   deriveSessionMetaPatch,
@@ -64,7 +64,7 @@ export type SessionInitResult = {
 
 export async function initSessionState(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   commandAuthorized: boolean;
 }): Promise<SessionInitResult> {
   const { ctx, cfg, commandAuthorized } = params;
@@ -488,3 +488,4 @@ export async function initSessionState(params: {
     triggerBodyNormalized,
   };
 }
+

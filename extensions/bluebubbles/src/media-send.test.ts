@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/bluebubbles";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sendBlueBubblesMedia } from "./media-send.js";
 import { setBlueBubblesRuntime } from "./runtime.js";
@@ -54,18 +54,18 @@ function createMockRuntime(): { runtime: PluginRuntime; mocks: RuntimeMocks } {
   };
 }
 
-function createConfig(overrides?: Record<string, unknown>): OpenClawConfig {
+function createConfig(overrides?: Record<string, unknown>): IronCliwConfig {
   return {
     channels: {
       bluebubbles: {
         ...overrides,
       },
     },
-  } as unknown as OpenClawConfig;
+  } as unknown as IronCliwConfig;
 }
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-bb-media-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-bb-media-"));
   tempDirs.push(dir);
   return dir;
 }
@@ -254,3 +254,4 @@ describe("sendBlueBubblesMedia local-path hardening", () => {
     expect(sendBlueBubblesAttachmentMock).toHaveBeenCalledTimes(1);
   });
 });
+

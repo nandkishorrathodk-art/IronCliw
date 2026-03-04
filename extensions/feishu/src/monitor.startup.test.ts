@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { monitorFeishuProvider, stopFeishuMonitor } from "./monitor.js";
 
@@ -201,3 +201,4 @@ describe("Feishu monitor startup preflight", () => {
     }
   });
 });
+

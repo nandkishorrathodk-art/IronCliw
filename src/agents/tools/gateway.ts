@@ -158,3 +158,4 @@ export async function callGatewayTool<T = Record<string, unknown>>(
     scopes,
   });
 }
+

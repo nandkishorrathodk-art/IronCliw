@@ -41,3 +41,4 @@ describe("buildWorkspaceSkillStatus", () => {
     expect(report.skills[0]?.install).toEqual([]);
   });
 });
+

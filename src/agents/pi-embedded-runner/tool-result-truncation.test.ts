@@ -311,3 +311,4 @@ describe("truncateToolResultText head+tail strategy", () => {
     expect(result).toContain("truncated");
   });
 });
+

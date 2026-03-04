@@ -35,3 +35,4 @@ export async function configureCommandFromSectionsArg(
 
   await configureCommandWithSections(sections as never, runtime);
 }
+

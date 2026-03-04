@@ -293,8 +293,8 @@ describe("resolveConfigEnvVars", () => {
         },
         {
           name: "gateway auth token",
-          config: { gateway: { auth: { token: "${OPENCLAW_GATEWAY_TOKEN}" } } },
-          env: { OPENCLAW_GATEWAY_TOKEN: "secret-token" },
+          config: { gateway: { auth: { token: "${IronCliw_GATEWAY_TOKEN}" } } },
+          env: { IronCliw_GATEWAY_TOKEN: "secret-token" },
           expected: { gateway: { auth: { token: "secret-token" } } },
         },
         {
@@ -321,3 +321,4 @@ describe("resolveConfigEnvVars", () => {
     });
   });
 });
+

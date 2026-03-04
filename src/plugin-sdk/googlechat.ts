@@ -41,7 +41,7 @@ export type {
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export { getChatChannelMeta } from "../channels/registry.js";
 export { createReplyPrefixOptions } from "../channels/reply-prefix.js";
-export type { OpenClawConfig } from "../config/config.js";
+export type { IronCliwConfig } from "../config/config.js";
 export { isDangerousNameMatchingEnabled } from "../config/dangerous-name-matching.js";
 export {
   GROUP_POLICY_BLOCKED_LABEL,
@@ -56,7 +56,7 @@ export { fetchWithSsrFGuard } from "../infra/net/fetch-guard.js";
 export { missingTargetError } from "../infra/outbound/target-errors.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 export { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
 export { resolveDmGroupAccessWithLists } from "../security/dm-policy-shared.js";
 export { formatDocsLink } from "../terminal/links.js";
@@ -76,3 +76,4 @@ export {
   resolveWebhookTargets,
   resolveWebhookTargetWithAuthOrReject,
 } from "./webhook-targets.js";
+

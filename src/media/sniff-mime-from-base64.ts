@@ -19,3 +19,4 @@ export async function sniffMimeFromBase64(base64: string): Promise<string | unde
     return undefined;
   }
 }
+

@@ -6,3 +6,4 @@ describe("gateway SIGTERM", () => {
     // case was retired: it duplicated run-loop signal coverage at high runtime cost.
   });
 });
+

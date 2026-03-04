@@ -1,18 +1,18 @@
-# OpenClaw gateway — Podman Quadlet (rootless)
-# Installed by setup-podman.sh into openclaw's ~/.config/containers/systemd/
-# {{OPENCLAW_HOME}} is replaced at install time.
+# IronCliw gateway — Podman Quadlet (rootless)
+# Installed by setup-podman.sh into IronCliw's ~/.config/containers/systemd/
+# {{IronCliw_HOME}} is replaced at install time.
 
 [Unit]
-Description=OpenClaw gateway (rootless Podman)
+Description=IronCliw gateway (rootless Podman)
 
 [Container]
-Image=openclaw:local
-ContainerName=openclaw
+Image=IronCliw:local
+ContainerName=IronCliw
 UserNS=keep-id
 # Keep container UID/GID aligned with the invoking user so mounted config is readable.
 User=%U:%G
-Volume={{OPENCLAW_HOME}}/.openclaw:/home/node/.openclaw
-EnvironmentFile={{OPENCLAW_HOME}}/.openclaw/.env
+Volume={{IronCliw_HOME}}/.IronCliw:/home/node/.IronCliw
+EnvironmentFile={{IronCliw_HOME}}/.IronCliw/.env
 Environment=HOME=/home/node
 Environment=TERM=xterm-256color
 PublishPort=18789:18789
@@ -26,3 +26,4 @@ Restart=on-failure
 
 [Install]
 WantedBy=default.target
+

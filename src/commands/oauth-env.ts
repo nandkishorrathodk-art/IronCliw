@@ -20,3 +20,4 @@ export function isRemoteEnvironment(): boolean {
 
   return false;
 }
+

@@ -275,3 +275,4 @@ function rebalanceReasoningItalics(source: string, chunks: string[]): string[] {
 
   return adjusted;
 }
+

@@ -33,3 +33,4 @@ describeLive("zai live", () => {
     await expectModelReturnsAssistantText("glm-4.7");
   }, 20000);
 });
+

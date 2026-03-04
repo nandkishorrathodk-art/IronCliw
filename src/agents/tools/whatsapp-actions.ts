@@ -1,12 +1,12 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { sendReactionWhatsApp } from "../../web/outbound.js";
 import { createActionGate, jsonResult, readReactionParams, readStringParam } from "./common.js";
 import { resolveAuthorizedWhatsAppOutboundTarget } from "./whatsapp-target-auth.js";
 
 export async function handleWhatsAppAction(
   params: Record<string, unknown>,
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
 ): Promise<AgentToolResult<unknown>> {
   const action = readStringParam(params, "action", { required: true });
   const isActionEnabled = createActionGate(cfg.channels?.whatsapp?.actions);
@@ -48,3 +48,4 @@ export async function handleWhatsAppAction(
 
   throw new Error(`Unsupported WhatsApp action: ${action}`);
 }
+

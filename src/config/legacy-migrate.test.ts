@@ -345,3 +345,4 @@ describe("legacy migrate controlUi.allowedOrigins seed (issue #29385)", () => {
     ]);
   });
 });
+

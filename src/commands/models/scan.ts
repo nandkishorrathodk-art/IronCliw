@@ -357,3 +357,4 @@ export async function modelsScanCommand(
     runtime.log(`Image model: ${selectedImages[0]}`);
   }
 }
+

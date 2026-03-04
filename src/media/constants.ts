@@ -44,3 +44,4 @@ export function maxBytesForKind(kind: MediaKind): number {
       return MAX_DOCUMENT_BYTES;
   }
 }
+

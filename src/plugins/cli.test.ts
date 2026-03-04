@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock("./loader.js", () => ({
-  loadOpenClawPlugins: () => ({
+  loadIronCliwPlugins: () => ({
     cliRegistrars: [
       {
         pluginId: "memory-core",
@@ -44,3 +44,4 @@ describe("registerPluginCliCommands", () => {
     expect(mocks.otherRegister).toHaveBeenCalledTimes(1);
   });
 });
+

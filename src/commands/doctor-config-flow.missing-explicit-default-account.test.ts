@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { collectMissingExplicitDefaultAccountWarnings } from "./doctor-config-flow.js";
 
 describe("collectMissingExplicitDefaultAccountWarnings", () => {
   it("warns when multiple named accounts are configured without default selection", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           accounts: {
@@ -22,7 +22,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("does not warn for a single named account without default", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           accounts: {
@@ -36,7 +36,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("does not warn when accounts.default exists", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           accounts: {
@@ -51,7 +51,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("does not warn when defaultAccount points to a configured account", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           defaultAccount: "work",
@@ -67,7 +67,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("normalizes defaultAccount before validating configured account ids", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           defaultAccount: "Router D",
@@ -83,7 +83,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("warns when defaultAccount is invalid for configured accounts", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           defaultAccount: "missing",
@@ -102,7 +102,7 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
   });
 
   it("warns across channels that support account maps", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         telegram: {
           accounts: {
@@ -125,3 +125,4 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
     expect(warnings.some((line) => line.includes("channels.slack"))).toBe(true);
   });
 });
+

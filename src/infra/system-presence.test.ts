@@ -12,7 +12,7 @@ describe("system-presence", () => {
     const instanceIdLower = instanceIdUpper.toLowerCase();
 
     upsertPresence(instanceIdUpper, {
-      host: "openclaw",
+      host: "IronCliw",
       mode: "ui",
       instanceId: instanceIdUpper,
       reason: "connect",
@@ -43,7 +43,7 @@ describe("system-presence", () => {
 
     upsertPresence(deviceId, {
       deviceId,
-      host: "openclaw",
+      host: "IronCliw",
       roles: ["operator"],
       scopes: ["operator.admin"],
       reason: "connect",
@@ -82,3 +82,4 @@ describe("system-presence", () => {
     expect(entries.some((entry) => entry.reason === "self")).toBe(true);
   });
 });
+

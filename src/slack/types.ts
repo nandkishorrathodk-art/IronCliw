@@ -59,3 +59,4 @@ export type SlackAppMentionEvent = {
   channel_type?: "im" | "mpim" | "channel" | "group";
   attachments?: SlackAttachment[];
 };
+

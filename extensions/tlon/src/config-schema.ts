@@ -1,4 +1,4 @@
-import { buildChannelConfigSchema } from "openclaw/plugin-sdk/tlon";
+import { buildChannelConfigSchema } from "IronCliw/plugin-sdk/tlon";
 import { z } from "zod";
 
 const ShipSchema = z.string().min(1);
@@ -44,3 +44,4 @@ export const TlonConfigSchema = z.object({
 });
 
 export const tlonChannelConfigSchema = buildChannelConfigSchema(TlonConfigSchema);
+

@@ -37,3 +37,4 @@ export async function handleDiscordDmCommandDecision(params: {
   await params.onUnauthorized();
   return false;
 }
+

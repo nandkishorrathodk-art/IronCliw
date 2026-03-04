@@ -45,3 +45,4 @@ verify_installed_cli() {
     node "$entry_path" --help >/dev/null
   fi
 }
+

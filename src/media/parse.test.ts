@@ -51,3 +51,4 @@ describe("splitMediaFromOutput", () => {
     expect(result.mediaUrls).toBeUndefined();
   });
 });
+

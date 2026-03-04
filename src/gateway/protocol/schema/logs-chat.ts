@@ -79,3 +79,4 @@ export const ChatEventSchema = Type.Object(
   },
   { additionalProperties: false },
 );
+

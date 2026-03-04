@@ -72,3 +72,4 @@ describe("WizardSession", () => {
     expect(done.status).toBe("cancelled");
   });
 });
+

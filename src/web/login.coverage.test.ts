@@ -102,3 +102,4 @@ describe("loginWeb coverage", () => {
     expect(formatErrorMock).toHaveBeenCalled();
   });
 });
+

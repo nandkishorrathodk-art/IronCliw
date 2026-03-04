@@ -35,3 +35,4 @@ export async function applyAuthChoiceGoogleGeminiCli(
     label: "Google Gemini CLI",
   });
 }
+

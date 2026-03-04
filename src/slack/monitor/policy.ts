@@ -15,3 +15,4 @@ export function isSlackChannelAllowedByPolicy(params: {
   }
   return channelAllowed;
 }
+

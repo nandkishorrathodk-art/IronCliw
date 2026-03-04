@@ -43,3 +43,4 @@ describe("resolveMatrixAllowListMatch", () => {
     expect(match.matchSource).toBe("wildcard");
   });
 });
+

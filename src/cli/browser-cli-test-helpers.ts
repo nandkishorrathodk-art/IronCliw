@@ -17,3 +17,4 @@ export function createBrowserProgram(params?: { withGatewayUrl?: boolean }): {
   const parentOpts = (cmd: Command) => cmd.parent?.opts?.() as BrowserParentOpts;
   return { program, browser, parentOpts };
 }
+

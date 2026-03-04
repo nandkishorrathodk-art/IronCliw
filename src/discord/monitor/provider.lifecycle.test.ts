@@ -447,3 +447,4 @@ describe("runDiscordGatewayLifecycle", () => {
     expect(connectedTrue).toBeUndefined();
   });
 });
+

@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "openclaw/plugin-sdk/msteams";
+import type { MSTeamsConfig } from "IronCliw/plugin-sdk/msteams";
 import { describe, expect, it, vi } from "vitest";
 
 const hostMockState = vi.hoisted(() => ({
@@ -56,3 +56,4 @@ describe("msteams probe", () => {
     });
   });
 });
+

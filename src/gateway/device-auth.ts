@@ -52,3 +52,4 @@ export function buildDeviceAuthPayloadV3(params: DeviceAuthPayloadV3Params): str
     deviceFamily,
   ].join("|");
 }
+

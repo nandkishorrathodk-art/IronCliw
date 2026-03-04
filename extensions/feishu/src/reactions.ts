@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 
@@ -158,3 +158,4 @@ export const FeishuEmoji = {
 } as const;
 
 export type FeishuEmojiType = (typeof FeishuEmoji)[keyof typeof FeishuEmoji];
+

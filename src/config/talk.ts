@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { TalkConfig, TalkProviderConfig } from "./types.gateway.js";
-import type { OpenClawConfig } from "./types.js";
+import type { IronCliwConfig } from "./types.js";
 import { coerceSecretRef } from "./types.secrets.js";
 
 type TalkApiKeyDeps = {
@@ -222,7 +222,7 @@ export function normalizeTalkSection(value: TalkConfig | undefined): TalkConfig 
   return Object.keys(normalized).length > 0 ? normalized : undefined;
 }
 
-export function normalizeTalkConfig(config: OpenClawConfig): OpenClawConfig {
+export function normalizeTalkConfig(config: IronCliwConfig): IronCliwConfig {
   if (!config.talk) {
     return config;
   }
@@ -325,3 +325,4 @@ export function resolveTalkApiKey(
   }
   return readTalkApiKeyFromProfile(deps);
 }
+

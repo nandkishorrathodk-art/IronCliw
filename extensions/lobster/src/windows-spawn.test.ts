@@ -15,7 +15,7 @@ describe("resolveWindowsLobsterSpawn", () => {
   const originalProcessState = snapshotPlatformPathEnv();
 
   beforeEach(async () => {
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-lobster-win-spawn-"));
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-lobster-win-spawn-"));
     setProcessPlatform("win32");
   });
 
@@ -113,3 +113,4 @@ describe("resolveWindowsLobsterSpawn", () => {
     );
   });
 });
+

@@ -16,10 +16,10 @@ export type {
   AcpSessionUpdateTag,
 } from "../acp/runtime/types.js";
 export type {
-  OpenClawPluginApi,
-  OpenClawPluginConfigSchema,
-  OpenClawPluginService,
-  OpenClawPluginServiceContext,
+  IronCliwPluginApi,
+  IronCliwPluginConfigSchema,
+  IronCliwPluginService,
+  IronCliwPluginServiceContext,
   PluginLogger,
 } from "../plugins/types.js";
 export type {
@@ -32,3 +32,4 @@ export {
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
 } from "./windows-spawn.js";
+

@@ -805,3 +805,4 @@ export abstract class MemoryManagerEmbeddingOps extends MemoryManagerSyncOps {
       .run(entry.path, options.source, entry.hash, entry.mtimeMs, entry.size);
   }
 }
+

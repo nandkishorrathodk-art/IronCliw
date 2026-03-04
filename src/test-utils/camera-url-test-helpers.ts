@@ -19,3 +19,4 @@ export async function readFileUtf8AndCleanup(filePath: string): Promise<string> 
     await fs.unlink(filePath).catch(() => {});
   }
 }
+

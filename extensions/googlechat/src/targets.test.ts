@@ -30,3 +30,4 @@ describe("target helpers", () => {
     expect(isGoogleChatUserTarget("spaces/abc")).toBe(false);
   });
 });
+

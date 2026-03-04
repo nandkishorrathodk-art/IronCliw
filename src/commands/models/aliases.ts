@@ -117,3 +117,4 @@ export async function modelsAliasesRemoveCommand(aliasRaw: string, runtime: Runt
     runtime.log("No aliases configured.");
   }
 }
+

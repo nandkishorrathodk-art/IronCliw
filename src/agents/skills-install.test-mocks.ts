@@ -30,3 +30,4 @@ export async function mockSkillScannerModule(
     scanDirectoryWithSummary: scanDirectoryWithSummaryFromMock,
   };
 }
+

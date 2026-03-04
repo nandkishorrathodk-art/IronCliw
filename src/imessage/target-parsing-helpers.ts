@@ -130,3 +130,4 @@ export function parseChatAllowTargetPrefixes(
 
   return null;
 }
+

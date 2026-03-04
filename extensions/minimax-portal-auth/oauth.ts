@@ -2,7 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import {
   generatePkceVerifierChallenge,
   toFormUrlEncoded,
-} from "openclaw/plugin-sdk/minimax-portal-auth";
+} from "IronCliw/plugin-sdk/minimax-portal-auth";
 
 export type MiniMaxRegion = "cn" | "global";
 
@@ -242,3 +242,4 @@ export async function loginMiniMaxPortalOAuth(params: {
 
   throw new Error("MiniMax OAuth timed out waiting for authorization.");
 }
+

@@ -26,7 +26,7 @@ import {
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
   type ResolvedIMessageAccount,
-} from "openclaw/plugin-sdk/imessage";
+} from "IronCliw/plugin-sdk/imessage";
 import { getIMessageRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("imessage");
@@ -333,3 +333,4 @@ export const imessagePlugin: ChannelPlugin<ResolvedIMessageAccount> = {
     },
   },
 };
+

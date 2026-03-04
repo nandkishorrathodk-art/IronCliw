@@ -64,3 +64,4 @@ export function handleSubagentsListAction(ctx: SubagentsCommandContext): Command
 
   return stopWithText(lines.join("\n"));
 }
+

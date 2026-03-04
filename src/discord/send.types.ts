@@ -1,5 +1,5 @@
 import type { RequestClient } from "@buape/carbon";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { RetryConfig } from "../infra/retry.js";
 
 export class DiscordSendError extends Error {
@@ -29,7 +29,7 @@ export type DiscordSendResult = {
 };
 
 export type DiscordReactOpts = {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   token?: string;
   accountId?: string;
   rest?: RequestClient;
@@ -174,3 +174,4 @@ export type DiscordChannelPermissionSet = {
   allow?: string;
   deny?: string;
 };
+

@@ -21,8 +21,8 @@ const serviceReadRuntime = vi.fn(async (_env?: NodeJS.ProcessEnv) => ({ status: 
 const serviceReadCommand = vi.fn(async (_env?: NodeJS.ProcessEnv) => ({
   programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
   environment: {
-    OPENCLAW_STATE_DIR: "/tmp/openclaw-daemon",
-    OPENCLAW_CONFIG_PATH: "/tmp/openclaw-daemon/openclaw.json",
+    IronCliw_STATE_DIR: "/tmp/IronCliw-daemon",
+    IronCliw_CONFIG_PATH: "/tmp/IronCliw-daemon/IronCliw.json",
   },
 }));
 const resolveGatewayBindHost = vi.fn(
@@ -31,10 +31,10 @@ const resolveGatewayBindHost = vi.fn(
 const pickPrimaryTailnetIPv4 = vi.fn(() => "100.64.0.9");
 const resolveGatewayPort = vi.fn((_cfg?: unknown, _env?: unknown) => 18789);
 const resolveStateDir = vi.fn(
-  (env: NodeJS.ProcessEnv) => env.OPENCLAW_STATE_DIR ?? "/tmp/openclaw-cli",
+  (env: NodeJS.ProcessEnv) => env.IronCliw_STATE_DIR ?? "/tmp/IronCliw-cli",
 );
 const resolveConfigPath = vi.fn((env: NodeJS.ProcessEnv, stateDir: string) => {
-  return env.OPENCLAW_CONFIG_PATH ?? `${stateDir}/openclaw.json`;
+  return env.IronCliw_CONFIG_PATH ?? `${stateDir}/IronCliw.json`;
 });
 let daemonLoadedConfig: Record<string, unknown> = {
   gateway: {
@@ -51,7 +51,7 @@ let cliLoadedConfig: Record<string, unknown> = {
 
 vi.mock("../../config/config.js", () => ({
   createConfigIO: ({ configPath }: { configPath: string }) => {
-    const isDaemon = configPath.includes("/openclaw-daemon/");
+    const isDaemon = configPath.includes("/IronCliw-daemon/");
     return {
       readConfigFileSnapshot: async () => ({
         path: configPath,
@@ -119,16 +119,16 @@ describe("gatherDaemonStatus", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv([
-      "OPENCLAW_STATE_DIR",
-      "OPENCLAW_CONFIG_PATH",
-      "OPENCLAW_GATEWAY_TOKEN",
-      "OPENCLAW_GATEWAY_PASSWORD",
+      "IronCliw_STATE_DIR",
+      "IronCliw_CONFIG_PATH",
+      "IronCliw_GATEWAY_TOKEN",
+      "IronCliw_GATEWAY_PASSWORD",
       "DAEMON_GATEWAY_PASSWORD",
     ]);
-    process.env.OPENCLAW_STATE_DIR = "/tmp/openclaw-cli";
-    process.env.OPENCLAW_CONFIG_PATH = "/tmp/openclaw-cli/openclaw.json";
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+    process.env.IronCliw_STATE_DIR = "/tmp/IronCliw-cli";
+    process.env.IronCliw_CONFIG_PATH = "/tmp/IronCliw-cli/IronCliw.json";
+    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IronCliw_GATEWAY_PASSWORD;
     delete process.env.DAEMON_GATEWAY_PASSWORD;
     callGatewayStatusProbe.mockClear();
     loadGatewayTlsRuntime.mockClear();
@@ -262,3 +262,4 @@ describe("gatherDaemonStatus", () => {
     expect(status.rpc).toBeUndefined();
   });
 });
+

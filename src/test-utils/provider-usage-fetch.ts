@@ -25,3 +25,4 @@ export function createProviderUsageFetch(
   );
   return withFetchPreconnect(mockFetch) as typeof fetch & UsageFetchMock;
 }
+

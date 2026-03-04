@@ -52,3 +52,4 @@ export function getTelegramSequentialKey(ctx: TelegramSequentialKeyContext): str
   }
   return "telegram:unknown";
 }
+

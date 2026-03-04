@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import type { SkillSnapshot } from "../skills.js";
 
 const hoisted = vi.hoisted(() => ({
   loadWorkspaceSkillEntries: vi.fn(
-    (_workspaceDir: string, _options?: { config?: OpenClawConfig }) => [],
+    (_workspaceDir: string, _options?: { config?: IronCliwConfig }) => [],
   ),
 }));
 
@@ -12,7 +12,7 @@ vi.mock("../skills.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../skills.js")>();
   return {
     ...actual,
-    loadWorkspaceSkillEntries: (workspaceDir: string, options?: { config?: OpenClawConfig }) =>
+    loadWorkspaceSkillEntries: (workspaceDir: string, options?: { config?: IronCliwConfig }) =>
       hoisted.loadWorkspaceSkillEntries(workspaceDir, options),
   };
 });
@@ -26,7 +26,7 @@ describe("resolveEmbeddedRunSkillEntries", () => {
   });
 
   it("loads skill entries with config when no resolved snapshot skills exist", () => {
-    const config: OpenClawConfig = {
+    const config: IronCliwConfig = {
       plugins: {
         entries: {
           diffs: { enabled: true },
@@ -68,3 +68,4 @@ describe("resolveEmbeddedRunSkillEntries", () => {
     expect(hoisted.loadWorkspaceSkillEntries).not.toHaveBeenCalled();
   });
 });
+

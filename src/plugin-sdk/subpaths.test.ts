@@ -1,51 +1,51 @@
-import * as compatSdk from "openclaw/plugin-sdk/compat";
-import * as discordSdk from "openclaw/plugin-sdk/discord";
-import * as imessageSdk from "openclaw/plugin-sdk/imessage";
-import * as lineSdk from "openclaw/plugin-sdk/line";
-import * as msteamsSdk from "openclaw/plugin-sdk/msteams";
-import * as signalSdk from "openclaw/plugin-sdk/signal";
-import * as slackSdk from "openclaw/plugin-sdk/slack";
-import * as whatsappSdk from "openclaw/plugin-sdk/whatsapp";
+import * as compatSdk from "IronCliw/plugin-sdk/compat";
+import * as discordSdk from "IronCliw/plugin-sdk/discord";
+import * as imessageSdk from "IronCliw/plugin-sdk/imessage";
+import * as lineSdk from "IronCliw/plugin-sdk/line";
+import * as msteamsSdk from "IronCliw/plugin-sdk/msteams";
+import * as signalSdk from "IronCliw/plugin-sdk/signal";
+import * as slackSdk from "IronCliw/plugin-sdk/slack";
+import * as whatsappSdk from "IronCliw/plugin-sdk/whatsapp";
 import { describe, expect, it } from "vitest";
 
 const bundledExtensionSubpathLoaders = [
-  { id: "acpx", load: () => import("openclaw/plugin-sdk/acpx") },
-  { id: "bluebubbles", load: () => import("openclaw/plugin-sdk/bluebubbles") },
-  { id: "copilot-proxy", load: () => import("openclaw/plugin-sdk/copilot-proxy") },
-  { id: "device-pair", load: () => import("openclaw/plugin-sdk/device-pair") },
-  { id: "diagnostics-otel", load: () => import("openclaw/plugin-sdk/diagnostics-otel") },
-  { id: "diffs", load: () => import("openclaw/plugin-sdk/diffs") },
-  { id: "feishu", load: () => import("openclaw/plugin-sdk/feishu") },
+  { id: "acpx", load: () => import("IronCliw/plugin-sdk/acpx") },
+  { id: "bluebubbles", load: () => import("IronCliw/plugin-sdk/bluebubbles") },
+  { id: "copilot-proxy", load: () => import("IronCliw/plugin-sdk/copilot-proxy") },
+  { id: "device-pair", load: () => import("IronCliw/plugin-sdk/device-pair") },
+  { id: "diagnostics-otel", load: () => import("IronCliw/plugin-sdk/diagnostics-otel") },
+  { id: "diffs", load: () => import("IronCliw/plugin-sdk/diffs") },
+  { id: "feishu", load: () => import("IronCliw/plugin-sdk/feishu") },
   {
     id: "google-gemini-cli-auth",
-    load: () => import("openclaw/plugin-sdk/google-gemini-cli-auth"),
+    load: () => import("IronCliw/plugin-sdk/google-gemini-cli-auth"),
   },
-  { id: "googlechat", load: () => import("openclaw/plugin-sdk/googlechat") },
-  { id: "irc", load: () => import("openclaw/plugin-sdk/irc") },
-  { id: "llm-task", load: () => import("openclaw/plugin-sdk/llm-task") },
-  { id: "lobster", load: () => import("openclaw/plugin-sdk/lobster") },
-  { id: "matrix", load: () => import("openclaw/plugin-sdk/matrix") },
-  { id: "mattermost", load: () => import("openclaw/plugin-sdk/mattermost") },
-  { id: "memory-core", load: () => import("openclaw/plugin-sdk/memory-core") },
-  { id: "memory-lancedb", load: () => import("openclaw/plugin-sdk/memory-lancedb") },
+  { id: "googlechat", load: () => import("IronCliw/plugin-sdk/googlechat") },
+  { id: "irc", load: () => import("IronCliw/plugin-sdk/irc") },
+  { id: "llm-task", load: () => import("IronCliw/plugin-sdk/llm-task") },
+  { id: "lobster", load: () => import("IronCliw/plugin-sdk/lobster") },
+  { id: "matrix", load: () => import("IronCliw/plugin-sdk/matrix") },
+  { id: "mattermost", load: () => import("IronCliw/plugin-sdk/mattermost") },
+  { id: "memory-core", load: () => import("IronCliw/plugin-sdk/memory-core") },
+  { id: "memory-lancedb", load: () => import("IronCliw/plugin-sdk/memory-lancedb") },
   {
     id: "minimax-portal-auth",
-    load: () => import("openclaw/plugin-sdk/minimax-portal-auth"),
+    load: () => import("IronCliw/plugin-sdk/minimax-portal-auth"),
   },
-  { id: "nextcloud-talk", load: () => import("openclaw/plugin-sdk/nextcloud-talk") },
-  { id: "nostr", load: () => import("openclaw/plugin-sdk/nostr") },
-  { id: "open-prose", load: () => import("openclaw/plugin-sdk/open-prose") },
-  { id: "phone-control", load: () => import("openclaw/plugin-sdk/phone-control") },
-  { id: "qwen-portal-auth", load: () => import("openclaw/plugin-sdk/qwen-portal-auth") },
-  { id: "synology-chat", load: () => import("openclaw/plugin-sdk/synology-chat") },
-  { id: "talk-voice", load: () => import("openclaw/plugin-sdk/talk-voice") },
-  { id: "test-utils", load: () => import("openclaw/plugin-sdk/test-utils") },
-  { id: "thread-ownership", load: () => import("openclaw/plugin-sdk/thread-ownership") },
-  { id: "tlon", load: () => import("openclaw/plugin-sdk/tlon") },
-  { id: "twitch", load: () => import("openclaw/plugin-sdk/twitch") },
-  { id: "voice-call", load: () => import("openclaw/plugin-sdk/voice-call") },
-  { id: "zalo", load: () => import("openclaw/plugin-sdk/zalo") },
-  { id: "zalouser", load: () => import("openclaw/plugin-sdk/zalouser") },
+  { id: "nextcloud-talk", load: () => import("IronCliw/plugin-sdk/nextcloud-talk") },
+  { id: "nostr", load: () => import("IronCliw/plugin-sdk/nostr") },
+  { id: "open-prose", load: () => import("IronCliw/plugin-sdk/open-prose") },
+  { id: "phone-control", load: () => import("IronCliw/plugin-sdk/phone-control") },
+  { id: "qwen-portal-auth", load: () => import("IronCliw/plugin-sdk/qwen-portal-auth") },
+  { id: "synology-chat", load: () => import("IronCliw/plugin-sdk/synology-chat") },
+  { id: "talk-voice", load: () => import("IronCliw/plugin-sdk/talk-voice") },
+  { id: "test-utils", load: () => import("IronCliw/plugin-sdk/test-utils") },
+  { id: "thread-ownership", load: () => import("IronCliw/plugin-sdk/thread-ownership") },
+  { id: "tlon", load: () => import("IronCliw/plugin-sdk/tlon") },
+  { id: "twitch", load: () => import("IronCliw/plugin-sdk/twitch") },
+  { id: "voice-call", load: () => import("IronCliw/plugin-sdk/voice-call") },
+  { id: "zalo", load: () => import("IronCliw/plugin-sdk/zalo") },
+  { id: "zalouser", load: () => import("IronCliw/plugin-sdk/zalouser") },
 ] as const;
 
 describe("plugin-sdk subpath exports", () => {
@@ -97,3 +97,4 @@ describe("plugin-sdk subpath exports", () => {
     }
   });
 });
+

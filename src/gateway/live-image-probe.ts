@@ -128,3 +128,4 @@ export function renderCatNoncePngBase64(nonce: string): string {
   const png = encodePngRgba(buf, width, height);
   return png.toString("base64");
 }
+

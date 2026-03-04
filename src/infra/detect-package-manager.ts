@@ -27,3 +27,4 @@ export async function detectPackageManager(root: string): Promise<DetectedPackag
   }
   return null;
 }
+

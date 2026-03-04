@@ -20,3 +20,4 @@ export function normalizeHttpWebhookUrl(value: unknown): string | null {
     return null;
   }
 }
+

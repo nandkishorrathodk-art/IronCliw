@@ -28,3 +28,4 @@ export function normalizeDeviceAuthScopes(scopes: string[] | undefined): string[
   }
   return [...out].toSorted();
 }
+

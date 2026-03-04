@@ -427,3 +427,4 @@ describe("tui-event-handlers: handleAgentEvent", () => {
     expect(chatLog.finalizeAssistant).not.toHaveBeenCalled();
   });
 });
+

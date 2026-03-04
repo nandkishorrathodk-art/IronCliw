@@ -178,14 +178,14 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "verify_block",
-              elements: [{ type: "button", action_id: "openclaw:verify" }],
+              elements: [{ type: "button", action_id: "IronCliw:verify" }],
             },
           ],
         },
       },
       action: {
         type: "button",
-        action_id: "openclaw:verify",
+        action_id: "IronCliw:verify",
         block_id: "verify_block",
         value: "approved",
         text: { type: "plain_text", text: "Approve" },
@@ -209,7 +209,7 @@ describe("registerSlackInteractionEvents", () => {
       threadTs?: string;
     };
     expect(payload).toMatchObject({
-      actionId: "openclaw:verify",
+      actionId: "IronCliw:verify",
       actionType: "button",
       value: "approved",
       userId: "U123",
@@ -255,7 +255,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "button",
-        action_id: "openclaw:verify",
+        action_id: "IronCliw:verify",
       },
     });
 
@@ -285,7 +285,7 @@ describe("registerSlackInteractionEvents", () => {
         team: { id: "T9" },
         view: {
           id: "V123",
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           private_metadata: JSON.stringify({ userId: "U123" }),
         },
       },
@@ -300,7 +300,7 @@ describe("registerSlackInteractionEvents", () => {
         team: { id: "T9" },
         view: {
           id: "V123",
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           private_metadata: JSON.stringify({ userId: "U123" }),
         },
       },
@@ -329,7 +329,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "static_select",
-        action_id: "openclaw:pick",
+        action_id: "IronCliw:pick",
         block_id: "select_block",
         selected_option: {
           text: { type: "plain_text", text: "Canary" },
@@ -390,7 +390,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "button",
-        action_id: "openclaw:verify",
+        action_id: "IronCliw:verify",
         block_id: "verify_block",
       },
     });
@@ -429,7 +429,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "button",
-        action_id: "openclaw:verify",
+        action_id: "IronCliw:verify",
         block_id: "verify_block",
       },
     });
@@ -463,7 +463,7 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "verify_block",
-              elements: [{ type: "button", action_id: "openclaw:verify" }],
+              elements: [{ type: "button", action_id: "IronCliw:verify" }],
             },
           ],
         },
@@ -497,7 +497,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "static_select",
-        action_id: "openclaw:pick",
+        action_id: "IronCliw:pick",
         block_id: "select_block",
         selected_option: {
           text: { type: "plain_text", text: "Canary_*`~<&>" },
@@ -543,7 +543,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "button",
-        action_id: "openclaw:container",
+        action_id: "IronCliw:container",
         block_id: "container_block",
         value: "ok",
         text: { type: "plain_text", text: "Container" },
@@ -592,14 +592,14 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "multi_block",
-              elements: [{ type: "multi_static_select", action_id: "openclaw:multi" }],
+              elements: [{ type: "multi_static_select", action_id: "IronCliw:multi" }],
             },
           ],
         },
       },
       action: {
         type: "multi_static_select",
-        action_id: "openclaw:multi",
+        action_id: "IronCliw:multi",
         block_id: "multi_block",
         selected_options: [
           { text: { type: "plain_text", text: "Alpha" }, value: "alpha" },
@@ -651,24 +651,24 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "date_block",
-              elements: [{ type: "datepicker", action_id: "openclaw:date" }],
+              elements: [{ type: "datepicker", action_id: "IronCliw:date" }],
             },
             {
               type: "actions",
               block_id: "time_block",
-              elements: [{ type: "timepicker", action_id: "openclaw:time" }],
+              elements: [{ type: "timepicker", action_id: "IronCliw:time" }],
             },
             {
               type: "actions",
               block_id: "datetime_block",
-              elements: [{ type: "datetimepicker", action_id: "openclaw:datetime" }],
+              elements: [{ type: "datetimepicker", action_id: "IronCliw:datetime" }],
             },
           ],
         },
       },
       action: {
         type: "datepicker",
-        action_id: "openclaw:date",
+        action_id: "IronCliw:date",
         block_id: "date_block",
         selected_date: "2026-02-16",
       },
@@ -686,14 +686,14 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "time_block",
-              elements: [{ type: "timepicker", action_id: "openclaw:time" }],
+              elements: [{ type: "timepicker", action_id: "IronCliw:time" }],
             },
           ],
         },
       },
       action: {
         type: "timepicker",
-        action_id: "openclaw:time",
+        action_id: "IronCliw:time",
         block_id: "time_block",
         selected_time: "14:30",
       },
@@ -711,14 +711,14 @@ describe("registerSlackInteractionEvents", () => {
             {
               type: "actions",
               block_id: "datetime_block",
-              elements: [{ type: "datetimepicker", action_id: "openclaw:datetime" }],
+              elements: [{ type: "datetimepicker", action_id: "IronCliw:datetime" }],
             },
           ],
         },
       },
       action: {
         type: "datetimepicker",
-        action_id: "openclaw:datetime",
+        action_id: "IronCliw:datetime",
         block_id: "datetime_block",
         selected_date_time: selectedDateTimeEpoch,
       },
@@ -793,7 +793,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "multi_conversations_select",
-        action_id: "openclaw:route",
+        action_id: "IronCliw:route",
         selected_user: "U777",
         selected_users: ["U777", "U888"],
         selected_channel: "C777",
@@ -863,7 +863,7 @@ describe("registerSlackInteractionEvents", () => {
       },
       action: {
         type: "workflow_button",
-        action_id: "openclaw:workflow",
+        action_id: "IronCliw:workflow",
         block_id: "workflow_block",
         text: { type: "plain_text", text: "Launch workflow" },
         workflow: {
@@ -907,7 +907,7 @@ describe("registerSlackInteractionEvents", () => {
         team: { id: "T1" },
         view: {
           id: "V123",
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           root_view_id: "VROOT",
           previous_view_id: "VPREV",
           external_id: "deploy-ext-1",
@@ -971,8 +971,8 @@ describe("registerSlackInteractionEvents", () => {
     };
     expect(payload).toMatchObject({
       interactionType: "view_submission",
-      actionId: "view:openclaw:deploy_form",
-      callbackId: "openclaw:deploy_form",
+      actionId: "view:IronCliw:deploy_form",
+      callbackId: "IronCliw:deploy_form",
       viewId: "V123",
       userId: "U777",
       routedChannelId: "D123",
@@ -1003,7 +1003,7 @@ describe("registerSlackInteractionEvents", () => {
       body: {
         user: { id: "U222" },
         view: {
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           private_metadata: JSON.stringify({
             channelId: "D123",
             channelType: "im",
@@ -1030,7 +1030,7 @@ describe("registerSlackInteractionEvents", () => {
       body: {
         user: { id: "U222" },
         view: {
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           private_metadata: JSON.stringify({
             channelId: "D123",
             channelType: "im",
@@ -1057,7 +1057,7 @@ describe("registerSlackInteractionEvents", () => {
         user: { id: "U444" },
         view: {
           id: "V400",
-          callback_id: "openclaw:routing_form",
+          callback_id: "IronCliw:routing_form",
           private_metadata: JSON.stringify({ userId: "U444" }),
           state: {
             values: {
@@ -1133,13 +1133,13 @@ describe("registerSlackInteractionEvents", () => {
               email_block: {
                 email_input: {
                   type: "email_text_input",
-                  value: "team@openclaw.ai",
+                  value: "team@IronCliw.ai",
                 },
               },
               url_block: {
                 url_input: {
                   type: "url_text_input",
-                  value: "https://docs.openclaw.ai",
+                  value: "https://docs.IronCliw.ai",
                 },
               },
               richtext_block: {
@@ -1230,12 +1230,12 @@ describe("registerSlackInteractionEvents", () => {
         expect.objectContaining({
           actionId: "email_input",
           inputKind: "email",
-          inputEmail: "team@openclaw.ai",
+          inputEmail: "team@IronCliw.ai",
         }),
         expect.objectContaining({
           actionId: "url_input",
           inputKind: "url",
-          inputUrl: "https://docs.openclaw.ai/",
+          inputUrl: "https://docs.IronCliw.ai/",
         }),
         expect.objectContaining({
           actionId: "richtext_input",
@@ -1273,7 +1273,7 @@ describe("registerSlackInteractionEvents", () => {
         user: { id: "U555" },
         view: {
           id: "V555",
-          callback_id: "openclaw:long_richtext",
+          callback_id: "IronCliw:long_richtext",
           private_metadata: JSON.stringify({ userId: "U555" }),
           state: {
             values: {
@@ -1323,7 +1323,7 @@ describe("registerSlackInteractionEvents", () => {
         is_cleared: true,
         view: {
           id: "V900",
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           root_view_id: "VROOT900",
           previous_view_id: "VPREV900",
           external_id: "deploy-ext-900",
@@ -1373,8 +1373,8 @@ describe("registerSlackInteractionEvents", () => {
     };
     expect(payload).toMatchObject({
       interactionType: "view_closed",
-      actionId: "view:openclaw:deploy_form",
-      callbackId: "openclaw:deploy_form",
+      actionId: "view:IronCliw:deploy_form",
+      callbackId: "IronCliw:deploy_form",
       viewId: "V900",
       userId: "U900",
       isCleared: true,
@@ -1407,7 +1407,7 @@ describe("registerSlackInteractionEvents", () => {
         user: { id: "U901" },
         view: {
           id: "V901",
-          callback_id: "openclaw:deploy_form",
+          callback_id: "IronCliw:deploy_form",
           private_metadata: JSON.stringify({ userId: "U901" }),
         },
       },
@@ -1456,7 +1456,7 @@ describe("registerSlackInteractionEvents", () => {
         team: { id: "T1" },
         view: {
           id: "V915",
-          callback_id: "openclaw:oversize",
+          callback_id: "IronCliw:oversize",
           private_metadata: JSON.stringify({
             channelId: "D915",
             channelType: "im",
@@ -1484,3 +1484,4 @@ describe("registerSlackInteractionEvents", () => {
   });
 });
 const selectedDateTimeEpoch = 1_771_632_300;
+

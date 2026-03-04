@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { installCommonResolveTargetErrorCases } from "../../shared/resolve-target-test-helpers.js";
 
-vi.mock("openclaw/plugin-sdk/whatsapp", async () => {
-  const actual = await vi.importActual<typeof import("openclaw/plugin-sdk/whatsapp")>(
-    "openclaw/plugin-sdk/whatsapp",
+vi.mock("IronCliw/plugin-sdk/whatsapp", async () => {
+  const actual = await vi.importActual<typeof import("IronCliw/plugin-sdk/whatsapp")>(
+    "IronCliw/plugin-sdk/whatsapp",
   );
   const normalizeWhatsAppTarget = (value: string) => {
     if (value === "invalid-target") return null;
@@ -148,3 +148,4 @@ describe("whatsapp resolveTarget", () => {
     implicitAllowFrom: ["5511999999999"],
   });
 });
+

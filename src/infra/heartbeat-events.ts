@@ -56,3 +56,4 @@ export function onHeartbeatEvent(listener: (evt: HeartbeatEventPayload) => void)
 export function getLastHeartbeatEvent(): HeartbeatEventPayload | null {
   return lastHeartbeat;
 }
+

@@ -120,3 +120,4 @@ describe("redactSensitiveText", () => {
     expect(output).toBe(input);
   });
 });
+

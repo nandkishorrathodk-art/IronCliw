@@ -341,3 +341,4 @@ describe("runPreparedReply media-only handling", () => {
     expect(call?.followupRun.run.extraSystemPrompt).toContain("Model switched.");
   });
 });
+

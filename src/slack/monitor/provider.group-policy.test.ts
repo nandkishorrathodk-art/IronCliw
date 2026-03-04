@@ -27,3 +27,4 @@ describe("resolveSlackRuntimeGroupPolicy", () => {
     expect(resolved.providerMissingFallbackApplied).toBe(true);
   });
 });
+

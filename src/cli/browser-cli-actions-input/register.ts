@@ -14,3 +14,4 @@ export function registerBrowserActionInputCommands(
   registerBrowserFilesAndDownloadsCommands(browser, parentOpts);
   registerBrowserFormWaitEvalCommands(browser, parentOpts);
 }
+

@@ -62,3 +62,4 @@ export function buildEmbeddingBatchGroupOptions<TRequest>(
     debugLabel: options.debugLabel,
   };
 }
+

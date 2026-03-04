@@ -497,7 +497,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart OpenClaw.",
+      description: "Restart IronCliw.",
       textAlias: "/restart",
       category: "tools",
     }),
@@ -774,3 +774,4 @@ export function getNativeCommandSurfaces(): Set<string> {
   cachedNativeRegistry = registry;
   return cachedNativeCommandSurfaces;
 }
+

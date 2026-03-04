@@ -7,3 +7,4 @@ export function generateSecureUuid(): string {
 export function generateSecureToken(bytes = 16): string {
   return randomBytes(bytes).toString("base64url");
 }
+

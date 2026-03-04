@@ -31,3 +31,4 @@ describe("nextcloud-talk policy", () => {
     });
   });
 });
+

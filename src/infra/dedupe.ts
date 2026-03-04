@@ -77,3 +77,4 @@ export function createDedupeCache(options: DedupeCacheOptions): DedupeCache {
     size: () => cache.size,
   };
 }
+

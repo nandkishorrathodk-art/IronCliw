@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/signal";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/signal";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getSignalRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

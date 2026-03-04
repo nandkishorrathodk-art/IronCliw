@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "openclaw/plugin-sdk/msteams";
+import type { MSTeamsConfig } from "IronCliw/plugin-sdk/msteams";
 import { describe, expect, it } from "vitest";
 import {
   isMSTeamsGroupAllowed,
@@ -219,3 +219,4 @@ describe("msteams policy", () => {
     });
   });
 });
+

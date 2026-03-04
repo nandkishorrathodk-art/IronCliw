@@ -59,3 +59,4 @@ export function presenceCacheSize(): number {
   }
   return total;
 }
+

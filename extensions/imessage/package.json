@@ -1,12 +1,13 @@
 {
-  "name": "@openclaw/imessage",
+  "name": "@IronCliw/imessage",
   "version": "2026.3.2",
   "private": true,
-  "description": "OpenClaw iMessage channel plugin",
+  "description": "IronCliw iMessage channel plugin",
   "type": "module",
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ]
   }
 }
+

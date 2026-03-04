@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { PluginLogger } from "openclaw/plugin-sdk/diffs";
+import type { PluginLogger } from "IronCliw/plugin-sdk/diffs";
 import type { DiffArtifactMeta, DiffOutputFormat } from "./types.js";
 
 const DEFAULT_TTL_MS = 30 * 60 * 1000;
@@ -356,3 +356,4 @@ function isExpired(meta: { expiresAt: string }): boolean {
 function isFileNotFound(error: unknown): boolean {
   return error instanceof Error && "code" in error && error.code === "ENOENT";
 }
+

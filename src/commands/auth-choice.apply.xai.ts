@@ -63,3 +63,4 @@ export async function applyAuthChoiceXAI(
 
   return { config: nextConfig, agentModelOverride };
 }
+

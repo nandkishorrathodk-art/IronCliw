@@ -86,3 +86,4 @@ test("exec tears down PTY resources on timeout", async () => {
   expect(disposeData).toHaveBeenCalledTimes(1);
   expect(disposeExit).toHaveBeenCalledTimes(1);
 });
+

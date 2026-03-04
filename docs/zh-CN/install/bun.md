@@ -63,3 +63,4 @@ bun pm trust @whiskeysockets/baileys protobufjs
 ## 注意事项
 
 - 一些脚本仍然硬编码 pnpm（例如 `docs:build`、`ui:*`、`protocol:check`）。目前请通过 pnpm 运行这些脚本。
+

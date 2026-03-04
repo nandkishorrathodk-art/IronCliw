@@ -41,3 +41,4 @@ export function styleHealthChannelLine(line: string, rich: boolean): string {
 
   return line;
 }
+

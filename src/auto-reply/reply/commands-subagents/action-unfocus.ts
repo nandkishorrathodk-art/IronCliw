@@ -40,3 +40,4 @@ export function handleSubagentsUnfocusAction(ctx: SubagentsCommandContext): Comm
   });
   return stopWithText("✅ Thread unfocused.");
 }
+

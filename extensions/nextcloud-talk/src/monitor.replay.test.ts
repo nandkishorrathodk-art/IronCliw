@@ -39,3 +39,4 @@ describe("createNextcloudTalkWebhookServer replay handling", () => {
     expect(onMessage).toHaveBeenCalledTimes(1);
   });
 });
+

@@ -86,3 +86,4 @@ export function buildCliSupervisorScopeKey(params: {
   }
   return `cli:${backendToken}:${commandToken}:${sessionToken}`;
 }
+

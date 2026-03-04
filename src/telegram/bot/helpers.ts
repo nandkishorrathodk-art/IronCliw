@@ -571,3 +571,4 @@ export function extractTelegramLocation(msg: Message): NormalizedLocation | null
 
   return null;
 }
+

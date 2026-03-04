@@ -191,3 +191,4 @@ export async function searchMessagesDiscord(
   }
   return await rest.get(`/guilds/${query.guildId}/messages/search?${params.toString()}`);
 }
+

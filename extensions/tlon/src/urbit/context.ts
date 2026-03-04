@@ -1,4 +1,4 @@
-import type { SsrFPolicy } from "openclaw/plugin-sdk/tlon";
+import type { SsrFPolicy } from "IronCliw/plugin-sdk/tlon";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 
@@ -54,3 +54,4 @@ export function getDefaultSsrFPolicy(): SsrFPolicy | undefined {
   // Default: block private networks for image uploads (safer default)
   return undefined;
 }
+

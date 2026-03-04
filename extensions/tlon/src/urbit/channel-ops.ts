@@ -1,4 +1,4 @@
-import type { LookupFn, SsrFPolicy } from "openclaw/plugin-sdk/tlon";
+import type { LookupFn, SsrFPolicy } from "IronCliw/plugin-sdk/tlon";
 import { UrbitHttpError } from "./errors.js";
 import { urbitFetch } from "./fetch.js";
 
@@ -162,3 +162,4 @@ export async function ensureUrbitChannelOpen(
   });
   await wakeUrbitChannel(deps);
 }
+

@@ -157,3 +157,4 @@ describe("resolveAuthProfileOrder — cooldown auto-expiry", () => {
     expect(store.usageStats?.["openai:default"]?.errorCount).toBe(0);
   });
 });
+

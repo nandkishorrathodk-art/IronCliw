@@ -437,3 +437,4 @@ describe("subscribeEmbeddedPiSession", () => {
     expect(lifecycleError?.data?.error).toContain("API rate limit reached");
   });
 });
+

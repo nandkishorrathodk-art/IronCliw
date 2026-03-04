@@ -58,3 +58,4 @@ export function awaitBackgroundTasks(backgroundTasks: Set<Promise<unknown>>) {
     backgroundTasks.clear();
   });
 }
+

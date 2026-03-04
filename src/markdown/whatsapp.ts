@@ -75,3 +75,4 @@ export function markdownToWhatsApp(text: string): string {
 
   return result;
 }
+

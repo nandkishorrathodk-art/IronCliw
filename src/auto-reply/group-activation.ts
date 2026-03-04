@@ -32,3 +32,4 @@ export function parseActivationCommand(raw?: string): {
   const mode = normalizeGroupActivation(match[1]);
   return { hasCommand: true, mode };
 }
+

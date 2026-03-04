@@ -10,7 +10,7 @@ import {
   readStringParam,
   type ChannelMessageActionAdapter,
   type ChannelMessageActionName,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "IronCliw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 import { sendBlueBubblesAttachment } from "./attachments.js";
 import {
@@ -443,3 +443,4 @@ export const bluebubblesMessageActions: ChannelMessageActionAdapter = {
     throw new Error(`Action ${action} is not supported for provider ${providerId}.`);
   },
 };
+

@@ -270,3 +270,4 @@ func resolveDocsPath(docsRoot, filePath string) (string, string, error) {
 	}
 	return absPath, relPath, nil
 }
+

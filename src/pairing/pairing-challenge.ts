@@ -46,3 +46,4 @@ export async function issuePairingChallenge(
   }
   return { created: true, code };
 }
+

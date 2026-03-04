@@ -39,3 +39,4 @@ describe("validateUrbitBaseUrl", () => {
     expect(result.baseUrl).toBe("http://example.com:8080");
   });
 });
+

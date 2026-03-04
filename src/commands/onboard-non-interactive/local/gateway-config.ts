@@ -1,15 +1,15 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import { normalizeGatewayTokenInput, randomToken } from "../../onboard-helpers.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
 export function applyNonInteractiveGatewayConfig(params: {
-  nextConfig: OpenClawConfig;
+  nextConfig: IronCliwConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
   defaultPort: number;
 }): {
-  nextConfig: OpenClawConfig;
+  nextConfig: IronCliwConfig;
   port: number;
   bind: string;
   authMode: string;
@@ -51,7 +51,7 @@ export function applyNonInteractiveGatewayConfig(params: {
   let nextConfig = params.nextConfig;
   let gatewayToken =
     normalizeGatewayTokenInput(opts.gatewayToken) ||
-    normalizeGatewayTokenInput(process.env.OPENCLAW_GATEWAY_TOKEN) ||
+    normalizeGatewayTokenInput(process.env.IronCliw_GATEWAY_TOKEN) ||
     undefined;
 
   if (authMode === "token") {
@@ -115,3 +115,4 @@ export function applyNonInteractiveGatewayConfig(params: {
     gatewayToken,
   };
 }
+

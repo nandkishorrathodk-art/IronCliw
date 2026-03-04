@@ -43,3 +43,4 @@ export async function probeSlack(token: string, timeoutMs = 2500): Promise<Slack
     };
   }
 }
+

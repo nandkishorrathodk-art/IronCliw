@@ -143,3 +143,4 @@ describe("shouldEnableWindowsGitBashPasteFallback", () => {
     ).toBe(false);
   });
 });
+

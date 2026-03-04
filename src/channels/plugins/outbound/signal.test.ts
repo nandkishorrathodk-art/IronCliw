@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import { signalOutbound } from "./signal.js";
 
 describe("signalOutbound", () => {
-  const cfg: OpenClawConfig = {
+  const cfg: IronCliwConfig = {
     channels: {
       signal: {
         mediaMaxMb: 8,
@@ -68,3 +68,4 @@ describe("signalOutbound", () => {
     expect(result).toEqual({ channel: "signal", messageId: "sig-media-1", timestamp: 456 });
   });
 });
+

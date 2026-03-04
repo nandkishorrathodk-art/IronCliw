@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { compileSafeRegex } from "../security/safe-regex.js";
 import { resolveNodeRequireFromMeta } from "./node-require.js";
 import { replacePatternBounded } from "./redact-bounded.js";
@@ -106,11 +106,11 @@ function redactText(text: string, patterns: RegExp[]): string {
 }
 
 function resolveConfigRedaction(): RedactOptions {
-  let cfg: OpenClawConfig["logging"] | undefined;
+  let cfg: IronCliwConfig["logging"] | undefined;
   try {
     const loaded = requireConfig?.("../config/config.js") as
       | {
-          loadConfig?: () => OpenClawConfig;
+          loadConfig?: () => IronCliwConfig;
         }
       | undefined;
     cfg = loaded?.loadConfig?.().logging;
@@ -149,3 +149,4 @@ export function redactToolDetail(detail: string): string {
 export function getDefaultRedactPatterns(): string[] {
   return [...DEFAULT_REDACT_PATTERNS];
 }
+

@@ -65,3 +65,4 @@ describe("registerSlackChannelEvents", () => {
     expect(enqueueSystemEventMock).toHaveBeenCalledTimes(1);
   });
 });
+

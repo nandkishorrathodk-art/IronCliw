@@ -213,3 +213,4 @@ output report = session "Format report"
     Format as markdown.
   """
   context: { statistics, recommendations, calibration_data }
+

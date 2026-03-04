@@ -59,3 +59,4 @@ describe("docker base image pinning", () => {
     expect(dockerUpdate?.groups?.["docker-images"]?.patterns).toContain("*");
   });
 });
+

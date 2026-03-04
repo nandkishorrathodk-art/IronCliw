@@ -99,3 +99,4 @@ describe("createIMessageRpcClient", () => {
     expect(spawnMock).not.toHaveBeenCalled();
   });
 });
+

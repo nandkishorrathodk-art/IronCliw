@@ -309,3 +309,4 @@ export function createIcaclsResetCommand(
     display: formatIcaclsResetCommand(targetPath, opts),
   };
 }
+

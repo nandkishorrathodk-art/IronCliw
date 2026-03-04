@@ -13,3 +13,4 @@ export async function modelsSetCommand(modelRaw: string, runtime: RuntimeEnv) {
     `Default model: ${resolveAgentModelPrimaryValue(updated.agents?.defaults?.model) ?? modelRaw}`,
   );
 }
+

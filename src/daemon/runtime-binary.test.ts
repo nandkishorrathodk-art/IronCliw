@@ -43,3 +43,4 @@ describe("isBunRuntime", () => {
     expect(isBunRuntime("/usr/bin/bunx")).toBe(false);
   });
 });
+

@@ -9,13 +9,13 @@ import {
   setRuntimeConfigSnapshot,
   writeConfigFile,
 } from "./io.js";
-import type { OpenClawConfig } from "./types.js";
+import type { IronCliwConfig } from "./types.js";
 
 describe("runtime config snapshot writes", () => {
   it("preserves source secret refs when writeConfigFile receives runtime-resolved config", async () => {
-    await withTempHome("openclaw-config-runtime-write-", async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
-      const sourceConfig: OpenClawConfig = {
+    await withTempHome("IronCliw-config-runtime-write-", async (home) => {
+      const configPath = path.join(home, ".IronCliw", "IronCliw.json");
+      const sourceConfig: IronCliwConfig = {
         models: {
           providers: {
             openai: {
@@ -26,7 +26,7 @@ describe("runtime config snapshot writes", () => {
           },
         },
       };
-      const runtimeConfig: OpenClawConfig = {
+      const runtimeConfig: IronCliwConfig = {
         models: {
           providers: {
             openai: {
@@ -62,3 +62,4 @@ describe("runtime config snapshot writes", () => {
     });
   });
 });
+

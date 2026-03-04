@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import { probeFeishu } from "./probe.js";
 import type { ResolvedFeishuAccount } from "./types.js";
 
@@ -49,3 +49,4 @@ export async function fetchBotOpenIdForMonitor(
   }
   return undefined;
 }
+

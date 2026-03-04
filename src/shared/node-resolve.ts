@@ -31,3 +31,4 @@ export function resolveNodeFromNodeList<TNode extends NodeMatchCandidate>(
   const nodeId = resolveNodeIdFromNodeList(nodes, query, options);
   return nodes.find((node) => node.nodeId === nodeId) ?? ({ nodeId } as TNode);
 }
+

@@ -47,3 +47,4 @@ describe("isTruthyEnvValue", () => {
     expect(isTruthyEnvValue(undefined)).toBe(false);
   });
 });
+

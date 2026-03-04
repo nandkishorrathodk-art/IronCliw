@@ -37,3 +37,4 @@ describe("command-tree", () => {
     expect(program.commands.map((command) => command.name())).toEqual(["alpha"]);
   });
 });
+

@@ -2,6 +2,7 @@ import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   normalizeSecretInputString,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 
 export { hasConfiguredSecretInput, normalizeResolvedSecretInputString, normalizeSecretInputString };
+

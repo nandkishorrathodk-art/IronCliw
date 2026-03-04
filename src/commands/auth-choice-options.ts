@@ -357,3 +357,4 @@ export function buildAuthChoiceGroups(params: { store: AuthProfileStore; include
 
   return { groups, skipOption };
 }
+

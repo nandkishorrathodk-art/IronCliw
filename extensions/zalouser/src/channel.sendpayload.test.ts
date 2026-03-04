@@ -1,4 +1,4 @@
-import type { ReplyPayload } from "openclaw/plugin-sdk/zalouser";
+import type { ReplyPayload } from "IronCliw/plugin-sdk/zalouser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { zalouserPlugin } from "./channel.js";
 
@@ -115,3 +115,4 @@ describe("zalouserPlugin outbound sendPayload", () => {
     expect(result).toMatchObject({ channel: "zalouser" });
   });
 });
+

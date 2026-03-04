@@ -40,3 +40,4 @@ export const LineConfigSchema = LineCommonConfigSchema.extend({
 }).strict();
 
 export type LineConfigSchemaType = z.infer<typeof LineConfigSchema>;
+

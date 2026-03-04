@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "openclaw/plugin-sdk/msteams";
+import type { MSTeamsConfig } from "IronCliw/plugin-sdk/msteams";
 import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
@@ -38,3 +38,4 @@ export function resolveMSTeamsCredentials(cfg?: MSTeamsConfig): MSTeamsCredentia
 
   return { appId, appPassword, tenantId };
 }
+

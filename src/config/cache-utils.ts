@@ -34,3 +34,4 @@ export function getFileStatSnapshot(filePath: string): FileStatSnapshot | undefi
     return undefined;
   }
 }
+

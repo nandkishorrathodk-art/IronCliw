@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { callGateway } from "../gateway/call.js";
 import { validateSecretsResolveResult } from "../gateway/protocol/index.js";
@@ -12,7 +12,7 @@ import { discoverConfigSecretTargetsByIds } from "../secrets/target-registry.js"
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 
 type ResolveCommandSecretsResult = {
-  resolvedConfig: OpenClawConfig;
+  resolvedConfig: IronCliwConfig;
   diagnostics: string[];
 };
 
@@ -42,7 +42,7 @@ function dedupeDiagnostics(entries: readonly string[]): string[] {
 }
 
 function collectConfiguredTargetRefPaths(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   targetIds: Set<string>;
 }): Set<string> {
   const defaults = params.config.secrets?.defaults;
@@ -61,7 +61,7 @@ function collectConfiguredTargetRefPaths(params: {
 }
 
 function classifyConfiguredTargetRefs(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   configuredTargetRefPaths: Set<string>;
 }): {
   hasActiveConfiguredRef: boolean;
@@ -163,7 +163,7 @@ function isUnsupportedSecretsResolveError(err: unknown): boolean {
 }
 
 async function resolveCommandSecretRefsLocally(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   commandName: string;
   targetIds: Set<string>;
   preflightDiagnostics: string[];
@@ -216,7 +216,7 @@ async function resolveCommandSecretRefsLocally(params: {
 }
 
 export async function resolveCommandSecretRefsViaGateway(params: {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   commandName: string;
   targetIds: Set<string>;
 }): Promise<ResolveCommandSecretsResult> {
@@ -315,3 +315,4 @@ export async function resolveCommandSecretRefsViaGateway(params: {
     diagnostics: dedupeDiagnostics(parsed.diagnostics),
   };
 }
+

@@ -16,7 +16,7 @@ const hoisted = vi.hoisted(() => {
       configured: true,
       accountId: "default",
       host: "irc.example.com",
-      nick: "openclaw",
+      nick: "IronCliw",
       port: 6697,
       tls: true,
     })),
@@ -114,3 +114,4 @@ describe("sendMessageIrc cfg threading", () => {
     expect(client.sendPrivmsg).toHaveBeenCalledWith("#ops", "ping");
   });
 });
+

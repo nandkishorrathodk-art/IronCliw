@@ -20,3 +20,4 @@ export function parseConfigCommand(raw: string): ConfigCommand | null {
     },
   });
 }
+

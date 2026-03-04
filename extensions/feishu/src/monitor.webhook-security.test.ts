@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const probeFeishuMock = vi.hoisted(() => vi.fn());
@@ -224,3 +224,4 @@ describe("Feishu webhook security hardening", () => {
     expect(getFeishuWebhookRateLimitStateSizeForTest()).toBe(1);
   });
 });
+

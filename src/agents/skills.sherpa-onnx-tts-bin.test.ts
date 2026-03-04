@@ -21,3 +21,4 @@ describe("skills/sherpa-onnx-tts bin script", () => {
     expect(result.stderr).not.toContain("require is not defined in ES module scope");
   });
 });
+

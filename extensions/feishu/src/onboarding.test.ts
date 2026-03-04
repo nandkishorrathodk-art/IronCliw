@@ -145,3 +145,4 @@ describe("feishuOnboardingAdapter.getStatus", () => {
     }
   });
 });
+

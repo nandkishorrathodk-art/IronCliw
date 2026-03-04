@@ -11,3 +11,4 @@ export type GatewayWsClient = {
   canvasCapability?: string;
   canvasCapabilityExpiresAtMs?: number;
 };
+

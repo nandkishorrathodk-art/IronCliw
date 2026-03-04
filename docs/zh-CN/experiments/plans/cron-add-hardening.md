@@ -1,6 +1,6 @@
 ---
 last_updated: "2026-01-05"
-owner: openclaw
+owner: IronCliw
 status: complete
 summary: 加固 cron.add 输入处理，对齐 schema，改进 cron UI/智能体工具
 title: Cron Add 加固
@@ -68,3 +68,4 @@ x-i18n:
 
 - `cron.add` 是否应该接受来自客户端的显式 `state`（当前被 schema 禁止）？
 - 我们是否应该允许 `webchat` 作为显式投递提供商（当前在投递解析中被过滤）？
+

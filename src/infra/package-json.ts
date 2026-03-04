@@ -21,3 +21,4 @@ export async function readPackageName(root: string): Promise<string | null> {
     return null;
   }
 }
+

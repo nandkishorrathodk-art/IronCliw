@@ -11,3 +11,4 @@ export async function createWindowsCmdShimFixture(params: {
   await fs.writeFile(params.scriptPath, "module.exports = {};\n", "utf8");
   await fs.writeFile(params.shimPath, `@echo off\r\n${params.shimLine}\r\n`, "utf8");
 }
+

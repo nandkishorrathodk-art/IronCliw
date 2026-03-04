@@ -22,3 +22,4 @@ describe("resolveTelegramStreamMode", () => {
     expect(resolveTelegramStreamMode({ streaming: "progress" })).toBe("partial");
   });
 });
+

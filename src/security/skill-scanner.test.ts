@@ -378,3 +378,4 @@ describe("scanDirectoryWithSummary", () => {
     readdirSpy.mockRestore();
   });
 });
+

@@ -59,3 +59,4 @@ describe("resolveThreadBindingsEnabled", () => {
     ).toBe(false);
   });
 });
+

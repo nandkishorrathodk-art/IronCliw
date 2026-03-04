@@ -98,3 +98,4 @@ describe("listenGatewayHttpServer", () => {
     expect(fake.closeCalls).toBe(0);
   });
 });
+

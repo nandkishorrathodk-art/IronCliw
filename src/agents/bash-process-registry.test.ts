@@ -115,3 +115,4 @@ describe("bash process registry", () => {
     expect(listFinishedSessions()).toHaveLength(1);
   });
 });
+

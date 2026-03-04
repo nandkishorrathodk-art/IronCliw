@@ -251,3 +251,4 @@ describe("export html security hardening", () => {
     expect(img?.getAttribute("src")).toBe("data:application/octet-stream;base64,AAAA");
   });
 });
+

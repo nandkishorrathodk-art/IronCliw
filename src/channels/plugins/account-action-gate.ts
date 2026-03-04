@@ -19,3 +19,4 @@ export function createAccountActionGate<T extends Record<string, boolean | undef
     return defaultValue;
   };
 }
+

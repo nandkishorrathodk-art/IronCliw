@@ -22,7 +22,7 @@ title: "Thinking Levels"
 - Provider notes:
   - Anthropic Claude 4.6 models default to `adaptive` when no explicit thinking level is set.
   - Z.AI (`zai/*`) only supports binary thinking (`on`/`off`). Any non-`off` level is treated as `on` (mapped to `low`).
-  - Moonshot (`moonshot/*`) maps `/think off` to `thinking: { type: "disabled" }` and any non-`off` level to `thinking: { type: "enabled" }`. When thinking is enabled, Moonshot only accepts `tool_choice` `auto|none`; OpenClaw normalizes incompatible values to `auto`.
+  - Moonshot (`moonshot/*`) maps `/think off` to `thinking: { type: "disabled" }` and any non-`off` level to `thinking: { type: "enabled" }`. When thinking is enabled, Moonshot only accepts `tool_choice` `auto|none`; IronCliw normalizes incompatible values to `auto`.
 
 ## Resolution order
 
@@ -76,3 +76,4 @@ title: "Thinking Levels"
 - The web chat thinking selector mirrors the session's stored level from the inbound session store/config when the page loads.
 - Picking another level applies only to the next message (`thinkingOnce`); after sending, the selector snaps back to the stored session level.
 - To change the session default, send a `/think:<level>` directive (as before); the selector will reflect it after the next reload.
+

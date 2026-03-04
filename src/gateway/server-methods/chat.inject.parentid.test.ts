@@ -8,7 +8,7 @@ import { createTranscriptFixtureSync } from "./chat.test-helpers.js";
 describe("gateway chat.inject transcript writes", () => {
   it("appends a Pi session entry that includes parentId", async () => {
     const { dir, transcriptPath } = createTranscriptFixtureSync({
-      prefix: "openclaw-chat-inject-",
+      prefix: "IronCliw-chat-inject-",
       sessionId: "sess-1",
     });
 
@@ -35,3 +35,4 @@ describe("gateway chat.inject transcript writes", () => {
     }
   });
 });
+

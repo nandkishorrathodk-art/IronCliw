@@ -77,3 +77,4 @@ export function normalizeModelCompat(model: Model<Api>): Model<Api> {
     compat: compat ? { ...compat, supportsDeveloperRole: false } : { supportsDeveloperRole: false },
   } as typeof model;
 }
+

@@ -14,3 +14,4 @@ export function appendUntrustedContext(base: string, untrusted?: string[]): stri
   const block = [header, ...entries].join("\n");
   return [base, block].filter(Boolean).join("\n\n");
 }
+

@@ -297,3 +297,4 @@ export function materializeWindowsSpawnProgram(
     windowsHide: program.windowsHide,
   };
 }
+

@@ -63,3 +63,4 @@ describe("channels command", () => {
     expect(lines.join("\n")).toMatch(/Channel error/i);
   });
 });
+

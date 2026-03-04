@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { expectGeneratedTokenPersistedToGatewayAuth } from "../test-utils/auth-token-assertions.js";
 
 const mocks = vi.hoisted(() => ({
-  writeConfigFile: vi.fn(async (_cfg: OpenClawConfig) => {}),
+  writeConfigFile: vi.fn(async (_cfg: IronCliwConfig) => {}),
 }));
 
 vi.mock("../config/config.js", async (importOriginal) => {
@@ -20,7 +20,7 @@ import {
 } from "./startup-auth.js";
 
 describe("ensureGatewayStartupAuth", () => {
-  async function expectEphemeralGeneratedTokenWhenOverridden(cfg: OpenClawConfig) {
+  async function expectEphemeralGeneratedTokenWhenOverridden(cfg: IronCliwConfig) {
     const result = await ensureGatewayStartupAuth({
       cfg,
       env: {} as NodeJS.ProcessEnv,
@@ -40,7 +40,7 @@ describe("ensureGatewayStartupAuth", () => {
     mocks.writeConfigFile.mockClear();
   });
 
-  async function expectNoTokenGeneration(cfg: OpenClawConfig, mode: string) {
+  async function expectNoTokenGeneration(cfg: IronCliwConfig, mode: string) {
     const result = await ensureGatewayStartupAuth({
       cfg,
       env: {} as NodeJS.ProcessEnv,
@@ -72,7 +72,7 @@ describe("ensureGatewayStartupAuth", () => {
   });
 
   it("does not generate when token already exists", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         auth: {
           mode: "token",
@@ -132,7 +132,7 @@ describe("ensureGatewayStartupAuth", () => {
     expect(result.auth.password).toBe("resolved-password");
   });
 
-  it("uses OPENCLAW_GATEWAY_PASSWORD without resolving configured password SecretRef", async () => {
+  it("uses IronCliw_GATEWAY_PASSWORD without resolving configured password SecretRef", async () => {
     const result = await ensureGatewayStartupAuth({
       cfg: {
         gateway: {
@@ -148,7 +148,7 @@ describe("ensureGatewayStartupAuth", () => {
         },
       },
       env: {
-        OPENCLAW_GATEWAY_PASSWORD: "password-from-env",
+        IronCliw_GATEWAY_PASSWORD: "password-from-env",
       } as NodeJS.ProcessEnv,
       persist: true,
     });
@@ -159,7 +159,7 @@ describe("ensureGatewayStartupAuth", () => {
   });
 
   it("does not resolve gateway.auth.password SecretRef when token mode is explicit", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         auth: {
           mode: "token",
@@ -213,7 +213,7 @@ describe("ensureGatewayStartupAuth", () => {
   });
 
   it("treats undefined token override as no override", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       gateway: {
         auth: {
           mode: "token",
@@ -275,7 +275,7 @@ describe("ensureGatewayStartupAuth", () => {
           },
         },
         env: {
-          OPENCLAW_GATEWAY_TOKEN: "shared-gateway-token-1234567890",
+          IronCliw_GATEWAY_TOKEN: "shared-gateway-token-1234567890",
         } as NodeJS.ProcessEnv,
       }),
     ).rejects.toThrow(/hooks\.token must not match gateway auth token/i);
@@ -340,3 +340,4 @@ describe("assertHooksTokenSeparateFromGatewayAuth", () => {
     ).not.toThrow();
   });
 });
+

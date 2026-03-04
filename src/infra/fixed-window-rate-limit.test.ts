@@ -29,3 +29,4 @@ describe("fixed-window rate limiter", () => {
     expect(limiter.consume().allowed).toBe(true);
   });
 });
+

@@ -7,3 +7,4 @@ export type TelegramInlineButton = {
 };
 
 export type TelegramInlineButtons = ReadonlyArray<ReadonlyArray<TelegramInlineButton>>;
+

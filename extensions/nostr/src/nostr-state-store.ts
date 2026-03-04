@@ -224,3 +224,4 @@ export async function writeNostrProfileState(params: {
   await fs.chmod(tmp, 0o600);
   await fs.rename(tmp, filePath);
 }
+

@@ -50,3 +50,4 @@ export function createSyntaxTheme(fallback: (text: string) => string): Highlight
     default: fallback, // fallback to code color
   };
 }
+

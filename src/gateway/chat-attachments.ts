@@ -182,3 +182,4 @@ export function buildMessageWithAttachments(
   const separator = message.trim().length > 0 ? "\n\n" : "";
   return `${message}${separator}${blocks.join("\n\n")}`;
 }
+

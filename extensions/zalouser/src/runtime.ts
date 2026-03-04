@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/zalouser";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/zalouser";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getZalouserRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

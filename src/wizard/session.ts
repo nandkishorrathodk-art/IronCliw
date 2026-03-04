@@ -262,3 +262,4 @@ export class WizardSession {
     return this.error;
   }
 }
+

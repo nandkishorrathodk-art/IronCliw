@@ -50,3 +50,4 @@ export const FeishuPermSchema = Type.Union([
 ]);
 
 export type FeishuPermParams = Static<typeof FeishuPermSchema>;
+

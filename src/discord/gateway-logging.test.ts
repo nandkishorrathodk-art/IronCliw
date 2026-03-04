@@ -87,3 +87,4 @@ describe("attachDiscordGatewayLogging", () => {
     expect(runtime.log).not.toHaveBeenCalled();
   });
 });
+

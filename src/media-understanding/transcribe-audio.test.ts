@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 
 const { runAudioTranscription } = vi.hoisted(() => {
   const runAudioTranscription = vi.fn();
@@ -22,7 +22,7 @@ describe("transcribeAudioFile", () => {
 
     const result = await transcribeAudioFile({
       filePath: "/tmp/note.mp3",
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
     });
 
     expect(runAudioTranscription).toHaveBeenCalledWith({
@@ -30,7 +30,7 @@ describe("transcribeAudioFile", () => {
         MediaPath: "/tmp/note.mp3",
         MediaType: undefined,
       },
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
       agentDir: undefined,
     });
     expect(result).toEqual({ text: "hello" });
@@ -41,7 +41,7 @@ describe("transcribeAudioFile", () => {
 
     const result = await transcribeAudioFile({
       filePath: "/tmp/missing.wav",
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IronCliwConfig,
     });
 
     expect(result).toEqual({ text: undefined });
@@ -50,7 +50,7 @@ describe("transcribeAudioFile", () => {
   it("propagates helper errors", async () => {
     const cfg = {
       tools: { media: { audio: { timeoutSeconds: 10 } } },
-    } as unknown as OpenClawConfig;
+    } as unknown as IronCliwConfig;
     runAudioTranscription.mockRejectedValue(new Error("boom"));
 
     await expect(
@@ -61,3 +61,4 @@ describe("transcribeAudioFile", () => {
     ).rejects.toThrow("boom");
   });
 });
+

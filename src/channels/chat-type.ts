@@ -16,3 +16,4 @@ export function normalizeChatType(raw?: string): ChatType | undefined {
   }
   return undefined;
 }
+

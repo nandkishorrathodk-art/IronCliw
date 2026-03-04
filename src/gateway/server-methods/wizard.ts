@@ -116,3 +116,4 @@ export const wizardHandlers: GatewayRequestHandlers = {
     respond(true, status, undefined);
   },
 };
+

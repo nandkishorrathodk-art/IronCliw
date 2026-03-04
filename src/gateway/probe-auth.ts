@@ -1,8 +1,8 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveGatewayCredentialsFromConfig } from "./credentials.js";
 
 export function resolveGatewayProbeAuth(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   mode: "local" | "remote";
   env?: NodeJS.ProcessEnv;
 }): { token?: string; password?: string } {
@@ -14,3 +14,4 @@ export function resolveGatewayProbeAuth(params: {
     remoteTokenFallback: "remote-only",
   });
 }
+

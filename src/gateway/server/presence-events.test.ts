@@ -33,3 +33,4 @@ describe("broadcastPresenceSnapshot", () => {
     expect(opts?.stateVersion).toEqual({ presence: 7, health: 11 });
   });
 });
+

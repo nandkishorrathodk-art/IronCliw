@@ -114,3 +114,4 @@ export type WhatsAppAccountConfig = WhatsAppConfigCore &
     /** Override auth directory (Baileys multi-file auth state). */
     authDir?: string;
   };
+

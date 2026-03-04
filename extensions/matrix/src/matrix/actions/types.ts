@@ -83,3 +83,4 @@ export type MatrixActionClient = {
   client: MatrixClient;
   stopOnDone: boolean;
 };
+

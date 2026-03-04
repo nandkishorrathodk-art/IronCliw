@@ -5,3 +5,4 @@ export function formatBonjourError(err: unknown): string {
   }
   return String(err);
 }
+

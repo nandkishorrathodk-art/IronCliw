@@ -3,7 +3,7 @@ import { vi, type Mock } from "vitest";
 type SessionsSpawnTestConfig = ReturnType<(typeof import("../config/config.js"))["loadConfig"]>;
 type CreateSessionsSpawnTool =
   (typeof import("./tools/sessions-spawn-tool.js"))["createSessionsSpawnTool"];
-export type CreateOpenClawToolsOpts = Parameters<CreateSessionsSpawnTool>[0];
+export type CreateIronCliwToolsOpts = Parameters<CreateSessionsSpawnTool>[0];
 export type GatewayRequest = { method?: string; params?: unknown };
 export type AgentWaitCall = { runId?: string; timeoutMs?: number };
 type SessionsSpawnGatewayMockOptions = {
@@ -52,7 +52,7 @@ export function setSessionsSpawnConfigOverride(next: SessionsSpawnTestConfig): v
   hoisted.state.configOverride = next;
 }
 
-export async function getSessionsSpawnTool(opts: CreateOpenClawToolsOpts) {
+export async function getSessionsSpawnTool(opts: CreateIronCliwToolsOpts) {
   // Dynamic import: ensure harness mocks are installed before tool modules load.
   const { createSessionsSpawnTool } = await import("./tools/sessions-spawn-tool.js");
   return createSessionsSpawnTool(opts);
@@ -173,3 +173,4 @@ vi.mock("../../config/config.js", async (importOriginal) => {
     resolveGatewayPort: () => 18789,
   };
 });
+

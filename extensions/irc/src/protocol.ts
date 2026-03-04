@@ -167,3 +167,4 @@ export function splitIrcText(text: string, maxChars = 350): string[] {
 export function makeIrcMessageId() {
   return randomUUID();
 }
+

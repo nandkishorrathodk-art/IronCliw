@@ -266,3 +266,4 @@ export async function expectAuthorizedVariants(params: {
 export function defaultProtectedPluginRoutePath(pathname: string): boolean {
   return isProtectedPluginRoutePath(pathname);
 }
+

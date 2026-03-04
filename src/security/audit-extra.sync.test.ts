@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { collectAttackSurfaceSummaryFindings } from "./audit-extra.sync.js";
 import { safeEqualSecret } from "./secret-equal.js";
 
 describe("collectAttackSurfaceSummaryFindings", () => {
   it("distinguishes external webhooks from internal hooks when only internal hooks are enabled", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       hooks: { internal: { enabled: true } },
     };
 
@@ -16,7 +16,7 @@ describe("collectAttackSurfaceSummaryFindings", () => {
   });
 
   it("reports both hook systems as enabled when both are configured", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       hooks: { enabled: true, internal: { enabled: true } },
     };
 
@@ -26,7 +26,7 @@ describe("collectAttackSurfaceSummaryFindings", () => {
   });
 
   it("reports both hook systems as disabled when neither is configured", () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IronCliwConfig = {};
 
     const [finding] = collectAttackSurfaceSummaryFindings(cfg);
     expect(finding.detail).toContain("hooks.webhooks: disabled");
@@ -53,3 +53,4 @@ describe("safeEqualSecret", () => {
     expect(safeEqualSecret(null, "secret")).toBe(false);
   });
 });
+

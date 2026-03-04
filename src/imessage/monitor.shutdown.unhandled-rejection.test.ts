@@ -41,3 +41,4 @@ describe("monitorIMessageProvider", () => {
     expect(requestMock).toHaveBeenCalledWith("watch.unsubscribe", { subscription: 1 });
   });
 });
+

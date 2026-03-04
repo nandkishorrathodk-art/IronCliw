@@ -75,3 +75,4 @@ describe("browser default executable detection", () => {
     expect(exe?.path).toContain("Google Chrome.app/Contents/MacOS/Google Chrome");
   });
 });
+

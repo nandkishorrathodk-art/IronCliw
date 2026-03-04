@@ -1,17 +1,17 @@
 import {
   buildOauthProviderAuthResult,
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type IronCliwPluginApi,
   type ProviderAuthContext,
-} from "openclaw/plugin-sdk/google-gemini-cli-auth";
+} from "IronCliw/plugin-sdk/google-gemini-cli-auth";
 import { loginGeminiCliOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "google-gemini-cli";
 const PROVIDER_LABEL = "Gemini CLI OAuth";
 const DEFAULT_MODEL = "google-gemini-cli/gemini-3-pro-preview";
 const ENV_VARS = [
-  "OPENCLAW_GEMINI_OAUTH_CLIENT_ID",
-  "OPENCLAW_GEMINI_OAUTH_CLIENT_SECRET",
+  "IronCliw_GEMINI_OAUTH_CLIENT_ID",
+  "IronCliw_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_ID",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];
@@ -21,7 +21,7 @@ const geminiCliPlugin = {
   name: "Google Gemini CLI Auth",
   description: "OAuth flow for Gemini CLI (Google Code Assist)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: IronCliwPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,
@@ -73,3 +73,4 @@ const geminiCliPlugin = {
 };
 
 export default geminiCliPlugin;
+

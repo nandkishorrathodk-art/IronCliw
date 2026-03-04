@@ -27,3 +27,4 @@ export async function searchGraphUsers(params: {
   });
   return res.value ?? [];
 }
+

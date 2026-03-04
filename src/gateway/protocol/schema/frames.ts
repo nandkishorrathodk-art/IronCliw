@@ -161,3 +161,4 @@ export const GatewayFrameSchema = Type.Union(
   [RequestFrameSchema, ResponseFrameSchema, EventFrameSchema],
   { discriminator: "type" },
 );
+

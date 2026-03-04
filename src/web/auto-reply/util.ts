@@ -59,3 +59,4 @@ export function isLikelyWhatsAppCryptoError(reason: unknown) {
     haystack.includes("aesdecryptgcm")
   );
 }
+

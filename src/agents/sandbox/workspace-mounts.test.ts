@@ -47,3 +47,4 @@ describe("appendWorkspaceMountArgs", () => {
     expect(mounts).toEqual(["/tmp/workspace:/workspace"]);
   });
 });
+

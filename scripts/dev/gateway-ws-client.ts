@@ -130,3 +130,4 @@ export function createGatewayWsClient(params: {
 
   return { ws, request, waitOpen, close };
 }
+

@@ -6,7 +6,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "openclaw/plugin-sdk/nextcloud-talk";
+} from "IronCliw/plugin-sdk/nextcloud-talk";
 import { resolveNextcloudTalkAccount } from "./accounts.js";
 import { handleNextcloudTalkInbound } from "./inbound.js";
 import { createNextcloudTalkReplayGuard } from "./replay-guard.js";
@@ -413,3 +413,4 @@ export async function monitorNextcloudTalkProvider(
 
   return { stop };
 }
+

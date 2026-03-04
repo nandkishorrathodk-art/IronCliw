@@ -6,7 +6,7 @@ import { resolveBrewExecutable, resolveBrewPathDirs } from "./brew.js";
 
 describe("brew helpers", () => {
   async function withBrewRoot(run: (tmp: string) => Promise<void>) {
-    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-brew-"));
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-brew-"));
     try {
       await run(tmp);
     } finally {
@@ -99,3 +99,4 @@ describe("brew helpers", () => {
     expect(dirs).toContain(path.join("/home/test", ".linuxbrew", "sbin"));
   });
 });
+

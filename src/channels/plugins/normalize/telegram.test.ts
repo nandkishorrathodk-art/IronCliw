@@ -41,3 +41,4 @@ describe("looksLikeTelegramTargetId", () => {
     expect(looksLikeTelegramTargetId("@mychannel")).toBe(true);
   });
 });
+

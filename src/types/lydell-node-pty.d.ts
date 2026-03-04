@@ -22,3 +22,4 @@ declare module "@lydell/node-pty" {
 
   export const spawn: PtySpawn;
 }
+

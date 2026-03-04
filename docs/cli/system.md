@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `openclaw system` (system events, heartbeat, presence)"
+summary: "CLI reference for `IronCliw system` (system events, heartbeat, presence)"
 read_when:
   - You want to enqueue a system event without creating a cron job
   - You need to enable or disable heartbeats
@@ -7,7 +7,7 @@ read_when:
 title: "system"
 ---
 
-# `openclaw system`
+# `IronCliw system`
 
 System-level helpers for the Gateway: enqueue system events, control heartbeats,
 and view presence.
@@ -15,10 +15,10 @@ and view presence.
 ## Common commands
 
 ```bash
-openclaw system event --text "Check for urgent follow-ups" --mode now
-openclaw system heartbeat enable
-openclaw system heartbeat last
-openclaw system presence
+IronCliw system event --text "Check for urgent follow-ups" --mode now
+IronCliw system heartbeat enable
+IronCliw system heartbeat last
+IronCliw system presence
 ```
 
 ## `system event`
@@ -58,3 +58,4 @@ Flags:
 
 - Requires a running Gateway reachable by your current config (local or remote).
 - System events are ephemeral and not persisted across restarts.
+

@@ -29,3 +29,4 @@ describe("Tlon config schema", () => {
     expect(parsed.accounts?.primary?.ship).toBe("~zod");
   });
 });
+

@@ -27,7 +27,7 @@ import {
   createStatusReactionController,
   type StatusReactionController,
 } from "../channels/status-reactions.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import { readSessionUpdatedAt, resolveStorePath } from "../config/sessions.js";
 import type {
@@ -125,7 +125,7 @@ export type BuildTelegramMessageContextParams = {
   storeAllowFrom: string[];
   options?: TelegramMessageContextOptions;
   bot: Bot;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   account: { accountId: string };
   historyLimit: number;
   groupHistories: Map<string, HistoryEntry[]>;
@@ -142,7 +142,7 @@ export type BuildTelegramMessageContextParams = {
 };
 
 async function resolveStickerVisionSupport(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   agentId?: string;
 }): Promise<boolean> {
   try {
@@ -904,3 +904,4 @@ export const buildTelegramMessageContext = async ({
 export type TelegramMessageContext = NonNullable<
   Awaited<ReturnType<typeof buildTelegramMessageContext>>
 >;
+

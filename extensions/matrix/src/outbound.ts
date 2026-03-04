@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "openclaw/plugin-sdk/matrix";
+import type { ChannelOutboundAdapter } from "IronCliw/plugin-sdk/matrix";
 import { sendMessageMatrix, sendPollMatrix } from "./matrix/send.js";
 import { getMatrixRuntime } from "./runtime.js";
 
@@ -56,3 +56,4 @@ export const matrixOutbound: ChannelOutboundAdapter = {
     };
   },
 };
+

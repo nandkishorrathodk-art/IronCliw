@@ -10,3 +10,4 @@ export function generatePairingToken(): string {
 export function verifyPairingToken(provided: string, expected: string): boolean {
   return safeEqualSecret(provided, expected);
 }
+

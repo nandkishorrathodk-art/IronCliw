@@ -4,7 +4,7 @@ import type { SandboxDockerConfig } from "./types.js";
 
 const baseDocker: SandboxDockerConfig = {
   image: "ghcr.io/example/sandbox:latest",
-  containerPrefix: "openclaw-sandbox-",
+  containerPrefix: "IronCliw-sandbox-",
   workdir: "/workspace",
   readOnlyRoot: true,
   tmpfs: ["/tmp"],
@@ -42,3 +42,4 @@ describe("resolveSandboxDockerUser", () => {
     expect(resolved.user).toBeUndefined();
   });
 });
+

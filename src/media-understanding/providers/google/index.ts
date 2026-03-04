@@ -10,3 +10,4 @@ export const googleProvider: MediaUnderstandingProvider = {
   transcribeAudio: transcribeGeminiAudio,
   describeVideo: describeGeminiVideo,
 };
+

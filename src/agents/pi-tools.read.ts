@@ -46,7 +46,7 @@ const ADAPTIVE_READ_CONTEXT_SHARE = 0.2;
 const CHARS_PER_TOKEN_ESTIMATE = 4;
 const MAX_ADAPTIVE_READ_PAGES = 8;
 
-type OpenClawReadToolOptions = {
+type IronCliwReadToolOptions = {
   modelContextWindowTokens?: number;
   imageSanitization?: ImageSanitizationLimits;
 };
@@ -64,7 +64,7 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
-function resolveAdaptiveReadMaxBytes(options?: OpenClawReadToolOptions): number {
+function resolveAdaptiveReadMaxBytes(options?: IronCliwReadToolOptions): number {
   const contextWindowTokens = options?.modelContextWindowTokens;
   if (
     typeof contextWindowTokens !== "number" ||
@@ -445,7 +445,7 @@ export function createSandboxedReadTool(params: SandboxToolParams) {
   const base = createReadTool(params.root, {
     operations: createSandboxReadOperations(params),
   }) as unknown as AnyAgentTool;
-  return createOpenClawReadTool(base, {
+  return createIronCliwReadTool(base, {
     modelContextWindowTokens: params.modelContextWindowTokens,
     imageSanitization: params.imageSanitization,
   });
@@ -480,9 +480,9 @@ export function createHostWorkspaceEditTool(root: string, options?: { workspaceO
   return wrapToolParamNormalization(withRecovery, CLAUDE_PARAM_GROUPS.edit);
 }
 
-export function createOpenClawReadTool(
+export function createIronCliwReadTool(
   base: AnyAgentTool,
-  options?: OpenClawReadToolOptions,
+  options?: IronCliwReadToolOptions,
 ): AnyAgentTool {
   const patched = patchToolSchemaForClaudeCompatibility(base);
   return {
@@ -671,3 +671,4 @@ function createFsAccessError(code: string, filePath: string): NodeJS.ErrnoExcept
   error.code = code;
   return error;
 }
+

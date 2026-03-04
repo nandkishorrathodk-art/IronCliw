@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 import { saveAuthProfileStore } from "./auth-profiles.js";
 import { AUTH_STORE_VERSION } from "./auth-profiles/constants.js";
@@ -13,7 +13,7 @@ import { makeModelFallbackCfg } from "./test-helpers/model-fallback-config-fixtu
 
 const makeCfg = makeModelFallbackCfg;
 
-function makeFallbacksOnlyCfg(): OpenClawConfig {
+function makeFallbacksOnlyCfg(): IronCliwConfig {
   return {
     agents: {
       defaults: {
@@ -22,10 +22,10 @@ function makeFallbacksOnlyCfg(): OpenClawConfig {
         },
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
-function makeProviderFallbackCfg(provider: string): OpenClawConfig {
+function makeProviderFallbackCfg(provider: string): IronCliwConfig {
   return makeCfg({
     agents: {
       defaults: {
@@ -42,7 +42,7 @@ async function withTempAuthStore<T>(
   store: AuthProfileStore,
   run: (tempDir: string) => Promise<T>,
 ): Promise<T> {
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-auth-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-auth-"));
   saveAuthProfileStore(store, tempDir);
   try {
     return await run(tempDir);
@@ -52,7 +52,7 @@ async function withTempAuthStore<T>(
 }
 
 async function runWithStoredAuth(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   store: AuthProfileStore;
   provider: string;
   run: (provider: string, model: string) => Promise<string>;
@@ -998,7 +998,7 @@ describe("runWithModelFallback", () => {
       provider: string,
       reason: "rate_limit" | "auth" | "billing",
     ): Promise<{ store: AuthProfileStore; dir: string }> {
-      const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-test-"));
+      const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-test-"));
       const now = Date.now();
       const store: AuthProfileStore = {
         version: AUTH_STORE_VERSION,
@@ -1111,7 +1111,7 @@ describe("runWithModelFallback", () => {
 
     it("tries cross-provider fallbacks when same provider has rate limit", async () => {
       // Anthropic in rate limit cooldown, Groq available
-      const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-test-"));
+      const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-test-"));
       const store: AuthProfileStore = {
         version: AUTH_STORE_VERSION,
         profiles: {
@@ -1226,3 +1226,4 @@ describe("isAnthropicBillingError", () => {
     }
   });
 });
+

@@ -269,3 +269,4 @@ describe("MediaStreamHandler security hardening", () => {
     }
   });
 });
+

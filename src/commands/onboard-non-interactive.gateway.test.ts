@@ -69,8 +69,8 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       throw new Error("temp home not initialized");
     }
     const stateDir = await fs.mkdtemp(path.join(tempHome, prefix));
-    process.env.OPENCLAW_STATE_DIR = stateDir;
-    delete process.env.OPENCLAW_CONFIG_PATH;
+    process.env.IronCliw_STATE_DIR = stateDir;
+    delete process.env.IronCliw_CONFIG_PATH;
     return stateDir;
   };
   const withStateDir = async (
@@ -87,25 +87,25 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
   beforeAll(async () => {
     envSnapshot = captureEnv([
       "HOME",
-      "OPENCLAW_STATE_DIR",
-      "OPENCLAW_CONFIG_PATH",
-      "OPENCLAW_SKIP_CHANNELS",
-      "OPENCLAW_SKIP_GMAIL_WATCHER",
-      "OPENCLAW_SKIP_CRON",
-      "OPENCLAW_SKIP_CANVAS_HOST",
-      "OPENCLAW_SKIP_BROWSER_CONTROL_SERVER",
-      "OPENCLAW_GATEWAY_TOKEN",
-      "OPENCLAW_GATEWAY_PASSWORD",
+      "IronCliw_STATE_DIR",
+      "IronCliw_CONFIG_PATH",
+      "IronCliw_SKIP_CHANNELS",
+      "IronCliw_SKIP_GMAIL_WATCHER",
+      "IronCliw_SKIP_CRON",
+      "IronCliw_SKIP_CANVAS_HOST",
+      "IronCliw_SKIP_BROWSER_CONTROL_SERVER",
+      "IronCliw_GATEWAY_TOKEN",
+      "IronCliw_GATEWAY_PASSWORD",
     ]);
-    process.env.OPENCLAW_SKIP_CHANNELS = "1";
-    process.env.OPENCLAW_SKIP_GMAIL_WATCHER = "1";
-    process.env.OPENCLAW_SKIP_CRON = "1";
-    process.env.OPENCLAW_SKIP_CANVAS_HOST = "1";
-    process.env.OPENCLAW_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+    process.env.IronCliw_SKIP_CHANNELS = "1";
+    process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
+    process.env.IronCliw_SKIP_CRON = "1";
+    process.env.IronCliw_SKIP_CANVAS_HOST = "1";
+    process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IronCliw_GATEWAY_PASSWORD;
 
-    tempHome = await makeTempWorkspace("openclaw-onboard-");
+    tempHome = await makeTempWorkspace("IronCliw-onboard-");
     process.env.HOME = tempHome;
   });
 
@@ -119,7 +119,7 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
   it("writes gateway token auth into config", async () => {
     await withStateDir("state-noninteractive-", async (stateDir) => {
       const token = "tok_test_123";
-      const workspace = path.join(stateDir, "openclaw");
+      const workspace = path.join(stateDir, "IronCliw");
 
       await runNonInteractiveOnboarding(
         {
@@ -151,12 +151,12 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
     });
   }, 60_000);
 
-  it("uses OPENCLAW_GATEWAY_TOKEN when --gateway-token is omitted", async () => {
+  it("uses IronCliw_GATEWAY_TOKEN when --gateway-token is omitted", async () => {
     await withStateDir("state-env-token-", async (stateDir) => {
       const envToken = "tok_env_fallback_123";
-      const workspace = path.join(stateDir, "openclaw");
-      const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      process.env.OPENCLAW_GATEWAY_TOKEN = envToken;
+      const workspace = path.join(stateDir, "IronCliw");
+      const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
+      process.env.IronCliw_GATEWAY_TOKEN = envToken;
 
       try {
         await runNonInteractiveOnboarding(
@@ -183,9 +183,9 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
         expect(cfg?.gateway?.auth?.token).toBe(envToken);
       } finally {
         if (prevToken === undefined) {
-          delete process.env.OPENCLAW_GATEWAY_TOKEN;
+          delete process.env.IronCliw_GATEWAY_TOKEN;
         } else {
-          process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+          process.env.IronCliw_GATEWAY_TOKEN = prevToken;
         }
       }
     });
@@ -230,11 +230,11 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       return;
     }
     await withStateDir("state-lan-", async (stateDir) => {
-      process.env.OPENCLAW_STATE_DIR = stateDir;
-      process.env.OPENCLAW_CONFIG_PATH = path.join(stateDir, "openclaw.json");
+      process.env.IronCliw_STATE_DIR = stateDir;
+      process.env.IronCliw_CONFIG_PATH = path.join(stateDir, "IronCliw.json");
 
       const port = getPseudoPort(40_000);
-      const workspace = path.join(stateDir, "openclaw");
+      const workspace = path.join(stateDir, "IronCliw");
 
       await runNonInteractiveOnboarding(
         {
@@ -267,3 +267,4 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
     });
   }, 60_000);
 });
+

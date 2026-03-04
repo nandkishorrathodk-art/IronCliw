@@ -85,3 +85,4 @@ export async function handleSignalDirectMessageAccess(params: {
   }
   return false;
 }
+

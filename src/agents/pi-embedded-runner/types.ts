@@ -103,3 +103,4 @@ export type EmbeddedSandboxInfo = {
     defaultLevel: "on" | "off" | "ask" | "full";
   };
 };
+

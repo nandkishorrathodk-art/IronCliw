@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/imessage";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/imessage";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getIMessageRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

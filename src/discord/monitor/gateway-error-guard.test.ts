@@ -31,3 +31,4 @@ describe("attachEarlyGatewayErrorGuard", () => {
     expect(() => guard.release()).not.toThrow();
   });
 });
+

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { PluginLogger } from "openclaw/plugin-sdk/acpx";
+import type { PluginLogger } from "IronCliw/plugin-sdk/acpx";
 import { ACPX_PINNED_VERSION, ACPX_PLUGIN_ROOT, buildAcpxLocalInstallCommand } from "./config.js";
 import {
   resolveSpawnFailure,
@@ -268,3 +268,4 @@ export async function ensureAcpx(params: {
     pendingEnsure = null;
   }
 }
+

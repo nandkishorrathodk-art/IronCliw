@@ -340,3 +340,4 @@ export function formatChangesDate(daysAgo = 5): string {
   const day = targetDate.getDate();
   return `~${year}.${month}.${day}..20.19.51..9b9d`;
 }
+

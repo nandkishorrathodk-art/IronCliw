@@ -16,3 +16,4 @@ export function validateLineSignature(
 
   return crypto.timingSafeEqual(hashBuffer, signatureBuffer);
 }
+

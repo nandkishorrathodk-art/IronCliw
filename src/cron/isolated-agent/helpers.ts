@@ -96,3 +96,4 @@ export function resolveHeartbeatAckMaxChars(agentCfg?: { heartbeat?: { ackMaxCha
   const raw = agentCfg?.heartbeat?.ackMaxChars ?? DEFAULT_HEARTBEAT_ACK_MAX_CHARS;
   return Math.max(0, raw);
 }
+

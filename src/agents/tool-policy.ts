@@ -203,3 +203,4 @@ export function mergeAlsoAllowPolicy<TPolicy extends { allow?: string[] }>(
   }
   return { ...policy, allow: Array.from(new Set([...policy.allow, ...alsoAllow])) };
 }
+

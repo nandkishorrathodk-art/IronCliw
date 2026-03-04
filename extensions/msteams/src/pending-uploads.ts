@@ -87,3 +87,4 @@ export function getPendingUploadCount(): number {
 export function clearPendingUploads(): void {
   pendingUploads.clear();
 }
+

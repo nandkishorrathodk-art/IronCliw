@@ -141,3 +141,4 @@ describe("evaluateSystemRunPolicy", () => {
     expect(allowed.allowlistSatisfied).toBe(true);
   });
 });
+

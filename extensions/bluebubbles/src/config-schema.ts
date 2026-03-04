@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "openclaw/plugin-sdk/bluebubbles";
+import { MarkdownConfigSchema, ToolPolicySchema } from "IronCliw/plugin-sdk/bluebubbles";
 import { z } from "zod";
 import { buildSecretInputSchema, hasConfiguredSecretInput } from "./secret-input.js";
 
@@ -65,3 +65,4 @@ export const BlueBubblesConfigSchema = bluebubblesAccountSchema.extend({
   defaultAccount: z.string().optional(),
   actions: bluebubblesActionSchema,
 });
+

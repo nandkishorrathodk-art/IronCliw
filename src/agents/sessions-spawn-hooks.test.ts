@@ -6,7 +6,7 @@ import {
   getGatewayMethods,
   getSessionsSpawnTool,
   setSessionsSpawnConfigOverride,
-} from "./openclaw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const hookRunnerMocks = vi.hoisted(() => ({
@@ -381,3 +381,4 @@ describe("sessions_spawn subagent lifecycle hooks", () => {
     });
   });
 });
+

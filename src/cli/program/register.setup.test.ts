@@ -87,3 +87,4 @@ describe("registerSetupCommand", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 });
+

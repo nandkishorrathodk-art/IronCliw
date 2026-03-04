@@ -345,3 +345,4 @@ export function hasMarkdown(text: string): boolean {
   // Check for common markdown patterns
   return /(\*\*|__|~~|`|^#{1,6}\s|^```|^\s*[-*]\s|\[.*\]\(.*\)|^>\s)/m.test(text);
 }
+

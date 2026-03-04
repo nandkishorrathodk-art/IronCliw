@@ -13,12 +13,12 @@ This page defines the canonical SecretRef credential surface.
 
 Scope intent:
 
-- In scope: strictly user-supplied credentials that OpenClaw does not mint or rotate.
+- In scope: strictly user-supplied credentials that IronCliw does not mint or rotate.
 - Out of scope: runtime-minted or rotating credentials, OAuth refresh material, and session-like artifacts.
 
 ## Supported credentials
 
-### `openclaw.json` targets (`secrets configure` + `secrets apply` + `secrets audit`)
+### `IronCliw.json` targets (`secrets configure` + `secrets apply` + `secrets audit`)
 
 [//]: # "secretref-supported-list-start"
 
@@ -123,3 +123,4 @@ Out-of-scope credentials include:
 Rationale:
 
 - These credentials are minted, rotated, session-bearing, or OAuth-durable classes that do not fit read-only external SecretRef resolution.
+

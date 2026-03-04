@@ -5,7 +5,7 @@ import {
   resolveWebhookTargetWithAuthOrReject,
   resolveWebhookTargets,
   type WebhookInFlightLimiter,
-} from "openclaw/plugin-sdk/googlechat";
+} from "IronCliw/plugin-sdk/googlechat";
 import { verifyGoogleChatRequest } from "./auth.js";
 import type { WebhookTarget } from "./monitor-types.js";
 import type {
@@ -214,3 +214,4 @@ export function createGoogleChatWebhookRequestHandler(params: {
     }
   };
 }
+

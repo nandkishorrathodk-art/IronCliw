@@ -102,3 +102,4 @@ export async function extractPdfContent(params: {
 
   return { text, images };
 }
+

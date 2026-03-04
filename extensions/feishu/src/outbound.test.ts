@@ -38,7 +38,7 @@ describe("feishuOutbound.sendText local-image auto-convert", () => {
   });
 
   async function createTmpImage(ext = ".png"): Promise<{ dir: string; file: string }> {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-feishu-outbound-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-feishu-outbound-"));
     const file = path.join(dir, `sample${ext}`);
     await fs.writeFile(file, "image-data");
     return { dir, file };
@@ -179,3 +179,4 @@ describe("feishuOutbound.sendMedia renderMode", () => {
     expect(result).toEqual(expect.objectContaining({ channel: "feishu", messageId: "media_msg" }));
   });
 });
+

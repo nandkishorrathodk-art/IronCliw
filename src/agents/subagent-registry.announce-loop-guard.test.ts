@@ -230,3 +230,4 @@ describe("announce loop guard (#18264)", () => {
     expect(stored?.lastAnnounceRetryAt).toBeTypeOf("number");
   });
 });
+

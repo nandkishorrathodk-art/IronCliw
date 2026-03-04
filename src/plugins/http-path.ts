@@ -12,3 +12,4 @@ export function normalizePluginHttpPath(
   }
   return trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
 }
+

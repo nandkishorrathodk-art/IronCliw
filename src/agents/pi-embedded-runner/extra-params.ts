@@ -2,12 +2,12 @@ import type { StreamFn } from "@mariozechner/pi-agent-core";
 import type { SimpleStreamOptions } from "@mariozechner/pi-ai";
 import { streamSimple } from "@mariozechner/pi-ai";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { log } from "./logger.js";
 
 const OPENROUTER_APP_HEADERS: Record<string, string> = {
-  "HTTP-Referer": "https://openclaw.ai",
-  "X-Title": "OpenClaw",
+  "HTTP-Referer": "https://IronCliw.ai",
+  "X-Title": "IronCliw",
 };
 const ANTHROPIC_CONTEXT_1M_BETA = "context-1m-2025-08-07";
 const ANTHROPIC_1M_MODEL_PREFIXES = ["claude-opus-4", "claude-sonnet-4"] as const;
@@ -23,7 +23,7 @@ const OPENAI_RESPONSES_PROVIDERS = new Set(["openai", "azure-openai-responses"])
  * @internal Exported for testing only
  */
 export function resolveExtraParams(params: {
-  cfg: OpenClawConfig | undefined;
+  cfg: IronCliwConfig | undefined;
   provider: string;
   modelId: string;
   agentId?: string;
@@ -509,7 +509,7 @@ function createOpenRouterSystemCacheWrapper(baseStreamFn: StreamFn | undefined):
 }
 
 /**
- * Map OpenClaw's ThinkLevel to OpenRouter's reasoning.effort values.
+ * Map IronCliw's ThinkLevel to OpenRouter's reasoning.effort values.
  * "off" maps to "none"; all other levels pass through as-is.
  */
 function mapThinkingLevelToOpenRouterReasoningEffort(
@@ -860,7 +860,7 @@ function createZaiToolStreamWrapper(
  */
 export function applyExtraParamsToAgent(
   agent: { streamFn?: StreamFn },
-  cfg: OpenClawConfig | undefined,
+  cfg: IronCliwConfig | undefined,
   provider: string,
   modelId: string,
   extraParamsOverride?: Record<string, unknown>,
@@ -929,12 +929,12 @@ export function applyExtraParamsToAgent(
     // Omit the thinkingLevel so we never inject `reasoning.effort: "none"`,
     // which would cause a 400 on models where reasoning is mandatory.
     // Users who need reasoning control should target a specific model ID.
-    // See: openclaw/openclaw#24851
+    // See: IronCliw/IronCliw#24851
     //
     // x-ai/grok models do not support OpenRouter's reasoning.effort parameter
     // and reject payloads containing it with "Invalid arguments passed to the
     // model." Skip reasoning injection for these models.
-    // See: openclaw/openclaw#32039
+    // See: IronCliw/IronCliw#32039
     const skipReasoningInjection = modelId === "auto" || isOpenRouterReasoningUnsupported(modelId);
     const openRouterThinkingLevel = skipReasoningInjection ? undefined : thinkingLevel;
     agent.streamFn = createOpenRouterWrapper(agent.streamFn, openRouterThinkingLevel);
@@ -965,3 +965,4 @@ export function applyExtraParamsToAgent(
   // server-side compaction for compatible OpenAI Responses payloads.
   agent.streamFn = createOpenAIResponsesContextManagementWrapper(agent.streamFn, merged);
 }
+

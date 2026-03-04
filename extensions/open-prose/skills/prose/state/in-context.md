@@ -382,3 +382,4 @@ In-context state management:
 5. Makes state **visible** in the conversation itself
 
 The narration protocol ensures that the VM can recover its execution state by reading its own prior messages. What you say becomes what you remember.
+

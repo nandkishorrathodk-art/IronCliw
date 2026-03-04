@@ -19,3 +19,4 @@ export function buildOpenAiResponsesProviderConfig(baseUrl: string, modelId = "g
     models: [buildOpenAiResponsesTestModel(modelId)],
   } as const;
 }
+

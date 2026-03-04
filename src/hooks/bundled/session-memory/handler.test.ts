@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import { writeWorkspaceFile } from "../../../test-helpers/workspace.js";
 import type { HookHandler } from "../../hooks.js";
 import { createHookEvent } from "../../hooks.js";
@@ -25,7 +25,7 @@ async function createCaseWorkspace(prefix = "case"): Promise<string> {
 
 beforeAll(async () => {
   ({ default: handler } = await import("./handler.js"));
-  suiteWorkspaceRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-session-memory-"));
+  suiteWorkspaceRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-session-memory-"));
 });
 
 afterAll(async () => {
@@ -63,7 +63,7 @@ function createMockSessionContent(
 async function runNewWithPreviousSessionEntry(params: {
   tempDir: string;
   previousSessionEntry: { sessionId: string; sessionFile?: string };
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   action?: "new" | "reset";
 }): Promise<{ files: string[]; memoryContent: string }> {
   const event = createHookEvent("command", params.action ?? "new", "agent:main:main", {
@@ -71,7 +71,7 @@ async function runNewWithPreviousSessionEntry(params: {
       params.cfg ??
       ({
         agents: { defaults: { workspace: params.tempDir } },
-      } satisfies OpenClawConfig),
+      } satisfies IronCliwConfig),
     previousSessionEntry: params.previousSessionEntry,
   });
 
@@ -86,7 +86,7 @@ async function runNewWithPreviousSessionEntry(params: {
 
 async function runNewWithPreviousSession(params: {
   sessionContent: string;
-  cfg?: (tempDir: string) => OpenClawConfig;
+  cfg?: (tempDir: string) => IronCliwConfig;
   action?: "new" | "reset";
 }): Promise<{ tempDir: string; files: string[]; memoryContent: string }> {
   const tempDir = await createCaseWorkspace("workspace");
@@ -103,7 +103,7 @@ async function runNewWithPreviousSession(params: {
     params.cfg?.(tempDir) ??
     ({
       agents: { defaults: { workspace: tempDir } },
-    } satisfies OpenClawConfig);
+    } satisfies IronCliwConfig);
 
   const { files, memoryContent } = await runNewWithPreviousSessionEntry({
     tempDir,
@@ -117,7 +117,7 @@ async function runNewWithPreviousSession(params: {
   return { tempDir, files, memoryContent };
 }
 
-function makeSessionMemoryConfig(tempDir: string, messages?: number): OpenClawConfig {
+function makeSessionMemoryConfig(tempDir: string, messages?: number): IronCliwConfig {
   return {
     agents: { defaults: { workspace: tempDir } },
     ...(typeof messages === "number"
@@ -131,7 +131,7 @@ function makeSessionMemoryConfig(tempDir: string, messages?: number): OpenClawCo
           },
         }
       : {}),
-  } satisfies OpenClawConfig;
+  } satisfies IronCliwConfig;
 }
 
 async function createSessionMemoryWorkspace(params?: {
@@ -527,3 +527,4 @@ describe("session-memory hook", () => {
     expect(memoryContent).toContain("assistant: Only message 2");
   });
 });
+

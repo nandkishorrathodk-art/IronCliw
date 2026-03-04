@@ -79,3 +79,4 @@ export function registerNodesLocationCommands(nodes: Command) {
     { timeoutMs: 30_000 },
   );
 }
+

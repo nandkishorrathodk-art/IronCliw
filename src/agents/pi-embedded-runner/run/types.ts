@@ -55,3 +55,4 @@ export type EmbeddedRunAttemptResult = {
   /** Client tool call detected (OpenResponses hosted tools). */
   clientToolCall?: { name: string; params: Record<string, unknown> };
 };
+

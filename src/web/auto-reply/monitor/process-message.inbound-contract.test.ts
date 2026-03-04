@@ -115,7 +115,7 @@ describe("web processMessage inbound contract", () => {
     capturedDispatchParams = undefined;
     backgroundTasks = new Set();
     deliverWebReplyMock.mockClear();
-    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-process-message-"));
+    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-process-message-"));
     sessionStorePath = path.join(sessionDir, "sessions.json");
   });
 
@@ -417,3 +417,4 @@ describe("web processMessage inbound contract", () => {
     expect(updateLastRouteMock).toHaveBeenCalledTimes(1);
   });
 });
+

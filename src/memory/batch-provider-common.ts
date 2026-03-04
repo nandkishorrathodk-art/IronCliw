@@ -10,3 +10,4 @@ export type EmbeddingBatchStatus = {
 export type ProviderBatchOutputLine = EmbeddingBatchOutputLine;
 
 export const EMBEDDING_BATCH_ENDPOINT = "/v1/embeddings";
+

@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { hasControlCommand } from "../../../src/auto-reply/command-detection.js";
 import {
@@ -576,3 +576,4 @@ describe("Feishu inbound debounce regressions", () => {
     expect(recordSpy).not.toHaveBeenCalledWith("default:om_new");
   });
 });
+

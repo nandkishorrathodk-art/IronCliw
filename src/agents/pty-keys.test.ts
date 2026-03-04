@@ -51,3 +51,4 @@ test("buildCursorPositionResponse returns CPR sequence", () => {
   expect(buildCursorPositionResponse()).toBe("\x1b[1;1R");
   expect(buildCursorPositionResponse(12, 34)).toBe("\x1b[12;34R");
 });
+

@@ -30,3 +30,4 @@ export function parseTelegramThreadId(threadId?: string | number | null): number
   const rawThreadId = scopedMatch ? scopedMatch[1] : trimmed;
   return parseIntegerId(rawThreadId);
 }
+

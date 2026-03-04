@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { buildSlackThreadingToolContext } from "./threading-tool-context.js";
 
-const emptyCfg = {} as OpenClawConfig;
+const emptyCfg = {} as IronCliwConfig;
 
 function resolveReplyToModeWithConfig(params: {
   slackConfig: Record<string, unknown>;
@@ -12,7 +12,7 @@ function resolveReplyToModeWithConfig(params: {
     channels: {
       slack: params.slackConfig,
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
   const result = buildSlackThreadingToolContext({
     cfg,
     accountId: null,
@@ -27,7 +27,7 @@ describe("buildSlackThreadingToolContext", () => {
       channels: {
         slack: { replyToMode: "first" },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -67,7 +67,7 @@ describe("buildSlackThreadingToolContext", () => {
           replyToMode: "first",
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -127,7 +127,7 @@ describe("buildSlackThreadingToolContext", () => {
           replyToModeByChatType: { channel: "first" },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
     const result = buildSlackThreadingToolContext({
       cfg,
       accountId: null,
@@ -145,3 +145,4 @@ describe("buildSlackThreadingToolContext", () => {
     expect(result.replyToMode).toBe("off");
   });
 });
+

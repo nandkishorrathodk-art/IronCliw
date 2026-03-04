@@ -47,3 +47,4 @@ export async function handleSlackHttpRequest(
   await handler(req, res);
   return true;
 }
+

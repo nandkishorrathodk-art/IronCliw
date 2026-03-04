@@ -17,3 +17,4 @@ export function removeCommandByName(program: Command, name: string): boolean {
   }
   return removeCommand(program, existing);
 }
+

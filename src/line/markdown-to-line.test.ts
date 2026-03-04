@@ -320,3 +320,4 @@ describe("hasMarkdownToConvert", () => {
     expect(hasMarkdownToConvert("Just plain text.")).toBe(false);
   });
 });
+

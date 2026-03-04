@@ -90,3 +90,4 @@ describe("ensureMediaHosted", () => {
     expect(result.url).toBe("https://tail.net/media/id3");
   });
 });
+

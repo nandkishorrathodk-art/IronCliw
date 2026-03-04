@@ -75,3 +75,4 @@ export const DOUBAO_CODING_MODEL_CATALOG = [
     maxTokens: 4096,
   },
 ] as const;
+

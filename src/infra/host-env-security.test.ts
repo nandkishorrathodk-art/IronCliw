@@ -129,12 +129,12 @@ describe("sanitizeSystemRunEnvOverrides", () => {
     const overrides = sanitizeSystemRunEnvOverrides({
       shellWrapper: false,
       overrides: {
-        OPENCLAW_TEST: "1",
+        IronCliw_TEST: "1",
         TOKEN: "abc",
       },
     });
     expect(overrides).toEqual({
-      OPENCLAW_TEST: "1",
+      IronCliw_TEST: "1",
       TOKEN: "abc",
     });
   });
@@ -143,7 +143,7 @@ describe("sanitizeSystemRunEnvOverrides", () => {
     const overrides = sanitizeSystemRunEnvOverrides({
       shellWrapper: true,
       overrides: {
-        OPENCLAW_TEST: "1",
+        IronCliw_TEST: "1",
         TOKEN: "abc",
         LANG: "C",
         LC_ALL: "C",
@@ -162,7 +162,7 @@ describe("shell wrapper exploit regression", () => {
     if (process.platform === "win32" || !fs.existsSync(bashPath)) {
       return;
     }
-    const marker = path.join(os.tmpdir(), `openclaw-ps4-marker-${process.pid}-${Date.now()}`);
+    const marker = path.join(os.tmpdir(), `IronCliw-ps4-marker-${process.pid}-${Date.now()}`);
     try {
       fs.unlinkSync(marker);
     } catch {
@@ -192,3 +192,4 @@ describe("shell wrapper exploit regression", () => {
     expect(fs.existsSync(marker)).toBe(false);
   });
 });
+

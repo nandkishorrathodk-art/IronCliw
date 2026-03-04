@@ -4,11 +4,11 @@ import path from "node:path";
 import { serializePayload, type MessagePayloadObject, type RequestClient } from "@buape/carbon";
 import { ChannelType, Routes } from "discord-api-types/v10";
 import { resolveChunkMode } from "../auto-reply/chunk.js";
-import { loadConfig, type OpenClawConfig } from "../config/config.js";
+import { loadConfig, type IronCliwConfig } from "../config/config.js";
 import { resolveMarkdownTableMode } from "../config/markdown-tables.js";
 import { recordChannelActivity } from "../infra/channel-activity.js";
 import type { RetryConfig } from "../infra/retry.js";
-import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
 import { convertMarkdownTables } from "../markdown/tables.js";
 import { maxBytesForKind } from "../media/constants.js";
 import { extensionForMime } from "../media/mime.js";
@@ -44,7 +44,7 @@ import {
 } from "./voice-message.js";
 
 type DiscordSendOpts = {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   token?: string;
   accountId?: string;
   mediaUrl?: string;
@@ -311,7 +311,7 @@ export async function sendMessageDiscord(
 }
 
 type DiscordWebhookSendOpts = {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   webhookId: string;
   webhookToken: string;
   accountId?: string;
@@ -466,7 +466,7 @@ export async function sendPollDiscord(
 }
 
 type VoiceMessageOpts = {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   token?: string;
   accountId?: string;
   verbose?: boolean;
@@ -483,7 +483,7 @@ async function materializeVoiceMessageInput(mediaUrl: string): Promise<{ filePat
   const extFromName = media.fileName ? path.extname(media.fileName) : "";
   const extFromMime = media.contentType ? extensionForMime(media.contentType) : "";
   const ext = extFromName || extFromMime || ".bin";
-  const tempDir = resolvePreferredOpenClawTmpDir();
+  const tempDir = resolvePreferredIronCliwTmpDir();
   const filePath = path.join(tempDir, `voice-src-${crypto.randomUUID()}${ext}`);
   await fs.writeFile(filePath, media.buffer, { mode: 0o600 });
   return { filePath };
@@ -569,3 +569,4 @@ export async function sendVoiceMessageDiscord(
     await unlinkIfExists(localInputPath);
   }
 }
+

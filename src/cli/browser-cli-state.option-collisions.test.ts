@@ -169,3 +169,4 @@ describe("browser state option collisions", () => {
     expect(mocks.runtime.exit).toHaveBeenCalledWith(1);
   });
 });
+

@@ -320,3 +320,4 @@ Preserved for benchmarking against the functional register. The functional regis
 4. **Preference** — Which do users actually prefer?
 
 A future experiment could present both registers and measure outcomes.
+

@@ -18,3 +18,4 @@ export function resolveSlackWebClientOptions(options: WebClientOptions = {}): We
 export function createSlackWebClient(token: string, options: WebClientOptions = {}) {
   return new WebClient(token, resolveSlackWebClientOptions(options));
 }
+

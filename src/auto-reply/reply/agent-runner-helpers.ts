@@ -80,3 +80,4 @@ export const signalTypingIfNeeded = async (
     await typingSignals.signalRunStart();
   }
 };
+

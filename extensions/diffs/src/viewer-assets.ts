@@ -60,3 +60,4 @@ async function loadViewerAssets(): Promise<RuntimeAssetCache> {
   };
   return runtimeAssetCache;
 }
+

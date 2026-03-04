@@ -72,3 +72,4 @@ export type ModelsConfig = {
   providers?: Record<string, ModelProviderConfig>;
   bedrockDiscovery?: BedrockDiscoveryConfig;
 };
+

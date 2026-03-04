@@ -39,3 +39,4 @@ export default function contextPruningExtension(api: ExtensionAPI): void {
     return { messages: next };
   });
 }
+

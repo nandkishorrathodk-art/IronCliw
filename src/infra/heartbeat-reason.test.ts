@@ -50,3 +50,4 @@ describe("heartbeat-reason", () => {
     expect(isHeartbeatActionWakeReason("retry")).toBe(false);
   });
 });
+

@@ -13,3 +13,4 @@ vi.mock("playwright-core", () => ({
 vi.mock("./chrome.js", () => ({
   getChromeWebSocketUrl: (...args: unknown[]) => getChromeWebSocketUrlMock(...args),
 }));
+

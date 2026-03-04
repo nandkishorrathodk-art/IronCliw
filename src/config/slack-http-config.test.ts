@@ -94,3 +94,4 @@ describe("Slack HTTP mode config", () => {
     }
   });
 });
+

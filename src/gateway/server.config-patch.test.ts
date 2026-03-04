@@ -24,7 +24,7 @@ function requireWs(): Awaited<ReturnType<typeof startServerWithClient>>["ws"] {
 }
 
 beforeAll(async () => {
-  sharedTempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sessions-config-"));
+  sharedTempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sessions-config-"));
   startedServer = await startServerWithClient(undefined, { controlUiEnabled: true });
   await connectOk(requireWs());
 });
@@ -158,3 +158,4 @@ describe("gateway server sessions", () => {
     expect(stored.main).toBeUndefined();
   });
 });
+

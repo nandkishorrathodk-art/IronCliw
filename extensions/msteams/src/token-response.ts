@@ -9,3 +9,4 @@ export function readAccessToken(value: unknown): string | null {
   }
   return null;
 }
+

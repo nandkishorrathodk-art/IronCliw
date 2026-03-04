@@ -38,3 +38,4 @@ describe("probeIMessage", () => {
     expect(createIMessageRpcClientMock).not.toHaveBeenCalled();
   });
 });
+

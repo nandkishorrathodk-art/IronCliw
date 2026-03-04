@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getMessageFeishu } from "./send.js";
 
@@ -166,3 +166,4 @@ describe("getMessageFeishu", () => {
     );
   });
 });
+

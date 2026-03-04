@@ -1,4 +1,4 @@
-import type { ChannelGroupContext, GroupToolPolicyConfig } from "openclaw/plugin-sdk/matrix";
+import type { ChannelGroupContext, GroupToolPolicyConfig } from "IronCliw/plugin-sdk/matrix";
 import { resolveMatrixAccountConfig } from "./matrix/accounts.js";
 import { resolveMatrixRoomConfig } from "./matrix/monitor/rooms.js";
 import type { CoreConfig } from "./types.js";
@@ -50,3 +50,4 @@ export function resolveMatrixGroupToolPolicy(
   const resolved = resolveMatrixRoomConfigForGroup(params);
   return resolved?.tools;
 }
+

@@ -140,3 +140,4 @@ describe("bedrock discovery", () => {
     expect(sendMock).toHaveBeenCalledTimes(2);
   });
 });
+

@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesServerAccount } from "./account-resolve.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";
 import { blueBubblesFetchWithTimeout, buildBlueBubblesApiUrl } from "./types.js";
@@ -8,7 +8,7 @@ export type BlueBubblesReactionOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
 };
 
 const REACTION_TYPES = new Set(["love", "like", "dislike", "laugh", "emphasize", "question"]);
@@ -180,3 +180,4 @@ export async function sendBlueBubblesReaction(params: {
     throw new Error(`BlueBubbles reaction failed (${res.status}): ${errorText || "unknown"}`);
   }
 }
+

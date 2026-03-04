@@ -1,16 +1,16 @@
 import type {
   ChannelAccountSnapshot,
   ChannelGatewayContext,
-  OpenClawConfig,
+  IronCliwConfig,
   PluginRuntime,
   ResolvedTelegramAccount,
-} from "openclaw/plugin-sdk/telegram";
+} from "IronCliw/plugin-sdk/telegram";
 import { describe, expect, it, vi } from "vitest";
 import { createRuntimeEnv } from "../../test-utils/runtime-env.js";
 import { telegramPlugin } from "./channel.js";
 import { setTelegramRuntime } from "./runtime.js";
 
-function createCfg(): OpenClawConfig {
+function createCfg(): IronCliwConfig {
   return {
     channels: {
       telegram: {
@@ -22,11 +22,11 @@ function createCfg(): OpenClawConfig {
         },
       },
     },
-  } as OpenClawConfig;
+  } as IronCliwConfig;
 }
 
 function createStartAccountCtx(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   accountId: string;
   runtime: ReturnType<typeof createRuntimeEnv>;
 }): ChannelGatewayContext<ResolvedTelegramAccount> {
@@ -226,3 +226,4 @@ describe("telegramPlugin duplicate token guard", () => {
     );
   });
 });
+

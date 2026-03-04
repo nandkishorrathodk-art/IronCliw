@@ -152,3 +152,4 @@ describe("input image base64 validation", () => {
     expect(image.data).toBe("aGVsbG8=");
   });
 });
+

@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-OpenClaw has three related (but different) controls:
+IronCliw has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ OpenClaw has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what OpenClaw is _actually_ doing:
+Use the inspector to see what IronCliw is _actually_ doing:
 
 ```bash
-openclaw sandbox explain
-openclaw sandbox explain --session agent:main:main
-openclaw sandbox explain --agent work
-openclaw sandbox explain --json
+IronCliw sandbox explain
+IronCliw sandbox explain --session agent:main:main
+IronCliw sandbox explain --agent work
+IronCliw sandbox explain --json
 ```
 
 It prints:
@@ -93,7 +93,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:openclaw`: all built-in OpenClaw tools (excludes provider plugins)
+- `group:IronCliw`: all built-in IronCliw tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 
@@ -126,3 +126,4 @@ Fix-it keys (pick one):
 ### “I thought this was main, why is it sandboxed?”
 
 In `"non-main"` mode, group/channel keys are _not_ main. Use the main session key (shown by `sandbox explain`) or switch mode to `"off"`.
+

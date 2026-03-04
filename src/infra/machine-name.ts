@@ -24,7 +24,7 @@ function fallbackHostName() {
     os
       .hostname()
       .replace(/\.local$/i, "")
-      .trim() || "openclaw"
+      .trim() || "IronCliw"
   );
 }
 
@@ -50,3 +50,4 @@ export async function getMachineDisplayName(): Promise<string> {
   })();
   return cachedPromise;
 }
+

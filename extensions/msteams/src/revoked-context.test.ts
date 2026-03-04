@@ -37,3 +37,4 @@ describe("msteams revoked context helper", () => {
     ).rejects.toBe(err);
   });
 });
+

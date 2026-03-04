@@ -25,3 +25,4 @@ export function pickGatewaySelfPresence(presence: unknown): GatewaySelfPresence 
     platform: typeof self.platform === "string" ? self.platform : undefined,
   };
 }
+

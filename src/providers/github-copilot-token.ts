@@ -135,3 +135,4 @@ export async function resolveCopilotApiToken(params: {
     baseUrl: deriveCopilotApiBaseUrlFromToken(payload.token) ?? DEFAULT_COPILOT_API_BASE_URL,
   };
 }
+

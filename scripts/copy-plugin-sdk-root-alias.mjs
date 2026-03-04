@@ -8,3 +8,4 @@ const target = resolve("dist/plugin-sdk/root-alias.cjs");
 
 mkdirSync(dirname(target), { recursive: true });
 copyFileSync(source, target);
+

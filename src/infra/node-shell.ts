@@ -7,3 +7,4 @@ export function buildNodeShellCommand(command: string, platform?: string | null)
   }
   return ["/bin/sh", "-lc", command];
 }
+

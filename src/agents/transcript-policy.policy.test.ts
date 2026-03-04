@@ -22,3 +22,4 @@ describe("resolveTranscriptPolicy e2e smoke", () => {
     expect(policy.toolCallIdMode).toBe("strict9");
   });
 });
+

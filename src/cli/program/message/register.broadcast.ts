@@ -14,3 +14,4 @@ export function registerMessageBroadcastCommand(message: Command, helpers: Messa
       await helpers.runMessageAction("broadcast", options);
     });
 }
+

@@ -35,3 +35,4 @@ describe("createPinnedDispatcher", () => {
     expect(firstCallArg?.connect?.autoSelectFamily).toBeUndefined();
   });
 });
+

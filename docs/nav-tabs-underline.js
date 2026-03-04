@@ -98,3 +98,4 @@
   window.addEventListener("resize", scheduleUpdate);
   void document.fonts?.ready?.then(scheduleUpdate, () => {});
 })();
+

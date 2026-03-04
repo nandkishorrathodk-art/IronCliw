@@ -26,8 +26,8 @@ const buildGatewayInstallPlan = vi.fn(
     programArguments: ["/bin/node", "cli", "gateway", "--port", String(params.port)],
     workingDirectory: process.cwd(),
     environment: {
-      OPENCLAW_GATEWAY_PORT: String(params.port),
-      ...(params.token ? { OPENCLAW_GATEWAY_TOKEN: params.token } : {}),
+      IronCliw_GATEWAY_PORT: String(params.port),
+      ...(params.token ? { IronCliw_GATEWAY_TOKEN: params.token } : {}),
     },
   }),
 );
@@ -113,15 +113,15 @@ describe("daemon-cli coverage", () => {
   beforeEach(() => {
     daemonProgram = createDaemonProgram();
     envSnapshot = captureEnv([
-      "OPENCLAW_STATE_DIR",
-      "OPENCLAW_CONFIG_PATH",
-      "OPENCLAW_GATEWAY_PORT",
-      "OPENCLAW_PROFILE",
+      "IronCliw_STATE_DIR",
+      "IronCliw_CONFIG_PATH",
+      "IronCliw_GATEWAY_PORT",
+      "IronCliw_PROFILE",
     ]);
-    process.env.OPENCLAW_STATE_DIR = "/tmp/openclaw-cli-state";
-    process.env.OPENCLAW_CONFIG_PATH = "/tmp/openclaw-cli-state/openclaw.json";
-    delete process.env.OPENCLAW_GATEWAY_PORT;
-    delete process.env.OPENCLAW_PROFILE;
+    process.env.IronCliw_STATE_DIR = "/tmp/IronCliw-cli-state";
+    process.env.IronCliw_CONFIG_PATH = "/tmp/IronCliw-cli-state/IronCliw.json";
+    delete process.env.IronCliw_GATEWAY_PORT;
+    delete process.env.IronCliw_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
     buildGatewayInstallPlan.mockClear();
   });
@@ -150,12 +150,12 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        OPENCLAW_PROFILE: "dev",
-        OPENCLAW_STATE_DIR: "/tmp/openclaw-daemon-state",
-        OPENCLAW_CONFIG_PATH: "/tmp/openclaw-daemon-state/openclaw.json",
-        OPENCLAW_GATEWAY_PORT: "19001",
+        IronCliw_PROFILE: "dev",
+        IronCliw_STATE_DIR: "/tmp/IronCliw-daemon-state",
+        IronCliw_CONFIG_PATH: "/tmp/IronCliw-daemon-state/IronCliw.json",
+        IronCliw_GATEWAY_PORT: "19001",
       },
-      sourcePath: "/tmp/ai.openclaw.gateway.plist",
+      sourcePath: "/tmp/ai.IronCliw.gateway.plist",
     });
 
     await runDaemonCommand(["daemon", "status", "--json"]);
@@ -235,3 +235,4 @@ describe("daemon-cli coverage", () => {
     expect(parsed.some((entry) => entry.action === "stop" && entry.ok === true)).toBe(true);
   });
 });
+

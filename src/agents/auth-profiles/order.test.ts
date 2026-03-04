@@ -23,3 +23,4 @@ describe("resolveAuthProfileOrder", () => {
     expect(order).toEqual(["volcengine:default"]);
   });
 });
+

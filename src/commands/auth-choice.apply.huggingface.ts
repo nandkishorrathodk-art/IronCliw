@@ -135,3 +135,4 @@ export async function applyAuthChoiceHuggingface(
 
   return { config: nextConfig, agentModelOverride };
 }
+

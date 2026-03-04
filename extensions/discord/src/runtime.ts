@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/discord";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/discord";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getDiscordRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

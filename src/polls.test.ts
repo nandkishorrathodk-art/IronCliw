@@ -45,3 +45,4 @@ describe("polls", () => {
     ).toThrow(/mutually exclusive/);
   });
 });
+

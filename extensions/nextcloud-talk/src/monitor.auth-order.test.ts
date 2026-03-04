@@ -26,3 +26,4 @@ describe("createNextcloudTalkWebhookServer auth order", () => {
     expect(readBody).not.toHaveBeenCalled();
   });
 });
+

@@ -65,3 +65,4 @@ describe("sanitizeSessionHistory toolResult details stripping", () => {
     expect(serialized).not.toContain("Ignore previous instructions");
   });
 });
+

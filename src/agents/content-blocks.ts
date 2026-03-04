@@ -14,3 +14,4 @@ export function collectTextContentBlocks(content: unknown): string[] {
   }
   return parts;
 }
+

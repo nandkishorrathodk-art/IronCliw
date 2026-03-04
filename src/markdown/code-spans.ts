@@ -103,3 +103,4 @@ function isInsideFenceSpan(index: number, spans: FenceSpan[]): boolean {
 function isInsideInlineSpan(index: number, spans: Array<[number, number]>): boolean {
   return spans.some(([start, end]) => index >= start && index < end);
 }
+

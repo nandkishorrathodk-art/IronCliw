@@ -95,3 +95,4 @@ describe("restoreTerminalState", () => {
     expect(resume).not.toHaveBeenCalled();
   });
 });
+

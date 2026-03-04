@@ -20,3 +20,4 @@ export function broadcastPresenceSnapshot(params: {
   );
   return presenceVersion;
 }
+

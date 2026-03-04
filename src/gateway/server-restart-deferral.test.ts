@@ -162,3 +162,4 @@ describe("gateway restart deferral", () => {
     expect(getTotalPendingReplies()).toBe(0);
   });
 });
+

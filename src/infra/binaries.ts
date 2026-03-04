@@ -12,3 +12,4 @@ export async function ensureBinary(
     runtime.exit(1);
   });
 }
+

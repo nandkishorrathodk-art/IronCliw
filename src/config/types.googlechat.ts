@@ -118,3 +118,4 @@ export type GoogleChatConfig = {
   /** Optional default account id when multiple accounts are configured. */
   defaultAccount?: string;
 } & GoogleChatAccountConfig;
+

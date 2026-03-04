@@ -56,3 +56,4 @@ export const truncate = (value: string, max: number) => {
   }
   return `${value.slice(0, max - 3)}...`;
 };
+

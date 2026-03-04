@@ -133,7 +133,7 @@ export async function appendAssistantMessageToSessionTranscript(params: {
     role: "assistant",
     content: [{ type: "text", text: mirrorText }],
     api: "openai-responses",
-    provider: "openclaw",
+    provider: "IronCliw",
     model: "delivery-mirror",
     usage: {
       input: 0,
@@ -156,3 +156,4 @@ export async function appendAssistantMessageToSessionTranscript(params: {
   emitSessionTranscriptUpdate(sessionFile);
   return { ok: true, sessionFile };
 }
+

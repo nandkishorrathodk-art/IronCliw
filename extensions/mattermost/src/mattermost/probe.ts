@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk/mattermost";
+import type { BaseProbeResult } from "IronCliw/plugin-sdk/mattermost";
 import { normalizeMattermostBaseUrl, readMattermostError, type MattermostUser } from "./client.js";
 
 export type MattermostProbe = BaseProbeResult & {
@@ -59,3 +59,4 @@ export async function probeMattermost(
     }
   }
 }
+

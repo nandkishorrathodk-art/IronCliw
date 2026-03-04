@@ -42,3 +42,4 @@ describe("plugin-sdk root alias", () => {
     expect(descriptor).toBeDefined();
   });
 });
+

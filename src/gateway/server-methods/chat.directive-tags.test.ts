@@ -197,7 +197,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("registers tool-event recipients for clients advertising tool-events capability", async () => {
-    createTranscriptFixture("openclaw-chat-send-tool-events-");
+    createTranscriptFixture("IronCliw-chat-send-tool-events-");
     mockState.finalText = "ok";
     mockState.triggerAgentRunStart = true;
     mockState.agentRunId = "run-current";
@@ -236,7 +236,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("does not register tool-event recipients without tool-events capability", async () => {
-    createTranscriptFixture("openclaw-chat-send-tool-events-off-");
+    createTranscriptFixture("IronCliw-chat-send-tool-events-off-");
     mockState.finalText = "ok";
     mockState.triggerAgentRunStart = true;
     mockState.agentRunId = "run-no-cap";
@@ -259,7 +259,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.inject keeps message defined when directive tag is the only content", async () => {
-    createTranscriptFixture("openclaw-chat-inject-directive-only-");
+    createTranscriptFixture("IronCliw-chat-inject-directive-only-");
     const respond = vi.fn();
     const context = createChatContext();
 
@@ -288,7 +288,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send non-streaming final keeps message defined for directive-only assistant text", async () => {
-    createTranscriptFixture("openclaw-chat-send-directive-only-");
+    createTranscriptFixture("IronCliw-chat-send-directive-only-");
     mockState.finalText = "[[reply_to_current]]";
     const respond = vi.fn();
     const context = createChatContext();
@@ -310,7 +310,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.inject strips external untrusted wrapper metadata from final payload text", async () => {
-    createTranscriptFixture("openclaw-chat-inject-untrusted-meta-");
+    createTranscriptFixture("IronCliw-chat-inject-untrusted-meta-");
     const respond = vi.fn();
     const context = createChatContext();
 
@@ -333,7 +333,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send non-streaming final strips external untrusted wrapper metadata from final payload text", async () => {
-    createTranscriptFixture("openclaw-chat-send-untrusted-meta-");
+    createTranscriptFixture("IronCliw-chat-send-untrusted-meta-");
     mockState.finalText = `hello\n\n${UNTRUSTED_CONTEXT_SUFFIX}`;
     const respond = vi.fn();
     const context = createChatContext();
@@ -347,7 +347,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send inherits originating routing metadata from session delivery context", async () => {
-    createTranscriptFixture("openclaw-chat-send-origin-routing-");
+    createTranscriptFixture("IronCliw-chat-send-origin-routing-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -383,7 +383,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send inherits Feishu routing metadata from session delivery context", async () => {
-    createTranscriptFixture("openclaw-chat-send-feishu-origin-routing-");
+    createTranscriptFixture("IronCliw-chat-send-feishu-origin-routing-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -416,7 +416,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send inherits routing metadata for per-account channel-peer session keys", async () => {
-    createTranscriptFixture("openclaw-chat-send-per-account-channel-peer-routing-");
+    createTranscriptFixture("IronCliw-chat-send-per-account-channel-peer-routing-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -449,7 +449,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send inherits routing metadata for legacy channel-peer session keys", async () => {
-    createTranscriptFixture("openclaw-chat-send-legacy-channel-peer-routing-");
+    createTranscriptFixture("IronCliw-chat-send-legacy-channel-peer-routing-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -482,7 +482,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send inherits routing metadata for legacy channel-peer thread session keys", async () => {
-    createTranscriptFixture("openclaw-chat-send-legacy-thread-channel-peer-routing-");
+    createTranscriptFixture("IronCliw-chat-send-legacy-thread-channel-peer-routing-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -518,7 +518,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send does not inherit external delivery context for shared main sessions", async () => {
-    createTranscriptFixture("openclaw-chat-send-main-no-cross-route-");
+    createTranscriptFixture("IronCliw-chat-send-main-no-cross-route-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -551,7 +551,7 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
   });
 
   it("chat.send does not inherit external delivery context for non-channel custom sessions", async () => {
-    createTranscriptFixture("openclaw-chat-send-custom-no-cross-route-");
+    createTranscriptFixture("IronCliw-chat-send-custom-no-cross-route-");
     mockState.finalText = "ok";
     mockState.sessionEntry = {
       deliveryContext: {
@@ -585,3 +585,4 @@ describe("chat directive tag stripping for non-streaming final payloads", () => 
     );
   });
 });
+

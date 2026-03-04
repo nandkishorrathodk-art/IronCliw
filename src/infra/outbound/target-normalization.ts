@@ -59,3 +59,4 @@ function hashSignature(value: string): string {
   }
   return (hash >>> 0).toString(36);
 }
+

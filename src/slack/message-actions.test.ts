@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { listSlackMessageActions } from "./message-actions.js";
 
 describe("listSlackMessageActions", () => {
@@ -13,10 +13,11 @@ describe("listSlackMessageActions", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     expect(listSlackMessageActions(cfg)).toEqual(
       expect.arrayContaining(["read", "edit", "delete", "download-file"]),
     );
   });
 });
+

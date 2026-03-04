@@ -51,8 +51,8 @@ export function registerAuthModesSuite(): void {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+      prevToken = process.env.IronCliw_GATEWAY_TOKEN;
+      process.env.IronCliw_GATEWAY_TOKEN = "secret";
       port = await getFreePort();
       server = await startGatewayServer(port);
     });
@@ -107,8 +107,8 @@ export function registerAuthModesSuite(): void {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      prevToken = process.env.IronCliw_GATEWAY_TOKEN;
+      delete process.env.IronCliw_GATEWAY_TOKEN;
       testState.gatewayAuth = { mode: "none" };
       port = await getFreePort();
       server = await startGatewayServer(port);
@@ -169,3 +169,4 @@ export function registerAuthModesSuite(): void {
     });
   });
 }
+

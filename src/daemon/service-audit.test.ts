@@ -74,7 +74,7 @@ describe("auditGatewayServiceConfig", () => {
         programArguments: ["/usr/bin/node", "gateway"],
         environment: {
           PATH: "/usr/local/bin:/usr/bin:/bin",
-          OPENCLAW_GATEWAY_TOKEN: "old-token",
+          IronCliw_GATEWAY_TOKEN: "old-token",
         },
       },
     });
@@ -92,7 +92,7 @@ describe("auditGatewayServiceConfig", () => {
         programArguments: ["/usr/bin/node", "gateway"],
         environment: {
           PATH: "/usr/local/bin:/usr/bin:/bin",
-          OPENCLAW_GATEWAY_TOKEN: "new-token",
+          IronCliw_GATEWAY_TOKEN: "new-token",
         },
       },
     });
@@ -137,3 +137,4 @@ describe("checkTokenDrift", () => {
     expect(result).toBeNull();
   });
 });
+

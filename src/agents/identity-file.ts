@@ -105,3 +105,4 @@ export function loadAgentIdentityFromWorkspace(workspace: string): AgentIdentity
   const identityPath = path.join(workspace, DEFAULT_IDENTITY_FILENAME);
   return loadIdentityFromFile(identityPath);
 }
+

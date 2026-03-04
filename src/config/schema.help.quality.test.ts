@@ -629,7 +629,7 @@ describe("config help copy quality", () => {
     expect(FIELD_HELP["memory.qmd.update.interval"].includes("5m")).toBe(true);
     expect(FIELD_HELP["memory.qmd.update.embedInterval"].includes("60m")).toBe(true);
     expect(FIELD_HELP["agents.defaults.memorySearch.store.path"]).toContain(
-      "~/.openclaw/memory/{agentId}.sqlite",
+      "~/.IronCliw/memory/{agentId}.sqlite",
     );
   });
 
@@ -789,3 +789,4 @@ describe("config help copy quality", () => {
     expect(/pre-compaction|memory flush|token/i.test(flush)).toBe(true);
   });
 });
+

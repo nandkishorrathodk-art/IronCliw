@@ -78,3 +78,4 @@ describe("normalizeSlackOutboundText", () => {
     expect(normalizeSlackOutboundText(" **bold** ")).toBe("*bold*");
   });
 });
+

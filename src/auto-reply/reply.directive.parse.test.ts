@@ -222,3 +222,4 @@ describe("directive parsing", () => {
     expect(res.cleaned).toBe("line 1\nline 2\n\nline 3");
   });
 });
+

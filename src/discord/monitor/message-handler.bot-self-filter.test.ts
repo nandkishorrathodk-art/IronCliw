@@ -1,12 +1,12 @@
 import { describe, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/types.js";
+import type { IronCliwConfig } from "../../config/types.js";
 import { createDiscordMessageHandler } from "./message-handler.js";
 import { createNoopThreadBindingManager } from "./thread-bindings.js";
 
 const BOT_USER_ID = "bot-123";
 
 function createHandlerParams(overrides?: Partial<{ botUserId: string }>) {
-  const cfg: OpenClawConfig = {
+  const cfg: IronCliwConfig = {
     channels: {
       discord: {
         enabled: true,
@@ -71,3 +71,4 @@ describe("createDiscordMessageHandler bot-self filter", () => {
     }
   });
 });
+

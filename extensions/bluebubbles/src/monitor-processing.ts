@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
 import {
   DM_GROUP_ACCESS_REASON,
   createScopedPairingAccess,
@@ -14,7 +14,7 @@ import {
   resolveControlCommandGate,
   stripMarkdown,
   type HistoryEntry,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "IronCliw/plugin-sdk/bluebubbles";
 import { downloadBlueBubblesAttachment } from "./attachments.js";
 import { markBlueBubblesChatRead, sendBlueBubblesTyping } from "./chat.js";
 import { fetchBlueBubblesHistory } from "./history.js";
@@ -220,7 +220,7 @@ function logGroupAllowlistHint(params: {
 }
 
 function resolveBlueBubblesAckReaction(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   agentId: string;
   core: BlueBubblesCoreRuntime;
   runtime: BlueBubblesRuntimeEnv;
@@ -1458,3 +1458,4 @@ export async function processReaction(
   });
   logVerbose(core, runtime, `reaction event enqueued: ${text}`);
 }
+

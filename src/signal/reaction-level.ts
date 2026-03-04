@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import {
   resolveReactionLevel,
   type ReactionLevel,
@@ -19,7 +19,7 @@ export type ResolvedSignalReactionLevel = ResolvedReactionLevel;
  * - "extensive": Agent can react liberally
  */
 export function resolveSignalReactionLevel(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   accountId?: string;
 }): ResolvedSignalReactionLevel {
   const account = resolveSignalAccount({
@@ -32,3 +32,4 @@ export function resolveSignalReactionLevel(params: {
     invalidFallback: "minimal",
   });
 }
+

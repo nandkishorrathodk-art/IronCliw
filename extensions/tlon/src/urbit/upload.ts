@@ -2,7 +2,7 @@
  * Upload an image from a URL to Tlon storage.
  */
 import { uploadFile } from "@tloncorp/api";
-import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/tlon";
+import { fetchWithSsrFGuard } from "IronCliw/plugin-sdk/tlon";
 import { getDefaultSsrFPolicy } from "./context.js";
 
 /**
@@ -58,3 +58,4 @@ export async function uploadImageFromUrl(imageUrl: string): Promise<string> {
     return imageUrl;
   }
 }
+

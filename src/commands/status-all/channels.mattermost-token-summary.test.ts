@@ -135,3 +135,4 @@ describe("buildChannelsTable - mattermost token summary", () => {
     expect(tokenRow?.detail).toContain("token");
   });
 });
+

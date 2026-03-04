@@ -2,7 +2,7 @@ export type { ChannelMessageActionAdapter } from "../channels/plugins/types.js";
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export type { ResolvedSignalAccount } from "../signal/accounts.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 
@@ -47,3 +47,4 @@ export {
   collectStatusIssuesFromLastError,
   createDefaultChannelRuntimeState,
 } from "./status-helpers.js";
+

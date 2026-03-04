@@ -65,3 +65,4 @@ export const DevicePairResolvedEventSchema = Type.Object(
   },
   { additionalProperties: false },
 );
+

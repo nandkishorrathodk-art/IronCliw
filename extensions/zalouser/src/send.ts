@@ -85,3 +85,4 @@ export async function sendSeenZalouser(params: {
 }): Promise<void> {
   await sendZaloSeenEvent(params);
 }
+

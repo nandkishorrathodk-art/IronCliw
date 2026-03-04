@@ -101,8 +101,8 @@ describe("resolveGatewayDisconnectState", () => {
   it("returns pairing recovery guidance when disconnect reason requires pairing", () => {
     const state = resolveGatewayDisconnectState("gateway closed (1008): pairing required");
     expect(state.connectionStatus).toContain("pairing required");
-    expect(state.activityStatus).toBe("pairing required: run openclaw devices list");
-    expect(state.pairingHint).toContain("openclaw devices list");
+    expect(state.activityStatus).toBe("pairing required: run IronCliw devices list");
+    expect(state.pairingHint).toContain("IronCliw devices list");
   });
 
   it("falls back to idle for generic disconnect reasons", () => {
@@ -206,3 +206,4 @@ describe("TUI shutdown safety", () => {
     }).toThrow("boom");
   });
 });
+

@@ -43,3 +43,4 @@ export function makeFormBody(fields: Record<string, string>): string {
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
     .join("&");
 }
+

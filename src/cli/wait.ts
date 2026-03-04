@@ -6,3 +6,4 @@ export function waitForever() {
     /* never resolve */
   });
 }
+

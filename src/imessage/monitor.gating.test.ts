@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import {
   buildIMessageInboundContext,
   resolveIMessageInboundDecision,
@@ -7,7 +7,7 @@ import {
 import { parseIMessageNotification } from "./monitor/parse-notification.js";
 import type { IMessagePayload } from "./monitor/types.js";
 
-function baseCfg(): OpenClawConfig {
+function baseCfg(): IronCliwConfig {
   return {
     channels: {
       imessage: {
@@ -19,13 +19,13 @@ function baseCfg(): OpenClawConfig {
     },
     session: { mainKey: "main" },
     messages: {
-      groupChat: { mentionPatterns: ["@openclaw"] },
+      groupChat: { mentionPatterns: ["@IronCliw"] },
     },
-  } as unknown as OpenClawConfig;
+  } as unknown as IronCliwConfig;
 }
 
 function resolve(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   message: IMessagePayload;
   storeAllowFrom?: string[];
 }) {
@@ -49,7 +49,7 @@ function resolve(params: {
 }
 
 function resolveDispatchDecision(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   message: IMessagePayload;
   groupHistories?: Parameters<typeof resolveIMessageInboundDecision>[0]["groupHistories"];
 }) {
@@ -76,7 +76,7 @@ function resolveDispatchDecision(params: {
   return { decision, groupHistories };
 }
 
-function buildDispatchContextPayload(params: { cfg: OpenClawConfig; message: IMessagePayload }) {
+function buildDispatchContextPayload(params: { cfg: IronCliwConfig; message: IMessagePayload }) {
   const { cfg, message } = params;
   const { decision, groupHistories } = resolveDispatchDecision({ cfg, message });
 
@@ -125,7 +125,7 @@ describe("imessage monitor gating + envelope builders", () => {
       chat_id: 42,
       sender: "+15550002222",
       is_from_me: false,
-      text: "@openclaw ping",
+      text: "@IronCliw ping",
       is_group: true,
       chat_name: "Lobster Squad",
       participants: ["+1555", "+1556"],
@@ -228,12 +228,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 123,
         sender: "+15550001111",
         is_from_me: false,
-        text: "@openclaw hello",
+        text: "@IronCliw hello",
         is_group: true,
       },
       opts: {},
-      messageText: "@openclaw hello",
-      bodyText: "@openclaw hello",
+      messageText: "@IronCliw hello",
+      bodyText: "@IronCliw hello",
       allowFrom: ["*"],
       groupAllowFrom: [],
       groupPolicy: "open",
@@ -260,12 +260,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 202,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@openclaw hi",
+        text: "@IronCliw hi",
         is_group: true,
       },
       opts: {},
-      messageText: "@openclaw hi",
-      bodyText: "@openclaw hi",
+      messageText: "@IronCliw hi",
+      bodyText: "@IronCliw hi",
       allowFrom: ["*"],
       groupAllowFrom: ["chat_id:101"],
       groupPolicy: "allowlist",
@@ -284,12 +284,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 101,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@openclaw ok",
+        text: "@IronCliw ok",
         is_group: true,
       },
       opts: {},
-      messageText: "@openclaw ok",
-      bodyText: "@openclaw ok",
+      messageText: "@IronCliw ok",
+      bodyText: "@IronCliw ok",
       allowFrom: ["*"],
       groupAllowFrom: ["chat_id:101"],
       groupPolicy: "allowlist",
@@ -316,12 +316,12 @@ describe("imessage monitor gating + envelope builders", () => {
         chat_id: 303,
         sender: "+15550003333",
         is_from_me: false,
-        text: "@openclaw hi",
+        text: "@IronCliw hi",
         is_group: true,
       },
       opts: {},
-      messageText: "@openclaw hi",
-      bodyText: "@openclaw hi",
+      messageText: "@IronCliw hi",
+      bodyText: "@IronCliw hi",
       allowFrom: ["*"],
       groupAllowFrom: [],
       groupPolicy: "disabled",
@@ -333,3 +333,4 @@ describe("imessage monitor gating + envelope builders", () => {
     expect(decision.kind).toBe("drop");
   });
 });
+

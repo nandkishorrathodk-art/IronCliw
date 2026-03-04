@@ -143,3 +143,4 @@ describe("subagent hook runner methods", () => {
     expect(runner.hasHooks("subagent_ended")).toBe(false);
   });
 });
+

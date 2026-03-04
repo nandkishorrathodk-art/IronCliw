@@ -99,3 +99,4 @@ describe("abort pattern: .bind() vs arrow closure (#7174)", () => {
     expect(combined.signal.reason.name).toBe("AbortError");
   });
 });
+

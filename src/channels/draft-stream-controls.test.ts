@@ -120,3 +120,4 @@ describe("draft-stream-controls", () => {
     expect(deleteMessage).toHaveBeenCalledWith("m-4");
   });
 });
+

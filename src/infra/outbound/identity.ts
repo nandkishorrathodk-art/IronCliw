@@ -1,6 +1,6 @@
 import { resolveAgentAvatar } from "../../agents/identity-avatar.js";
 import { resolveAgentIdentity } from "../../agents/identity.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 
 export type OutboundIdentity = {
   name?: string;
@@ -24,7 +24,7 @@ export function normalizeOutboundIdentity(
 }
 
 export function resolveAgentOutboundIdentity(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   agentId: string,
 ): OutboundIdentity | undefined {
   const agentIdentity = resolveAgentIdentity(cfg, agentId);
@@ -35,3 +35,4 @@ export function resolveAgentOutboundIdentity(
     avatarUrl: avatar.kind === "remote" ? avatar.url : undefined,
   });
 }
+

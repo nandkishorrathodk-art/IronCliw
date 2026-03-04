@@ -69,3 +69,4 @@ export const handleNodeInvokeResult: GatewayRequestHandler = async ({
 
   respond(true, { ok: true }, undefined);
 };
+

@@ -147,3 +147,4 @@ describe("isHeartbeatOnlyResponse", () => {
     ).toBe(false);
   });
 });
+

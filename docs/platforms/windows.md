@@ -1,14 +1,14 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing OpenClaw on Windows
+  - Installing IronCliw on Windows
   - Looking for Windows companion app status
 title: "Windows (WSL2)"
 ---
 
 # Windows (WSL2)
 
-OpenClaw on Windows is recommended **via WSL2** (Ubuntu recommended). The
+IronCliw on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent and makes
 tooling far more compatible (Node/Bun/pnpm, Linux binaries, skills). Native
 Windows might be trickier. WSL2 gives you the full Linux experience — one command
@@ -32,19 +32,19 @@ Native Windows companion apps are planned.
 Inside WSL2:
 
 ```
-openclaw onboard --install-daemon
+IronCliw onboard --install-daemon
 ```
 
 Or:
 
 ```
-openclaw gateway install
+IronCliw gateway install
 ```
 
 Or:
 
 ```
-openclaw configure
+IronCliw configure
 ```
 
 Select **Gateway service** when prompted.
@@ -52,7 +52,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-openclaw doctor
+IronCliw doctor
 ```
 
 ## Gateway auto-start before Windows login
@@ -68,12 +68,12 @@ Inside WSL:
 sudo loginctl enable-linger "$(whoami)"
 ```
 
-### 2) Install the OpenClaw gateway user service
+### 2) Install the IronCliw gateway user service
 
 Inside WSL:
 
 ```bash
-openclaw gateway install
+IronCliw gateway install
 ```
 
 ### 3) Start WSL automatically at Windows boot
@@ -95,8 +95,8 @@ wsl --list --verbose
 After a reboot (before Windows sign-in), check from WSL:
 
 ```bash
-systemctl --user is-enabled openclaw-gateway
-systemctl --user status openclaw-gateway --no-pager
+systemctl --user is-enabled IronCliw-gateway
+systemctl --user status IronCliw-gateway --no-pager
 ```
 
 ## Advanced: expose WSL services over LAN (portproxy)
@@ -139,7 +139,7 @@ Notes:
 
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `openclaw status --all` to confirm.
+  `IronCliw status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -182,17 +182,17 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install OpenClaw (inside WSL)
+### 3) Install IronCliw (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
-git clone https://github.com/openclaw/openclaw.git
-cd openclaw
+git clone https://github.com/IronCliw/IronCliw.git
+cd IronCliw
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-openclaw onboard
+IronCliw onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)
@@ -201,3 +201,4 @@ Full guide: [Getting Started](/start/getting-started)
 
 We do not have a Windows companion app yet. Contributions are welcome if you want
 contributions to make it happen.
+

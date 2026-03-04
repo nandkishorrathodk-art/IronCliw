@@ -18,3 +18,4 @@ export function attachFooterText(bubble: FlexBubble, footer: string) {
     backgroundColor: "#FAFAFA",
   } as FlexBox;
 }
+

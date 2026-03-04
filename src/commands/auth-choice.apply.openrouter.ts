@@ -91,3 +91,4 @@ export async function applyAuthChoiceOpenRouter(
 
   return { config: nextConfig, agentModelOverride };
 }
+

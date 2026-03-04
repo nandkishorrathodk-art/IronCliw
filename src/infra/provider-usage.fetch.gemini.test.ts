@@ -37,3 +37,4 @@ describe("fetchGeminiUsage", () => {
     expect(result.windows[1]?.usedPercent).toBeCloseTo(30, 6);
   });
 });
+

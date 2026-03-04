@@ -16,3 +16,4 @@ export function parseTimeoutMs(raw: unknown): number | undefined {
   }
   return Number.isFinite(value) ? value : undefined;
 }
+

@@ -850,3 +850,4 @@ function resolveSymlinkHopPathSync(symlinkPath: string): string {
     return resolvePathViaExistingAncestorSync(linkAbsolute);
   }
 }
+

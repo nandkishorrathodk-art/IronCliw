@@ -29,3 +29,4 @@ export function matchesSkillFilter(
   }
   return cachedNormalized.every((entry, index) => entry === nextNormalized[index]);
 }
+

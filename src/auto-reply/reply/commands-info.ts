@@ -226,3 +226,4 @@ export const handleWhoamiCommand: CommandHandler = async (params, allowTextComma
   }
   return { shouldContinue: false, reply: { text: lines.join("\n") } };
 };
+

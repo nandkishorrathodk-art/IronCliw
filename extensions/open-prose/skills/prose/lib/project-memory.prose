@@ -116,3 +116,4 @@ elif **mode is summarize**:
 
 else:
   throw "Unknown mode: {mode}. Use: ingest, query, update, or summarize"
+

@@ -23,3 +23,4 @@ export function looksLikeWhatsAppTargetId(raw: string): boolean {
     prefixPattern: /^whatsapp:/i,
   });
 }
+

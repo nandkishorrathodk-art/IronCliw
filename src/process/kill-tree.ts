@@ -102,3 +102,4 @@ function killProcessTreeWindows(pid: number, graceMs: number): void {
     runTaskkill(["/F", "/T", "/PID", String(pid)]);
   }, graceMs).unref(); // Don't block event loop exit
 }
+

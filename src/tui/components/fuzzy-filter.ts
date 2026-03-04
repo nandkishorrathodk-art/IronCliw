@@ -136,3 +136,4 @@ export function prepareSearchItems<
     return { ...item, searchTextLower: parts.join(" ").toLowerCase() };
   });
 }
+

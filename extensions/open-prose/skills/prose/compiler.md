@@ -2969,3 +2969,4 @@ When a user invokes `/prose-compile` or asks you to compile a `.prose` file:
 5. **Output** the compiled program or report errors/warnings with line numbers
 
 For direct interpretation without compilation, read `prose.md` and execute statements as described in the Session Statement section.
+

@@ -80,7 +80,7 @@ export type CronServiceDeps = {
       /**
        * `true` when the isolated run already delivered its output to the target
        * channel (including matching messaging-tool sends). See:
-       * https://github.com/openclaw/openclaw/issues/15692
+       * https://github.com/IronCliw/IronCliw/issues/15692
        */
       delivered?: boolean;
       /**
@@ -154,3 +154,4 @@ export type CronUpdateResult = CronJob;
 export type CronListResult = CronJob[];
 export type CronAddInput = CronJobCreate;
 export type CronUpdateInput = CronJobPatch;
+

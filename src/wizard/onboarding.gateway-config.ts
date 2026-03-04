@@ -8,7 +8,7 @@ import {
   validateGatewayPasswordInput,
 } from "../commands/onboard-helpers.js";
 import type { GatewayAuthChoice, SecretInputMode } from "../commands/onboard-types.js";
-import type { GatewayBindMode, GatewayTailscaleMode, OpenClawConfig } from "../config/config.js";
+import type { GatewayBindMode, GatewayTailscaleMode, IronCliwConfig } from "../config/config.js";
 import { ensureControlUiAllowedOriginsForNonLoopbackBind } from "../config/gateway-control-ui-origins.js";
 import type { SecretInput } from "../config/types.secrets.js";
 import {
@@ -30,8 +30,8 @@ import type { WizardPrompter } from "./prompts.js";
 
 type ConfigureGatewayOptions = {
   flow: WizardFlow;
-  baseConfig: OpenClawConfig;
-  nextConfig: OpenClawConfig;
+  baseConfig: IronCliwConfig;
+  nextConfig: IronCliwConfig;
   localPort: number;
   quickstartGateway: QuickstartGatewayDefaults;
   secretInputMode?: SecretInputMode;
@@ -40,7 +40,7 @@ type ConfigureGatewayOptions = {
 };
 
 type ConfigureGatewayResult = {
-  nextConfig: OpenClawConfig;
+  nextConfig: IronCliwConfig;
   settings: GatewayWizardSettings;
 };
 
@@ -156,7 +156,7 @@ export async function configureGatewayForOnboarding(
     if (flow === "quickstart") {
       gatewayToken =
         (quickstartGateway.token ??
-          normalizeGatewayTokenInput(process.env.OPENCLAW_GATEWAY_TOKEN)) ||
+          normalizeGatewayTokenInput(process.env.IronCliw_GATEWAY_TOKEN)) ||
         randomToken();
     } else {
       const tokenInput = await prompter.text({
@@ -164,7 +164,7 @@ export async function configureGatewayForOnboarding(
         placeholder: "Needed for multi-machine or non-loopback access",
         initialValue:
           quickstartGateway.token ??
-          normalizeGatewayTokenInput(process.env.OPENCLAW_GATEWAY_TOKEN) ??
+          normalizeGatewayTokenInput(process.env.IronCliw_GATEWAY_TOKEN) ??
           "",
       });
       gatewayToken = normalizeGatewayTokenInput(tokenInput) || randomToken();
@@ -181,7 +181,7 @@ export async function configureGatewayForOnboarding(
         copy: {
           modeMessage: "How do you want to provide the gateway password?",
           plaintextLabel: "Enter password now",
-          plaintextHint: "Stores the password directly in OpenClaw config",
+          plaintextHint: "Stores the password directly in IronCliw config",
         },
       });
       if (selectedMode === "ref") {
@@ -189,10 +189,10 @@ export async function configureGatewayForOnboarding(
           provider: "gateway-auth-password",
           config: nextConfig,
           prompter,
-          preferredEnvVar: "OPENCLAW_GATEWAY_PASSWORD",
+          preferredEnvVar: "IronCliw_GATEWAY_PASSWORD",
           copy: {
             sourceMessage: "Where is this gateway password stored?",
-            envVarPlaceholder: "OPENCLAW_GATEWAY_PASSWORD",
+            envVarPlaceholder: "IronCliw_GATEWAY_PASSWORD",
           },
         });
         password = resolved.ref;
@@ -288,3 +288,4 @@ export async function configureGatewayForOnboarding(
     },
   };
 }
+

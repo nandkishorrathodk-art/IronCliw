@@ -26,3 +26,4 @@ export function isDangerousNetworkMode(network: string | undefined): boolean {
   const normalized = normalizeNetworkMode(network);
   return normalized === "host" || normalized?.startsWith("container:") === true;
 }
+

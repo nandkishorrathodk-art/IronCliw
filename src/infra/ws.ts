@@ -19,3 +19,4 @@ export function rawDataToString(
   }
   return Buffer.from(String(data)).toString(encoding);
 }
+

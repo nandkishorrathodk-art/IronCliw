@@ -52,3 +52,4 @@ describe("qmd scope", () => {
     expect(isQmdScopeAllowed(scope, "agent:main:slack:channel:c123")).toBe(true);
   });
 });
+

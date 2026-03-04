@@ -19,3 +19,4 @@ describe("parsePollStartContent", () => {
     expect(summary?.answers).toEqual(["Yes", "No"]);
   });
 });
+

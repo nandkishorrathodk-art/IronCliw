@@ -1,5 +1,6 @@
-# Tlon (OpenClaw plugin)
+# Tlon (IronCliw plugin)
 
-Tlon/Urbit channel plugin for OpenClaw. Supports DMs, group mentions, and thread replies.
+Tlon/Urbit channel plugin for IronCliw. Supports DMs, group mentions, and thread replies.
 
-Docs: https://docs.openclaw.ai/channels/tlon
+Docs: https://docs.IronCliw.ai/channels/tlon
+

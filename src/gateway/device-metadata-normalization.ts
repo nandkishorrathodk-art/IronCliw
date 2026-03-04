@@ -29,3 +29,4 @@ export function normalizeDeviceMetadataForPolicy(value?: string | null): string 
   // tokens where possible before matching platform/family rules.
   return trimmed.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase();
 }
+

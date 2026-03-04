@@ -27,3 +27,4 @@ export async function listGuilds(
       slug: normalizeDiscordSlug(guild.name),
     }));
 }
+

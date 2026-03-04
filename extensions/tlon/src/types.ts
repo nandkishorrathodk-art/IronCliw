@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/tlon";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/tlon";
 
 export type TlonResolvedAccount = {
   accountId: string;
@@ -23,7 +23,7 @@ export type TlonResolvedAccount = {
 };
 
 export function resolveTlonAccount(
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
   accountId?: string | null,
 ): TlonResolvedAccount {
   const base = cfg.channels?.tlon as
@@ -121,7 +121,7 @@ export function resolveTlonAccount(
   };
 }
 
-export function listTlonAccountIds(cfg: OpenClawConfig): string[] {
+export function listTlonAccountIds(cfg: IronCliwConfig): string[] {
   const base = cfg.channels?.tlon as
     | { ship?: string; accounts?: Record<string, Record<string, unknown>> }
     | undefined;
@@ -131,3 +131,4 @@ export function listTlonAccountIds(cfg: OpenClawConfig): string[] {
   const accounts = base.accounts ?? {};
   return [...(base.ship ? ["default"] : []), ...Object.keys(accounts)];
 }
+

@@ -23,3 +23,4 @@ describe("parseControlJsonError", () => {
     expect(parseControlJsonError("bad")).toBeNull();
   });
 });
+

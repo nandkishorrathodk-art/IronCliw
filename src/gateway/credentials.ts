@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 
 export type ExplicitGatewayAuth = {
@@ -37,7 +37,7 @@ function throwUnresolvedGatewaySecretInput(path: string): never {
   throw new Error(
     [
       `${path} is configured as a secret reference but is unavailable in this command path.`,
-      "Fix: set OPENCLAW_GATEWAY_TOKEN/OPENCLAW_GATEWAY_PASSWORD, pass explicit --token/--password,",
+      "Fix: set IronCliw_GATEWAY_TOKEN/IronCliw_GATEWAY_PASSWORD, pass explicit --token/--password,",
       "or run a gateway command path that resolves secret references before credential selection.",
     ].join("\n"),
   );
@@ -47,7 +47,7 @@ function readGatewayTokenEnv(
   env: NodeJS.ProcessEnv,
   includeLegacyEnv: boolean,
 ): string | undefined {
-  const primary = trimToUndefined(env.OPENCLAW_GATEWAY_TOKEN);
+  const primary = trimToUndefined(env.IronCliw_GATEWAY_TOKEN);
   if (primary) {
     return primary;
   }
@@ -61,7 +61,7 @@ function readGatewayPasswordEnv(
   env: NodeJS.ProcessEnv,
   includeLegacyEnv: boolean,
 ): string | undefined {
-  const primary = trimToUndefined(env.OPENCLAW_GATEWAY_PASSWORD);
+  const primary = trimToUndefined(env.IronCliw_GATEWAY_PASSWORD);
   if (primary) {
     return primary;
   }
@@ -101,7 +101,7 @@ export function resolveGatewayCredentialsFromValues(params: {
 }
 
 export function resolveGatewayCredentialsFromConfig(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   env?: NodeJS.ProcessEnv;
   explicitAuth?: ExplicitGatewayAuth;
   urlOverride?: string;
@@ -220,3 +220,4 @@ export function resolveGatewayCredentialsFromConfig(params: {
 
   return { token, password };
 }
+

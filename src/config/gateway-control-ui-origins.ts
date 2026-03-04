@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "./config.js";
+import type { IronCliwConfig } from "./config.js";
 import { DEFAULT_GATEWAY_PORT } from "./paths.js";
 
 export type GatewayNonLoopbackBindMode = "lan" | "tailnet" | "custom";
@@ -44,10 +44,10 @@ export function buildDefaultControlUiAllowedOrigins(params: {
 }
 
 export function ensureControlUiAllowedOriginsForNonLoopbackBind(
-  config: OpenClawConfig,
+  config: IronCliwConfig,
   opts?: { defaultPort?: number; requireControlUiEnabled?: boolean },
 ): {
-  config: OpenClawConfig;
+  config: IronCliwConfig;
   seededOrigins: string[] | null;
   bind: GatewayNonLoopbackBindMode | null;
 } {
@@ -89,3 +89,4 @@ export function ensureControlUiAllowedOriginsForNonLoopbackBind(
     bind,
   };
 }
+

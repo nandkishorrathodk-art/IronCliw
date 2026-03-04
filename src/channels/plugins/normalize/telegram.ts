@@ -42,3 +42,4 @@ export function normalizeTelegramMessagingTarget(raw: string): string | undefine
 export function looksLikeTelegramTargetId(raw: string): boolean {
   return normalizeTelegramTargetBody(raw) !== undefined;
 }
+

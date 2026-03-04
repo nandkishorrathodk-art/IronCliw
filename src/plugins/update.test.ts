@@ -19,7 +19,7 @@ describe("updateNpmInstalledPlugins", () => {
     installPluginFromNpmSpecMock.mockResolvedValue({
       ok: false,
       code: "npm_package_not_found",
-      error: "Package not found on npm: @openclaw/missing.",
+      error: "Package not found on npm: @IronCliw/missing.",
     });
 
     const { updateNpmInstalledPlugins } = await import("./update.js");
@@ -29,7 +29,7 @@ describe("updateNpmInstalledPlugins", () => {
           installs: {
             missing: {
               source: "npm",
-              spec: "@openclaw/missing",
+              spec: "@IronCliw/missing",
               installPath: "/tmp/missing",
             },
           },
@@ -43,7 +43,7 @@ describe("updateNpmInstalledPlugins", () => {
       {
         pluginId: "missing",
         status: "error",
-        message: "Failed to check missing: npm package not found for @openclaw/missing.",
+        message: "Failed to check missing: npm package not found for @IronCliw/missing.",
       },
     ]);
   });
@@ -81,3 +81,4 @@ describe("updateNpmInstalledPlugins", () => {
     ]);
   });
 });
+

@@ -5,3 +5,4 @@ export function resolveAssistantStreamDeltaText(evt: AgentEventPayload): string 
   const text = evt.data.text;
   return typeof delta === "string" ? delta : typeof text === "string" ? text : "";
 }
+

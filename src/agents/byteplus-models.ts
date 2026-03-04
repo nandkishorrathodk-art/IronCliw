@@ -49,3 +49,4 @@ export function buildBytePlusModelDefinition(
 }
 
 export const BYTEPLUS_CODING_MODEL_CATALOG = VOLC_SHARED_CODING_MODEL_CATALOG;
+

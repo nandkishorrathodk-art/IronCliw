@@ -40,3 +40,4 @@ describe("slash-state token routing", () => {
     expect(match.accountIds?.sort()).toEqual(["a1", "a2"]);
   });
 });
+

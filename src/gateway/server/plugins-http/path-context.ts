@@ -58,3 +58,4 @@ export function resolvePluginRoutePathContext(pathname: string): PluginRoutePath
     rawNormalizedPath: canonical.rawNormalizedPath,
   };
 }
+

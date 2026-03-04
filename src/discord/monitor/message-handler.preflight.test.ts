@@ -124,7 +124,7 @@ describe("preflightDiscordMessage", () => {
       author: {
         id: "relay-bot-1",
         bot: true,
-        username: "OpenClaw",
+        username: "IronCliw",
       },
     } as unknown as import("@buape/carbon").Message;
 
@@ -134,14 +134,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: true,
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -227,14 +227,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: true,
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -318,14 +318,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: true,
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -391,14 +391,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: "mentions",
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -442,11 +442,11 @@ describe("preflightDiscordMessage", () => {
     } as unknown as import("@buape/carbon").Client;
     const message = {
       id: "m-bot-mentions-on",
-      content: "hi <@openclaw-bot>",
+      content: "hi <@IronCliw-bot>",
       timestamp: new Date().toISOString(),
       channelId,
       attachments: [],
-      mentionedUsers: [{ id: "openclaw-bot" }],
+      mentionedUsers: [{ id: "IronCliw-bot" }],
       mentionedRoles: [],
       mentionedEveryone: false,
       author: {
@@ -462,14 +462,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: "mentions",
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -533,14 +533,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {} as NonNullable<
-        import("../../config/config.js").OpenClawConfig["channels"]
+        import("../../config/config.js").IronCliwConfig["channels"]
       >["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -610,14 +610,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {} as NonNullable<
-        import("../../config/config.js").OpenClawConfig["channels"]
+        import("../../config/config.js").IronCliwConfig["channels"]
       >["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -688,14 +688,14 @@ describe("preflightDiscordMessage", () => {
           mainKey: "main",
           scope: "per-sender",
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {
         allowBots: true,
-      } as NonNullable<import("../../config/config.js").OpenClawConfig["channels"]>["discord"],
+      } as NonNullable<import("../../config/config.js").IronCliwConfig["channels"]>["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -729,7 +729,7 @@ describe("preflightDiscordMessage", () => {
   });
 
   it("uses attachment content_type for guild audio preflight mention detection", async () => {
-    transcribeFirstAudioMock.mockResolvedValue("hey openclaw");
+    transcribeFirstAudioMock.mockResolvedValue("hey IronCliw");
 
     const channelId = "channel-audio-1";
     const client = {
@@ -776,17 +776,17 @@ describe("preflightDiscordMessage", () => {
         },
         messages: {
           groupChat: {
-            mentionPatterns: ["openclaw"],
+            mentionPatterns: ["IronCliw"],
           },
         },
-      } as import("../../config/config.js").OpenClawConfig,
+      } as import("../../config/config.js").IronCliwConfig,
       discordConfig: {} as NonNullable<
-        import("../../config/config.js").OpenClawConfig["channels"]
+        import("../../config/config.js").IronCliwConfig["channels"]
       >["discord"],
       accountId: "default",
       token: "token",
       runtime: {} as import("../../runtime.js").RuntimeEnv,
-      botUserId: "openclaw-bot",
+      botUserId: "IronCliw-bot",
       guildHistories: new Map(),
       historyLimit: 0,
       mediaMaxBytes: 1_000_000,
@@ -892,3 +892,4 @@ describe("shouldIgnoreBoundThreadWebhookMessage", () => {
     ).toBe(true);
   });
 });
+

@@ -1,7 +1,7 @@
 {
-  "name": "@openclaw/matrix",
+  "name": "@IronCliw/matrix",
   "version": "2026.3.2",
-  "description": "OpenClaw Matrix channel plugin",
+  "description": "IronCliw Matrix channel plugin",
   "type": "module",
   "dependencies": {
     "@mariozechner/pi-agent-core": "0.55.3",
@@ -11,7 +11,7 @@
     "music-metadata": "^11.12.1",
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -26,9 +26,10 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/matrix",
+      "npmSpec": "@IronCliw/matrix",
       "localPath": "extensions/matrix",
       "defaultChoice": "npm"
     }
   }
 }
+

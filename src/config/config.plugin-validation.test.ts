@@ -25,7 +25,7 @@ async function writePluginFixture(params: {
     manifest.channels = params.channels;
   }
   await fs.writeFile(
-    path.join(params.dir, "openclaw.plugin.json"),
+    path.join(params.dir, "IronCliw.plugin.json"),
     JSON.stringify(manifest, null, 2),
     "utf-8",
   );
@@ -38,14 +38,14 @@ describe("config plugin validation", () => {
   let enumPluginDir = "";
   let bluebubblesPluginDir = "";
   const envSnapshot = {
-    OPENCLAW_STATE_DIR: process.env.OPENCLAW_STATE_DIR,
-    OPENCLAW_PLUGIN_MANIFEST_CACHE_MS: process.env.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS,
+    IronCliw_STATE_DIR: process.env.IronCliw_STATE_DIR,
+    IronCliw_PLUGIN_MANIFEST_CACHE_MS: process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS,
   };
 
   const validateInSuite = (raw: unknown) => validateConfigObjectWithPlugins(raw);
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-config-plugin-validation-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-config-plugin-validation-"));
     suiteHome = path.join(fixtureRoot, "home");
     await fs.mkdir(suiteHome, { recursive: true });
     badPluginDir = path.join(suiteHome, "bad-plugin");
@@ -83,8 +83,8 @@ describe("config plugin validation", () => {
       channels: ["bluebubbles"],
       schema: { type: "object" },
     });
-    process.env.OPENCLAW_STATE_DIR = path.join(suiteHome, ".openclaw");
-    process.env.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS = "10000";
+    process.env.IronCliw_STATE_DIR = path.join(suiteHome, ".IronCliw");
+    process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS = "10000";
     clearPluginManifestRegistryCache();
     // Warm the plugin manifest cache once so path-based validations can reuse
     // parsed manifests across test cases.
@@ -99,15 +99,15 @@ describe("config plugin validation", () => {
   afterAll(async () => {
     await fs.rm(fixtureRoot, { recursive: true, force: true });
     clearPluginManifestRegistryCache();
-    if (envSnapshot.OPENCLAW_STATE_DIR === undefined) {
-      delete process.env.OPENCLAW_STATE_DIR;
+    if (envSnapshot.IronCliw_STATE_DIR === undefined) {
+      delete process.env.IronCliw_STATE_DIR;
     } else {
-      process.env.OPENCLAW_STATE_DIR = envSnapshot.OPENCLAW_STATE_DIR;
+      process.env.IronCliw_STATE_DIR = envSnapshot.IronCliw_STATE_DIR;
     }
-    if (envSnapshot.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS === undefined) {
-      delete process.env.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS;
+    if (envSnapshot.IronCliw_PLUGIN_MANIFEST_CACHE_MS === undefined) {
+      delete process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS;
     } else {
-      process.env.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS = envSnapshot.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS;
+      process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS = envSnapshot.IronCliw_PLUGIN_MANIFEST_CACHE_MS;
     }
   });
 
@@ -286,3 +286,4 @@ describe("config plugin validation", () => {
     }
   });
 });
+

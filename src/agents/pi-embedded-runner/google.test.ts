@@ -62,3 +62,4 @@ describe("sanitizeToolsForGoogle", () => {
     expect(sanitized[0]).toBe(tool);
   });
 });
+

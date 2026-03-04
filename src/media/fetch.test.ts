@@ -66,3 +66,4 @@ describe("fetchRemoteMedia", () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 });
+

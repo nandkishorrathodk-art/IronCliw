@@ -14,3 +14,4 @@ describe("getHeader", () => {
     expect(getHeader({ host: "example.com" }, "x-missing")).toBeUndefined();
   });
 });
+

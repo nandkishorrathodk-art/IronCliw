@@ -16,3 +16,4 @@ export function normalizePackageTagInput(
 
   return trimmed;
 }
+

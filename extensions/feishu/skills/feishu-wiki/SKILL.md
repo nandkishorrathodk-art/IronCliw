@@ -109,3 +109,4 @@ channels:
 ## Permissions
 
 Required: `wiki:wiki` or `wiki:wiki:readonly`
+

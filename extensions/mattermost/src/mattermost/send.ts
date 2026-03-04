@@ -1,4 +1,4 @@
-import { loadOutboundMediaFromUrl, type OpenClawConfig } from "openclaw/plugin-sdk/mattermost";
+import { loadOutboundMediaFromUrl, type IronCliwConfig } from "IronCliw/plugin-sdk/mattermost";
 import { getMattermostRuntime } from "../runtime.js";
 import { resolveMattermostAccount } from "./accounts.js";
 import {
@@ -13,7 +13,7 @@ import {
 } from "./client.js";
 
 export type MattermostSendOpts = {
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   botToken?: string;
   baseUrl?: string;
   accountId?: string;
@@ -234,3 +234,4 @@ export async function sendMessageMattermost(
     channelId,
   };
 }
+

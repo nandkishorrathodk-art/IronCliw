@@ -4,7 +4,7 @@ import path from "node:path";
 import type { App } from "@slack/bolt";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { expectInboundContextContract } from "../../../../test/helpers/inbound-contract.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import { resolveAgentRoute } from "../../../routing/resolve-route.js";
 import { resolveThreadSessionKeys } from "../../../routing/session-key.js";
 import type { RuntimeEnv } from "../../../runtime.js";
@@ -28,7 +28,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
   }
 
   beforeAll(() => {
-    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-slack-thread-"));
+    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-slack-thread-"));
   });
 
   afterAll(() => {
@@ -39,7 +39,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
   });
 
   function createInboundSlackCtx(params: {
-    cfg: OpenClawConfig;
+    cfg: IronCliwConfig;
     appClient?: App["client"];
     defaultRequireMention?: boolean;
     replyToMode?: "off" | "all";
@@ -74,7 +74,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
       threadInheritParent: false,
       slashCommand: {
         enabled: false,
-        name: "openclaw",
+        name: "IronCliw",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -90,7 +90,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
     const slackCtx = createInboundSlackCtx({
       cfg: {
         channels: { slack: { enabled: true } },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
     });
     // oxlint-disable-next-line typescript/no-explicit-any
     slackCtx.resolveUserName = async () => ({ name: "Alice" }) as any;
@@ -153,7 +153,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
     });
   }
 
-  function createThreadSlackCtx(params: { cfg: OpenClawConfig; replies: unknown }) {
+  function createThreadSlackCtx(params: { cfg: IronCliwConfig; replies: unknown }) {
     return createInboundSlackCtx({
       cfg: params.cfg,
       appClient: { conversations: { replies: params.replies } } as App["client"],
@@ -195,7 +195,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
       cfg: {
         channels: { slack: { enabled: true } },
         session: { dmScope: "main" },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
     });
     // oxlint-disable-next-line typescript/no-explicit-any
     slackCtx.resolveUserName = async () => ({ name: "Alice" }) as any;
@@ -243,7 +243,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
             ...(params?.groupPolicy ? { groupPolicy: params.groupPolicy } : {}),
           },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       replyToMode: "all",
       ...(params?.defaultRequireMention === undefined
         ? {}
@@ -332,7 +332,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
         channels: {
           slack: { enabled: true },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       defaultRequireMention: false,
     });
     // oxlint-disable-next-line typescript/no-explicit-any
@@ -364,7 +364,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
             enabled: true,
           },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       defaultRequireMention: false,
       channelsConfig: {
         C123: { systemPrompt: "Config prompt" },
@@ -495,7 +495,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
       cfg: {
         session: { store: storePath },
         channels: { slack: { enabled: true, replyToMode: "all", groupPolicy: "open" } },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       replies,
     });
     slackCtx.resolveUserName = async (id: string) => ({
@@ -521,7 +521,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
     const cfg = {
       session: { store: storePath },
       channels: { slack: { enabled: true, replyToMode: "all", groupPolicy: "open" } },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
     const route = resolveAgentRoute({
       cfg,
       channel: "slack",
@@ -610,7 +610,7 @@ describe("slack prepareSlackMessage inbound contract", () => {
       cfg: {
         session: { store: storePath },
         channels: { slack: { enabled: true, replyToMode: "all" } },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       replyToMode: "all",
     });
     // oxlint-disable-next-line typescript/no-explicit-any
@@ -640,7 +640,7 @@ describe("prepareSlackMessage sender prefix", () => {
   }): SlackMonitorContext {
     return {
       cfg: {
-        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/openclaw" } },
+        agents: { defaults: { model: "anthropic/claude-opus-4-5", workspace: "/tmp/IronCliw" } },
         channels: { slack: params.channels },
       },
       accountId: "default",
@@ -709,7 +709,7 @@ describe("prepareSlackMessage sender prefix", () => {
   it("prefixes channel bodies with sender label", async () => {
     const ctx = createSenderPrefixCtx({
       channels: {},
-      slashCommand: { command: "/openclaw", enabled: true },
+      slashCommand: { command: "/IronCliw", enabled: true },
     });
 
     const result = await prepareSenderPrefixMessage(ctx, "<@BOT> hello", "1700000000.0001");
@@ -726,7 +726,7 @@ describe("prepareSlackMessage sender prefix", () => {
       useAccessGroups: true,
       slashCommand: {
         enabled: false,
-        name: "openclaw",
+        name: "IronCliw",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -738,3 +738,4 @@ describe("prepareSlackMessage sender prefix", () => {
     expect(result?.ctxPayload.CommandAuthorized).toBe(true);
   });
 });
+

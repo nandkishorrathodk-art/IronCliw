@@ -67,3 +67,4 @@ describe("sendWebhookMessageDiscord activity", () => {
     expect(loadConfigMock).not.toHaveBeenCalled();
   });
 });
+

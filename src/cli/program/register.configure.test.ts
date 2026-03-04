@@ -50,3 +50,4 @@ describe("registerConfigureCommand", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 });
+

@@ -63,3 +63,4 @@ describe("createDirectRoomTracker", () => {
     ).resolves.toBe(true);
   });
 });
+

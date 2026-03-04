@@ -419,3 +419,4 @@ export function inferToolMetaFromArgs(toolName: string, args: unknown): string |
   const display = resolveToolDisplay({ name: toolName, args });
   return formatToolDetail(display);
 }
+

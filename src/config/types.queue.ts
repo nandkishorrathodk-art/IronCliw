@@ -20,3 +20,4 @@ export type QueueModeByProvider = {
   msteams?: QueueMode;
   webchat?: QueueMode;
 };
+

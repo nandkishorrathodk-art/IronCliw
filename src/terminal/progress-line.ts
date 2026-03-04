@@ -23,3 +23,4 @@ export function unregisterActiveProgressLine(stream?: NodeJS.WriteStream): void 
   }
   activeStream = null;
 }
+

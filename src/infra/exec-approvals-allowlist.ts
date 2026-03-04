@@ -513,3 +513,4 @@ export function evaluateShellAllowlist(
     segmentSatisfiedBy,
   };
 }
+

@@ -92,3 +92,4 @@ describe("scheduleRestartSentinelWake", () => {
     expect(mocks.enqueueSystemEvent).not.toHaveBeenCalled();
   });
 });
+

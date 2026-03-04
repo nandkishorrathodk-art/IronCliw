@@ -56,3 +56,4 @@ describe("resolveZaloToken", () => {
     expect(res.source).toBe("config");
   });
 });
+

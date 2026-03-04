@@ -61,3 +61,4 @@ describe("signal outbound cfg threading", () => {
     expect(result).toEqual({ channel: "signal", messageId: "sig-2" });
   });
 });
+

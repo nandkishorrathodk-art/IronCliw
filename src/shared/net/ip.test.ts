@@ -54,3 +54,4 @@ describe("shared ip helpers", () => {
     expect(isPrivateOrLoopbackIpAddress("2001:4860:4860::8888")).toBe(false);
   });
 });
+

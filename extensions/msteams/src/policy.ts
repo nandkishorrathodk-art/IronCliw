@@ -7,7 +7,7 @@ import type {
   MSTeamsConfig,
   MSTeamsReplyStyle,
   MSTeamsTeamConfig,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
@@ -15,7 +15,7 @@ import {
   resolveToolsBySender,
   resolveChannelEntryMatchWithFallback,
   resolveNestedAllowlistDecision,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 
 export type MSTeamsResolvedRouteConfig = {
   teamConfig?: MSTeamsTeamConfig;
@@ -257,3 +257,4 @@ export function isMSTeamsGroupAllowed(params: {
   }
   return resolveMSTeamsAllowlistMatch(params).allowed;
 }
+

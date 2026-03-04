@@ -71,3 +71,4 @@ export function toStringArray(value: unknown): string[] | undefined {
   const strings = value.map((v) => toStringOrEmpty(v)).filter(Boolean);
   return strings.length ? strings : undefined;
 }
+

@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IronCliwConfig } from "../../../config/config.js";
 import { imessageOutbound } from "./imessage.js";
 
 describe("imessageOutbound", () => {
-  const cfg: OpenClawConfig = {
+  const cfg: IronCliwConfig = {
     channels: {
       imessage: {
         mediaMaxMb: 2,
@@ -67,3 +67,4 @@ describe("imessageOutbound", () => {
     expect(result).toEqual({ channel: "imessage", messageId: "media-1" });
   });
 });
+

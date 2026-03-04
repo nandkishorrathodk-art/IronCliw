@@ -17,3 +17,4 @@ describe("formatAcpRuntimeErrorText", () => {
     expect(text).toContain("next:");
   });
 });
+

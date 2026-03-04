@@ -225,3 +225,4 @@ export async function sessionsCommand(
     runtime.log(line.trimEnd());
   }
 }
+

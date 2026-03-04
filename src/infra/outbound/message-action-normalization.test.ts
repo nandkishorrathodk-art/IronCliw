@@ -66,3 +66,4 @@ describe("normalizeMessageActionInput", () => {
     ).toThrow(/requires a target/);
   });
 });
+

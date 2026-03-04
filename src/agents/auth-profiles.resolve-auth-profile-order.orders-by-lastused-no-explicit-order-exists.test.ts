@@ -70,3 +70,4 @@ describe("resolveAuthProfileOrder", () => {
     expect(order).toEqual(["anthropic:ready", "anthropic:cool2", "anthropic:cool1"]);
   });
 });
+

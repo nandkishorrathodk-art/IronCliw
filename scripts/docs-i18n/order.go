@@ -35,3 +35,4 @@ func orderFiles(docsRoot string, files []string) ([]string, error) {
 	}
 	return ordered, nil
 }
+

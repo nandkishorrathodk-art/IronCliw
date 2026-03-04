@@ -46,3 +46,4 @@ describe("hooks module loader helpers", () => {
     expect(resolved).toBeUndefined();
   });
 });
+

@@ -1,6 +1,6 @@
 import { StaticAuthProvider } from "@twurple/auth";
 import { ChatClient } from "@twurple/chat";
-import type { BaseProbeResult } from "openclaw/plugin-sdk/twitch";
+import type { BaseProbeResult } from "IronCliw/plugin-sdk/twitch";
 import type { TwitchAccountConfig } from "./types.js";
 import { normalizeToken } from "./utils/twitch.js";
 
@@ -117,3 +117,4 @@ export async function probeTwitch(
     }
   }
 }
+

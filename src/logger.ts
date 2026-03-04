@@ -83,3 +83,4 @@ export function logDebug(message: string) {
   getLogger().debug(message);
   logVerboseConsole(message);
 }
+

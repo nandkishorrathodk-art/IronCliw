@@ -57,3 +57,4 @@ export const createIMessageTestPlugin = (params?: {
     normalizeTarget: (raw) => normalizeIMessageHandle(raw),
   },
 });
+

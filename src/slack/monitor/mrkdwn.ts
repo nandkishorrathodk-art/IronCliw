@@ -6,3 +6,4 @@ export function escapeSlackMrkdwn(value: string): string {
     .replaceAll(">", "&gt;")
     .replace(/([*_`~])/g, "\\$1");
 }
+

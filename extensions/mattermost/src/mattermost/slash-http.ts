@@ -6,14 +6,14 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawConfig, ReplyPayload, RuntimeEnv } from "openclaw/plugin-sdk/mattermost";
+import type { IronCliwConfig, ReplyPayload, RuntimeEnv } from "IronCliw/plugin-sdk/mattermost";
 import {
   createReplyPrefixOptions,
   createTypingCallbacks,
   isDangerousNameMatchingEnabled,
   logTypingFailure,
   resolveControlCommandGate,
-} from "openclaw/plugin-sdk/mattermost";
+} from "IronCliw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "../mattermost/accounts.js";
 import { getMattermostRuntime } from "../runtime.js";
 import {
@@ -38,7 +38,7 @@ import {
 
 type SlashHttpHandlerParams = {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   runtime: RuntimeEnv;
   /** Expected token from registered commands (for validation). */
   commandTokens: Set<string>;
@@ -92,7 +92,7 @@ type SlashInvocationAuth = {
 
 async function authorizeSlashInvocation(params: {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   client: ReturnType<typeof createMattermostClient>;
   commandText: string;
   channelId: string;
@@ -482,7 +482,7 @@ export function createSlashCommandHttpHandler(params: SlashHttpHandlerParams) {
 
 async function handleSlashCommandAsync(params: {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   runtime: RuntimeEnv;
   client: ReturnType<typeof createMattermostClient>;
   commandText: string;
@@ -655,3 +655,4 @@ async function handleSlashCommandAsync(params: {
       }),
   });
 }
+

@@ -138,3 +138,4 @@ describe("createSlackDraftStream", () => {
     expect(stream.channelId()).toBeUndefined();
   });
 });
+

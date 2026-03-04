@@ -45,3 +45,4 @@ const buildInfo = {
 
 fs.mkdirSync(distDir, { recursive: true });
 fs.writeFileSync(path.join(distDir, "build-info.json"), `${JSON.stringify(buildInfo, null, 2)}\n`);
+

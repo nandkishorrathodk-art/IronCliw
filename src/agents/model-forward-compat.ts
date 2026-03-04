@@ -255,3 +255,4 @@ export function resolveForwardCompatModel(
     resolveGoogleGeminiCli31ForwardCompatModel(provider, modelId, modelRegistry)
   );
 }
+

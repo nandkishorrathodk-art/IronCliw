@@ -35,3 +35,4 @@ export class HyperlinkMarkdown implements Component {
     this.inner.invalidate();
   }
 }
+

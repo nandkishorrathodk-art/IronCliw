@@ -7,7 +7,7 @@
  * - m.poll.end - Closes a poll
  */
 
-import type { PollInput } from "openclaw/plugin-sdk/matrix";
+import type { PollInput } from "IronCliw/plugin-sdk/matrix";
 
 export const M_POLL_START = "m.poll.start" as const;
 export const M_POLL_RESPONSE = "m.poll.response" as const;
@@ -165,3 +165,4 @@ export function buildPollStartContent(poll: PollInput): PollStartContent {
     "org.matrix.msc1767.text": fallbackText,
   };
 }
+

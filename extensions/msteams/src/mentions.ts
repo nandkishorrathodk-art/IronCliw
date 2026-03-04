@@ -112,3 +112,4 @@ export function formatMentionText(text: string, mentions: MentionInfo[]): string
   }
   return formatted;
 }
+

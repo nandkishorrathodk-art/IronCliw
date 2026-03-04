@@ -81,3 +81,4 @@ describe("scanOpenRouterModels", () => {
     });
   });
 });
+

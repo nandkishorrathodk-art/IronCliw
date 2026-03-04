@@ -80,7 +80,7 @@ Client                    Gateway
 - 握手后：
   - 请求：`{type:"req", id, method, params}` → `{type:"res", id, ok, payload|error}`
   - 事件：`{type:"event", event, payload, seq?, stateVersion?}`
-- 如果设置了 `OPENCLAW_GATEWAY_TOKEN`（或 `--token`），`connect.params.auth.token` 必须匹配，否则套接字关闭。
+- 如果设置了 `IronCliw_GATEWAY_TOKEN`（或 `--token`），`connect.params.auth.token` 必须匹配，否则套接字关闭。
 - 有副作用的方法（`send`、`agent`）需要幂等键以安全重试；服务器保持短期去重缓存。
 - 节点必须在 `connect` 中包含 `role: "node"` 以及能力/命令/权限。
 
@@ -112,7 +112,7 @@ Client                    Gateway
 
 ## 操作快照
 
-- 启动：`openclaw gateway`（前台，日志输出到 stdout）。
+- 启动：`IronCliw gateway`（前台，日志输出到 stdout）。
 - 健康检查：通过 WS 的 `health`（也包含在 `hello-ok` 中）。
 - 监控：使用 launchd/systemd 自动重启。
 
@@ -121,3 +121,4 @@ Client                    Gateway
 - 每台主机恰好一个 Gateway 网关控制单个 Baileys 会话。
 - 握手是强制的；任何非 JSON 或非 connect 的第一帧都会导致硬关闭。
 - 事件不会重放；客户端必须在出现间隙时刷新。
+

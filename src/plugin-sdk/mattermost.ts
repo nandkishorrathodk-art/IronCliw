@@ -41,7 +41,7 @@ export type {
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export { createReplyPrefixOptions } from "../channels/reply-prefix.js";
 export { createTypingCallbacks } from "../channels/typing.js";
-export type { OpenClawConfig } from "../config/config.js";
+export type { IronCliwConfig } from "../config/config.js";
 export { isDangerousNameMatchingEnabled } from "../config/dangerous-name-matching.js";
 export {
   resolveAllowlistProviderRuntimeGroupPolicy,
@@ -66,7 +66,7 @@ export { createDedupeCache } from "../infra/dedupe.js";
 export { rawDataToString } from "../infra/ws.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 export {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
@@ -83,3 +83,4 @@ export type { WizardPrompter } from "../wizard/prompts.js";
 export { buildAgentMediaPayload } from "./agent-media-payload.js";
 export { loadOutboundMediaFromUrl } from "./outbound-media.js";
 export { createScopedPairingAccess } from "./pairing-access.js";
+

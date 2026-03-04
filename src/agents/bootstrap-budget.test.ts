@@ -395,3 +395,4 @@ describe("bootstrap prompt warnings", () => {
     expect(meta.warningSignaturesSeen?.length).toBeGreaterThan(0);
   });
 });
+

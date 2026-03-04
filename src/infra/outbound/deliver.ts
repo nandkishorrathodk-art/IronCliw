@@ -11,7 +11,7 @@ import type {
   ChannelOutboundAdapter,
   ChannelOutboundContext,
 } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { resolveMarkdownTableMode } from "../../config/markdown-tables.js";
 import {
   appendAssistantMessageToSessionTranscript,
@@ -54,7 +54,7 @@ type SendMatrixMessage = (
   to: string,
   text: string,
   opts?: {
-    cfg?: OpenClawConfig;
+    cfg?: IronCliwConfig;
     mediaUrl?: string;
     replyToId?: string;
     threadId?: string;
@@ -122,7 +122,7 @@ type ChannelHandler = {
 };
 
 type ChannelHandlerParams = {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -212,7 +212,7 @@ function createChannelOutboundContextBase(
 const isAbortError = (err: unknown): boolean => err instanceof Error && err.name === "AbortError";
 
 type DeliverOutboundPayloadsCoreParams = {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channel: Exclude<OutboundChannel, "none">;
   to: string;
   accountId?: string;
@@ -297,7 +297,7 @@ function normalizePayloadsForChannelDelivery(
     let sanitizedPayload = payload;
     // Strip HTML tags for plain-text surfaces (WhatsApp, Signal, etc.)
     // Models occasionally produce <br>, <b>, etc. that render as literal text.
-    // See https://github.com/openclaw/openclaw/issues/31884
+    // See https://github.com/IronCliw/IronCliw/issues/31884
     if (isPlainTextSurface(channel) && payload.text) {
       // Telegram sendPayload uses textMode:"html". Preserve raw HTML in this path.
       if (!(channel === "telegram" && payload.channelData)) {
@@ -779,3 +779,4 @@ async function deliverOutboundPayloadsCore(
 
   return results;
 }
+

@@ -16,7 +16,7 @@ vi.mock("./node-require.js", () => ({
 }));
 
 let originalTestFileLog: string | undefined;
-let originalOpenClawLogLevel: string | undefined;
+let originalIronCliwLogLevel: string | undefined;
 let logging: typeof import("../logging.js");
 
 beforeAll(async () => {
@@ -24,10 +24,10 @@ beforeAll(async () => {
 });
 
 beforeEach(() => {
-  originalTestFileLog = process.env.OPENCLAW_TEST_FILE_LOG;
-  originalOpenClawLogLevel = process.env.OPENCLAW_LOG_LEVEL;
-  delete process.env.OPENCLAW_TEST_FILE_LOG;
-  delete process.env.OPENCLAW_LOG_LEVEL;
+  originalTestFileLog = process.env.IronCliw_TEST_FILE_LOG;
+  originalIronCliwLogLevel = process.env.IronCliw_LOG_LEVEL;
+  delete process.env.IronCliw_TEST_FILE_LOG;
+  delete process.env.IronCliw_LOG_LEVEL;
   readLoggingConfigMock.mockClear();
   fallbackRequireMock.mockClear();
   logging.resetLogger();
@@ -36,14 +36,14 @@ beforeEach(() => {
 
 afterEach(() => {
   if (originalTestFileLog === undefined) {
-    delete process.env.OPENCLAW_TEST_FILE_LOG;
+    delete process.env.IronCliw_TEST_FILE_LOG;
   } else {
-    process.env.OPENCLAW_TEST_FILE_LOG = originalTestFileLog;
+    process.env.IronCliw_TEST_FILE_LOG = originalTestFileLog;
   }
-  if (originalOpenClawLogLevel === undefined) {
-    delete process.env.OPENCLAW_LOG_LEVEL;
+  if (originalIronCliwLogLevel === undefined) {
+    delete process.env.IronCliw_LOG_LEVEL;
   } else {
-    process.env.OPENCLAW_LOG_LEVEL = originalOpenClawLogLevel;
+    process.env.IronCliw_LOG_LEVEL = originalIronCliwLogLevel;
   }
   logging.resetLogger();
   logging.setLoggerOverride(null);
@@ -59,8 +59,9 @@ describe("getResolvedLoggerSettings", () => {
   });
 
   it("reads logging config when test file logging is explicitly enabled", () => {
-    process.env.OPENCLAW_TEST_FILE_LOG = "1";
+    process.env.IronCliw_TEST_FILE_LOG = "1";
     const settings = logging.getResolvedLoggerSettings();
     expect(settings.level).toBe("info");
   });
 });
+

@@ -27,3 +27,4 @@ export type ExecApprovalForwardingConfig = {
 export type ApprovalsConfig = {
   exec?: ExecApprovalForwardingConfig;
 };
+

@@ -70,3 +70,4 @@ describe("fetchDiscord", () => {
     expect(calls).toBe(2);
   });
 });
+

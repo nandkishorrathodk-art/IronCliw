@@ -10,3 +10,4 @@ export function safeEqualSecret(
   const hash = (s: string) => createHash("sha256").update(s).digest();
   return timingSafeEqual(hash(provided), hash(expected));
 }
+

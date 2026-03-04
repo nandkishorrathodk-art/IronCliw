@@ -3,7 +3,7 @@ import type { PortListener, PortListenerKind, PortUsage } from "./ports-types.js
 
 export function classifyPortListener(listener: PortListener, port: number): PortListenerKind {
   const raw = `${listener.commandLine ?? ""} ${listener.command ?? ""}`.trim().toLowerCase();
-  if (raw.includes("openclaw")) {
+  if (raw.includes("IronCliw")) {
     return "gateway";
   }
   if (raw.includes("ssh")) {
@@ -27,7 +27,7 @@ export function buildPortHints(listeners: PortListener[], port: number): string[
   const hints: string[] = [];
   if (kinds.has("gateway")) {
     hints.push(
-      `Gateway already running locally. Stop it (${formatCliCommand("openclaw gateway stop")}) or use a different port.`,
+      `Gateway already running locally. Stop it (${formatCliCommand("IronCliw gateway stop")}) or use a different port.`,
     );
   }
   if (kinds.has("ssh")) {
@@ -67,3 +67,4 @@ export function formatPortDiagnostics(diagnostics: PortUsage): string[] {
   }
   return lines;
 }
+

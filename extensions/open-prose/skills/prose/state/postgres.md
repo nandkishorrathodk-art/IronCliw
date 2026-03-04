@@ -878,3 +878,4 @@ PostgreSQL state management:
 The core contract: the VM manages execution flow and spawns subagents; subagents write their own outputs directly to the database. Completion is signaled through the Task tool return, not database updates. External tools can query execution state in real-time.
 
 **PostgreSQL state is for power users.** If you don't need concurrent writes, network access, or team collaboration, filesystem or SQLite state will be simpler and sufficient.
+

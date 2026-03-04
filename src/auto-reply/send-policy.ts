@@ -42,3 +42,4 @@ export function parseSendPolicyCommand(raw?: string): {
   const mode = normalizeSendPolicyOverride(token);
   return { hasCommand: true, mode };
 }
+

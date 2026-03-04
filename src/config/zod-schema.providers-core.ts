@@ -1448,3 +1448,4 @@ export const MSTeamsConfigSchema = z
         'channels.msteams.dmPolicy="allowlist" requires channels.msteams.allowFrom to contain at least one sender ID',
     });
   });
+

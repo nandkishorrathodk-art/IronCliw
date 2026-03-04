@@ -118,3 +118,4 @@ describe("cron main job passes heartbeat target=last", () => {
     expect(runHeartbeatOnce).not.toHaveBeenCalled();
   });
 });
+

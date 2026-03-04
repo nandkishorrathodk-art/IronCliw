@@ -7,7 +7,7 @@ import {
   summarizeMapping,
   warnMissingProviderGroupPolicyFallbackOnce,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/matrix";
+} from "IronCliw/plugin-sdk/matrix";
 import { resolveMatrixTargets } from "../../resolve-targets.js";
 import { getMatrixRuntime } from "../../runtime.js";
 import type { CoreConfig, MatrixConfig, MatrixRoomConfig, ReplyToMode } from "../../types.js";
@@ -413,3 +413,4 @@ export async function monitorMatrixProvider(opts: MonitorMatrixOpts = {}): Promi
     opts.abortSignal?.addEventListener("abort", onAbort, { once: true });
   });
 }
+

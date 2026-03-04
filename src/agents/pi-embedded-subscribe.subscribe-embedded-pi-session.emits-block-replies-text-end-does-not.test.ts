@@ -55,3 +55,4 @@ describe("subscribeEmbeddedPiSession", () => {
     expect(subscription.assistantTexts).toEqual(["Hello block"]);
   });
 });
+

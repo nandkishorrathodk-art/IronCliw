@@ -5,7 +5,7 @@ vi.mock("../pi-model-discovery.js", () => ({
   discoverModels: vi.fn(() => ({ find: vi.fn(() => null) })),
 }));
 
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { buildInlineProviderModels, resolveModel } from "./model.js";
 import {
   buildOpenAICodexForwardCompatExpectation,
@@ -48,7 +48,7 @@ function expectResolvedForwardCompatFallback(params: {
   provider: string;
   id: string;
   expectedModel: Record<string, unknown>;
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
 }) {
   const result = resolveModel(params.provider, params.id, "/tmp/agent", params.cfg);
   expect(result.error).toBeUndefined();
@@ -162,7 +162,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const result = resolveModel("custom", "missing-model", "/tmp/agent", cfg);
 
@@ -192,7 +192,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const result = resolveModel("custom", "model-b", "/tmp/agent", cfg);
 
@@ -219,7 +219,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const result = resolveModel("custom", "model-b", "/tmp/agent", cfg);
 
@@ -332,7 +332,7 @@ describe("resolveModel", () => {
     // This test verifies the ordering: codex fallback must fire BEFORE the generic providerCfg fallback.
     // If ordering is wrong, the generic fallback would use api: "openai-responses" (the default)
     // instead of "openai-codex-responses".
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       models: {
         providers: {
           "openai-codex": {
@@ -341,7 +341,7 @@ describe("resolveModel", () => {
           },
         },
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as IronCliwConfig;
 
     expectResolvedForwardCompatFallback({
       provider: "openai-codex",
@@ -362,7 +362,7 @@ describe("resolveModel", () => {
     expect(result.model).toBeUndefined();
     expect(result.error).toContain("Unknown model: ollama/gemma3:4b");
     expect(result.error).toContain("OLLAMA_API_KEY");
-    expect(result.error).toContain("docs.openclaw.ai/providers/ollama");
+    expect(result.error).toContain("docs.IronCliw.ai/providers/ollama");
   });
 
   it("includes auth hint for unknown vllm models", () => {
@@ -380,3 +380,4 @@ describe("resolveModel", () => {
     expect(result.error).toBe("Unknown model: google-antigravity/some-model");
   });
 });
+

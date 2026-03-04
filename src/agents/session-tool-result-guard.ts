@@ -258,3 +258,4 @@ export function installSessionToolResultGuard(
     getPendingIds: pendingState.getPendingIds,
   };
 }
+

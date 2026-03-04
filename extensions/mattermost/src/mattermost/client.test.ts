@@ -17,3 +17,4 @@ describe("mattermost client", () => {
     expect(result).toBeUndefined();
   });
 });
+

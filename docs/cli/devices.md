@@ -1,78 +1,78 @@
 ---
-summary: "CLI reference for `openclaw devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `IronCliw devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `openclaw devices`
+# `IronCliw devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `openclaw devices list`
+### `IronCliw devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-openclaw devices list
-openclaw devices list --json
+IronCliw devices list
+IronCliw devices list --json
 ```
 
-### `openclaw devices remove <deviceId>`
+### `IronCliw devices remove <deviceId>`
 
 Remove one paired device entry.
 
 ```
-openclaw devices remove <deviceId>
-openclaw devices remove <deviceId> --json
+IronCliw devices remove <deviceId>
+IronCliw devices remove <deviceId> --json
 ```
 
-### `openclaw devices clear --yes [--pending]`
+### `IronCliw devices clear --yes [--pending]`
 
 Clear paired devices in bulk.
 
 ```
-openclaw devices clear --yes
-openclaw devices clear --yes --pending
-openclaw devices clear --yes --pending --json
+IronCliw devices clear --yes
+IronCliw devices clear --yes --pending
+IronCliw devices clear --yes --pending --json
 ```
 
-### `openclaw devices approve [requestId] [--latest]`
+### `IronCliw devices approve [requestId] [--latest]`
 
-Approve a pending device pairing request. If `requestId` is omitted, OpenClaw
+Approve a pending device pairing request. If `requestId` is omitted, IronCliw
 automatically approves the most recent pending request.
 
 ```
-openclaw devices approve
-openclaw devices approve <requestId>
-openclaw devices approve --latest
+IronCliw devices approve
+IronCliw devices approve <requestId>
+IronCliw devices approve --latest
 ```
 
-### `openclaw devices reject <requestId>`
+### `IronCliw devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-openclaw devices reject <requestId>
+IronCliw devices reject <requestId>
 ```
 
-### `openclaw devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `IronCliw devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-openclaw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+IronCliw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `openclaw devices revoke --device <id> --role <role>`
+### `IronCliw devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-openclaw devices revoke --device <deviceId> --role node
+IronCliw devices revoke --device <deviceId> --role node
 ```
 
 ## Common options
@@ -92,3 +92,4 @@ Pass `--token` or `--password` explicitly. Missing explicit credentials is an er
 - These commands require `operator.pairing` (or `operator.admin`) scope.
 - `devices clear` is intentionally gated by `--yes`.
 - If pairing scope is unavailable on local loopback (and no explicit `--url` is passed), list/approve can use a local pairing fallback.
+

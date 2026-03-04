@@ -1,8 +1,8 @@
 import type {
   ChannelMessageActionName,
   ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/msteams";
+  IronCliwConfig,
+} from "IronCliw/plugin-sdk/msteams";
 import {
   buildBaseChannelStatusSummary,
   buildChannelConfigSchema,
@@ -12,7 +12,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   resolveAllowlistProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 import { listMSTeamsDirectoryGroupsLive, listMSTeamsDirectoryPeersLive } from "./directory-live.js";
 import { msteamsOnboardingAdapter } from "./onboarding.js";
 import { msteamsOutbound } from "./outbound.js";
@@ -107,7 +107,7 @@ export const msteamsPlugin: ChannelPlugin<ResolvedMSTeamsAccount> = {
       },
     }),
     deleteAccount: ({ cfg }) => {
-      const next = { ...cfg } as OpenClawConfig;
+      const next = { ...cfg } as IronCliwConfig;
       const nextChannels = { ...cfg.channels };
       delete nextChannels.msteams;
       if (Object.keys(nextChannels).length > 0) {
@@ -462,3 +462,4 @@ export const msteamsPlugin: ChannelPlugin<ResolvedMSTeamsAccount> = {
     },
   },
 };
+

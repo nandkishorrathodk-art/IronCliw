@@ -600,3 +600,4 @@ describe("startTelegramWebhook", () => {
     expect(deleteWebhookSpy).toHaveBeenCalledWith({ drop_pending_updates: false });
   });
 });
+

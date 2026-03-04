@@ -12,3 +12,4 @@ export const mistralProvider: MediaUnderstandingProvider = {
       baseUrl: req.baseUrl ?? DEFAULT_MISTRAL_AUDIO_BASE_URL,
     }),
 };
+

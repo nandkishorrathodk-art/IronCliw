@@ -10,3 +10,4 @@ export function resolveRequestUrl(input: RequestInfo | URL): string {
   }
   return String(input);
 }
+

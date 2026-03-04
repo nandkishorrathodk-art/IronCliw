@@ -188,3 +188,4 @@ export function deriveSessionTotalTokens(params: {
   // percentages for terminal output.
   return promptTokens;
 }
+

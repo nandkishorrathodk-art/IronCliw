@@ -20,3 +20,4 @@ export function stripIrcControlChars(value: string): string {
   }
   return out;
 }
+

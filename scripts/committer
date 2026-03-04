@@ -115,3 +115,4 @@ if [ "$committed" = false ]; then
 fi
 
 printf 'Committed "%s" with %d files\n' "$commit_message" "${#files[@]}"
+

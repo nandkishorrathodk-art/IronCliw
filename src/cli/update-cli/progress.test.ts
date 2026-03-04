@@ -14,7 +14,7 @@ function makeResult(
     steps: [
       {
         name: stepName,
-        command: "npm i -g openclaw@latest",
+        command: "npm i -g IronCliw@latest",
         cwd: "/tmp",
         durationMs: 1,
         exitCode: 1,
@@ -51,3 +51,4 @@ describe("inferUpdateFailureHints", () => {
     expect(inferUpdateFailureHints(result)).toEqual([]);
   });
 });
+

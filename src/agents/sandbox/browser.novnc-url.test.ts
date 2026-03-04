@@ -54,3 +54,4 @@ describe("noVNC auth helpers", () => {
     expect(password).toMatch(/^[a-zA-Z0-9]{8}$/);
   });
 });
+

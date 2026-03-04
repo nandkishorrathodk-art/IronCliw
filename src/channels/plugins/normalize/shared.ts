@@ -20,3 +20,4 @@ export function looksLikeHandleOrPhoneTarget(params: {
   }
   return (params.phonePattern ?? /^\+?\d{3,}$/).test(trimmed);
 }
+

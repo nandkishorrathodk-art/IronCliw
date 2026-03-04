@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { TelegramAccountConfig } from "../config/types.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { registerTelegramNativeCommands } from "./bot-native-commands.js";
@@ -7,7 +7,7 @@ type RegisterTelegramNativeCommandParams = Parameters<typeof registerTelegramNat
 
 export function createNativeCommandTestParams(params: {
   bot: RegisterTelegramNativeCommandParams["bot"];
-  cfg?: OpenClawConfig;
+  cfg?: IronCliwConfig;
   runtime?: RuntimeEnv;
   accountId?: string;
   telegramCfg?: TelegramAccountConfig;
@@ -44,3 +44,4 @@ export function createNativeCommandTestParams(params: {
     opts: params.opts ?? { token: "token" },
   };
 }
+

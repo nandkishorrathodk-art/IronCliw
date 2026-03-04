@@ -138,3 +138,4 @@ describe("registerSlackPinEvents", () => {
     expect(trackEvent).toHaveBeenCalledTimes(1);
   });
 });
+

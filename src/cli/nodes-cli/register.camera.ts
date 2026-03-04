@@ -260,3 +260,4 @@ export function registerNodesCameraCommands(nodes: Command) {
     { timeoutMs: 90_000 },
   );
 }
+

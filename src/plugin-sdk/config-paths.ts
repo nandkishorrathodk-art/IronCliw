@@ -1,7 +1,7 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 
 export function resolveChannelAccountConfigBasePath(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channelKey: string;
   accountId: string;
 }): string {
@@ -13,3 +13,4 @@ export function resolveChannelAccountConfigBasePath(params: {
     ? `channels.${params.channelKey}.accounts.${params.accountId}.`
     : `channels.${params.channelKey}.`;
 }
+

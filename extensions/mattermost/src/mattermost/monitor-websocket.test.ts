@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "openclaw/plugin-sdk/mattermost";
+import type { RuntimeEnv } from "IronCliw/plugin-sdk/mattermost";
 import { describe, expect, it, vi } from "vitest";
 import {
   createMattermostConnectOnce,
@@ -230,3 +230,4 @@ describe("mattermost websocket monitor", () => {
     expect(payload.data?.reaction).toBeDefined();
   });
 });
+

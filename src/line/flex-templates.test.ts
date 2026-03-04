@@ -93,3 +93,4 @@ describe("createEventCard", () => {
     expect(body.contents).toHaveLength(3);
   });
 });
+

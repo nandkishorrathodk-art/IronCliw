@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 
 let mockStore: AuthProfileStore;
 let mockAllowedProfiles: string[];
@@ -74,7 +74,7 @@ describe("buildProbeTargets reason codes", () => {
             anthropic: ["anthropic:default"],
           },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       providers: ["anthropic"],
       modelCandidates: ["anthropic/claude-sonnet-4-6"],
       options: {
@@ -104,7 +104,7 @@ describe("buildProbeTargets reason codes", () => {
             anthropic: ["anthropic:work"],
           },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       providers: ["anthropic"],
       modelCandidates: ["anthropic/claude-sonnet-4-6"],
       options: {
@@ -144,7 +144,7 @@ describe("buildProbeTargets reason codes", () => {
             anthropic: ["anthropic:default"],
           },
         },
-      } as OpenClawConfig,
+      } as IronCliwConfig,
       providers: ["anthropic"],
       modelCandidates: ["anthropic/claude-sonnet-4-6"],
       options: {
@@ -164,3 +164,4 @@ describe("buildProbeTargets reason codes", () => {
     expect(plan.results[0]?.error).toContain("env:default:MISSING_ANTHROPIC_TOKEN");
   });
 });
+

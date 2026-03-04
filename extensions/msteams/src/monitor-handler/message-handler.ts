@@ -15,7 +15,7 @@ import {
   resolveEffectiveAllowFromLists,
   resolveDmGroupAccessWithLists,
   type HistoryEntry,
-} from "openclaw/plugin-sdk/msteams";
+} from "IronCliw/plugin-sdk/msteams";
 import {
   buildMSTeamsAttachmentPlaceholder,
   buildMSTeamsMediaPayload,
@@ -691,3 +691,4 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
     });
   };
 }
+

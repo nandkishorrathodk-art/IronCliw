@@ -45,7 +45,7 @@ describe("getSubagentDepthFromSessionStore", () => {
   });
 
   it("resolves prefixed store keys when caller key omits the agent prefix", () => {
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-subagent-depth-"));
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-subagent-depth-"));
     const storeTemplate = path.join(tmpDir, "sessions-{agentId}.json");
     const prefixedKey = "agent:main:subagent:flat";
     const storePath = storeTemplate.replaceAll("{agentId}", "main");
@@ -98,3 +98,4 @@ describe("resolveAgentTimeoutMs", () => {
     expect(resolveAgentTimeoutMs({ overrideMs: 9_999_999_999 })).toBe(2_147_000_000);
   });
 });
+

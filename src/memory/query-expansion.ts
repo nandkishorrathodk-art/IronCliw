@@ -804,3 +804,4 @@ export async function expandQueryWithLlm(
   // Fall back to local keyword extraction
   return extractKeywords(query);
 }
+

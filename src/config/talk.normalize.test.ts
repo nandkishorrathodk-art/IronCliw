@@ -10,8 +10,8 @@ async function withTempConfig(
   config: unknown,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-talk-"));
-  const configPath = path.join(dir, "openclaw.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-talk-"));
+  const configPath = path.join(dir, "IronCliw.json");
   await fs.writeFile(configPath, JSON.stringify(config, null, 2));
   try {
     await run(configPath);
@@ -170,3 +170,4 @@ describe("talk normalization", () => {
     });
   });
 });
+

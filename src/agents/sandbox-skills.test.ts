@@ -2,13 +2,13 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { captureFullEnv } from "../test-utils/env.js";
 import { resolveSandboxContext } from "./sandbox/context.js";
 import { writeSkill } from "./skills.e2e-test-helpers.js";
 
 vi.mock("./sandbox/docker.js", () => ({
-  ensureSandboxContainer: vi.fn(async () => "openclaw-sbx-test"),
+  ensureSandboxContainer: vi.fn(async () => "IronCliw-sbx-test"),
 }));
 
 vi.mock("./sandbox/browser.js", () => ({
@@ -31,19 +31,19 @@ describe("sandbox skill mirroring", () => {
   });
 
   const runContext = async (workspaceAccess: "none" | "ro") => {
-    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-bundled-skills-"));
+    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-bundled-skills-"));
     await fs.mkdir(bundledDir, { recursive: true });
 
-    process.env.OPENCLAW_BUNDLED_SKILLS_DIR = bundledDir;
+    process.env.IronCliw_BUNDLED_SKILLS_DIR = bundledDir;
 
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-workspace-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-workspace-"));
     await writeSkill({
       dir: path.join(workspaceDir, "skills", "demo-skill"),
       name: "demo-skill",
       description: "Demo skill",
     });
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       agents: {
         defaults: {
           sandbox: {
@@ -77,3 +77,4 @@ describe("sandbox skill mirroring", () => {
     20_000,
   );
 });
+

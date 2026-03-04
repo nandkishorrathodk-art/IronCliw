@@ -96,3 +96,4 @@ export function formatAudioTranscripts(outputs: MediaUnderstandingOutput[]): str
   }
   return outputs.map((output, index) => `Audio ${index + 1}:\n${output.text}`).join("\n\n");
 }
+

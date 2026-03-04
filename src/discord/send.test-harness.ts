@@ -54,3 +54,4 @@ export function makeDiscordRest(): DiscordRestFactoryResult {
     deleteMock,
   };
 }
+

@@ -1,1 +1,2 @@
-export { promptAccountId } from "openclaw/plugin-sdk/mattermost";
+export { promptAccountId } from "IronCliw/plugin-sdk/mattermost";
+

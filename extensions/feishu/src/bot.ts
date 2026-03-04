@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import {
   buildAgentMediaPayload,
   buildPendingHistoryContextFromMap,
@@ -11,7 +11,7 @@ import {
   resolveOpenProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
   warnMissingProviderGroupPolicyFallbackOnce,
-} from "openclaw/plugin-sdk/feishu";
+} from "IronCliw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { tryRecordMessage, tryRecordMessagePersistent } from "./dedup.js";
@@ -1527,3 +1527,4 @@ export async function handleFeishuMessage(params: {
     error(`feishu[${account.accountId}]: failed to dispatch message: ${String(err)}`);
   }
 }
+

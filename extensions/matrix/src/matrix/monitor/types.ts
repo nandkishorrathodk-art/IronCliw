@@ -37,3 +37,4 @@ export type RoomMessageEventContent = MessageEventContent & {
     "m.in_reply_to"?: { event_id?: string };
   };
 };
+

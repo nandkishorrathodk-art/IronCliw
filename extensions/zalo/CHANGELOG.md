@@ -4,37 +4,37 @@
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 2026.3.1
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 2026.2.26
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 2026.2.25
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 2026.2.24
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 2026.2.22
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core IronCliw release numbers.
 
 ## 0.1.0
 
@@ -45,3 +45,4 @@
 - Polling and webhook delivery modes.
 - Text + image messaging with 2000-char chunking and media size caps.
 - Multi-account support with per-account config.
+

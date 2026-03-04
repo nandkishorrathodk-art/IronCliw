@@ -20,3 +20,4 @@ export function extractToolSend(
   const threadId = threadIdRaw.length > 0 ? threadIdRaw : undefined;
   return { to, accountId, threadId };
 }
+

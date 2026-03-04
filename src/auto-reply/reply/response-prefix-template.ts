@@ -99,3 +99,4 @@ export function hasTemplateVariables(template: string | undefined): boolean {
   TEMPLATE_VAR_PATTERN.lastIndex = 0;
   return TEMPLATE_VAR_PATTERN.test(template);
 }
+

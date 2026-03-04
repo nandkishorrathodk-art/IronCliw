@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想了解 OpenClaw 支持的完整功能列表
-summary: OpenClaw 在渠道、路由、媒体和用户体验方面的功能。
+  - 你想了解 IronCliw 支持的完整功能列表
+summary: IronCliw 在渠道、路由、媒体和用户体验方面的功能。
 title: 功能
 x-i18n:
   generated_at: "2026-02-04T17:53:22Z"
@@ -57,3 +57,4 @@ x-i18n:
 <Note>
 旧版 Claude、Codex、Gemini 和 Opencode 路径已被移除。Pi 是唯一的编程智能体路径。
 </Note>
+

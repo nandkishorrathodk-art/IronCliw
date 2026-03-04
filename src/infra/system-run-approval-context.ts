@@ -110,3 +110,4 @@ export function resolveSystemRunApprovalRuntimeContext(params: {
     rawCommand: normalizeNonEmptyString(params.rawCommand),
   };
 }
+

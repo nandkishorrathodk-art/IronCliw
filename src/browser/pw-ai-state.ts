@@ -7,3 +7,4 @@ export function markPwAiLoaded(): void {
 export function isPwAiLoaded(): boolean {
   return pwAiLoaded;
 }
+

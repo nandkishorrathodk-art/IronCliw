@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { getChannelDock } from "./dock.js";
 
-function emptyConfig(): OpenClawConfig {
-  return {} as OpenClawConfig;
+function emptyConfig(): IronCliwConfig {
+  return {} as IronCliwConfig;
 }
 
 describe("channels dock", () => {
@@ -69,7 +69,7 @@ describe("channels dock", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const accountDefault = ircDock?.config?.resolveDefaultTo?.({ cfg, accountId: "work" });
     const rootDefault = ircDock?.config?.resolveDefaultTo?.({ cfg, accountId: "missing" });
@@ -100,3 +100,4 @@ describe("channels dock", () => {
     expect(formatted).toEqual(["user", "foo", "plain"]);
   });
 });
+

@@ -5,7 +5,7 @@ read_when:
   - Updating the default dev agent identity
 ---
 
-# AGENTS.md - OpenClaw Workspace
+# AGENTS.md - IronCliw Workspace
 
 This folder is the assistant's working directory.
 
@@ -81,3 +81,4 @@ We shook hand-to-claw that day. I shall never forget it.
 - Vibes + Stack traces = Unstoppable team
 - Oh thank the Maker (always appropriate)
 - The Clawdributors are kind
+

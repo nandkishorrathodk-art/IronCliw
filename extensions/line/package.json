@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/line",
+  "name": "@IronCliw/line",
   "version": "2026.3.2",
   "private": true,
-  "description": "OpenClaw LINE channel plugin",
+  "description": "IronCliw LINE channel plugin",
   "type": "module",
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -19,9 +19,10 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/line",
+      "npmSpec": "@IronCliw/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }
   }
 }
+

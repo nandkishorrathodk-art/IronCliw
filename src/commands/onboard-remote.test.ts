@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { GatewayBonjourBeacon } from "../infra/bonjour-discovery.js";
 import { captureEnv } from "../test-utils/env.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
@@ -40,14 +40,14 @@ function createSelectPrompter(
 }
 
 describe("promptRemoteGatewayConfig", () => {
-  const envSnapshot = captureEnv(["OPENCLAW_ALLOW_INSECURE_PRIVATE_WS"]);
+  const envSnapshot = captureEnv(["IronCliw_ALLOW_INSECURE_PRIVATE_WS"]);
 
   async function runRemotePrompt(params: {
     text: WizardPrompter["text"];
     selectResponses: Partial<Record<string, string>>;
     confirm: boolean;
   }) {
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as IronCliwConfig;
     const prompter = createPrompter({
       confirm: vi.fn(async () => params.confirm),
       select: createSelectPrompter(params.selectResponses),
@@ -133,13 +133,13 @@ describe("promptRemoteGatewayConfig", () => {
   });
 
   it("supports storing remote auth as an external env secret ref", async () => {
-    process.env.OPENCLAW_GATEWAY_TOKEN = "remote-token-value";
+    process.env.IronCliw_GATEWAY_TOKEN = "remote-token-value";
     const text: WizardPrompter["text"] = vi.fn(async (params) => {
       if (params.message === "Gateway WebSocket URL") {
         return "wss://remote.example.com:18789";
       }
       if (params.message === "Environment variable name") {
-        return "OPENCLAW_GATEWAY_TOKEN";
+        return "IronCliw_GATEWAY_TOKEN";
       }
       return "";
     }) as WizardPrompter["text"];
@@ -157,7 +157,7 @@ describe("promptRemoteGatewayConfig", () => {
       return (params.options[0]?.value ?? "") as never;
     });
 
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as IronCliwConfig;
     const prompter = createPrompter({
       confirm: vi.fn(async () => false),
       select,
@@ -171,7 +171,8 @@ describe("promptRemoteGatewayConfig", () => {
     expect(next.gateway?.remote?.token).toEqual({
       source: "env",
       provider: "default",
-      id: "OPENCLAW_GATEWAY_TOKEN",
+      id: "IronCliw_GATEWAY_TOKEN",
     });
   });
 });
+

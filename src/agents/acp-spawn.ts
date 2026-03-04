@@ -22,7 +22,7 @@ import {
   resolveThreadBindingSpawnPolicy,
 } from "../channels/thread-bindings-policy.js";
 import { loadConfig } from "../config/config.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { callGateway } from "../gateway/call.js";
 import { resolveConversationIdFromTargets } from "../infra/outbound/conversation-id.js";
 import {
@@ -104,7 +104,7 @@ function resolveAcpSessionMode(mode: SpawnAcpMode): AcpRuntimeSessionMode {
 
 function resolveTargetAcpAgentId(params: {
   requestedAgentId?: string;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
 }): { ok: true; agentId: string } | { ok: false; error: string } {
   const requested = normalizeOptionalAgentId(params.requestedAgentId);
   if (requested) {
@@ -152,7 +152,7 @@ function resolveConversationIdForThreadBinding(params: {
 }
 
 function prepareAcpThreadBinding(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   channel?: string;
   accountId?: string;
   to?: string;
@@ -514,3 +514,4 @@ export async function spawnAcpDirect(
     note: spawnMode === "session" ? ACP_SPAWN_SESSION_ACCEPTED_NOTE : ACP_SPAWN_ACCEPTED_NOTE,
   };
 }
+

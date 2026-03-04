@@ -87,3 +87,4 @@ export function validateA2UIJsonl(jsonl: string) {
   const version: A2UIVersion = sawV09 ? "v0.9" : "v0.8";
   return { version, messageCount };
 }
+

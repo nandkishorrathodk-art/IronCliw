@@ -54,3 +54,4 @@ export function renderSignalMentions(message: string, mentions?: SignalMention[]
 
   return normalized;
 }
+

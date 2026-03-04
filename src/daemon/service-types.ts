@@ -36,3 +36,4 @@ export type GatewayServiceRenderArgs = {
   workingDirectory?: string;
   environment?: GatewayServiceEnv;
 };
+

@@ -2,15 +2,15 @@ import { parseFrontmatterBlock } from "../markdown/frontmatter.js";
 import {
   getFrontmatterString,
   normalizeStringList,
-  parseOpenClawManifestInstallBase,
+  parseIronCliwManifestInstallBase,
   parseFrontmatterBool,
-  resolveOpenClawManifestBlock,
-  resolveOpenClawManifestInstall,
-  resolveOpenClawManifestOs,
-  resolveOpenClawManifestRequires,
+  resolveIronCliwManifestBlock,
+  resolveIronCliwManifestInstall,
+  resolveIronCliwManifestOs,
+  resolveIronCliwManifestRequires,
 } from "../shared/frontmatter.js";
 import type {
-  OpenClawHookMetadata,
+  IronCliwHookMetadata,
   HookEntry,
   HookInstallSpec,
   HookInvocationPolicy,
@@ -22,7 +22,7 @@ export function parseFrontmatter(content: string): ParsedHookFrontmatter {
 }
 
 function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
-  const parsed = parseOpenClawManifestInstallBase(input, ["bundled", "npm", "git"]);
+  const parsed = parseIronCliwManifestInstallBase(input, ["bundled", "npm", "git"]);
   if (!parsed) {
     return undefined;
   }
@@ -50,16 +50,16 @@ function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
   return spec;
 }
 
-export function resolveOpenClawMetadata(
+export function resolveIronCliwMetadata(
   frontmatter: ParsedHookFrontmatter,
-): OpenClawHookMetadata | undefined {
-  const metadataObj = resolveOpenClawManifestBlock({ frontmatter });
+): IronCliwHookMetadata | undefined {
+  const metadataObj = resolveIronCliwManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveOpenClawManifestRequires(metadataObj);
-  const install = resolveOpenClawManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveOpenClawManifestOs(metadataObj);
+  const requires = resolveIronCliwManifestRequires(metadataObj);
+  const install = resolveIronCliwManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveIronCliwManifestOs(metadataObj);
   const eventsRaw = normalizeStringList(metadataObj.events);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
@@ -85,3 +85,4 @@ export function resolveHookInvocationPolicy(
 export function resolveHookKey(hookName: string, entry?: HookEntry): string {
   return entry?.metadata?.hookKey ?? hookName;
 }
+

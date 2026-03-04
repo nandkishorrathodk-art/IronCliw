@@ -58,3 +58,4 @@ for (const entry of entrypoints) {
   // NodeNext: reference the runtime specifier with `.js`, TS will map it to `.d.ts`.
   fs.writeFileSync(out, `export * from "./plugin-sdk/${entry}.js";\n`, "utf8");
 }
+

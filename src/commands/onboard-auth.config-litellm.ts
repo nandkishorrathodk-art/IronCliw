@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import {
   applyAgentDefaultModelPrimary,
   applyProviderConfigWithDefaultModel,
@@ -36,7 +36,7 @@ function buildLitellmModelDefinition(): {
   };
 }
 
-export function applyLitellmProviderConfig(cfg: OpenClawConfig): OpenClawConfig {
+export function applyLitellmProviderConfig(cfg: IronCliwConfig): IronCliwConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[LITELLM_DEFAULT_MODEL_REF] = {
     ...models[LITELLM_DEFAULT_MODEL_REF],
@@ -59,7 +59,8 @@ export function applyLitellmProviderConfig(cfg: OpenClawConfig): OpenClawConfig 
   });
 }
 
-export function applyLitellmConfig(cfg: OpenClawConfig): OpenClawConfig {
+export function applyLitellmConfig(cfg: IronCliwConfig): IronCliwConfig {
   const next = applyLitellmProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, LITELLM_DEFAULT_MODEL_REF);
 }
+

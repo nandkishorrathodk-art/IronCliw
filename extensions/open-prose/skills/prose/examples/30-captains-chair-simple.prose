@@ -40,3 +40,4 @@ else:
   output result = session: captain
     prompt: "Validate and summarize the completed work"
     context: { work, review }
+

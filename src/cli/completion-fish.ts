@@ -39,3 +39,4 @@ export function buildFishOptionCompletionLine(params: {
   line += ` -d '${desc}'\n`;
   return line;
 }
+

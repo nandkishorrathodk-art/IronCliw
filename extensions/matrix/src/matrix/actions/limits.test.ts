@@ -13,3 +13,4 @@ describe("resolveMatrixActionLimit", () => {
     expect(resolveMatrixActionLimit(-3, 20)).toBe(1);
   });
 });
+

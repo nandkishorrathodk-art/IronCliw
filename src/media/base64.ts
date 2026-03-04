@@ -49,3 +49,4 @@ export function canonicalizeBase64(base64: string): string | undefined {
   }
   return cleaned;
 }
+

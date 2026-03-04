@@ -23,3 +23,4 @@ export function createSuccessfulImageMediaDecision() {
     ],
   } as const;
 }
+

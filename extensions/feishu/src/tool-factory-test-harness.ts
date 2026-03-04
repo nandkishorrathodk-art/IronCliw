@@ -1,4 +1,4 @@
-import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { AnyAgentTool, IronCliwPluginApi } from "IronCliw/plugin-sdk/feishu";
 
 type ToolContextLike = {
   agentAccountId?: string;
@@ -34,10 +34,10 @@ function asToolLike(tool: AnyAgentTool, fallbackName?: string): ToolLike {
   };
 }
 
-export function createToolFactoryHarness(cfg: OpenClawPluginApi["config"]) {
+export function createToolFactoryHarness(cfg: IronCliwPluginApi["config"]) {
   const registered: RegisteredTool[] = [];
 
-  const api: Pick<OpenClawPluginApi, "config" | "logger" | "registerTool"> = {
+  const api: Pick<IronCliwPluginApi, "config" | "logger" | "registerTool"> = {
     config: cfg,
     logger: {
       info: () => {},
@@ -70,7 +70,8 @@ export function createToolFactoryHarness(cfg: OpenClawPluginApi["config"]) {
   };
 
   return {
-    api: api as OpenClawPluginApi,
+    api: api as IronCliwPluginApi,
     resolveTool,
   };
 }
+

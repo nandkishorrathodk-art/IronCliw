@@ -50,3 +50,4 @@ export function isTruthyEnvValue(value?: string): boolean {
 export function normalizeEnv(): void {
   normalizeZaiEnv();
 }
+

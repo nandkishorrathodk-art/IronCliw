@@ -110,3 +110,4 @@ export async function ensureDockerContainerIsRunning(containerName: string) {
     await execDocker(["start", containerName]);
   }
 }
+

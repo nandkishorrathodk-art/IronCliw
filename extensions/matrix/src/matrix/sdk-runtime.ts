@@ -16,3 +16,4 @@ export function loadMatrixSdk(): MatrixSdkRuntime {
 export function getMatrixLogService() {
   return loadMatrixSdk().LogService;
 }
+

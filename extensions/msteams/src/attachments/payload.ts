@@ -1,4 +1,4 @@
-import { buildMediaPayload } from "openclaw/plugin-sdk/msteams";
+import { buildMediaPayload } from "IronCliw/plugin-sdk/msteams";
 
 export function buildMSTeamsMediaPayload(
   mediaList: Array<{ path: string; contentType?: string }>,
@@ -12,3 +12,4 @@ export function buildMSTeamsMediaPayload(
 } {
   return buildMediaPayload(mediaList, { preserveMediaTypeCardinality: true });
 }
+

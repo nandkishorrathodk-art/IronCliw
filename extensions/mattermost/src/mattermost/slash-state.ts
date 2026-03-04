@@ -10,7 +10,7 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/mattermost";
+import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import { resolveSlashCommandConfig, type MattermostRegisteredCommand } from "./slash-commands.js";
 import { createSlashCommandHttpHandler } from "./slash-http.js";
@@ -86,8 +86,8 @@ export function activateSlashCommands(params: {
   registeredCommands: MattermostRegisteredCommand[];
   triggerMap?: Map<string, string>;
   api: {
-    cfg: import("openclaw/plugin-sdk/mattermost").OpenClawConfig;
-    runtime: import("openclaw/plugin-sdk/mattermost").RuntimeEnv;
+    cfg: import("IronCliw/plugin-sdk/mattermost").IronCliwConfig;
+    runtime: import("IronCliw/plugin-sdk/mattermost").RuntimeEnv;
   };
   log?: (msg: string) => void;
 }) {
@@ -148,7 +148,7 @@ export function deactivateSlashCommands(accountId?: string) {
  * The single HTTP route dispatches to the correct per-account handler
  * by matching the inbound token against each account's registered tokens.
  */
-export function registerSlashCommandRoute(api: OpenClawPluginApi) {
+export function registerSlashCommandRoute(api: IronCliwPluginApi) {
   const mmConfig = api.config.channels?.mattermost as Record<string, unknown> | undefined;
 
   // Collect callback paths from both top-level and per-account config.
@@ -311,3 +311,4 @@ export function registerSlashCommandRoute(api: OpenClawPluginApi) {
     api.logger.info?.(`mattermost: registered slash command callback at ${callbackPath}`);
   }
 }
+

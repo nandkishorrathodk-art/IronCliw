@@ -62,3 +62,4 @@ describe("browser control HTTP auth", () => {
     expect((await ok.json()) as { ok: boolean }).toEqual({ ok: true });
   });
 });
+

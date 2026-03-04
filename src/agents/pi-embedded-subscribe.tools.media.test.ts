@@ -49,7 +49,7 @@ describe("extractToolResultMediaPaths", () => {
   });
 
   it("falls back to details.path when image content exists but no MEDIA: text", () => {
-    // Pi SDK read tool doesn't include MEDIA: but OpenClaw imageResult
+    // Pi SDK read tool doesn't include MEDIA: but IronCliw imageResult
     // sets details.path as fallback.
     const result = {
       content: [
@@ -230,3 +230,4 @@ describe("extractToolResultMediaPaths", () => {
     expect(extractToolResultMediaPaths(result)).toEqual(["/tmp/page1.png", "/tmp/page2.png"]);
   });
 });
+

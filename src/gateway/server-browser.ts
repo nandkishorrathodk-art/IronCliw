@@ -5,12 +5,12 @@ export type BrowserControlServer = {
 };
 
 export async function startBrowserControlServerIfEnabled(): Promise<BrowserControlServer | null> {
-  if (isTruthyEnvValue(process.env.OPENCLAW_SKIP_BROWSER_CONTROL_SERVER)) {
+  if (isTruthyEnvValue(process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER)) {
     return null;
   }
   // Lazy import: keeps startup fast, but still bundles for the embedded
   // gateway (bun --compile) via the static specifier path.
-  const override = process.env.OPENCLAW_BROWSER_CONTROL_MODULE?.trim();
+  const override = process.env.IronCliw_BROWSER_CONTROL_MODULE?.trim();
   const mod = override ? await import(override) : await import("../browser/server.js");
   const start =
     typeof (mod as { startBrowserControlServiceFromConfig?: unknown })
@@ -29,3 +29,4 @@ export async function startBrowserControlServerIfEnabled(): Promise<BrowserContr
   await start();
   return { stop: stop ?? (async () => {}) };
 }
+

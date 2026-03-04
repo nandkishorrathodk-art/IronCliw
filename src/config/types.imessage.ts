@@ -87,3 +87,4 @@ export type IMessageConfig = {
   /** Optional default account id when multiple accounts are configured. */
   defaultAccount?: string;
 } & IMessageAccountConfig;
+

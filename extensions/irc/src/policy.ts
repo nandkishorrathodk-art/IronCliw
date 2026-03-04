@@ -164,3 +164,4 @@ export function resolveIrcGroupSenderAllowed(params: {
   }
   return policy === "open";
 }
+

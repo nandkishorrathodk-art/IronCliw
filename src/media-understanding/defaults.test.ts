@@ -22,3 +22,4 @@ describe("AUTO_VIDEO_KEY_PROVIDERS", () => {
     expect(AUTO_VIDEO_KEY_PROVIDERS).toContain("moonshot");
   });
 });
+

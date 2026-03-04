@@ -114,3 +114,4 @@ describe("session identifier helpers", () => {
     expect(cwd).toBe("/repo/new");
   });
 });
+

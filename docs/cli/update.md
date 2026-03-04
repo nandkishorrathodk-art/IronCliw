@@ -1,30 +1,30 @@
 ---
-summary: "CLI reference for `openclaw update` (safe-ish source update + gateway auto-restart)"
+summary: "CLI reference for `IronCliw update` (safe-ish source update + gateway auto-restart)"
 read_when:
   - You want to update a source checkout safely
   - You need to understand `--update` shorthand behavior
 title: "update"
 ---
 
-# `openclaw update`
+# `IronCliw update`
 
-Safely update OpenClaw and switch between stable/beta/dev channels.
+Safely update IronCliw and switch between stable/beta/dev channels.
 
 If you installed via **npm/pnpm** (global install, no git metadata), updates happen via the package manager flow in [Updating](/install/updating).
 
 ## Usage
 
 ```bash
-openclaw update
-openclaw update status
-openclaw update wizard
-openclaw update --channel beta
-openclaw update --channel dev
-openclaw update --tag beta
-openclaw update --dry-run
-openclaw update --no-restart
-openclaw update --json
-openclaw --update
+IronCliw update
+IronCliw update status
+IronCliw update wizard
+IronCliw update --channel beta
+IronCliw update --channel dev
+IronCliw update --tag beta
+IronCliw update --dry-run
+IronCliw update --no-restart
+IronCliw update --json
+IronCliw --update
 ```
 
 ## Options
@@ -43,9 +43,9 @@ Note: downgrades require confirmation because older versions can break configura
 Show the active update channel + git tag/branch/SHA (for source checkouts), plus update availability.
 
 ```bash
-openclaw update status
-openclaw update status --json
-openclaw update status --timeout 10
+IronCliw update status
+IronCliw update status --json
+IronCliw update status --timeout 10
 ```
 
 Options:
@@ -61,10 +61,10 @@ offers to create one.
 
 ## What it does
 
-When you switch channels explicitly (`--channel ...`), OpenClaw also keeps the
+When you switch channels explicitly (`--channel ...`), IronCliw also keeps the
 install method aligned:
 
-- `dev` → ensures a git checkout (default: `~/openclaw`, override with `OPENCLAW_GIT_DIR`),
+- `dev` → ensures a git checkout (default: `~/IronCliw`, override with `IronCliw_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` → installs from npm using the matching dist-tag.
 
@@ -87,16 +87,17 @@ High-level:
 5. Rebases onto the selected commit (dev only).
 6. Installs deps (pnpm preferred; npm fallback).
 7. Builds + builds the Control UI.
-8. Runs `openclaw doctor` as the final “safe update” check.
+8. Runs `IronCliw doctor` as the final “safe update” check.
 9. Syncs plugins to the active channel (dev uses bundled extensions; stable/beta uses npm) and updates npm-installed plugins.
 
 ## `--update` shorthand
 
-`openclaw --update` rewrites to `openclaw update` (useful for shells and launcher scripts).
+`IronCliw --update` rewrites to `IronCliw update` (useful for shells and launcher scripts).
 
 ## See also
 
-- `openclaw doctor` (offers to run update first on git checkouts)
+- `IronCliw doctor` (offers to run update first on git checkouts)
 - [Development channels](/install/development-channels)
 - [Updating](/install/updating)
 - [CLI reference](/cli)
+

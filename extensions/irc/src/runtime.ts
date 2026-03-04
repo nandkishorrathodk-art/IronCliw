@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/irc";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/irc";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getIrcRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

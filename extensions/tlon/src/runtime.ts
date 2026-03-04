@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/tlon";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/tlon";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getTlonRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

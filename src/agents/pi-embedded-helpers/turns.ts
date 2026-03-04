@@ -199,3 +199,4 @@ export function validateAnthropicTurns(messages: AgentMessage[]): AgentMessage[]
     merge: mergeConsecutiveUserTurns,
   });
 }
+

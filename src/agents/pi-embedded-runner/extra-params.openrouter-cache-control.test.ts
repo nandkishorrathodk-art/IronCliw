@@ -91,3 +91,4 @@ describe("extra-params: OpenRouter Anthropic cache_control", () => {
     expect(payload.messages[0].content).toBe("Hello");
   });
 });
+

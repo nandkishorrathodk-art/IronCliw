@@ -22,3 +22,4 @@ export async function loadSqliteVecExtension(params: {
     return { ok: false, error: message };
   }
 }
+

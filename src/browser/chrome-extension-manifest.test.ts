@@ -27,3 +27,4 @@ describe("chrome extension manifest", () => {
     expect(permissions).toContain("debugger");
   });
 });
+

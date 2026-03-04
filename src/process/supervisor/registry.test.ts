@@ -98,3 +98,4 @@ describe("process supervisor run registry", () => {
     expect(registry.get("r1")?.state).toBe("running");
   });
 });
+

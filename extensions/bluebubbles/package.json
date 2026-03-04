@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/bluebubbles",
+  "name": "@IronCliw/bluebubbles",
   "version": "2026.3.2",
-  "description": "OpenClaw BlueBubbles channel plugin",
+  "description": "IronCliw BlueBubbles channel plugin",
   "type": "module",
   "dependencies": {
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -28,9 +28,10 @@
       "order": 75
     },
     "install": {
-      "npmSpec": "@openclaw/bluebubbles",
+      "npmSpec": "@IronCliw/bluebubbles",
       "localPath": "extensions/bluebubbles",
       "defaultChoice": "npm"
     }
   }
 }
+

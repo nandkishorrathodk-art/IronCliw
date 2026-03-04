@@ -27,3 +27,4 @@ export function parseNonNegativeByteSize(value: unknown): number | null {
 export function isValidNonNegativeByteSizeString(value: string): boolean {
   return parseNonNegativeByteSize(value) !== null;
 }
+

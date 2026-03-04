@@ -83,3 +83,4 @@ describe("rewriteDiscordKnownMentions", () => {
     expect(opsRewrite).toBe("<@999888777>");
   });
 });
+

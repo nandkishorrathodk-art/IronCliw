@@ -47,16 +47,16 @@ Status: production-ready for bot DMs + groups via grammY. Long polling is the de
 ```
 
     Env fallback: `TELEGRAM_BOT_TOKEN=...` (default account only).
-    Telegram does **not** use `openclaw channels login telegram`; configure token in config/env, then start gateway.
+    Telegram does **not** use `IronCliw channels login telegram`; configure token in config/env, then start gateway.
 
   </Step>
 
   <Step title="Start gateway and approve first DM">
 
 ```bash
-openclaw gateway
-openclaw pairing list telegram
-openclaw pairing approve telegram <CODE>
+IronCliw gateway
+IronCliw pairing list telegram
+IronCliw pairing approve telegram <CODE>
 ```
 
     Pairing codes expire after 1 hour.
@@ -116,15 +116,15 @@ Token resolution order is account-aware. In practice, config values win over env
     `channels.telegram.allowFrom` accepts numeric Telegram user IDs. `telegram:` / `tg:` prefixes are accepted and normalized.
     `dmPolicy: "allowlist"` with empty `allowFrom` blocks all DMs and is rejected by config validation.
     The onboarding wizard accepts `@username` input and resolves it to numeric IDs.
-    If you upgraded and your config contains `@username` allowlist entries, run `openclaw doctor --fix` to resolve them (best-effort; requires a Telegram bot token).
-    If you previously relied on pairing-store allowlist files, `openclaw doctor --fix` can recover entries into `channels.telegram.allowFrom` in allowlist flows (for example when `dmPolicy: "allowlist"` has no explicit IDs yet).
+    If you upgraded and your config contains `@username` allowlist entries, run `IronCliw doctor --fix` to resolve them (best-effort; requires a Telegram bot token).
+    If you previously relied on pairing-store allowlist files, `IronCliw doctor --fix` can recover entries into `channels.telegram.allowFrom` in allowlist flows (for example when `dmPolicy: "allowlist"` has no explicit IDs yet).
 
     ### Finding your Telegram user ID
 
     Safer (no third-party bot):
 
     1. DM your bot.
-    2. Run `openclaw logs --follow`.
+    2. Run `IronCliw logs --follow`.
     3. Read `from.id`.
 
     Official Bot API method:
@@ -211,7 +211,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     Getting the group chat ID:
 
     - forward a group message to `@userinfobot` / `@getidsbot`
-    - or read `chat.id` from `openclaw logs --follow`
+    - or read `chat.id` from `IronCliw logs --follow`
     - or inspect Bot API `getUpdates`
 
   </Tab>
@@ -223,7 +223,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 - Routing is deterministic: Telegram inbound replies back to Telegram (the model does not pick channels).
 - Inbound messages normalize into the shared channel envelope with reply metadata and media placeholders.
 - Group sessions are isolated by group ID. Forum topics append `:topic:<threadId>` to keep topics isolated.
-- DM messages can carry `message_thread_id`; OpenClaw routes them with thread-aware session keys and preserves thread ID for replies.
+- DM messages can carry `message_thread_id`; IronCliw routes them with thread-aware session keys and preserves thread ID for replies.
 - Long polling uses grammY runner with per-chat/per-thread sequencing. Overall runner sink concurrency uses `agents.defaults.maxConcurrent`.
 - Telegram Bot API has no read-receipt support (`sendReadReceipts` does not apply).
 
@@ -231,7 +231,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
 <AccordionGroup>
   <Accordion title="Live stream preview (native drafts + message edits)">
-    OpenClaw can stream partial replies in real time:
+    IronCliw can stream partial replies in real time:
 
     - direct chats: Telegram native draft streaming via `sendMessageDraft`
     - groups/topics: preview message + `editMessageText`
@@ -246,14 +246,14 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     For text-only replies:
 
-    - DM: OpenClaw updates the draft in place (no extra preview message)
-    - group/topic: OpenClaw keeps the same preview message and performs a final edit in place (no second message)
+    - DM: IronCliw updates the draft in place (no extra preview message)
+    - group/topic: IronCliw keeps the same preview message and performs a final edit in place (no second message)
 
-    For complex replies (for example media payloads), OpenClaw falls back to normal final delivery and then cleans up the preview message.
+    For complex replies (for example media payloads), IronCliw falls back to normal final delivery and then cleans up the preview message.
 
-    Preview streaming is separate from block streaming. When block streaming is explicitly enabled for Telegram, OpenClaw skips the preview stream to avoid double-streaming.
+    Preview streaming is separate from block streaming. When block streaming is explicitly enabled for Telegram, IronCliw skips the preview stream to avoid double-streaming.
 
-    If native draft transport is unavailable/rejected, OpenClaw automatically falls back to `sendMessage` + `editMessageText`.
+    If native draft transport is unavailable/rejected, IronCliw automatically falls back to `sendMessage` + `editMessageText`.
 
     Telegram-only reasoning stream:
 
@@ -267,7 +267,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     - Markdown-ish text is rendered to Telegram-safe HTML.
     - Raw model HTML is escaped to reduce Telegram parse failures.
-    - If Telegram rejects parsed HTML, OpenClaw retries as plain text.
+    - If Telegram rejects parsed HTML, IronCliw retries as plain text.
 
     Link previews are enabled by default and can be disabled with `channels.telegram.linkPreview: false`.
 
@@ -536,7 +536,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     Sticker cache file:
 
-    - `~/.openclaw/telegram/sticker-cache.json`
+    - `~/.IronCliw/telegram/sticker-cache.json`
 
     Stickers are described once (when possible) and cached to reduce repeated vision calls.
 
@@ -581,7 +581,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
   <Accordion title="Reaction notifications">
     Telegram reactions arrive as `message_reaction` updates (separate from message payloads).
 
-    When enabled, OpenClaw enqueues system events like:
+    When enabled, IronCliw enqueues system events like:
 
     - `Telegram reaction added: 👍 by Alice (@alice) on msg 42`
 
@@ -603,7 +603,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
   </Accordion>
 
   <Accordion title="Ack reactions">
-    `ackReaction` sends an acknowledgement emoji while OpenClaw is processing an inbound message.
+    `ackReaction` sends an acknowledgement emoji while IronCliw is processing an inbound message.
 
     Resolution order:
 
@@ -673,8 +673,8 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     CLI send target can be numeric chat ID or username:
 
 ```bash
-openclaw message send --channel telegram --target 123456789 --message "hi"
-openclaw message send --channel telegram --target @name --message "hi"
+IronCliw message send --channel telegram --target 123456789 --message "hi"
+IronCliw message send --channel telegram --target @name --message "hi"
 ```
 
   </Accordion>
@@ -688,8 +688,8 @@ openclaw message send --channel telegram --target @name --message "hi"
     - If `requireMention=false`, Telegram privacy mode must allow full visibility.
       - BotFather: `/setprivacy` -> Disable
       - then remove + re-add bot to group
-    - `openclaw channels status` warns when config expects unmentioned group messages.
-    - `openclaw channels status --probe` can check explicit numeric group IDs; wildcard `"*"` cannot be membership-probed.
+    - `IronCliw channels status` warns when config expects unmentioned group messages.
+    - `IronCliw channels status --probe` can check explicit numeric group IDs; wildcard `"*"` cannot be membership-probed.
     - quick session test: `/activation always`.
 
   </Accordion>
@@ -698,7 +698,7 @@ openclaw message send --channel telegram --target @name --message "hi"
 
     - when `channels.telegram.groups` exists, group must be listed (or include `"*"`)
     - verify bot membership in group
-    - review logs: `openclaw logs --follow` for skip reasons
+    - review logs: `IronCliw logs --follow` for skip reasons
 
   </Accordion>
 
@@ -714,7 +714,7 @@ openclaw message send --channel telegram --target @name --message "hi"
 
     - Node 22+ + custom fetch/proxy can trigger immediate abort behavior if AbortSignal types mismatch.
     - Some hosts resolve `api.telegram.org` to IPv6 first; broken IPv6 egress can cause intermittent Telegram API failures.
-    - If logs include `TypeError: fetch failed` or `Network request for 'getUpdates' failed!`, OpenClaw now retries these as recoverable network errors.
+    - If logs include `TypeError: fetch failed` or `Network request for 'getUpdates' failed!`, IronCliw now retries these as recoverable network errors.
     - On VPS hosts with unstable direct egress/TLS, route Telegram API calls through `channels.telegram.proxy`:
 
 ```yaml
@@ -734,9 +734,9 @@ channels:
 ```
 
     - Environment overrides (temporary):
-      - `OPENCLAW_TELEGRAM_DISABLE_AUTO_SELECT_FAMILY=1`
-      - `OPENCLAW_TELEGRAM_ENABLE_AUTO_SELECT_FAMILY=1`
-      - `OPENCLAW_TELEGRAM_DNS_RESULT_ORDER=ipv4first`
+      - `IronCliw_TELEGRAM_DISABLE_AUTO_SELECT_FAMILY=1`
+      - `IronCliw_TELEGRAM_ENABLE_AUTO_SELECT_FAMILY=1`
+      - `IronCliw_TELEGRAM_DNS_RESULT_ORDER=ipv4first`
     - Validate DNS answers:
 
 ```bash
@@ -757,13 +757,13 @@ Primary reference:
 - `channels.telegram.botToken`: bot token (BotFather).
 - `channels.telegram.tokenFile`: read token from file path.
 - `channels.telegram.dmPolicy`: `pairing | allowlist | open | disabled` (default: pairing).
-- `channels.telegram.allowFrom`: DM allowlist (numeric Telegram user IDs). `allowlist` requires at least one sender ID. `open` requires `"*"`. `openclaw doctor --fix` can resolve legacy `@username` entries to IDs and can recover allowlist entries from pairing-store files in allowlist migration flows.
+- `channels.telegram.allowFrom`: DM allowlist (numeric Telegram user IDs). `allowlist` requires at least one sender ID. `open` requires `"*"`. `IronCliw doctor --fix` can resolve legacy `@username` entries to IDs and can recover allowlist entries from pairing-store files in allowlist migration flows.
 - `channels.telegram.defaultTo`: default Telegram target used by CLI `--deliver` when no explicit `--reply-to` is provided.
 - `channels.telegram.groupPolicy`: `open | allowlist | disabled` (default: allowlist).
-- `channels.telegram.groupAllowFrom`: group sender allowlist (numeric Telegram user IDs). `openclaw doctor --fix` can resolve legacy `@username` entries to IDs. Non-numeric entries are ignored at auth time. Group auth does not use DM pairing-store fallback (`2026.2.25+`).
+- `channels.telegram.groupAllowFrom`: group sender allowlist (numeric Telegram user IDs). `IronCliw doctor --fix` can resolve legacy `@username` entries to IDs. Non-numeric entries are ignored at auth time. Group auth does not use DM pairing-store fallback (`2026.2.25+`).
 - Multi-account precedence:
   - When two or more account IDs are configured, set `channels.telegram.defaultAccount` (or include `channels.telegram.accounts.default`) to make default routing explicit.
-  - If neither is set, OpenClaw falls back to the first normalized account ID and `openclaw doctor` warns.
+  - If neither is set, IronCliw falls back to the first normalized account ID and `IronCliw doctor` warns.
   - `channels.telegram.accounts.default.allowFrom` and `channels.telegram.accounts.default.groupAllowFrom` apply only to the `default` account.
   - Named accounts inherit `channels.telegram.allowFrom` and `channels.telegram.groupAllowFrom` when account-level values are unset.
   - Named accounts do not inherit `channels.telegram.accounts.default.allowFrom` / `groupAllowFrom`.
@@ -826,3 +826,4 @@ Telegram-specific high-signal fields:
 - [Channel routing](/channels/channel-routing)
 - [Multi-agent routing](/concepts/multi-agent)
 - [Troubleshooting](/channels/troubleshooting)
+

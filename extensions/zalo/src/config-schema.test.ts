@@ -28,3 +28,4 @@ describe("ZaloConfigSchema SecretInput", () => {
     expect(result.success).toBe(true);
   });
 });
+

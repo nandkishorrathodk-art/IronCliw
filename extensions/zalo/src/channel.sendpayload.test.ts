@@ -1,4 +1,4 @@
-import type { ReplyPayload } from "openclaw/plugin-sdk/zalo";
+import type { ReplyPayload } from "IronCliw/plugin-sdk/zalo";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { zaloPlugin } from "./channel.js";
 
@@ -100,3 +100,4 @@ describe("zaloPlugin outbound sendPayload", () => {
     expect(result).toMatchObject({ channel: "zalo" });
   });
 });
+

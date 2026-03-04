@@ -64,3 +64,4 @@ describe("collectBlueBubblesStatusIssues", () => {
     expect(issues).toEqual([]);
   });
 });
+

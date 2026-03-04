@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "openclaw/plugin-sdk/matrix";
+import type { ChannelDirectoryEntry } from "IronCliw/plugin-sdk/matrix";
 import { resolveMatrixAuth } from "./matrix/client.js";
 
 type MatrixUserResult = {
@@ -207,3 +207,4 @@ export async function listMatrixDirectoryGroupsLive(
 
   return results;
 }
+

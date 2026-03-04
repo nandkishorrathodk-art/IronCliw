@@ -132,3 +132,4 @@ describe("resolveConnectAuthDecision", () => {
     expect(verifyDeviceToken).not.toHaveBeenCalled();
   });
 });
+

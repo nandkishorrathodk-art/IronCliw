@@ -137,3 +137,4 @@ describe("resolveProxyFetchFromEnv", () => {
     expect(fetchFn).toBeUndefined();
   });
 });
+

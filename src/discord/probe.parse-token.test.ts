@@ -41,3 +41,4 @@ describe("parseApplicationIdFromToken", () => {
     expect(parseApplicationIdFromToken(".ts.hmac")).toBeUndefined();
   });
 });
+

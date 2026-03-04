@@ -76,3 +76,4 @@ export interface VoiceCallProvider {
    */
   getCallStatus(input: GetCallStatusInput): Promise<GetCallStatusResult>;
 }
+

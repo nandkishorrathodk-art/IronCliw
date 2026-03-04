@@ -12,7 +12,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelMessageActionName,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk/mattermost";
+} from "IronCliw/plugin-sdk/mattermost";
 import { MattermostConfigSchema } from "./config-schema.js";
 import { resolveMattermostGroupRequireMention } from "./group-mentions.js";
 import {
@@ -441,3 +441,4 @@ export const mattermostPlugin: ChannelPlugin<ResolvedMattermostAccount> = {
     },
   },
 };
+

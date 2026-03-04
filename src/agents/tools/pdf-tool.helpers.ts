@@ -1,5 +1,5 @@
 import type { AssistantMessage } from "@mariozechner/pi-ai";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
@@ -81,7 +81,7 @@ export function coercePdfAssistantText(params: {
   throw new Error(`PDF model returned no text (${label}).`);
 }
 
-export function coercePdfModelConfig(cfg?: OpenClawConfig): PdfModelConfig {
+export function coercePdfModelConfig(cfg?: IronCliwConfig): PdfModelConfig {
   const primary = resolveAgentModelPrimaryValue(cfg?.agents?.defaults?.pdfModel);
   const fallbacks = resolveAgentModelFallbackValues(cfg?.agents?.defaults?.pdfModel);
   const modelConfig: PdfModelConfig = {};
@@ -107,3 +107,4 @@ export function resolvePdfToolMaxTokens(
   }
   return Math.min(requestedMaxTokens, modelMaxTokens);
 }
+

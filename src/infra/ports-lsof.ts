@@ -35,3 +35,4 @@ export function resolveLsofCommandSync(): string {
   }
   return "lsof";
 }
+

@@ -9,3 +9,4 @@ export async function sendTyping(params: { client: Client; channelId: string }) 
     await channel.triggerTyping();
   }
 }
+

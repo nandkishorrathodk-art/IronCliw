@@ -31,3 +31,4 @@ describe("shared/string-normalization", () => {
     expect(normalizeAtHashSlug(null)).toBe("");
   });
 });
+

@@ -66,3 +66,4 @@ describe("extractLinksFromMessage", () => {
     expect(extractLinksFromMessage("https://8.8.8.8/dns")).toEqual(["https://8.8.8.8/dns"]);
   });
 });
+

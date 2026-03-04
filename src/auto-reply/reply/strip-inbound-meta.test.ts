@@ -119,3 +119,4 @@ Hello from user`;
     expect(stripInboundMetadata(input)).toBe(input);
   });
 });
+

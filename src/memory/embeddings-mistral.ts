@@ -51,3 +51,4 @@ export async function resolveMistralEmbeddingClient(
     normalizeModel: normalizeMistralModel,
   });
 }
+

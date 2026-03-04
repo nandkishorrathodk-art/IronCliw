@@ -42,3 +42,4 @@ export function wasMSTeamsMessageSent(conversationId: string, messageId: string)
 export function clearMSTeamsSentMessageCache(): void {
   sentMessages.clear();
 }
+

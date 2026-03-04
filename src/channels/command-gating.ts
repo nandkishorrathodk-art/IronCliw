@@ -43,3 +43,4 @@ export function resolveControlCommandGate(params: {
   const shouldBlock = params.allowTextCommands && params.hasControlCommand && !commandAuthorized;
   return { commandAuthorized, shouldBlock };
 }
+

@@ -27,3 +27,4 @@ export interface StickerMetadata {
   /** Cached description from previous vision processing (skip re-processing if present). */
   cachedDescription?: string;
 }
+

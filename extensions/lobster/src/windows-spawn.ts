@@ -2,7 +2,7 @@ import {
   applyWindowsSpawnProgramPolicy,
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
-} from "openclaw/plugin-sdk/lobster";
+} from "IronCliw/plugin-sdk/lobster";
 
 type SpawnTarget = {
   command: string;
@@ -34,3 +34,4 @@ export function resolveWindowsLobsterSpawn(
     windowsHide: resolved.windowsHide,
   };
 }
+

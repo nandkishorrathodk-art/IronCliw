@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "openclaw/plugin-sdk/zalo";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "IronCliw/plugin-sdk/zalo";
 
 type ZaloAccountStatus = {
   accountId?: unknown;
@@ -51,3 +51,4 @@ export function collectZaloStatusIssues(accounts: ChannelAccountSnapshot[]): Cha
   }
   return issues;
 }
+

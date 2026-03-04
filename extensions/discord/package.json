@@ -1,11 +1,12 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@IronCliw/discord",
   "version": "2026.3.2",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "IronCliw Discord channel plugin",
   "type": "module",
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ]
   }
 }
+

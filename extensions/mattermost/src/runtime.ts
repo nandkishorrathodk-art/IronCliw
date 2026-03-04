@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk/mattermost";
+import type { PluginRuntime } from "IronCliw/plugin-sdk/mattermost";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getMattermostRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

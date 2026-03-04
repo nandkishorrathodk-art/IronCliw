@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in OpenClaw"
+summary: "Use Qwen OAuth (free tier) in IronCliw"
 read_when:
-  - You want to use Qwen with OpenClaw
+  - You want to use Qwen with IronCliw
   - You want free-tier OAuth access to Qwen Coder
 title: "Qwen"
 ---
@@ -14,7 +14,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-openclaw plugins enable qwen-portal-auth
+IronCliw plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -22,7 +22,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-openclaw models auth login --provider qwen-portal --set-default
+IronCliw models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -36,12 +36,12 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-openclaw models set qwen-portal/coder-model
+IronCliw models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, OpenClaw will sync credentials
+If you already logged in with the Qwen Code CLI, IronCliw will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 
@@ -51,3 +51,4 @@ from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 - Default base URL: `https://portal.qwen.ai/v1` (override with
   `models.providers.qwen-portal.baseUrl` if Qwen provides a different endpoint).
 - See [Model providers](/concepts/model-providers) for provider-wide rules.
+

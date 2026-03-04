@@ -16,3 +16,4 @@ declare module "node-edge-tts" {
     ttsPromise(text: string, outputPath: string): Promise<void>;
   }
 }
+

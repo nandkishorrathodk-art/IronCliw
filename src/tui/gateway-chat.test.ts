@@ -13,7 +13,7 @@ describe("resolveGatewayConnection", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["OPENCLAW_GATEWAY_TOKEN", "OPENCLAW_GATEWAY_PASSWORD"]);
+    envSnapshot = captureEnv(["IronCliw_GATEWAY_TOKEN", "IronCliw_GATEWAY_PASSWORD"]);
     loadConfig.mockClear();
     resolveGatewayPort.mockClear();
     pickPrimaryTailnetIPv4.mockClear();
@@ -21,8 +21,8 @@ describe("resolveGatewayConnection", () => {
     resolveGatewayPort.mockReturnValue(18789);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
     pickPrimaryLanIPv4.mockReturnValue(undefined);
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
-    delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IronCliw_GATEWAY_PASSWORD;
   });
 
   afterEach(() => {
@@ -83,10 +83,10 @@ describe("resolveGatewayConnection", () => {
     expect(result.url).toBe("ws://127.0.0.1:18800");
   });
 
-  it("uses OPENCLAW_GATEWAY_TOKEN for local mode", () => {
+  it("uses IronCliw_GATEWAY_TOKEN for local mode", () => {
     loadConfig.mockReturnValue({ gateway: { mode: "local" } });
 
-    withEnv({ OPENCLAW_GATEWAY_TOKEN: "env-token" }, () => {
+    withEnv({ IronCliw_GATEWAY_TOKEN: "env-token" }, () => {
       const result = resolveGatewayConnection({});
       expect(result.token).toBe("env-token");
     });
@@ -99,7 +99,7 @@ describe("resolveGatewayConnection", () => {
     expect(result.token).toBe("config-token");
   });
 
-  it("prefers OPENCLAW_GATEWAY_PASSWORD over remote password fallback", () => {
+  it("prefers IronCliw_GATEWAY_PASSWORD over remote password fallback", () => {
     loadConfig.mockReturnValue({
       gateway: {
         mode: "remote",
@@ -107,9 +107,10 @@ describe("resolveGatewayConnection", () => {
       },
     });
 
-    withEnv({ OPENCLAW_GATEWAY_PASSWORD: "env-pass" }, () => {
+    withEnv({ IronCliw_GATEWAY_PASSWORD: "env-pass" }, () => {
       const result = resolveGatewayConnection({});
       expect(result.password).toBe("env-pass");
     });
   });
 });
+

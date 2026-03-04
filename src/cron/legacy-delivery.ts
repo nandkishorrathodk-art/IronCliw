@@ -46,3 +46,4 @@ export function stripLegacyDeliveryFields(payload: Record<string, unknown>) {
     delete payload.bestEffortDeliver;
   }
 }
+

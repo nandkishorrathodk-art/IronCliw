@@ -60,3 +60,4 @@ export function getMediaUnderstandingProvider(
 ): MediaUnderstandingProvider | undefined {
   return registry.get(normalizeMediaProviderId(id));
 }
+

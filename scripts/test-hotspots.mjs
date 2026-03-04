@@ -39,7 +39,7 @@ function formatMs(value) {
 
 const opts = parseArgs(process.argv.slice(2));
 const reportPath =
-  opts.reportPath || path.join(os.tmpdir(), `openclaw-vitest-hotspots-${Date.now()}.json`);
+  opts.reportPath || path.join(os.tmpdir(), `IronCliw-vitest-hotspots-${Date.now()}.json`);
 
 if (!(opts.reportPath && fs.existsSync(reportPath))) {
   const run = spawnSync(
@@ -81,3 +81,4 @@ for (const [index, item] of top.entries()) {
   const tests = String(item.testCount).padStart(4, " ");
   console.log(`${label}. ${duration} | tests=${tests} | ${item.file}`);
 }
+

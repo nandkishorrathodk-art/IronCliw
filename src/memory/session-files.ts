@@ -129,3 +129,4 @@ export async function buildSessionEntry(absPath: string): Promise<SessionFileEnt
     return null;
   }
 }
+

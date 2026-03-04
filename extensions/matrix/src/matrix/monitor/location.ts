@@ -3,7 +3,7 @@ import {
   formatLocationText,
   toLocationContext,
   type NormalizedLocation,
-} from "openclaw/plugin-sdk/matrix";
+} from "IronCliw/plugin-sdk/matrix";
 import { EventType } from "./types.js";
 
 export type MatrixLocationPayload = {
@@ -98,3 +98,4 @@ export function resolveMatrixLocation(params: {
     context: toLocationContext(location),
   };
 }
+

@@ -13,3 +13,4 @@ export function respondPlainText(res: ServerResponse, statusCode: number, body: 
 export function respondNotFound(res: ServerResponse): void {
   respondPlainText(res, 404, "Not Found");
 }
+

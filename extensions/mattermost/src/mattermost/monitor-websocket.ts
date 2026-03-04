@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, RuntimeEnv } from "openclaw/plugin-sdk/mattermost";
+import type { ChannelAccountSnapshot, RuntimeEnv } from "IronCliw/plugin-sdk/mattermost";
 import WebSocket from "ws";
 import type { MattermostPost } from "./client.js";
 import { rawDataToString } from "./monitor-helpers.js";
@@ -219,3 +219,4 @@ function reasonToString(reason: Buffer | string | undefined): string {
   }
   return reason.length > 0 ? reason.toString("utf8") : "";
 }
+

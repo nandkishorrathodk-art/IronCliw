@@ -70,7 +70,7 @@ export function registerTriggerHandlingUsageSummaryCases(params: {
 
           const text = Array.isArray(res) ? res[0]?.text : res?.text;
           expect(text).toContain("Model:");
-          expect(text).toContain("OpenClaw");
+          expect(text).toContain("IronCliw");
           expect(normalizeTestText(text ?? "")).toContain("Usage: Claude 80% left");
           expect(usageMocks.loadProviderUsageSummary).toHaveBeenCalledWith(
             expect.objectContaining({ providers: ["anthropic"] }),
@@ -156,7 +156,7 @@ export function registerTriggerHandlingUsageSummaryCases(params: {
           runEmbeddedPiAgentMock.mockClear();
           const cfg = makeCfg(home);
           cfg.session = { ...cfg.session, store: join(home, "auth-profile-status.sessions.json") };
-          const agentDir = join(home, ".openclaw", "agents", "main", "agent");
+          const agentDir = join(home, ".IronCliw", "agents", "main", "agent");
           await mkdir(agentDir, { recursive: true });
           await writeFile(
             join(agentDir, "auth-profiles.json"),
@@ -222,3 +222,4 @@ export function registerTriggerHandlingUsageSummaryCases(params: {
     });
   });
 }
+

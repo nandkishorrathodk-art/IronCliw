@@ -66,3 +66,4 @@ const logCommand: HookHandler = async (event) => {
 };
 
 export default logCommand;
+

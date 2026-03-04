@@ -98,3 +98,4 @@ describe("clearBootstrapSnapshot", () => {
     expect(mockLoad).toHaveBeenCalledTimes(2); // sk1 x1, sk2 x1
   });
 });
+

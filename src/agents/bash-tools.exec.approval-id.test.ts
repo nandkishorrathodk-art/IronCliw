@@ -55,7 +55,7 @@ describe("exec approvals", () => {
   beforeEach(async () => {
     previousHome = process.env.HOME;
     previousUserProfile = process.env.USERPROFILE;
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-test-"));
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-test-"));
     process.env.HOME = tempDir;
     // Windows uses USERPROFILE for os.homedir()
     process.env.USERPROFILE = tempDir;
@@ -117,7 +117,7 @@ describe("exec approvals", () => {
   });
 
   it("skips approval when node allowlist is satisfied", async () => {
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-test-bin-"));
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-test-bin-"));
     const binDir = path.join(tempDir, "bin");
     await fs.mkdir(binDir, { recursive: true });
     const exeName = process.platform === "win32" ? "tool.cmd" : "tool";
@@ -346,7 +346,7 @@ describe("exec approvals", () => {
       return { ok: true };
     });
 
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-test-obf-"));
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-test-obf-"));
     const markerPath = path.join(tempDir, "ran.txt");
     const tool = createExecTool({
       host: "gateway",
@@ -371,3 +371,4 @@ describe("exec approvals", () => {
       .toBe(false);
   });
 });
+

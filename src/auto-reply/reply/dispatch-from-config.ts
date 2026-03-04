@@ -1,5 +1,5 @@
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { loadSessionStore, resolveStorePath, type SessionEntry } from "../../config/sessions.js";
 import { logVerbose } from "../../globals.js";
 import { fireAndForgetHook } from "../../hooks/fire-and-forget.js";
@@ -67,7 +67,7 @@ const isInboundAudioContext = (ctx: FinalizedMsgContext): boolean => {
 
 const resolveSessionStoreEntry = (
   ctx: FinalizedMsgContext,
-  cfg: OpenClawConfig,
+  cfg: IronCliwConfig,
 ): {
   sessionKey?: string;
   entry?: SessionEntry;
@@ -100,7 +100,7 @@ export type DispatchFromConfigResult = {
 
 export async function dispatchReplyFromConfig(params: {
   ctx: FinalizedMsgContext;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   dispatcher: ReplyDispatcher;
   replyOptions?: Omit<GetReplyOptions, "onToolResult" | "onBlockReply">;
   replyResolver?: typeof getReplyFromConfig;
@@ -549,3 +549,4 @@ export async function dispatchReplyFromConfig(params: {
     throw err;
   }
 }
+

@@ -8,3 +8,4 @@ export const createTestRegistry = (overrides: Partial<PluginRegistry> = {}): Plu
     httpRoutes: merged.httpRoutes ?? [],
   };
 };
+

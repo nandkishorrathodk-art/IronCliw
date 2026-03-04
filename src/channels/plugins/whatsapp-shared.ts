@@ -15,3 +15,4 @@ export function resolveWhatsAppMentionStripPatterns(ctx: { To?: string | null })
   const escaped = escapeRegExp(selfE164);
   return [escaped, `@${escaped}`];
 }
+

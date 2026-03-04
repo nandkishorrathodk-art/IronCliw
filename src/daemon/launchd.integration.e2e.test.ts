@@ -92,11 +92,11 @@ describeLaunchdIntegration("launchd integration", () => {
 
   beforeAll(async () => {
     const testId = randomUUID().slice(0, 8);
-    homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `openclaw-launchd-int-${testId}-`));
+    homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `IronCliw-launchd-int-${testId}-`));
     env = {
       HOME: homeDir,
-      OPENCLAW_LAUNCHD_LABEL: `ai.openclaw.launchd-int-${testId}`,
-      OPENCLAW_LOG_PREFIX: `gateway-launchd-int-${testId}`,
+      IronCliw_LAUNCHD_LABEL: `ai.IronCliw.launchd-int-${testId}`,
+      IronCliw_LOG_PREFIX: `gateway-launchd-int-${testId}`,
     };
   });
 
@@ -143,3 +143,4 @@ describeLaunchdIntegration("launchd integration", () => {
     await fs.access(resolveLaunchAgentPlistPath(launchEnv));
   }, 60_000);
 });
+

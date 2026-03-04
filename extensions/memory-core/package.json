@@ -1,20 +1,21 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@IronCliw/memory-core",
   "version": "2026.3.2",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "IronCliw core memory search plugin",
   "type": "module",
   "peerDependencies": {
-    "openclaw": ">=2026.3.2"
+    "IronCliw": ">=2026.3.2"
   },
   "peerDependenciesMeta": {
-    "openclaw": {
+    "IronCliw": {
       "optional": true
     }
   },
-  "openclaw": {
+  "IronCliw": {
     "extensions": [
       "./index.ts"
     ]
   }
 }
+

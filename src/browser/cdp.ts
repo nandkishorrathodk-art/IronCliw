@@ -460,3 +460,4 @@ export type QueryMatch = {
   href?: string;
   outerHTML?: string;
 };
+

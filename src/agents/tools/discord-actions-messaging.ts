@@ -1,6 +1,6 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
 import type { DiscordActionConfig } from "../../config/config.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IronCliwConfig } from "../../config/config.js";
 import { readDiscordComponentSpec } from "../../discord/components.js";
 import {
   createThreadDiscord,
@@ -60,7 +60,7 @@ export async function handleDiscordMessagingAction(
   options?: {
     mediaLocalRoots?: readonly string[];
   },
-  cfg?: OpenClawConfig,
+  cfg?: IronCliwConfig,
 ): Promise<AgentToolResult<unknown>> {
   const resolveChannelId = () =>
     resolveDiscordChannelId(
@@ -544,3 +544,4 @@ export async function handleDiscordMessagingAction(
       throw new Error(`Unknown action: ${action}`);
   }
 }
+

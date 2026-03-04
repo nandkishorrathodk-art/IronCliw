@@ -16,3 +16,4 @@ describe("base64 helpers", () => {
     expect(estimateBase64DecodedBytes("SGV s bG8= \n")).toBe(5);
   });
 });
+

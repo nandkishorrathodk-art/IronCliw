@@ -3,7 +3,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { loadOutboundMediaFromUrl } from "openclaw/plugin-sdk/zalouser";
+import { loadOutboundMediaFromUrl } from "IronCliw/plugin-sdk/zalouser";
 import { normalizeZaloReactionIcon } from "./reaction.js";
 import { getZalouserRuntime } from "./runtime.js";
 import type {
@@ -1399,3 +1399,4 @@ export async function clearProfileRuntimeArtifacts(profileInput?: string | null)
   invalidateApi(profile);
   await fsp.mkdir(resolveCredentialsDir(), { recursive: true }).catch(() => undefined);
 }
+

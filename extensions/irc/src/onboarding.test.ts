@@ -1,4 +1,4 @@
-import type { RuntimeEnv, WizardPrompter } from "openclaw/plugin-sdk/irc";
+import type { RuntimeEnv, WizardPrompter } from "IronCliw/plugin-sdk/irc";
 import { describe, expect, it, vi } from "vitest";
 import { ircOnboardingAdapter } from "./onboarding.js";
 import type { CoreConfig } from "./types.js";
@@ -36,19 +36,19 @@ describe("irc onboarding", () => {
           return "6697";
         }
         if (message === "IRC nick") {
-          return "openclaw-bot";
+          return "IronCliw-bot";
         }
         if (message === "IRC username") {
-          return "openclaw";
+          return "IronCliw";
         }
         if (message === "IRC real name") {
-          return "OpenClaw Bot";
+          return "IronCliw Bot";
         }
         if (message.startsWith("Auto-join IRC channels")) {
-          return "#openclaw, #ops";
+          return "#IronCliw, #ops";
         }
         if (message.startsWith("IRC channels allowlist")) {
-          return "#openclaw, #ops";
+          return "#IronCliw, #ops";
         }
         throw new Error(`Unexpected prompt: ${message}`);
       }) as WizardPrompter["text"],
@@ -84,11 +84,11 @@ describe("irc onboarding", () => {
     expect(result.accountId).toBe("default");
     expect(result.cfg.channels?.irc?.enabled).toBe(true);
     expect(result.cfg.channels?.irc?.host).toBe("irc.libera.chat");
-    expect(result.cfg.channels?.irc?.nick).toBe("openclaw-bot");
+    expect(result.cfg.channels?.irc?.nick).toBe("IronCliw-bot");
     expect(result.cfg.channels?.irc?.tls).toBe(true);
-    expect(result.cfg.channels?.irc?.channels).toEqual(["#openclaw", "#ops"]);
+    expect(result.cfg.channels?.irc?.channels).toEqual(["#IronCliw", "#ops"]);
     expect(result.cfg.channels?.irc?.groupPolicy).toBe("allowlist");
-    expect(Object.keys(result.cfg.channels?.irc?.groups ?? {})).toEqual(["#openclaw", "#ops"]);
+    expect(Object.keys(result.cfg.channels?.irc?.groups ?? {})).toEqual(["#IronCliw", "#ops"]);
   });
 
   it("writes DM allowFrom to top-level config for non-default account prompts", async () => {
@@ -111,7 +111,7 @@ describe("irc onboarding", () => {
           accounts: {
             work: {
               host: "irc.libera.chat",
-              nick: "openclaw-work",
+              nick: "IronCliw-work",
             },
           },
         },
@@ -128,3 +128,4 @@ describe("irc onboarding", () => {
     expect(updated.channels?.irc?.accounts?.work?.allowFrom).toBeUndefined();
   });
 });
+

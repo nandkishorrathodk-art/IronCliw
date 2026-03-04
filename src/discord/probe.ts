@@ -230,3 +230,4 @@ export async function fetchDiscordApplicationId(
     return parseApplicationIdFromToken(token);
   }
 }
+

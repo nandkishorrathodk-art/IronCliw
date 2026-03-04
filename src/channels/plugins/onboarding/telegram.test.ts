@@ -21,3 +21,4 @@ describe("parseTelegramAllowFromId", () => {
     expect(parseTelegramAllowFromId("tg:alice")).toBeNull();
   });
 });
+

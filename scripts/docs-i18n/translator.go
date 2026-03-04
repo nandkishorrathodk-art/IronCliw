@@ -24,7 +24,7 @@ type PiTranslator struct {
 
 func NewPiTranslator(srcLang, tgtLang string, glossary []GlossaryEntry, thinking string) (*PiTranslator, error) {
 	options := pi.DefaultOneShotOptions()
-	options.AppName = "openclaw-docs-i18n"
+	options.AppName = "IronCliw-docs-i18n"
 	options.WorkDir = "/tmp"
 	options.Mode = pi.ModeDragons
 	options.Dragons = pi.DragonsOptions{
@@ -245,3 +245,4 @@ func normalizeThinking(value string) string {
 		return "high"
 	}
 }
+

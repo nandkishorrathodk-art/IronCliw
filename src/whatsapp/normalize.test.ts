@@ -70,3 +70,4 @@ describe("isWhatsAppGroupJid", () => {
     expect(isWhatsAppGroupJid("+1555123")).toBe(false);
   });
 });
+

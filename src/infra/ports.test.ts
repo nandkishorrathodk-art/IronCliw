@@ -44,7 +44,7 @@ describe("ports helpers", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 
-  it("prints an OpenClaw-specific hint when port details look like another OpenClaw instance", async () => {
+  it("prints an IronCliw-specific hint when port details look like another IronCliw instance", async () => {
     const runtime = {
       error: vi.fn(),
       log: vi.fn(),
@@ -52,14 +52,14 @@ describe("ports helpers", () => {
     };
 
     await handlePortError(
-      new PortInUseError(18789, "node dist/index.js openclaw gateway"),
+      new PortInUseError(18789, "node dist/index.js IronCliw gateway"),
       18789,
       "gateway start",
       runtime,
     ).catch(() => {});
 
     const messages = runtime.error.mock.calls.map((call) => stripAnsi(String(call[0] ?? "")));
-    expect(messages.join("\n")).toContain("another OpenClaw instance is already running");
+    expect(messages.join("\n")).toContain("another IronCliw instance is already running");
   });
 
   it("classifies ssh and gateway listeners", () => {
@@ -69,7 +69,7 @@ describe("ports helpers", () => {
     expect(
       classifyPortListener(
         {
-          commandLine: "node /Users/me/Projects/openclaw/dist/entry.js gateway",
+          commandLine: "node /Users/me/Projects/IronCliw/dist/entry.js gateway",
         },
         18789,
       ),
@@ -112,3 +112,4 @@ describeUnix("inspectPortUsage", () => {
     }
   });
 });
+

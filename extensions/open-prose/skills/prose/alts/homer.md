@@ -344,3 +344,4 @@ Preserved for benchmarking. The Homeric register offers gravitas and heroic fram
 - Contexts where "glory" as output feels appropriate
 
 May cause unintentional bathos when applied to mundane tasks.
+

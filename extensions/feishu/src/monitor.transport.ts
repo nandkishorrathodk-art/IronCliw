@@ -4,7 +4,7 @@ import {
   applyBasicWebhookRequestGuards,
   type RuntimeEnv,
   installRequestBodyLimitGuard,
-} from "openclaw/plugin-sdk/feishu";
+} from "IronCliw/plugin-sdk/feishu";
 import { createFeishuWSClient } from "./client.js";
 import {
   botOpenIds,
@@ -161,3 +161,4 @@ export async function monitorWebhook({
     });
   });
 }
+

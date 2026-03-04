@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { buildGatewayConnectionDetails, callGateway } from "../gateway/call.js";
 import type { DoctorMemoryStatusPayload } from "../gateway/server-methods/doctor.js";
 import { collectChannelStatusIssues } from "../infra/channels-status-issues.js";
@@ -15,7 +15,7 @@ export type GatewayMemoryProbe = {
 
 export async function checkGatewayHealth(params: {
   runtime: RuntimeEnv;
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   timeoutMs?: number;
 }) {
   const gatewayDetails = buildGatewayConnectionDetails({ config: params.cfg });
@@ -65,7 +65,7 @@ export async function checkGatewayHealth(params: {
 }
 
 export async function probeGatewayMemoryStatus(params: {
-  cfg: OpenClawConfig;
+  cfg: IronCliwConfig;
   timeoutMs?: number;
 }): Promise<GatewayMemoryProbe> {
   const timeoutMs =
@@ -90,3 +90,4 @@ export async function probeGatewayMemoryStatus(params: {
     };
   }
 }
+

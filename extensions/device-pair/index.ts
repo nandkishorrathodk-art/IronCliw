@@ -1,12 +1,12 @@
 import os from "node:os";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/device-pair";
+import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/device-pair";
 import {
   approveDevicePairing,
   listDevicePairing,
   resolveGatewayBindUrl,
   runPluginCommandWithTimeout,
   resolveTailnetHostWithRunner,
-} from "openclaw/plugin-sdk/device-pair";
+} from "IronCliw/plugin-sdk/device-pair";
 import qrcode from "qrcode-terminal";
 import {
   armPairNotifyOnce,
@@ -86,9 +86,9 @@ function parsePositiveInteger(raw: string | undefined): number | null {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 }
 
-function resolveGatewayPort(cfg: OpenClawPluginApi["config"]): number {
+function resolveGatewayPort(cfg: IronCliwPluginApi["config"]): number {
   const envPort =
-    parsePositiveInteger(process.env.OPENCLAW_GATEWAY_PORT?.trim()) ??
+    parsePositiveInteger(process.env.IronCliw_GATEWAY_PORT?.trim()) ??
     parsePositiveInteger(process.env.CLAWDBOT_GATEWAY_PORT?.trim());
   if (envPort) {
     return envPort;
@@ -101,7 +101,7 @@ function resolveGatewayPort(cfg: OpenClawPluginApi["config"]): number {
 }
 
 function resolveScheme(
-  cfg: OpenClawPluginApi["config"],
+  cfg: IronCliwPluginApi["config"],
   opts?: { forceSecure?: boolean },
 ): "ws" | "wss" {
   if (opts?.forceSecure) {
@@ -187,17 +187,17 @@ async function resolveTailnetHost(): Promise<string | null> {
   );
 }
 
-function resolveAuth(cfg: OpenClawPluginApi["config"]): ResolveAuthResult {
+function resolveAuth(cfg: IronCliwPluginApi["config"]): ResolveAuthResult {
   const mode = cfg.gateway?.auth?.mode;
   const token =
     pickFirstDefined([
-      process.env.OPENCLAW_GATEWAY_TOKEN,
+      process.env.IronCliw_GATEWAY_TOKEN,
       process.env.CLAWDBOT_GATEWAY_TOKEN,
       cfg.gateway?.auth?.token,
     ]) ?? undefined;
   const password =
     pickFirstDefined([
-      process.env.OPENCLAW_GATEWAY_PASSWORD,
+      process.env.IronCliw_GATEWAY_PASSWORD,
       process.env.CLAWDBOT_GATEWAY_PASSWORD,
       cfg.gateway?.auth?.password,
     ]) ?? undefined;
@@ -241,7 +241,7 @@ function resolveRequiredAuth(
     : { error: "Gateway auth is set to password, but no password is configured." };
 }
 
-async function resolveGatewayUrl(api: OpenClawPluginApi): Promise<ResolveUrlResult> {
+async function resolveGatewayUrl(api: IronCliwPluginApi): Promise<ResolveUrlResult> {
   const cfg = api.config;
   const pluginCfg = (api.pluginConfig ?? {}) as DevicePairPluginConfig;
   const scheme = resolveScheme(cfg);
@@ -323,7 +323,7 @@ function formatSetupInstructions(): string {
   ].join("\n");
 }
 
-export default function register(api: OpenClawPluginApi) {
+export default function register(api: IronCliwPluginApi) {
   registerPairingNotifierService(api);
 
   api.registerCommand({
@@ -436,7 +436,7 @@ export default function register(api: OpenClawPluginApi) {
             if (send) {
               await send(
                 target,
-                ["Scan this QR code with the OpenClaw iOS app:", "", "```", qrAscii, "```"].join(
+                ["Scan this QR code with the IronCliw iOS app:", "", "```", qrAscii, "```"].join(
                   "\n",
                 ),
                 {
@@ -490,7 +490,7 @@ export default function register(api: OpenClawPluginApi) {
         // WebUI + CLI/TUI: ASCII QR
         return {
           text: [
-            "Scan this QR code with the OpenClaw iOS app:",
+            "Scan this QR code with the IronCliw iOS app:",
             "",
             "```",
             qrAscii,
@@ -547,3 +547,4 @@ export default function register(api: OpenClawPluginApi) {
     },
   });
 }
+

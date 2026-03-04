@@ -40,3 +40,4 @@ describe("applyMergePatch prototype pollution guard", () => {
     expect(({} as Record<string, unknown>).polluted).toBeUndefined();
   });
 });
+

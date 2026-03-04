@@ -1,5 +1,5 @@
 import path from "node:path";
-import { resolveOpenClawAgentDir } from "../../agents/agent-paths.js";
+import { resolveIronCliwAgentDir } from "../../agents/agent-paths.js";
 import {
   resolveAgentDir,
   resolveAgentExplicitModelPrimary,
@@ -79,7 +79,7 @@ export async function modelsStatusCommand(
   }
   const cfg = await loadModelsConfig({ commandName: "models status", runtime });
   const agentId = resolveKnownAgentId({ cfg, rawAgentId: opts.agent });
-  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveOpenClawAgentDir();
+  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveIronCliwAgentDir();
   const agentModelPrimary = agentId ? resolveAgentExplicitModelPrimary(cfg, agentId) : undefined;
   const agentFallbacksOverride = agentId
     ? resolveAgentModelFallbacksOverride(cfg, agentId)
@@ -537,8 +537,8 @@ export async function modelsStatusCommand(
     for (const provider of missingProvidersInUse) {
       const hint =
         provider === "anthropic"
-          ? `Run \`claude setup-token\`, then \`${formatCliCommand("openclaw models auth setup-token")}\` or \`${formatCliCommand("openclaw configure")}\`.`
-          : `Run \`${formatCliCommand("openclaw configure")}\` or set an API key env var.`;
+          ? `Run \`claude setup-token\`, then \`${formatCliCommand("IronCliw models auth setup-token")}\` or \`${formatCliCommand("IronCliw configure")}\`.`
+          : `Run \`${formatCliCommand("IronCliw configure")}\` or set an API key env var.`;
       runtime.log(`- ${theme.heading(provider)} ${hint}`);
     }
   }
@@ -684,3 +684,4 @@ export async function modelsStatusCommand(
     runtime.exit(checkStatus);
   }
 }
+

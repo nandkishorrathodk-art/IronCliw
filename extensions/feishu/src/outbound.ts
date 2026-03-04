@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type { ChannelOutboundAdapter } from "openclaw/plugin-sdk/feishu";
+import type { ChannelOutboundAdapter } from "IronCliw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { sendMediaFeishu } from "./media.js";
 import { getFeishuRuntime } from "./runtime.js";
@@ -140,3 +140,4 @@ export const feishuOutbound: ChannelOutboundAdapter = {
     return { channel: "feishu", ...result };
   },
 };
+

@@ -278,7 +278,7 @@ function buildOversizedHistoryPlaceholder(message?: unknown): Record<string, unk
     role,
     timestamp,
     content: [{ type: "text", text: CHAT_HISTORY_OVERSIZED_PLACEHOLDER }],
-    __openclaw: { truncated: true, reason: "oversized" },
+    __IronCliw: { truncated: true, reason: "oversized" },
   };
 }
 
@@ -1154,3 +1154,4 @@ export const chatHandlers: GatewayRequestHandlers = {
     respond(true, { ok: true, messageId: appended.messageId });
   },
 };
+

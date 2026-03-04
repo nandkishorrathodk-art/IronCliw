@@ -233,3 +233,4 @@ export const telegramMessageActions: ChannelMessageActionAdapter = {
     throw new Error(`Action ${action} is not supported for provider ${providerId}.`);
   },
 };
+

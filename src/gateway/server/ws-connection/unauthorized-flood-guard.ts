@@ -67,3 +67,4 @@ export function isUnauthorizedRoleError(error?: ErrorShape): boolean {
     error.message.startsWith("unauthorized role:")
   );
 }
+

@@ -106,3 +106,4 @@ Both recommend `--backend sqlite+` for durable persistence.
 4. **Minimal dependencies** — No external services required
 5. **Clear contracts** — Well-defined inputs and outputs
 6. **Incremental value** — Useful in simple mode, more powerful with depth
+

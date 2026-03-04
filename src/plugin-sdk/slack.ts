@@ -1,8 +1,8 @@
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
-export type { OpenClawConfig } from "../config/config.js";
+export type { IronCliwConfig } from "../config/config.js";
 export type { ResolvedSlackAccount } from "../slack/accounts.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawPluginApi } from "../plugins/types.js";
+export type { IronCliwPluginApi } from "../plugins/types.js";
 
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 
@@ -50,3 +50,4 @@ export { slackOnboardingAdapter } from "../channels/plugins/onboarding/slack.js"
 export { SlackConfigSchema } from "../config/zod-schema.providers-core.js";
 
 export { handleSlackMessageAction } from "./slack-message-actions.js";
+

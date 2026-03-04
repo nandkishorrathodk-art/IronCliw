@@ -19,3 +19,4 @@ export type PortUsage = {
 };
 
 export type PortListenerKind = "gateway" | "ssh" | "unknown";
+

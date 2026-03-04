@@ -25,3 +25,4 @@ export function createWizardSessionTracker() {
 
   return { wizardSessions, findRunningWizard, purgeWizardSession };
 }
+

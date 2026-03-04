@@ -1,5 +1,5 @@
 import type { AuthProfileCredential } from "../agents/auth-profiles/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import type { ProviderAuthResult } from "../plugins/types.js";
 
 export function buildOauthProviderAuthResult(params: {
@@ -11,7 +11,7 @@ export function buildOauthProviderAuthResult(params: {
   email?: string | null;
   profilePrefix?: string;
   credentialExtra?: Record<string, unknown>;
-  configPatch?: Partial<OpenClawConfig>;
+  configPatch?: Partial<IronCliwConfig>;
   notes?: string[];
 }): ProviderAuthResult {
   const email = params.email ?? undefined;
@@ -40,8 +40,9 @@ export function buildOauthProviderAuthResult(params: {
             },
           },
         },
-      } as Partial<OpenClawConfig>),
+      } as Partial<IronCliwConfig>),
     defaultModel: params.defaultModel,
     notes: params.notes,
   };
 }
+

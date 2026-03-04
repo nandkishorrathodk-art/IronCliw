@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema } from "openclaw/plugin-sdk/twitch";
+import { MarkdownConfigSchema } from "IronCliw/plugin-sdk/twitch";
 import { z } from "zod";
 
 /**
@@ -82,3 +82,4 @@ const MultiAccountSchema = z.intersection(
  * The union ensures clear discrimination between the two modes.
  */
 export const TwitchConfigSchema = z.union([SimplifiedSchema, MultiAccountSchema]);
+

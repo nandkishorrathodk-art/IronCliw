@@ -82,3 +82,4 @@ export async function listMatrixPins(
     return { pinned, events };
   });
 }
+

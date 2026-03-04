@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "IronCliw/plugin-sdk/feishu";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPluginRuntimeMock } from "../../test-utils/plugin-runtime-mock.js";
 import type { FeishuMessageEvent } from "./bot.js";
@@ -1952,3 +1952,4 @@ describe("broadcast dispatch", () => {
     expect(sessionKey).toBe("agent:susan:feishu:group:oc-broadcast-group");
   });
 });
+

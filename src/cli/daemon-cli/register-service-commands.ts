@@ -99,3 +99,4 @@ export function addGatewayServiceCommands(parent: Command, opts?: { statusDescri
       await runDaemonRestart(cmdOpts);
     });
 }
+

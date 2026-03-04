@@ -81,3 +81,4 @@ describe("gateway startup legacy migration fallback", () => {
     expect(message).not.toContain("Legacy config entries detected but auto-migration failed.");
   });
 });
+

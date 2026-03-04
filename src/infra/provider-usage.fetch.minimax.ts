@@ -308,7 +308,7 @@ export async function fetchMinimaxUsage(
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "MM-API-Source": "OpenClaw",
+        "MM-API-Source": "IronCliw",
       },
     },
     timeoutMs,
@@ -386,3 +386,4 @@ export async function fetchMinimaxUsage(
     plan: pickString(usageRecord, PLAN_KEYS) ?? pickString(payload, PLAN_KEYS),
   };
 }
+

@@ -71,3 +71,4 @@ export const countToolResults = (message: Record<string, unknown>): ToolResultCo
 
   return { total, errors };
 };
+

@@ -56,3 +56,4 @@ export function getChannelActivity(params: {
 export function resetChannelActivityForTest() {
   activity.clear();
 }
+

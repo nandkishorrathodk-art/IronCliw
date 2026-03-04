@@ -42,3 +42,4 @@ export function inheritOptionFromParent<T = unknown>(
   }
   return undefined;
 }
+

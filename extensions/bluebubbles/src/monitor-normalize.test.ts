@@ -76,3 +76,4 @@ describe("normalizeWebhookReaction", () => {
     expect(result?.action).toBe("added");
   });
 });
+

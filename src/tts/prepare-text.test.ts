@@ -65,3 +65,4 @@ Use \`B-tree\` for read-heavy, \`LSM-tree\` for write-heavy.`;
     expect(result).toContain("B-tree uses in-place updates");
   });
 });
+

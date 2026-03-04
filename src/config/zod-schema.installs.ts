@@ -20,3 +20,4 @@ export const InstallRecordShape = {
   resolvedAt: z.string().optional(),
   installedAt: z.string().optional(),
 } as const;
+

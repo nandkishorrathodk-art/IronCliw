@@ -45,3 +45,4 @@ describe("resolveWhatsAppAuthDir", () => {
     expect(authDir).toMatch(/whatsapp[/\\]my-account-1$/);
   });
 });
+

@@ -467,3 +467,4 @@ describe("nostr-profile-http", () => {
     });
   });
 });
+

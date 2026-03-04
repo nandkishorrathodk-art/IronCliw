@@ -13,3 +13,4 @@ vi.mock("../gateway/call.js", () => ({
 vi.mock("../infra/agent-events.js", () => ({
   onAgentEvent: vi.fn(() => noop),
 }));
+

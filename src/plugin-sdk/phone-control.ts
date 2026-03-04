@@ -2,8 +2,9 @@
 // Keep this list additive and scoped to symbols used under extensions/phone-control.
 
 export type {
-  OpenClawPluginApi,
-  OpenClawPluginCommandDefinition,
-  OpenClawPluginService,
+  IronCliwPluginApi,
+  IronCliwPluginCommandDefinition,
+  IronCliwPluginService,
   PluginCommandContext,
 } from "../plugins/types.js";
+

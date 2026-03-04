@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IronCliwConfig } from "../config/config.js";
 import { resolveCliBackendConfig } from "./cli-backends.js";
 
 describe("resolveCliBackendConfig reliability merge", () => {
@@ -21,7 +21,7 @@ describe("resolveCliBackendConfig reliability merge", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IronCliwConfig;
 
     const resolved = resolveCliBackendConfig("codex-cli", cfg);
 
@@ -59,7 +59,7 @@ describe("resolveCliBackendConfig claude-cli defaults", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IronCliwConfig;
 
     const resolved = resolveCliBackendConfig("claude-cli", cfg);
 
@@ -91,7 +91,7 @@ describe("resolveCliBackendConfig claude-cli defaults", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IronCliwConfig;
 
     const resolved = resolveCliBackendConfig("claude-cli", cfg);
 
@@ -123,7 +123,7 @@ describe("resolveCliBackendConfig claude-cli defaults", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IronCliwConfig;
 
     const resolved = resolveCliBackendConfig("claude-cli", cfg);
 
@@ -141,3 +141,4 @@ describe("resolveCliBackendConfig claude-cli defaults", () => {
     expect(resolved?.config.resumeArgs).not.toContain("bypassPermissions");
   });
 });
+

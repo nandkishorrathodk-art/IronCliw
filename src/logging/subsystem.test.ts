@@ -54,3 +54,4 @@ describe("createSubsystemLogger().isEnabled", () => {
     expect(log.isEnabled("info")).toBe(true);
   });
 });
+

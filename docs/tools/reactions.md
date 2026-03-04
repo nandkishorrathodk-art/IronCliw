@@ -21,3 +21,4 @@ Channel notes:
 - **WhatsApp**: empty `emoji` removes the bot reaction; `remove: true` maps to empty emoji (still requires `emoji`).
 - **Zalo Personal (`zalouser`)**: requires non-empty `emoji`; `remove: true` removes that specific emoji reaction.
 - **Signal**: inbound reaction notifications emit system events when `channels.signal.reactionNotifications` is enabled.
+

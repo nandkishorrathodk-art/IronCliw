@@ -88,12 +88,13 @@ export function assertSupportedRuntime(
 
   runtime.error(
     [
-      "openclaw requires Node >=22.12.0.",
+      "IronCliw requires Node >=22.12.0.",
       `Detected: ${runtimeLabel} (exec: ${execLabel}).`,
       `PATH searched: ${details.pathEnv}`,
       "Install Node: https://nodejs.org/en/download",
-      "Upgrade Node and re-run openclaw.",
+      "Upgrade Node and re-run IronCliw.",
     ].join("\n"),
   );
   runtime.exit(1);
 }
+

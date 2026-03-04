@@ -9,7 +9,7 @@ title: "Streaming and Chunking"
 
 # Streaming + chunking
 
-OpenClaw has two separate streaming layers:
+IronCliw has two separate streaming layers:
 
 - **Block streaming (channels):** emit completed **blocks** as the assistant writes. These are normal channel messages (not token deltas).
 - **Preview streaming (Telegram/Discord/Slack):** update a temporary **preview message** while generating.
@@ -67,7 +67,7 @@ Block chunking is implemented by `EmbeddedBlockChunker`:
 
 ## Coalescing (merge streamed blocks)
 
-When block streaming is enabled, OpenClaw can **merge consecutive block chunks**
+When block streaming is enabled, IronCliw can **merge consecutive block chunks**
 before sending them out. This reduces “single-line spam” while still providing
 progressive output.
 
@@ -153,3 +153,4 @@ Slack:
 - `partial` can use Slack native streaming (`chat.startStream`/`append`/`stop`) when available.
 - `block` uses append-style draft previews.
 - `progress` uses status preview text, then final answer.
+

@@ -102,3 +102,4 @@ describe("isSilentReplyPrefixText", () => {
     expect(isSilentReplyPrefixText("NO-")).toBe(false);
   });
 });
+

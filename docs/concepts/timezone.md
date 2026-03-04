@@ -8,7 +8,7 @@ title: "Timezones"
 
 # Timezones
 
-OpenClaw standardizes timestamps so the model sees a **single reference time**.
+IronCliw standardizes timestamps so the model sees a **single reference time**.
 
 ## Message envelopes (local by default)
 
@@ -73,7 +73,7 @@ Raw provider fields are preserved.
 ## User timezone for the system prompt
 
 Set `agents.defaults.userTimezone` to tell the model the user's local time zone. If it is
-unset, OpenClaw resolves the **host timezone at runtime** (no config write).
+unset, IronCliw resolves the **host timezone at runtime** (no config write).
 
 ```json5
 {
@@ -89,3 +89,4 @@ The system prompt includes:
 You can control the prompt format with `agents.defaults.timeFormat` (`auto` | `12` | `24`).
 
 See [Date & Time](/date-time) for the full behavior and examples.
+

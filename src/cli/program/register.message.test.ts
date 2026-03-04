@@ -121,3 +121,4 @@ describe("registerMessageCommands", () => {
     expect(helpSpy).toHaveBeenCalledWith({ error: true });
   });
 });
+

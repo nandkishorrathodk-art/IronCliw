@@ -15,3 +15,4 @@ export function formatSetExplicitDefaultToConfiguredInstruction(params: {
 }): string {
   return `Set ${formatChannelDefaultAccountPath(params.channelKey)} to one of these accounts, or add ${formatChannelAccountsDefaultPath(params.channelKey)}`;
 }
+

@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { normalizeFeishuTarget } from "./targets.js";
@@ -175,3 +175,4 @@ export async function listFeishuDirectoryGroupsLive(params: {
     return listFeishuDirectoryGroups(params);
   }
 }
+

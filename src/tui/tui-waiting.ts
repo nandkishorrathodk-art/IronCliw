@@ -49,3 +49,4 @@ export function buildWaitingStatusMessage(params: {
   const cute = shimmerText(params.theme, `${phrase}…`, params.tick);
   return `${cute} • ${params.elapsed} | ${params.connectionStatus}`;
 }
+

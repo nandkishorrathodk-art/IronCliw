@@ -5,7 +5,7 @@ import {
   getSessionsSpawnTool,
   resetSessionsSpawnConfigOverride,
   setupSessionsSpawnGatewayMock,
-} from "./openclaw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 import { SUBAGENT_SPAWN_ACCEPTED_NOTE } from "./subagent-spawn.js";
 
@@ -63,3 +63,4 @@ describe("sessions_spawn: cron isolated session note suppression", () => {
     expect((result.details as SpawnResult).note).toBe(SUBAGENT_SPAWN_ACCEPTED_NOTE);
   });
 });
+

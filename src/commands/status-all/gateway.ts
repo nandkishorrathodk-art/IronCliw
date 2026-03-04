@@ -181,3 +181,4 @@ export function summarizeLogTail(rawLines: string[], opts?: { maxLines?: number 
 }
 
 export { pickGatewaySelfPresence } from "../gateway-presence.js";
+

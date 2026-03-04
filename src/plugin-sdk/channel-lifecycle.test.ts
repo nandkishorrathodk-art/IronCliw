@@ -64,3 +64,4 @@ describe("plugin-sdk channel lifecycle helpers", () => {
     expect(onAbort).toHaveBeenCalledOnce();
   });
 });
+

@@ -86,3 +86,4 @@ export function stripEnvelopeFromMessages(messages: unknown[]): unknown[] {
   });
   return changed ? next : messages;
 }
+

@@ -49,3 +49,4 @@ session "Continue with whatever results we got"
 # Throwing custom errors
 session "Validate input data"
 throw "Validation failed: missing required fields"
+

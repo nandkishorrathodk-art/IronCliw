@@ -1,3 +1,4 @@
-import type { GoogleChatAccountConfig, GoogleChatConfig } from "openclaw/plugin-sdk/googlechat";
+import type { GoogleChatAccountConfig, GoogleChatConfig } from "IronCliw/plugin-sdk/googlechat";
 
 export type { GoogleChatAccountConfig, GoogleChatConfig };
+

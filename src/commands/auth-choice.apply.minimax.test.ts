@@ -29,15 +29,15 @@ function createMinimaxPrompter(
 
 describe("applyAuthChoiceMiniMax", () => {
   const lifecycle = createAuthTestLifecycle([
-    "OPENCLAW_STATE_DIR",
-    "OPENCLAW_AGENT_DIR",
+    "IronCliw_STATE_DIR",
+    "IronCliw_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "MINIMAX_API_KEY",
     "MINIMAX_OAUTH_TOKEN",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("openclaw-minimax-");
+    const env = await setupAuthTestEnv("IronCliw-minimax-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }
@@ -221,3 +221,4 @@ describe("applyAuthChoiceMiniMax", () => {
     expect(parsed.profiles?.["minimax:default"]?.key).toBe("mm-lightning-token");
   });
 });
+

@@ -14,3 +14,4 @@ describe("readNextcloudTalkWebhookBody", () => {
     await expect(readNextcloudTalkWebhookBody(req, 128)).rejects.toThrow("PayloadTooLarge");
   });
 });
+

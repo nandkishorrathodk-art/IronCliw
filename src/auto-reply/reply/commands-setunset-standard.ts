@@ -21,3 +21,4 @@ export function parseStandardSetUnsetSlashCommand<T>(params: {
     onError: params.onError ?? ((message) => ({ action: "error", message }) as T),
   });
 }
+

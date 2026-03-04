@@ -12,3 +12,4 @@ fs.mkdirSync(binDir, { recursive: true });
 const wrapper = `#!/usr/bin/env node\nimport { spawnSync } from "node:child_process";\nimport path from "node:path";\nimport { fileURLToPath } from "node:url";\n\nconst here = path.dirname(fileURLToPath(import.meta.url));\nconst script = path.join(here, "..", "scripts", "docs-list.js");\n\nconst result = spawnSync(process.execPath, [script], { stdio: "inherit" });\nprocess.exit(result.status ?? 1);\n`;
 
 fs.writeFileSync(binPath, wrapper, { mode: 0o755 });
+

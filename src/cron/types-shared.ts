@@ -16,3 +16,4 @@ export type CronJobBase<TSchedule, TSessionTarget, TWakeMode, TPayload, TDeliver
     delivery?: TDelivery;
     failureAlert?: TFailureAlert;
   };
+

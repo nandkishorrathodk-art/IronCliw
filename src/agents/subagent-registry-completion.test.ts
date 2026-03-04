@@ -124,3 +124,4 @@ describe("emitSubagentEndedHookOnce", () => {
     expect(entry.endedHookEmittedAt).toBeUndefined();
   });
 });
+

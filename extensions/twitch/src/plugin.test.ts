@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/twitch";
+import type { IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
 import { describe, expect, it } from "vitest";
 import { twitchPlugin } from "./plugin.js";
 
@@ -27,7 +27,7 @@ describe("twitchPlugin.status.buildAccountSnapshot", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IronCliwConfig;
 
     const snapshot = await twitchPlugin.status?.buildAccountSnapshot?.({
       account: secondary,
@@ -37,3 +37,4 @@ describe("twitchPlugin.status.buildAccountSnapshot", () => {
     expect(snapshot?.accountId).toBe("secondary");
   });
 });
+

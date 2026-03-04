@@ -1,4 +1,4 @@
-import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk/googlechat";
+import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/googlechat";
 import { describe, expect, it, vi } from "vitest";
 
 const uploadGoogleChatAttachmentMock = vi.hoisted(() => vi.fn());
@@ -40,7 +40,7 @@ describe("googlechatPlugin outbound sendMedia", () => {
       messageName: "spaces/AAA/messages/msg-1",
     });
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         googlechat: {
           enabled: true,
@@ -117,7 +117,7 @@ describe("googlechatPlugin outbound sendMedia", () => {
       messageName: "spaces/AAA/messages/msg-2",
     });
 
-    const cfg: OpenClawConfig = {
+    const cfg: IronCliwConfig = {
       channels: {
         googlechat: {
           enabled: true,
@@ -166,3 +166,4 @@ describe("googlechatPlugin outbound sendMedia", () => {
     });
   });
 });
+

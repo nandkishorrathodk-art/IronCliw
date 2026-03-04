@@ -1,6 +1,6 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
 import { Type } from "@sinclair/typebox";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/feishu";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { createFeishuToolClient } from "./tool-account.js";
 
@@ -532,7 +532,7 @@ const UpdateRecordSchema = Type.Object({
 
 // ============ Tool Registration ============
 
-export function registerFeishuBitableTools(api: OpenClawPluginApi) {
+export function registerFeishuBitableTools(api: IronCliwPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_bitable: No config available, skipping bitable tools");
     return;
@@ -723,3 +723,4 @@ export function registerFeishuBitableTools(api: OpenClawPluginApi) {
 
   api.logger.info?.("feishu_bitable: Registered bitable tools");
 }
+

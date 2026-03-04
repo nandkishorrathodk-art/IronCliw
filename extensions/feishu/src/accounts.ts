@@ -1,5 +1,5 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
+import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
 import { normalizeResolvedSecretInputString, normalizeSecretInputString } from "./secret-input.js";
 import type {
   FeishuConfig,
@@ -238,3 +238,4 @@ export function listEnabledFeishuAccounts(cfg: ClawdbotConfig): ResolvedFeishuAc
     .map((accountId) => resolveFeishuAccount({ cfg, accountId }))
     .filter((account) => account.enabled && account.configured);
 }
+

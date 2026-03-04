@@ -60,3 +60,4 @@ describe("channelsAddCommand", () => {
     expect(offsetMocks.deleteTelegramUpdateOffset).not.toHaveBeenCalled();
   });
 });
+

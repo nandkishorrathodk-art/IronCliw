@@ -10,3 +10,4 @@ export function getHeader(headers: HttpHeaderMap, name: string): string | undefi
   }
   return value;
 }
+

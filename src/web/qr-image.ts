@@ -52,3 +52,4 @@ export async function renderQrPngBase64(
   const png = encodePngRgba(buf, size, size);
   return png.toString("base64");
 }
+
