@@ -2,8 +2,8 @@
 
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ironcliw/Ironcliw/main/docs/assets/Ironcliw-logo-text-dark.png">
-        <img src="https://raw.githubusercontent.com/Ironcliw/Ironcliw/main/docs/assets/Ironcliw-logo-text.png" alt="Ironcliw" width="500">
+        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nandkishorrathodk-art/IronCliw/main/docs/assets/Ironcliw-logo-text-dark.png">
+        <img src="https://raw.githubusercontent.com/nandkishorrathodk-art/IronCliw/main/docs/assets/Ironcliw-logo-text.png" alt="Ironcliw" width="500">
     </picture>
 </p>
 
@@ -12,8 +12,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Ironcliw/Ironcliw/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/Ironcliw/Ironcliw/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
-  <a href="https://github.com/Ironcliw/Ironcliw/releases"><img src="https://img.shields.io/github/v/release/Ironcliw/Ironcliw?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
+  <a href="https://github.com/nandkishorrathodk-art/IronCliw/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/nandkishorrathodk-art/IronCliw/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
+  <a href="https://github.com/nandkishorrathodk-art/IronCliw/releases"><img src="https://img.shields.io/github/v/release/nandkishorrathodk-art/IronCliw?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
   <a href="https://discord.gg/clawd"><img src="https://img.shields.io/discord/1456350064065904867?label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="Discord"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
@@ -23,7 +23,7 @@ It answers you on the channels you already use (WhatsApp, Telegram, Slack, Disco
 
 If you want a personal, single-user assistant that feels local, fast, and always-on, this is it.
 
-[Website](https://Ironcliw.ai) · [Docs](https://docs.Ironcliw.ai) · [Vision](VISION.md) · [DeepWiki](https://deepwiki.com/Ironcliw/Ironcliw) · [Getting Started](https://docs.Ironcliw.ai/start/getting-started) · [Updating](https://docs.Ironcliw.ai/install/updating) · [Showcase](https://docs.Ironcliw.ai/start/showcase) · [FAQ](https://docs.Ironcliw.ai/help/faq) · [Wizard](https://docs.Ironcliw.ai/start/wizard) · [Nix](https://github.com/Ironcliw/nix-Ironcliw) · [Docker](https://docs.Ironcliw.ai/install/docker) · [Discord](https://discord.gg/clawd)
+[Website](https://Ironcliw.ai) · [Docs](https://docs.Ironcliw.ai) · [Vision](VISION.md) · [DeepWiki](https://deepwiki.com/nandkishorrathodk-art/IronCliw) · [Getting Started](https://docs.Ironcliw.ai/start/getting-started) · [Updating](https://docs.Ironcliw.ai/install/updating) · [Showcase](https://docs.Ironcliw.ai/start/showcase) · [FAQ](https://docs.Ironcliw.ai/help/faq) · [Wizard](https://docs.Ironcliw.ai/start/wizard) · [Nix](https://github.com/Ironcliw/nix-Ironcliw) · [Docker](https://docs.Ironcliw.ai/install/docker) · [Discord](https://discord.gg/clawd)
 
 Preferred setup: run the onboarding wizard (`Ironcliw onboard`) in your terminal.
 The wizard guides you step by step through setting up the gateway, workspace, channels, and skills. The CLI wizard is the recommended path and works on **macOS, Linux, and Windows (via WSL2; strongly recommended)**.
@@ -94,7 +94,7 @@ Details: [Development channels](https://docs.Ironcliw.ai/install/development-cha
 Prefer `pnpm` for builds from source. Bun is optional for running TypeScript directly.
 
 ```bash
-git clone https://github.com/Ironcliw/Ironcliw.git
+git clone https://github.com/nandkishorrathodk-art/IronCliw.git
 cd Ironcliw
 
 pnpm install
@@ -136,7 +136,7 @@ Run `Ironcliw doctor` to surface risky/misconfigured DM policies.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Ironcliw/Ironcliw&type=date&legend=top-left)](https://www.star-history.com/#Ironcliw/Ironcliw&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=nandkishorrathodk-art/IronCliw&type=date&legend=top-left)](https://www.star-history.com/#nandkishorrathodk-art/IronCliw&type=date&legend=top-left)
 
 ## Everything we built so far
 
@@ -317,7 +317,7 @@ Runbook: [iOS connect](https://docs.Ironcliw.ai/platforms/ios).
 
 ## Configuration
 
-Minimal `~/.Ironcliw/Ironcliw.json` (model + defaults):
+Minimal `~/.nandkishorrathodk-art/IronCliw.json` (model + defaults):
 
 ```json5
 {
