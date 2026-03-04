@@ -1,4 +1,6 @@
-# <img src="docs/assets/IronCliw-logo-text.png" alt="IronCliw Logo" width="400">
+<p align="center">
+  <img src="docs/assets/IronCliw-logo-text-dark.png" alt="IronCliw Logo" width="600">
+</p>
 
 <p align="center">
   <strong>Native Windows Integration | Bug Bounty Automation | Multi-Channel AI</strong>
@@ -232,4 +234,3 @@ This project stands on the shoulders of giants:
 [🌐 Website](https://ironcliw.ai) · [📖 Docs](./docs) · [☠️ Bug Bounty Guide](./BUGBOUNTY_SETUP.md) · [🔒 Security](./SECURITY.md)
 
 </div>
-
