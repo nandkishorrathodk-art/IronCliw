@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { installCommonResolveTargetErrorCases } from "../../shared/resolve-target-test-helpers.js";
 
-vi.mock("openclaw/plugin-sdk", () => ({
+vi.mock("Ironcliw/plugin-sdk", () => ({
   getChatChannelMeta: () => ({ id: "googlechat", label: "Google Chat" }),
   missingTargetError: (provider: string, hint: string) =>
     new Error(`Delivering to ${provider} requires target ${hint}`),
@@ -104,3 +104,4 @@ describe("googlechat resolveTarget", () => {
     implicitAllowFrom: ["spaces/BBB"],
   });
 });
+

@@ -264,16 +264,16 @@ describe("sandbox browser binds config", () => {
       globalBrowser: {},
       agentBrowser: {},
     });
-    expect(resolved.network).toBe("openclaw-sandbox-browser");
+    expect(resolved.network).toBe("Ironcliw-sandbox-browser");
   });
 
   it("prefers agent browser network over global browser network", () => {
     const resolved = resolveSandboxBrowserConfig({
       scope: "agent",
-      globalBrowser: { network: "openclaw-sandbox-browser-global" },
-      agentBrowser: { network: "openclaw-sandbox-browser-agent" },
+      globalBrowser: { network: "Ironcliw-sandbox-browser-global" },
+      agentBrowser: { network: "Ironcliw-sandbox-browser-agent" },
     });
-    expect(resolved.network).toBe("openclaw-sandbox-browser-agent");
+    expect(resolved.network).toBe("Ironcliw-sandbox-browser-agent");
   });
 
   it("merges cdpSourceRange with agent override", () => {
@@ -333,3 +333,4 @@ describe("sandbox browser binds config", () => {
     expect(res.ok).toBe(true);
   });
 });
+

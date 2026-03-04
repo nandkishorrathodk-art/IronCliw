@@ -1,6 +1,6 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 
-export function buildModelAliasLines(cfg?: OpenClawConfig) {
+export function buildModelAliasLines(cfg?: IroncliwConfig) {
   const models = cfg?.agents?.defaults?.models ?? {};
   const entries: Array<{ alias: string; model: string }> = [];
   for (const [keyRaw, entryRaw] of Object.entries(models)) {
@@ -18,3 +18,4 @@ export function buildModelAliasLines(cfg?: OpenClawConfig) {
     .toSorted((a, b) => a.alias.localeCompare(b.alias))
     .map((entry) => `- ${entry.alias}: ${entry.model}`);
 }
+

@@ -5,7 +5,7 @@ import {
   type ParsedChatTarget,
   resolveServicePrefixedAllowTarget,
   resolveServicePrefixedTarget,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 
 export type BlueBubblesService = "imessage" | "sms" | "auto";
 
@@ -365,3 +365,4 @@ export function formatBlueBubblesChatTarget(params: {
   }
   return "";
 }
+

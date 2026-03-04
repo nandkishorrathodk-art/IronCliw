@@ -1,13 +1,13 @@
 ---
-summary: "Direct `openclaw agent` CLI runs (with optional delivery)"
+summary: "Direct `Ironcliw agent` CLI runs (with optional delivery)"
 read_when:
   - Adding or modifying the agent CLI entrypoint
 title: "Agent Send"
 ---
 
-# `openclaw agent` (direct agent runs)
+# `Ironcliw agent` (direct agent runs)
 
-`openclaw agent` runs a single agent turn without needing an inbound chat message.
+`Ironcliw agent` runs a single agent turn without needing an inbound chat message.
 By default it goes **through the Gateway**; add `--local` to force the embedded
 runtime on the current machine.
 
@@ -23,7 +23,7 @@ runtime on the current machine.
 - Output:
   - default: prints reply text (plus `MEDIA:<url>` lines)
   - `--json`: prints structured payload + metadata
-- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `openclaw message --target`).
+- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `Ironcliw message --target`).
 - Use `--reply-channel`/`--reply-to`/`--reply-account` to override delivery without changing the session.
 
 If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
@@ -31,12 +31,12 @@ If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
 ## Examples
 
 ```bash
-openclaw agent --to +15555550123 --message "status update"
-openclaw agent --agent ops --message "Summarize logs"
-openclaw agent --session-id 1234 --message "Summarize inbox" --thinking medium
-openclaw agent --to +15555550123 --message "Trace logs" --verbose on --json
-openclaw agent --to +15555550123 --message "Summon reply" --deliver
-openclaw agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+Ironcliw agent --to +15555550123 --message "status update"
+Ironcliw agent --agent ops --message "Summarize logs"
+Ironcliw agent --session-id 1234 --message "Summarize inbox" --thinking medium
+Ironcliw agent --to +15555550123 --message "Trace logs" --verbose on --json
+Ironcliw agent --to +15555550123 --message "Summon reply" --deliver
+Ironcliw agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```
 
 ## Flags
@@ -51,3 +51,4 @@ openclaw agent --agent ops --message "Generate report" --deliver --reply-channel
 - `--verbose <on|full|off>`: persist verbose level
 - `--timeout <seconds>`: override agent timeout
 - `--json`: output structured JSON
+

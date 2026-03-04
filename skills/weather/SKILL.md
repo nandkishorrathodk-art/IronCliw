@@ -2,7 +2,7 @@
 name: weather
 description: "Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed."
 homepage: https://wttr.in/:help
-metadata: { "openclaw": { "emoji": "🌤️", "requires": { "bins": ["curl"] } } }
+metadata: { "Ironcliw": { "emoji": "🌤️", "requires": { "bins": ["curl"] } } }
 ---
 
 # Weather Skill
@@ -110,3 +110,4 @@ curl "wttr.in/London?format=v2"
 - Rate limited; don't spam requests
 - Works for most global cities
 - Supports airport codes: `curl wttr.in/ORD`
+

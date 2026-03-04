@@ -1,26 +1,26 @@
 ---
-summary: "CLI reference for `openclaw daemon` (legacy alias for gateway service management)"
+summary: "CLI reference for `Ironcliw daemon` (legacy alias for gateway service management)"
 read_when:
-  - You still use `openclaw daemon ...` in scripts
+  - You still use `Ironcliw daemon ...` in scripts
   - You need service lifecycle commands (install/start/stop/restart/status)
 title: "daemon"
 ---
 
-# `openclaw daemon`
+# `Ironcliw daemon`
 
 Legacy alias for Gateway service management commands.
 
-`openclaw daemon ...` maps to the same service control surface as `openclaw gateway ...` service commands.
+`Ironcliw daemon ...` maps to the same service control surface as `Ironcliw gateway ...` service commands.
 
 ## Usage
 
 ```bash
-openclaw daemon status
-openclaw daemon install
-openclaw daemon start
-openclaw daemon stop
-openclaw daemon restart
-openclaw daemon uninstall
+Ironcliw daemon status
+Ironcliw daemon install
+Ironcliw daemon start
+Ironcliw daemon stop
+Ironcliw daemon restart
+Ironcliw daemon uninstall
 ```
 
 ## Subcommands
@@ -40,4 +40,5 @@ openclaw daemon uninstall
 
 ## Prefer
 
-Use [`openclaw gateway`](/cli/gateway) for current docs and examples.
+Use [`Ironcliw gateway`](/cli/gateway) for current docs and examples.
+

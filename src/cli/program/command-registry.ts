@@ -193,7 +193,7 @@ const coreEntries: CoreCliEntry[] = [
     commands: [
       {
         name: "browser",
-        description: "Manage OpenClaw's dedicated browser (Chrome/Chromium)",
+        description: "Manage Ironcliw's dedicated browser (Chrome/Chromium)",
         hasSubcommands: true,
       },
     ],
@@ -302,3 +302,4 @@ export function registerProgramCommands(
   registerCoreCliCommands(program, ctx, argv);
   registerSubCliCommands(program, argv);
 }
+

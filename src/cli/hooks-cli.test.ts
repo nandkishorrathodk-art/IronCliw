@@ -10,14 +10,14 @@ const report: HookStatusReport = {
     {
       name: "session-memory",
       description: "Save session context to memory",
-      source: "openclaw-bundled",
+      source: "Ironcliw-bundled",
       pluginId: undefined,
       filePath: "/tmp/hooks/session-memory/HOOK.md",
       baseDir: "/tmp/hooks/session-memory",
       handlerPath: "/tmp/hooks/session-memory/handler.js",
       hookKey: "session-memory",
       emoji: "💾",
-      homepage: "https://docs.openclaw.ai/automation/hooks#session-memory",
+      homepage: "https://docs.Ironcliw.ai/automation/hooks#session-memory",
       events: ["command:new"],
       always: false,
       disabled: false,
@@ -48,7 +48,7 @@ describe("hooks cli formatting", () => {
         {
           name: "plugin-hook",
           description: "Hook from plugin",
-          source: "openclaw-plugin",
+          source: "Ironcliw-plugin",
           pluginId: "voice-call",
           filePath: "/tmp/hooks/plugin-hook/HOOK.md",
           baseDir: "/tmp/hooks/plugin-hook",
@@ -70,3 +70,4 @@ describe("hooks cli formatting", () => {
     expect(output).toContain("plugin:voice-call");
   });
 });
+

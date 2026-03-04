@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { afterEach, describe, expect, it } from "vitest";
 import { createEmptyPluginRegistry } from "../../../src/plugins/registry.js";
 import { setActivePluginRegistry } from "../../../src/plugins/runtime.js";
@@ -8,7 +8,7 @@ import { registerBlueBubblesWebhookTarget } from "./monitor.js";
 function createTarget(): WebhookTarget {
   return {
     account: { accountId: "default" } as WebhookTarget["account"],
-    config: {} as OpenClawConfig,
+    config: {} as IroncliwConfig,
     runtime: {},
     core: {} as WebhookTarget["core"],
     path: "/bluebubbles-webhook",
@@ -42,3 +42,4 @@ describe("registerBlueBubblesWebhookTarget", () => {
     expect(registry.httpRoutes).toHaveLength(0);
   });
 });
+

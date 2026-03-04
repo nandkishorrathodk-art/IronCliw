@@ -1,4 +1,4 @@
-import type { SecretInput } from "openclaw/plugin-sdk";
+import type { SecretInput } from "Ironcliw/plugin-sdk";
 
 export type ZaloAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
@@ -48,3 +48,4 @@ export type ResolvedZaloAccount = {
   tokenSource: ZaloTokenSource;
   config: ZaloAccountConfig;
 };
+

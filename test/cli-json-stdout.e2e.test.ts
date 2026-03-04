@@ -16,14 +16,14 @@ describe("cli json stdout contract", () => {
           ...process.env,
           HOME: tempHome,
           USERPROFILE: tempHome,
-          OPENCLAW_TEST_FAST: "1",
+          IRONCLIW_TEST_FAST: "1",
         };
-        delete env.OPENCLAW_HOME;
-        delete env.OPENCLAW_STATE_DIR;
-        delete env.OPENCLAW_CONFIG_PATH;
+        delete env.IRONCLIW_HOME;
+        delete env.IRONCLIW_STATE_DIR;
+        delete env.IRONCLIW_CONFIG_PATH;
         delete env.VITEST;
 
-        const entry = path.resolve(process.cwd(), "openclaw.mjs");
+        const entry = path.resolve(process.cwd(), "ironcliw.mjs");
         const result = spawnSync(
           process.execPath,
           [entry, "update", "status", "--json", "--timeout", "1"],
@@ -38,7 +38,7 @@ describe("cli json stdout contract", () => {
         expect(stdout).not.toContain("Doctor changes");
         expect(stdout).not.toContain("Config invalid");
       },
-      { prefix: "openclaw-json-e2e-" },
+      { prefix: "ironcliw-json-e2e-" },
     );
   });
 });

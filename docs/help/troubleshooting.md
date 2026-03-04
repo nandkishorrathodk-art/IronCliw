@@ -1,7 +1,7 @@
 ---
-summary: "Symptom first troubleshooting hub for OpenClaw"
+summary: "Symptom first troubleshooting hub for Ironcliw"
 read_when:
-  - OpenClaw is not working and you need the fastest path to a fix
+  - Ironcliw is not working and you need the fastest path to a fix
   - You want a triage flow before diving into deep runbooks
 title: "Troubleshooting"
 ---
@@ -15,24 +15,24 @@ If you only have 2 minutes, use this page as a triage front door.
 Run this exact ladder in order:
 
 ```bash
-openclaw status
-openclaw status --all
-openclaw gateway probe
-openclaw gateway status
-openclaw doctor
-openclaw channels status --probe
-openclaw logs --follow
+Ironcliw status
+Ironcliw status --all
+Ironcliw gateway probe
+Ironcliw gateway status
+Ironcliw doctor
+Ironcliw channels status --probe
+Ironcliw logs --follow
 ```
 
 Good output in one line:
 
-- `openclaw status` → shows configured channels and no obvious auth errors.
-- `openclaw status --all` → full report is present and shareable.
-- `openclaw gateway probe` → expected gateway target is reachable.
-- `openclaw gateway status` → `Runtime: running` and `RPC probe: ok`.
-- `openclaw doctor` → no blocking config/service errors.
-- `openclaw channels status --probe` → channels report `connected` or `ready`.
-- `openclaw logs --follow` → steady activity, no repeating fatal errors.
+- `Ironcliw status` → shows configured channels and no obvious auth errors.
+- `Ironcliw status --all` → full report is present and shareable.
+- `Ironcliw gateway probe` → expected gateway target is reachable.
+- `Ironcliw gateway status` → `Runtime: running` and `RPC probe: ok`.
+- `Ironcliw doctor` → no blocking config/service errors.
+- `Ironcliw channels status --probe` → channels report `connected` or `ready`.
+- `Ironcliw logs --follow` → steady activity, no repeating fatal errors.
 
 ## Anthropic long context 429
 
@@ -40,24 +40,24 @@ If you see:
 `HTTP 429: rate_limit_error: Extra usage is required for long context requests`,
 go to [/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context](/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context).
 
-## Plugin install fails with missing openclaw extensions
+## Plugin install fails with missing Ironcliw extensions
 
-If install fails with `package.json missing openclaw.extensions`, the plugin package
-is using an old shape that OpenClaw no longer accepts.
+If install fails with `package.json missing Ironcliw.extensions`, the plugin package
+is using an old shape that Ironcliw no longer accepts.
 
 Fix in the plugin package:
 
-1. Add `openclaw.extensions` to `package.json`.
+1. Add `Ironcliw.extensions` to `package.json`.
 2. Point entries at built runtime files (usually `./dist/index.js`).
-3. Republish the plugin and run `openclaw plugins install <npm-spec>` again.
+3. Republish the plugin and run `Ironcliw plugins install <npm-spec>` again.
 
 Example:
 
 ```json
 {
-  "name": "@openclaw/my-plugin",
+  "name": "@Ironcliw/my-plugin",
   "version": "1.2.3",
-  "openclaw": {
+  "Ironcliw": {
     "extensions": ["./dist/index.js"]
   }
 }
@@ -69,7 +69,7 @@ Reference: [/tools/plugin#distribution-npm](/tools/plugin#distribution-npm)
 
 ```mermaid
 flowchart TD
-  A[OpenClaw is not working] --> B{What breaks first}
+  A[Ironcliw is not working] --> B{What breaks first}
   B --> C[No replies]
   B --> D[Dashboard or Control UI will not connect]
   B --> E[Gateway will not start or service not running]
@@ -90,11 +90,11 @@ flowchart TD
 <AccordionGroup>
   <Accordion title="No replies">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw channels status --probe
-    openclaw pairing list --channel <channel> [--account <id>]
-    openclaw logs --follow
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw channels status --probe
+    Ironcliw pairing list --channel <channel> [--account <id>]
+    Ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -120,16 +120,16 @@ flowchart TD
 
   <Accordion title="Dashboard or Control UI will not connect">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw logs --follow
+    Ironcliw doctor
+    Ironcliw channels status --probe
     ```
 
     Good output looks like:
 
-    - `Dashboard: http://...` is shown in `openclaw gateway status`
+    - `Dashboard: http://...` is shown in `Ironcliw gateway status`
     - `RPC probe: ok`
     - No auth loop in logs
 
@@ -149,11 +149,11 @@ flowchart TD
 
   <Accordion title="Gateway will not start or service installed but not running">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw logs --follow
+    Ironcliw doctor
+    Ironcliw channels status --probe
     ```
 
     Good output looks like:
@@ -178,11 +178,11 @@ flowchart TD
 
   <Accordion title="Channel connects but messages do not flow">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw logs --follow
+    Ironcliw doctor
+    Ironcliw channels status --probe
     ```
 
     Good output looks like:
@@ -206,12 +206,12 @@ flowchart TD
 
   <Accordion title="Cron or heartbeat did not fire or did not deliver">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw cron status
-    openclaw cron list
-    openclaw cron runs --id <jobId> --limit 20
-    openclaw logs --follow
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw cron status
+    Ironcliw cron list
+    Ironcliw cron runs --id <jobId> --limit 20
+    Ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -237,11 +237,11 @@ flowchart TD
 
   <Accordion title="Node is paired but tool fails camera canvas screen exec">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw nodes status
-    openclaw nodes describe --node <idOrNameOrIp>
-    openclaw logs --follow
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw nodes status
+    Ironcliw nodes describe --node <idOrNameOrIp>
+    Ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -267,17 +267,17 @@ flowchart TD
 
   <Accordion title="Browser tool fails">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw browser status
-    openclaw logs --follow
-    openclaw doctor
+    Ironcliw status
+    Ironcliw gateway status
+    Ironcliw browser status
+    Ironcliw logs --follow
+    Ironcliw doctor
     ```
 
     Good output looks like:
 
     - Browser status shows `running: true` and a chosen browser/profile.
-    - `openclaw` profile starts or `chrome` relay has an attached tab.
+    - `Ironcliw` profile starts or `chrome` relay has an attached tab.
 
     Common log signatures:
 
@@ -294,3 +294,4 @@ flowchart TD
 
   </Accordion>
 </AccordionGroup>
+

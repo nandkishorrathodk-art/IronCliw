@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/slack",
-  "version": "2026.3.2",
-  "private": true,
-  "description": "OpenClaw Slack channel plugin",
-  "type": "module",
-  "openclaw": {
-    "extensions": [
-      "./index.ts"
-    ]
-  }
+    "name":  "@ironcliw/slack",
+    "version":  "2026.0.01",
+    "private":  true,
+    "description":  "Ironcliw Slack channel plugin",
+    "type":  "module",
+    "Ironcliw":  {
+                     "extensions":  [
+                                        "./index.ts"
+                                    ]
+                 }
 }

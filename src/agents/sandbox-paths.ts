@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import { assertNoPathAliasEscape, type PathAliasPolicy } from "../infra/path-alias-guards.js";
 import { isPathInside } from "../infra/path-guards.js";
-import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+import { resolvePreferredIroncliwTmpDir } from "../infra/tmp-Ironcliw-dir.js";
 
 const UNICODE_SPACES = /[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g;
 const HTTP_URL_RE = /^https?:\/\//i;
@@ -190,11 +190,11 @@ async function resolveAllowedTmpMediaPath(params: {
     return undefined;
   }
   const resolved = path.resolve(resolveSandboxInputPath(params.candidate, params.sandboxRoot));
-  const openClawTmpDir = path.resolve(resolvePreferredOpenClawTmpDir());
-  if (!isPathInside(openClawTmpDir, resolved)) {
+  const IroncliwTmpDir = path.resolve(resolvePreferredIroncliwTmpDir());
+  if (!isPathInside(IroncliwTmpDir, resolved)) {
     return undefined;
   }
-  await assertNoTmpAliasEscape({ filePath: resolved, tmpRoot: openClawTmpDir });
+  await assertNoTmpAliasEscape({ filePath: resolved, tmpRoot: IroncliwTmpDir });
   return resolved;
 }
 
@@ -215,3 +215,4 @@ function shortPath(value: string) {
   }
   return value;
 }
+

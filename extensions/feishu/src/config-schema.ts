@@ -1,4 +1,4 @@
-import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
+import { normalizeAccountId } from "Ironcliw/plugin-sdk/account-id";
 import { z } from "zod";
 export { z };
 import { buildSecretInputSchema, hasConfiguredSecretInput } from "./secret-input.js";
@@ -279,3 +279,4 @@ export const FeishuConfigSchema = z
       }
     }
   });
+

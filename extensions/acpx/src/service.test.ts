@@ -1,4 +1,4 @@
-import type { AcpRuntime, OpenClawPluginServiceContext } from "openclaw/plugin-sdk";
+import type { AcpRuntime, IroncliwPluginServiceContext } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../../src/acp/runtime/errors.js";
 import {
@@ -54,8 +54,8 @@ function createRuntimeStub(healthy: boolean): {
 }
 
 function createServiceContext(
-  overrides: Partial<OpenClawPluginServiceContext> = {},
-): OpenClawPluginServiceContext {
+  overrides: Partial<IroncliwPluginServiceContext> = {},
+): IroncliwPluginServiceContext {
   return {
     config: {},
     workspaceDir: "/tmp/workspace",
@@ -173,3 +173,4 @@ describe("createAcpxRuntimeService", () => {
     expect(getAcpRuntimeBackend("acpx")?.runtime).toBe(runtime);
   });
 });
+

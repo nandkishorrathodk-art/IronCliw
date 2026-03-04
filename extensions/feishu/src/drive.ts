@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { FeishuDriveSchema, type FeishuDriveParams } from "./drive-schema.js";
 import { createFeishuToolClient, resolveAnyEnabledFeishuToolsConfig } from "./tool-account.js";
@@ -167,7 +167,7 @@ async function deleteFile(client: Lark.Client, fileToken: string, type: string) 
 
 // ============ Tool Registration ============
 
-export function registerFeishuDriveTools(api: OpenClawPluginApi) {
+export function registerFeishuDriveTools(api: IroncliwPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_drive: No config available, skipping drive tools");
     return;
@@ -230,3 +230,4 @@ export function registerFeishuDriveTools(api: OpenClawPluginApi) {
 
   api.logger.info?.(`feishu_drive: Registered feishu_drive tool`);
 }
+

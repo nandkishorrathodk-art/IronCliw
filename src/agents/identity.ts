@@ -1,17 +1,17 @@
-import type { OpenClawConfig, HumanDelayConfig, IdentityConfig } from "../config/config.js";
+import type { IroncliwConfig, HumanDelayConfig, IdentityConfig } from "../config/config.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
 const DEFAULT_ACK_REACTION = "👀";
 
 export function resolveAgentIdentity(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
 ): IdentityConfig | undefined {
   return resolveAgentConfig(cfg, agentId)?.identity;
 }
 
 export function resolveAckReaction(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
   opts?: { channel?: string; accountId?: string },
 ): string {
@@ -46,7 +46,7 @@ export function resolveAckReaction(
 }
 
 export function resolveIdentityNamePrefix(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
 ): string | undefined {
   const name = resolveAgentIdentity(cfg, agentId)?.name?.trim();
@@ -57,12 +57,12 @@ export function resolveIdentityNamePrefix(
 }
 
 /** Returns just the identity name (without brackets) for template context. */
-export function resolveIdentityName(cfg: OpenClawConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: IroncliwConfig, agentId: string): string | undefined {
   return resolveAgentIdentity(cfg, agentId)?.name?.trim() || undefined;
 }
 
 export function resolveMessagePrefix(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
   opts?: { configured?: string; hasAllowFrom?: boolean; fallback?: string },
 ): string {
@@ -76,12 +76,12 @@ export function resolveMessagePrefix(
     return "";
   }
 
-  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[openclaw]";
+  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[Ironcliw]";
 }
 
 /** Helper to extract a channel config value by dynamic key. */
 function getChannelConfig(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   channel: string,
 ): Record<string, unknown> | undefined {
   const channels = cfg.channels as Record<string, unknown> | undefined;
@@ -92,7 +92,7 @@ function getChannelConfig(
 }
 
 export function resolveResponsePrefix(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
   opts?: { channel?: string; accountId?: string },
 ): string | undefined {
@@ -133,7 +133,7 @@ export function resolveResponsePrefix(
 }
 
 export function resolveEffectiveMessagesConfig(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
   opts?: {
     hasAllowFrom?: boolean;
@@ -155,7 +155,7 @@ export function resolveEffectiveMessagesConfig(
 }
 
 export function resolveHumanDelayConfig(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId: string,
 ): HumanDelayConfig | undefined {
   const defaults = cfg.agents?.defaults?.humanDelay;
@@ -169,3 +169,4 @@ export function resolveHumanDelayConfig(
     maxMs: overrides?.maxMs ?? defaults?.maxMs,
   };
 }
+

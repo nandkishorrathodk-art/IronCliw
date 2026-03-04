@@ -609,8 +609,8 @@ describe("applyExtraParamsToAgent", () => {
 
     expect(calls).toHaveLength(1);
     expect(calls[0]?.headers).toEqual({
-      "HTTP-Referer": "https://openclaw.ai",
-      "X-Title": "OpenClaw",
+      "HTTP-Referer": "https://Ironcliw.ai",
+      "X-Title": "Ironcliw",
       "X-Custom": "1",
     });
   });
@@ -1243,3 +1243,4 @@ describe("applyExtraParamsToAgent", () => {
     },
   );
 });
+

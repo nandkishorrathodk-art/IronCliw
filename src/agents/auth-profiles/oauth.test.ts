@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { resolveApiKeyForProfile } from "./oauth.js";
 import type { AuthProfileStore } from "./types.js";
 
@@ -10,7 +10,7 @@ function cfgFor(profileId: string, provider: string, mode: "api_key" | "token" |
         [profileId]: { provider, mode },
       },
     },
-  } satisfies OpenClawConfig;
+  } satisfies IroncliwConfig;
 }
 
 function tokenStore(params: {
@@ -303,3 +303,4 @@ describe("resolveApiKeyForProfile secret refs", () => {
     }
   });
 });
+

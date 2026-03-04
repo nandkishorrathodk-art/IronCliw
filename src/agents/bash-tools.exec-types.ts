@@ -1,8 +1,10 @@
 import type { ExecAsk, ExecHost, ExecSecurity } from "../infra/exec-approvals.js";
 import type { SafeBinProfileFixture } from "../infra/exec-safe-bin-policy.js";
 import type { BashSandboxConfig } from "./bash-tools.shared.js";
+import type { IroncliwConfig } from "../config/config.js";
 
 export type ExecToolDefaults = {
+  config?: IroncliwConfig;
   host?: ExecHost;
   security?: ExecSecurity;
   ask?: ExecAsk;

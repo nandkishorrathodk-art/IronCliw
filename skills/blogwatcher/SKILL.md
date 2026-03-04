@@ -4,7 +4,7 @@ description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher 
 homepage: https://github.com/Hyaxia/blogwatcher
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "📰",
         "requires": { "bins": ["blogwatcher"] },
@@ -67,3 +67,4 @@ Found 4 new article(s) total!
 Notes
 
 - Use `blogwatcher <command> --help` to discover flags and options.
+

@@ -83,7 +83,7 @@ describe("runClaudeCliAgent", () => {
     );
 
     await runClaudeCliAgent({
-      sessionId: "openclaw-session",
+      sessionId: "Ironcliw-session",
       sessionFile: "/tmp/session.jsonl",
       workspaceDir: "/tmp",
       prompt: "hi",
@@ -106,7 +106,7 @@ describe("runClaudeCliAgent", () => {
     );
 
     await runClaudeCliAgent({
-      sessionId: "openclaw-session",
+      sessionId: "Ironcliw-session",
       sessionFile: "/tmp/session.jsonl",
       workspaceDir: "/tmp",
       prompt: "hi",
@@ -163,3 +163,4 @@ describe("runClaudeCliAgent", () => {
     await Promise.all([firstRun, secondRun]);
   });
 });
+

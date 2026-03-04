@@ -1,56 +1,56 @@
 :root {
-  /* Background - Warmer dark with depth */
-  --bg: #12141a;
-  --bg-accent: #14161d;
-  --bg-elevated: #1a1d25;
-  --bg-hover: #262a35;
-  --bg-muted: #262a35;
+  /* Background - Deeper black for JARVIS look */
+  --bg: #050505;
+  --bg-accent: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-hover: #1a1a1a;
+  --bg-muted: #1a1a1a;
 
-  /* Card / Surface - More contrast between levels */
-  --card: #181b22;
-  --card-foreground: #f4f4f5;
-  --card-highlight: rgba(255, 255, 255, 0.05);
-  --popover: #181b22;
-  --popover-foreground: #f4f4f5;
+  /* Card / Surface */
+  --card: #0d0d0d;
+  --card-foreground: #ffffff;
+  --card-highlight: rgba(0, 217, 255, 0.05);
+  --popover: #0d0d0d;
+  --popover-foreground: #ffffff;
 
   /* Panel */
-  --panel: #12141a;
-  --panel-strong: #1a1d25;
-  --panel-hover: #262a35;
-  --chrome: rgba(18, 20, 26, 0.95);
-  --chrome-strong: rgba(18, 20, 26, 0.98);
+  --panel: #050505;
+  --panel-strong: #0a0a0a;
+  --panel-hover: #111111;
+  --chrome: rgba(5, 5, 5, 0.95);
+  --chrome-strong: rgba(5, 5, 5, 0.98);
 
-  /* Text - Slightly warmer */
-  --text: #e4e4e7;
-  --text-strong: #fafafa;
-  --chat-text: #e4e4e7;
-  --muted: #71717a;
-  --muted-strong: #52525b;
-  --muted-foreground: #71717a;
+  /* Text */
+  --text: #d1d1d1;
+  --text-strong: #ffffff;
+  --chat-text: #e0e0e0;
+  --muted: #666666;
+  --muted-strong: #888888;
+  --muted-foreground: #666666;
 
-  /* Border - Subtle but defined */
-  --border: #27272a;
-  --border-strong: #3f3f46;
-  --border-hover: #52525b;
-  --input: #27272a;
-  --ring: #ff5c5c;
+  /* Border */
+  --border: #222222;
+  --border-strong: #333333;
+  --border-hover: #444444;
+  --input: #111111;
+  --ring: #00d9ff;
 
-  /* Accent - Punchy signature red */
-  --accent: #ff5c5c;
-  --accent-hover: #ff7070;
-  --accent-muted: #ff5c5c;
-  --accent-subtle: rgba(255, 92, 92, 0.15);
-  --accent-foreground: #fafafa;
-  --accent-glow: rgba(255, 92, 92, 0.25);
-  --primary: #ff5c5c;
+  /* Accent - JARVIS Blue/Cyan */
+  --accent: #00d9ff;
+  --accent-hover: #00f2ff;
+  --accent-muted: #00d9ff;
+  --accent-subtle: rgba(0, 217, 255, 0.15);
+  --accent-foreground: #ffffff;
+  --accent-glow: rgba(0, 217, 255, 0.4);
+  --primary: #00d9ff;
   --primary-foreground: #ffffff;
 
-  /* Secondary - Teal accent for variety */
-  --secondary: #1e2028;
-  --secondary-foreground: #f4f4f5;
-  --accent-2: #14b8a6;
-  --accent-2-muted: rgba(20, 184, 166, 0.7);
-  --accent-2-subtle: rgba(20, 184, 166, 0.15);
+  /* Secondary - Hacker Green */
+  --secondary: #00ff95;
+  --secondary-foreground: #ffffff;
+  --accent-2: #00ff95;
+  --accent-2-muted: rgba(0, 255, 149, 0.7);
+  --accent-2-subtle: rgba(0, 255, 149, 0.15);
 
   /* Semantic - More saturated */
   --ok: #22c55e;
@@ -238,7 +238,7 @@ html.theme-transition::view-transition-new(theme) {
   }
 }
 
-openclaw-app {
+ironcliw-app {
   display: block;
   position: relative;
   z-index: 1;

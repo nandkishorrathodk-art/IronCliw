@@ -1,6 +1,6 @@
 import path from "node:path";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
-import { resolvePreferredOpenClawTmpDir } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
+import { resolvePreferredIroncliwTmpDir } from "Ironcliw/plugin-sdk";
 import {
   diffsPluginConfigSchema,
   resolveDiffsPluginDefaults,
@@ -15,11 +15,11 @@ const plugin = {
   name: "Diffs",
   description: "Read-only diff viewer and PNG/PDF renderer for agents.",
   configSchema: diffsPluginConfigSchema,
-  register(api: OpenClawPluginApi) {
+  register(api: IroncliwPluginApi) {
     const defaults = resolveDiffsPluginDefaults(api.pluginConfig);
     const security = resolveDiffsPluginSecurity(api.pluginConfig);
     const store = new DiffArtifactStore({
-      rootDir: path.join(resolvePreferredOpenClawTmpDir(), "openclaw-diffs"),
+      rootDir: path.join(resolvePreferredIroncliwTmpDir(), "Ironcliw-diffs"),
       logger: api.logger,
     });
 
@@ -38,3 +38,4 @@ const plugin = {
 };
 
 export default plugin;
+

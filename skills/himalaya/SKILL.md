@@ -4,7 +4,7 @@ description: "CLI to manage emails via IMAP/SMTP. Use `himalaya` to list, read, 
 homepage: https://github.com/pimalaya/himalaya
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "📧",
         "requires": { "bins": ["himalaya"] },
@@ -255,3 +255,4 @@ RUST_LOG=trace RUST_BACKTRACE=1 himalaya envelope list
 - Message IDs are relative to the current folder; re-list after folder changes.
 - For composing rich emails with attachments, use MML syntax (see `references/message-composition.md`).
 - Store passwords securely using `pass`, system keyring, or a command that outputs the password.
+

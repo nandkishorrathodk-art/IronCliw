@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-    namespace = "ai.openclaw.android"
+    namespace = "ai.Ironcliw.android"
     compileSdk = 36
 
     sourceSets {
         getByName("main") {
-            assets.directories.add("../../shared/OpenClawKit/Sources/OpenClawKit/Resources")
+            assets.directories.add("../../shared/IroncliwKit/Sources/IroncliwKit/Resources")
         }
     }
 
     defaultConfig {
-        applicationId = "ai.openclaw.android"
+        applicationId = "ai.Ironcliw.android"
         minSdk = 31
         targetSdk = 36
         versionCode = 202603010
@@ -87,7 +87,7 @@ androidComponents {
                 val versionName = output.versionName.orNull ?: "0"
                 val buildType = variant.buildType
 
-                val outputFileName = "openclaw-$versionName-$buildType.apk"
+                val outputFileName = "Ironcliw-$versionName-$buildType.apk"
                 output.outputFileName = outputFileName
             }
     }
@@ -166,3 +166,4 @@ dependencies {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
+

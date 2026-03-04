@@ -1,8 +1,8 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { getMemorySearchManager, type MemoryIndexManager } from "./index.js";
 
 export async function createMemoryManagerOrThrow(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   agentId = "main",
 ): Promise<MemoryIndexManager> {
   const result = await getMemorySearchManager({ cfg, agentId });
@@ -11,3 +11,4 @@ export async function createMemoryManagerOrThrow(
   }
   return result.manager as unknown as MemoryIndexManager;
 }
+

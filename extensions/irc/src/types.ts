@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk";
+import type { BaseProbeResult } from "Ironcliw/plugin-sdk";
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,
@@ -7,8 +7,8 @@ import type {
   GroupToolPolicyBySenderConfig,
   GroupToolPolicyConfig,
   MarkdownConfig,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk";
+  IroncliwConfig,
+} from "Ironcliw/plugin-sdk";
 
 export type IrcChannelConfig = {
   requireMention?: boolean;
@@ -71,8 +71,8 @@ export type IrcConfig = IrcAccountConfig & {
   defaultAccount?: string;
 };
 
-export type CoreConfig = OpenClawConfig & {
-  channels?: OpenClawConfig["channels"] & {
+export type CoreConfig = IroncliwConfig & {
+  channels?: IroncliwConfig["channels"] & {
     irc?: IrcConfig;
   };
 };
@@ -98,3 +98,4 @@ export type IrcProbe = BaseProbeResult<string> & {
   nick: string;
   latencyMs?: number;
 };
+

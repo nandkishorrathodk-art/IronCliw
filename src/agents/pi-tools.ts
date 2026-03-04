@@ -1,5 +1,5 @@
 import { codingTools, createReadTool, readTool } from "@mariozechner/pi-coding-agent";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import type { ToolLoopDetectionConfig } from "../config/types.tools.js";
 import { resolveMergedSafeBinProfileFixtures } from "../infra/exec-safe-bin-runtime-policy.js";
 import { logWarn } from "../logger.js";
@@ -17,7 +17,7 @@ import {
 import { listChannelAgentTools } from "./channel-tools.js";
 import { resolveImageSanitizationLimits } from "./image-sanitization.js";
 import type { ModelAuthMode } from "./model-auth.js";
-import { createOpenClawTools } from "./openclaw-tools.js";
+import { createIroncliwTools } from "./Ironcliw-tools.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
 import { wrapToolWithBeforeToolCallHook } from "./pi-tools.before-tool-call.js";
 import {
@@ -30,7 +30,7 @@ import {
   assertRequiredParams,
   createHostWorkspaceEditTool,
   createHostWorkspaceWriteTool,
-  createOpenClawReadTool,
+  createIroncliwReadTool,
   createSandboxedEditTool,
   createSandboxedReadTool,
   createSandboxedWriteTool,
@@ -115,7 +115,7 @@ function isApplyPatchAllowedForModel(params: {
   });
 }
 
-function resolveExecConfig(params: { cfg?: OpenClawConfig; agentId?: string }) {
+function resolveExecConfig(params: { cfg?: IroncliwConfig; agentId?: string }) {
   const cfg = params.cfg;
   const globalExec = cfg?.tools?.exec;
   const agentExec =
@@ -145,7 +145,7 @@ function resolveExecConfig(params: { cfg?: OpenClawConfig; agentId?: string }) {
 }
 
 export function resolveToolLoopDetectionConfig(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   agentId?: string;
 }): ToolLoopDetectionConfig | undefined {
   const global = params.cfg?.tools?.loopDetection;
@@ -179,7 +179,7 @@ export const __testing = {
   assertRequiredParams,
 } as const;
 
-export function createOpenClawCodingTools(options?: {
+export function createIroncliwCodingTools(options?: {
   agentId?: string;
   exec?: ExecToolDefaults & ProcessToolDefaults;
   messageProvider?: string;
@@ -194,7 +194,7 @@ export function createOpenClawCodingTools(options?: {
   runId?: string;
   agentDir?: string;
   workspaceDir?: string;
-  config?: OpenClawConfig;
+  config?: IroncliwConfig;
   abortSignal?: AbortSignal;
   /**
    * Provider of the currently selected model (used for provider-specific tool quirks).
@@ -350,7 +350,7 @@ export function createOpenClawCodingTools(options?: {
         ];
       }
       const freshReadTool = createReadTool(workspaceRoot);
-      const wrapped = createOpenClawReadTool(freshReadTool, {
+      const wrapped = createIroncliwReadTool(freshReadTool, {
         modelContextWindowTokens: options?.modelContextWindowTokens,
         imageSanitization,
       });
@@ -378,6 +378,7 @@ export function createOpenClawCodingTools(options?: {
   const { cleanupMs: cleanupMsOverride, ...execDefaults } = options?.exec ?? {};
   const execTool = createExecTool({
     ...execDefaults,
+    config: options?.config,
     host: options?.exec?.host ?? execConfig.host,
     security: options?.exec?.security ?? execConfig.security,
     ask: options?.exec?.ask ?? execConfig.ask,
@@ -457,7 +458,7 @@ export function createOpenClawCodingTools(options?: {
     processTool as unknown as AnyAgentTool,
     // Channel docking: include channel-defined agent tools (login, etc.).
     ...listChannelAgentTools({ cfg: options?.config }),
-    ...createOpenClawTools({
+    ...createIroncliwTools({
       sandboxBrowserBridgeUrl: sandbox?.browser?.bridgeUrl,
       allowHostBrowserControl: sandbox ? sandbox.browserAllowHostControl : true,
       agentSessionKey: options?.sessionKey,
@@ -552,3 +553,4 @@ export function createOpenClawCodingTools(options?: {
   // on the wire and maps them back for tool dispatch.
   return withAbort;
 }
+

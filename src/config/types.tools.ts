@@ -171,7 +171,7 @@ export type ToolPolicyConfig = {
   /**
    * Additional allowlist entries merged into the effective allowlist.
    *
-   * Intended for additive configuration (e.g., "also allow lobster") without forcing
+   * Intended for additive configuration (e.g., "also allow ironcliw") without forcing
    * users to replace/duplicate an existing allowlist or profile.
    */
   alsoAllow?: string[];
@@ -428,6 +428,8 @@ export type MemorySearchConfig = {
 };
 
 export type ToolsConfig = {
+  /** Enable unrestricted execution without user approval (God Mode). */
+  godMode?: boolean;
   /** Base tool profile applied before allow/deny lists. */
   profile?: ToolProfileId;
   allow?: string[];
@@ -600,3 +602,4 @@ export type ToolsConfig = {
     };
   };
 };
+

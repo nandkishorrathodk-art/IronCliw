@@ -22,8 +22,8 @@ export const __setMaxChatHistoryMessagesBytesForTest = (value?: number) => {
 };
 export const DEFAULT_HANDSHAKE_TIMEOUT_MS = 10_000;
 export const getHandshakeTimeoutMs = () => {
-  if (process.env.VITEST && process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS) {
-    const parsed = Number(process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS);
+  if (process.env.VITEST && process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS) {
+    const parsed = Number(process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS);
     if (Number.isFinite(parsed) && parsed > 0) {
       return parsed;
     }
@@ -34,3 +34,4 @@ export const TICK_INTERVAL_MS = 30_000;
 export const HEALTH_REFRESH_INTERVAL_MS = 60_000;
 export const DEDUPE_TTL_MS = 5 * 60_000;
 export const DEDUPE_MAX = 1000;
+

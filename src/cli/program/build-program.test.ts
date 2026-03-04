@@ -43,7 +43,7 @@ describe("buildProgram", () => {
   });
 
   it("wires context/help/preaction/command registration with shared context", () => {
-    const argv = ["node", "openclaw", "status"];
+    const argv = ["node", "Ironcliw", "status"];
     const originalArgv = process.argv;
     process.argv = argv;
     try {
@@ -60,3 +60,4 @@ describe("buildProgram", () => {
     }
   });
 });
+

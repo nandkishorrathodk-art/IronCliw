@@ -1,9 +1,9 @@
 import { collectTextContentBlocks } from "../../agents/content-blocks.js";
-import { createOpenClawTools } from "../../agents/openclaw-tools.js";
+import { createIroncliwTools } from "../../agents/Ironcliw-tools.js";
 import type { SkillCommandSpec } from "../../agents/skills.js";
 import { applyOwnerOnlyToolPolicy } from "../../agents/tool-policy.js";
 import { getChannelDock } from "../../channels/dock.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import { logVerbose } from "../../globals.js";
 import { generateSecureToken } from "../../infra/secure-random.js";
@@ -80,7 +80,7 @@ function extractTextFromToolResult(result: any): string | null {
 export async function handleInlineActions(params: {
   ctx: MsgContext;
   sessionCtx: TemplateContext;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   agentId: string;
   agentDir?: string;
   sessionEntry?: SessionEntry;
@@ -199,7 +199,7 @@ export async function handleInlineActions(params: {
         resolveGatewayMessageChannel(ctx.Provider) ??
         undefined;
 
-      const tools = createOpenClawTools({
+      const tools = createIroncliwTools({
         agentSessionKey: sessionKey,
         agentChannel: channel,
         agentAccountId: (ctx as { AccountId?: string }).AccountId,
@@ -413,3 +413,4 @@ export async function handleInlineActions(params: {
     abortedLastRun,
   };
 }
+

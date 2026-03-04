@@ -1,7 +1,7 @@
 import { formatCliCommand } from "../../../cli/command-format.js";
 import { detectBinary } from "../../../commands/onboard-helpers.js";
 import { installSignalCli } from "../../../commands/signal-install.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IroncliwConfig } from "../../../config/config.js";
 import {
   listSignalAccountIds,
   resolveDefaultSignalAccountId,
@@ -61,10 +61,10 @@ export function parseSignalAllowFromEntries(raw: string): { entries: string[]; e
 }
 
 async function promptSignalAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<IroncliwConfig> {
   return onboardingHelpers.promptParsedAllowFromForScopedChannel({
     cfg: params.cfg,
     channel: "signal",
@@ -229,9 +229,9 @@ export const signalOnboardingAdapter: ChannelOnboardingAdapter = {
 
     await prompter.note(
       [
-        'Link device with: signal-cli link -n "OpenClaw"',
+        'Link device with: signal-cli link -n "Ironcliw"',
         "Scan QR in Signal → Linked Devices",
-        `Then run: ${formatCliCommand("openclaw gateway call channels.status --params '{\"probe\":true}'")}`,
+        `Then run: ${formatCliCommand("Ironcliw gateway call channels.status --params '{\"probe\":true}'")}`,
         `Docs: ${formatDocsLink("/signal", "signal")}`,
       ].join("\n"),
       "Signal next steps",
@@ -242,3 +242,4 @@ export const signalOnboardingAdapter: ChannelOnboardingAdapter = {
   dmPolicy,
   disable: (cfg) => onboardingHelpers.setOnboardingChannelEnabled(cfg, channel, false),
 };
+

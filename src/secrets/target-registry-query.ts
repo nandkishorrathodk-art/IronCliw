@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { getPath } from "./path-utils.js";
 import { SECRET_TARGET_REGISTRY } from "./target-registry-data.js";
 import {
@@ -15,8 +15,8 @@ import type {
 } from "./target-registry-types.js";
 
 const COMPILED_SECRET_TARGET_REGISTRY = SECRET_TARGET_REGISTRY.map(compileTargetRegistryEntry);
-const OPENCLAW_COMPILED_SECRET_TARGETS = COMPILED_SECRET_TARGET_REGISTRY.filter(
-  (entry) => entry.configFile === "openclaw.json",
+const IRONCLIW_COMPILED_SECRET_TARGETS = COMPILED_SECRET_TARGET_REGISTRY.filter(
+  (entry) => entry.configFile === "Ironcliw.json",
 );
 const AUTH_PROFILES_COMPILED_SECRET_TARGETS = COMPILED_SECRET_TARGET_REGISTRY.filter(
   (entry) => entry.configFile === "auth-profiles.json",
@@ -46,7 +46,7 @@ const KNOWN_TARGET_IDS = new Set(COMPILED_SECRET_TARGET_REGISTRY.map((entry) => 
 
 function buildConfigTargetIdIndex(): Map<string, CompiledTargetRegistryEntry[]> {
   const byId = new Map<string, CompiledTargetRegistryEntry[]>();
-  for (const entry of OPENCLAW_COMPILED_SECRET_TARGETS) {
+  for (const entry of IRONCLIW_COMPILED_SECRET_TARGETS) {
     const existing = byId.get(entry.id);
     if (existing) {
       existing.push(entry);
@@ -57,7 +57,7 @@ function buildConfigTargetIdIndex(): Map<string, CompiledTargetRegistryEntry[]> 
   return byId;
 }
 
-const OPENCLAW_TARGETS_BY_ID = buildConfigTargetIdIndex();
+const IRONCLIW_TARGETS_BY_ID = buildConfigTargetIdIndex();
 
 function buildAuthProfileTargetIdIndex(): Map<string, CompiledTargetRegistryEntry[]> {
   const byId = new Map<string, CompiledTargetRegistryEntry[]>();
@@ -173,13 +173,13 @@ export function resolvePlanTargetAgainstRegistry(candidate: {
 }
 
 export function discoverConfigSecretTargets(
-  config: OpenClawConfig,
+  config: IroncliwConfig,
 ): DiscoveredConfigSecretTarget[] {
   return discoverConfigSecretTargetsByIds(config);
 }
 
 export function discoverConfigSecretTargetsByIds(
-  config: OpenClawConfig,
+  config: IroncliwConfig,
   targetIds?: Iterable<string>,
 ): DiscoveredConfigSecretTarget[] {
   const allowedTargetIds =
@@ -195,9 +195,9 @@ export function discoverConfigSecretTargetsByIds(
 
   const discoveryEntries =
     allowedTargetIds === null
-      ? OPENCLAW_COMPILED_SECRET_TARGETS
+      ? IRONCLIW_COMPILED_SECRET_TARGETS
       : Array.from(allowedTargetIds).flatMap(
-          (targetId) => OPENCLAW_TARGETS_BY_ID.get(targetId) ?? [],
+          (targetId) => IRONCLIW_TARGETS_BY_ID.get(targetId) ?? [],
         );
 
   for (const entry of discoveryEntries) {
@@ -313,3 +313,4 @@ export type {
   SecretTargetRegistryEntry,
   SecretTargetShape,
 } from "./target-registry-types.js";
+

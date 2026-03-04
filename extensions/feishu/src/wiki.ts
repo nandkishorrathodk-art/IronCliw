@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { createFeishuToolClient, resolveAnyEnabledFeishuToolsConfig } from "./tool-account.js";
 import { FeishuWikiSchema, type FeishuWikiParams } from "./wiki-schema.js";
@@ -155,7 +155,7 @@ async function renameNode(client: Lark.Client, spaceId: string, nodeToken: strin
 
 // ============ Tool Registration ============
 
-export function registerFeishuWikiTools(api: OpenClawPluginApi) {
+export function registerFeishuWikiTools(api: IroncliwPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_wiki: No config available, skipping wiki tools");
     return;
@@ -235,3 +235,4 @@ export function registerFeishuWikiTools(api: OpenClawPluginApi) {
 
   api.logger.info?.(`feishu_wiki: Registered feishu_wiki tool`);
 }
+

@@ -1,6 +1,6 @@
 import * as crypto from "crypto";
 import * as Lark from "@larksuiteoapi/node-sdk";
-import type { ClawdbotConfig, RuntimeEnv, HistoryEntry } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, RuntimeEnv, HistoryEntry } from "Ironcliw/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { raceWithTimeoutAndAbort } from "./async.js";
 import {
@@ -39,7 +39,7 @@ export type FeishuReactionCreatedEvent = {
 };
 
 type ResolveReactionSyntheticEventParams = {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   accountId: string;
   event: FeishuReactionCreatedEvent;
   botOpenId?: string;
@@ -127,7 +127,7 @@ export async function resolveReactionSyntheticEvent(
 }
 
 type RegisterEventHandlersContext = {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   accountId: string;
   runtime?: RuntimeEnv;
   chatHistories: Map<string, HistoryEntry[]>;
@@ -486,7 +486,7 @@ function registerEventHandlers(
 export type BotOpenIdSource = { kind: "prefetched"; botOpenId?: string } | { kind: "fetch" };
 
 export type MonitorSingleAccountParams = {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   account: ResolvedFeishuAccount;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
@@ -532,3 +532,4 @@ export async function monitorSingleAccount(params: MonitorSingleAccountParams): 
   }
   return monitorWebSocket({ account, accountId, runtime, abortSignal, eventDispatcher });
 }
+

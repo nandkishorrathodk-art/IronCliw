@@ -1,5 +1,5 @@
 ---
-summary: "How OpenClaw presence entries are produced, merged, and displayed"
+summary: "How Ironcliw presence entries are produced, merged, and displayed"
 read_when:
   - Debugging the Instances tab
   - Investigating duplicate or stale instance rows
@@ -9,7 +9,7 @@ title: "Presence"
 
 # Presence
 
-OpenClaw “presence” is a lightweight, best‑effort view of:
+Ironcliw “presence” is a lightweight, best‑effort view of:
 
 - the **Gateway** itself, and
 - **clients connected to the Gateway** (mac app, WebChat, CLI, etc.)
@@ -100,3 +100,4 @@ indicator (Active/Idle/Stale) based on the age of the last update.
   - confirm clients send a stable `client.instanceId` in the handshake
   - confirm periodic beacons use the same `instanceId`
   - check whether the connection‑derived entry is missing `instanceId` (duplicates are expected)
+

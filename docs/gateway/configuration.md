@@ -1,7 +1,7 @@
 ---
 summary: "Configuration overview: common tasks, quick setup, and links to the full reference"
 read_when:
-  - Setting up OpenClaw for the first time
+  - Setting up Ironcliw for the first time
   - Looking for common configuration patterns
   - Navigating to specific config sections
 title: "Configuration"
@@ -9,9 +9,9 @@ title: "Configuration"
 
 # Configuration
 
-OpenClaw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.openclaw/openclaw.json`.
+Ironcliw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.Ironcliw/Ironcliw.json`.
 
-If the file is missing, OpenClaw uses safe defaults. Common reasons to add a config:
+If the file is missing, Ironcliw uses safe defaults. Common reasons to add a config:
 
 - Connect channels and control who can message the bot
 - Set models, tools, sandboxing, or automation (cron, hooks)
@@ -20,15 +20,15 @@ If the file is missing, OpenClaw uses safe defaults. Common reasons to add a con
 See the [full reference](/gateway/configuration-reference) for every available field.
 
 <Tip>
-**New to configuration?** Start with `openclaw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
+**New to configuration?** Start with `Ironcliw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
 </Tip>
 
 ## Minimal config
 
 ```json5
-// ~/.openclaw/openclaw.json
+// ~/.Ironcliw/Ironcliw.json
 {
-  agents: { defaults: { workspace: "~/.openclaw/workspace" } },
+  agents: { defaults: { workspace: "~/.Ironcliw/workspace" } },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
@@ -38,15 +38,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 <Tabs>
   <Tab title="Interactive wizard">
     ```bash
-    openclaw onboard       # full setup wizard
-    openclaw configure     # config wizard
+    Ironcliw onboard       # full setup wizard
+    Ironcliw configure     # config wizard
     ```
   </Tab>
   <Tab title="CLI (one-liners)">
     ```bash
-    openclaw config get agents.defaults.workspace
-    openclaw config set agents.defaults.heartbeat.every "2h"
-    openclaw config unset tools.web.search.apiKey
+    Ironcliw config get agents.defaults.workspace
+    Ironcliw config set agents.defaults.heartbeat.every "2h"
+    Ironcliw config unset tools.web.search.apiKey
     ```
   </Tab>
   <Tab title="Control UI">
@@ -54,22 +54,22 @@ See the [full reference](/gateway/configuration-reference) for every available f
     The Control UI renders a form from the config schema, with a **Raw JSON** editor as an escape hatch.
   </Tab>
   <Tab title="Direct edit">
-    Edit `~/.openclaw/openclaw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
+    Edit `~/.Ironcliw/Ironcliw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
   </Tab>
 </Tabs>
 
 ## Strict validation
 
 <Warning>
-OpenClaw only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
+Ironcliw only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
 </Warning>
 
 When validation fails:
 
 - The Gateway does not boot
-- Only diagnostic commands work (`openclaw doctor`, `openclaw logs`, `openclaw health`, `openclaw status`)
-- Run `openclaw doctor` to see exact issues
-- Run `openclaw doctor --fix` (or `--yes`) to apply repairs
+- Only diagnostic commands work (`Ironcliw doctor`, `Ironcliw logs`, `Ironcliw health`, `Ironcliw status`)
+- Run `Ironcliw doctor` to see exact issues
+- Run `Ironcliw doctor --fix` (or `--yes`) to apply repairs
 
 ## Common tasks
 
@@ -156,7 +156,7 @@ When validation fails:
           {
             id: "main",
             groupChat: {
-              mentionPatterns: ["@openclaw", "openclaw"],
+              mentionPatterns: ["@Ironcliw", "Ironcliw"],
             },
           },
         ],
@@ -307,8 +307,8 @@ When validation fails:
     {
       agents: {
         list: [
-          { id: "home", default: true, workspace: "~/.openclaw/workspace-home" },
-          { id: "work", workspace: "~/.openclaw/workspace-work" },
+          { id: "home", default: true, workspace: "~/.Ironcliw/workspace-home" },
+          { id: "work", workspace: "~/.Ironcliw/workspace-work" },
         ],
       },
       bindings: [
@@ -326,7 +326,7 @@ When validation fails:
     Use `$include` to organize large configs:
 
     ```json5
-    // ~/.openclaw/openclaw.json
+    // ~/.Ironcliw/Ironcliw.json
     {
       gateway: { port: 18789 },
       agents: { $include: "./agents.json5" },
@@ -348,7 +348,7 @@ When validation fails:
 
 ## Config hot reload
 
-The Gateway watches `~/.openclaw/openclaw.json` and applies changes automatically — no manual restart needed for most settings.
+The Gateway watches `~/.Ironcliw/Ironcliw.json` and applies changes automatically — no manual restart needed for most settings.
 
 ### Reload modes
 
@@ -397,7 +397,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Validates + writes the full config and restarts the Gateway in one step.
 
     <Warning>
-    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `openclaw config set` for single keys.
+    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `Ironcliw config set` for single keys.
     </Warning>
 
     Params:
@@ -411,9 +411,9 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart requests are coalesced while one is already pending/in-flight, and a 30-second cooldown applies between restart cycles.
 
     ```bash
-    openclaw gateway call config.get --params '{}'  # capture payload.hash
-    openclaw gateway call config.apply --params '{
-      "raw": "{ agents: { defaults: { workspace: \"~/.openclaw/workspace\" } } }",
+    Ironcliw gateway call config.get --params '{}'  # capture payload.hash
+    Ironcliw gateway call config.apply --params '{
+      "raw": "{ agents: { defaults: { workspace: \"~/.Ironcliw/workspace\" } } }",
       "baseHash": "<hash>",
       "sessionKey": "agent:main:whatsapp:dm:+15555550123"
     }'
@@ -437,7 +437,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart behavior matches `config.apply`: coalesced pending restarts plus a 30-second cooldown between restart cycles.
 
     ```bash
-    openclaw gateway call config.patch --params '{
+    Ironcliw gateway call config.patch --params '{
       "raw": "{ channels: { telegram: { groups: { \"*\": { requireMention: false } } } } }",
       "baseHash": "<hash>"
     }'
@@ -448,10 +448,10 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
 
 ## Environment variables
 
-OpenClaw reads env vars from the parent process plus:
+Ironcliw reads env vars from the parent process plus:
 
 - `.env` from the current working directory (if present)
-- `~/.openclaw/.env` (global fallback)
+- `~/.Ironcliw/.env` (global fallback)
 
 Neither file overrides existing env vars. You can also set inline env vars in config:
 
@@ -465,7 +465,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 ```
 
 <Accordion title="Shell env import (optional)">
-  If enabled and expected keys aren't set, OpenClaw runs your login shell and imports only the missing keys:
+  If enabled and expected keys aren't set, Ironcliw runs your login shell and imports only the missing keys:
 
 ```json5
 {
@@ -475,7 +475,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 }
 ```
 
-Env var equivalent: `OPENCLAW_LOAD_SHELL_ENV=1`
+Env var equivalent: `IRONCLIW_LOAD_SHELL_ENV=1`
 </Accordion>
 
 <Accordion title="Env var substitution in config values">
@@ -483,7 +483,7 @@ Env var equivalent: `OPENCLAW_LOAD_SHELL_ENV=1`
 
 ```json5
 {
-  gateway: { auth: { token: "${OPENCLAW_GATEWAY_TOKEN}" } },
+  gateway: { auth: { token: "${IRONCLIW_GATEWAY_TOKEN}" } },
   models: { providers: { custom: { apiKey: "${CUSTOM_API_KEY}" } } },
 }
 ```
@@ -544,3 +544,4 @@ For the complete field-by-field reference, see **[Configuration Reference](/gate
 ---
 
 _Related: [Configuration Examples](/gateway/configuration-examples) · [Configuration Reference](/gateway/configuration-reference) · [Doctor](/gateway/doctor)_
+

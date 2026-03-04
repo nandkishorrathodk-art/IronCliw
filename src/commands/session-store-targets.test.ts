@@ -37,7 +37,7 @@ describe("resolveSessionStoreTargets", () => {
 
     const targets = resolveSessionStoreTargets(
       {
-        session: { store: "~/.openclaw/agents/{agentId}/sessions/sessions.json" },
+        session: { store: "~/.Ironcliw/agents/{agentId}/sessions/sessions.json" },
       },
       { allAgents: true },
     );
@@ -77,3 +77,4 @@ describe("resolveSessionStoreTargets", () => {
     ).toThrow(/cannot be combined/i);
   });
 });
+

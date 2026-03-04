@@ -1,4 +1,4 @@
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { ChannelMeta, ChannelPlugin, IroncliwConfig } from "Ironcliw/plugin-sdk";
 import {
   buildBaseChannelStatusSummary,
   createDefaultChannelRuntimeState,
@@ -6,7 +6,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   resolveAllowlistProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   resolveFeishuAccount,
   resolveFeishuCredentials,
@@ -201,7 +201,7 @@ export const feishuPlugin: ChannelPlugin<ResolvedFeishuAccount> = {
 
       if (isDefault) {
         // Delete entire feishu config
-        const next = { ...cfg } as ClawdbotConfig;
+        const next = { ...cfg } as IroncliwConfig;
         const nextChannels = { ...cfg.channels };
         delete (nextChannels as Record<string, unknown>).feishu;
         if (Object.keys(nextChannels).length > 0) {
@@ -382,3 +382,4 @@ export const feishuPlugin: ChannelPlugin<ResolvedFeishuAccount> = {
     },
   },
 };
+

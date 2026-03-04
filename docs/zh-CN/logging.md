@@ -16,7 +16,7 @@ x-i18n:
 
 # 日志
 
-OpenClaw 在两个地方记录日志：
+Ironcliw 在两个地方记录日志：
 
 - **文件日志**（JSON 行）由 Gateway 网关写入。
 - **控制台输出**显示在终端和控制 UI 中。
@@ -27,16 +27,16 @@ OpenClaw 在两个地方记录日志：
 
 默认情况下，Gateway 网关在以下位置写入滚动日志文件：
 
-`/tmp/openclaw/openclaw-YYYY-MM-DD.log`
+`/tmp/Ironcliw/Ironcliw-YYYY-MM-DD.log`
 
 日期使用 Gateway 网关主机的本地时区。
 
-你可以在 `~/.openclaw/openclaw.json` 中覆盖此设置：
+你可以在 `~/.Ironcliw/Ironcliw.json` 中覆盖此设置：
 
 ```json
 {
   "logging": {
-    "file": "/path/to/openclaw.log"
+    "file": "/path/to/Ironcliw.log"
   }
 }
 ```
@@ -48,7 +48,7 @@ OpenClaw 在两个地方记录日志：
 使用 CLI 通过 RPC 跟踪 Gateway 网关日志文件：
 
 ```bash
-openclaw logs --follow
+Ironcliw logs --follow
 ```
 
 输出模式：
@@ -69,7 +69,7 @@ openclaw logs --follow
 如果 Gateway 网关无法访问，CLI 会打印一个简短提示运行：
 
 ```bash
-openclaw doctor
+Ironcliw doctor
 ```
 
 ### 控制 UI（Web）
@@ -82,7 +82,7 @@ openclaw doctor
 要过滤渠道活动（WhatsApp/Telegram 等），使用：
 
 ```bash
-openclaw channels logs --channel whatsapp
+Ironcliw channels logs --channel whatsapp
 ```
 
 ## 日志格式
@@ -103,13 +103,13 @@ openclaw channels logs --channel whatsapp
 
 ## 配置日志
 
-所有日志配置都在 `~/.openclaw/openclaw.json` 的 `logging` 下。
+所有日志配置都在 `~/.Ironcliw/Ironcliw.json` 的 `logging` 下。
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/openclaw/openclaw-YYYY-MM-DD.log",
+    "file": "/tmp/Ironcliw/Ironcliw-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -152,7 +152,7 @@ openclaw channels logs --channel whatsapp
 
 - **OpenTelemetry（OTel）**：追踪、指标和日志的数据模型 + SDK。
 - **OTLP**：用于将 OTel 数据导出到收集器/后端的线路协议。
-- OpenClaw 目前通过 **OTLP/HTTP（protobuf）** 导出。
+- Ironcliw 目前通过 **OTLP/HTTP（protobuf）** 导出。
 
 ### 导出的信号
 
@@ -211,7 +211,7 @@ openclaw channels logs --channel whatsapp
 环境变量覆盖（一次性）：
 
 ```
-OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
+IRONCLIW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 注意：
@@ -240,7 +240,7 @@ OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "openclaw-gateway",
+      "serviceName": "Ironcliw-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -253,7 +253,7 @@ OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
 
 注意：
 
-- 你也可以使用 `openclaw plugins enable diagnostics-otel` 启用插件。
+- 你也可以使用 `Ironcliw plugins enable diagnostics-otel` 启用插件。
 - `protocol` 目前仅支持 `http/protobuf`。`grpc` 被忽略。
 - 指标包括令牌使用、成本、上下文大小、运行持续时间和消息流计数器/直方图（webhooks、队列、会话状态、队列深度/等待）。
 - 追踪/指标可以通过 `traces` / `metrics` 切换（默认：开启）。启用时，追踪包括模型使用 span 加上 webhook/消息处理 span。
@@ -264,45 +264,45 @@ OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
 
 模型使用：
 
-- `openclaw.tokens`（计数器，属性：`openclaw.token`、`openclaw.channel`、`openclaw.provider`、`openclaw.model`）
-- `openclaw.cost.usd`（计数器，属性：`openclaw.channel`、`openclaw.provider`、`openclaw.model`）
-- `openclaw.run.duration_ms`（直方图，属性：`openclaw.channel`、`openclaw.provider`、`openclaw.model`）
-- `openclaw.context.tokens`（直方图，属性：`openclaw.context`、`openclaw.channel`、`openclaw.provider`、`openclaw.model`）
+- `Ironcliw.tokens`（计数器，属性：`Ironcliw.token`、`Ironcliw.channel`、`Ironcliw.provider`、`Ironcliw.model`）
+- `Ironcliw.cost.usd`（计数器，属性：`Ironcliw.channel`、`Ironcliw.provider`、`Ironcliw.model`）
+- `Ironcliw.run.duration_ms`（直方图，属性：`Ironcliw.channel`、`Ironcliw.provider`、`Ironcliw.model`）
+- `Ironcliw.context.tokens`（直方图，属性：`Ironcliw.context`、`Ironcliw.channel`、`Ironcliw.provider`、`Ironcliw.model`）
 
 消息流：
 
-- `openclaw.webhook.received`（计数器，属性：`openclaw.channel`、`openclaw.webhook`）
-- `openclaw.webhook.error`（计数器，属性：`openclaw.channel`、`openclaw.webhook`）
-- `openclaw.webhook.duration_ms`（直方图，属性：`openclaw.channel`、`openclaw.webhook`）
-- `openclaw.message.queued`（计数器，属性：`openclaw.channel`、`openclaw.source`）
-- `openclaw.message.processed`（计数器，属性：`openclaw.channel`、`openclaw.outcome`）
-- `openclaw.message.duration_ms`（直方图，属性：`openclaw.channel`、`openclaw.outcome`）
+- `Ironcliw.webhook.received`（计数器，属性：`Ironcliw.channel`、`Ironcliw.webhook`）
+- `Ironcliw.webhook.error`（计数器，属性：`Ironcliw.channel`、`Ironcliw.webhook`）
+- `Ironcliw.webhook.duration_ms`（直方图，属性：`Ironcliw.channel`、`Ironcliw.webhook`）
+- `Ironcliw.message.queued`（计数器，属性：`Ironcliw.channel`、`Ironcliw.source`）
+- `Ironcliw.message.processed`（计数器，属性：`Ironcliw.channel`、`Ironcliw.outcome`）
+- `Ironcliw.message.duration_ms`（直方图，属性：`Ironcliw.channel`、`Ironcliw.outcome`）
 
 队列 + 会话：
 
-- `openclaw.queue.lane.enqueue`（计数器，属性：`openclaw.lane`）
-- `openclaw.queue.lane.dequeue`（计数器，属性：`openclaw.lane`）
-- `openclaw.queue.depth`（直方图，属性：`openclaw.lane` 或 `openclaw.channel=heartbeat`）
-- `openclaw.queue.wait_ms`（直方图，属性：`openclaw.lane`）
-- `openclaw.session.state`（计数器，属性：`openclaw.state`、`openclaw.reason`）
-- `openclaw.session.stuck`（计数器，属性：`openclaw.state`）
-- `openclaw.session.stuck_age_ms`（直方图，属性：`openclaw.state`）
-- `openclaw.run.attempt`（计数器，属性：`openclaw.attempt`）
+- `Ironcliw.queue.lane.enqueue`（计数器，属性：`Ironcliw.lane`）
+- `Ironcliw.queue.lane.dequeue`（计数器，属性：`Ironcliw.lane`）
+- `Ironcliw.queue.depth`（直方图，属性：`Ironcliw.lane` 或 `Ironcliw.channel=heartbeat`）
+- `Ironcliw.queue.wait_ms`（直方图，属性：`Ironcliw.lane`）
+- `Ironcliw.session.state`（计数器，属性：`Ironcliw.state`、`Ironcliw.reason`）
+- `Ironcliw.session.stuck`（计数器，属性：`Ironcliw.state`）
+- `Ironcliw.session.stuck_age_ms`（直方图，属性：`Ironcliw.state`）
+- `Ironcliw.run.attempt`（计数器，属性：`Ironcliw.attempt`）
 
 ### 导出的 span（名称 + 关键属性）
 
-- `openclaw.model.usage`
-  - `openclaw.channel`、`openclaw.provider`、`openclaw.model`
-  - `openclaw.sessionKey`、`openclaw.sessionId`
-  - `openclaw.tokens.*`（input/output/cache_read/cache_write/total）
-- `openclaw.webhook.processed`
-  - `openclaw.channel`、`openclaw.webhook`、`openclaw.chatId`
-- `openclaw.webhook.error`
-  - `openclaw.channel`、`openclaw.webhook`、`openclaw.chatId`、`openclaw.error`
-- `openclaw.message.processed`
-  - `openclaw.channel`、`openclaw.outcome`、`openclaw.chatId`、`openclaw.messageId`、`openclaw.sessionKey`、`openclaw.sessionId`、`openclaw.reason`
-- `openclaw.session.stuck`
-  - `openclaw.state`、`openclaw.ageMs`、`openclaw.queueDepth`、`openclaw.sessionKey`、`openclaw.sessionId`
+- `Ironcliw.model.usage`
+  - `Ironcliw.channel`、`Ironcliw.provider`、`Ironcliw.model`
+  - `Ironcliw.sessionKey`、`Ironcliw.sessionId`
+  - `Ironcliw.tokens.*`（input/output/cache_read/cache_write/total）
+- `Ironcliw.webhook.processed`
+  - `Ironcliw.channel`、`Ironcliw.webhook`、`Ironcliw.chatId`
+- `Ironcliw.webhook.error`
+  - `Ironcliw.channel`、`Ironcliw.webhook`、`Ironcliw.chatId`、`Ironcliw.error`
+- `Ironcliw.message.processed`
+  - `Ironcliw.channel`、`Ironcliw.outcome`、`Ironcliw.chatId`、`Ironcliw.messageId`、`Ironcliw.sessionKey`、`Ironcliw.sessionId`、`Ironcliw.reason`
+- `Ironcliw.session.stuck`
+  - `Ironcliw.state`、`Ironcliw.ageMs`、`Ironcliw.queueDepth`、`Ironcliw.sessionKey`、`Ironcliw.sessionId`
 
 ### 采样 + 刷新
 
@@ -324,6 +324,7 @@ OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
 
 ## 故障排除提示
 
-- **Gateway 网关无法访问？** 先运行 `openclaw doctor`。
+- **Gateway 网关无法访问？** 先运行 `Ironcliw doctor`。
 - **日志为空？** 检查 Gateway 网关是否正在运行并写入 `logging.file` 中的文件路径。
 - **需要更多细节？** 将 `logging.level` 设置为 `debug` 或 `trace` 并重试。
+

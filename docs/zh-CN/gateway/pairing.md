@@ -39,11 +39,11 @@ x-i18n:
 ## CLI 工作流程（支持无头模式）
 
 ```bash
-openclaw nodes pending
-openclaw nodes approve <requestId>
-openclaw nodes reject <requestId>
-openclaw nodes status
-openclaw nodes rename --node <id|name|ip> --name "Living Room iPad"
+Ironcliw nodes pending
+Ironcliw nodes approve <requestId>
+Ironcliw nodes reject <requestId>
+Ironcliw nodes status
+Ironcliw nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` 显示已配对/已连接的节点及其功能。
@@ -80,12 +80,12 @@ openclaw nodes rename --node <id|name|ip> --name "Living Room iPad"
 
 ## 存储（本地，私有）
 
-配对状态存储在 Gateway 网关状态目录下（默认 `~/.openclaw`）：
+配对状态存储在 Gateway 网关状态目录下（默认 `~/.Ironcliw`）：
 
-- `~/.openclaw/nodes/paired.json`
-- `~/.openclaw/nodes/pending.json`
+- `~/.Ironcliw/nodes/paired.json`
+- `~/.Ironcliw/nodes/pending.json`
 
-如果你覆盖了 `OPENCLAW_STATE_DIR`，`nodes/` 文件夹会随之移动。
+如果你覆盖了 `IRONCLIW_STATE_DIR`，`nodes/` 文件夹会随之移动。
 
 安全注意事项：
 
@@ -97,3 +97,4 @@ openclaw nodes rename --node <id|name|ip> --name "Living Room iPad"
 - 传输层是**无状态的**；它不存储成员资格。
 - 如果 Gateway 网关离线或配对被禁用，节点无法配对。
 - 如果 Gateway 网关处于远程模式，配对仍然针对远程 Gateway 网关的存储进行。
+

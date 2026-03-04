@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ai.openclaw.android.benchmark"
+    namespace = "ai.Ironcliw.android.benchmark"
     compileSdk = 36
 
     defaultConfig {
@@ -43,3 +43,4 @@ dependencies {
     implementation("androidx.test.ext:junit:1.2.1")
     implementation("androidx.test.uiautomator:uiautomator:2.4.0-alpha06")
 }
+

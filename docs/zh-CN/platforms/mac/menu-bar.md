@@ -55,7 +55,7 @@ x-i18n:
 ## 状态行文本（菜单）
 
 - 工作活跃时：`<会话角色> · <活动标签>`
-  - 示例：`Main · exec: pnpm test`、`Other · read: apps/macos/Sources/OpenClaw/AppState.swift`。
+  - 示例：`Main · exec: pnpm test`、`Other · read: apps/macos/Sources/Ironcliw/AppState.swift`。
 - 空闲时：回退显示健康摘要。
 
 ## 事件接收
@@ -86,3 +86,4 @@ x-i18n:
 - 在 other 活跃时启动 main：图标立即切换到 main。
 - 快速连续工具调用：确保徽章不会闪烁（工具结果的 TTL 宽限期）。
 - 所有会话空闲后健康行重新出现。
+

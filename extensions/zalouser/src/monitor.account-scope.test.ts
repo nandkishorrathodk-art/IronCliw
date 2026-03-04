@@ -1,4 +1,4 @@
-import type { OpenClawConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, PluginRuntime, RuntimeEnv } from "Ironcliw/plugin-sdk";
 import { describe, expect, it, vi } from "vitest";
 import { __testing } from "./monitor.js";
 import { setZalouserRuntime } from "./runtime.js";
@@ -67,7 +67,7 @@ describe("zalouser monitor pairing account scoping", () => {
       },
     };
 
-    const config: OpenClawConfig = {
+    const config: IroncliwConfig = {
       channels: {
         zalouser: {
           accounts: {
@@ -121,3 +121,4 @@ describe("zalouser monitor pairing account scoping", () => {
     expect(sendMessageZalouserMock).toHaveBeenCalled();
   });
 });
+

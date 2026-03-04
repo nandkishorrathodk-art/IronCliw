@@ -1,7 +1,7 @@
 ---
 summary: "Nostr DM channel via NIP-04 encrypted messages"
 read_when:
-  - You want OpenClaw to receive DMs via Nostr
+  - You want Ironcliw to receive DMs via Nostr
   - You're setting up decentralized messaging
 title: "Nostr"
 ---
@@ -10,13 +10,13 @@ title: "Nostr"
 
 **Status:** Optional plugin (disabled by default).
 
-Nostr is a decentralized protocol for social networking. This channel enables OpenClaw to receive and respond to encrypted direct messages (DMs) via NIP-04.
+Nostr is a decentralized protocol for social networking. This channel enables Ironcliw to receive and respond to encrypted direct messages (DMs) via NIP-04.
 
 ## Install (on demand)
 
 ### Onboarding (recommended)
 
-- The onboarding wizard (`openclaw onboard`) and `openclaw channels add` list optional channel plugins.
+- The onboarding wizard (`Ironcliw onboard`) and `Ironcliw channels add` list optional channel plugins.
 - Selecting Nostr prompts you to install the plugin on demand.
 
 Install defaults:
@@ -29,13 +29,13 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-openclaw plugins install @openclaw/nostr
+Ironcliw plugins install @Ironcliw/nostr
 ```
 
 Use a local checkout (dev workflows):
 
 ```bash
-openclaw plugins install --link <path-to-openclaw>/extensions/nostr
+Ironcliw plugins install --link <path-to-Ironcliw>/extensions/nostr
 ```
 
 Restart the Gateway after installing or enabling plugins.
@@ -93,14 +93,14 @@ Example:
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "openclaw",
-        "displayName": "OpenClaw",
+        "name": "Ironcliw",
+        "displayName": "Ironcliw",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "openclaw@example.com",
-        "lud16": "openclaw@example.com"
+        "nip05": "Ironcliw@example.com",
+        "lud16": "Ironcliw@example.com"
       }
     }
   }
@@ -231,3 +231,4 @@ docker run -p 7777:7777 ghcr.io/hoytech/strfry
 - Direct messages only (no group chats).
 - No media attachments.
 - NIP-04 only (NIP-17 gift-wrap planned).
+

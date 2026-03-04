@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../acp/runtime/errors.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { SessionBindingRecord } from "../../infra/outbound/session-binding-service.js";
 
 const hoisted = vi.hoisted(() => {
@@ -169,9 +169,9 @@ const baseCfg = {
       },
     },
   },
-} satisfies OpenClawConfig;
+} satisfies IroncliwConfig;
 
-function createDiscordParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createDiscordParams(commandBody: string, cfg: IroncliwConfig = baseCfg) {
   const params = buildCommandTestParams(commandBody, cfg, {
     Provider: "discord",
     Surface: "discord",
@@ -291,17 +291,17 @@ function mockBoundThreadSession(options?: {
   );
 }
 
-function createThreadParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createThreadParams(commandBody: string, cfg: IroncliwConfig = baseCfg) {
   const params = createDiscordParams(commandBody, cfg);
   params.ctx.MessageThreadId = defaultThreadId;
   return params;
 }
 
-async function runDiscordAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runDiscordAcpCommand(commandBody: string, cfg: IroncliwConfig = baseCfg) {
   return handleAcpCommand(createDiscordParams(commandBody, cfg), true);
 }
 
-async function runThreadAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runThreadAcpCommand(commandBody: string, cfg: IroncliwConfig = baseCfg) {
   return handleAcpCommand(createThreadParams(commandBody, cfg), true);
 }
 
@@ -402,7 +402,7 @@ describe("/acp command", () => {
       backendSessionId: "acpx-1",
     });
 
-    const result = await runDiscordAcpCommand("/acp spawn codex --cwd /home/bob/clawd");
+    const result = await runDiscordAcpCommand("/acp spawn codex --cwd /home/bob/ironcliw");
 
     expect(result?.reply?.text).toContain("Spawned ACP session agent:codex:acp:");
     expect(result?.reply?.text).toContain("Created thread thread-created and bound it");
@@ -411,7 +411,7 @@ describe("/acp command", () => {
       expect.objectContaining({
         agent: "codex",
         mode: "persistent",
-        cwd: "/home/bob/clawd",
+        cwd: "/home/bob/ironcliw",
       }),
     );
     expect(hoisted.sessionBindingBindMock).toHaveBeenCalledWith(
@@ -419,7 +419,7 @@ describe("/acp command", () => {
         targetKind: "session",
         placement: "child",
         metadata: expect.objectContaining({
-          introText: expect.stringContaining("cwd: /home/bob/clawd"),
+          introText: expect.stringContaining("cwd: /home/bob/ironcliw"),
         }),
       }),
     );
@@ -466,7 +466,7 @@ describe("/acp command", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IroncliwConfig;
 
     const result = await runDiscordAcpCommand("/acp spawn codex", cfg);
 
@@ -535,7 +535,7 @@ describe("/acp command", () => {
         ...baseCfg.acp,
         dispatch: { enabled: false },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IroncliwConfig;
     const result = await runDiscordAcpCommand("/acp steer tighten logging", cfg);
     expect(result?.reply?.text).toContain("ACP dispatch is disabled by policy");
     expect(hoisted.runTurnMock).not.toHaveBeenCalled();
@@ -683,3 +683,5 @@ describe("/acp command", () => {
     expect(result?.reply?.text).toContain("then: /acp doctor");
   });
 });
+
+

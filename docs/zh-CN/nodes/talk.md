@@ -54,7 +54,7 @@ Talk 模式是一个连续的语音对话循环：
 - `seed`、`normalize`、`lang`、`output_format`、`latency_tier`
 - `once`
 
-## 配置（`~/.openclaw/openclaw.json`）
+## 配置（`~/.Ironcliw/Ironcliw.json`）
 
 ```json5
 {
@@ -95,3 +95,4 @@ Talk 模式是一个连续的语音对话循环：
 - `eleven_v3` 的 `stability` 验证为 `0.0`、`0.5` 或 `1.0`；其他模型接受 `0..1`。
 - 设置时 `latency_tier` 验证为 `0..4`。
 - Android 支持 `pcm_16000`、`pcm_22050`、`pcm_24000` 和 `pcm_44100` 输出格式，用于低延迟 AudioTrack 流式传输。
+

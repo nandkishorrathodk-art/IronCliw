@@ -1,8 +1,8 @@
 ---
-summary: "Use Kilo Gateway's unified API to access many models in OpenClaw"
+summary: "Use Kilo Gateway's unified API to access many models in Ironcliw"
 read_when:
   - You want a single API key for many LLMs
-  - You want to run models via Kilo Gateway in OpenClaw
+  - You want to run models via Kilo Gateway in Ironcliw
 ---
 
 # Kilo Gateway
@@ -19,7 +19,7 @@ endpoint and API key. It is OpenAI-compatible, so most OpenAI SDKs work by switc
 ## CLI setup
 
 ```bash
-openclaw onboard --kilocode-api-key <key>
+Ironcliw onboard --kilocode-api-key <key>
 ```
 
 Or set the environment variable:
@@ -62,3 +62,4 @@ The built-in Kilo Gateway catalog currently surfaces these model refs:
 - Base URL: `https://api.kilo.ai/api/gateway/`
 - For more model/provider options, see [/concepts/model-providers](/concepts/model-providers).
 - Kilo Gateway uses a Bearer token with your API key under the hood.
+

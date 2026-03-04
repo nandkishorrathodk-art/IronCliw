@@ -18,7 +18,7 @@ excluded:
   - coverage
   - "*.playground"
   # Generated (protocol-gen-swift.ts)
-  - apps/macos/Sources/MoltbotProtocol/GatewayModels.swift
+  - apps/macos/Sources/IroncliwProtocol/GatewayModels.swift
 
 analyzer_rules:
   - unused_declaration
@@ -146,3 +146,4 @@ line_length:
   ignores_urls: true
 
 reporter: "xcode"
+

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import {
   normalizePluginsConfig,
@@ -14,7 +14,7 @@ const log = createSubsystemLogger("skills");
 
 export function resolvePluginSkillDirs(params: {
   workspaceDir: string | undefined;
-  config?: OpenClawConfig;
+  config?: IroncliwConfig;
 }): string[] {
   const workspaceDir = (params.workspaceDir ?? "").trim();
   if (!workspaceDir) {
@@ -87,3 +87,4 @@ export function resolvePluginSkillDirs(params: {
 
   return resolved;
 }
+

@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
 
 type ElevenLabsVoice = {
   voice_id: string;
@@ -77,7 +77,7 @@ function asTrimmedString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-export default function register(api: OpenClawPluginApi) {
+export default function register(api: IroncliwPluginApi) {
   api.registerCommand({
     name: "voice",
     description: "List/set ElevenLabs Talk voice (affects iOS Talk playback).",
@@ -152,3 +152,4 @@ export default function register(api: OpenClawPluginApi) {
     },
   });
 }
+

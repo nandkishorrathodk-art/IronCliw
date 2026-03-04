@@ -69,7 +69,7 @@ describe("push.test handler", () => {
     vi.mocked(loadApnsRegistration).mockResolvedValue({
       nodeId: "ios-node-1",
       token: "abcd",
-      topic: "ai.openclaw.ios",
+      topic: "ai.Ironcliw.ios",
       environment: "sandbox",
       updatedAtMs: 1,
     });
@@ -86,7 +86,7 @@ describe("push.test handler", () => {
       ok: true,
       status: 200,
       tokenSuffix: "1234abcd",
-      topic: "ai.openclaw.ios",
+      topic: "ai.Ironcliw.ios",
       environment: "sandbox",
     });
 
@@ -103,3 +103,4 @@ describe("push.test handler", () => {
     expect(call?.[1]).toMatchObject({ ok: true, status: 200 });
   });
 });
+

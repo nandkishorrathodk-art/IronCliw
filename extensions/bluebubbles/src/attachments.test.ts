@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk";
+import type { PluginRuntime } from "Ironcliw/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "./test-mocks.js";
 import { downloadBlueBubblesAttachment, sendBlueBubblesAttachment } from "./attachments.js";
@@ -497,3 +497,4 @@ describe("sendBlueBubblesAttachment", () => {
     expect(bodyText).not.toContain('name="partIndex"');
   });
 });
+

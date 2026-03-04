@@ -1,6 +1,6 @@
-# @openclaw/zalouser
+# @Ironcliw/zalouser
 
-OpenClaw extension for Zalo Personal Account messaging via native `zca-js` integration.
+Ironcliw extension for Zalo Personal Account messaging via native `zca-js` integration.
 
 > **Warning:** Using Zalo automation may result in account suspension or ban. Use at your own risk. This is an unofficial integration.
 
@@ -14,7 +14,7 @@ OpenClaw extension for Zalo Personal Account messaging via native `zca-js` integ
 
 ## Prerequisites
 
-- OpenClaw Gateway
+- Ironcliw Gateway
 - Zalo mobile app (for QR login)
 
 No external `zca`, `openzca`, or `zca-cli` binary is required.
@@ -24,13 +24,13 @@ No external `zca`, `openzca`, or `zca-cli` binary is required.
 ### Option A: npm
 
 ```bash
-openclaw plugins install @openclaw/zalouser
+Ironcliw plugins install @Ironcliw/zalouser
 ```
 
 ### Option B: local source checkout
 
 ```bash
-openclaw plugins install ./extensions/zalouser
+Ironcliw plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -41,7 +41,7 @@ Restart the Gateway after install.
 ### Login (QR)
 
 ```bash
-openclaw channels login --channel zalouser
+Ironcliw channels login --channel zalouser
 ```
 
 Scan the QR code with the Zalo app on your phone.
@@ -58,7 +58,7 @@ channels:
 ### Send a message
 
 ```bash
-openclaw message send --channel zalouser --target <threadId> --message "Hello from OpenClaw"
+Ironcliw message send --channel zalouser --target <threadId> --message "Hello from Ironcliw"
 ```
 
 ## Configuration
@@ -91,15 +91,15 @@ channels:
 ## Useful commands
 
 ```bash
-openclaw channels login --channel zalouser
-openclaw channels login --channel zalouser --account work
-openclaw channels status --probe
-openclaw channels logout --channel zalouser
+Ironcliw channels login --channel zalouser
+Ironcliw channels login --channel zalouser --account work
+Ironcliw channels status --probe
+Ironcliw channels logout --channel zalouser
 
-openclaw directory self --channel zalouser
-openclaw directory peers list --channel zalouser --query "name"
-openclaw directory groups list --channel zalouser --query "work"
-openclaw directory groups members --channel zalouser --group-id <id>
+Ironcliw directory self --channel zalouser
+Ironcliw directory peers list --channel zalouser --query "name"
+Ironcliw directory groups list --channel zalouser --query "work"
+Ironcliw directory groups members --channel zalouser --group-id <id>
 ```
 
 ## Agent tool
@@ -110,10 +110,11 @@ Available actions: `send`, `image`, `link`, `friends`, `groups`, `me`, `status`
 
 ## Troubleshooting
 
-- Login not persisted: `openclaw channels logout --channel zalouser && openclaw channels login --channel zalouser`
-- Probe status: `openclaw channels status --probe`
+- Login not persisted: `Ironcliw channels logout --channel zalouser && Ironcliw channels login --channel zalouser`
+- Probe status: `Ironcliw channels status --probe`
 - Name resolution issues (allowlist/groups): use numeric IDs or exact Zalo names
 
 ## Credits
 
 Built on [zca-js](https://github.com/RFS-ADRENO/zca-js).
+

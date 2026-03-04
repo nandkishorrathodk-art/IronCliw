@@ -16,7 +16,7 @@ import {
   writeScreenRecordToFile,
 } from "../../cli/nodes-screen.js";
 import { parseDurationMs } from "../../cli/parse-duration.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { parsePreparedSystemRunPayload } from "../../infra/system-run-approval-context.js";
 import { formatExecCommand } from "../../infra/system-run-command.js";
 import { imageMimeFromFormat } from "../../media/mime.js";
@@ -151,7 +151,7 @@ export function createNodesTool(options?: {
   agentAccountId?: string;
   currentChannelId?: string;
   currentThreadTs?: string | number;
-  config?: OpenClawConfig;
+  config?: IroncliwConfig;
 }): AnyAgentTool {
   const sessionKey = options?.agentSessionKey?.trim() || undefined;
   const turnSourceChannel = options?.agentChannel?.trim() || undefined;
@@ -695,3 +695,4 @@ export function createNodesTool(options?: {
     },
   };
 }
+

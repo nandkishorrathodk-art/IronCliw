@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { PassThrough } from "node:stream";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawPluginApi, OpenClawPluginToolContext } from "../../../src/plugins/types.js";
+import type { IroncliwPluginApi, IroncliwPluginToolContext } from "../../../src/plugins/types.js";
 import {
   createWindowsCmdShimFixture,
   restorePlatformPathEnv,
@@ -27,7 +27,7 @@ vi.mock("node:child_process", async (importOriginal) => {
 
 let createLobsterTool: typeof import("./lobster-tool.js").createLobsterTool;
 
-function fakeApi(overrides: Partial<OpenClawPluginApi> = {}): OpenClawPluginApi {
+function fakeApi(overrides: Partial<IroncliwPluginApi> = {}): IroncliwPluginApi {
   return {
     id: "lobster",
     name: "lobster",
@@ -52,7 +52,7 @@ function fakeApi(overrides: Partial<OpenClawPluginApi> = {}): OpenClawPluginApi 
   };
 }
 
-function fakeCtx(overrides: Partial<OpenClawPluginToolContext> = {}): OpenClawPluginToolContext {
+function fakeCtx(overrides: Partial<IroncliwPluginToolContext> = {}): IroncliwPluginToolContext {
   return {
     config: {},
     workspaceDir: "/tmp",
@@ -73,7 +73,7 @@ describe("lobster plugin tool", () => {
   beforeAll(async () => {
     ({ createLobsterTool } = await import("./lobster-tool.js"));
 
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-lobster-plugin-"));
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-lobster-plugin-"));
   });
 
   afterEach(() => {
@@ -297,7 +297,7 @@ describe("lobster plugin tool", () => {
 
   it("can be gated off in sandboxed contexts", async () => {
     const api = fakeApi();
-    const factoryTool = (ctx: OpenClawPluginToolContext) => {
+    const factoryTool = (ctx: IroncliwPluginToolContext) => {
       if (ctx.sandboxed) {
         return null;
       }
@@ -308,3 +308,4 @@ describe("lobster plugin tool", () => {
     expect(factoryTool(fakeCtx({ sandboxed: false }))?.name).toBe("lobster");
   });
 });
+

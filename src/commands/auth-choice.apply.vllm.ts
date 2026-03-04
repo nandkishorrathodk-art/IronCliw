@@ -1,8 +1,8 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import type { ApplyAuthChoiceParams, ApplyAuthChoiceResult } from "./auth-choice.apply.js";
 import { promptAndConfigureVllm } from "./vllm-setup.js";
 
-function applyVllmDefaultModel(cfg: OpenClawConfig, modelRef: string): OpenClawConfig {
+function applyVllmDefaultModel(cfg: IroncliwConfig, modelRef: string): IroncliwConfig {
   const existingModel = cfg.agents?.defaults?.model;
   const fallbacks =
     existingModel && typeof existingModel === "object" && "fallbacks" in existingModel
@@ -44,3 +44,4 @@ export async function applyAuthChoiceVllm(
   await params.prompter.note(`Default model set to ${modelRef}`, "Model configured");
   return { config: applyVllmDefaultModel(nextConfig, modelRef) };
 }
+

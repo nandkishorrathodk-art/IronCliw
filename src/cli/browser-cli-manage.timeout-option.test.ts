@@ -15,7 +15,7 @@ const mocks = vi.hoisted(() => {
             pid: 1,
             cdpPort: 18800,
             chosenBrowser: "chrome",
-            userDataDir: "/tmp/openclaw",
+            userDataDir: "/tmp/Ironcliw",
             color: "blue",
             headless: true,
             attachOnly: false,
@@ -77,3 +77,4 @@ describe("browser manage start timeout option", () => {
     expect(startCall?.[2]).toBeUndefined();
   });
 });
+

@@ -1,7 +1,7 @@
 ---
 read_when:
   - 更改菜单栏图标行为
-summary: macOS 上 OpenClaw 菜单栏图标的状态和动画
+summary: macOS 上 Ironcliw 菜单栏图标的状态和动画
 title: 菜单栏图标
 x-i18n:
   generated_at: "2026-02-01T21:32:49Z"
@@ -36,3 +36,4 @@ x-i18n:
 
 - 耳朵/工作状态没有外部 CLI/代理切换；保持仅由应用自身信号控制，以避免意外的状态抖动。
 - 保持 TTL 较短（&lt;10 秒），以便在任务挂起时图标能快速恢复到基准状态。
+

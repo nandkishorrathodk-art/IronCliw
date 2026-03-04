@@ -1,23 +1,23 @@
 ---
-summary: "Updating OpenClaw safely (global install or source), plus rollback strategy"
+summary: "Updating Ironcliw safely (global install or source), plus rollback strategy"
 read_when:
-  - Updating OpenClaw
+  - Updating Ironcliw
   - Something breaks after an update
 title: "Updating"
 ---
 
 # Updating
 
-OpenClaw is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `openclaw update`, which restarts) → verify.
+Ironcliw is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `Ironcliw update`, which restarts) → verify.
 
 ## Recommended: re-run the website installer (upgrade in place)
 
 The **preferred** update path is to re-run the installer from the website. It
-detects existing installs, upgrades in place, and runs `openclaw doctor` when
+detects existing installs, upgrades in place, and runs `Ironcliw doctor` when
 needed.
 
 ```bash
-curl -fsSL https://openclaw.ai/install.sh | bash
+curl -fsSL https://Ironcliw.ai/install.sh | bash
 ```
 
 Notes:
@@ -26,33 +26,33 @@ Notes:
 - For **source installs**, use:
 
   ```bash
-  curl -fsSL https://openclaw.ai/install.sh | bash -s -- --install-method git --no-onboard
+  curl -fsSL https://Ironcliw.ai/install.sh | bash -s -- --install-method git --no-onboard
   ```
 
   The installer will `git pull --rebase` **only** if the repo is clean.
 
-- For **global installs**, the script uses `npm install -g openclaw@latest` under the hood.
-- Legacy note: `clawdbot` remains available as a compatibility shim.
+- For **global installs**, the script uses `npm install -g Ironcliw@latest` under the hood.
+- Legacy note: `Ironcliw` remains available as a compatibility shim.
 
 ## Before you update
 
 - Know how you installed: **global** (npm/pnpm) vs **from source** (git clone).
 - Know how your Gateway is running: **foreground terminal** vs **supervised service** (launchd/systemd).
 - Snapshot your tailoring:
-  - Config: `~/.openclaw/openclaw.json`
-  - Credentials: `~/.openclaw/credentials/`
-  - Workspace: `~/.openclaw/workspace`
+  - Config: `~/.Ironcliw/Ironcliw.json`
+  - Credentials: `~/.Ironcliw/credentials/`
+  - Workspace: `~/.Ironcliw/workspace`
 
 ## Update (global install)
 
 Global install (pick one):
 
 ```bash
-npm i -g openclaw@latest
+npm i -g Ironcliw@latest
 ```
 
 ```bash
-pnpm add -g openclaw@latest
+pnpm add -g Ironcliw@latest
 ```
 
 We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
@@ -60,9 +60,9 @@ We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
 To switch update channels (git + npm installs):
 
 ```bash
-openclaw update --channel beta
-openclaw update --channel dev
-openclaw update --channel stable
+Ironcliw update --channel beta
+Ironcliw update --channel dev
+Ironcliw update --channel stable
 ```
 
 Use `--tag <dist-tag|version>` for a one-off install tag/version.
@@ -91,31 +91,31 @@ Auto-updater is **off by default** and is a core Gateway feature (not a plugin).
 
 Behavior:
 
-- `stable`: when a new version is seen, OpenClaw waits `stableDelayHours` and then applies a deterministic per-install jitter in `stableJitterHours` (spread rollout).
+- `stable`: when a new version is seen, Ironcliw waits `stableDelayHours` and then applies a deterministic per-install jitter in `stableJitterHours` (spread rollout).
 - `beta`: checks on `betaCheckIntervalHours` cadence (default: hourly) and applies when an update is available.
-- `dev`: no automatic apply; use manual `openclaw update`.
+- `dev`: no automatic apply; use manual `Ironcliw update`.
 
-Use `openclaw update --dry-run` to preview update actions before enabling automation.
+Use `Ironcliw update --dry-run` to preview update actions before enabling automation.
 
 Then:
 
 ```bash
-openclaw doctor
-openclaw gateway restart
-openclaw health
+Ironcliw doctor
+Ironcliw gateway restart
+Ironcliw health
 ```
 
 Notes:
 
-- If your Gateway runs as a service, `openclaw gateway restart` is preferred over killing PIDs.
+- If your Gateway runs as a service, `Ironcliw gateway restart` is preferred over killing PIDs.
 - If you’re pinned to a specific version, see “Rollback / pinning” below.
 
-## Update (`openclaw update`)
+## Update (`Ironcliw update`)
 
 For **source installs** (git checkout), prefer:
 
 ```bash
-openclaw update
+Ironcliw update
 ```
 
 It runs a safe-ish update flow:
@@ -123,16 +123,16 @@ It runs a safe-ish update flow:
 - Requires a clean worktree.
 - Switches to the selected channel (tag or branch).
 - Fetches + rebases against the configured upstream (dev channel).
-- Installs deps, builds, builds the Control UI, and runs `openclaw doctor`.
+- Installs deps, builds, builds the Control UI, and runs `Ironcliw doctor`.
 - Restarts the gateway by default (use `--no-restart` to skip).
 
-If you installed via **npm/pnpm** (no git metadata), `openclaw update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
+If you installed via **npm/pnpm** (no git metadata), `Ironcliw update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
 
 ## Update (Control UI / RPC)
 
 The Control UI has **Update & Restart** (RPC: `update.run`). It:
 
-1. Runs the same source-update flow as `openclaw update` (git checkout only).
+1. Runs the same source-update flow as `Ironcliw update` (git checkout only).
 2. Writes a restart sentinel with a structured report (stdout/stderr tail).
 3. Restarts the gateway and pings the last active session with the report.
 
@@ -145,7 +145,7 @@ From the repo checkout:
 Preferred:
 
 ```bash
-openclaw update
+Ironcliw update
 ```
 
 Manual (equivalent-ish):
@@ -155,29 +155,29 @@ git pull
 pnpm install
 pnpm build
 pnpm ui:build # auto-installs UI deps on first run
-openclaw doctor
-openclaw health
+Ironcliw doctor
+Ironcliw health
 ```
 
 Notes:
 
-- `pnpm build` matters when you run the packaged `openclaw` binary ([`openclaw.mjs`](https://github.com/openclaw/openclaw/blob/main/openclaw.mjs)) or use Node to run `dist/`.
-- If you run from a repo checkout without a global install, use `pnpm openclaw ...` for CLI commands.
-- If you run directly from TypeScript (`pnpm openclaw ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
-- Switching between global and git installs is easy: install the other flavor, then run `openclaw doctor` so the gateway service entrypoint is rewritten to the current install.
+- `pnpm build` matters when you run the packaged `Ironcliw` binary ([`Ironcliw.mjs`](https://github.com/Ironcliw/Ironcliw/blob/main/Ironcliw.mjs)) or use Node to run `dist/`.
+- If you run from a repo checkout without a global install, use `pnpm Ironcliw ...` for CLI commands.
+- If you run directly from TypeScript (`pnpm Ironcliw ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
+- Switching between global and git installs is easy: install the other flavor, then run `Ironcliw doctor` so the gateway service entrypoint is rewritten to the current install.
 
-## Always Run: `openclaw doctor`
+## Always Run: `Ironcliw doctor`
 
 Doctor is the “safe update” command. It’s intentionally boring: repair + migrate + warn.
 
-Note: if you’re on a **source install** (git checkout), `openclaw doctor` will offer to run `openclaw update` first.
+Note: if you’re on a **source install** (git checkout), `Ironcliw doctor` will offer to run `Ironcliw update` first.
 
 Typical things it does:
 
 - Migrate deprecated config keys / legacy config file locations.
 - Audit DM policies and warn on risky “open” settings.
 - Check Gateway health and can offer to restart.
-- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current OpenClaw services.
+- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current Ironcliw services.
 - On Linux, ensure systemd user lingering (so the Gateway survives logout).
 
 Details: [Doctor](/gateway/doctor)
@@ -187,19 +187,19 @@ Details: [Doctor](/gateway/doctor)
 CLI (works regardless of OS):
 
 ```bash
-openclaw gateway status
-openclaw gateway stop
-openclaw gateway restart
-openclaw gateway --port 18789
-openclaw logs --follow
+Ironcliw gateway status
+Ironcliw gateway stop
+Ironcliw gateway restart
+Ironcliw gateway --port 18789
+Ironcliw logs --follow
 ```
 
 If you’re supervised:
 
-- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.openclaw.gateway` (use `ai.openclaw.<profile>`; legacy `com.openclaw.*` still works)
-- Linux systemd user service: `systemctl --user restart openclaw-gateway[-<profile>].service`
-- Windows (WSL2): `systemctl --user restart openclaw-gateway[-<profile>].service`
-  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `openclaw gateway install`.
+- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.Ironcliw.gateway` (use `ai.Ironcliw.<profile>`; legacy `com.Ironcliw.*` still works)
+- Linux systemd user service: `systemctl --user restart Ironcliw-gateway[-<profile>].service`
+- Windows (WSL2): `systemctl --user restart Ironcliw-gateway[-<profile>].service`
+  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `Ironcliw gateway install`.
 
 Runbook + exact service labels: [Gateway runbook](/gateway)
 
@@ -210,20 +210,20 @@ Runbook + exact service labels: [Gateway runbook](/gateway)
 Install a known-good version (replace `<version>` with the last working one):
 
 ```bash
-npm i -g openclaw@<version>
+npm i -g Ironcliw@<version>
 ```
 
 ```bash
-pnpm add -g openclaw@<version>
+pnpm add -g Ironcliw@<version>
 ```
 
-Tip: to see the current published version, run `npm view openclaw version`.
+Tip: to see the current published version, run `npm view Ironcliw version`.
 
 Then restart + re-run doctor:
 
 ```bash
-openclaw doctor
-openclaw gateway restart
+Ironcliw doctor
+Ironcliw gateway restart
 ```
 
 ### Pin (source) by date
@@ -240,7 +240,7 @@ Then reinstall deps + restart:
 ```bash
 pnpm install
 pnpm build
-openclaw gateway restart
+Ironcliw gateway restart
 ```
 
 If you want to go back to latest later:
@@ -252,6 +252,8 @@ git pull
 
 ## If you’re stuck
 
-- Run `openclaw doctor` again and read the output carefully (it often tells you the fix).
+- Run `Ironcliw doctor` again and read the output carefully (it often tells you the fix).
 - Check: [Troubleshooting](/gateway/troubleshooting)
-- Ask in Discord: [https://discord.gg/clawd](https://discord.gg/clawd)
+- Ask in Discord: [https://discord.gg/Ironcliw](https://discord.gg/Ironcliw)
+
+

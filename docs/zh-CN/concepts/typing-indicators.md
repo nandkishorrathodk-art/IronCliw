@@ -1,7 +1,7 @@
 ---
 read_when:
   - 更改输入指示器的行为或默认设置
-summary: OpenClaw 何时显示输入指示器以及如何调整它们
+summary: Ironcliw 何时显示输入指示器以及如何调整它们
 title: 输入指示器
 x-i18n:
   generated_at: "2026-02-01T20:24:47Z"
@@ -20,7 +20,7 @@ x-i18n:
 
 ## 默认行为
 
-当 `agents.defaults.typingMode` **未设置**时，OpenClaw 保持旧版行为：
+当 `agents.defaults.typingMode` **未设置**时，Ironcliw 保持旧版行为：
 
 - **私聊**：模型循环开始后立即显示输入指示器。
 - **群聊中被提及**：立即显示输入指示器。
@@ -72,3 +72,4 @@ x-i18n:
 - 无论使用何种模式，心跳运行都不会显示输入指示器。
 - `typingIntervalSeconds` 控制的是**刷新频率**，而非开始时间。
   默认值为 6 秒。
+

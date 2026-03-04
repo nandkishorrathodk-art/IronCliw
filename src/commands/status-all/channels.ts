@@ -12,7 +12,7 @@ import type {
   ChannelId,
   ChannelPlugin,
 } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { sha256HexPrefix } from "../../logging/redact-identifier.js";
 import { formatTimeAgo } from "./format.js";
 
@@ -89,7 +89,7 @@ const formatAccountLabel = (params: { accountId: string; name?: string }) => {
 
 const buildAccountNotes = (params: {
   plugin: ChannelPlugin;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   entry: ChannelAccountRow;
 }) => {
   const { plugin, cfg, entry } = params;
@@ -179,7 +179,7 @@ function collectMissingPaths(accounts: ChannelAccountRow[]): string[] {
 
 function summarizeTokenConfig(params: {
   plugin: ChannelPlugin;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accounts: ChannelAccountRow[];
   showSecrets: boolean;
 }): { state: "ok" | "setup" | "warn" | null; detail: string | null } {
@@ -291,7 +291,7 @@ function summarizeTokenConfig(params: {
 // `status --all` channels table.
 // Keep this generic: channel-specific rules belong in the channel plugin.
 export async function buildChannelsTable(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   opts?: { showSecrets?: boolean },
 ): Promise<{
   rows: ChannelRow[];
@@ -474,3 +474,4 @@ export async function buildChannelsTable(
     details,
   };
 }
+

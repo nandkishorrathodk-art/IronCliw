@@ -7,13 +7,13 @@ title: "Credits"
 
 ## The name
 
-OpenClaw = CLAW + TARDIS, because every space lobster needs a time and space machine.
+Ironcliw = CLAW + TARDIS, because every space lobster needs a time and space machine.
 
 ## Credits
 
 - **Peter Steinberger** ([@steipete](https://x.com/steipete)) - Creator, lobster whisperer
 - **Mario Zechner** ([@badlogicc](https://x.com/badlogicgames)) - Pi creator, security pen tester
-- **Clawd** - The space lobster who demanded a better name
+- **Ironcliw** - The space lobster who demanded a better name
 
 ## Core contributors
 
@@ -26,3 +26,5 @@ OpenClaw = CLAW + TARDIS, because every space lobster needs a time and space mac
 MIT - Free as a lobster in the ocean.
 
 > "We are all just playing with our own prompts." (An AI, probably high on tokens)
+
+

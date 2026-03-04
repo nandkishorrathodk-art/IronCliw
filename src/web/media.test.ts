@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { resolveStateDir } from "../config/paths.js";
 import { sendVoiceMessageDiscord } from "../discord/send.js";
-import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+import { resolvePreferredIroncliwTmpDir } from "../infra/tmp-Ironcliw-dir.js";
 import { optimizeImageToPng } from "../media/image-ops.js";
 import { mockPinnedHostnameResolution } from "../test-helpers/ssrf.js";
 import { captureEnv } from "../test-utils/env.js";
@@ -56,7 +56,7 @@ function cloneStatWithDev<T extends { dev: number | bigint }>(stat: T, dev: numb
 
 beforeAll(async () => {
   fixtureRoot = await fs.mkdtemp(
-    path.join(resolvePreferredOpenClawTmpDir(), "openclaw-media-test-"),
+    path.join(resolvePreferredIroncliwTmpDir(), "Ironcliw-media-test-"),
   );
   largeJpegBuffer = await sharp({
     create: {
@@ -114,14 +114,14 @@ afterEach(() => {
 
 describe("web media loading", () => {
   beforeAll(() => {
-    // Ensure state dir is stable and not influenced by other tests that stub OPENCLAW_STATE_DIR.
-    // Also keep it outside the OpenClaw temp root so default localRoots doesn't accidentally make all state readable.
-    stateDirSnapshot = captureEnv(["OPENCLAW_STATE_DIR"]);
-    process.env.OPENCLAW_STATE_DIR = path.join(
+    // Ensure state dir is stable and not influenced by other tests that stub IRONCLIW_STATE_DIR.
+    // Also keep it outside the Ironcliw temp root so default localRoots doesn't accidentally make all state readable.
+    stateDirSnapshot = captureEnv(["IRONCLIW_STATE_DIR"]);
+    process.env.IRONCLIW_STATE_DIR = path.join(
       path.parse(os.tmpdir()).root,
       "var",
       "lib",
-      "openclaw-media-state-test",
+      "Ironcliw-media-state-test",
     );
   });
 
@@ -356,7 +356,7 @@ describe("local media root guard", () => {
 
   it("allows local paths under an explicit root", async () => {
     const result = await loadWebMedia(tinyPngFile, 1024 * 1024, {
-      localRoots: [resolvePreferredOpenClawTmpDir()],
+      localRoots: [resolvePreferredIroncliwTmpDir()],
     });
     expect(result.kind).toBe("image");
   });
@@ -374,7 +374,7 @@ describe("local media root guard", () => {
 
     try {
       const result = await loadWebMedia(tinyPngFile, 1024 * 1024, {
-        localRoots: [resolvePreferredOpenClawTmpDir()],
+        localRoots: [resolvePreferredIroncliwTmpDir()],
       });
       expect(result.kind).toBe("image");
       expect(result.buffer.length).toBeGreaterThan(0);
@@ -417,7 +417,7 @@ describe("local media root guard", () => {
     ).rejects.toMatchObject({ code: "invalid-root" });
   });
 
-  it("allows default OpenClaw state workspace and sandbox roots", async () => {
+  it("allows default Ironcliw state workspace and sandbox roots", async () => {
     const stateDir = resolveStateDir();
     const readFile = vi.fn(async () => Buffer.from("generated-media"));
 
@@ -444,12 +444,12 @@ describe("local media root guard", () => {
     );
   });
 
-  it("rejects default OpenClaw state per-agent workspace-* roots without explicit local roots", async () => {
+  it("rejects default Ironcliw state per-agent workspace-* roots without explicit local roots", async () => {
     const stateDir = resolveStateDir();
     const readFile = vi.fn(async () => Buffer.from("generated-media"));
 
     await expect(
-      loadWebMedia(path.join(stateDir, "workspace-clawdy", "tmp", "render.bin"), {
+      loadWebMedia(path.join(stateDir, "workspace-ironcliwy", "tmp", "render.bin"), {
         maxBytes: 1024 * 1024,
         readFile,
       }),
@@ -459,7 +459,7 @@ describe("local media root guard", () => {
   it("allows per-agent workspace-* paths with explicit local roots", async () => {
     const stateDir = resolveStateDir();
     const readFile = vi.fn(async () => Buffer.from("generated-media"));
-    const agentWorkspaceDir = path.join(stateDir, "workspace-clawdy");
+    const agentWorkspaceDir = path.join(stateDir, "workspace-ironcliwy");
 
     await expect(
       loadWebMedia(path.join(agentWorkspaceDir, "tmp", "render.bin"), {
@@ -474,3 +474,5 @@ describe("local media root guard", () => {
     );
   });
 });
+
+

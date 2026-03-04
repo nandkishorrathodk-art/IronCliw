@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
+import { normalizeAccountId } from "Ironcliw/plugin-sdk/account-id";
 
 // Support multiple active clients for multi-account
 const activeClients = new Map<string, MatrixClient>();
@@ -30,3 +30,4 @@ export function getAnyActiveMatrixClient(): MatrixClient | null {
 export function clearAllActiveMatrixClients(): void {
   activeClients.clear();
 }
+

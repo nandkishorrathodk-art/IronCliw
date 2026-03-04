@@ -1,9 +1,9 @@
 ---
 name: voice-call
-description: Start voice calls via the OpenClaw voice-call plugin.
+description: Start voice calls via the Ironcliw voice-call plugin.
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "📞",
         "skillKey": "voice-call",
@@ -19,8 +19,8 @@ Use the voice-call plugin to start or inspect calls (Twilio, Telnyx, Plivo, or m
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall status --call-id <id>
+Ironcliw voicecall call --to "+15555550123" --message "Hello from Ironcliw"
+Ironcliw voicecall status --call-id <id>
 ```
 
 ## Tool
@@ -43,3 +43,4 @@ Notes:
 - Telnyx config: `provider: "telnyx"` + `telnyx.apiKey/connectionId` + `fromNumber`.
 - Plivo config: `provider: "plivo"` + `plivo.authId/authToken` + `fromNumber`.
 - Dev fallback: `provider: "mock"` (no network).
+

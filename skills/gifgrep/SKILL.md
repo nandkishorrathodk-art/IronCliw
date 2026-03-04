@@ -4,7 +4,7 @@ description: Search GIF providers with CLI/TUI, download results, and extract st
 homepage: https://gifgrep.com
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🧲",
         "requires": { "bins": ["gifgrep"] },
@@ -77,3 +77,4 @@ Environment tweaks
 
 - `GIFGREP_SOFTWARE_ANIM=1` to force software animation
 - `GIFGREP_CELL_ASPECT=0.5` to tweak preview geometry
+

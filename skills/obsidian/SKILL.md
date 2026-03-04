@@ -4,7 +4,7 @@ description: Work with Obsidian vaults (plain Markdown notes) and automate via o
 homepage: https://help.obsidian.md
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "💎",
         "requires": { "bins": ["obsidian-cli"] },
@@ -79,3 +79,4 @@ Delete
 - `obsidian-cli delete "path/note"`
 
 Prefer direct edits when appropriate: open the `.md` file and change it; Obsidian will pick it up.
+

@@ -4,7 +4,7 @@ description: Capture frames or clips from RTSP/ONVIF cameras.
 homepage: https://camsnap.ai
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "📸",
         "requires": { "bins": ["camsnap"] },
@@ -43,3 +43,4 @@ Notes
 
 - Requires `ffmpeg` on PATH.
 - Prefer a short test capture before longer clips.
+

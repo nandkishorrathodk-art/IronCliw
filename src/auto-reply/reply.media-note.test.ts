@@ -3,7 +3,7 @@ import "./reply.directive.directive-behavior.e2e-mocks.js";
 import { describe, expect, it, vi } from "vitest";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 import { runEmbeddedPiAgent } from "../agents/pi-embedded.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { getReplyFromConfig } from "./reply.js";
 
 function makeResult(text: string) {
@@ -24,9 +24,9 @@ async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
     },
     {
       env: {
-        OPENCLAW_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
+        IRONCLIW_BUNDLED_SKILLS_DIR: (home) => path.join(home, "bundled-skills"),
       },
-      prefix: "openclaw-media-note-",
+      prefix: "Ironcliw-media-note-",
     },
   );
 }
@@ -36,12 +36,12 @@ function makeCfg(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "openclaw"),
+        workspace: path.join(home, "Ironcliw"),
       },
     },
     channels: { whatsapp: { allowFrom: ["*"] } },
     session: { store: path.join(home, "sessions.json") },
-  } as unknown as OpenClawConfig;
+  } as unknown as IroncliwConfig;
 }
 
 describe("getReplyFromConfig media note plumbing", () => {
@@ -80,3 +80,4 @@ describe("getReplyFromConfig media note plumbing", () => {
     });
   });
 });
+

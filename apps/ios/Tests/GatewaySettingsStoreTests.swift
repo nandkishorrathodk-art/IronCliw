@@ -1,15 +1,15 @@
 import Foundation
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 private struct KeychainEntry: Hashable {
     let service: String
     let account: String
 }
 
-private let gatewayService = "ai.openclaw.gateway"
-private let nodeService = "ai.openclaw.node"
-private let talkService = "ai.openclaw.talk"
+private let gatewayService = "ai.Ironcliw.gateway"
+private let nodeService = "ai.Ironcliw.node"
+private let talkService = "ai.Ironcliw.talk"
 private let instanceIdEntry = KeychainEntry(service: nodeService, account: "instanceId")
 private let preferredGatewayEntry = KeychainEntry(service: gatewayService, account: "preferredStableID")
 private let lastGatewayEntry = KeychainEntry(service: gatewayService, account: "lastDiscoveredStableID")
@@ -195,3 +195,4 @@ private func withLastGatewayDefaultsSnapshot(_ body: () -> Void) {
         #expect(GatewaySettingsStore.loadTalkProviderApiKey(provider: "acme") == nil)
     }
 }
+

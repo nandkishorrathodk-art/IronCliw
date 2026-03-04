@@ -31,7 +31,7 @@ describe("irc protocol", () => {
   });
 
   it("validates targets and rejects control characters", () => {
-    expect(sanitizeIrcTarget("#openclaw")).toBe("#openclaw");
+    expect(sanitizeIrcTarget("#Ironcliw")).toBe("#Ironcliw");
     expect(() => sanitizeIrcTarget("#bad\\nPING")).toThrow(/Invalid IRC target/);
     expect(() => sanitizeIrcTarget(" user")).toThrow(/Invalid IRC target/);
   });
@@ -42,3 +42,4 @@ describe("irc protocol", () => {
     expect(chunks.every((chunk) => chunk.length <= 120)).toBe(true);
   });
 });
+

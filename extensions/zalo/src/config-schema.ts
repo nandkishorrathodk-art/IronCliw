@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema } from "openclaw/plugin-sdk";
+import { MarkdownConfigSchema } from "Ironcliw/plugin-sdk";
 import { z } from "zod";
 import { buildSecretInputSchema } from "./secret-input.js";
 
@@ -26,3 +26,4 @@ export const ZaloConfigSchema = zaloAccountSchema.extend({
   accounts: z.object({}).catchall(zaloAccountSchema).optional(),
   defaultAccount: z.string().optional(),
 });
+

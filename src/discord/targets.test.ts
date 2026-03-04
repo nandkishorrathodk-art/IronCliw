@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { normalizeDiscordMessagingTarget } from "../channels/plugins/normalize/discord.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { listDiscordDirectoryPeersLive } from "./directory-live.js";
 import { parseDiscordTarget, resolveDiscordChannelId, resolveDiscordTarget } from "./targets.js";
 
@@ -72,7 +72,7 @@ describe("resolveDiscordChannelId", () => {
 });
 
 describe("resolveDiscordTarget", () => {
-  const cfg = { channels: { discord: {} } } as OpenClawConfig;
+  const cfg = { channels: { discord: {} } } as IroncliwConfig;
   const listPeers = vi.mocked(listDiscordDirectoryPeersLive);
 
   beforeEach(() => {
@@ -108,3 +108,4 @@ describe("normalizeDiscordMessagingTarget", () => {
     expect(normalizeDiscordMessagingTarget("123")).toBe("channel:123");
   });
 });
+

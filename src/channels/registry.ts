@@ -21,7 +21,7 @@ export const CHANNEL_IDS = [...CHAT_CHANNEL_ORDER] as const;
 
 export type ChatChannelMeta = ChannelMeta;
 
-const WEBSITE_URL = "https://openclaw.ai";
+const WEBSITE_URL = "https://Ironcliw.ai";
 
 const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
   telegram: {
@@ -187,3 +187,4 @@ export function formatChannelSelectionLine(
   const extras = (meta.selectionExtras ?? []).filter(Boolean).join(" ");
   return `${meta.label} — ${meta.blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
 }
+

@@ -4,7 +4,7 @@ description: Foodora-only CLI for checking past orders and active order status (
 homepage: https://ordercli.sh
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🛵",
         "requires": { "bins": ["ordercli"] },
@@ -76,3 +76,4 @@ Notes
 
 - Use `--config /tmp/ordercli.json` for testing.
 - Confirm before any reorder or cart-changing action.
+

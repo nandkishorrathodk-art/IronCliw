@@ -14,7 +14,7 @@ function usage() {
       "    --description-file <path>",
       "    --vulnerable-version-range <range>",
       "    --patched-versions <range-or-null>",
-      "    [--package openclaw] [--ecosystem npm] [--cvss <vector>]",
+      "    [--package Ironcliw] [--ecosystem npm] [--cvss <vector>]",
     ].join("\n"),
   );
 }
@@ -92,7 +92,7 @@ const current = JSON.parse(runGh(["api", "-H", "X-GitHub-Api-Version: 2022-11-28
 const restoredCvss = args.cvss || current?.cvss?.vector_string || null;
 
 const ecosystem = args.ecosystem || "npm";
-const packageName = args.package || "openclaw";
+const packageName = args.package || "Ironcliw";
 const vulnerableRange = args["vulnerable-version-range"];
 const patchedVersionsRaw = args["patched-versions"];
 
@@ -166,3 +166,4 @@ console.log(
     2,
   ),
 );
+

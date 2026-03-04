@@ -61,8 +61,8 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   const commitLabel = commit ?? "unknown";
   const tagline = pickTagline({ ...options, mode: resolveTaglineMode(options) });
   const rich = options.richTty ?? isRich();
-  const title = "🦞 OpenClaw";
-  const prefix = "🦞 ";
+  const title = "🛡️ Ironcliw";
+  const prefix = "🛡️ ";
   const columns = options.columns ?? process.stdout.columns ?? 120;
   const plainBaseLine = `${title} ${version} (${commitLabel})`;
   const plainFullLine = tagline ? `${plainBaseLine} — ${tagline}` : plainBaseLine;
@@ -96,20 +96,20 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   return `${line1}\n${line2}`;
 }
 
-const LOBSTER_ASCII = [
+const ironcliw_ASCII = [
   "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
   "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██",
   "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
   "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
   "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
-  "                  🦞 OPENCLAW 🦞                    ",
+  "                  🦞 Ironcliw 🦞                    ",
   " ",
 ];
 
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
   if (!rich) {
-    return LOBSTER_ASCII.join("\n");
+    return ironcliw_ASCII.join("\n");
   }
 
   const colorChar = (ch: string) => {
@@ -125,13 +125,13 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
     return theme.muted(ch);
   };
 
-  const colored = LOBSTER_ASCII.map((line) => {
-    if (line.includes("OPENCLAW")) {
+  const colored = ironcliw_ASCII.map((line) => {
+    if (line.includes("Ironcliw")) {
       return (
         theme.muted("              ") +
-        theme.accent("🦞") +
-        theme.info(" OPENCLAW ") +
-        theme.accent("🦞")
+        theme.accent("🛡️") +
+        theme.info(" Ironcliw ") +
+        theme.accent("🛡️")
       );
     }
     return splitGraphemes(line).map(colorChar).join("");
@@ -162,3 +162,5 @@ export function emitCliBanner(version: string, options: BannerOptions = {}) {
 export function hasEmittedCliBanner(): boolean {
   return bannerEmitted;
 }
+
+

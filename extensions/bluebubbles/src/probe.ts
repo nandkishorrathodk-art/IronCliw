@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk";
+import type { BaseProbeResult } from "Ironcliw/plugin-sdk";
 import { normalizeSecretInputString } from "./secret-input.js";
 import { buildBlueBubblesApiUrl, blueBubblesFetchWithTimeout } from "./types.js";
 
@@ -162,3 +162,4 @@ export async function probeBlueBubbles(params: {
     };
   }
 }
+

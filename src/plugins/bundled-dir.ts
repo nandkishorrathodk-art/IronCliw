@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 export function resolveBundledPluginsDir(): string | undefined {
-  const override = process.env.OPENCLAW_BUNDLED_PLUGINS_DIR?.trim();
+  const override = process.env.IRONCLIW_BUNDLED_PLUGINS_DIR?.trim();
   if (override) {
     return override;
   }
@@ -39,3 +39,4 @@ export function resolveBundledPluginsDir(): string | undefined {
 
   return undefined;
 }
+

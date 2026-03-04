@@ -85,7 +85,7 @@ async function submitVoyageBatch(params: {
         input_type: "document",
       },
       metadata: {
-        source: "clawdbot-memory",
+        source: "Ironcliw-memory",
         agent: params.agentId,
       },
     },
@@ -287,3 +287,4 @@ export async function runVoyageEmbeddingBatches(
     },
   });
 }
+

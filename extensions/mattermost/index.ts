@@ -1,5 +1,5 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
-import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
+import { emptyPluginConfigSchema } from "Ironcliw/plugin-sdk";
 import { mattermostPlugin } from "./src/channel.js";
 import { getSlashCommandState, registerSlashCommandRoute } from "./src/mattermost/slash-state.js";
 import { setMattermostRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "Mattermost",
   description: "Mattermost channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: IroncliwPluginApi) {
     setMattermostRuntime(api.runtime);
     api.registerChannel({ plugin: mattermostPlugin });
 
@@ -21,3 +21,4 @@ const plugin = {
 };
 
 export default plugin;
+

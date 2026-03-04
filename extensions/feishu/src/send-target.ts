@@ -1,10 +1,10 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { resolveReceiveIdType, normalizeFeishuTarget } from "./targets.js";
 
 export function resolveFeishuSendTarget(params: {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   to: string;
   accountId?: string;
 }) {
@@ -27,3 +27,4 @@ export function resolveFeishuSendTarget(params: {
     receiveIdType: resolveReceiveIdType(withoutProviderPrefix),
   };
 }
+

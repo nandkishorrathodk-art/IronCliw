@@ -8,7 +8,7 @@ describe("workspace bootstrap file caching", () => {
   let workspaceDir: string;
 
   beforeEach(async () => {
-    workspaceDir = await makeTempWorkspace("openclaw-bootstrap-cache-test-");
+    workspaceDir = await makeTempWorkspace("Ironcliw-bootstrap-cache-test-");
   });
 
   const loadAgentsFile = async (dir: string) => {
@@ -143,8 +143,8 @@ describe("workspace bootstrap file caching", () => {
     const content2 = "# File 2 content";
 
     // Create two different workspace directories
-    const workspace1 = await makeTempWorkspace("openclaw-cache-test1-");
-    const workspace2 = await makeTempWorkspace("openclaw-cache-test2-");
+    const workspace1 = await makeTempWorkspace("Ironcliw-cache-test1-");
+    const workspace2 = await makeTempWorkspace("Ironcliw-cache-test2-");
 
     await writeWorkspaceFile({ dir: workspace1, name: DEFAULT_AGENTS_FILENAME, content: content1 });
     await writeWorkspaceFile({ dir: workspace2, name: DEFAULT_AGENTS_FILENAME, content: content2 });
@@ -166,3 +166,4 @@ describe("workspace bootstrap file caching", () => {
     expect(agentsFile?.content).toBeUndefined();
   });
 });
+

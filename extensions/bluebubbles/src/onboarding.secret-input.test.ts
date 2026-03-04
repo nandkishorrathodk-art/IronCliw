@@ -1,7 +1,7 @@
-import type { WizardPrompter } from "openclaw/plugin-sdk";
+import type { WizardPrompter } from "Ironcliw/plugin-sdk";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("openclaw/plugin-sdk", () => ({
+vi.mock("Ironcliw/plugin-sdk", () => ({
   DEFAULT_ACCOUNT_ID: "default",
   addWildcardAllowFrom: vi.fn(),
   formatDocsLink: (_url: string, fallback: string) => fallback,
@@ -79,3 +79,4 @@ describe("bluebubbles onboarding SecretInput", () => {
     expect(text).not.toHaveBeenCalled();
   });
 });
+

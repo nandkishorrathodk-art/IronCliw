@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "openclaw/plugin-sdk";
+import { MarkdownConfigSchema, ToolPolicySchema } from "Ironcliw/plugin-sdk";
 import { z } from "zod";
 import { buildSecretInputSchema } from "./secret-input.js";
 
@@ -64,3 +64,4 @@ export const MatrixConfigSchema = z.object({
   rooms: z.object({}).catchall(matrixRoomSchema).optional(),
   actions: matrixActionSchema,
 });
+

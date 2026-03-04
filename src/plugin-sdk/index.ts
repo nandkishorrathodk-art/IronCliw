@@ -96,10 +96,10 @@ export { ACP_ERROR_CODES, AcpRuntimeError } from "../acp/runtime/errors.js";
 export type { AcpRuntimeErrorCode } from "../acp/runtime/errors.js";
 export type {
   AnyAgentTool,
-  OpenClawPluginConfigSchema,
-  OpenClawPluginApi,
-  OpenClawPluginService,
-  OpenClawPluginServiceContext,
+  IroncliwPluginConfigSchema,
+  IroncliwPluginApi,
+  IroncliwPluginService,
+  IroncliwPluginServiceContext,
   PluginLogger,
   ProviderAuthContext,
   ProviderAuthResult,
@@ -113,9 +113,7 @@ export type { PluginRuntime, RuntimeLogger } from "../plugins/runtime/types.js";
 export { normalizePluginHttpPath } from "../plugins/http-path.js";
 export { registerPluginHttpRoute } from "../plugins/http-registry.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
-export type { OpenClawConfig } from "../config/config.js";
-/** @deprecated Use OpenClawConfig instead */
-export type { OpenClawConfig as ClawdbotConfig } from "../config/config.js";
+export type { IroncliwConfig } from "../config/config.js";
 export { isDangerousNameMatchingEnabled } from "../config/dangerous-name-matching.js";
 
 export type { FileLockHandle, FileLockOptions } from "./file-lock.js";
@@ -308,7 +306,7 @@ export type {
   WindowsSpawnProgram,
   WindowsSpawnResolution,
 } from "./windows-spawn.js";
-export { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+export { resolvePreferredIroncliwTmpDir } from "../infra/tmp-Ironcliw-dir.js";
 export {
   runPluginCommandWithTimeout,
   type PluginCommandRunOptions,
@@ -691,3 +689,4 @@ export { loadWebMedia, type WebMediaResult } from "../web/media.js";
 
 // Security utilities
 export { redactSensitiveText } from "../logging/redact.js";
+

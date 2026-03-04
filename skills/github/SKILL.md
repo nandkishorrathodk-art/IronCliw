@@ -3,7 +3,7 @@ name: github
 description: "GitHub operations via `gh` CLI: issues, PRs, CI runs, code review, API queries. Use when: (1) checking PR status or CI, (2) creating/commenting on issues, (3) listing/filtering PRs or issues, (4) viewing run logs. NOT for: complex web UI interactions requiring manual browser flows (use browser tooling when available), bulk operations across many repos (script with gh api), or when gh auth is not configured."
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🐙",
         "requires": { "bins": ["gh"] },
@@ -161,3 +161,4 @@ gh issue list --repo owner/repo --state open --json number,title,labels,createdA
 - Always specify `--repo owner/repo` when not in a git directory
 - Use URLs directly: `gh pr view https://github.com/owner/repo/pull/55`
 - Rate limits apply; use `gh api --cache 1h` for repeated queries
+

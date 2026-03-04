@@ -82,7 +82,7 @@ export async function installPackageDir(params: {
   });
   let backupDir: string | null = null;
   if (params.mode === "update" && (await fileExists(params.targetDir))) {
-    const backupRoot = path.join(path.dirname(params.targetDir), ".openclaw-install-backups");
+    const backupRoot = path.join(path.dirname(params.targetDir), ".Ironcliw-install-backups");
     backupDir = path.join(backupRoot, `${path.basename(params.targetDir)}-${Date.now()}`);
     await fs.mkdir(backupRoot, { recursive: true });
     await assertInstallBoundaryPaths({
@@ -164,3 +164,4 @@ export async function installPackageDirWithManifestDeps(params: {
     hasDeps: Object.keys(params.manifestDependencies ?? {}).length > 0,
   });
 }
+

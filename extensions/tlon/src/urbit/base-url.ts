@@ -1,4 +1,4 @@
-import { isBlockedHostnameOrIp } from "openclaw/plugin-sdk";
+import { isBlockedHostnameOrIp } from "Ironcliw/plugin-sdk";
 
 export type UrbitBaseUrlValidation =
   | { ok: true; baseUrl: string; hostname: string }
@@ -55,3 +55,4 @@ export function isBlockedUrbitHostname(hostname: string): boolean {
   }
   return isBlockedHostnameOrIp(normalized);
 }
+

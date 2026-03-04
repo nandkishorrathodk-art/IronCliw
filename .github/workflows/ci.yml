@@ -153,8 +153,8 @@ jobs:
         run: |
           # `pnpm test` runs `scripts/test-parallel.mjs`, which spawns multiple Node processes.
           # Default heap limits have been too low on Linux CI (V8 OOM near 4GB).
-          echo "OPENCLAW_TEST_WORKERS=2" >> "$GITHUB_ENV"
-          echo "OPENCLAW_TEST_MAX_OLD_SPACE_SIZE_MB=6144" >> "$GITHUB_ENV"
+          echo "IRONCLIW_TEST_WORKERS=2" >> "$GITHUB_ENV"
+          echo "IRONCLIW_TEST_MAX_OLD_SPACE_SIZE_MB=6144" >> "$GITHUB_ENV"
 
       - name: Run ${{ matrix.task }} (${{ matrix.runtime }})
         if: matrix.runtime != 'bun' || github.event_name != 'push'
@@ -338,7 +338,7 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=6144
       # Keep total concurrency predictable on the 32 vCPU runner.
       # Windows shard 2 has shown intermittent instability at 2 workers.
-      OPENCLAW_TEST_WORKERS: 1
+      IRONCLIW_TEST_WORKERS: 1
     defaults:
       run:
         shell: bash
@@ -440,8 +440,8 @@ jobs:
       - name: Configure test shard (Windows)
         if: matrix.task == 'test'
         run: |
-          echo "OPENCLAW_TEST_SHARDS=${{ matrix.shard_count }}" >> "$GITHUB_ENV"
-          echo "OPENCLAW_TEST_SHARD_INDEX=${{ matrix.shard_index }}" >> "$GITHUB_ENV"
+          echo "IRONCLIW_TEST_SHARDS=${{ matrix.shard_count }}" >> "$GITHUB_ENV"
+          echo "IRONCLIW_TEST_SHARD_INDEX=${{ matrix.shard_index }}" >> "$GITHUB_ENV"
 
       - name: Build A2UI bundle (Windows)
         if: matrix.task == 'test'
@@ -561,7 +561,7 @@ jobs:
       - name: iOS tests
         run: |
           set -euo pipefail
-          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Clawdis-iOS.xcresult"
+          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Ironcliwis-iOS.xcresult"
           DEST_ID="$(
             python3 - <<'PY'
           import json
@@ -640,8 +640,8 @@ jobs:
           )"
           echo "Using iOS Simulator id: $DEST_ID"
           xcodebuild test \
-            -project apps/ios/Clawdis.xcodeproj \
-            -scheme Clawdis \
+            -project apps/ios/Ironcliwis.xcodeproj \
+            -scheme Ironcliwis \
             -destination "platform=iOS Simulator,id=$DEST_ID" \
             -resultBundlePath "$RESULT_BUNDLE_PATH" \
             -enableCodeCoverage YES
@@ -649,20 +649,20 @@ jobs:
       - name: iOS coverage summary
         run: |
           set -euo pipefail
-          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Clawdis-iOS.xcresult"
+          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Ironcliwis-iOS.xcresult"
           xcrun xccov view --report --only-targets "$RESULT_BUNDLE_PATH"
 
       - name: iOS coverage gate (43%)
         run: |
           set -euo pipefail
-          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Clawdis-iOS.xcresult"
+          RESULT_BUNDLE_PATH="$RUNNER_TEMP/Ironcliwis-iOS.xcresult"
           RESULT_BUNDLE_PATH="$RESULT_BUNDLE_PATH" python3 - <<'PY'
           import json
           import os
           import subprocess
           import sys
 
-          target_name = "Clawdis.app"
+          target_name = "Ironcliwis.app"
           minimum = 0.43
 
           report = json.loads(
@@ -733,3 +733,5 @@ jobs:
       - name: Run Android ${{ matrix.task }}
         working-directory: apps/android
         run: ${{ matrix.command }}
+
+

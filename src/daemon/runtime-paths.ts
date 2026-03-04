@@ -166,7 +166,7 @@ export async function resolvePreferredNodePath(params: {
     return undefined;
   }
 
-  // Prefer the node that is currently running `openclaw gateway install`.
+  // Prefer the node that is currently running `Ironcliw gateway install`.
   // This respects the user's active version manager (fnm/nvm/volta/etc.).
   const platform = params.platform ?? process.platform;
   const currentExecPath = params.execPath ?? process.execPath;
@@ -185,3 +185,4 @@ export async function resolvePreferredNodePath(params: {
   }
   return systemNode.path;
 }
+

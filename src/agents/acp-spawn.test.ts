@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import type { SessionBindingRecord } from "../infra/outbound/session-binding-service.js";
 
-function createDefaultSpawnConfig(): OpenClawConfig {
+function createDefaultSpawnConfig(): IroncliwConfig {
   return {
     acp: {
       enabled: true,
@@ -288,7 +288,7 @@ describe("spawnAcpDirect", () => {
       {
         task: "Check workspace",
         agentId: "codex",
-        cwd: "/home/bob/clawd",
+        cwd: "/home/bob/ironcliw",
         mode: "session",
         thread: true,
       },
@@ -304,7 +304,7 @@ describe("spawnAcpDirect", () => {
     expect(hoisted.sessionBindingBindMock).toHaveBeenCalledWith(
       expect.objectContaining({
         metadata: expect.objectContaining({
-          introText: expect.stringContaining("cwd: /home/bob/clawd"),
+          introText: expect.stringContaining("cwd: /home/bob/ironcliw"),
         }),
       }),
     );
@@ -424,3 +424,5 @@ describe("spawnAcpDirect", () => {
     expect(hoisted.initializeSessionMock).not.toHaveBeenCalled();
   });
 });
+
+

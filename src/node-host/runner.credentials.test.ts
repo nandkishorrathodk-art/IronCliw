@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { withEnvAsync } from "../test-utils/env.js";
 import { resolveNodeHostGatewayCredentials } from "./runner.js";
 
@@ -17,11 +17,11 @@ describe("resolveNodeHostGatewayCredentials", () => {
           token: { source: "env", provider: "default", id: "REMOTE_GATEWAY_TOKEN" },
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
 
     await withEnvAsync(
       {
-        OPENCLAW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
       },
       async () => {
@@ -31,7 +31,7 @@ describe("resolveNodeHostGatewayCredentials", () => {
     );
   });
 
-  it("prefers OPENCLAW_GATEWAY_TOKEN over configured refs", async () => {
+  it("prefers IRONCLIW_GATEWAY_TOKEN over configured refs", async () => {
     const config = {
       secrets: {
         providers: {
@@ -44,11 +44,11 @@ describe("resolveNodeHostGatewayCredentials", () => {
           token: { source: "env", provider: "default", id: "REMOTE_GATEWAY_TOKEN" },
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
 
     await withEnvAsync(
       {
-        OPENCLAW_GATEWAY_TOKEN: "token-from-env",
+        IRONCLIW_GATEWAY_TOKEN: "token-from-env",
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
       },
       async () => {
@@ -71,11 +71,11 @@ describe("resolveNodeHostGatewayCredentials", () => {
           token: { source: "env", provider: "default", id: "MISSING_REMOTE_GATEWAY_TOKEN" },
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
 
     await withEnvAsync(
       {
-        OPENCLAW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
         MISSING_REMOTE_GATEWAY_TOKEN: undefined,
       },
       async () => {
@@ -100,12 +100,12 @@ describe("resolveNodeHostGatewayCredentials", () => {
           password: { source: "env", provider: "default", id: "MISSING_REMOTE_GATEWAY_PASSWORD" },
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
 
     await withEnvAsync(
       {
-        OPENCLAW_GATEWAY_TOKEN: undefined,
-        OPENCLAW_GATEWAY_PASSWORD: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_PASSWORD: undefined,
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
         MISSING_REMOTE_GATEWAY_PASSWORD: undefined,
       },
@@ -117,3 +117,4 @@ describe("resolveNodeHostGatewayCredentials", () => {
     );
   });
 });
+

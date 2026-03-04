@@ -4,7 +4,7 @@ import path from "node:path";
 import { captureEnv } from "../test-utils/env.js";
 
 export function snapshotStateDirEnv() {
-  return captureEnv(["OPENCLAW_STATE_DIR", "CLAWDBOT_STATE_DIR"]);
+  return captureEnv(["IRONCLIW_STATE_DIR", "IRONCLIW_STATE_DIR"]);
 }
 
 export function restoreStateDirEnv(snapshot: ReturnType<typeof snapshotStateDirEnv>): void {
@@ -12,8 +12,8 @@ export function restoreStateDirEnv(snapshot: ReturnType<typeof snapshotStateDirE
 }
 
 export function setStateDirEnv(stateDir: string): void {
-  process.env.OPENCLAW_STATE_DIR = stateDir;
-  delete process.env.CLAWDBOT_STATE_DIR;
+  process.env.IRONCLIW_STATE_DIR = stateDir;
+  delete process.env.IRONCLIW_STATE_DIR;
 }
 
 export async function withStateDirEnv<T>(
@@ -32,3 +32,4 @@ export async function withStateDirEnv<T>(
     await fs.rm(tempRoot, { recursive: true, force: true });
   }
 }
+

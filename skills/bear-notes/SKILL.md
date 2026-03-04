@@ -4,7 +4,7 @@ description: Create, search, and manage Bear notes via grizzly CLI.
 homepage: https://bear.app
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🐻",
         "os": ["darwin"],
@@ -105,3 +105,4 @@ timeout = "5s"
 - Note IDs are Bear's internal identifiers (visible in note info or via callbacks)
 - Use `--enable-callback` when you need to read data back from Bear
 - Some operations require a valid token (add-text, tags, open-note --selected)
+

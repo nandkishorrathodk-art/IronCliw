@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { resolveChannelModelOverride } from "./model-overrides.js";
 
 describe("resolveChannelModelOverride", () => {
@@ -15,7 +15,7 @@ describe("resolveChannelModelOverride", () => {
               },
             },
           },
-        } as unknown as OpenClawConfig,
+        } as unknown as IroncliwConfig,
         channel: "telegram",
         groupId: "-100123:topic:99",
       },
@@ -33,7 +33,7 @@ describe("resolveChannelModelOverride", () => {
               },
             },
           },
-        } as unknown as OpenClawConfig,
+        } as unknown as IroncliwConfig,
         channel: "telegram",
         groupId: "-100123:topic:99",
       },
@@ -50,7 +50,7 @@ describe("resolveChannelModelOverride", () => {
               },
             },
           },
-        } as unknown as OpenClawConfig,
+        } as unknown as IroncliwConfig,
         channel: "discord",
         groupId: "999",
         parentSessionKey: "agent:main:discord:channel:123:thread:456",
@@ -67,3 +67,4 @@ describe("resolveChannelModelOverride", () => {
     });
   }
 });
+

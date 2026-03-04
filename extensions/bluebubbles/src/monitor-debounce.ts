@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import type { NormalizedWebhookMessage } from "./monitor-normalize.js";
 import type { BlueBubblesCoreRuntime, WebhookTarget } from "./monitor-shared.js";
 
@@ -95,7 +95,7 @@ function combineDebounceEntries(entries: BlueBubblesDebounceEntry[]): Normalized
 }
 
 function resolveBlueBubblesDebounceMs(
-  config: OpenClawConfig,
+  config: IroncliwConfig,
   core: BlueBubblesCoreRuntime,
 ): number {
   const inbound = config.messages?.inbound;
@@ -203,3 +203,4 @@ export function createBlueBubblesDebounceRegistry(params: {
     },
   };
 }
+

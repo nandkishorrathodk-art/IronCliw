@@ -4,7 +4,7 @@ description: Control Sonos speakers (discover/status/play/volume/group).
 homepage: https://sonoscli.sh
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🔊",
         "requires": { "bins": ["sonos"] },
@@ -63,3 +63,4 @@ Use `sonos` to control Sonos speakers on the local network.
 
 - On error `Error: listen udp4 0.0.0.0:0: bind: operation not permitted`
 - Advise the user that they may be running via a Codex or other sandbox that does not permit network access (this can be replicated by running `sonos discover` within a Codex CLI session with sandbox enabled and not approving the escalation request)
+

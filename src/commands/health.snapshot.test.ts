@@ -157,7 +157,7 @@ describe("getHealthSnapshot", () => {
   });
 
   it("treats telegram.tokenFile as configured", async () => {
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-health-"));
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "Ironcliw-health-"));
     const tokenFile = path.join(tmpDir, "telegram-token");
     fs.writeFileSync(tokenFile, "t-file\n", "utf-8");
     const { calls, telegram } = await runSuccessfulTelegramProbe(
@@ -251,3 +251,4 @@ describe("getHealthSnapshot", () => {
     expect(ops?.heartbeat.every).toBe("1h");
   });
 });
+

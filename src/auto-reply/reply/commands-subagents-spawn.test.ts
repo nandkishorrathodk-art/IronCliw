@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resetSubagentRegistryForTests } from "../../agents/subagent-registry.js";
 import type { SpawnSubagentResult } from "../../agents/subagent-spawn.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { installSubagentsCommandCoreMocks } from "./commands-subagents.test-mocks.js";
 
 const hoisted = vi.hoisted(() => {
@@ -45,7 +45,7 @@ function forbiddenResult(error: string): SpawnSubagentResult {
 
 const baseCfg = {
   session: { mainKey: "main", scope: "per-sender" },
-} satisfies OpenClawConfig;
+} satisfies IroncliwConfig;
 
 describe("/subagents spawn command", () => {
   beforeEach(() => {
@@ -217,3 +217,4 @@ describe("/subagents spawn command", () => {
     expect(spawnSubagentDirectMock).not.toHaveBeenCalled();
   });
 });
+

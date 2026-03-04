@@ -68,7 +68,7 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
       if (!json) {
         defaultRuntime.log(`Gateway service already ${service.loadedText}.`);
         defaultRuntime.log(
-          `Reinstall with: ${formatCliCommand("openclaw gateway install --force")}`,
+          `Reinstall with: ${formatCliCommand("Ironcliw gateway install --force")}`,
         );
       }
       return;
@@ -87,8 +87,8 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
   let token: string | undefined =
     opts.token ||
     cfg.gateway?.auth?.token ||
-    process.env.OPENCLAW_GATEWAY_TOKEN ||
-    process.env.CLAWDBOT_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN ||
+    process.env.IRONCLIW_GATEWAY_TOKEN;
 
   if (!token && needsToken) {
     token = randomToken();
@@ -175,3 +175,4 @@ export async function runDaemonInstall(opts: DaemonInstallOptions) {
     },
   });
 }
+

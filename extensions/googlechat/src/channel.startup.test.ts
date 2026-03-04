@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot } from "openclaw/plugin-sdk";
+import type { ChannelAccountSnapshot } from "Ironcliw/plugin-sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createStartAccountContext } from "../../test-utils/start-account-context.js";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
@@ -66,3 +66,4 @@ describe("googlechatPlugin gateway.startAccount", () => {
     expect(patches.some((entry) => entry.running === false)).toBe(true);
   });
 });
+

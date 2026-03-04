@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import { zaloOnboardingAdapter } from "./onboarding.js";
 
@@ -15,10 +15,11 @@ describe("zalo onboarding status", () => {
             },
           },
         },
-      } as OpenClawConfig,
+      } as IroncliwConfig,
       accountOverrides: {},
     });
 
     expect(status.configured).toBe(true);
   });
 });
+

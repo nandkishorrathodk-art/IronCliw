@@ -44,21 +44,21 @@ describe("findExtraGatewayServices (win32)", () => {
     expect(result).toEqual([]);
   });
 
-  it("collects only non-openclaw marker tasks from schtasks output", async () => {
+  it("collects only non-Ironcliw marker tasks from schtasks output", async () => {
     execSchtasksMock.mockResolvedValueOnce({
       code: 0,
       stdout: [
-        "TaskName: OpenClaw Gateway",
-        "Task To Run: C:\\Program Files\\OpenClaw\\openclaw.exe gateway run",
+        "TaskName: Ironcliw Gateway",
+        "Task To Run: C:\\Program Files\\Ironcliw\\Ironcliw.exe gateway run",
         "",
-        "TaskName: Clawdbot Legacy",
-        "Task To Run: C:\\clawdbot\\clawdbot.exe run",
+        "TaskName: Ironcliw Legacy",
+        "Task To Run: C:\\Ironcliw\\Ironcliw.exe run",
         "",
         "TaskName: Other Task",
         "Task To Run: C:\\tools\\helper.exe",
         "",
-        "TaskName: MoltBot Legacy",
-        "Task To Run: C:\\moltbot\\moltbot.exe run",
+        "TaskName: Ironcliw Legacy",
+        "Task To Run: C:\\Ironcliw\\Ironcliw.exe run",
         "",
       ].join("\n"),
       stderr: "",
@@ -68,20 +68,21 @@ describe("findExtraGatewayServices (win32)", () => {
     expect(result).toEqual([
       {
         platform: "win32",
-        label: "Clawdbot Legacy",
-        detail: "task: Clawdbot Legacy, run: C:\\clawdbot\\clawdbot.exe run",
+        label: "Ironcliw Legacy",
+        detail: "task: Ironcliw Legacy, run: C:\\Ironcliw\\Ironcliw.exe run",
         scope: "system",
-        marker: "clawdbot",
+        marker: "Ironcliw",
         legacy: true,
       },
       {
         platform: "win32",
-        label: "MoltBot Legacy",
-        detail: "task: MoltBot Legacy, run: C:\\moltbot\\moltbot.exe run",
+        label: "Ironcliw Legacy",
+        detail: "task: Ironcliw Legacy, run: C:\\Ironcliw\\Ironcliw.exe run",
         scope: "system",
-        marker: "moltbot",
+        marker: "Ironcliw",
         legacy: true,
       },
     ]);
   });
 });
+

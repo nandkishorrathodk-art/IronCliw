@@ -1,9 +1,9 @@
 import type { MsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { recordSessionMetaFromInbound, resolveStorePath } from "../config/sessions.js";
 
 export async function recordInboundSessionMetaSafe(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   agentId: string;
   sessionKey: string;
   ctx: MsgContext;
@@ -22,3 +22,4 @@ export async function recordInboundSessionMetaSafe(params: {
     params.onError?.(err);
   }
 }
+

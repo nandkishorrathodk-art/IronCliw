@@ -30,7 +30,7 @@ export async function refreshQwenPortalCredentials(
     const text = await response.text();
     if (response.status === 400) {
       throw new Error(
-        `Qwen OAuth refresh token expired or invalid. Re-authenticate with \`${formatCliCommand("openclaw models auth login --provider qwen-portal")}\`.`,
+        `Qwen OAuth refresh token expired or invalid. Re-authenticate with \`${formatCliCommand("Ironcliw models auth login --provider qwen-portal")}\`.`,
       );
     }
     throw new Error(`Qwen OAuth refresh failed: ${text || response.statusText}`);
@@ -60,3 +60,4 @@ export async function refreshQwenPortalCredentials(
     expires: Date.now() + expiresIn * 1000,
   };
 }
+

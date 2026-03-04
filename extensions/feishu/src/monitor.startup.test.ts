@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { monitorFeishuProvider, stopFeishuMonitor } from "./monitor.js";
 
@@ -30,7 +30,7 @@ vi.mock("./runtime.js", () => ({
   }),
 }));
 
-function buildMultiAccountWebsocketConfig(accountIds: string[]): ClawdbotConfig {
+function buildMultiAccountWebsocketConfig(accountIds: string[]): IroncliwConfig {
   return {
     channels: {
       feishu: {
@@ -48,7 +48,7 @@ function buildMultiAccountWebsocketConfig(accountIds: string[]): ClawdbotConfig 
         ),
       },
     },
-  } as ClawdbotConfig;
+  } as IroncliwConfig;
 }
 
 afterEach(() => {
@@ -201,3 +201,4 @@ describe("Feishu monitor startup preflight", () => {
     }
   });
 });
+

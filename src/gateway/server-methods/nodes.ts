@@ -214,8 +214,8 @@ async function maybeSendNodeWakeNudge(nodeId: string): Promise<NodeWakeNudgeAtte
       auth: auth.value,
       registration,
       nodeId,
-      title: "OpenClaw needs a quick reopen",
-      body: "Tap to reopen OpenClaw and restore the node connection.",
+      title: "Ironcliw needs a quick reopen",
+      body: "Tap to reopen Ironcliw and restore the node connection.",
     });
     if (!result.ok) {
       return withDuration({
@@ -854,3 +854,4 @@ function buildNodeCommandRejectionHint(
   }
   return `node command not allowed: ${reason}`;
 }
+

@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @MainActor
 @Suite struct TalkModeConfigParsingTests {
@@ -29,3 +29,4 @@ import Testing
         #expect(selection == nil)
     }
 }
+

@@ -1,7 +1,7 @@
 ---
-summary: "Use NVIDIA's OpenAI-compatible API in OpenClaw"
+summary: "Use NVIDIA's OpenAI-compatible API in Ironcliw"
 read_when:
-  - You want to use NVIDIA models in OpenClaw
+  - You want to use NVIDIA models in Ironcliw
   - You need NVIDIA_API_KEY setup
 title: "NVIDIA"
 ---
@@ -16,8 +16,8 @@ Export the key once, then run onboarding and set an NVIDIA model:
 
 ```bash
 export NVIDIA_API_KEY="nvapi-..."
-openclaw onboard --auth-choice skip
-openclaw models set nvidia/nvidia/llama-3.1-nemotron-70b-instruct
+Ironcliw onboard --auth-choice skip
+Ironcliw models set nvidia/nvidia/llama-3.1-nemotron-70b-instruct
 ```
 
 If you still pass `--token`, remember it lands in shell history and `ps` output; prefer the env var when possible.
@@ -53,3 +53,4 @@ If you still pass `--token`, remember it lands in shell history and `ps` output;
 
 - OpenAI-compatible `/v1` endpoint; use an API key from NVIDIA NGC.
 - Provider auto-enables when `NVIDIA_API_KEY` is set; uses static defaults (131,072-token context window, 4,096 max tokens).
+

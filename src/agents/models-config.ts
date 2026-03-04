@@ -1,9 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { type OpenClawConfig, loadConfig } from "../config/config.js";
+import { type IroncliwConfig, loadConfig } from "../config/config.js";
 import { applyConfigEnvVars } from "../config/env-vars.js";
 import { isRecord } from "../utils.js";
-import { resolveOpenClawAgentDir } from "./agent-paths.js";
+import { resolveIroncliwAgentDir } from "./agent-paths.js";
 import {
   normalizeProviders,
   type ProviderConfig,
@@ -12,7 +12,7 @@ import {
   resolveImplicitProviders,
 } from "./models-config.providers.js";
 
-type ModelsConfig = NonNullable<OpenClawConfig["models"]>;
+type ModelsConfig = NonNullable<IroncliwConfig["models"]>;
 
 const DEFAULT_MODE: NonNullable<ModelsConfig["mode"]> = "merge";
 
@@ -112,7 +112,7 @@ async function readJson(pathname: string): Promise<unknown> {
 }
 
 async function resolveProvidersForModelsJson(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   agentDir: string;
 }): Promise<Record<string, ProviderConfig>> {
   const { cfg, agentDir } = params;
@@ -200,12 +200,12 @@ async function readRawFile(pathname: string): Promise<string> {
   }
 }
 
-export async function ensureOpenClawModelsJson(
-  config?: OpenClawConfig,
+export async function ensureIroncliwModelsJson(
+  config?: IroncliwConfig,
   agentDirOverride?: string,
 ): Promise<{ agentDir: string; wrote: boolean }> {
   const cfg = config ?? loadConfig();
-  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveOpenClawAgentDir();
+  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveIroncliwAgentDir();
 
   // Ensure config env vars (e.g. AWS_PROFILE, AWS_ACCESS_KEY_ID) are
   // available in process.env before implicit provider discovery.  Some
@@ -242,3 +242,4 @@ export async function ensureOpenClawModelsJson(
   await fs.writeFile(targetPath, next, { mode: 0o600 });
   return { agentDir, wrote: true };
 }
+

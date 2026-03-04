@@ -1,14 +1,14 @@
 {
-  "name": "@openclaw/irc",
-  "version": "2026.3.2",
-  "description": "OpenClaw IRC channel plugin",
-  "type": "module",
-  "dependencies": {
-    "zod": "^4.3.6"
-  },
-  "openclaw": {
-    "extensions": [
-      "./index.ts"
-    ]
-  }
+    "name":  "@ironcliw/irc",
+    "version":  "2026.0.01",
+    "description":  "Ironcliw IRC channel plugin",
+    "type":  "module",
+    "dependencies":  {
+                         "zod":  "^4.3.6"
+                     },
+    "Ironcliw":  {
+                     "extensions":  [
+                                        "./index.ts"
+                                    ]
+                 }
 }

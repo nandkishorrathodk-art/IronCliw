@@ -13,13 +13,13 @@ title: "TUI"
 1. Start the Gateway.
 
 ```bash
-openclaw gateway
+Ironcliw gateway
 ```
 
 2. Open the TUI.
 
 ```bash
-openclaw tui
+Ironcliw tui
 ```
 
 3. Type a message and press Enter.
@@ -27,7 +27,7 @@ openclaw tui
 Remote Gateway:
 
 ```bash
-openclaw tui --url ws://<host>:<port> --token <gateway-token>
+Ironcliw tui --url ws://<host>:<port> --token <gateway-token>
 ```
 
 Use `--password` if your Gateway uses password auth.
@@ -58,7 +58,7 @@ Use `--password` if your Gateway uses password auth.
 - Turn delivery on:
   - `/deliver on`
   - or the Settings panel
-  - or start with `openclaw tui --deliver`
+  - or start with `Ironcliw tui --deliver`
 
 ## Pickers + overlays
 
@@ -113,7 +113,7 @@ Other Gateway slash commands (for example, `/context`) are forwarded to the Gate
 - Prefix a line with `!` to run a local shell command on the TUI host.
 - The TUI prompts once per session to allow local execution; declining keeps `!` disabled for the session.
 - Commands run in a fresh, non-interactive shell in the TUI working directory (no persistent `cd`/env).
-- Local shell commands receive `OPENCLAW_SHELL=tui-local` in their environment.
+- Local shell commands receive `IRONCLIW_SHELL=tui-local` in their environment.
 - A lone `!` is sent as a normal message; leading spaces do not trigger local exec.
 
 ## Tool output
@@ -151,13 +151,14 @@ Pass `--token` or `--password` explicitly. Missing explicit credentials is an er
 No output after sending a message:
 
 - Run `/status` in the TUI to confirm the Gateway is connected and idle/busy.
-- Check the Gateway logs: `openclaw logs --follow`.
-- Confirm the agent can run: `openclaw status` and `openclaw models status`.
+- Check the Gateway logs: `Ironcliw logs --follow`.
+- Confirm the agent can run: `Ironcliw status` and `Ironcliw models status`.
 - If you expect messages in a chat channel, enable delivery (`/deliver on` or `--deliver`).
 - `--history-limit <n>`: History entries to load (default 200)
 
 ## Connection troubleshooting
 
 - `disconnected`: ensure the Gateway is running and your `--url/--token/--password` are correct.
-- No agents in picker: check `openclaw agents list` and your routing config.
+- No agents in picker: check `Ironcliw agents list` and your routing config.
 - Empty session picker: you might be in global scope or have no sessions yet.
+

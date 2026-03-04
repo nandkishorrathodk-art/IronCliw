@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { loadConfig } from "../../config/config.js";
 import { callGatewayLeastPrivilege, randomIdempotencyKey } from "../../gateway/call.js";
 import type { PollInput } from "../../polls.js";
@@ -44,7 +44,7 @@ type MessageSendParams = {
   dryRun?: boolean;
   bestEffort?: boolean;
   deps?: OutboundSendDeps;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   gateway?: MessageGatewayOptions;
   idempotencyKey?: string;
   mirror?: {
@@ -80,7 +80,7 @@ type MessagePollParams = {
   silent?: boolean;
   isAnonymous?: boolean;
   dryRun?: boolean;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   gateway?: MessageGatewayOptions;
   idempotencyKey?: string;
 };
@@ -105,7 +105,7 @@ export type MessagePollResult = {
 };
 
 async function resolveRequiredChannel(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   channel?: string;
 }): Promise<string> {
   return (
@@ -116,7 +116,7 @@ async function resolveRequiredChannel(params: {
   ).channel;
 }
 
-function resolveRequiredPlugin(channel: string, cfg: OpenClawConfig) {
+function resolveRequiredPlugin(channel: string, cfg: IroncliwConfig) {
   const plugin = resolveOutboundChannelPlugin({ channel, cfg });
   if (!plugin) {
     throw new Error(`Unknown channel: ${channel}`);
@@ -344,3 +344,4 @@ export async function sendPoll(params: MessagePollParams): Promise<MessagePollRe
     result,
   };
 }
+

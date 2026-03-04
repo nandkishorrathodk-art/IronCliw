@@ -1,6 +1,6 @@
 import type { App } from "@slack/bolt";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { SlackMessageEvent } from "../types.js";
 import { resolveSlackChannelConfig } from "./channel-config.js";
@@ -84,7 +84,7 @@ describe("resolveSlackChannelConfig", () => {
 });
 
 const baseParams = () => ({
-  cfg: {} as OpenClawConfig,
+  cfg: {} as IroncliwConfig,
   accountId: "default",
   botToken: "token",
   app: { client: {} } as App,
@@ -109,7 +109,7 @@ const baseParams = () => ({
   replyToMode: "off" as const,
   slashCommand: {
     enabled: false,
-    name: "openclaw",
+    name: "Ironcliw",
     sessionPrefix: "slack:slash",
     ephemeral: true,
   },
@@ -348,3 +348,4 @@ describe("createSlackThreadTsResolver", () => {
     expect(historyMock).toHaveBeenCalledTimes(1);
   });
 });
+

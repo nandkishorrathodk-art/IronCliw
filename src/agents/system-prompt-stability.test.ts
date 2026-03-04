@@ -11,7 +11,7 @@ describe("system prompt stability for cache hits", () => {
   let workspaceDir: string;
 
   beforeEach(async () => {
-    workspaceDir = await makeTempWorkspace("openclaw-system-prompt-stability-");
+    workspaceDir = await makeTempWorkspace("Ironcliw-system-prompt-stability-");
   });
 
   it("returns identical results for same inputs across multiple calls", async () => {
@@ -153,3 +153,4 @@ describe("system prompt stability for cache hits", () => {
     }
   });
 });
+

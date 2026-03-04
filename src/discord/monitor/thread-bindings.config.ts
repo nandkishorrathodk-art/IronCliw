@@ -3,7 +3,7 @@ import {
   resolveThreadBindingMaxAgeMs,
   resolveThreadBindingsEnabled,
 } from "../../channels/thread-bindings-policy.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { normalizeAccountId } from "../../routing/session-key.js";
 
 export {
@@ -13,7 +13,7 @@ export {
 };
 
 export function resolveDiscordThreadBindingIdleTimeoutMs(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accountId?: string;
 }): number {
   const accountId = normalizeAccountId(params.accountId);
@@ -26,7 +26,7 @@ export function resolveDiscordThreadBindingIdleTimeoutMs(params: {
 }
 
 export function resolveDiscordThreadBindingMaxAgeMs(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accountId?: string;
 }): number {
   const accountId = normalizeAccountId(params.accountId);
@@ -37,3 +37,4 @@ export function resolveDiscordThreadBindingMaxAgeMs(params: {
     sessionMaxAgeHoursRaw: params.cfg.session?.threadBindings?.maxAgeHours,
   });
 }
+

@@ -6,7 +6,7 @@ WORKDIR /app
 
 ENV NODE_OPTIONS="--disable-warning=ExperimentalWarning"
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json tsconfig.plugin-sdk.dts.json tsdown.config.ts vitest.config.ts vitest.e2e.config.ts openclaw.mjs ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json tsconfig.plugin-sdk.dts.json tsdown.config.ts vitest.config.ts vitest.e2e.config.ts Ironcliw.mjs ./
 COPY src ./src
 COPY test ./test
 COPY scripts ./scripts
@@ -16,8 +16,8 @@ COPY patches ./patches
 COPY ui ./ui
 COPY extensions/memory-core ./extensions/memory-core
 COPY vendor/a2ui/renderers/lit ./vendor/a2ui/renderers/lit
-COPY apps/shared/OpenClawKit/Sources/OpenClawKit/Resources ./apps/shared/OpenClawKit/Sources/OpenClawKit/Resources
-COPY apps/shared/OpenClawKit/Tools/CanvasA2UI ./apps/shared/OpenClawKit/Tools/CanvasA2UI
+COPY apps/shared/IroncliwKit/Sources/IroncliwKit/Resources ./apps/shared/IroncliwKit/Sources/IroncliwKit/Resources
+COPY apps/shared/IroncliwKit/Tools/CanvasA2UI ./apps/shared/IroncliwKit/Tools/CanvasA2UI
 
 RUN pnpm install --frozen-lockfile
 RUN pnpm build
@@ -28,3 +28,4 @@ RUN useradd --create-home --shell /bin/bash appuser \
 USER appuser
 
 CMD ["bash"]
+

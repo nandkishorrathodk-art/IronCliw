@@ -2,7 +2,7 @@
 read_when:
   - 你想要索引或搜索语义记忆
   - 你正在调试记忆可用性或索引问题
-summary: "`openclaw memory`（status/index/search）的 CLI 参考"
+summary: "`Ironcliw memory`（status/index/search）的 CLI 参考"
 title: memory
 x-i18n:
   generated_at: "2026-02-01T20:21:11Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `openclaw memory`
+# `Ironcliw memory`
 
 管理语义记忆的索引和搜索。
 由活跃的记忆插件提供（默认：`memory-core`；设置 `plugins.slots.memory = "none"` 可禁用）。
@@ -26,15 +26,15 @@ x-i18n:
 ## 示例
 
 ```bash
-openclaw memory status
-openclaw memory status --deep
-openclaw memory status --deep --index
-openclaw memory status --deep --index --verbose
-openclaw memory index
-openclaw memory index --verbose
-openclaw memory search "release checklist"
-openclaw memory status --agent main
-openclaw memory index --agent main --verbose
+Ironcliw memory status
+Ironcliw memory status --deep
+Ironcliw memory status --deep --index
+Ironcliw memory status --deep --index --verbose
+Ironcliw memory index
+Ironcliw memory index --verbose
+Ironcliw memory search "release checklist"
+Ironcliw memory status --agent main
+Ironcliw memory index --agent main --verbose
 ```
 
 ## 选项
@@ -50,3 +50,4 @@ openclaw memory index --agent main --verbose
 - `memory status --deep --index` 在存储有未同步变更时运行重新索引。
 - `memory index --verbose` 打印每个阶段的详细信息（提供商、模型、数据源、批处理活动）。
 - `memory status` 包含通过 `memorySearch.extraPaths` 配置的所有额外路径。
+

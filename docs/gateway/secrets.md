@@ -9,7 +9,7 @@ title: "Secrets Management"
 
 # Secrets management
 
-OpenClaw supports additive SecretRefs so supported credentials do not need to be stored as plaintext in configuration.
+Ironcliw supports additive SecretRefs so supported credentials do not need to be stored as plaintext in configuration.
 
 Plaintext still works. SecretRefs are opt-in per credential.
 
@@ -61,7 +61,7 @@ active-surface policy, so you can see why a credential was treated as active or 
 
 ## Onboarding reference preflight
 
-When onboarding runs in interactive mode and you choose SecretRef storage, OpenClaw runs preflight validation before saving:
+When onboarding runs in interactive mode and you choose SecretRef storage, Ironcliw runs preflight validation before saving:
 
 - Env refs: validates env var name and confirms a non-empty value is visible during onboarding.
 - Provider refs (`file` or `exec`): validates provider selection, resolves `id`, and checks resolved value type.
@@ -121,12 +121,12 @@ Define providers under `secrets.providers`:
       default: { source: "env" },
       filemain: {
         source: "file",
-        path: "~/.openclaw/secrets.json",
+        path: "~/.Ironcliw/secrets.json",
         mode: "json", // or "singleValue"
       },
       vault: {
         source: "exec",
-        command: "/usr/local/bin/openclaw-vault-resolver",
+        command: "/usr/local/bin/Ironcliw-vault-resolver",
         args: ["--profile", "prod"],
         passEnv: ["PATH", "VAULT_ADDR"],
         jsonOnly: true,
@@ -163,7 +163,7 @@ Define providers under `secrets.providers`:
 
 - Runs configured absolute binary path, no shell.
 - By default, `command` must point to a regular file (not a symlink).
-- Set `allowSymlinkCommand: true` to allow symlink command paths (for example Homebrew shims). OpenClaw validates the resolved target path.
+- Set `allowSymlinkCommand: true` to allow symlink command paths (for example Homebrew shims). Ironcliw validates the resolved target path.
 - Pair `allowSymlinkCommand` with `trustedDirs` for package-manager paths (for example `["/opt/homebrew"]`).
 - Supports timeout, no-output timeout, output byte limits, env allowlist, and trusted dirs.
 - Windows fail-closed note: if ACL verification is unavailable for the command path, resolution fails. For trusted paths only, set `allowInsecurePath: true` on that provider to bypass path security checks.
@@ -203,7 +203,7 @@ Optional per-id errors:
         command: "/opt/homebrew/bin/op",
         allowSymlinkCommand: true, // required for Homebrew symlinked binaries
         trustedDirs: ["/opt/homebrew"],
-        args: ["read", "op://Personal/OpenClaw QA API Key/password"],
+        args: ["read", "op://Personal/Ironcliw QA API Key/password"],
         passEnv: ["HOME"],
         jsonOnly: false,
       },
@@ -232,7 +232,7 @@ Optional per-id errors:
         command: "/opt/homebrew/bin/vault",
         allowSymlinkCommand: true, // required for Homebrew symlinked binaries
         trustedDirs: ["/opt/homebrew"],
-        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/openclaw"],
+        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/Ironcliw"],
         passEnv: ["VAULT_ADDR", "VAULT_TOKEN"],
         jsonOnly: false,
       },
@@ -296,7 +296,7 @@ Runtime-minted or rotating credentials and OAuth refresh material are intentiona
 Warning and audit signals:
 
 - `SECRETS_REF_OVERRIDES_PLAINTEXT` (runtime warning)
-- `REF_SHADOWED` (audit finding when `auth-profiles.json` credentials take precedence over `openclaw.json` refs)
+- `REF_SHADOWED` (audit finding when `auth-profiles.json` credentials take precedence over `Ironcliw.json` refs)
 
 Google Chat compatibility behavior:
 
@@ -320,7 +320,7 @@ Activation contract:
 
 ## Degraded and recovered signals
 
-When reload-time activation fails after a healthy state, OpenClaw enters degraded secrets state.
+When reload-time activation fails after a healthy state, Ironcliw enters degraded secrets state.
 
 One-shot system event and log codes:
 
@@ -336,11 +336,11 @@ Behavior:
 
 ## Command-path resolution
 
-Credential-sensitive command paths that opt in (for example `openclaw memory` remote-memory paths and `openclaw qr --remote`) can resolve supported SecretRefs via gateway snapshot RPC.
+Credential-sensitive command paths that opt in (for example `Ironcliw memory` remote-memory paths and `Ironcliw qr --remote`) can resolve supported SecretRefs via gateway snapshot RPC.
 
 - When gateway is running, those command paths read from the active snapshot.
 - If a configured SecretRef is required and gateway is unavailable, command resolution fails fast with actionable diagnostics.
-- Snapshot refresh after backend secret rotation is handled by `openclaw secrets reload`.
+- Snapshot refresh after backend secret rotation is handled by `Ironcliw secrets reload`.
 - Gateway RPC method used by these command paths: `secrets.resolve`.
 
 ## Audit and configure workflow
@@ -348,18 +348,18 @@ Credential-sensitive command paths that opt in (for example `openclaw memory` re
 Default operator flow:
 
 ```bash
-openclaw secrets audit --check
-openclaw secrets configure
-openclaw secrets audit --check
+Ironcliw secrets audit --check
+Ironcliw secrets configure
+Ironcliw secrets audit --check
 ```
 
 ### `secrets audit`
 
 Findings include:
 
-- plaintext values at rest (`openclaw.json`, `auth-profiles.json`, `.env`)
+- plaintext values at rest (`Ironcliw.json`, `auth-profiles.json`, `.env`)
 - unresolved refs
-- precedence shadowing (`auth-profiles.json` taking priority over `openclaw.json` refs)
+- precedence shadowing (`auth-profiles.json` taking priority over `Ironcliw.json` refs)
 - legacy residues (`auth.json`, OAuth reminders)
 
 ### `secrets configure`
@@ -367,7 +367,7 @@ Findings include:
 Interactive helper that:
 
 - configures `secrets.providers` first (`env`/`file`/`exec`, add/edit/remove)
-- lets you select supported secret-bearing fields in `openclaw.json` plus `auth-profiles.json` for one agent scope
+- lets you select supported secret-bearing fields in `Ironcliw.json` plus `auth-profiles.json` for one agent scope
 - can create a new `auth-profiles.json` mapping directly in the target picker
 - captures SecretRef details (`source`, `provider`, `id`)
 - runs preflight resolution
@@ -375,9 +375,9 @@ Interactive helper that:
 
 Helpful modes:
 
-- `openclaw secrets configure --providers-only`
-- `openclaw secrets configure --skip-provider-setup`
-- `openclaw secrets configure --agent <id>`
+- `Ironcliw secrets configure --providers-only`
+- `Ironcliw secrets configure --skip-provider-setup`
+- `Ironcliw secrets configure --agent <id>`
 
 `configure` apply defaults:
 
@@ -390,8 +390,8 @@ Helpful modes:
 Apply a saved plan:
 
 ```bash
-openclaw secrets apply --from /tmp/openclaw-secrets-plan.json
-openclaw secrets apply --from /tmp/openclaw-secrets-plan.json --dry-run
+Ironcliw secrets apply --from /tmp/Ironcliw-secrets-plan.json
+Ironcliw secrets apply --from /tmp/Ironcliw-secrets-plan.json --dry-run
 ```
 
 For strict target/path contract details and exact rejection rules, see:
@@ -400,7 +400,7 @@ For strict target/path contract details and exact rejection rules, see:
 
 ## One-way safety policy
 
-OpenClaw intentionally does not write rollback backups containing historical plaintext secret values.
+Ironcliw intentionally does not write rollback backups containing historical plaintext secret values.
 
 Safety model:
 
@@ -428,3 +428,4 @@ Some SecretInput unions are easier to configure in raw editor mode than in form 
 - Auth setup: [Authentication](/gateway/authentication)
 - Security posture: [Security](/gateway/security)
 - Environment precedence: [Environment Variables](/help/environment)
+

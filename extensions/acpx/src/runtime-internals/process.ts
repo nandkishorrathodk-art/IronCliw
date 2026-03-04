@@ -4,12 +4,12 @@ import type {
   WindowsSpawnProgram,
   WindowsSpawnProgramCandidate,
   WindowsSpawnResolution,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   applyWindowsSpawnProgramPolicy,
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 
 export type SpawnExit = {
   code: number | null;
@@ -132,7 +132,7 @@ export function spawnWithResolvedCommand(
 
   return spawn(resolved.command, resolved.args, {
     cwd: params.cwd,
-    env: { ...process.env, OPENCLAW_SHELL: "acp" },
+    env: { ...process.env, IRONCLIW_SHELL: "acp" },
     stdio: ["pipe", "pipe", "pipe"],
     shell: resolved.shell,
     windowsHide: resolved.windowsHide,
@@ -218,3 +218,4 @@ function directoryExists(cwd: string): boolean {
     return false;
   }
 }
+

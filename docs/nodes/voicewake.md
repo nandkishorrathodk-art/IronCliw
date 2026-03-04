@@ -8,7 +8,7 @@ title: "Voice Wake"
 
 # Voice Wake (Global Wake Words)
 
-OpenClaw treats **wake words as a single global list** owned by the **Gateway**.
+Ironcliw treats **wake words as a single global list** owned by the **Gateway**.
 
 - There are **no per-node custom wake words**.
 - **Any node/app UI may edit** the list; changes are persisted by the Gateway and broadcast to everyone.
@@ -19,12 +19,12 @@ OpenClaw treats **wake words as a single global list** owned by the **Gateway**.
 
 Wake words are stored on the gateway machine at:
 
-- `~/.openclaw/settings/voicewake.json`
+- `~/.Ironcliw/settings/voicewake.json`
 
 Shape:
 
 ```json
-{ "triggers": ["openclaw", "claude", "computer"], "updatedAtMs": 1730000000000 }
+{ "triggers": ["Ironcliw", "claude", "computer"], "updatedAtMs": 1730000000000 }
 ```
 
 ## Protocol
@@ -64,3 +64,4 @@ Who receives it:
 
 - Voice Wake is currently disabled in Android runtime/Settings.
 - Android voice uses manual mic capture in the Voice tab instead of wake-word triggers.
+

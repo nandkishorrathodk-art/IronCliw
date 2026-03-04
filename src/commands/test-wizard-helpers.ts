@@ -37,7 +37,7 @@ export function createWizardPrompter(
 }
 
 export async function setupAuthTestEnv(
-  prefix = "openclaw-auth-",
+  prefix = "Ironcliw-auth-",
   options?: { agentSubdir?: string },
 ): Promise<{
   stateDir: string;
@@ -45,8 +45,8 @@ export async function setupAuthTestEnv(
 }> {
   const stateDir = await makeTempWorkspace(prefix);
   const agentDir = path.join(stateDir, options?.agentSubdir ?? "agent");
-  process.env.OPENCLAW_STATE_DIR = stateDir;
-  process.env.OPENCLAW_AGENT_DIR = agentDir;
+  process.env.IRONCLIW_STATE_DIR = stateDir;
+  process.env.IRONCLIW_AGENT_DIR = agentDir;
   process.env.PI_CODING_AGENT_DIR = agentDir;
   await fs.mkdir(agentDir, { recursive: true });
   return { stateDir, agentDir };
@@ -74,10 +74,10 @@ export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
   };
 }
 
-export function requireOpenClawAgentDir(): string {
-  const agentDir = process.env.OPENCLAW_AGENT_DIR;
+export function requireIroncliwAgentDir(): string {
+  const agentDir = process.env.IRONCLIW_AGENT_DIR;
   if (!agentDir) {
-    throw new Error("OPENCLAW_AGENT_DIR not set");
+    throw new Error("IRONCLIW_AGENT_DIR not set");
   }
   return agentDir;
 }
@@ -90,3 +90,4 @@ export async function readAuthProfilesForAgent<T>(agentDir: string): Promise<T> 
   const raw = await fs.readFile(authProfilePathForAgent(agentDir), "utf8");
   return JSON.parse(raw) as T;
 }
+

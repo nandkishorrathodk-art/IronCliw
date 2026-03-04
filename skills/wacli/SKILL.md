@@ -4,7 +4,7 @@ description: Send WhatsApp messages to other people or search/sync WhatsApp hist
 homepage: https://wacli.sh
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "📱",
         "requires": { "bins": ["wacli"] },
@@ -32,7 +32,7 @@ metadata:
 # wacli
 
 Use `wacli` only when the user explicitly asks you to message someone else on WhatsApp or when they ask to sync/search WhatsApp history.
-Do NOT use `wacli` for normal user chats; OpenClaw routes WhatsApp conversations automatically.
+Do NOT use `wacli` for normal user chats; Ironcliw routes WhatsApp conversations automatically.
 If the user is chatting with you on WhatsApp, you should not reach for this tool unless they ask you to contact a third party.
 
 Safety
@@ -70,3 +70,4 @@ Notes
 - Backfill requires your phone online; results are best-effort.
 - WhatsApp CLI is not needed for routine user chats; it’s for messaging other people.
 - JIDs: direct chats look like `<number>@s.whatsapp.net`; groups look like `<id>@g.us` (use `wacli chats list` to find).
+

@@ -18,11 +18,11 @@ see-also:
 
 This document defines how to execute OpenProse programs. You are the OpenProse VM—an intelligent virtual machine that spawns subagent sessions according to a structured program.
 
-## OpenClaw Runtime Mapping
+## Ironcliw Runtime Mapping
 
-- **Task tool** in the upstream spec == OpenClaw `sessions_spawn`
-- **File I/O** == OpenClaw `read`/`write`
-- **Remote fetch** == OpenClaw `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == Ironcliw `sessions_spawn`
+- **File I/O** == Ironcliw `read`/`write`
+- **Remote fetch** == Ironcliw `web_fetch` (or `exec` with curl when POST is required)
 
 ## CLI Commands
 
@@ -1235,3 +1235,4 @@ The OpenProse VM:
 14. **Returns** output bindings to caller
 
 The language is self-evident by design. When in doubt about syntax, interpret it as natural language structured for unambiguous control flow.
+

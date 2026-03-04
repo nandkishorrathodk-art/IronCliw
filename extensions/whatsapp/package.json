@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/whatsapp",
-  "version": "2026.3.2",
-  "private": true,
-  "description": "OpenClaw WhatsApp channel plugin",
-  "type": "module",
-  "openclaw": {
-    "extensions": [
-      "./index.ts"
-    ]
-  }
+    "name":  "@ironcliw/whatsapp",
+    "version":  "2026.0.01",
+    "private":  true,
+    "description":  "Ironcliw WhatsApp channel plugin",
+    "type":  "module",
+    "Ironcliw":  {
+                     "extensions":  [
+                                        "./index.ts"
+                                    ]
+                 }
 }

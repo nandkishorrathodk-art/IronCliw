@@ -35,7 +35,7 @@ export function createProfileSelectionOps({
       if (profile.driver === "extension") {
         throw new Error(
           `tab not found (no attached Chrome tabs for profile "${profile.name}"). ` +
-            "Click the OpenClaw Browser Relay toolbar icon on the tab you want to control (badge ON).",
+            "Click the Ironcliw Browser Relay toolbar icon on the tab you want to control (badge ON).",
         );
       }
       await openTab("about:blank");
@@ -153,3 +153,4 @@ export function createProfileSelectionOps({
     closeTab,
   };
 }
+

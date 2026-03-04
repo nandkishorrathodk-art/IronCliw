@@ -13,7 +13,7 @@ import {
   isBlockedHostnameOrIp,
   readJsonBodyWithLimit,
   requestBodyErrorToText,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { z } from "zod";
 import { publishNostrProfile, getNostrProfileState } from "./channel.js";
 import { NostrProfileSchema, type NostrProfile } from "./config-schema.js";
@@ -517,3 +517,4 @@ async function handleImportProfile(
   });
   return true;
 }
+

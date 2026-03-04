@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/types.js";
+import type { IroncliwConfig } from "../../config/types.js";
 import { resolveDiscordAccount } from "../../discord/accounts.js";
 import { resolveSlackAccount } from "../../slack/accounts.js";
 import { resolveTelegramAccount } from "../../telegram/accounts.js";
@@ -8,7 +8,7 @@ import { normalizeSlackMessagingTarget } from "./normalize/slack.js";
 import type { ChannelDirectoryEntry } from "./types.js";
 
 export type DirectoryConfigParams = {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accountId?: string | null;
   query?: string | null;
   limit?: number | null;
@@ -219,3 +219,4 @@ export async function listWhatsAppDirectoryGroupsFromConfig(
     .filter((id) => Boolean(id) && id !== "*");
   return toDirectoryEntries("group", applyDirectoryQueryAndLimit(ids, params));
 }
+

@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import IroncliwKit
 
 @MainActor
 final class NodeCapabilityRouter {
@@ -23,3 +23,4 @@ final class NodeCapabilityRouter {
         return try await handler(request)
     }
 }
+

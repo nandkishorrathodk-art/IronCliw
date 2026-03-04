@@ -4,7 +4,7 @@ description: Best practices for using the oracle CLI (prompt + file bundling, en
 homepage: https://askoracle.dev
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🧿",
         "requires": { "bins": ["oracle"] },
@@ -123,3 +123,4 @@ For long investigations, write a standalone prompt + file set so you can rerun d
 - Attach all context files needed (entrypoints, configs, key modules, docs).
 
 Oracle runs are one-shot; the model doesn’t remember prior runs. “Restoring context” means re-running with the same prompt + `--file …` set (or reattaching a still-running stored session).
+

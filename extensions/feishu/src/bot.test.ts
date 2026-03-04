@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, PluginRuntime, RuntimeEnv } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPluginRuntimeMock } from "../../test-utils/plugin-runtime-mock.js";
 import type { FeishuMessageEvent } from "./bot.js";
@@ -69,7 +69,7 @@ function createRuntimeEnv(): RuntimeEnv {
   } as RuntimeEnv;
 }
 
-async function dispatchMessage(params: { cfg: ClawdbotConfig; event: FeishuMessageEvent }) {
+async function dispatchMessage(params: { cfg: IroncliwConfig; event: FeishuMessageEvent }) {
   await handleFeishuMessage({
     cfg: params.cfg,
     event: params.event,
@@ -201,13 +201,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("does not enqueue inbound preview text as system events", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -230,7 +230,7 @@ describe("handleFeishuMessage command authorization", () => {
   });
 
   it("uses authorizer resolution instead of hardcoded CommandAuthorized=true", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       commands: { useAccessGroups: true },
       channels: {
         feishu: {
@@ -238,7 +238,7 @@ describe("handleFeishuMessage command authorization", () => {
           allowFrom: ["ou-admin"],
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -275,7 +275,7 @@ describe("handleFeishuMessage command authorization", () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
     mockReadAllowFromStore.mockResolvedValue(["ou-attacker"]);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       commands: { useAccessGroups: true },
       channels: {
         feishu: {
@@ -283,7 +283,7 @@ describe("handleFeishuMessage command authorization", () => {
           allowFrom: [],
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -312,7 +312,7 @@ describe("handleFeishuMessage command authorization", () => {
   });
 
   it("skips sender-name lookup when resolveSenderNames is false", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
@@ -320,7 +320,7 @@ describe("handleFeishuMessage command authorization", () => {
           resolveSenderNames: false,
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -350,14 +350,14 @@ describe("handleFeishuMessage command authorization", () => {
       contentType: "text",
     });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           enabled: true,
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -388,13 +388,13 @@ describe("handleFeishuMessage command authorization", () => {
   });
 
   it("replies pairing challenge to DM chat_id instead of user:sender id", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "pairing",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -427,14 +427,14 @@ describe("handleFeishuMessage command authorization", () => {
     mockReadAllowFromStore.mockResolvedValue([]);
     mockUpsertPairingRequest.mockResolvedValue({ code: "ABCDEFGH", created: true });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "pairing",
           allowFrom: [],
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -478,7 +478,7 @@ describe("handleFeishuMessage command authorization", () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(true);
     mockResolveCommandAuthorizedFromAuthorizers.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       commands: { useAccessGroups: true },
       channels: {
         feishu: {
@@ -489,7 +489,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -525,7 +525,7 @@ describe("handleFeishuMessage command authorization", () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(true);
     mockResolveCommandAuthorizedFromAuthorizers.mockReturnValue(true);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       commands: { useAccessGroups: true },
       channels: {
         feishu: {
@@ -537,7 +537,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -572,7 +572,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("allows group sender when global groupSenderAllowFrom includes sender", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groupPolicy: "open",
@@ -584,7 +584,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -615,7 +615,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("blocks group sender when global groupSenderAllowFrom excludes sender", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groupPolicy: "open",
@@ -627,7 +627,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -653,7 +653,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("prefers per-group allowFrom over global groupSenderAllowFrom", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groupPolicy: "open",
@@ -666,7 +666,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -690,7 +690,7 @@ describe("handleFeishuMessage command authorization", () => {
   });
 
   it("drops message when groupConfig.enabled is false", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -700,7 +700,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -724,13 +724,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("uses video file_key (not thumbnail image_key) for inbound video download", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -772,13 +772,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("uses media message_type file_key (not thumbnail image_key) for inbound mobile video download", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -820,13 +820,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("downloads embedded media tags from post messages as files", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -874,13 +874,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("includes message_id in BodyForAgent on its own line", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -947,13 +947,13 @@ describe("handleFeishuMessage command authorization", () => {
       },
     });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -999,13 +999,13 @@ describe("handleFeishuMessage command authorization", () => {
       },
     });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -1048,7 +1048,7 @@ describe("handleFeishuMessage command authorization", () => {
       },
     });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           appId: "cli_test",
@@ -1060,7 +1060,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -1111,7 +1111,7 @@ describe("handleFeishuMessage command authorization", () => {
       },
     });
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           appId: "cli_scope_bug",
@@ -1123,7 +1123,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -1158,7 +1158,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("routes group sessions by sender when groupSessionScope=group_sender", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1169,7 +1169,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-scope-user" } },
@@ -1195,7 +1195,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("routes topic sessions and parentPeer when groupSessionScope=group_topic_sender", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1206,7 +1206,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-user" } },
@@ -1233,7 +1233,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("keeps root_id as topic key when root_id and thread_id both exist", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1244,7 +1244,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-user" } },
@@ -1272,7 +1272,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("uses thread_id as topic key when root_id is missing", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1283,7 +1283,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-user" } },
@@ -1310,7 +1310,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("maps legacy topicSessionMode=enabled to group_topic routing", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           topicSessionMode: "enabled",
@@ -1321,7 +1321,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-legacy" } },
@@ -1348,7 +1348,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("maps legacy topicSessionMode=enabled to root_id when both root_id and thread_id exist", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           topicSessionMode: "enabled",
@@ -1359,7 +1359,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-legacy-thread-id" } },
@@ -1387,7 +1387,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("uses message_id as topic root when group_topic + replyInThread and no root_id", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1399,7 +1399,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-init" } },
@@ -1425,7 +1425,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("keeps topic session key stable after first turn creates a thread", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1437,7 +1437,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const firstTurn: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-init" } },
@@ -1482,7 +1482,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("replies to the topic root when handling a message inside an existing topic", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1493,7 +1493,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-topic-user" } },
@@ -1520,7 +1520,7 @@ describe("handleFeishuMessage command authorization", () => {
   it("forces thread replies when inbound message contains thread_id", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1532,7 +1532,7 @@ describe("handleFeishuMessage command authorization", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-thread-reply" } },
@@ -1559,13 +1559,13 @@ describe("handleFeishuMessage command authorization", () => {
   it("does not dispatch twice for the same image message_id (concurrent dedupe)", async () => {
     mockShouldComputeCommandAuthorized.mockReturnValue(false);
 
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           dmPolicy: "open",
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: {
@@ -1607,22 +1607,22 @@ describe("toMessageResourceType", () => {
 
 describe("resolveBroadcastAgents", () => {
   it("returns agent list when broadcast config has the peerId", () => {
-    const cfg = { broadcast: { oc_group123: ["susan", "main"] } } as unknown as ClawdbotConfig;
+    const cfg = { broadcast: { oc_group123: ["susan", "main"] } } as unknown as IroncliwConfig;
     expect(resolveBroadcastAgents(cfg, "oc_group123")).toEqual(["susan", "main"]);
   });
 
   it("returns null when no broadcast config", () => {
-    const cfg = {} as ClawdbotConfig;
+    const cfg = {} as IroncliwConfig;
     expect(resolveBroadcastAgents(cfg, "oc_group123")).toBeNull();
   });
 
   it("returns null when peerId not in broadcast", () => {
-    const cfg = { broadcast: { oc_other: ["susan"] } } as unknown as ClawdbotConfig;
+    const cfg = { broadcast: { oc_other: ["susan"] } } as unknown as IroncliwConfig;
     expect(resolveBroadcastAgents(cfg, "oc_group123")).toBeNull();
   });
 
   it("returns null when agent list is empty", () => {
-    const cfg = { broadcast: { oc_group123: [] } } as unknown as ClawdbotConfig;
+    const cfg = { broadcast: { oc_group123: [] } } as unknown as IroncliwConfig;
     expect(resolveBroadcastAgents(cfg, "oc_group123")).toBeNull();
   });
 });
@@ -1732,7 +1732,7 @@ describe("broadcast dispatch", () => {
   });
 
   it("dispatches to all broadcast agents when bot is mentioned", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       broadcast: { "oc-broadcast-group": ["susan", "main"] },
       agents: { list: [{ id: "main" }, { id: "susan" }] },
       channels: {
@@ -1744,7 +1744,7 @@ describe("broadcast dispatch", () => {
           },
         },
       },
-    } as unknown as ClawdbotConfig;
+    } as unknown as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-sender" } },
@@ -1785,7 +1785,7 @@ describe("broadcast dispatch", () => {
   });
 
   it("skips broadcast dispatch when bot is NOT mentioned (requireMention=true)", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       broadcast: { "oc-broadcast-group": ["susan", "main"] },
       agents: { list: [{ id: "main" }, { id: "susan" }] },
       channels: {
@@ -1797,7 +1797,7 @@ describe("broadcast dispatch", () => {
           },
         },
       },
-    } as unknown as ClawdbotConfig;
+    } as unknown as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-sender" } },
@@ -1824,7 +1824,7 @@ describe("broadcast dispatch", () => {
   });
 
   it("preserves single-agent dispatch when no broadcast config", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         feishu: {
           groups: {
@@ -1834,7 +1834,7 @@ describe("broadcast dispatch", () => {
           },
         },
       },
-    } as ClawdbotConfig;
+    } as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-sender" } },
@@ -1864,7 +1864,7 @@ describe("broadcast dispatch", () => {
   });
 
   it("cross-account broadcast dedup: second account skips dispatch", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       broadcast: { "oc-broadcast-group": ["susan", "main"] },
       agents: { list: [{ id: "main" }, { id: "susan" }] },
       channels: {
@@ -1876,7 +1876,7 @@ describe("broadcast dispatch", () => {
           },
         },
       },
-    } as unknown as ClawdbotConfig;
+    } as unknown as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-sender" } },
@@ -1914,7 +1914,7 @@ describe("broadcast dispatch", () => {
   });
 
   it("skips unknown agents not in agents.list", async () => {
-    const cfg: ClawdbotConfig = {
+    const cfg: IroncliwConfig = {
       broadcast: { "oc-broadcast-group": ["susan", "unknown-agent"] },
       agents: { list: [{ id: "main" }, { id: "susan" }] },
       channels: {
@@ -1926,7 +1926,7 @@ describe("broadcast dispatch", () => {
           },
         },
       },
-    } as unknown as ClawdbotConfig;
+    } as unknown as IroncliwConfig;
 
     const event: FeishuMessageEvent = {
       sender: { sender_id: { open_id: "ou-sender" } },
@@ -1952,3 +1952,4 @@ describe("broadcast dispatch", () => {
     expect(sessionKey).toBe("agent:susan:feishu:group:oc-broadcast-group");
   });
 });
+

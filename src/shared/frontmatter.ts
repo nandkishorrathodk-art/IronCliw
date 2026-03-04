@@ -31,7 +31,7 @@ export function parseFrontmatterBool(value: string | undefined, fallback: boolea
   return parsed === undefined ? fallback : parsed;
 }
 
-export function resolveOpenClawManifestBlock(params: {
+export function resolveIroncliwManifestBlock(params: {
   frontmatter: Record<string, unknown>;
   key?: string;
 }): Record<string, unknown> | undefined {
@@ -59,16 +59,16 @@ export function resolveOpenClawManifestBlock(params: {
   }
 }
 
-export type OpenClawManifestRequires = {
+export type IroncliwManifestRequires = {
   bins: string[];
   anyBins: string[];
   env: string[];
   config: string[];
 };
 
-export function resolveOpenClawManifestRequires(
+export function resolveIroncliwManifestRequires(
   metadataObj: Record<string, unknown>,
-): OpenClawManifestRequires | undefined {
+): IroncliwManifestRequires | undefined {
   const requiresRaw =
     typeof metadataObj.requires === "object" && metadataObj.requires !== null
       ? (metadataObj.requires as Record<string, unknown>)
@@ -84,7 +84,7 @@ export function resolveOpenClawManifestRequires(
   };
 }
 
-export function resolveOpenClawManifestInstall<T>(
+export function resolveIroncliwManifestInstall<T>(
   metadataObj: Record<string, unknown>,
   parseInstallSpec: (input: unknown) => T | undefined,
 ): T[] {
@@ -94,11 +94,11 @@ export function resolveOpenClawManifestInstall<T>(
     .filter((entry): entry is T => Boolean(entry));
 }
 
-export function resolveOpenClawManifestOs(metadataObj: Record<string, unknown>): string[] {
+export function resolveIroncliwManifestOs(metadataObj: Record<string, unknown>): string[] {
   return normalizeStringList(metadataObj.os);
 }
 
-export type ParsedOpenClawManifestInstallBase = {
+export type ParsedIroncliwManifestInstallBase = {
   raw: Record<string, unknown>;
   kind: string;
   id?: string;
@@ -106,10 +106,10 @@ export type ParsedOpenClawManifestInstallBase = {
   bins?: string[];
 };
 
-export function parseOpenClawManifestInstallBase(
+export function parseIroncliwManifestInstallBase(
   input: unknown,
   allowedKinds: readonly string[],
-): ParsedOpenClawManifestInstallBase | undefined {
+): ParsedIroncliwManifestInstallBase | undefined {
   if (!input || typeof input !== "object") {
     return undefined;
   }
@@ -121,7 +121,7 @@ export function parseOpenClawManifestInstallBase(
     return undefined;
   }
 
-  const spec: ParsedOpenClawManifestInstallBase = {
+  const spec: ParsedIroncliwManifestInstallBase = {
     raw,
     kind,
   };
@@ -137,3 +137,4 @@ export function parseOpenClawManifestInstallBase(
   }
   return spec;
 }
+

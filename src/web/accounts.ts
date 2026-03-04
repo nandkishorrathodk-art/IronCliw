@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createAccountListHelpers } from "../channels/plugins/account-helpers.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { resolveOAuthDir } from "../config/paths.js";
 import type { DmPolicy, GroupPolicy, WhatsAppAccountConfig } from "../config/types.js";
 import { resolveAccountEntry } from "../routing/account-lookup.js";
@@ -36,7 +36,7 @@ const { listConfiguredAccountIds, listAccountIds, resolveDefaultAccountId } =
 export const listWhatsAppAccountIds = listAccountIds;
 export const resolveDefaultWhatsAppAccountId = resolveDefaultAccountId;
 
-export function listWhatsAppAuthDirs(cfg: OpenClawConfig): string[] {
+export function listWhatsAppAuthDirs(cfg: IroncliwConfig): string[] {
   const oauthDir = resolveOAuthDir();
   const whatsappDir = path.join(oauthDir, "whatsapp");
   const authDirs = new Set<string>([oauthDir, path.join(whatsappDir, DEFAULT_ACCOUNT_ID)]);
@@ -61,12 +61,12 @@ export function listWhatsAppAuthDirs(cfg: OpenClawConfig): string[] {
   return Array.from(authDirs);
 }
 
-export function hasAnyWhatsAppAuth(cfg: OpenClawConfig): boolean {
+export function hasAnyWhatsAppAuth(cfg: IroncliwConfig): boolean {
   return listWhatsAppAuthDirs(cfg).some((authDir) => hasWebCredsSync(authDir));
 }
 
 function resolveAccountConfig(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   accountId: string,
 ): WhatsAppAccountConfig | undefined {
   return resolveAccountEntry(cfg.channels?.whatsapp?.accounts, accountId);
@@ -89,7 +89,7 @@ function legacyAuthExists(authDir: string): boolean {
   }
 }
 
-export function resolveWhatsAppAuthDir(params: { cfg: OpenClawConfig; accountId: string }): {
+export function resolveWhatsAppAuthDir(params: { cfg: IroncliwConfig; accountId: string }): {
   authDir: string;
   isLegacy: boolean;
 } {
@@ -112,7 +112,7 @@ export function resolveWhatsAppAuthDir(params: { cfg: OpenClawConfig; accountId:
 }
 
 export function resolveWhatsAppAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accountId?: string | null;
 }): ResolvedWhatsAppAccount {
   const rootCfg = params.cfg.channels?.whatsapp;
@@ -147,8 +147,9 @@ export function resolveWhatsAppAccount(params: {
   };
 }
 
-export function listEnabledWhatsAppAccounts(cfg: OpenClawConfig): ResolvedWhatsAppAccount[] {
+export function listEnabledWhatsAppAccounts(cfg: IroncliwConfig): ResolvedWhatsAppAccount[] {
   return listWhatsAppAccountIds(cfg)
     .map((accountId) => resolveWhatsAppAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
+

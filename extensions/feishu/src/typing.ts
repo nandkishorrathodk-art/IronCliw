@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, RuntimeEnv } from "Ironcliw/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { getFeishuRuntime } from "./runtime.js";
@@ -101,7 +101,7 @@ export function getBackoffCodeFromResponse(response: unknown): number | undefine
  * Also checks for backoff codes in non-throwing SDK responses (#28157).
  */
 export async function addTypingIndicator(params: {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   messageId: string;
   accountId?: string;
   runtime?: RuntimeEnv;
@@ -158,7 +158,7 @@ export async function addTypingIndicator(params: {
  * Rate-limit and quota errors are re-thrown for the same reason as above.
  */
 export async function removeTypingIndicator(params: {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   state: TypingIndicatorState;
   accountId?: string;
   runtime?: RuntimeEnv;
@@ -208,3 +208,4 @@ export async function removeTypingIndicator(params: {
     }
   }
 }
+

@@ -1,4 +1,8 @@
 import {
+  GATEWAY_CLIENT_MODES,
+  GATEWAY_CLIENT_NAMES,
+} from "../../../src/gateway/protocol/client-info.js";
+import {
   GATEWAY_EVENT_UPDATE_AVAILABLE,
   type GatewayUpdateAvailableEventPayload,
 } from "../../../src/gateway/events.js";
@@ -11,7 +15,7 @@ import {
   setLastActiveSessionKey,
 } from "./app-settings.ts";
 import { handleAgentEvent, resetToolStream, type AgentEventPayload } from "./app-tool-stream.ts";
-import type { OpenClawApp } from "./app.ts";
+import type { IroncliwApp } from "./app.ts";
 import { shouldReloadHistoryForFinalEvent } from "./chat-event-reload.ts";
 import { loadAgents, loadToolsCatalog } from "./controllers/agents.ts";
 import { loadAssistantIdentity } from "./controllers/assistant-identity.ts";
@@ -149,8 +153,8 @@ export function connectGateway(host: GatewayHost) {
     url: host.settings.gatewayUrl,
     token: host.settings.token.trim() ? host.settings.token : undefined,
     password: host.password.trim() ? host.password : undefined,
-    clientName: "openclaw-control-ui",
-    mode: "webchat",
+    clientName: GATEWAY_CLIENT_NAMES.CONTROL_UI,
+    mode: GATEWAY_CLIENT_MODES.UI,
     instanceId: host.clientInstanceId,
     onHello: (hello) => {
       if (host.client !== client) {
@@ -167,11 +171,11 @@ export function connectGateway(host: GatewayHost) {
       (host as unknown as { chatStream: string | null }).chatStream = null;
       (host as unknown as { chatStreamStartedAt: number | null }).chatStreamStartedAt = null;
       resetToolStream(host as unknown as Parameters<typeof resetToolStream>[0]);
-      void loadAssistantIdentity(host as unknown as OpenClawApp);
-      void loadAgents(host as unknown as OpenClawApp);
-      void loadToolsCatalog(host as unknown as OpenClawApp);
-      void loadNodes(host as unknown as OpenClawApp, { quiet: true });
-      void loadDevices(host as unknown as OpenClawApp, { quiet: true });
+      void loadAssistantIdentity(host as unknown as IroncliwApp);
+      void loadAgents(host as unknown as IroncliwApp);
+      void loadToolsCatalog(host as unknown as IroncliwApp);
+      void loadNodes(host as unknown as IroncliwApp, { quiet: true });
+      void loadDevices(host as unknown as IroncliwApp, { quiet: true });
       void refreshActiveTab(host as unknown as Parameters<typeof refreshActiveTab>[0]);
     },
     onClose: ({ code, reason, error }) => {
@@ -237,7 +241,7 @@ function handleTerminalChatEvent(
   }
   host.refreshSessionsAfterChat.delete(runId);
   if (state === "final") {
-    void loadSessions(host as unknown as OpenClawApp, {
+    void loadSessions(host as unknown as IroncliwApp, {
       activeMinutes: CHAT_SESSIONS_ACTIVE_MINUTES,
     });
   }
@@ -250,10 +254,10 @@ function handleChatGatewayEvent(host: GatewayHost, payload: ChatEventPayload | u
       payload.sessionKey,
     );
   }
-  const state = handleChatEvent(host as unknown as OpenClawApp, payload);
+  const state = handleChatEvent(host as unknown as IroncliwApp, payload);
   handleTerminalChatEvent(host, payload, state);
   if (state === "final" && shouldReloadHistoryForFinalEvent(payload)) {
-    void loadChatHistory(host as unknown as OpenClawApp);
+    void loadChatHistory(host as unknown as IroncliwApp);
   }
 }
 
@@ -297,7 +301,7 @@ function handleGatewayEventUnsafe(host: GatewayHost, evt: GatewayEventFrame) {
   }
 
   if (evt.event === "device.pair.requested" || evt.event === "device.pair.resolved") {
-    void loadDevices(host as unknown as OpenClawApp, { quiet: true });
+    void loadDevices(host as unknown as IroncliwApp, { quiet: true });
   }
 
   if (evt.event === "exec.approval.requested") {

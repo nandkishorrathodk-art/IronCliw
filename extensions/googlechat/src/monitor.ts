@@ -1,12 +1,12 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import {
   createWebhookInFlightLimiter,
   createReplyPrefixOptions,
   registerWebhookTargetWithPluginRoute,
   resolveInboundRouteEnvelopeBuilderWithRuntime,
   resolveWebhookPath,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { type ResolvedGoogleChatAccount } from "./accounts.js";
 import {
   downloadGoogleChatMedia,
@@ -113,12 +113,12 @@ async function processGoogleChatEvent(event: GoogleChatEvent, target: WebhookTar
  * Resolve bot display name with fallback chain:
  * 1. Account config name
  * 2. Agent name from config
- * 3. "OpenClaw" as generic fallback
+ * 3. "Ironcliw" as generic fallback
  */
 function resolveBotDisplayName(params: {
   accountName?: string;
   agentId: string;
-  config: OpenClawConfig;
+  config: IroncliwConfig;
 }): string {
   const { accountName, agentId, config } = params;
   if (accountName?.trim()) {
@@ -128,13 +128,13 @@ function resolveBotDisplayName(params: {
   if (agent?.name?.trim()) {
     return agent.name.trim();
   }
-  return "OpenClaw";
+  return "Ironcliw";
 }
 
 async function processMessageWithPipeline(params: {
   event: GoogleChatEvent;
   account: ResolvedGoogleChatAccount;
-  config: OpenClawConfig;
+  config: IroncliwConfig;
   runtime: GoogleChatRuntimeEnv;
   core: GoogleChatCoreRuntime;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -369,7 +369,7 @@ async function deliverGoogleChatReply(params: {
   spaceId: string;
   runtime: GoogleChatRuntimeEnv;
   core: GoogleChatCoreRuntime;
-  config: OpenClawConfig;
+  config: IroncliwConfig;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   typingMessageName?: string;
 }): Promise<void> {
@@ -546,3 +546,4 @@ export function resolveGoogleChatWebhookPath(params: {
 export function computeGoogleChatMediaMaxMb(params: { account: ResolvedGoogleChatAccount }) {
   return params.account.config.mediaMaxMb ?? 20;
 }
+

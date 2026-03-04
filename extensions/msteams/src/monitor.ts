@@ -5,9 +5,9 @@ import {
   keepHttpServerTaskAlive,
   mergeAllowlist,
   summarizeMapping,
-  type OpenClawConfig,
+  type IroncliwConfig,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import { formatUnknownError } from "./errors.js";
@@ -23,7 +23,7 @@ import { createMSTeamsAdapter, loadMSTeamsSdkWithAuth } from "./sdk.js";
 import { resolveMSTeamsCredentials } from "./token.js";
 
 export type MonitorMSTeamsOpts = {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   conversationStore?: MSTeamsConversationStore;
@@ -343,3 +343,4 @@ export async function monitorMSTeamsProvider(
 
   return { app: expressApp, shutdown };
 }
+

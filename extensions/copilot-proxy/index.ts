@@ -1,9 +1,9 @@
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type IroncliwPluginApi,
   type ProviderAuthContext,
   type ProviderAuthResult,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 
 const DEFAULT_BASE_URL = "http://localhost:3000/v1";
 const DEFAULT_API_KEY = "n/a";
@@ -76,7 +76,7 @@ const copilotProxyPlugin = {
   name: "Copilot Proxy",
   description: "Local Copilot Proxy (VS Code LM) provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: IroncliwPluginApi) {
     api.registerProvider({
       id: "copilot-proxy",
       label: "Copilot Proxy",
@@ -152,3 +152,4 @@ const copilotProxyPlugin = {
 };
 
 export default copilotProxyPlugin;
+

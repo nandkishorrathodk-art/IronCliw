@@ -13,8 +13,8 @@ async function withTempConfig(
   configContent: string,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-env-io-"));
-  const configPath = path.join(dir, "openclaw.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-env-io-"));
+  const configPath = path.join(dir, "Ironcliw.json");
   await fs.writeFile(configPath, configContent);
   try {
     await run(configPath);
@@ -26,8 +26,8 @@ async function withTempConfig(
 async function withWrapperEnvContext(configPath: string, run: () => Promise<void>): Promise<void> {
   await withEnvAsync(
     {
-      OPENCLAW_CONFIG_PATH: configPath,
-      OPENCLAW_DISABLE_CONFIG_CACHE: "1",
+      IRONCLIW_CONFIG_PATH: configPath,
+      IRONCLIW_DISABLE_CONFIG_CACHE: "1",
       MY_API_KEY: "original-key-123",
     },
     run,
@@ -147,3 +147,4 @@ describe("env snapshot TOCTOU via wrapper APIs", () => {
     });
   });
 });
+

@@ -27,7 +27,7 @@ describe("discord audit", () => {
           },
         },
       },
-    } as unknown as import("../config/config.js").OpenClawConfig;
+    } as unknown as import("../config/config.js").IroncliwConfig;
 
     const collected = collectDiscordAuditChannelIds({
       cfg,
@@ -54,3 +54,4 @@ describe("discord audit", () => {
     expect(audit.channels[0]?.missing).toContain("SendMessages");
   });
 });
+

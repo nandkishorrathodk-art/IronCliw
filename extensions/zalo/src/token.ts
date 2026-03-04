@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
-import type { BaseTokenResolution } from "openclaw/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";
+import type { BaseTokenResolution } from "Ironcliw/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "Ironcliw/plugin-sdk/account-id";
 import { normalizeResolvedSecretInputString, normalizeSecretInputString } from "./secret-input.js";
 import type { ZaloConfig } from "./types.js";
 
@@ -101,3 +101,4 @@ export function resolveZaloToken(
 
   return { token: "", source: "none" };
 }
+

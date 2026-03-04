@@ -11,8 +11,8 @@ type RegisteredRoute = {
 const registerPluginHttpRouteMock = vi.fn<(params: RegisteredRoute) => () => void>(() => vi.fn());
 const dispatchReplyWithBufferedBlockDispatcher = vi.fn().mockResolvedValue({ counts: {} });
 
-vi.mock("openclaw/plugin-sdk", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("openclaw/plugin-sdk")>();
+vi.mock("Ironcliw/plugin-sdk", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("Ironcliw/plugin-sdk")>();
   return {
     ...actual,
     DEFAULT_ACCOUNT_ID: "default",
@@ -106,3 +106,4 @@ describe("Synology channel wiring integration", () => {
     await started;
   });
 });
+

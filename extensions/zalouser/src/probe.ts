@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk";
+import type { BaseProbeResult } from "Ironcliw/plugin-sdk";
 import type { ZcaUserInfo } from "./types.js";
 import { getZaloUserInfo } from "./zalo-js.js";
 
@@ -32,3 +32,4 @@ export async function probeZalouser(
     };
   }
 }
+

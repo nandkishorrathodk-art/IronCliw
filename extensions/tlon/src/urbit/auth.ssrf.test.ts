@@ -1,5 +1,5 @@
-import type { LookupFn } from "openclaw/plugin-sdk";
-import { SsrFBlockedError } from "openclaw/plugin-sdk";
+import type { LookupFn } from "Ironcliw/plugin-sdk";
+import { SsrFBlockedError } from "Ironcliw/plugin-sdk";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { authenticate } from "./auth.js";
 
@@ -42,3 +42,4 @@ describe("tlon urbit auth ssrf", () => {
     expect(mockFetch).toHaveBeenCalled();
   });
 });
+

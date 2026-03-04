@@ -42,10 +42,10 @@ describe("acpx plugin config parsing", () => {
       rawConfig: {
         command: "../acpx/dist/cli.js",
       },
-      workspaceDir: "/home/user/repos/openclaw",
+      workspaceDir: "/home/user/repos/Ironcliw",
     });
 
-    expect(resolved.command).toBe(path.resolve("/home/user/repos/openclaw", "../acpx/dist/cli.js"));
+    expect(resolved.command).toBe(path.resolve("/home/user/repos/Ironcliw", "../acpx/dist/cli.js"));
     expect(resolved.expectedVersion).toBeUndefined();
     expect(resolved.allowPluginLocalInstall).toBe(false);
   });
@@ -133,3 +133,4 @@ describe("acpx plugin config parsing", () => {
     ).toThrow("strictWindowsCmdWrapper must be a boolean");
   });
 });
+

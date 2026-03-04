@@ -19,7 +19,7 @@ const fsState = vi.hoisted(() => ({
 }));
 
 const abs = (p: string) => path.resolve(p);
-const fixturesRoot = abs(path.join("__openclaw_vitest__", "cron", "runs-one-shot"));
+const fixturesRoot = abs(path.join("__IRONCLIW_vitest__", "cron", "runs-one-shot"));
 const isFixturePath = (p: string) => {
   const resolved = abs(p);
   const rootPrefix = `${fixturesRoot}${path.sep}`;
@@ -827,3 +827,4 @@ describe("CronService", () => {
     await store.cleanup();
   });
 });
+

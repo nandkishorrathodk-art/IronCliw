@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想从终端搜索实时 OpenClaw 文档
-summary: "`openclaw docs` 的 CLI 参考（搜索实时文档索引）"
+  - 你想从终端搜索实时 Ironcliw 文档
+summary: "`Ironcliw docs` 的 CLI 参考（搜索实时文档索引）"
 title: docs
 x-i18n:
   generated_at: "2026-02-03T07:44:50Z"
@@ -12,11 +12,12 @@ x-i18n:
   workflow: 15
 ---
 
-# `openclaw docs`
+# `Ironcliw docs`
 
 搜索实时文档索引。
 
 ```bash
-openclaw docs browser extension
-openclaw docs sandbox allowHostControl
+Ironcliw docs browser extension
+Ironcliw docs sandbox allowHostControl
 ```
+

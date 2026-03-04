@@ -25,27 +25,27 @@ function isBatchSafe(value: string): boolean {
 }
 
 function resolveSystemdUnit(env: NodeJS.ProcessEnv): string {
-  const override = env.OPENCLAW_SYSTEMD_UNIT?.trim();
+  const override = env.IRONCLIW_SYSTEMD_UNIT?.trim();
   if (override) {
     return override.endsWith(".service") ? override : `${override}.service`;
   }
-  return `${resolveGatewaySystemdServiceName(env.OPENCLAW_PROFILE)}.service`;
+  return `${resolveGatewaySystemdServiceName(env.IRONCLIW_PROFILE)}.service`;
 }
 
 function resolveLaunchdLabel(env: NodeJS.ProcessEnv): string {
-  const override = env.OPENCLAW_LAUNCHD_LABEL?.trim();
+  const override = env.IRONCLIW_LAUNCHD_LABEL?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayLaunchAgentLabel(env.OPENCLAW_PROFILE);
+  return resolveGatewayLaunchAgentLabel(env.IRONCLIW_PROFILE);
 }
 
 function resolveWindowsTaskName(env: NodeJS.ProcessEnv): string {
-  const override = env.OPENCLAW_WINDOWS_TASK_NAME?.trim();
+  const override = env.IRONCLIW_WINDOWS_TASK_NAME?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayWindowsTaskName(env.OPENCLAW_PROFILE);
+  return resolveGatewayWindowsTaskName(env.IRONCLIW_PROFILE);
 }
 
 /**
@@ -69,7 +69,7 @@ export async function prepareRestartScript(
     if (platform === "linux") {
       const unitName = resolveSystemdUnit(env);
       const escaped = shellEscape(unitName);
-      filename = `openclaw-restart-${timestamp}.sh`;
+      filename = `Ironcliw-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
@@ -83,7 +83,7 @@ rm -f "$0"
       const escaped = shellEscape(label);
       // Fallback to 501 if getuid is not available (though it should be on macOS)
       const uid = process.getuid ? process.getuid() : 501;
-      filename = `openclaw-restart-${timestamp}.sh`;
+      filename = `Ironcliw-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
@@ -99,7 +99,7 @@ rm -f "$0"
       }
       const port =
         Number.isFinite(gatewayPort) && gatewayPort > 0 ? gatewayPort : DEFAULT_GATEWAY_PORT;
-      filename = `openclaw-restart-${timestamp}.bat`;
+      filename = `Ironcliw-restart-${timestamp}.bat`;
       scriptContent = `@echo off
 REM Standalone restart script — survives parent process termination.
 REM Wait briefly to ensure file locks are released after update.
@@ -159,3 +159,4 @@ export async function runRestartScript(scriptPath: string): Promise<void> {
   });
   child.unref();
 }
+

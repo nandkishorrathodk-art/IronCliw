@@ -3,11 +3,11 @@ import { VERSION } from "../version.js";
 import type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 import { applySensitiveHints, buildBaseHints, mapSensitivePaths } from "./schema.hints.js";
 import { applyDerivedTags } from "./schema.tags.js";
-import { OpenClawSchema } from "./zod-schema.js";
+import { IroncliwSchema } from "./zod-schema.js";
 
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
-export type ConfigSchema = ReturnType<typeof OpenClawSchema.toJSONSchema>;
+export type ConfigSchema = ReturnType<typeof IroncliwSchema.toJSONSchema>;
 
 type JsonSchemaNode = Record<string, unknown>;
 
@@ -360,12 +360,12 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   if (cachedBase) {
     return cachedBase;
   }
-  const schema = OpenClawSchema.toJSONSchema({
+  const schema = IroncliwSchema.toJSONSchema({
     target: "draft-07",
     unrepresentable: "any",
   });
-  schema.title = "OpenClawConfig";
-  const hints = applyDerivedTags(mapSensitivePaths(OpenClawSchema, "", buildBaseHints()));
+  schema.title = "IroncliwConfig";
+  const hints = applyDerivedTags(mapSensitivePaths(IroncliwSchema, "", buildBaseHints()));
   const next = {
     schema: stripChannelSchema(schema),
     uiHints: hints,
@@ -412,3 +412,4 @@ export function buildConfigSchema(params?: {
   setMergedSchemaCache(cacheKey, merged);
   return merged;
 }
+

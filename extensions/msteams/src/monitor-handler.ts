@@ -1,4 +1,4 @@
-import type { OpenClawConfig, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, RuntimeEnv } from "Ironcliw/plugin-sdk";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import { buildFileInfoCard, parseFileConsentInvoke, uploadToConsentUrl } from "./file-consent.js";
 import { normalizeMSTeamsConversationId } from "./inbound.js";
@@ -25,7 +25,7 @@ export type MSTeamsActivityHandler = {
 };
 
 export type MSTeamsMessageHandlerDeps = {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   runtime: RuntimeEnv;
   appId: string;
   adapter: MSTeamsAdapter;
@@ -188,3 +188,4 @@ export function registerMSTeamsHandlers<T extends MSTeamsActivityHandler>(
 
   return handler;
 }
+

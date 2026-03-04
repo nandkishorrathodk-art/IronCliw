@@ -1,8 +1,8 @@
 import {
   resolveChannelMediaMaxBytes,
-  type OpenClawConfig,
+  type IroncliwConfig,
   type PluginRuntime,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import type {
@@ -92,7 +92,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;
@@ -162,3 +162,4 @@ export async function resolveMSTeamsSendContext(params: {
     mediaMaxBytes,
   };
 }
+

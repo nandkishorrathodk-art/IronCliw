@@ -124,7 +124,7 @@ type MattermostCommandResponse = {
 // ─── Default commands ────────────────────────────────────────────────────────
 
 /**
- * Built-in OpenClaw commands to register as native slash commands.
+ * Built-in Ironcliw commands to register as native slash commands.
  * These mirror the text-based commands already handled by the gateway.
  */
 export const DEFAULT_COMMAND_SPECS: MattermostCommandSpec[] = [
@@ -232,7 +232,7 @@ export async function updateMattermostCommand(
 }
 
 /**
- * Register all OpenClaw slash commands for a given team.
+ * Register all Ironcliw slash commands for a given team.
  * Skips commands that are already registered with the same trigger + callback URL.
  * Returns the list of newly created command IDs.
  */
@@ -282,7 +282,7 @@ export async function registerSlashCommands(params: {
 
     if (ownedCommands.length === 0 && foreignCommands.length > 0) {
       log?.(
-        `mattermost: trigger /${spec.trigger} already used by non-OpenClaw command(s); skipping to avoid mutating external integrations`,
+        `mattermost: trigger /${spec.trigger} already used by non-Ironcliw command(s); skipping to avoid mutating external integrations`,
       );
       continue;
     }
@@ -476,7 +476,7 @@ export function parseSlashCommandPayload(
 }
 
 /**
- * Map the trigger word back to the original OpenClaw command name.
+ * Map the trigger word back to the original Ironcliw command name.
  * e.g. "oc_status" -> "/status", "oc_model" -> "/model"
  */
 export function resolveCommandText(
@@ -563,3 +563,4 @@ export function resolveCallbackUrl(params: {
 
   return `http://${host}:${params.gatewayPort}${path}`;
 }
+

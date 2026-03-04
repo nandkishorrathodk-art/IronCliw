@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import {
   evaluateSessionFreshness,
   loadSessionStore,
@@ -9,7 +9,7 @@ import {
 } from "../../config/sessions.js";
 
 export function resolveCronSession(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   sessionKey: string;
   nowMs: number;
   agentId: string;
@@ -81,3 +81,4 @@ export function resolveCronSession(params: {
   };
   return { storePath, store, sessionEntry, systemSent, isNewSession };
 }
+

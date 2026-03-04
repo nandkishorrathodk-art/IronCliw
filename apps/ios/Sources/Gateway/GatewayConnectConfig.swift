@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import IroncliwKit
 
 /// Single source of truth for "how we connect" to the current gateway.
 ///
@@ -25,3 +25,4 @@ struct GatewayConnectConfig: Sendable {
         return trimmed
     }
 }
+

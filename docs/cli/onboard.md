@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `openclaw onboard` (interactive onboarding wizard)"
+summary: "CLI reference for `Ironcliw onboard` (interactive onboarding wizard)"
 read_when:
   - You want guided setup for gateway, workspace, auth, channels, and skills
 title: "onboard"
 ---
 
-# `openclaw onboard`
+# `Ironcliw onboard`
 
 Interactive onboarding wizard (local or remote Gateway setup).
 
@@ -20,19 +20,19 @@ Interactive onboarding wizard (local or remote Gateway setup).
 ## Examples
 
 ```bash
-openclaw onboard
-openclaw onboard --flow quickstart
-openclaw onboard --flow manual
-openclaw onboard --mode remote --remote-url wss://gateway-host:18789
+Ironcliw onboard
+Ironcliw onboard --flow quickstart
+Ironcliw onboard --flow manual
+Ironcliw onboard --mode remote --remote-url wss://gateway-host:18789
 ```
 
 For plaintext private-network `ws://` targets (trusted networks only), set
-`OPENCLAW_ALLOW_INSECURE_PRIVATE_WS=1` in the onboarding process environment.
+`IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1` in the onboarding process environment.
 
 Non-interactive custom provider:
 
 ```bash
-openclaw onboard --non-interactive \
+Ironcliw onboard --non-interactive \
   --auth-choice custom-api-key \
   --custom-base-url "https://llm.example.com/v1" \
   --custom-model-id "foo-large" \
@@ -46,7 +46,7 @@ openclaw onboard --non-interactive \
 Store provider keys as refs instead of plaintext:
 
 ```bash
-openclaw onboard --non-interactive \
+Ironcliw onboard --non-interactive \
   --auth-choice openai-api-key \
   --secret-input-mode ref \
   --accept-risk
@@ -77,7 +77,7 @@ If you specifically want the GLM Coding Plan endpoints, pick `zai-coding-global`
 
 ```bash
 # Promptless endpoint selection
-openclaw onboard --non-interactive \
+Ironcliw onboard --non-interactive \
   --auth-choice zai-coding-global \
   --zai-api-key "$ZAI_API_KEY"
 
@@ -90,7 +90,7 @@ openclaw onboard --non-interactive \
 Non-interactive Mistral example:
 
 ```bash
-openclaw onboard --non-interactive \
+Ironcliw onboard --non-interactive \
   --auth-choice mistral-api-key \
   --mistral-api-key "$MISTRAL_API_KEY"
 ```
@@ -100,17 +100,18 @@ Flow notes:
 - `quickstart`: minimal prompts, auto-generates a gateway token.
 - `manual`: full prompts for port/bind/auth (alias of `advanced`).
 - Local onboarding DM scope behavior: [CLI Onboarding Reference](/start/wizard-cli-reference#outputs-and-internals).
-- Fastest first chat: `openclaw dashboard` (Control UI, no channel setup).
+- Fastest first chat: `Ironcliw dashboard` (Control UI, no channel setup).
 - Custom Provider: connect any OpenAI or Anthropic compatible endpoint,
   including hosted providers not listed. Use Unknown to auto-detect.
 
 ## Common follow-up commands
 
 ```bash
-openclaw configure
-openclaw agents add <name>
+Ironcliw configure
+Ironcliw agents add <name>
 ```
 
 <Note>
 `--json` does not imply non-interactive mode. Use `--non-interactive` for scripts.
 </Note>
+

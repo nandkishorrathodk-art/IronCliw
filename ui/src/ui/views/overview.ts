@@ -50,8 +50,8 @@ export function renderOverview(props: OverviewProps) {
       <div class="muted" style="margin-top: 8px">
         ${t("overview.pairing.hint")}
         <div style="margin-top: 6px">
-          <span class="mono">openclaw devices list</span><br />
-          <span class="mono">openclaw devices approve &lt;requestId&gt;</span>
+          <span class="mono">ironcliw devices list</span><br />
+          <span class="mono">ironcliw devices approve &lt;requestId&gt;</span>
         </div>
         <div style="margin-top: 6px; font-size: 12px;">
           ${t("overview.pairing.mobileHint")}
@@ -59,7 +59,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.openclaw.ai/web/control-ui#device-pairing-first-connection"
+            href="https://docs.ironcliw.ai/web/control-ui#device-pairing-first-connection"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Device pairing docs (opens in new tab)"
@@ -110,13 +110,13 @@ export function renderOverview(props: OverviewProps) {
         <div class="muted" style="margin-top: 8px">
           ${t("overview.auth.required")}
           <div style="margin-top: 6px">
-            <span class="mono">openclaw dashboard --no-open</span> → tokenized URL<br />
-            <span class="mono">openclaw doctor --generate-gateway-token</span> → set token
+            <span class="mono">ironcliw dashboard --no-open</span> → tokenized URL<br />
+            <span class="mono">ironcliw doctor --generate-gateway-token</span> → set token
           </div>
           <div style="margin-top: 6px">
             <a
               class="session-link"
-              href="https://docs.openclaw.ai/web/dashboard"
+              href="https://docs.ironcliw.ai/web/dashboard"
               target=${EXTERNAL_LINK_TARGET}
               rel=${buildExternalLinkRel()}
               title="Control UI auth docs (opens in new tab)"
@@ -128,11 +128,11 @@ export function renderOverview(props: OverviewProps) {
     }
     return html`
       <div class="muted" style="margin-top: 8px">
-        ${t("overview.auth.failed", { command: "openclaw dashboard --no-open" })}
+        ${t("overview.auth.failed", { command: "ironcliw dashboard --no-open" })}
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.openclaw.ai/web/dashboard"
+            href="https://docs.ironcliw.ai/web/dashboard"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Control UI auth docs (opens in new tab)"
@@ -171,7 +171,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.openclaw.ai/gateway/tailscale"
+            href="https://docs.ironcliw.ai/gateway/tailscale"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Tailscale Serve docs (opens in new tab)"
@@ -180,7 +180,7 @@ export function renderOverview(props: OverviewProps) {
           <span class="muted"> · </span>
           <a
             class="session-link"
-            href="https://docs.openclaw.ai/web/control-ui#insecure-http"
+            href="https://docs.ironcliw.ai/web/control-ui#insecure-http"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Insecure HTTP docs (opens in new tab)"
@@ -222,7 +222,7 @@ export function renderOverview(props: OverviewProps) {
                       const v = (e.target as HTMLInputElement).value;
                       props.onSettingsChange({ ...props.settings, token: v });
                     }}
-                    placeholder="OPENCLAW_GATEWAY_TOKEN"
+                    placeholder="IRONCLIW_GATEWAY_TOKEN"
                   />
                 </label>
                 <label class="field">
@@ -334,6 +334,48 @@ export function renderOverview(props: OverviewProps) {
           ${props.cronEnabled == null ? t("common.na") : props.cronEnabled ? t("common.enabled") : t("common.disabled")}
         </div>
         <div class="muted">${t("overview.stats.cronNext", { time: formatNextRun(props.cronNext) })}</div>
+      </div>
+    </section>
+
+    <!-- Bug Bounty Showcase -->
+    <section class="card" style="margin-top: 18px;">
+      <div class="card-title">Bug Bounty Power Tools</div>
+      <div class="card-sub" style="margin-bottom: 14px;">God-Tier Elite Hacker Utilities</div>
+      <div class="grid grid-cols-4" style="gap: 12px; text-align: center;">
+        <div class="card stat-card" style="border: 1px solid #d92626; box-shadow: 0 0 10px rgba(217,38,38,0.2);">
+          <div style="font-size: 24px; margin-bottom: 8px;">🛡️</div><div style="font-weight: bold; color: #d92626;">Network Recon</div>
+        </div>
+        <div class="card stat-card" style="border: 1px solid #00bbff; transition: transform 0.2s;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🔍</div><div style="font-weight: bold; color: #00bbff;">Subdomain Brute</div>
+        </div>
+        <div class="card stat-card" style="border: 1px solid #ffaa00; transition: transform 0.2s;">
+          <div style="font-size: 24px; margin-bottom: 8px;">⚡</div><div style="font-weight: bold; color: #ffaa00;">Quick Exploits</div>
+        </div>
+        <div class="card stat-card" style="border: 1px solid #9900ff; transition: transform 0.2s;">
+          <div style="font-size: 24px; margin-bottom: 8px;">💀</div><div style="font-weight: bold; color: #9900ff;">God-Tier Analysis</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Animated Metrics Section -->
+    <section class="card" style="margin-top: 18px; border-top: 2px solid #d92626;">
+      <div class="row" style="justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div class="card-title" style="color: #d92626;">Live Bug Bounty Metrics</div>
+        <div class="statusDot ok"></div>
+      </div>
+      <div class="grid grid-cols-3" style="gap: 1rem;">
+         <div class="card" style="background: rgba(20,20,20,0.6); text-align: center; border: 1px solid #333;">
+           <div class="stat-label">Endpoints Scanned</div>
+           <div class="mono" style="font-size: 2rem; color: #00ff00; margin-top: 8px;">004,231</div>
+         </div>
+         <div class="card" style="background: rgba(20,20,20,0.6); text-align: center; border: 1px solid #333;">
+           <div class="stat-label">Vulns Identified</div>
+           <div class="mono" style="font-size: 2rem; color: #ff3333; margin-top: 8px;">14 CRIT</div>
+         </div>
+         <div class="card" style="background: rgba(20,20,20,0.6); text-align: center; border: 1px solid #333;">
+           <div class="stat-label">WAF Bypasses</div>
+           <div class="mono" style="font-size: 2rem; color: #ffbb00; margin-top: 8px;">ACTIVE</div>
+         </div>
       </div>
     </section>
 

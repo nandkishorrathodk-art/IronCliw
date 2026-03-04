@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 ANDROID_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 RESULTS_DIR="$ANDROID_DIR/benchmark/results"
-CLASS_FILTER="ai.openclaw.android.benchmark.StartupMacrobenchmark#coldStartup"
+CLASS_FILTER="ai.Ironcliw.android.benchmark.StartupMacrobenchmark#coldStartup"
 BASELINE_JSON=""
 
 usage() {
@@ -54,7 +54,7 @@ fi
 
 mkdir -p "$RESULTS_DIR"
 
-run_log="$(mktemp -t openclaw-android-bench.XXXXXX.log)"
+run_log="$(mktemp -t Ironcliw-android-bench.XXXXXX.log)"
 trap 'rm -f "$run_log"' EXIT
 
 cd "$ANDROID_DIR"
@@ -122,3 +122,4 @@ if [[ -n "$BASELINE_JSON" ]]; then
   delta_pct="$(awk -v a="$median_ms" -v b="$base_median" 'BEGIN { if (b==0) { print "nan" } else { printf "%.2f", ((a-b)/b)*100 } }')"
   echo "baseline_median_ms=$base_median delta_ms=$delta_ms delta_pct=$delta_pct%"
 fi
+

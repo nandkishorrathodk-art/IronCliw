@@ -6,7 +6,7 @@ import {
   type ChannelMessageActionContext,
   type ChannelMessageActionName,
   type ChannelToolSend,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { resolveMatrixAccount } from "./matrix/accounts.js";
 import { handleMatrixAction } from "./tool-actions.js";
 import type { CoreConfig } from "./types.js";
@@ -193,3 +193,4 @@ export const matrixMessageActions: ChannelMessageActionAdapter = {
     throw new Error(`Action ${action} is not supported for provider matrix.`);
   },
 };
+

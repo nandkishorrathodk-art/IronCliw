@@ -196,16 +196,16 @@ describe("temp path guard", () => {
 
   it("detects dynamic and ignores static fixtures", () => {
     const dynamicFixtures = [
-      "const p = path.join(os.tmpdir(), `openclaw-${id}`);",
+      "const p = path.join(os.tmpdir(), `Ironcliw-${id}`);",
       "const p = path.join(os.tmpdir(), 'safe', `${token}`);",
     ];
     const staticFixtures = [
-      "const p = path.join(os.tmpdir(), 'openclaw-fixed');",
-      "const p = path.join(os.tmpdir(), `openclaw-fixed`);",
+      "const p = path.join(os.tmpdir(), 'Ironcliw-fixed');",
+      "const p = path.join(os.tmpdir(), `Ironcliw-fixed`);",
       "const p = path.join(os.tmpdir(), prefix + '-x');",
       "const p = path.join(os.tmpdir(), segment);",
-      "const p = path.join('/tmp', `openclaw-${id}`);",
-      "// path.join(os.tmpdir(), `openclaw-${id}`)",
+      "const p = path.join('/tmp', `Ironcliw-${id}`);",
+      "// path.join(os.tmpdir(), `Ironcliw-${id}`)",
       "const p = path.join(os.tmpdir());",
     ];
 
@@ -247,3 +247,4 @@ describe("temp path guard", () => {
     expect(weakRandomMatches).toEqual([]);
   });
 });
+

@@ -4,7 +4,7 @@
  * Used by channel.ts to access dispatch functions.
  */
 
-import type { PluginRuntime } from "openclaw/plugin-sdk";
+import type { PluginRuntime } from "Ironcliw/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 
@@ -18,3 +18,4 @@ export function getSynologyRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

@@ -1,4 +1,4 @@
-# OpenClaw Codebase Patterns
+# Ironcliw Codebase Patterns
 
 **Always reuse existing code - no redundancy!**
 
@@ -55,10 +55,11 @@
 ## Stack & Commands
 
 - **Package manager**: pnpm (`pnpm install`)
-- **Dev**: `pnpm openclaw ...` or `pnpm dev`
+- **Dev**: `pnpm Ironcliw ...` or `pnpm dev`
 - **Type-check**: `pnpm tsgo`
 - **Lint/format**: `pnpm check`
 - **Tests**: `pnpm test`
 - **Build**: `pnpm build`
 
 If you are coding together with a human, do NOT use scripts/committer, but git directly and run the above commands manually to ensure quality.
+

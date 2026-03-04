@@ -2,7 +2,7 @@
 name: tmux
 description: Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.
 metadata:
-  { "openclaw": { "emoji": "🧵", "os": ["darwin", "linux"], "requires": { "bins": ["tmux"] } } }
+  { "Ironcliw": { "emoji": "🧵", "os": ["darwin", "linux"], "requires": { "bins": ["tmux"] } } }
 ---
 
 # tmux Session Control
@@ -151,3 +151,4 @@ tmux send-keys -t worker-4 "Fix the bug in auth.js" Enter
 - `-S -` captures entire scrollback history
 - Target format: `session:window.pane` (e.g., `shared:0.0`)
 - Sessions persist across SSH disconnects
+

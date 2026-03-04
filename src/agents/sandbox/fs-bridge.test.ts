@@ -57,12 +57,12 @@ function dockerExecResult(stdout: string) {
 function createSandbox(overrides?: Partial<SandboxContext>): SandboxContext {
   return createSandboxTestContext({
     overrides: {
-      containerName: "moltbot-sbx-test",
+      containerName: "Ironcliw-sbx-test",
       ...overrides,
     },
     dockerOverrides: {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "Ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "Ironcliw-sbx-",
     },
   });
 }
@@ -90,7 +90,7 @@ function installDockerReadMock(params?: { canonicalPath?: string }) {
       return dockerExecResult("content");
     }
     if (script.includes("mktemp")) {
-      return dockerExecResult("/workspace/.openclaw-write-b.txt.ABC123\n");
+      return dockerExecResult("/workspace/.Ironcliw-write-b.txt.ABC123\n");
     }
     return dockerExecResult("");
   });
@@ -107,7 +107,7 @@ async function createHostEscapeFixture(stateDir: string) {
 }
 
 async function expectMkdirpAllowsExistingDirectory(params?: { forceBoundaryIoFallback?: boolean }) {
-  await withTempDir("openclaw-fs-bridge-mkdirp-", async (stateDir) => {
+  await withTempDir("Ironcliw-fs-bridge-mkdirp-", async (stateDir) => {
     const workspaceDir = path.join(stateDir, "workspace");
     const nestedDir = path.join(workspaceDir, "memory", "kemik");
     await fs.mkdir(nestedDir, { recursive: true });
@@ -213,7 +213,7 @@ describe("sandbox fs bridge shell compatibility", () => {
 
     const args = mockedExecDockerRaw.mock.calls.at(-1)?.[0] ?? [];
     expect(args).toEqual(
-      expect.arrayContaining(["moltbot-sbx-test", "sh", "-c", 'set -eu; cat -- "$1"']),
+      expect.arrayContaining(["Ironcliw-sbx-test", "sh", "-c", 'set -eu; cat -- "$1"']),
     );
     expect(getDockerPathArg(args)).toBe("/workspace-two/README.md");
   });
@@ -273,7 +273,7 @@ describe("sandbox fs bridge shell compatibility", () => {
   });
 
   it("rejects mkdirp when target exists as a file", async () => {
-    await withTempDir("openclaw-fs-bridge-mkdirp-file-", async (stateDir) => {
+    await withTempDir("Ironcliw-fs-bridge-mkdirp-file-", async (stateDir) => {
       const workspaceDir = path.join(stateDir, "workspace");
       const filePath = path.join(workspaceDir, "memory", "kemik");
       await fs.mkdir(path.dirname(filePath), { recursive: true });
@@ -294,7 +294,7 @@ describe("sandbox fs bridge shell compatibility", () => {
   });
 
   it("rejects pre-existing host symlink escapes before docker exec", async () => {
-    await withTempDir("openclaw-fs-bridge-", async (stateDir) => {
+    await withTempDir("Ironcliw-fs-bridge-", async (stateDir) => {
       const { workspaceDir, outsideFile } = await createHostEscapeFixture(stateDir);
       // File symlinks require SeCreateSymbolicLinkPrivilege on Windows.
       if (process.platform === "win32") {
@@ -318,7 +318,7 @@ describe("sandbox fs bridge shell compatibility", () => {
     if (process.platform === "win32") {
       return;
     }
-    await withTempDir("openclaw-fs-bridge-hardlink-", async (stateDir) => {
+    await withTempDir("Ironcliw-fs-bridge-hardlink-", async (stateDir) => {
       const { workspaceDir, outsideFile } = await createHostEscapeFixture(stateDir);
       const hardlinkPath = path.join(workspaceDir, "link.txt");
       try {
@@ -351,3 +351,4 @@ describe("sandbox fs bridge shell compatibility", () => {
     expect(scripts.some((script) => script.includes('cat -- "$1"'))).toBe(false);
   });
 });
+

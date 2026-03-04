@@ -1,4 +1,4 @@
-import type { DmPolicy } from "openclaw/plugin-sdk";
+import type { DmPolicy } from "Ironcliw/plugin-sdk";
 import {
   addWildcardAllowFrom,
   formatResolvedUnresolvedNote,
@@ -11,7 +11,7 @@ import {
   type ChannelOnboardingAdapter,
   type ChannelOnboardingDmPolicy,
   type WizardPrompter,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { listMatrixDirectoryGroupsLive } from "./directory-live.js";
 import { resolveMatrixAccount } from "./matrix/accounts.js";
 import { ensureMatrixSdkInstalled, isMatrixSdkAvailable } from "./matrix/deps.js";
@@ -352,7 +352,7 @@ export const matrixOnboardingAdapter: ChannelOnboardingAdapter = {
     const deviceName = String(
       await prompter.text({
         message: "Matrix device name (optional)",
-        initialValue: existing.deviceName ?? "OpenClaw Gateway",
+        initialValue: existing.deviceName ?? "Ironcliw Gateway",
       }),
     ).trim();
 
@@ -457,3 +457,4 @@ export const matrixOnboardingAdapter: ChannelOnboardingAdapter = {
     },
   }),
 };
+

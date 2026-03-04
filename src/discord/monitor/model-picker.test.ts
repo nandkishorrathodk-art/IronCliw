@@ -2,7 +2,7 @@ import { serializePayload } from "@buape/carbon";
 import { ComponentType } from "discord-api-types/v10";
 import { describe, expect, it, vi } from "vitest";
 import * as modelsCommandModule from "../../auto-reply/reply/commands-models.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import {
   DISCORD_CUSTOM_ID_MAX_CHARS,
   DISCORD_MODEL_PICKER_MODEL_PAGE_SIZE,
@@ -67,7 +67,7 @@ describe("loadDiscordModelPickerData", () => {
       .spyOn(modelsCommandModule, "buildModelsProviderData")
       .mockResolvedValue(expected);
 
-    const result = await loadDiscordModelPickerData({} as OpenClawConfig);
+    const result = await loadDiscordModelPickerData({} as IroncliwConfig);
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(result).toBe(expected);
@@ -636,3 +636,4 @@ describe("Discord model picker recents view", () => {
     expect(recentBtn?.label).toContain("anthropic/claude-sonnet-4-5");
   });
 });
+

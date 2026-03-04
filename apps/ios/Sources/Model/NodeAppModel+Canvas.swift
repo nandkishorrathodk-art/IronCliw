@@ -1,6 +1,6 @@
 import Foundation
 import Network
-import OpenClawKit
+import IroncliwKit
 import os
 
 extension NodeAppModel {
@@ -15,7 +15,7 @@ extension NodeAppModel {
         if let host = base.host, LoopbackHost.isLoopback(host) {
             return nil
         }
-        return base.appendingPathComponent("__openclaw__/a2ui/").absoluteString + "?platform=ios"
+        return base.appendingPathComponent("__IRONCLIW__/a2ui/").absoluteString + "?platform=ios"
     }
 
     func showA2UIOnConnectIfNeeded() async {
@@ -57,3 +57,4 @@ extension NodeAppModel {
             queueLabel: "a2ui.preflight")
     }
 }
+

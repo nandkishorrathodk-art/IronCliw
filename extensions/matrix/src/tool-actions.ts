@@ -5,7 +5,7 @@ import {
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   deleteMatrixMessage,
   editMatrixMessage,
@@ -162,3 +162,4 @@ export async function handleMatrixAction(
 
   throw new Error(`Unsupported Matrix action: ${action}`);
 }
+

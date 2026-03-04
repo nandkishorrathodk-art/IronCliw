@@ -7,8 +7,8 @@ import {
   resolveDmGroupAccessWithLists,
   resolveMentionGatingWithBypass,
   warnMissingProviderGroupPolicyFallbackOnce,
-} from "openclaw/plugin-sdk";
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
 import { sendGoogleChatMessage } from "./api.js";
 import type { GoogleChatCoreRuntime } from "./monitor-types.js";
@@ -127,7 +127,7 @@ function warnDeprecatedUsersEmailEntries(logVerbose: (message: string) => void, 
 
 export async function applyGoogleChatInboundAccessPolicy(params: {
   account: ResolvedGoogleChatAccount;
-  config: OpenClawConfig;
+  config: IroncliwConfig;
   core: GoogleChatCoreRuntime;
   space: GoogleChatSpace;
   message: GoogleChatMessage;
@@ -355,3 +355,4 @@ export async function applyGoogleChatInboundAccessPolicy(params: {
     groupSystemPrompt: groupEntry?.systemPrompt?.trim() || undefined,
   };
 }
+

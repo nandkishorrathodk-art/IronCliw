@@ -10,8 +10,8 @@ async function withTempConfig(
   config: unknown,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-talk-"));
-  const configPath = path.join(dir, "openclaw.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-talk-"));
+  const configPath = path.join(dir, "Ironcliw.json");
   await fs.writeFile(configPath, JSON.stringify(config, null, 2));
   try {
     await run(configPath);
@@ -24,7 +24,7 @@ describe("talk normalization", () => {
   it("maps legacy ElevenLabs fields into provider/providers", () => {
     const normalized = normalizeTalkSection({
       voiceId: "voice-123",
-      voiceAliases: { Clawd: "EXAVITQu4vr4xnSDxMaL" },
+      voiceAliases: { ironcliw: "EXAVITQu4vr4xnSDxMaL" },
       modelId: "eleven_v3",
       outputFormat: "pcm_44100",
       apiKey: "secret-key",
@@ -36,14 +36,14 @@ describe("talk normalization", () => {
       providers: {
         elevenlabs: {
           voiceId: "voice-123",
-          voiceAliases: { Clawd: "EXAVITQu4vr4xnSDxMaL" },
+          voiceAliases: { ironcliw: "EXAVITQu4vr4xnSDxMaL" },
           modelId: "eleven_v3",
           outputFormat: "pcm_44100",
           apiKey: "secret-key",
         },
       },
       voiceId: "voice-123",
-      voiceAliases: { Clawd: "EXAVITQu4vr4xnSDxMaL" },
+      voiceAliases: { ironcliw: "EXAVITQu4vr4xnSDxMaL" },
       modelId: "eleven_v3",
       outputFormat: "pcm_44100",
       apiKey: "secret-key",
@@ -170,3 +170,5 @@ describe("talk normalization", () => {
     });
   });
 });
+
+

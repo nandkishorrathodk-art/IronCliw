@@ -52,6 +52,7 @@ export function classifyRelayCheckException(err, port) {
 
   return {
     kind: 'error',
-    message: `Relay not reachable/authenticated at http://127.0.0.1:${port}/. Start OpenClaw browser relay and verify token.`,
+    message: `Relay not reachable/authenticated at http://127.0.0.1:${port}/. Start Ironcliw browser relay and verify token.`,
   }
 }
+

@@ -1,6 +1,6 @@
-import type { OpenClawConfig } from "./config.js";
+import type { IroncliwConfig } from "./config.js";
 
-export function ensurePluginAllowlisted(cfg: OpenClawConfig, pluginId: string): OpenClawConfig {
+export function ensurePluginAllowlisted(cfg: IroncliwConfig, pluginId: string): IroncliwConfig {
   const allow = cfg.plugins?.allow;
   if (!Array.isArray(allow) || allow.includes(pluginId)) {
     return cfg;
@@ -13,3 +13,4 @@ export function ensurePluginAllowlisted(cfg: OpenClawConfig, pluginId: string): 
     },
   };
 }
+

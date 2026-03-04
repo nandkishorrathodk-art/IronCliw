@@ -1,5 +1,5 @@
 import AVFoundation
-import OpenClawKit
+import IroncliwKit
 import Foundation
 
 actor CameraController {
@@ -36,7 +36,7 @@ actor CameraController {
         }
     }
 
-    func snap(params: OpenClawCameraSnapParams) async throws -> (
+    func snap(params: IroncliwCameraSnapParams) async throws -> (
         format: String,
         base64: String,
         width: Int,
@@ -86,7 +86,7 @@ actor CameraController {
             height: res.heightPx)
     }
 
-    func clip(params: OpenClawCameraClipParams) async throws -> (
+    func clip(params: IroncliwCameraClipParams) async throws -> (
         format: String,
         base64: String,
         durationMs: Int,
@@ -103,9 +103,9 @@ actor CameraController {
         }
 
         let movURL = FileManager().temporaryDirectory
-            .appendingPathComponent("openclaw-camera-\(UUID().uuidString).mov")
+            .appendingPathComponent("Ironcliw-camera-\(UUID().uuidString).mov")
         let mp4URL = FileManager().temporaryDirectory
-            .appendingPathComponent("openclaw-camera-\(UUID().uuidString).mp4")
+            .appendingPathComponent("Ironcliw-camera-\(UUID().uuidString).mp4")
         defer {
             try? FileManager().removeItem(at: movURL)
             try? FileManager().removeItem(at: mp4URL)
@@ -157,7 +157,7 @@ actor CameraController {
     }
 
     private nonisolated static func pickCamera(
-        facing: OpenClawCameraFacing,
+        facing: IroncliwCameraFacing,
         deviceId: String?) -> AVCaptureDevice?
     {
         if let deviceId, !deviceId.isEmpty {
@@ -338,3 +338,4 @@ private final class MovieFileDelegate: NSObject, AVCaptureFileOutputRecordingDel
         self.continuation.resume(returning: outputFileURL)
     }
 }
+

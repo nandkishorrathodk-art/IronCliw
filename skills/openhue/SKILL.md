@@ -4,7 +4,7 @@ description: Control Philips Hue lights and scenes via the OpenHue CLI.
 homepage: https://www.openhue.io/cli
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "💡",
         "requires": { "bins": ["openhue"] },
@@ -110,3 +110,4 @@ openhue set room "Living Room" --on --brightness 10
 - Bridge must be on local network
 - First run requires button press on Hue bridge to pair
 - Colors only work on color-capable bulbs (not white-only)
+

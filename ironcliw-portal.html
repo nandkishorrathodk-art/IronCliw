@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IronCliw | Cybersecurity AI Command Center</title>
+    <meta name="description"
+        content="IronCliw — Elite AI-powered cybersecurity intelligence. Recon, threat analysis, and network defense at your command." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #e63946;
+            --red-glow: #ff1a2e;
+            --red-dim: rgba(230, 57, 70, 0.15);
+            --gold: #ffd60a;
+            --cyan: #00f5d4;
+            --cyan-dim: rgba(0, 245, 212, 0.1);
+            --bg: #020409;
+            --surface: rgba(10, 16, 30, 0.85);
+            --border: rgba(230, 57, 70, 0.25);
+            --text: #d4dae8;
+            --text-muted: #5a6480;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ─── MATRIX CANVAS ─── */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.18;
+            pointer-events: none;
+        }
+
+        /* ─── NOISE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── GRID LINES ─── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(230, 57, 70, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(230, 57, 70, 0.04) 1px, transparent 1px);
+            background-size: 64px 64px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── LAYOUT ─── */
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 40px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(2, 4, 9, 0.85);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #e63946, #720026);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.15));
+        }
+
+        .nav-brand {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 22px;
+            color: #fff;
+            letter-spacing: 3px;
+        }
+
+        .nav-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: #00f5d4;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00f5d4;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 245, 212, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(0, 245, 212, 0);
+            }
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-nav {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+
+        .btn-nav:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: var(--red-dim);
+        }
+
+        .btn-nav-primary {
+            background: linear-gradient(135deg, #e63946, #720026);
+            border-color: var(--red);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn-nav-primary:hover {
+            box-shadow: 0 0 30px rgba(230, 57, 70, 0.7);
+            background: linear-gradient(135deg, #ff1a2e, #a00035);
+            color: #fff;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(0, 245, 212, 0.3);
+            background: rgba(0, 245, 212, 0.05);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--cyan);
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            animation: fadeSlideDown 0.8s ease forwards;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan);
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: clamp(48px, 8vw, 100px);
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 8px;
+            animation: fadeSlideDown 0.9s ease 0.1s both;
+        }
+
+        .title-iron {
+            color: #fff;
+        }
+
+        .title-cliw {
+            color: var(--red);
+            text-shadow: 0 0 40px rgba(230, 57, 70, 0.6), 0 0 80px rgba(230, 57, 70, 0.3);
+            position: relative;
+        }
+
+        .title-cliw::after {
+            content: 'IRONCLIW';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--cyan);
+            opacity: 0;
+            animation: glitch 4s infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            94%,
+            100% {
+                opacity: 0;
+                transform: none;
+            }
+
+            95% {
+                opacity: 0.7;
+                transform: translateX(-3px) skewX(-5deg);
+                clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+            }
+
+            97% {
+                transform: translateX(3px) skewX(5deg);
+                clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(16px, 2.5vw, 24px);
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            animation: fadeSlideDown 0.9s ease 0.2s both;
+        }
+
+        .hero-desc {
+            max-width: 680px;
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 48px;
+            animation: fadeSlideDown 0.9s ease 0.3s both;
+        }
+
+        .hero-desc span {
+            color: var(--cyan);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeSlideDown 0.9s ease 0.4s both;
+        }
+
+        .btn-primary {
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #e63946, #9b0b1a);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 0 30px rgba(230, 57, 70, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-20deg);
+            transition: all 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 120%;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 50px rgba(230, 57, 70, 0.7), 0 8px 32px rgba(230, 57, 70, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 16px 32px;
+            background: transparent;
+            border: 1px solid rgba(0, 245, 212, 0.4);
+            color: var(--cyan);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline:hover {
+            background: var(--cyan-dim);
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ─── TERMINAL PREVIEW ─── */
+        .hero-terminal {
+            width: 100%;
+            max-width: 800px;
+            margin: 60px auto 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(5, 10, 20, 0.9);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 60px rgba(230, 57, 70, 0.15), 0 40px 80px rgba(0, 0, 0, 0.5);
+            animation: fadeSlideUp 1s ease 0.5s both;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(20, 25, 40, 0.9);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .term-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .term-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .td-r {
+            background: var(--red);
+            box-shadow: 0 0 6px var(--red);
+        }
+
+        .td-y {
+            background: #ffd60a;
+            box-shadow: 0 0 6px #ffd60a;
+        }
+
+        .td-g {
+            background: #00f5d4;
+            box-shadow: 0 0 6px #00f5d4;
+        }
+
+        .term-title {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            min-height: 180px;
+        }
+
+        .t-prompt {
+            color: var(--red);
+        }
+
+        .t-cmd {
+            color: #fff;
+        }
+
+        .t-output {
+            color: var(--text-muted);
+        }
+
+        .t-success {
+            color: var(--cyan);
+        }
+
+        .t-warn {
+            color: var(--gold);
+        }
+
+        .t-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: var(--red);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+
+            0%,
+            49% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ─── STATS BAR ─── */
+        .stats-bar {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(5, 10, 20, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 32px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--red);
+            text-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+            line-height: 1;
+        }
+
+        .stat-num.cyan {
+            color: var(--cyan);
+            text-shadow: 0 0 20px rgba(0, 245, 212, 0.5);
+        }
+
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        /* ─── SECTION COMMON ─── */
+        .section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--red);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: clamp(28px, 4vw, 48px);
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        /* ─── CAPABILITIES ─── */
+        .caps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .cap-card {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cap-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cap-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 40px rgba(230, 57, 70, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .cap-card:hover::before {
+            opacity: 1;
+        }
+
+        .cap-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--red-dim);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .cap-card:hover .cap-icon {
+            background: rgba(230, 57, 70, 0.25);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .cap-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .cap-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .cap-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 16px;
+        }
+
+        .cap-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            padding: 3px 10px;
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            color: var(--cyan);
+            border-radius: 100px;
+            letter-spacing: 1px;
+        }
+
+        /* ─── CHAT SECTION ─── */
+        .chat-section {
+            border-top: 1px solid var(--border);
+            background: rgba(2, 4, 9, 0.7);
+        }
+
+        .chat-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-preview {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: rgba(5, 10, 20, 0.95);
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(230, 57, 70, 0.1), 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(15, 20, 35, 0.9);
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #e63946, #720026);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+        }
+
+        .chat-agent-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .chat-agent-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--cyan);
+        }
+
+        .chat-online {
+            width: 8px;
+            height: 8px;
+            background: #00e676;
+            border-radius: 50%;
+            margin-left: auto;
+            animation: pulse 2s infinite;
+        }
+
+        .chat-messages {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .msg {
+            max-width: 85%;
+        }
+
+        .msg-ai {
+            background: rgba(15, 20, 35, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 12px 2px;
+            padding: 12px 16px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.25), rgba(114, 0, 38, 0.25));
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            border-radius: 12px 12px 2px 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #fff;
+            text-align: right;
+        }
+
+        .msg-time {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .chat-input-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border-top: 1px solid var(--border);
+            background: rgba(10, 16, 30, 0.9);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-send {
+            background: linear-gradient(135deg, #e63946, #720026);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .chat-send:hover {
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* ─── POWER MODES ─── */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .mode-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 36px 28px;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card.active {
+            border-color: var(--red);
+            box-shadow: 0 0 40px rgba(230, 57, 70, 0.2), inset 0 0 40px rgba(230, 57, 70, 0.05);
+        }
+
+        .mode-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center bottom, rgba(230, 57, 70, 0.08), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mode-card.active::after,
+        .mode-card:hover::after {
+            opacity: 1;
+        }
+
+        .mode-card:hover {
+            border-color: rgba(230, 57, 70, 0.6);
+            transform: translateY(-4px);
+        }
+
+        .mode-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.5));
+        }
+
+        .mode-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .mode-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ─── LIVE METRICS ─── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .metric-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.15), transparent 60%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .metric-card:nth-child(2)::before {
+            background: radial-gradient(circle, rgba(0, 245, 212, 0.12), transparent 60%);
+            animation-delay: -2s;
+        }
+
+        .metric-card:nth-child(3)::before {
+            background: radial-gradient(circle, rgba(255, 214, 10, 0.1), transparent 60%);
+            animation-delay: -4s;
+        }
+
+        .metric-card:nth-child(4)::before {
+            animation-delay: -1s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30%, 20%);
+            }
+
+            66% {
+                transform: translate(-10%, 40%);
+            }
+        }
+
+        .metric-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--red);
+            margin: 8px 0 4px;
+            line-height: 1;
+        }
+
+        .metric-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--red), var(--red-glow));
+            animation: fill 2.5s ease forwards;
+        }
+
+        @keyframes fill {
+            from {
+                width: 0;
+            }
+        }
+
+        .metric-change {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--cyan);
+            margin-top: 4px;
+        }
+
+        /* ─── CTA SECTION ─── */
+        .cta-section {
+            border-top: 1px solid var(--border);
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(28px, 4vw, 52px);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+        }
+
+        .connect-url {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            color: var(--red);
+            border: 1px solid var(--border);
+            padding: 16px 28px;
+            border-radius: 8px;
+            background: var(--red-dim);
+            display: inline-block;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .connect-url:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 30px rgba(230, 57, 70, 0.3);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--red);
+            letter-spacing: 3px;
+        }
+
+        .footer-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ─── ANIMS ─── */
+        @keyframes fadeSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s ease;
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width:900px) {
+            nav {
+                padding: 14px 20px;
+            }
+
+            .stats-bar {
+                gap: 40px;
+            }
+
+            .chat-wrapper {
+                grid-template-columns: 1fr;
+                padding: 60px 20px;
+            }
+
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="page">
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">⚔️</div>
+                <div>
+                    <div class="nav-brand">IRONCLIW</div>
+                    <div class="nav-sub">CYBER AI</div>
+                </div>
+            </a>
+            <div class="nav-status">
+                <div class="status-dot"></div>
+                SYSTEMS ONLINE
+            </div>
+            <div class="nav-actions">
+                <button class="btn-nav"
+                    onclick="document.getElementById('capabilities').scrollIntoView({behavior:'smooth'})">CAPABILITIES</button>
+                <a href="http://127.0.0.1:18789" class="btn-nav btn-nav-primary">⚡ LAUNCH GATEWAY</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-badge">
+                <div class="badge-dot"></div>
+                ELITE CYBERSECURITY AI — v2026.0.1
+            </div>
+            <h1 class="hero-title">
+                <span class="title-iron">IRON</span><span class="title-cliw">CLIW</span>
+            </h1>
+            <p class="hero-subtitle">Your AI-Powered Cyber Intelligence System</p>
+            <p class="hero-desc">
+                Automated <span>recon</span>, threat analysis, <span>vulnerability assessment</span>, network defense,
+                and full-spectrum cyber operations — all under a single elite command interface.
+            </p>
+            <div class="hero-cta">
+                <a href="http://127.0.0.1:18789" class="btn-primary">⚡ OPEN COMMAND CENTER</a>
+                <a href="#capabilities" class="btn-outline">→ EXPLORE POWERS</a>
+            </div>
+
+            <!-- Terminal -->
+            <div class="hero-terminal">
+                <div class="terminal-bar">
+                    <div class="term-dots">
+                        <div class="term-dot td-r"></div>
+                        <div class="term-dot td-y"></div>
+                        <div class="term-dot td-g"></div>
+                    </div>
+                    <div class="term-title">ironcliw@cyber-command ~ $</div>
+                    <div style="width:48px"></div>
+                </div>
+                <div class="terminal-body" id="terminal-output">
+                    <div><span class="t-prompt">ironcliw@cmd:~$ </span><span class="t-cmd" id="typed-cmd"></span><span
+                            class="t-cursor" id="cursor1"></span></div>
+                    <div id="term-results" style="margin-top:8px"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-num" data-target="2847">0</div>
+                <div class="stat-label">CVEs Analyzed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num cyan" data-target="99">0</div>
+                <div class="stat-label">Uptime %</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num" data-target="512">0</div>
+                <div class="stat-label">Tools Integrated</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num cyan" data-target="7">0</div>
+                <div class="stat-label">Sec Frameworks</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num" data-target="2026">0</div>
+                <div class="stat-label">AI Model Version</div>
+            </div>
+        </div>
+
+        <!-- CAPABILITIES -->
+        <section class="section" id="capabilities">
+            <div class="section-tag">// CORE CAPABILITIES</div>
+            <h2 class="section-title reveal">Elite Cyber Operations Suite</h2>
+            <p class="section-desc reveal">Everything you need to dominate the cyberspace — from passive intelligence to
+                active operations.</p>
+
+            <div class="caps-grid">
+                <div class="cap-card reveal">
+                    <div class="cap-icon">🕵️</div>
+                    <div class="cap-title">Passive Reconnaissance</div>
+                    <div class="cap-desc">WHOIS, DNS deep-dive, SSL cert analysis, Shodan/Censys queries, web archive
+                        intelligence, and Google dork automation.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">OSINT</span>
+                        <span class="cap-tag">DNS</span>
+                        <span class="cap-tag">SHODAN</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">🌐</div>
+                    <div class="cap-title">Network Enumeration</div>
+                    <div class="cap-desc">Full-scale subdomain enum with subfinder/amass, port scanning with
+                        nmap/masscan, service fingerprinting and live host discovery.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">NMAP</span>
+                        <span class="cap-tag">SUBFINDER</span>
+                        <span class="cap-tag">MASSCAN</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">💥</div>
+                    <div class="cap-title">Vulnerability Assessment</div>
+                    <div class="cap-desc">Automated nuclei template scanning, OWASP Top 10 checks, IDOR, XSS, SQLi, SSRF
+                        detection with chained exploit identification.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">NUCLEI</span>
+                        <span class="cap-tag">OWASP</span>
+                        <span class="cap-tag">CVE</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">🔐</div>
+                    <div class="cap-title">Authentication Analysis</div>
+                    <div class="cap-desc">JWT manipulation, OAuth flow testing, session token analysis, brute-force
+                        simulation and credential leak detection.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">JWT</span>
+                        <span class="cap-tag">OAUTH</span>
+                        <span class="cap-tag">AUTH</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">📡</div>
+                    <div class="cap-title">Content Discovery</div>
+                    <div class="cap-desc">Directory brute-forcing with ffuf/dirsearch, JS file secret extraction, API
+                        endpoint discovery and parameter fuzzing.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">FFUF</span>
+                        <span class="cap-tag">DIRSEARCH</span>
+                        <span class="cap-tag">API</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">📊</div>
+                    <div class="cap-title">Report Generation</div>
+                    <div class="cap-desc">Automatic CVSS scoring, professional markdown reports, impact analysis and
+                        platform-ready write-ups for submission.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">CVSS</span>
+                        <span class="cap-tag">MARKDOWN</span>
+                        <span class="cap-tag">REPORT</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">🖥️</div>
+                    <div class="cap-title">Web Application Hacking</div>
+                    <div class="cap-desc">Automated XSS with dalfox, SQLi with sqlmap, SSTI, XXE, path traversal and
+                        business logic vulnerability chains.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">XSS</span>
+                        <span class="cap-tag">SQLI</span>
+                        <span class="cap-tag">SSTI</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">🛡️</div>
+                    <div class="cap-title">Defense & Monitoring</div>
+                    <div class="cap-desc">Real-time threat intelligence feeds, attack surface monitoring, dark web
+                        correlation and proactive defense recommendations.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">THREAT-INT</span>
+                        <span class="cap-tag">MONITOR</span>
+                        <span class="cap-tag">DARK-WEB</span>
+                    </div>
+                </div>
+
+                <div class="cap-card reveal">
+                    <div class="cap-icon">⚡</div>
+                    <div class="cap-title">Autonomous Operation</div>
+                    <div class="cap-desc">Full open-hands mode: independent task execution, multi-phase attack chains,
+                        background scanning and result correlation without human intervention.</div>
+                    <div class="cap-tags">
+                        <span class="cap-tag">AUTO</span>
+                        <span class="cap-tag">CHAIN</span>
+                        <span class="cap-tag">AUTONOMOUS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAT SECTION -->
+        <div class="chat-section">
+            <div class="chat-wrapper">
+                <div class="reveal">
+                    <div class="section-tag">// COMMAND INTERFACE</div>
+                    <h2 class="section-title">Talk to IronCliw.<br />Command Everything.</h2>
+                    <p class="section-desc" style="margin-bottom:32px">Direct natural language to elite cyber
+                        operations. Describe a target, IronCliw builds and executes the full attack chain.</p>
+                    <div>
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                            <div style="width:10px;height:10px;border-radius:50%;background:var(--red)"></div>
+                            <span
+                                style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-muted)">Hinglish
+                                mode supported — Boss ke commands</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                            <div style="width:10px;height:10px;border-radius:50%;background:var(--red)"></div>
+                            <span
+                                style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-muted)">Auto-executes
+                                recon without asking permission</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div style="width:10px;height:10px;border-radius:50%;background:var(--red)"></div>
+                            <span
+                                style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text-muted)">Structured
+                                reports, ready to submit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-preview reveal">
+                    <div class="chat-header">
+                        <div class="chat-avatar">⚔️</div>
+                        <div>
+                            <div class="chat-agent-name">IronCliw</div>
+                            <div class="chat-agent-sub">CYBER AI ACTIVE</div>
+                        </div>
+                        <div class="chat-online"></div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="msg">
+                            <div class="msg-ai">IronCliw v2026.0.1 online. Systems armed. Give me a target, Boss. 🎯
+                            </div>
+                            <div class="msg-time">02:30:45</div>
+                        </div>
+                        <div class="msg" style="align-self:flex-end">
+                            <div class="msg-user">Bhai, example.com pe full recon chala</div>
+                            <div class="msg-time" style="text-align:right">02:31:12</div>
+                        </div>
+                        <div class="msg">
+                            <div class="msg-ai" style="color:var(--cyan)">⚡ Initiating Phase 1 — Passive Recon<br />
+                                <span style="color:var(--text-muted)">→ WHOIS: Cloudflare protect detected<br />
+                                    → DNS: 12 subdomains found<br />
+                                    → SSL: Cert issued 2025-01-15 — valid<br />
+                                    → Shodan: 3 exposed services<br />
+                                    <span style="color:var(--gold)">⚠ admin.example.com — interesting!</span></span>
+                            </div>
+                            <div class="msg-time">02:31:45</div>
+                        </div>
+                        <div class="msg">
+                            <div class="msg-ai">Phase 1 complete. Found 3 high-value targets. Starting Phase 2 active
+                                recon... 👁️</div>
+                            <div class="msg-time">02:31:50</div>
+                        </div>
+                    </div>
+                    <div class="chat-input-bar">
+                        <input class="chat-input" type="text" placeholder="Give IronCliw a target..."
+                            id="demo-chat-input" />
+                        <button class="chat-send" onclick="sendDemoMsg()">➤</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POWER MODES -->
+        <section class="section">
+            <div class="section-tag">// OPERATION MODES</div>
+            <h2 class="section-title reveal">How IronCliw Operates</h2>
+            <div class="modes-grid">
+                <div class="mode-card active reveal">
+                    <span class="mode-emoji">🌑</span>
+                    <div class="mode-name">GHOST MODE</div>
+                    <div class="mode-desc">Passive intelligence gathering only. Zero active footprint. Perfect for
+                        dark-room recon before engagement.</div>
+                </div>
+                <div class="mode-card reveal">
+                    <span class="mode-emoji">⚡</span>
+                    <div class="mode-name">HUNTER MODE</div>
+                    <div class="mode-desc">Active scanning, fuzzing, and vulnerability discovery. Full autonomous
+                        operation with chained attack sequences.</div>
+                </div>
+                <div class="mode-card reveal">
+                    <span class="mode-emoji">🛡️</span>
+                    <div class="mode-name">DEFENDER MODE</div>
+                    <div class="mode-desc">Blue team operations. Monitor, alert, patch guidance and threat response
+                        recommendations in real-time.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METRICS -->
+        <section class="section" style="padding-top:0">
+            <div class="section-tag">// LIVE INTELLIGENCE</div>
+            <h2 class="section-title reveal">Real-Time Cyber Pulse</h2>
+            <div class="metrics-grid">
+                <div class="metric-card reveal">
+                    <div class="metric-label">Threats Detected</div>
+                    <div class="metric-value" id="m1">0</div>
+                    <div class="metric-change">+12 this session</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width:72%"></div>
+                    </div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="metric-label">Scans Running</div>
+                    <div class="metric-value" style="color:var(--cyan)" id="m2">0</div>
+                    <div class="metric-change">3 active</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill"
+                            style="width:45%;background:linear-gradient(90deg,var(--cyan),#00e5ff)"></div>
+                    </div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="metric-label">Response Time</div>
+                    <div class="metric-value" style="color:var(--gold);font-size:24px">1.2s</div>
+                    <div class="metric-change" style="color:var(--gold)">Lightning fast</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width:92%;background:linear-gradient(90deg,#ffd60a,#ff9500)">
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card reveal">
+                    <div class="metric-label">Intel Points</div>
+                    <div class="metric-value" id="m3">0</div>
+                    <div class="metric-change">+1500 today</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width:88%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <div class="cta-glow"></div>
+            <div class="section-tag">// INITIATE</div>
+            <h2 class="cta-title reveal">Ready to Hunt?</h2>
+            <p class="cta-desc reveal">IronCliw is running locally. Connect to your gateway and begin operations.</p>
+            <a href="http://127.0.0.1:18789" class="connect-url reveal">→ ws://127.0.0.1:18789 — CONNECT NOW</a>
+            <div style="margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap" class="reveal">
+                <a href="http://127.0.0.1:18789" class="btn-primary">⚡ LAUNCH GATEWAY DASHBOARD</a>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-logo">IRONCLIW</div>
+            <div class="footer-text">CYBER AI COMMAND CENTER — v2026.0.1 — Built by Nandkishor Rathod</div>
+            <div class="footer-text" style="color:var(--red)">SYSTEMS ARMED ⚔️</div>
+        </footer>
+    </div>
+
+    <script>
+        // ─── MATRIX RAIN ───
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        let cols, drops;
+        const chars = 'アイウエオカキクケコサシスセソタチツテト0123456789ABCDEF<>{}[]!@#$%';
+
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.floor(canvas.width / 16);
+            drops = Array(cols).fill(1);
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(2,4,9,0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '14px Share Tech Mono, monospace';
+            drops.forEach((y, i) => {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const heat = Math.random();
+                if (heat > 0.97) ctx.fillStyle = '#ffffff';
+                else if (heat > 0.9) ctx.fillStyle = '#ff1a2e';
+                else ctx.fillStyle = '#e63946';
+                ctx.globalAlpha = Math.random() * 0.7 + 0.3;
+                ctx.fillText(char, i * 16, y * 16);
+                ctx.globalAlpha = 1;
+                if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+
+        initMatrix();
+        window.addEventListener('resize', initMatrix);
+        setInterval(drawMatrix, 50);
+
+        // ─── COUNTER ANIMATION ───
+        function animateCounter(el, target, suffix = '') {
+            let start = 0;
+            const duration = 2000;
+            const step = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += step;
+                if (start >= target) { start = target; clearInterval(timer); }
+                el.textContent = Math.floor(start) + suffix;
+            }, 16);
+        }
+
+        // Observe stats
+        const statNums = document.querySelectorAll('[data-target]');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCounter(e.target, parseInt(e.target.dataset.target));
+                    statsObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        statNums.forEach(el => statsObserver.observe(el));
+
+        // Metrics
+        setTimeout(() => {
+            animateCounter(document.getElementById('m1'), 247);
+            animateCounter(document.getElementById('m2'), 8);
+            animateCounter(document.getElementById('m3'), 12490);
+        }, 500);
+
+        // ─── SCROLL REVEAL ───
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('in-view'), i * 80);
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        reveals.forEach(el => revealObs.observe(el));
+
+        // ─── TERMINAL TYPEWRITER ───
+        const commands = [
+            {
+                cmd: 'ironcliw recon --target example.com', delay: 60, results: [
+                    { text: '[+] WHOIS: Cloudflare, Inc (AS13335)', cls: 'success', delay: 200 },
+                    { text: '[+] DNS: 14 subdomains discovered', cls: 'success', delay: 400 },
+                    { text: '[!] api.example.com — open (port 443)', cls: 'warn', delay: 600 },
+                    { text: '[+] Phase 1 complete. 3 targets queued.', cls: 'success', delay: 800 },
+                ]
+            },
+            {
+                cmd: 'ironcliw scan --vuln --target api.example.com', delay: 60, results: [
+                    { text: '[+] nuclei: 2 HIGH severity findings', cls: 'success', delay: 200 },
+                    { text: '[!] JWT none-alg bypass — CRITICAL', cls: 'warn', delay: 400 },
+                    { text: '[+] CVSS: 9.8 — report generated', cls: 'success', delay: 600 },
+                ]
+            },
+        ];
+        let cmdIdx = 0;
+
+        function typeCommand(cmdObj) {
+            const el = document.getElementById('typed-cmd');
+            const results = document.getElementById('term-results');
+            const cursor = document.getElementById('cursor1');
+            results.innerHTML = '';
+            el.textContent = '';
+            let i = 0;
+            const interval = setInterval(() => {
+                el.textContent += cmdObj.cmd[i++];
+                if (i >= cmdObj.cmd.length) {
+                    clearInterval(interval);
+                    cursor.style.display = 'none';
+                    cmdObj.results.forEach(r => {
+                        setTimeout(() => {
+                            const div = document.createElement('div');
+                            div.className = `t-${r.cls}`;
+                            div.textContent = r.text;
+                            results.appendChild(div);
+                        }, r.delay);
+                    });
+                    const lastDelay = cmdObj.results[cmdObj.results.length - 1].delay;
+                    setTimeout(() => {
+                        cursor.style.display = 'inline-block';
+                        el.textContent = '';
+                        results.innerHTML = '';
+                        cmdIdx = (cmdIdx + 1) % commands.length;
+                        setTimeout(() => typeCommand(commands[cmdIdx]), 1000);
+                    }, lastDelay + 2000);
+                }
+            }, cmdObj.delay);
+        }
+        setTimeout(() => typeCommand(commands[0]), 1200);
+
+        // ─── DEMO CHAT ───
+        const demoResponses = [
+            "Acknowledged. Initiating passive recon sequence... 🕵️",
+            "Running subfinder + amass. Found 23 live subdomains. Processing...",
+            "⚡ High-value target detected. Starting Phase 2 active enumeration.",
+            "nuclei scan complete: 1 CRITICAL, 3 HIGH severity findings. Report ready.",
+            "Boss, all findings documented. CVSS scores calculated. Ready for submission.",
+        ];
+        let demoIdx = 0;
+        function sendDemoMsg() {
+            const input = document.getElementById('demo-chat-input');
+            if (!input.value.trim()) return;
+            const msgs = document.querySelector('.chat-messages');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg';
+            userMsg.style.alignSelf = 'flex-end';
+            userMsg.innerHTML = `<div class="msg-user">${input.value}</div><div class="msg-time" style="text-align:right">${new Date().toLocaleTimeString()}</div>`;
+            msgs.appendChild(userMsg);
+            input.value = '';
+            msgs.scrollTop = msgs.scrollHeight;
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'msg';
+                aiMsg.innerHTML = `<div class="msg-ai" style="color:var(--cyan)">${demoResponses[demoIdx % demoResponses.length]}</div><div class="msg-time">${new Date().toLocaleTimeString()}</div>`;
+                msgs.appendChild(aiMsg);
+                msgs.scrollTop = msgs.scrollHeight;
+                demoIdx++;
+            }, 800);
+        }
+        document.getElementById('demo-chat-input').addEventListener('keypress', e => { if (e.key === 'Enter') sendDemoMsg(); });
+
+        // ─── MODE CARD TOGGLE ───
+        document.querySelectorAll('.mode-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

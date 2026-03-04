@@ -11,7 +11,7 @@ const SAMPLE_URL =
 const LIVE =
   isTruthyEnvValue(process.env.DEEPGRAM_LIVE_TEST) ||
   isTruthyEnvValue(process.env.LIVE) ||
-  isTruthyEnvValue(process.env.OPENCLAW_LIVE_TEST);
+  isTruthyEnvValue(process.env.IRONCLIW_LIVE_TEST);
 
 const describeLive = LIVE && DEEPGRAM_KEY ? describe : describe.skip;
 
@@ -45,3 +45,4 @@ describeLive("deepgram live", () => {
     expect(result.text.trim().length).toBeGreaterThan(0);
   }, 30000);
 });
+

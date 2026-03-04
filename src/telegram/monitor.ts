@@ -1,6 +1,6 @@
 import { type RunOptions, run } from "@grammyjs/runner";
 import { resolveAgentMaxConcurrent } from "../config/agent-limits.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import { waitForAbortSignal } from "../infra/abort-signal.js";
 import { computeBackoff, sleepWithAbort } from "../infra/backoff.js";
@@ -20,7 +20,7 @@ import { startTelegramWebhook } from "./webhook.js";
 export type MonitorTelegramOpts = {
   token?: string;
   accountId?: string;
-  config?: OpenClawConfig;
+  config?: IroncliwConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   useWebhook?: boolean;
@@ -32,7 +32,7 @@ export type MonitorTelegramOpts = {
   webhookUrl?: string;
 };
 
-export function createTelegramRunnerOptions(cfg: OpenClawConfig): RunOptions<unknown> {
+export function createTelegramRunnerOptions(cfg: IroncliwConfig): RunOptions<unknown> {
   return {
     sink: {
       concurrency: resolveAgentMaxConcurrent(cfg),
@@ -343,3 +343,4 @@ export async function monitorTelegramProvider(opts: MonitorTelegramOpts = {}) {
     unregisterHandler();
   }
 }
+

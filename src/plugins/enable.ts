@@ -1,15 +1,15 @@
 import { normalizeChatChannelId } from "../channels/registry.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { ensurePluginAllowlisted } from "../config/plugins-allowlist.js";
 import { setPluginEnabledInConfig } from "./toggle-config.js";
 
 export type PluginEnableResult = {
-  config: OpenClawConfig;
+  config: IroncliwConfig;
   enabled: boolean;
   reason?: string;
 };
 
-export function enablePluginInConfig(cfg: OpenClawConfig, pluginId: string): PluginEnableResult {
+export function enablePluginInConfig(cfg: IroncliwConfig, pluginId: string): PluginEnableResult {
   const builtInChannelId = normalizeChatChannelId(pluginId);
   const resolvedId = builtInChannelId ?? pluginId;
   if (cfg.plugins?.enabled === false) {
@@ -22,3 +22,4 @@ export function enablePluginInConfig(cfg: OpenClawConfig, pluginId: string): Plu
   next = ensurePluginAllowlisted(next, resolvedId);
   return { config: next, enabled: true };
 }
+

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
 import { resolveAuthStorePath } from "../agents/auth-profiles/paths.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { resolveUserPath } from "../utils.js";
 
 export function parseEnvAssignmentValue(raw: string): string {
@@ -16,7 +16,7 @@ export function parseEnvAssignmentValue(raw: string): string {
   return trimmed;
 }
 
-export function listAuthProfileStorePaths(config: OpenClawConfig, stateDir: string): string[] {
+export function listAuthProfileStorePaths(config: IroncliwConfig, stateDir: string): string[] {
   const paths = new Set<string>();
   // Scope default auth store discovery to the provided stateDir instead of
   // ambient process env, so scans do not include unrelated host-global stores.
@@ -85,3 +85,4 @@ export function readJsonObjectIfExists(filePath: string): {
     };
   }
 }
+

@@ -1,7 +1,7 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { expect, vi } from "vitest";
 
-export function createMattermostTestConfig(): OpenClawConfig {
+export function createMattermostTestConfig(): IroncliwConfig {
   return {
     channels: {
       mattermost: {
@@ -81,3 +81,4 @@ export async function withMockedGlobalFetch<T>(
     (globalThis as any).fetch = prevFetch;
   }
 }
+

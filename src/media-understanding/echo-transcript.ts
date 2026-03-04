@@ -1,5 +1,5 @@
 import type { MsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
 import { isDeliverableMessageChannel } from "../utils/message-channel.js";
 
@@ -15,7 +15,7 @@ function formatEchoTranscript(transcript: string, format: string): string {
  */
 export async function sendTranscriptEcho(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   transcript: string;
   format?: string;
 }): Promise<void> {
@@ -60,3 +60,4 @@ export async function sendTranscriptEcho(params: {
     logVerbose(`media: echo-transcript delivery failed: ${String(err)}`);
   }
 }
+

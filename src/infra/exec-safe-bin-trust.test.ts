@@ -65,7 +65,7 @@ describe("exec safe bin trust", () => {
   });
 
   it("does not trust PATH entries by default", () => {
-    const injected = `/tmp/openclaw-path-injected-${Date.now()}`;
+    const injected = `/tmp/Ironcliw-path-injected-${Date.now()}`;
 
     withEnv({ PATH: `${injected}${path.delimiter}${process.env.PATH ?? ""}` }, () => {
       const refreshed = getTrustedSafeBinDirs({ refresh: true });
@@ -77,7 +77,7 @@ describe("exec safe bin trust", () => {
     if (process.platform === "win32") {
       return;
     }
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-safe-bin-trust-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-safe-bin-trust-"));
     try {
       await fs.chmod(dir, 0o777);
       const hits = listWritableExplicitTrustedSafeBinDirs([dir]);
@@ -94,3 +94,4 @@ describe("exec safe bin trust", () => {
     }
   });
 });
+

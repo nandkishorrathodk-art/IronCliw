@@ -2,7 +2,7 @@ import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   normalizeOptionalAccountId,
-} from "openclaw/plugin-sdk/account-id";
+} from "Ironcliw/plugin-sdk/account-id";
 import { hasConfiguredSecretInput } from "../secret-input.js";
 import type { CoreConfig, MatrixConfig } from "../types.js";
 import { resolveMatrixConfigForAccount } from "./client.js";
@@ -148,3 +148,4 @@ export function listEnabledMatrixAccounts(cfg: CoreConfig): ResolvedMatrixAccoun
     .map((accountId) => resolveMatrixAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
+

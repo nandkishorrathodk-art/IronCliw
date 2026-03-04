@@ -18,7 +18,7 @@ import type { HookSource } from "./types.js";
  * Sources whose handler files never change between `npm install` runs.
  * Imports from these sources skip cache busting entirely.
  */
-const IMMUTABLE_SOURCES: ReadonlySet<HookSource> = new Set(["openclaw-bundled"]);
+const IMMUTABLE_SOURCES: ReadonlySet<HookSource> = new Set(["Ironcliw-bundled"]);
 
 export function buildImportUrl(handlerPath: string, source: HookSource): string {
   const base = pathToFileURL(handlerPath).href;
@@ -36,3 +36,4 @@ export function buildImportUrl(handlerPath: string, source: HookSource): string 
     return `${base}?t=${Date.now()}`;
   }
 }
+

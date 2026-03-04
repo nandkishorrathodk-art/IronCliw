@@ -2,14 +2,14 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { normalizeProviders } from "./models-config.providers.js";
 
 describe("normalizeProviders", () => {
   it("trims provider keys so image models remain discoverable for custom providers", async () => {
-    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-agent-"));
+    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-agent-"));
     try {
-      const providers: NonNullable<NonNullable<OpenClawConfig["models"]>["providers"]> = {
+      const providers: NonNullable<NonNullable<IroncliwConfig["models"]>["providers"]> = {
         " dashscope-vision ": {
           baseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
           api: "openai-completions",
@@ -37,9 +37,9 @@ describe("normalizeProviders", () => {
   });
 
   it("keeps the latest provider config when duplicate keys only differ by whitespace", async () => {
-    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-agent-"));
+    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-agent-"));
     try {
-      const providers: NonNullable<NonNullable<OpenClawConfig["models"]>["providers"]> = {
+      const providers: NonNullable<NonNullable<IroncliwConfig["models"]>["providers"]> = {
         openai: {
           baseUrl: "https://api.openai.com/v1",
           api: "openai-completions",
@@ -74,3 +74,4 @@ describe("normalizeProviders", () => {
     }
   });
 });
+

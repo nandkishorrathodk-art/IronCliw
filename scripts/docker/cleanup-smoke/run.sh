@@ -3,33 +3,34 @@ set -euo pipefail
 
 cd /repo
 
-export OPENCLAW_STATE_DIR="/tmp/openclaw-test"
-export OPENCLAW_CONFIG_PATH="${OPENCLAW_STATE_DIR}/openclaw.json"
+export IRONCLIW_STATE_DIR="/tmp/Ironcliw-test"
+export IRONCLIW_CONFIG_PATH="${IRONCLIW_STATE_DIR}/Ironcliw.json"
 
 echo "==> Build"
 pnpm build
 
 echo "==> Seed state"
-mkdir -p "${OPENCLAW_STATE_DIR}/credentials"
-mkdir -p "${OPENCLAW_STATE_DIR}/agents/main/sessions"
-echo '{}' >"${OPENCLAW_CONFIG_PATH}"
-echo 'creds' >"${OPENCLAW_STATE_DIR}/credentials/marker.txt"
-echo 'session' >"${OPENCLAW_STATE_DIR}/agents/main/sessions/sessions.json"
+mkdir -p "${IRONCLIW_STATE_DIR}/credentials"
+mkdir -p "${IRONCLIW_STATE_DIR}/agents/main/sessions"
+echo '{}' >"${IRONCLIW_CONFIG_PATH}"
+echo 'creds' >"${IRONCLIW_STATE_DIR}/credentials/marker.txt"
+echo 'session' >"${IRONCLIW_STATE_DIR}/agents/main/sessions/sessions.json"
 
 echo "==> Reset (config+creds+sessions)"
-pnpm openclaw reset --scope config+creds+sessions --yes --non-interactive
+pnpm Ironcliw reset --scope config+creds+sessions --yes --non-interactive
 
-test ! -f "${OPENCLAW_CONFIG_PATH}"
-test ! -d "${OPENCLAW_STATE_DIR}/credentials"
-test ! -d "${OPENCLAW_STATE_DIR}/agents/main/sessions"
+test ! -f "${IRONCLIW_CONFIG_PATH}"
+test ! -d "${IRONCLIW_STATE_DIR}/credentials"
+test ! -d "${IRONCLIW_STATE_DIR}/agents/main/sessions"
 
 echo "==> Recreate minimal config"
-mkdir -p "${OPENCLAW_STATE_DIR}/credentials"
-echo '{}' >"${OPENCLAW_CONFIG_PATH}"
+mkdir -p "${IRONCLIW_STATE_DIR}/credentials"
+echo '{}' >"${IRONCLIW_CONFIG_PATH}"
 
 echo "==> Uninstall (state only)"
-pnpm openclaw uninstall --state --yes --non-interactive
+pnpm Ironcliw uninstall --state --yes --non-interactive
 
-test ! -d "${OPENCLAW_STATE_DIR}"
+test ! -d "${IRONCLIW_STATE_DIR}"
 
 echo "OK"
+

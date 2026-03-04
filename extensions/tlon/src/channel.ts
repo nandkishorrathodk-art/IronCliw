@@ -4,13 +4,13 @@ import type {
   ChannelOutboundAdapter,
   ChannelPlugin,
   ChannelSetupInput,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk";
+  IroncliwConfig,
+} from "Ironcliw/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { buildTlonAccountFields } from "./account-fields.js";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
@@ -101,10 +101,10 @@ type TlonSetupInput = ChannelSetupInput & {
 };
 
 function applyTlonSetupConfig(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   accountId: string;
   input: TlonSetupInput;
-}): OpenClawConfig {
+}): IroncliwConfig {
   const { cfg, accountId, input } = params;
   const useDefault = accountId === DEFAULT_ACCOUNT_ID;
   const namedConfig = applyAccountNameToChannelSection({
@@ -311,7 +311,7 @@ export const tlonPlugin: ChannelPlugin = {
               enabled,
             },
           },
-        } as OpenClawConfig;
+        } as IroncliwConfig;
       }
       return {
         ...cfg,
@@ -328,7 +328,7 @@ export const tlonPlugin: ChannelPlugin = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as IroncliwConfig;
     },
     deleteAccount: ({ cfg, accountId }) => {
       const useDefault = !accountId || accountId === "default";
@@ -346,7 +346,7 @@ export const tlonPlugin: ChannelPlugin = {
             ...cfg.channels,
             tlon: rest,
           },
-        } as OpenClawConfig;
+        } as IroncliwConfig;
       }
       const { [accountId]: _removed, ...remainingAccounts } = cfg.channels?.tlon?.accounts ?? {};
       return {
@@ -358,7 +358,7 @@ export const tlonPlugin: ChannelPlugin = {
             accounts: remainingAccounts,
           },
         },
-      } as OpenClawConfig;
+      } as IroncliwConfig;
     },
     isConfigured: (account) => account.configured,
     describeAccount: (account) => ({
@@ -497,7 +497,7 @@ export const tlonPlugin: ChannelPlugin = {
         lastError: runtime?.lastError ?? null,
         probe,
       };
-      return snapshot as import("openclaw/plugin-sdk").ChannelAccountSnapshot;
+      return snapshot as import("Ironcliw/plugin-sdk").ChannelAccountSnapshot;
     },
   },
   gateway: {
@@ -507,7 +507,7 @@ export const tlonPlugin: ChannelPlugin = {
         accountId: account.accountId,
         ship: account.ship,
         url: account.url,
-      } as import("openclaw/plugin-sdk").ChannelAccountSnapshot);
+      } as import("Ironcliw/plugin-sdk").ChannelAccountSnapshot);
       ctx.log?.info(`[${account.accountId}] starting Tlon provider for ${account.ship ?? "tlon"}`);
       return monitorTlonProvider({
         runtime: ctx.runtime,
@@ -517,3 +517,4 @@ export const tlonPlugin: ChannelPlugin = {
     },
   },
 };
+

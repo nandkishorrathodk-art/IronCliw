@@ -86,13 +86,13 @@ describe("gateway auth", () => {
     expect(res.user).toBe(params.expected.user);
   }
 
-  it("resolves token/password from OPENCLAW gateway env vars", () => {
+  it("resolves token/password from Ironcliw gateway env vars", () => {
     expect(
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          OPENCLAW_GATEWAY_TOKEN: "env-token",
-          OPENCLAW_GATEWAY_PASSWORD: "env-password",
+          IRONCLIW_GATEWAY_TOKEN: "env-token",
+          IRONCLIW_GATEWAY_PASSWORD: "env-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({
@@ -103,13 +103,13 @@ describe("gateway auth", () => {
     });
   });
 
-  it("does not resolve legacy CLAWDBOT gateway env vars", () => {
+  it("does not resolve legacy Ironcliw gateway env vars", () => {
     expect(
       resolveGatewayAuth({
         authConfig: {},
         env: {
-          CLAWDBOT_GATEWAY_TOKEN: "legacy-token",
-          CLAWDBOT_GATEWAY_PASSWORD: "legacy-password",
+          IRONCLIW_GATEWAY_TOKEN: "legacy-token",
+          IRONCLIW_GATEWAY_PASSWORD: "legacy-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({
@@ -128,8 +128,8 @@ describe("gateway auth", () => {
           password: "config-password",
         },
         env: {
-          OPENCLAW_GATEWAY_TOKEN: "env-token",
-          OPENCLAW_GATEWAY_PASSWORD: "env-password",
+          IRONCLIW_GATEWAY_TOKEN: "env-token",
+          IRONCLIW_GATEWAY_PASSWORD: "env-password",
         } as NodeJS.ProcessEnv,
       }),
     ).toMatchObject({
@@ -537,3 +537,4 @@ describe("trusted-proxy auth", () => {
     expect(res.user).toBe("nick@example.com");
   });
 });
+

@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "openclaw/plugin-sdk";
+import type { BaseProbeResult } from "Ironcliw/plugin-sdk";
 import { createMatrixClient, isBunRuntime } from "./client.js";
 
 export type MatrixProbe = BaseProbeResult & {
@@ -67,3 +67,4 @@ export async function probeMatrix(params: {
     };
   }
 }
+

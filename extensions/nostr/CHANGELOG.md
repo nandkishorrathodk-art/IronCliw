@@ -4,37 +4,37 @@
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.3.1
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.2.26
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.2.25
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.2.24
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.2.22
 
 ### Changes
 
-- Version alignment with core OpenClaw release numbers.
+- Version alignment with core Ironcliw release numbers.
 
 ## 2026.1.19-1
 
@@ -60,3 +60,4 @@ Initial release.
 - NIP-17: Gift-wrapped DMs
 - NIP-44: Versioned encryption
 - Media attachments
+

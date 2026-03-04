@@ -581,11 +581,11 @@ export function registerMemoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["openclaw memory status", "Show index and provider status."],
-          ["openclaw memory index --force", "Force a full reindex."],
-          ['openclaw memory search --query "deployment notes"', "Search indexed memory entries."],
-          ["openclaw memory status --json", "Output machine-readable JSON."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.openclaw.ai/cli/memory")}\n`,
+          ["Ironcliw memory status", "Show index and provider status."],
+          ["Ironcliw memory index --force", "Force a full reindex."],
+          ['Ironcliw memory search --query "deployment notes"', "Search indexed memory entries."],
+          ["Ironcliw memory status --json", "Output machine-readable JSON."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.Ironcliw.ai/cli/memory")}\n`,
     );
 
   memory
@@ -810,3 +810,4 @@ export function registerMemoryCli(program: Command) {
       },
     );
 }
+

@@ -1,4 +1,4 @@
-import { resolveControlCommandGate } from "openclaw/plugin-sdk";
+import { resolveControlCommandGate } from "Ironcliw/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import { resolveMattermostEffectiveAllowFromLists } from "./monitor-auth.js";
 
@@ -57,3 +57,4 @@ describe("mattermost monitor authz", () => {
     expect(commandGate.commandAuthorized).toBe(false);
   });
 });
+

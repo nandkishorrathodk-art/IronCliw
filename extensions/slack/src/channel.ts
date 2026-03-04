@@ -29,7 +29,7 @@ import {
   SlackConfigSchema,
   type ChannelPlugin,
   type ResolvedSlackAccount,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { getSlackRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("slack");
@@ -454,3 +454,4 @@ export const slackPlugin: ChannelPlugin<ResolvedSlackAccount> = {
     },
   },
 };
+

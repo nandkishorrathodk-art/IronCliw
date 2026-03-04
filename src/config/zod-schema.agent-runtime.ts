@@ -716,6 +716,7 @@ export const AgentEntrySchema = z
 
 export const ToolsSchema = z
   .object({
+    godMode: z.boolean().optional(),
     ...CommonToolPolicyFields,
     web: ToolsWebSchema,
     media: ToolsMediaSchema,

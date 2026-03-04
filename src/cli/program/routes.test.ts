@@ -41,24 +41,24 @@ describe("program routes", () => {
     const route = expectRoute(["health"]);
     expect(typeof route?.loadPlugins).toBe("function");
     const shouldLoad = route?.loadPlugins as (argv: string[]) => boolean;
-    expect(shouldLoad(["node", "openclaw", "health"])).toBe(true);
-    expect(shouldLoad(["node", "openclaw", "health", "--json"])).toBe(false);
+    expect(shouldLoad(["node", "Ironcliw", "health"])).toBe(true);
+    expect(shouldLoad(["node", "Ironcliw", "health", "--json"])).toBe(false);
   });
 
   it("returns false when status timeout flag value is missing", async () => {
-    await expectRunFalse(["status"], ["node", "openclaw", "status", "--timeout"]);
+    await expectRunFalse(["status"], ["node", "Ironcliw", "status", "--timeout"]);
   });
 
   it("returns false for sessions route when --store value is missing", async () => {
-    await expectRunFalse(["sessions"], ["node", "openclaw", "sessions", "--store"]);
+    await expectRunFalse(["sessions"], ["node", "Ironcliw", "sessions", "--store"]);
   });
 
   it("returns false for sessions route when --active value is missing", async () => {
-    await expectRunFalse(["sessions"], ["node", "openclaw", "sessions", "--active"]);
+    await expectRunFalse(["sessions"], ["node", "Ironcliw", "sessions", "--active"]);
   });
 
   it("returns false for sessions route when --agent value is missing", async () => {
-    await expectRunFalse(["sessions"], ["node", "openclaw", "sessions", "--agent"]);
+    await expectRunFalse(["sessions"], ["node", "Ironcliw", "sessions", "--agent"]);
   });
 
   it("does not fast-route sessions subcommands", () => {
@@ -70,11 +70,11 @@ describe("program routes", () => {
   });
 
   it("returns false for config get route when path argument is missing", async () => {
-    await expectRunFalse(["config", "get"], ["node", "openclaw", "config", "get", "--json"]);
+    await expectRunFalse(["config", "get"], ["node", "Ironcliw", "config", "get", "--json"]);
   });
 
   it("returns false for config unset route when path argument is missing", async () => {
-    await expectRunFalse(["config", "unset"], ["node", "openclaw", "config", "unset"]);
+    await expectRunFalse(["config", "unset"], ["node", "Ironcliw", "config", "unset"]);
   });
 
   it("passes config get path correctly when root option values precede command", async () => {
@@ -82,7 +82,7 @@ describe("program routes", () => {
     await expect(
       route?.run([
         "node",
-        "openclaw",
+        "Ironcliw",
         "--log-level",
         "debug",
         "config",
@@ -97,7 +97,7 @@ describe("program routes", () => {
   it("passes config unset path correctly when root option values precede command", async () => {
     const route = expectRoute(["config", "unset"]);
     await expect(
-      route?.run(["node", "openclaw", "--profile", "work", "config", "unset", "update.channel"]),
+      route?.run(["node", "Ironcliw", "--profile", "work", "config", "unset", "update.channel"]),
     ).resolves.toBe(true);
     expect(runConfigUnsetMock).toHaveBeenCalledWith({ path: "update.channel" });
   });
@@ -107,7 +107,7 @@ describe("program routes", () => {
     await expect(
       route?.run([
         "node",
-        "openclaw",
+        "Ironcliw",
         "config",
         "get",
         "--log-level",
@@ -122,7 +122,7 @@ describe("program routes", () => {
   it("passes config unset path when root value options appear after subcommand", async () => {
     const route = expectRoute(["config", "unset"]);
     await expect(
-      route?.run(["node", "openclaw", "config", "unset", "--profile", "work", "update.channel"]),
+      route?.run(["node", "Ironcliw", "config", "unset", "--profile", "work", "update.channel"]),
     ).resolves.toBe(true);
     expect(runConfigUnsetMock).toHaveBeenCalledWith({ path: "update.channel" });
   });
@@ -130,45 +130,45 @@ describe("program routes", () => {
   it("returns false for config get route when unknown option appears", async () => {
     await expectRunFalse(
       ["config", "get"],
-      ["node", "openclaw", "config", "get", "--mystery", "value", "update.channel"],
+      ["node", "Ironcliw", "config", "get", "--mystery", "value", "update.channel"],
     );
   });
 
   it("returns false for memory status route when --agent value is missing", async () => {
-    await expectRunFalse(["memory", "status"], ["node", "openclaw", "memory", "status", "--agent"]);
+    await expectRunFalse(["memory", "status"], ["node", "Ironcliw", "memory", "status", "--agent"]);
   });
 
   it("returns false for models list route when --provider value is missing", async () => {
-    await expectRunFalse(["models", "list"], ["node", "openclaw", "models", "list", "--provider"]);
+    await expectRunFalse(["models", "list"], ["node", "Ironcliw", "models", "list", "--provider"]);
   });
 
   it("returns false for models status route when probe flags are missing values", async () => {
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-provider"],
+      ["node", "Ironcliw", "models", "status", "--probe-provider"],
     );
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-timeout"],
+      ["node", "Ironcliw", "models", "status", "--probe-timeout"],
     );
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-concurrency"],
+      ["node", "Ironcliw", "models", "status", "--probe-concurrency"],
     );
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-max-tokens"],
+      ["node", "Ironcliw", "models", "status", "--probe-max-tokens"],
     );
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-provider", "openai", "--agent"],
+      ["node", "Ironcliw", "models", "status", "--probe-provider", "openai", "--agent"],
     );
   });
 
   it("returns false for models status route when --probe-profile has no value", async () => {
     await expectRunFalse(
       ["models", "status"],
-      ["node", "openclaw", "models", "status", "--probe-profile"],
+      ["node", "Ironcliw", "models", "status", "--probe-profile"],
     );
   });
 
@@ -177,7 +177,7 @@ describe("program routes", () => {
     await expect(
       route?.run([
         "node",
-        "openclaw",
+        "Ironcliw",
         "models",
         "status",
         "--probe-provider",
@@ -207,3 +207,4 @@ describe("program routes", () => {
     );
   });
 });
+

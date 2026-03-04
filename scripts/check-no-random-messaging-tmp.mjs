@@ -81,9 +81,10 @@ export async function main() {
     skipRelativePath: (relativePath) => allowedRelativePaths.has(relativePath),
     header: "Found os.tmpdir()/tmpdir() usage in messaging/channel runtime sources:",
     footer:
-      "Use resolvePreferredOpenClawTmpDir() or plugin-sdk temp helpers instead of host tmp defaults.",
+      "Use resolvePreferredIroncliwTmpDir() or plugin-sdk temp helpers instead of host tmp defaults.",
     sortViolations: false,
   });
 }
 
 runAsScript(import.meta.url, main);
+

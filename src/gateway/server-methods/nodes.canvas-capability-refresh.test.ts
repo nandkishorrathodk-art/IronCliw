@@ -35,7 +35,7 @@ describe("node.canvas.capability.refresh", () => {
     const payload = call?.[1] ?? {};
     expect(typeof payload.canvasCapability).toBe("string");
     expect(payload.canvasCapability).not.toBe("old-token");
-    expect(payload.canvasHostUrl).toContain("/__openclaw__/cap/");
+    expect(payload.canvasHostUrl).toContain("/__IRONCLIW__/cap/");
     expect(typeof payload.canvasCapabilityExpiresAtMs).toBe("number");
     expect(payload.canvasCapabilityExpiresAtMs).toBeGreaterThan(Date.now());
     expect(client.canvasCapability).toBe(payload.canvasCapability);
@@ -61,3 +61,4 @@ describe("node.canvas.capability.refresh", () => {
     expect(call?.[2]?.code).toBe(ErrorCodes.UNAVAILABLE);
   });
 });
+

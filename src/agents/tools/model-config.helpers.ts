@@ -1,10 +1,10 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { ensureAuthProfileStore, listProfilesForProvider } from "../auth-profiles.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
 import { resolveEnvApiKey } from "../model-auth.js";
 import { resolveConfiguredModelRef } from "../model-selection.js";
 
-export function resolveDefaultModelRef(cfg?: OpenClawConfig): { provider: string; model: string } {
+export function resolveDefaultModelRef(cfg?: IroncliwConfig): { provider: string; model: string } {
   if (cfg) {
     const resolved = resolveConfiguredModelRef({
       cfg,
@@ -25,3 +25,4 @@ export function hasAuthForProvider(params: { provider: string; agentDir: string 
   });
   return listProfilesForProvider(store, params.provider).length > 0;
 }
+

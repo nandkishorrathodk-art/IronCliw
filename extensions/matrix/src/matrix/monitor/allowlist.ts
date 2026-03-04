@@ -1,4 +1,4 @@
-import { resolveAllowlistMatchByCandidates, type AllowlistMatch } from "openclaw/plugin-sdk";
+import { resolveAllowlistMatchByCandidates, type AllowlistMatch } from "Ironcliw/plugin-sdk";
 
 function normalizeAllowList(list?: Array<string | number>) {
   return (list ?? []).map((entry) => String(entry).trim()).filter(Boolean);
@@ -90,3 +90,4 @@ export function resolveMatrixAllowListMatch(params: {
 export function resolveMatrixAllowListMatches(params: { allowList: string[]; userId?: string }) {
   return resolveMatrixAllowListMatch(params).allowed;
 }
+

@@ -3,7 +3,7 @@ summary: "Production plan for reliable interactive process supervision (PTY + no
 read_when:
   - Working on exec/process lifecycle ownership and cleanup
   - Debugging PTY and non-PTY supervision behavior
-owner: "openclaw"
+owner: "Ironcliw"
 status: "in-progress"
 last_updated: "2026-02-15"
 title: "PTY and Process Supervision Plan"
@@ -193,3 +193,4 @@ The branch now has a coherent and safer supervision shape:
 - process-tree cancellation for child-run default kill paths
 - unified watchdog defaults
 - explicit in-memory restart boundary (no orphan reconciliation across restart in this pass)
+

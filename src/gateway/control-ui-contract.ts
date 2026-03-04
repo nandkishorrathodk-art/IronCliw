@@ -1,4 +1,4 @@
-export const CONTROL_UI_BOOTSTRAP_CONFIG_PATH = "/__openclaw/control-ui-config.json";
+export const CONTROL_UI_BOOTSTRAP_CONFIG_PATH = "/__Ironcliw/control-ui-config.json";
 
 export type ControlUiBootstrapConfig = {
   basePath: string;
@@ -6,3 +6,4 @@ export type ControlUiBootstrapConfig = {
   assistantAvatar: string;
   assistantAgentId: string;
 };
+

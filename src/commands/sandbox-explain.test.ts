@@ -26,7 +26,7 @@ describe("sandbox explain command", () => {
         sandbox: { tools: { deny: ["browser"] } },
         elevated: { enabled: true, allowFrom: { whatsapp: ["*"] } },
       },
-      session: { store: "/tmp/openclaw-test-sessions-{agentId}.json" },
+      session: { store: "/tmp/Ironcliw-test-sessions-{agentId}.json" },
     };
 
     const logs: string[] = [];
@@ -38,7 +38,7 @@ describe("sandbox explain command", () => {
 
     const out = logs.join("");
     const parsed = JSON.parse(out);
-    expect(parsed).toHaveProperty("docsUrl", "https://docs.openclaw.ai/sandbox");
+    expect(parsed).toHaveProperty("docsUrl", "https://docs.Ironcliw.ai/sandbox");
     expect(parsed).toHaveProperty("sandbox.mode", "all");
     expect(parsed).toHaveProperty("sandbox.tools.sources.allow.source");
     expect(Array.isArray(parsed.fixIt)).toBe(true);
@@ -46,3 +46,4 @@ describe("sandbox explain command", () => {
     expect(parsed.fixIt).toContain("tools.sandbox.tools.deny");
   });
 });
+

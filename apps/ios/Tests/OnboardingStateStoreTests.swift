@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @Suite(.serialized) struct OnboardingStateStoreTests {
     @Test @MainActor func shouldPresentWhenFreshAndDisconnected() {
@@ -55,3 +55,4 @@ import Testing
         defaults.defaults.removePersistentDomain(forName: defaults.suiteName)
     }
 }
+

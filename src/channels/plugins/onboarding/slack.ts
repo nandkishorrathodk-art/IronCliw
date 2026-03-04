@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IroncliwConfig } from "../../../config/config.js";
 import { hasConfiguredSecretInput } from "../../../config/types.secrets.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../routing/session-key.js";
 import {
@@ -29,11 +29,11 @@ import {
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "OpenClaw";
+  const safeName = botName.trim() || "Ironcliw";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for OpenClaw`,
+      description: `${safeName} connector for Ironcliw`,
     },
     features: {
       bot_user: {
@@ -46,8 +46,8 @@ function buildSlackManifest(botName: string) {
       },
       slash_commands: [
         {
-          command: "/openclaw",
-          description: "Send a message to OpenClaw",
+          command: "/Ironcliw",
+          description: "Send a message to Ironcliw",
           should_escape: false,
         },
       ],
@@ -117,10 +117,10 @@ async function noteSlackTokenHelp(prompter: WizardPrompter, botName: string): Pr
 }
 
 function setSlackChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   accountId: string,
   channelKeys: string[],
-): OpenClawConfig {
+): IroncliwConfig {
   const channels = Object.fromEntries(channelKeys.map((key) => [key, { allow: true }]));
   return patchChannelConfigForAccount({
     cfg,
@@ -131,10 +131,10 @@ function setSlackChannelAllowlist(
 }
 
 async function promptSlackAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<IroncliwConfig> {
   const accountId = resolveOnboardingAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultSlackAccountId(params.cfg),
@@ -245,7 +245,7 @@ export const slackOnboardingAdapter: ChannelOnboardingAdapter = {
     const slackBotName = String(
       await prompter.text({
         message: "Slack bot display name (used for manifest)",
-        initialValue: "OpenClaw",
+        initialValue: "Ironcliw",
       }),
     ).trim();
     if (!accountConfigured) {
@@ -363,3 +363,4 @@ export const slackOnboardingAdapter: ChannelOnboardingAdapter = {
   dmPolicy,
   disable: (cfg) => setOnboardingChannelEnabled(cfg, channel, false),
 };
+

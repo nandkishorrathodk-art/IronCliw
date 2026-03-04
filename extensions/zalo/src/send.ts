@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { resolveZaloAccount } from "./accounts.js";
 import type { ZaloFetch } from "./api.js";
 import { sendMessage, sendPhoto } from "./api.js";
@@ -8,7 +8,7 @@ import { resolveZaloToken } from "./token.js";
 export type ZaloSendOptions = {
   token?: string;
   accountId?: string;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   mediaUrl?: string;
   caption?: string;
   verbose?: boolean;
@@ -122,3 +122,4 @@ export async function sendPhotoZalo(
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
 }
+

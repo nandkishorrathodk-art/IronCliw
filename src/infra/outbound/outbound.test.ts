@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { typedCases } from "../../test-utils/typed-cases.js";
 import {
   ackDelivery,
@@ -45,7 +45,7 @@ describe("delivery-queue", () => {
   let fixtureCount = 0;
 
   beforeAll(() => {
-    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-dq-suite-"));
+    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "Ironcliw-dq-suite-"));
   });
 
   beforeEach(() => {
@@ -573,7 +573,7 @@ describe("delivery-queue", () => {
 });
 
 describe("DirectoryCache", () => {
-  const cfg = {} as OpenClawConfig;
+  const cfg = {} as IroncliwConfig;
 
   afterEach(() => {
     vi.useRealTimers();
@@ -824,13 +824,13 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as OpenClawConfig;
+} as IroncliwConfig;
 
 const discordConfig = {
   channels: {
     discord: {},
   },
-} as OpenClawConfig;
+} as IroncliwConfig;
 
 describe("outbound policy", () => {
   it("allows cross-provider sends when enabled", () => {
@@ -839,7 +839,7 @@ describe("outbound policy", () => {
       tools: {
         message: { crossContext: { allowAcrossProviders: true } },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
 
     expect(() =>
       enforceCrossContextPolicy({
@@ -875,10 +875,10 @@ describe("outbound policy", () => {
 });
 
 describe("resolveOutboundSessionRoute", () => {
-  const baseConfig = {} as OpenClawConfig;
+  const baseConfig = {} as IroncliwConfig;
 
   it("resolves provider-specific session routes", async () => {
-    const perChannelPeerCfg = { session: { dmScope: "per-channel-peer" } } as OpenClawConfig;
+    const perChannelPeerCfg = { session: { dmScope: "per-channel-peer" } } as IroncliwConfig;
     const identityLinksCfg = {
       session: {
         dmScope: "per-peer",
@@ -886,7 +886,7 @@ describe("resolveOutboundSessionRoute", () => {
           alice: ["discord:123"],
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
     const slackMpimCfg = {
       channels: {
         slack: {
@@ -895,10 +895,10 @@ describe("resolveOutboundSessionRoute", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as IroncliwConfig;
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: IroncliwConfig;
       channel: string;
       target: string;
       replyToId?: string;
@@ -1197,3 +1197,4 @@ describe("formatOutboundPayloadLog", () => {
 });
 
 runResolveOutboundTargetCoreTests();
+

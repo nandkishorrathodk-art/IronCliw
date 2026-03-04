@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `openclaw node` (headless node host)"
+summary: "CLI reference for `Ironcliw node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `openclaw node`
+# `Ironcliw node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-openclaw node run --host <gateway-host> --port 18789
+Ironcliw node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -63,7 +63,7 @@ Options:
 Install a headless node host as a user service.
 
 ```bash
-openclaw node install --host <gateway-host> --port 18789
+Ironcliw node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -80,13 +80,13 @@ Options:
 Manage the service:
 
 ```bash
-openclaw node status
-openclaw node stop
-openclaw node restart
-openclaw node uninstall
+Ironcliw node status
+Ironcliw node stop
+Ironcliw node restart
+Ironcliw node uninstall
 ```
 
-Use `openclaw node run` for a foreground node host (no service).
+Use `Ironcliw node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -96,17 +96,18 @@ The first connection creates a pending device pairing request (`role: node`) on 
 Approve it via:
 
 ```bash
-openclaw devices list
-openclaw devices approve <requestId>
+Ironcliw devices list
+Ironcliw devices approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
-`~/.openclaw/node.json`.
+`~/.Ironcliw/node.json`.
 
 ## Exec approvals
 
 `system.run` is gated by local exec approvals:
 
-- `~/.openclaw/exec-approvals.json`
+- `~/.Ironcliw/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `openclaw approvals --node <id|name|ip>` (edit from the Gateway)
+- `Ironcliw approvals --node <id|name|ip>` (edit from the Gateway)
+

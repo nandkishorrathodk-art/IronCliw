@@ -63,7 +63,7 @@ export type SandboxBrowserSettings = {
   enabled?: boolean;
   image?: string;
   containerPrefix?: string;
-  /** Docker network for sandbox browser containers (default: openclaw-sandbox-browser). */
+  /** Docker network for sandbox browser containers (default: Ironcliw-sandbox-browser). */
   network?: string;
   cdpPort?: number;
   /** Optional CIDR allowlist for CDP ingress at the container edge (for example: 172.21.0.1/32). */
@@ -94,3 +94,4 @@ export type SandboxPruneSettings = {
   /** Prune if older than N days (0 disables). */
   maxAgeDays?: number;
 };
+

@@ -65,9 +65,9 @@ updates:
           - patch
     open-pull-requests-limit: 5
 
-  # Swift Package Manager - shared MoltbotKit
+  # Swift Package Manager - shared IroncliwKit
   - package-ecosystem: swift
-    directory: /apps/shared/MoltbotKit
+    directory: /apps/shared/IroncliwKit
     schedule:
       interval: daily
     cooldown:
@@ -125,3 +125,4 @@ updates:
         patterns:
           - "*"
     open-pull-requests-limit: 5
+

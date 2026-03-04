@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, buildChannelConfigSchema } from "openclaw/plugin-sdk";
+import { MarkdownConfigSchema, buildChannelConfigSchema } from "Ironcliw/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);
@@ -91,3 +91,4 @@ export type NostrConfig = z.infer<typeof NostrConfigSchema>;
  * JSON Schema for Control UI (converted from Zod)
  */
 export const nostrChannelConfigSchema = buildChannelConfigSchema(NostrConfigSchema);
+

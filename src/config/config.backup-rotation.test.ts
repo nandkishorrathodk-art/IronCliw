@@ -12,16 +12,16 @@ import {
   resolveConfigPathFromTempState,
 } from "./config.backup-rotation.test-helpers.js";
 import { withTempHome } from "./test-helpers.js";
-import type { OpenClawConfig } from "./types.js";
+import type { IroncliwConfig } from "./types.js";
 
 describe("config backup rotation", () => {
   it("keeps a 5-deep backup ring for config writes", async () => {
     await withTempHome(async () => {
       const configPath = resolveConfigPathFromTempState();
-      const buildConfig = (version: number): OpenClawConfig =>
+      const buildConfig = (version: number): IroncliwConfig =>
         ({
           agents: { list: [{ id: `v${version}` }] },
-        }) as OpenClawConfig;
+        }) as IroncliwConfig;
 
       const writeVersion = async (version: number) => {
         const json = JSON.stringify(buildConfig(version), null, 2).trimEnd().concat("\n");
@@ -132,3 +132,4 @@ describe("config backup rotation", () => {
     });
   });
 });
+

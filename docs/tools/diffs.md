@@ -152,7 +152,7 @@ Mode behavior summary:
 
 ## Plugin defaults
 
-Set plugin-wide defaults in `~/.openclaw/openclaw.json`:
+Set plugin-wide defaults in `~/.Ironcliw/Ironcliw.json`:
 
 ```json5
 {
@@ -230,7 +230,7 @@ Example:
 
 ## Artifact lifecycle and storage
 
-- Artifacts are stored under the temp subfolder: `$TMPDIR/openclaw-diffs`.
+- Artifacts are stored under the temp subfolder: `$TMPDIR/Ironcliw-diffs`.
 - Viewer artifact metadata contains:
   - random artifact ID (20 hex chars)
   - random token (48 hex chars)
@@ -291,9 +291,9 @@ File rendering hardening:
 
 Resolution order:
 
-1. `browser.executablePath` in OpenClaw config.
+1. `browser.executablePath` in Ironcliw config.
 2. Environment variables:
-   - `OPENCLAW_BROWSER_EXECUTABLE_PATH`
+   - `IRONCLIW_BROWSER_EXECUTABLE_PATH`
    - `BROWSER_EXECUTABLE_PATH`
    - `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`
 3. Platform command/path discovery fallback.
@@ -356,3 +356,4 @@ Diff rendering engine:
 - [Tools overview](/tools)
 - [Plugins](/tools/plugin)
 - [Browser](/tools/browser)
+

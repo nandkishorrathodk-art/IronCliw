@@ -4,7 +4,7 @@ import type {
   DmPolicy,
   GroupPolicy,
   SecretInput,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 
 export type { DmPolicy, GroupPolicy };
 
@@ -188,3 +188,4 @@ export type NextcloudTalkSendOptions = {
   message: string;
   replyTo?: string;
 };
+

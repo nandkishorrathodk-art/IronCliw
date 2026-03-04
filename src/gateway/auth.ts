@@ -294,7 +294,7 @@ export function assertGatewayAuthConfigured(auth: ResolvedGatewayAuth): void {
       return;
     }
     throw new Error(
-      "gateway auth mode is token, but no token was configured (set gateway.auth.token or OPENCLAW_GATEWAY_TOKEN)",
+      "gateway auth mode is token, but no token was configured (set gateway.auth.token or IRONCLIW_GATEWAY_TOKEN)",
     );
   }
   if (auth.mode === "password" && !auth.password) {
@@ -485,3 +485,4 @@ export async function authorizeWsControlUiGatewayConnect(
     authSurface: "ws-control-ui",
   });
 }
+

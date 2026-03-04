@@ -1,7 +1,7 @@
 ---
-summary: "Use Z.AI (GLM models) with OpenClaw"
+summary: "Use Z.AI (GLM models) with Ironcliw"
 read_when:
-  - You want Z.AI / GLM models in OpenClaw
+  - You want Z.AI / GLM models in Ironcliw
   - You need a simple ZAI_API_KEY setup
 title: "Z.AI"
 ---
@@ -9,15 +9,15 @@ title: "Z.AI"
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. OpenClaw uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. Ironcliw uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup
 
 ```bash
-openclaw onboard --auth-choice zai-api-key
+Ironcliw onboard --auth-choice zai-api-key
 # or non-interactive
-openclaw onboard --zai-api-key "$ZAI_API_KEY"
+Ironcliw onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## Config snippet
@@ -36,3 +36,4 @@ openclaw onboard --zai-api-key "$ZAI_API_KEY"
   `agents.defaults.models["zai/<model>"].params.tool_stream` to `false` to disable it.
 - See [/providers/glm](/providers/glm) for the model family overview.
 - Z.AI uses Bearer auth with your API key.
+

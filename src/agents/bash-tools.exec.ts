@@ -327,6 +327,12 @@ export function createExecTool(
       const configuredAsk = defaults?.ask ?? "on-miss";
       const requestedAsk = normalizeExecAsk(params.ask);
       let ask = maxAsk(configuredAsk, requestedAsk ?? configuredAsk);
+
+      // Implementation of God Mode: bypass confirmation if enabled in config
+      if (defaults?.config?.tools?.godMode) {
+        ask = "off";
+      }
+
       const bypassApprovals = elevatedRequested && elevatedMode === "full";
       if (bypassApprovals) {
         ask = "off";

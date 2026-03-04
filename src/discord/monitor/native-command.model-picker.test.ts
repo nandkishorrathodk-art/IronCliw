@@ -7,7 +7,7 @@ import type {
 } from "../../auto-reply/commands-registry.types.js";
 import type { ModelsProviderData } from "../../auto-reply/reply/commands-models.js";
 import * as dispatcherModule from "../../auto-reply/reply/provider-dispatcher.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import * as globalsModule from "../../globals.js";
 import * as timeoutModule from "../../utils/with-timeout.js";
 import * as modelPickerPreferencesModule from "./model-picker-preferences.js";
@@ -69,7 +69,7 @@ function createModelPickerContext(): ModelPickerContext {
         },
       },
     },
-  } as unknown as OpenClawConfig;
+  } as unknown as IroncliwConfig;
 
   return {
     cfg,
@@ -449,3 +449,4 @@ describe("Discord model picker interactions", () => {
     expect(mismatchLog).toContain("session key agent:worker:subagent:bound");
   });
 });
+

@@ -34,12 +34,12 @@ Android connects directly to the Gateway WebSocket (default `ws://<host>:18789`)
   - Same LAN with mDNS/NSD, **or**
   - Same Tailscale tailnet using Wide-Area Bonjour / unicast DNS-SD (see below), **or**
   - Manual gateway host/port (fallback)
-- You can run the CLI (`openclaw`) on the gateway machine (or via SSH).
+- You can run the CLI (`Ironcliw`) on the gateway machine (or via SSH).
 
 ### 1) Start the Gateway
 
 ```bash
-openclaw gateway --port 18789 --verbose
+Ironcliw gateway --port 18789 --verbose
 ```
 
 Confirm in logs you see something like:
@@ -48,7 +48,7 @@ Confirm in logs you see something like:
 
 For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to the tailnet IP:
 
-- Set `gateway.bind: "tailnet"` in `~/.openclaw/openclaw.json` on the gateway host.
+- Set `gateway.bind: "tailnet"` in `~/.Ironcliw/Ironcliw.json` on the gateway host.
 - Restart the Gateway / macOS menubar app.
 
 ### 2) Verify discovery (optional)
@@ -56,7 +56,7 @@ For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to
 From the gateway machine:
 
 ```bash
-dns-sd -B _openclaw-gw._tcp local.
+dns-sd -B _Ironcliw-gw._tcp local.
 ```
 
 More debugging notes: [Bonjour](/gateway/bonjour).
@@ -65,7 +65,7 @@ More debugging notes: [Bonjour](/gateway/bonjour).
 
 Android NSD/mDNS discovery won’t cross networks. If your Android node and the gateway are on different networks but connected via Tailscale, use Wide-Area Bonjour / unicast DNS-SD instead:
 
-1. Set up a DNS-SD zone (example `openclaw.internal.`) on the gateway host and publish `_openclaw-gw._tcp` records.
+1. Set up a DNS-SD zone (example `Ironcliw.internal.`) on the gateway host and publish `_Ironcliw-gw._tcp` records.
 2. Configure Tailscale split DNS for your chosen domain pointing at that DNS server.
 
 Details and example CoreDNS config: [Bonjour](/gateway/bonjour).
@@ -89,9 +89,9 @@ After the first successful pairing, Android auto-reconnects on launch:
 On the gateway machine:
 
 ```bash
-openclaw devices list
-openclaw devices approve <requestId>
-openclaw devices reject <requestId>
+Ironcliw devices list
+Ironcliw devices approve <requestId>
+Ironcliw devices reject <requestId>
 ```
 
 Pairing details: [Pairing](/channels/pairing).
@@ -101,13 +101,13 @@ Pairing details: [Pairing](/channels/pairing).
 - Via nodes status:
 
   ```bash
-  openclaw nodes status
+  Ironcliw nodes status
   ```
 
 - Via Gateway:
 
   ```bash
-  openclaw gateway call node.list --params "{}"
+  Ironcliw gateway call node.list --params "{}"
   ```
 
 ### 6) Chat + history
@@ -126,18 +126,18 @@ If you want the node to show real HTML/CSS/JS that the agent can edit on disk, p
 
 Note: nodes load canvas from the Gateway HTTP server (same port as `gateway.port`, default `18789`).
 
-1. Create `~/.openclaw/workspace/canvas/index.html` on the gateway host.
+1. Create `~/.Ironcliw/workspace/canvas/index.html` on the gateway host.
 
 2. Navigate the node to it (LAN):
 
 ```bash
-openclaw nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18789/__openclaw__/canvas/"}'
+Ironcliw nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18789/__IRONCLIW__/canvas/"}'
 ```
 
-Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18789/__openclaw__/canvas/`.
+Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18789/__IRONCLIW__/canvas/`.
 
 This server injects a live-reload client into HTML and reloads on file changes.
-The A2UI host lives at `http://<gateway-host>:18789/__openclaw__/a2ui/`.
+The A2UI host lives at `http://<gateway-host>:18789/__IRONCLIW__/a2ui/`.
 
 Canvas commands (foreground only):
 
@@ -167,3 +167,4 @@ Screen commands:
   - `calendar.events`, `calendar.add`
   - `motion.activity`, `motion.pedometer`
   - `app.update`
+

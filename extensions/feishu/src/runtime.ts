@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk";
+import type { PluginRuntime } from "Ironcliw/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 
@@ -12,3 +12,4 @@ export function getFeishuRuntime(): PluginRuntime {
   }
   return runtime;
 }
+

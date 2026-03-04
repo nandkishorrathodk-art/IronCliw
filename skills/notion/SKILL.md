@@ -4,7 +4,7 @@ description: Notion API for creating and managing pages, databases, and blocks.
 homepage: https://developers.notion.com
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       { "emoji": "📝", "requires": { "env": ["NOTION_API_KEY"] }, "primaryEnv": "NOTION_API_KEY" },
   }
 ---
@@ -170,3 +170,4 @@ Common property formats for database items:
 - The API cannot set database view filters — that's UI-only
 - Rate limit: ~3 requests/second average
 - Use `is_inline: true` when creating data sources to embed them in pages
+

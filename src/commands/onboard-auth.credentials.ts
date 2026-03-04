@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { OAuthCredentials } from "@mariozechner/pi-ai";
-import { resolveOpenClawAgentDir } from "../agents/agent-paths.js";
+import { resolveIroncliwAgentDir } from "../agents/agent-paths.js";
 import { upsertAuthProfile } from "../agents/auth-profiles.js";
 import { resolveStateDir } from "../config/paths.js";
 import {
@@ -18,7 +18,7 @@ export { CLOUDFLARE_AI_GATEWAY_DEFAULT_MODEL_REF } from "../agents/cloudflare-ai
 export { MISTRAL_DEFAULT_MODEL_REF, XAI_DEFAULT_MODEL_REF } from "./onboard-auth.models.js";
 export { KILOCODE_DEFAULT_MODEL_REF };
 
-const resolveAuthAgentDir = (agentDir?: string) => agentDir ?? resolveOpenClawAgentDir();
+const resolveAuthAgentDir = (agentDir?: string) => agentDir ?? resolveIroncliwAgentDir();
 
 const ENV_REF_PATTERN = /^\$\{([A-Z][A-Z0-9_]*)\}$/;
 
@@ -502,3 +502,4 @@ export async function setKilocodeApiKey(
     agentDir: resolveAuthAgentDir(agentDir),
   });
 }
+

@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveFeishuSendTarget } from "./send-target.js";
 
@@ -14,7 +14,7 @@ vi.mock("./client.js", () => ({
 }));
 
 describe("resolveFeishuSendTarget", () => {
-  const cfg = {} as ClawdbotConfig;
+  const cfg = {} as IroncliwConfig;
   const client = { id: "client" };
 
   beforeEach(() => {
@@ -72,3 +72,4 @@ describe("resolveFeishuSendTarget", () => {
     ).toThrow('Feishu account "default" not configured');
   });
 });
+

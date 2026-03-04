@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
-import type { ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const probeFeishuMock = vi.hoisted(() => vi.fn());
@@ -79,7 +79,7 @@ function buildConfig(params: {
   path: string;
   port: number;
   verificationToken?: string;
-}): ClawdbotConfig {
+}): IroncliwConfig {
   return {
     channels: {
       feishu: {
@@ -98,7 +98,7 @@ function buildConfig(params: {
         },
       },
     },
-  } as ClawdbotConfig;
+  } as IroncliwConfig;
 }
 
 async function withRunningWebhookMonitor(
@@ -224,3 +224,4 @@ describe("Feishu webhook security hardening", () => {
     expect(getFeishuWebhookRateLimitStateSizeForTest()).toBe(1);
   });
 });
+

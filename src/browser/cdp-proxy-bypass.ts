@@ -5,7 +5,7 @@
  * CDP connections to localhost/127.0.0.1 can be incorrectly routed through
  * the proxy, causing browser control to fail.
  *
- * @see https://github.com/nicepkg/openclaw/issues/31219
+ * @see https://github.com/nicepkg/Ironcliw/issues/31219
  */
 import http from "node:http";
 import https from "node:https";
@@ -149,3 +149,4 @@ export async function withNoProxyForCdpUrl<T>(url: string, fn: () => Promise<T>)
     release?.();
   }
 }
+

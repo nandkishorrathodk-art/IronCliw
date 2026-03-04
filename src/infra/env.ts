@@ -49,4 +49,15 @@ export function isTruthyEnvValue(value?: string): boolean {
 
 export function normalizeEnv(): void {
   normalizeZaiEnv();
+  
+  // Legacy environment variable fallback: map IRONCLIW_ variables from OPENCLAW_ if missing
+  const keys = Object.keys(process.env);
+  for (const key of keys) {
+    if (key.startsWith("OPENCLAW_")) {
+      const newKey = key.replace("OPENCLAW_", "IRONCLIW_");
+      if (!process.env[newKey]) {
+        process.env[newKey] = process.env[key];
+      }
+    }
+  }
 }

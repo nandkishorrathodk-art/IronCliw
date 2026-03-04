@@ -3,7 +3,7 @@ import {
   issuePairingChallenge,
   readStoreAllowFromForDmPolicy,
   resolveDmGroupAccessWithLists,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   normalizeMatrixAllowList,
   resolveMatrixAllowListMatch,
@@ -99,12 +99,12 @@ export async function enforceMatrixDirectMessageAccess(params: {
       upsertPairingRequest: params.upsertPairingRequest,
       buildReplyText: ({ code }) =>
         [
-          "OpenClaw: access not configured.",
+          "Ironcliw: access not configured.",
           "",
           `Pairing code: ${code}`,
           "",
           "Ask the bot owner to approve with:",
-          "openclaw pairing approve matrix <code>",
+          "Ironcliw pairing approve matrix <code>",
         ].join("\n"),
       sendPairingReply: params.sendPairingReply,
       onCreated: () => {
@@ -125,3 +125,4 @@ export async function enforceMatrixDirectMessageAccess(params: {
   );
   return false;
 }
+

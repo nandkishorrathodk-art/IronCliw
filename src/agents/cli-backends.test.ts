@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { resolveCliBackendConfig } from "./cli-backends.js";
 
 describe("resolveCliBackendConfig reliability merge", () => {
@@ -21,7 +21,7 @@ describe("resolveCliBackendConfig reliability merge", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies IroncliwConfig;
 
     const resolved = resolveCliBackendConfig("codex-cli", cfg);
 
@@ -34,3 +34,4 @@ describe("resolveCliBackendConfig reliability merge", () => {
     expect(resolved?.config.reliability?.watchdog?.fresh?.noOutputTimeoutRatio).toBe(0.8);
   });
 });
+

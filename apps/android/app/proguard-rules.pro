@@ -1,5 +1,5 @@
 # ── App classes ───────────────────────────────────────────────────
--keep class ai.openclaw.android.** { *; }
+-keep class ai.Ironcliw.android.** { *; }
 
 # ── Bouncy Castle ─────────────────────────────────────────────────
 -keep class org.bouncycastle.** { *; }
@@ -26,3 +26,4 @@
 -dontwarn lombok.Generated
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 -dontwarn sun.net.spi.nameservice.NameServiceDescriptor
+

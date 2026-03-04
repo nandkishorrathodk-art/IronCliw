@@ -4,7 +4,7 @@ description: Generate spectrograms and feature-panel visualizations from audio w
 homepage: https://github.com/steipete/songsee
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🌊",
         "requires": { "bins": ["songsee"] },
@@ -47,3 +47,4 @@ Notes
 
 - WAV/MP3 decode native; other formats use ffmpeg if available.
 - Multiple `--viz` renders a grid.
+

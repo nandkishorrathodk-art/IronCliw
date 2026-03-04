@@ -1,5 +1,5 @@
 ---
-summary: "Mattermost bot setup and OpenClaw config"
+summary: "Mattermost bot setup and Ironcliw config"
 read_when:
   - Setting up Mattermost
   - Debugging Mattermost routing
@@ -19,17 +19,17 @@ Mattermost ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-openclaw plugins install @openclaw/mattermost
+Ironcliw plugins install @Ironcliw/mattermost
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-openclaw plugins install ./extensions/mattermost
+Ironcliw plugins install ./extensions/mattermost
 ```
 
 If you choose Mattermost during configure/onboarding and a git checkout is detected,
-OpenClaw will offer the local install path automatically.
+Ironcliw will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
@@ -38,7 +38,7 @@ Details: [Plugins](/tools/plugin)
 1. Install the Mattermost plugin.
 2. Create a Mattermost bot account and copy the **bot token**.
 3. Copy the Mattermost **base URL** (e.g., `https://chat.example.com`).
-4. Configure OpenClaw and start the gateway.
+4. Configure Ironcliw and start the gateway.
 
 Minimal config:
 
@@ -57,7 +57,7 @@ Minimal config:
 
 ## Native slash commands
 
-Native slash commands are opt-in. When enabled, OpenClaw registers `oc_*` slash commands via
+Native slash commands are opt-in. When enabled, Ironcliw registers `oc_*` slash commands via
 the Mattermost API and receives callback POSTs on the gateway HTTP server.
 
 ```json5
@@ -79,14 +79,14 @@ the Mattermost API and receives callback POSTs on the gateway HTTP server.
 Notes:
 
 - `native: "auto"` defaults to disabled for Mattermost. Set `native: true` to enable.
-- If `callbackUrl` is omitted, OpenClaw derives one from gateway host/port + `callbackPath`.
+- If `callbackUrl` is omitted, Ironcliw derives one from gateway host/port + `callbackPath`.
 - For multi-account setups, `commands` can be set at the top level or under
   `channels.mattermost.accounts.<id>.commands` (account values override top-level fields).
 - Command callbacks are validated with per-command tokens and fail closed when token checks fail.
 - Reachability requirement: the callback endpoint must be reachable from the Mattermost server.
-  - Do not set `callbackUrl` to `localhost` unless Mattermost runs on the same host/network namespace as OpenClaw.
-  - Do not set `callbackUrl` to your Mattermost base URL unless that URL reverse-proxies `/api/channels/mattermost/command` to OpenClaw.
-  - A quick check is `curl https://<gateway-host>/api/channels/mattermost/command`; a GET should return `405 Method Not Allowed` from OpenClaw, not `404`.
+  - Do not set `callbackUrl` to `localhost` unless Mattermost runs on the same host/network namespace as Ironcliw.
+  - Do not set `callbackUrl` to your Mattermost base URL unless that URL reverse-proxies `/api/channels/mattermost/command` to Ironcliw.
+  - A quick check is `curl https://<gateway-host>/api/channels/mattermost/command`; a GET should return `405 Method Not Allowed` from Ironcliw, not `404`.
 - Mattermost egress allowlist requirement:
   - If your callback targets private/tailnet/internal addresses, set Mattermost
     `ServiceSettings.AllowedUntrustedInternalConnections` to include the callback host/domain.
@@ -133,8 +133,8 @@ Notes:
 
 - Default: `channels.mattermost.dmPolicy = "pairing"` (unknown senders get a pairing code).
 - Approve via:
-  - `openclaw pairing list mattermost`
-  - `openclaw pairing approve mattermost <CODE>`
+  - `Ironcliw pairing list mattermost`
+  - `Ironcliw pairing approve mattermost <CODE>`
 - Public DMs: `channels.mattermost.dmPolicy="open"` plus `channels.mattermost.allowFrom=["*"]`.
 
 ## Channels (groups)
@@ -147,7 +147,7 @@ Notes:
 
 ## Targets for outbound delivery
 
-Use these target formats with `openclaw message send` or cron/webhooks:
+Use these target formats with `Ironcliw message send` or cron/webhooks:
 
 - `channel:<id>` for a channel
 - `user:<id>` for a DM
@@ -197,3 +197,4 @@ Mattermost supports multiple accounts under `channels.mattermost.accounts`:
 - No replies in channels: ensure the bot is in the channel and mention it (oncall), use a trigger prefix (onchar), or set `chatmode: "onmessage"`.
 - Auth errors: check the bot token, base URL, and whether the account is enabled.
 - Multi-account issues: env vars only apply to the `default` account.
+

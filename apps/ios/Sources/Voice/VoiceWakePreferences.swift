@@ -5,7 +5,7 @@ enum VoiceWakePreferences {
     static let triggerWordsKey = "voiceWake.triggerWords"
 
     // Keep defaults aligned with the mac app.
-    static let defaultTriggerWords: [String] = ["openclaw", "claude"]
+    static let defaultTriggerWords: [String] = ["Ironcliw", "claude"]
     static let maxWords = 32
     static let maxWordLength = 64
 
@@ -42,3 +42,4 @@ enum VoiceWakePreferences {
         return sanitized.joined(separator: ", ")
     }
 }
+

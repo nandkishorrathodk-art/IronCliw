@@ -1,4 +1,4 @@
-import { resolveAllowlistMatchSimple, resolveEffectiveAllowFromLists } from "openclaw/plugin-sdk";
+import { resolveAllowlistMatchSimple, resolveEffectiveAllowFromLists } from "Ironcliw/plugin-sdk";
 
 export function normalizeMattermostAllowEntry(entry: string): string {
   const trimmed = entry.trim();
@@ -56,3 +56,4 @@ export function isMattermostSenderAllowed(params: {
   });
   return match.allowed;
 }
+

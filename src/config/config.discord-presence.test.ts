@@ -57,7 +57,7 @@ describe("config discord presence", () => {
       channels: {
         discord: {
           activity: "Live",
-          activityUrl: "https://twitch.tv/openclaw",
+          activityUrl: "https://twitch.tv/Ironcliw",
         },
       },
     });
@@ -65,3 +65,4 @@ describe("config discord presence", () => {
     expect(res.ok).toBe(false);
   });
 });
+

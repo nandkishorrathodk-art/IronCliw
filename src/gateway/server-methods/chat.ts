@@ -262,7 +262,7 @@ function buildOversizedHistoryPlaceholder(message?: unknown): Record<string, unk
     role,
     timestamp,
     content: [{ type: "text", text: CHAT_HISTORY_OVERSIZED_PLACEHOLDER }],
-    __openclaw: { truncated: true, reason: "oversized" },
+    __Ironcliw: { truncated: true, reason: "oversized" },
   };
 }
 
@@ -860,7 +860,7 @@ export const chatHandlers: GatewayRequestHandlers = {
       const messageThreadId = hasDeliverableRoute ? routeThreadIdCandidate : undefined;
       // Inject timestamp so agents know the current date/time.
       // Only BodyForAgent gets the timestamp — Body stays raw for UI display.
-      // See: https://github.com/moltbot/moltbot/issues/3658
+      // See: https://github.com/Ironcliw/Ironcliw/issues/3658
       const stampedMessage = injectTimestamp(parsedMessage, timestampOptsFromConfig(cfg));
 
       const ctx: MsgContext = {
@@ -1099,3 +1099,4 @@ export const chatHandlers: GatewayRequestHandlers = {
     respond(true, { ok: true, messageId: appended.messageId });
   },
 };
+

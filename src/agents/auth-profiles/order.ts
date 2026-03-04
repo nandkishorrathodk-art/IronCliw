@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import {
   findNormalizedProviderValue,
   normalizeProviderId,
@@ -13,7 +13,7 @@ import {
 } from "./usage.js";
 
 export function resolveAuthProfileOrder(params: {
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   store: AuthProfileStore;
   provider: string;
   preferredProfile?: string;
@@ -188,3 +188,4 @@ function orderProfilesByMode(order: string[], store: AuthProfileStore): string[]
 
   return [...sorted, ...cooldownSorted];
 }
+

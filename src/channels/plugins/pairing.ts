@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import {
   type ChannelId,
@@ -51,7 +51,7 @@ export function resolvePairingChannel(raw: unknown): ChannelId {
 export async function notifyPairingApproved(params: {
   channelId: ChannelId;
   id: string;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   runtime?: RuntimeEnv;
   /** Extension channels can pass their adapter directly to bypass registry lookup. */
   pairingAdapter?: ChannelPairingAdapter;
@@ -67,3 +67,4 @@ export async function notifyPairingApproved(params: {
     runtime: params.runtime,
   });
 }
+

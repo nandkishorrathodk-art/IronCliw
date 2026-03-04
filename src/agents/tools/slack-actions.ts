@@ -1,5 +1,5 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { resolveSlackAccount } from "../../slack/accounts.js";
 import {
   deleteSlackMessage,
@@ -102,7 +102,7 @@ function readSlackBlocksParam(params: Record<string, unknown>) {
 
 export async function handleSlackAction(
   params: Record<string, unknown>,
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   context?: SlackActionContext,
 ): Promise<AgentToolResult<unknown>> {
   const resolveChannelId = () =>
@@ -396,3 +396,4 @@ export async function handleSlackAction(
 
   throw new Error(`Unknown action: ${action}`);
 }
+

@@ -6,7 +6,7 @@ import { createMSTeamsPollStoreMemory } from "./polls-store-memory.js";
 import { createMSTeamsPollStoreFs } from "./polls.js";
 
 const createFsStore = async () => {
-  const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "openclaw-msteams-polls-"));
+  const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "Ironcliw-msteams-polls-"));
   return createMSTeamsPollStoreFs({ stateDir });
 };
 
@@ -36,3 +36,4 @@ describe.each([
     expect(poll?.votes["user-1"]).toEqual(["0"]);
   });
 });
+

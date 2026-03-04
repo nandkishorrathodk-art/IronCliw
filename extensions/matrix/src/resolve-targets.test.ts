@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "openclaw/plugin-sdk";
+import type { ChannelDirectoryEntry } from "Ironcliw/plugin-sdk";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { listMatrixDirectoryGroupsLive, listMatrixDirectoryPeersLive } from "./directory-live.js";
 import { resolveMatrixTargets } from "./resolve-targets.js";
@@ -65,3 +65,4 @@ describe("resolveMatrixTargets (users)", () => {
     expect(result?.note).toBe("multiple matches; chose first");
   });
 });
+

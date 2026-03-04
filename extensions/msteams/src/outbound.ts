@@ -1,4 +1,4 @@
-import type { ChannelOutboundAdapter } from "openclaw/plugin-sdk";
+import type { ChannelOutboundAdapter } from "Ironcliw/plugin-sdk";
 import { createMSTeamsPollStoreFs } from "./polls.js";
 import { getMSTeamsRuntime } from "./runtime.js";
 import { sendMessageMSTeams, sendPollMSTeams } from "./send.js";
@@ -51,3 +51,4 @@ export const msteamsOutbound: ChannelOutboundAdapter = {
     return result;
   },
 };
+

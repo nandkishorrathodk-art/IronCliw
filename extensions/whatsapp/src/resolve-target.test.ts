@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { installCommonResolveTargetErrorCases } from "../../shared/resolve-target-test-helpers.js";
 
-vi.mock("openclaw/plugin-sdk", () => ({
+vi.mock("Ironcliw/plugin-sdk", () => ({
   getChatChannelMeta: () => ({ id: "whatsapp", label: "WhatsApp" }),
   normalizeWhatsAppTarget: (value: string) => {
     if (value === "invalid-target") return null;
@@ -170,3 +170,4 @@ describe("whatsapp resolveTarget", () => {
     implicitAllowFrom: ["5511999999999"],
   });
 });
+

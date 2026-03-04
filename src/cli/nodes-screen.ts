@@ -30,9 +30,10 @@ export function parseScreenRecordPayload(value: unknown): ScreenRecordPayload {
 
 export function screenRecordTempPath(opts: { ext: string; tmpDir?: string; id?: string }) {
   const { tmpDir, id, ext } = resolveTempPathParts(opts);
-  return path.join(tmpDir, `openclaw-screen-record-${id}${ext}`);
+  return path.join(tmpDir, `Ironcliw-screen-record-${id}${ext}`);
 }
 
 export async function writeScreenRecordToFile(filePath: string, base64: string) {
   return writeBase64ToFile(filePath, base64);
 }
+

@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";
+import { resolveIroncliwPackageRoot } from "../infra/Ironcliw-root.js";
 
-export async function resolveOpenClawDocsPath(params: {
+export async function resolveIroncliwDocsPath(params: {
   workspaceDir?: string;
   argv1?: string;
   cwd?: string;
@@ -16,7 +16,7 @@ export async function resolveOpenClawDocsPath(params: {
     }
   }
 
-  const packageRoot = await resolveOpenClawPackageRoot({
+  const packageRoot = await resolveIroncliwPackageRoot({
     cwd: params.cwd,
     argv1: params.argv1,
     moduleUrl: params.moduleUrl,
@@ -28,3 +28,4 @@ export async function resolveOpenClawDocsPath(params: {
   const packageDocs = path.join(packageRoot, "docs");
   return fs.existsSync(packageDocs) ? packageDocs : null;
 }
+

@@ -7,8 +7,8 @@ describe("noteStartupOptimizationHints", () => {
 
     noteStartupOptimizationHints(
       {
-        NODE_COMPILE_CACHE: "/var/tmp/openclaw-compile-cache",
-        OPENCLAW_NO_RESPAWN: "1",
+        NODE_COMPILE_CACHE: "/var/tmp/Ironcliw-compile-cache",
+        IRONCLIW_NO_RESPAWN: "1",
       },
       { platform: "linux", arch: "arm64", totalMemBytes: 4 * 1024 ** 3, noteFn },
     );
@@ -21,7 +21,7 @@ describe("noteStartupOptimizationHints", () => {
 
     noteStartupOptimizationHints(
       {
-        NODE_COMPILE_CACHE: "/tmp/openclaw-compile-cache",
+        NODE_COMPILE_CACHE: "/tmp/Ironcliw-compile-cache",
       },
       { platform: "linux", arch: "arm64", totalMemBytes: 4 * 1024 ** 3, noteFn },
     );
@@ -30,9 +30,9 @@ describe("noteStartupOptimizationHints", () => {
     const [message, title] = noteFn.mock.calls[0] ?? [];
     expect(title).toBe("Startup optimization");
     expect(message).toContain("NODE_COMPILE_CACHE points to /tmp");
-    expect(message).toContain("OPENCLAW_NO_RESPAWN is not set to 1");
-    expect(message).toContain("export NODE_COMPILE_CACHE=/var/tmp/openclaw-compile-cache");
-    expect(message).toContain("export OPENCLAW_NO_RESPAWN=1");
+    expect(message).toContain("IRONCLIW_NO_RESPAWN is not set to 1");
+    expect(message).toContain("export NODE_COMPILE_CACHE=/var/tmp/Ironcliw-compile-cache");
+    expect(message).toContain("export IRONCLIW_NO_RESPAWN=1");
   });
 
   it("warns when compile cache is disabled via env override", () => {
@@ -40,8 +40,8 @@ describe("noteStartupOptimizationHints", () => {
 
     noteStartupOptimizationHints(
       {
-        NODE_COMPILE_CACHE: "/var/tmp/openclaw-compile-cache",
-        OPENCLAW_NO_RESPAWN: "1",
+        NODE_COMPILE_CACHE: "/var/tmp/Ironcliw-compile-cache",
+        IRONCLIW_NO_RESPAWN: "1",
         NODE_DISABLE_COMPILE_CACHE: "1",
       },
       { platform: "linux", arch: "arm64", totalMemBytes: 4 * 1024 ** 3, noteFn },
@@ -58,7 +58,7 @@ describe("noteStartupOptimizationHints", () => {
 
     noteStartupOptimizationHints(
       {
-        NODE_COMPILE_CACHE: "/tmp/openclaw-compile-cache",
+        NODE_COMPILE_CACHE: "/tmp/Ironcliw-compile-cache",
       },
       { platform: "win32", arch: "arm64", totalMemBytes: 4 * 1024 ** 3, noteFn },
     );
@@ -71,7 +71,7 @@ describe("noteStartupOptimizationHints", () => {
 
     noteStartupOptimizationHints(
       {
-        NODE_COMPILE_CACHE: "/tmp/openclaw-compile-cache",
+        NODE_COMPILE_CACHE: "/tmp/Ironcliw-compile-cache",
       },
       { platform: "linux", arch: "x64", totalMemBytes: 32 * 1024 ** 3, noteFn },
     );
@@ -79,3 +79,4 @@ describe("noteStartupOptimizationHints", () => {
     expect(noteFn).not.toHaveBeenCalled();
   });
 });
+

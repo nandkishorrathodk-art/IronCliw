@@ -142,10 +142,10 @@ describe("gateway-cli coverage", () => {
     discoverGatewayBeacons.mockClear();
     discoverGatewayBeacons.mockResolvedValueOnce([
       {
-        instanceName: "Studio (OpenClaw)",
+        instanceName: "Studio (Ironcliw)",
         displayName: "Studio",
-        domain: "openclaw.internal.",
-        host: "studio.openclaw.internal",
+        domain: "Ironcliw.internal.",
+        host: "studio.Ironcliw.internal",
         lanHost: "studio.local",
         tailnetDns: "studio.tailnet.ts.net",
         gatewayPort: 18789,
@@ -237,7 +237,7 @@ describe("gateway-cli coverage", () => {
   });
 
   it("uses env/config port when --port is omitted", async () => {
-    await withEnvOverride({ OPENCLAW_GATEWAY_PORT: "19001" }, async () => {
+    await withEnvOverride({ IRONCLIW_GATEWAY_PORT: "19001" }, async () => {
       resetRuntimeCapture();
       startGatewayServer.mockClear();
 
@@ -248,3 +248,4 @@ describe("gateway-cli coverage", () => {
     });
   });
 });
+

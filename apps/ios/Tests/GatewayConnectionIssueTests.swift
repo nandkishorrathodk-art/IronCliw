@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @Suite(.serialized) struct GatewayConnectionIssueTests {
     @Test func detectsTokenMissing() {
@@ -31,3 +31,4 @@ import Testing
         #expect(issue == .none)
     }
 }
+

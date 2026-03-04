@@ -1,4 +1,4 @@
-# OpenClaw macOS app (dev + signing)
+# Ironcliw macOS app (dev + signing)
 
 ## Quick dev run
 
@@ -20,7 +20,7 @@ scripts/restart-mac.sh --sign      # force code signing (requires cert)
 scripts/package-mac-app.sh
 ```
 
-Creates `dist/OpenClaw.app` and signs it via `scripts/codesign-mac-app.sh`.
+Creates `dist/Ironcliw.app` and signs it via `scripts/codesign-mac-app.sh`.
 
 ## Signing behavior
 
@@ -62,3 +62,4 @@ Use for local dev only; keep off for release builds.
 - `CODESIGN_TIMESTAMP=off` (offline debug)
 - `DISABLE_LIBRARY_VALIDATION=1` (dev-only Sparkle workaround)
 - `SKIP_TEAM_ID_CHECK=1` (bypass audit)
+

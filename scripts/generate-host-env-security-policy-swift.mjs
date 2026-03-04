@@ -20,7 +20,7 @@ const outputPath = path.join(
   "apps",
   "macos",
   "Sources",
-  "OpenClaw",
+  "Ironcliw",
   "HostEnvSecurityPolicy.generated.swift",
 );
 
@@ -72,3 +72,4 @@ if (writeMode) {
   }
   console.log(`Wrote ${path.relative(repoRoot, outputPath)}`);
 }
+

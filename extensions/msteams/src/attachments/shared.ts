@@ -4,8 +4,8 @@ import {
   isHttpsUrlAllowedByHostnameSuffixAllowlist,
   isPrivateIpAddress,
   normalizeHostnameSuffixAllowlist,
-} from "openclaw/plugin-sdk";
-import type { SsrFPolicy } from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
+import type { SsrFPolicy } from "Ironcliw/plugin-sdk";
 import type { MSTeamsAttachmentLike } from "./types.js";
 
 type InlineImageCandidate =
@@ -457,3 +457,4 @@ export async function safeFetchWithPolicy(params: {
     resolveFn: params.resolveFn,
   });
 }
+

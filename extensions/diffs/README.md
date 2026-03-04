@@ -1,6 +1,6 @@
-# @openclaw/diffs
+# @Ironcliw/diffs
 
-Read-only diff viewer plugin for **OpenClaw** agents.
+Read-only diff viewer plugin for **Ironcliw** agents.
 
 It gives agents one tool, `diffs`, that can:
 
@@ -69,7 +69,7 @@ Input safety limits:
 
 ## Plugin Defaults
 
-Set plugin-wide defaults in `~/.openclaw/openclaw.json`:
+Set plugin-wide defaults in `~/.Ironcliw/Ironcliw.json`:
 
 ```json5
 {
@@ -135,10 +135,10 @@ Use the `diffs` tool in `file` mode for this before and after input. After it re
 Path: README.md
 
 Before:
-OpenClaw supports plugins.
+Ironcliw supports plugins.
 
 After:
-OpenClaw supports plugins and hosted diff views.
+Ironcliw supports plugins and hosted diff views.
 ```
 
 Do both:
@@ -173,10 +173,11 @@ diff --git a/src/example.ts b/src/example.ts
 ## Notes
 
 - The viewer is hosted locally through the gateway under `/plugins/diffs/...`.
-- Artifacts are ephemeral and stored in the plugin temp subfolder (`$TMPDIR/openclaw-diffs`).
+- Artifacts are ephemeral and stored in the plugin temp subfolder (`$TMPDIR/Ironcliw-diffs`).
 - Default viewer URLs use loopback (`127.0.0.1`) unless you set `baseUrl` (or use `gateway.bind=custom` + `gateway.customBindHost`).
 - Remote viewer misses are throttled to reduce token-guess abuse.
 - PNG or PDF rendering requires a Chromium-compatible browser. Set `browser.executablePath` if auto-detection is not enough.
 - If your delivery channel compresses images heavily (for example Telegram or WhatsApp), prefer `fileFormat: "pdf"` to preserve readability.
 - `N unmodified lines` rows may not always include expand controls for patch input, because many patch hunks do not carry full expandable context data.
 - Diff rendering is powered by [Diffs](https://diffs.com).
+

@@ -1,15 +1,15 @@
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk";
-import { extractToolSend, jsonResult, readStringParam } from "openclaw/plugin-sdk";
+  IroncliwConfig,
+} from "Ironcliw/plugin-sdk";
+import { extractToolSend, jsonResult, readStringParam } from "Ironcliw/plugin-sdk";
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";
 
 const providerId = "zalo";
 
-function listEnabledAccounts(cfg: OpenClawConfig) {
+function listEnabledAccounts(cfg: IroncliwConfig) {
   return listEnabledZaloAccounts(cfg).filter(
     (account) => account.enabled && account.tokenSource !== "none",
   );
@@ -54,3 +54,4 @@ export const zaloMessageActions: ChannelMessageActionAdapter = {
     throw new Error(`Action ${action} is not supported for provider ${providerId}.`);
   },
 };
+

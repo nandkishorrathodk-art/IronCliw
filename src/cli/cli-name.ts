@@ -1,9 +1,9 @@
 import path from "node:path";
 
-export const DEFAULT_CLI_NAME = "openclaw";
+export const DEFAULT_CLI_NAME = "Ironcliw";
 
 const KNOWN_CLI_NAMES = new Set([DEFAULT_CLI_NAME]);
-const CLI_PREFIX_RE = /^(?:((?:pnpm|npm|bunx|npx)\s+))?(openclaw)\b/;
+const CLI_PREFIX_RE = /^(?:((?:pnpm|npm|bunx|npx)\s+))?(Ironcliw)\b/;
 
 export function resolveCliName(argv: string[] = process.argv): string {
   const argv1 = argv[1];
@@ -28,3 +28,4 @@ export function replaceCliName(command: string, cliName = resolveCliName()): str
     return `${runner ?? ""}${cliName}`;
   });
 }
+

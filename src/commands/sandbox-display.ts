@@ -94,7 +94,7 @@ export function displaySummary(
   if (mismatchCount > 0) {
     runtime.log(`\n⚠️  ${mismatchCount} container(s) with image mismatch detected.`);
     runtime.log(
-      `   Run '${formatCliCommand("openclaw sandbox recreate --all")}' to update all containers.`,
+      `   Run '${formatCliCommand("Ironcliw sandbox recreate --all")}' to update all containers.`,
     );
   }
 }
@@ -134,3 +134,4 @@ export function displayRecreateResult(
     runtime.log("\nContainers will be automatically recreated when the agent is next used.");
   }
 }
+

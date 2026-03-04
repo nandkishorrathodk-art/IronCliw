@@ -7,9 +7,9 @@ import type {
   ChannelGroupContext,
   ChannelMessageActionAdapter,
   ChannelPlugin,
-  OpenClawConfig,
+  IroncliwConfig,
   GroupToolPolicyConfig,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -20,10 +20,10 @@ import {
   formatPairingApproveHint,
   migrateBaseNameToDefaultAccount,
   normalizeAccountId,
-  resolvePreferredOpenClawTmpDir,
+  resolvePreferredIroncliwTmpDir,
   resolveChannelAccountConfigBasePath,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   listZalouserAccountIds,
   resolveDefaultZalouserAccountId,
@@ -81,8 +81,8 @@ async function writeQrDataUrlToTempFile(
   }
   const safeProfile = profile.replace(/[^a-zA-Z0-9_-]+/g, "-") || "default";
   const filePath = path.join(
-    resolvePreferredOpenClawTmpDir(),
-    `openclaw-zalouser-qr-${safeProfile}.png`,
+    resolvePreferredIroncliwTmpDir(),
+    `Ironcliw-zalouser-qr-${safeProfile}.png`,
   );
   await fsp.writeFile(filePath, Buffer.from(base64, "base64"));
   return filePath;
@@ -365,7 +365,7 @@ export const zalouserPlugin: ChannelPlugin<ResolvedZalouserAccount> = {
               enabled: true,
             },
           },
-        } as OpenClawConfig;
+        } as IroncliwConfig;
       }
       return {
         ...next,
@@ -383,7 +383,7 @@ export const zalouserPlugin: ChannelPlugin<ResolvedZalouserAccount> = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as IroncliwConfig;
     },
   },
   messaging: {
@@ -703,3 +703,4 @@ export const zalouserPlugin: ChannelPlugin<ResolvedZalouserAccount> = {
 };
 
 export type { ResolvedZalouserAccount };
+

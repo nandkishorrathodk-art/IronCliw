@@ -1,4 +1,4 @@
-import type { DmPolicy, GroupPolicy, SecretInput } from "openclaw/plugin-sdk";
+import type { DmPolicy, GroupPolicy, SecretInput } from "Ironcliw/plugin-sdk";
 export type { DmPolicy, GroupPolicy };
 
 export type ReplyToMode = "off" | "first" | "all";
@@ -116,3 +116,4 @@ export type CoreConfig = {
   };
   [key: string]: unknown;
 };
+

@@ -1,17 +1,17 @@
 {
-  "name": "@openclaw/voice-call",
-  "version": "2026.3.2",
-  "description": "OpenClaw voice-call plugin",
-  "type": "module",
-  "dependencies": {
-    "@sinclair/typebox": "0.34.48",
-    "commander": "^14.0.3",
-    "ws": "^8.19.0",
-    "zod": "^4.3.6"
-  },
-  "openclaw": {
-    "extensions": [
-      "./index.ts"
-    ]
-  }
+    "name":  "@ironcliw/voice-call",
+    "version":  "2026.0.01",
+    "description":  "Ironcliw voice-call plugin",
+    "type":  "module",
+    "dependencies":  {
+                         "@sinclair/typebox":  "0.34.48",
+                         "commander":  "^14.0.3",
+                         "ws":  "^8.19.0",
+                         "zod":  "^4.3.6"
+                     },
+    "Ironcliw":  {
+                     "extensions":  [
+                                        "./index.ts"
+                                    ]
+                 }
 }

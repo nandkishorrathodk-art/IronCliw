@@ -1,15 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { validateConfigObject } from "../config/validation.js";
-import { resolveOpenClawAgentDir } from "./agent-paths.js";
+import { resolveIroncliwAgentDir } from "./agent-paths.js";
 import {
   CUSTOM_PROXY_MODELS_CONFIG,
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureOpenClawModelsJson } from "./models-config.js";
+import { ensureIroncliwModelsJson } from "./models-config.js";
 import { readGeneratedModelsJson } from "./models-config.test-utils.js";
 
 installModelsConfigTestHooks();
@@ -31,7 +31,7 @@ async function withEnvVar(name: string, value: string, run: () => Promise<void>)
 }
 
 async function writeAgentModelsJson(content: unknown): Promise<void> {
-  const agentDir = resolveOpenClawAgentDir();
+  const agentDir = resolveIroncliwAgentDir();
   await fs.mkdir(agentDir, { recursive: true });
   await fs.writeFile(
     path.join(agentDir, MODELS_JSON_NAME),
@@ -66,7 +66,7 @@ async function runCustomProviderMergeTest(seedProvider: {
   models: Array<{ id: string; name: string; input: string[] }>;
 }) {
   await writeAgentModelsJson({ providers: { custom: seedProvider } });
-  await ensureOpenClawModelsJson({
+  await ensureIroncliwModelsJson({
     models: {
       mode: "merge",
       providers: {
@@ -82,7 +82,7 @@ async function runCustomProviderMergeTest(seedProvider: {
 function createMoonshotConfig(overrides: {
   contextWindow: number;
   maxTokens: number;
-}): OpenClawConfig {
+}): IroncliwConfig {
   return {
     models: {
       providers: {
@@ -125,7 +125,7 @@ describe("models-config", () => {
         throw new Error("expected config to validate");
       }
 
-      await ensureOpenClawModelsJson(validated.config);
+      await ensureIroncliwModelsJson(validated.config);
 
       const parsed = await readGeneratedModelsJson<{
         providers: Record<string, { api?: string; models?: Array<{ id: string; api?: string }> }>;
@@ -139,7 +139,7 @@ describe("models-config", () => {
   it("fills missing provider.apiKey from env var name when models exist", async () => {
     await withTempHome(async () => {
       await withEnvVar("MINIMAX_API_KEY", "sk-minimax-test", async () => {
-        const cfg: OpenClawConfig = {
+        const cfg: IroncliwConfig = {
           models: {
             providers: {
               minimax: {
@@ -161,7 +161,7 @@ describe("models-config", () => {
           },
         };
 
-        await ensureOpenClawModelsJson(cfg);
+        await ensureIroncliwModelsJson(cfg);
 
         const parsed = await readGeneratedModelsJson<{
           providers: Record<string, { apiKey?: string; models?: Array<{ id: string }> }>;
@@ -196,7 +196,7 @@ describe("models-config", () => {
         },
       });
 
-      await ensureOpenClawModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
+      await ensureIroncliwModelsJson(CUSTOM_PROXY_MODELS_CONFIG);
 
       const parsed = await readGeneratedModelsJson<{
         providers: Record<string, { baseUrl?: string }>;
@@ -238,7 +238,7 @@ describe("models-config", () => {
       await withEnvVar("MOONSHOT_API_KEY", "sk-moonshot-test", async () => {
         const cfg = createMoonshotConfig({ contextWindow: 1024, maxTokens: 256 });
 
-        await ensureOpenClawModelsJson(cfg);
+        await ensureIroncliwModelsJson(cfg);
 
         const parsed = await readGeneratedModelsJson<{
           providers: Record<
@@ -272,7 +272,7 @@ describe("models-config", () => {
       await withEnvVar("MOONSHOT_API_KEY", "sk-moonshot-test", async () => {
         const cfg = createMoonshotConfig({ contextWindow: 350000, maxTokens: 16384 });
 
-        await ensureOpenClawModelsJson(cfg);
+        await ensureIroncliwModelsJson(cfg);
         const parsed = await readGeneratedModelsJson<{
           providers: Record<
             string,
@@ -292,3 +292,4 @@ describe("models-config", () => {
     });
   });
 });
+

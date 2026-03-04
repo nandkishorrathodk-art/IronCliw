@@ -27,7 +27,7 @@ async function writeInstallableSkill(workspaceDir: string, name: string): Promis
     `---
 name: ${name}
 description: test skill
-metadata: {"openclaw":{"install":[{"id":"deps","kind":"node","package":"example-package"}]}}
+metadata: {"Ironcliw":{"install":[{"id":"deps","kind":"node","package":"example-package"}]}}
 ---
 
 # ${name}
@@ -38,11 +38,11 @@ metadata: {"openclaw":{"install":[{"id":"deps","kind":"node","package":"example-
   return skillDir;
 }
 
-const workspaceSuite = createFixtureSuite("openclaw-skills-install-");
+const workspaceSuite = createFixtureSuite("Ironcliw-skills-install-");
 let tempHome: TempHomeEnv;
 
 beforeAll(async () => {
-  tempHome = await createTempHomeEnv("openclaw-skills-install-home-");
+  tempHome = await createTempHomeEnv("Ironcliw-skills-install-home-");
   await workspaceSuite.setup();
 });
 
@@ -127,3 +127,4 @@ describe("installSkill code safety scanning", () => {
     });
   });
 });
+

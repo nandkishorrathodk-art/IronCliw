@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { webhookCallback } from "grammy";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { isDiagnosticsEnabled } from "../infra/diagnostic-events.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { readJsonBodyWithLimit } from "../infra/http-body.js";
@@ -77,7 +77,7 @@ async function initializeTelegramWebhookBot(params: {
 export async function startTelegramWebhook(opts: {
   token: string;
   accountId?: string;
-  config?: OpenClawConfig;
+  config?: IroncliwConfig;
   path?: string;
   port?: number;
   host?: string;
@@ -280,3 +280,4 @@ export async function startTelegramWebhook(opts: {
 
   return { server, bot, stop: shutdown };
 }
+

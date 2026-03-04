@@ -3,7 +3,7 @@ name: xurl
 description: A CLI tool for making authenticated requests to the X (Twitter) API. Use this skill when you need to post tweets, reply, quote, search, read posts, manage followers, send DMs, upload media, or interact with any X API v2 endpoint.
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "𝕏",
         "requires": { "bins": ["xurl"] },
@@ -459,3 +459,4 @@ xurl --app staging /2/users/me         # one-off request against staging
 - **Multiple accounts:** You can authenticate multiple OAuth 2.0 accounts per app and switch between them with `--username` / `-u` or set a default with `xurl auth default APP USER`.
 - **Default user:** When no `-u` flag is given, xurl uses the default user for the active app (set via `xurl auth default`). If no default user is set, it uses the first available token.
 - **Token storage:** `~/.xurl` is YAML. Each app stores its own credentials and tokens. Never read or send this file to LLM context.
+

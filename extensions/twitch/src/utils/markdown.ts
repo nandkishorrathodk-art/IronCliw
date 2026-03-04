@@ -2,7 +2,7 @@
  * Markdown utilities for Twitch chat
  *
  * Twitch chat doesn't support markdown formatting, so we strip it before sending.
- * Based on OpenClaw's markdownToText in src/agents/tools/web-fetch-utils.ts.
+ * Based on Ironcliw's markdownToText in src/agents/tools/web-fetch-utils.ts.
  */
 
 /**
@@ -96,3 +96,4 @@ export function chunkTextForTwitch(text: string, limit: number): string[] {
 
   return chunks;
 }
+

@@ -170,7 +170,7 @@ def main():
         if image_saved:
             full_path = output_path.resolve()
             print(f"\nImage saved: {full_path}")
-            # OpenClaw parses MEDIA tokens and will attach the file on supported providers.
+            # Ironcliw parses MEDIA tokens and will attach the file on supported providers.
             print(f"MEDIA: {full_path}")
         else:
             print("Error: No image was generated in the response.", file=sys.stderr)
@@ -183,3 +183,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

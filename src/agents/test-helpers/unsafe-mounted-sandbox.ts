@@ -68,7 +68,7 @@ export function createUnsafeMountedSandbox(params: {
 export async function withUnsafeMountedSandboxHarness(
   run: (ctx: { sandboxRoot: string; agentRoot: string; sandbox: SandboxContext }) => Promise<void>,
 ) {
-  const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-sbx-mounts-"));
+  const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-sbx-mounts-"));
   const sandboxRoot = path.join(stateDir, "sandbox");
   const agentRoot = path.join(stateDir, "agent");
   await fs.mkdir(sandboxRoot, { recursive: true });
@@ -80,3 +80,4 @@ export async function withUnsafeMountedSandboxHarness(
     await fs.rm(stateDir, { recursive: true, force: true });
   }
 }
+

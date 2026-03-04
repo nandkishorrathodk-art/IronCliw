@@ -3,7 +3,7 @@ import { buildTelegramMessageContextForTest } from "./bot-message-context.test-h
 
 const transcribeFirstAudioMock = vi.fn();
 const DEFAULT_MODEL = "anthropic/claude-opus-4-5";
-const DEFAULT_WORKSPACE = "/tmp/openclaw";
+const DEFAULT_WORKSPACE = "/tmp/Ironcliw";
 const DEFAULT_MENTION_PATTERN = "\\bbot\\b";
 
 vi.mock("../media-understanding/audio-preflight.js", () => ({
@@ -151,3 +151,4 @@ describe("buildTelegramMessageContext audio transcript body", () => {
     expectAudioPlaceholderRendered(ctx);
   });
 });
+

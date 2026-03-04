@@ -1,9 +1,9 @@
-import type { GroupPolicy, SenderGroupAccessDecision } from "openclaw/plugin-sdk";
+import type { GroupPolicy, SenderGroupAccessDecision } from "Ironcliw/plugin-sdk";
 import {
   evaluateSenderGroupAccess,
   isNormalizedSenderAllowed,
   resolveOpenProviderRuntimeGroupPolicy,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 
 const ZALO_ALLOW_FROM_PREFIX_RE = /^(zalo|zl):/i;
 
@@ -46,3 +46,4 @@ export function evaluateZaloGroupAccess(params: {
     isSenderAllowed: isZaloSenderAllowed,
   });
 }
+

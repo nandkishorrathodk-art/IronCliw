@@ -18,7 +18,7 @@ const testAuthPrivateKey = generateKeyPairSync("ec", { namedCurve: "prime256v1" 
   .toString();
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-push-apns-test-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-push-apns-test-"));
   tempDirs.push(dir);
   return dir;
 }
@@ -38,7 +38,7 @@ describe("push APNs registration store", () => {
     const saved = await registerApnsToken({
       nodeId: "ios-node-1",
       token: "ABCD1234ABCD1234ABCD1234ABCD1234",
-      topic: "ai.openclaw.ios",
+      topic: "ai.Ironcliw.ios",
       environment: "sandbox",
       baseDir,
     });
@@ -47,7 +47,7 @@ describe("push APNs registration store", () => {
     expect(loaded).not.toBeNull();
     expect(loaded?.nodeId).toBe("ios-node-1");
     expect(loaded?.token).toBe("abcd1234abcd1234abcd1234abcd1234");
-    expect(loaded?.topic).toBe("ai.openclaw.ios");
+    expect(loaded?.topic).toBe("ai.Ironcliw.ios");
     expect(loaded?.environment).toBe("sandbox");
     expect(loaded?.updatedAtMs).toBe(saved.updatedAtMs);
   });
@@ -58,7 +58,7 @@ describe("push APNs registration store", () => {
       registerApnsToken({
         nodeId: "ios-node-1",
         token: "not-a-token",
-        topic: "ai.openclaw.ios",
+        topic: "ai.Ironcliw.ios",
         baseDir,
       }),
     ).rejects.toThrow("invalid APNs token");
@@ -74,9 +74,9 @@ describe("push APNs env config", () => {
 
   it("resolves inline private key and unescapes newlines", async () => {
     const env = {
-      OPENCLAW_APNS_TEAM_ID: "TEAM123",
-      OPENCLAW_APNS_KEY_ID: "KEY123",
-      OPENCLAW_APNS_PRIVATE_KEY_P8:
+      IRONCLIW_APNS_TEAM_ID: "TEAM123",
+      IRONCLIW_APNS_KEY_ID: "KEY123",
+      IRONCLIW_APNS_PRIVATE_KEY_P8:
         "-----BEGIN PRIVATE KEY-----\\nline-a\\nline-b\\n-----END PRIVATE KEY-----",
     } as NodeJS.ProcessEnv;
     const resolved = await resolveApnsAuthConfigFromEnv(env);
@@ -95,7 +95,7 @@ describe("push APNs env config", () => {
     if (resolved.ok) {
       return;
     }
-    expect(resolved.error).toContain("OPENCLAW_APNS_TEAM_ID");
+    expect(resolved.error).toContain("IRONCLIW_APNS_TEAM_ID");
   });
 });
 
@@ -116,7 +116,7 @@ describe("push APNs send semantics", () => {
       registration: {
         nodeId: "ios-node-alert",
         token: "ABCD1234ABCD1234ABCD1234ABCD1234",
-        topic: "ai.openclaw.ios",
+        topic: "ai.Ironcliw.ios",
         environment: "sandbox",
         updatedAtMs: 1,
       },
@@ -135,7 +135,7 @@ describe("push APNs send semantics", () => {
         alert: { title: "Wake", body: "Ping" },
         sound: "default",
       },
-      openclaw: {
+      Ironcliw: {
         kind: "push.test",
         nodeId: "ios-node-alert",
       },
@@ -160,7 +160,7 @@ describe("push APNs send semantics", () => {
       registration: {
         nodeId: "ios-node-wake",
         token: "ABCD1234ABCD1234ABCD1234ABCD1234",
-        topic: "ai.openclaw.ios",
+        topic: "ai.Ironcliw.ios",
         environment: "production",
         updatedAtMs: 1,
       },
@@ -177,7 +177,7 @@ describe("push APNs send semantics", () => {
       aps: {
         "content-available": 1,
       },
-      openclaw: {
+      Ironcliw: {
         kind: "node.wake",
         reason: "node.invoke",
         nodeId: "ios-node-wake",
@@ -207,7 +207,7 @@ describe("push APNs send semantics", () => {
       registration: {
         nodeId: "ios-node-wake-default-reason",
         token: "ABCD1234ABCD1234ABCD1234ABCD1234",
-        topic: "ai.openclaw.ios",
+        topic: "ai.Ironcliw.ios",
         environment: "sandbox",
         updatedAtMs: 1,
       },
@@ -217,7 +217,7 @@ describe("push APNs send semantics", () => {
 
     const sent = send.mock.calls[0]?.[0];
     expect(sent?.payload).toMatchObject({
-      openclaw: {
+      Ironcliw: {
         kind: "node.wake",
         reason: "node.invoke",
         nodeId: "ios-node-wake-default-reason",
@@ -225,3 +225,4 @@ describe("push APNs send semantics", () => {
     });
   });
 });
+

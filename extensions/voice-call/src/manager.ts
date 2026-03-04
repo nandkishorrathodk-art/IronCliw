@@ -29,7 +29,7 @@ function resolveDefaultStoreBase(config: VoiceCallConfig, storePath?: string): s
   if (rawOverride) {
     return resolveUserPath(rawOverride);
   }
-  const preferred = path.join(os.homedir(), ".openclaw", "voice-calls");
+  const preferred = path.join(os.homedir(), ".Ironcliw", "voice-calls");
   const candidates = [preferred].map((dir) => resolveUserPath(dir));
   const existing =
     candidates.find((dir) => {
@@ -316,3 +316,4 @@ export class CallManager {
     return getCallHistoryFromStore(this.storePath, limit);
   }
 }
+

@@ -93,9 +93,9 @@ describe("configureGatewayForOnboarding", () => {
     expect(result.nextConfig.gateway?.nodes?.denyCommands).toEqual(DEFAULT_DANGEROUS_NODE_COMMANDS);
   });
 
-  it("prefers OPENCLAW_GATEWAY_TOKEN during quickstart token setup", async () => {
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "token-from-env";
+  it("prefers IRONCLIW_GATEWAY_TOKEN during quickstart token setup", async () => {
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "token-from-env";
     mocks.randomToken.mockReturnValue("generated-token");
     mocks.randomToken.mockClear();
 
@@ -108,9 +108,9 @@ describe("configureGatewayForOnboarding", () => {
       expect(result.settings.gatewayToken).toBe("token-from-env");
     } finally {
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
       }
     }
   });
@@ -140,12 +140,12 @@ describe("configureGatewayForOnboarding", () => {
   });
 
   it("honors secretInputMode=ref for gateway password prompts", async () => {
-    const previous = process.env.OPENCLAW_GATEWAY_PASSWORD;
-    process.env.OPENCLAW_GATEWAY_PASSWORD = "gateway-secret";
+    const previous = process.env.IRONCLIW_GATEWAY_PASSWORD;
+    process.env.IRONCLIW_GATEWAY_PASSWORD = "gateway-secret";
     try {
       const prompter = createPrompter({
         selectQueue: ["loopback", "password", "off", "env"],
-        textQueue: ["18789", "OPENCLAW_GATEWAY_PASSWORD"],
+        textQueue: ["18789", "IRONCLIW_GATEWAY_PASSWORD"],
       });
       const runtime = createRuntime();
 
@@ -164,14 +164,15 @@ describe("configureGatewayForOnboarding", () => {
       expect(result.nextConfig.gateway?.auth?.password).toEqual({
         source: "env",
         provider: "default",
-        id: "OPENCLAW_GATEWAY_PASSWORD",
+        id: "IRONCLIW_GATEWAY_PASSWORD",
       });
     } finally {
       if (previous === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+        delete process.env.IRONCLIW_GATEWAY_PASSWORD;
       } else {
-        process.env.OPENCLAW_GATEWAY_PASSWORD = previous;
+        process.env.IRONCLIW_GATEWAY_PASSWORD = previous;
       }
     }
   });
 });
+

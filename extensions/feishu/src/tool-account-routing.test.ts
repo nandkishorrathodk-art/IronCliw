@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { IroncliwPluginApi } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { registerFeishuBitableTools } from "./bitable.js";
 import { registerFeishuDriveTools } from "./drive.js";
@@ -26,7 +26,7 @@ function createConfig(params: {
     perm?: boolean;
   };
   defaultAccount?: string;
-}): OpenClawPluginApi["config"] {
+}): IroncliwPluginApi["config"] {
   return {
     channels: {
       feishu: {
@@ -46,7 +46,7 @@ function createConfig(params: {
         },
       },
     },
-  } as OpenClawPluginApi["config"];
+  } as IroncliwPluginApi["config"];
 }
 
 describe("feishu tool account routing", () => {
@@ -127,3 +127,4 @@ describe("feishu tool account routing", () => {
     expect(createFeishuClientMock.mock.calls[1]?.[0]?.appId).toBe("app-a");
   });
 });
+

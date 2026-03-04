@@ -4,7 +4,7 @@ import { createExecTool } from "../../agents/bash-tools.js";
 import { resolveSandboxRuntimeStatus } from "../../agents/sandbox.js";
 import { killProcessTree } from "../../agents/shell-utils.js";
 import { isCommandFlagEnabled } from "../../config/commands.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { logVerbose } from "../../globals.js";
 import { clampInt } from "../../utils.js";
 import type { MsgContext } from "../templating.js";
@@ -35,7 +35,7 @@ type ActiveBashJob =
 
 let activeJob: ActiveBashJob | null = null;
 
-function resolveForegroundMs(cfg: OpenClawConfig): number {
+function resolveForegroundMs(cfg: IroncliwConfig): number {
   const raw = cfg.commands?.bashForegroundMs;
   if (typeof raw !== "number" || Number.isNaN(raw)) {
     return DEFAULT_FOREGROUND_MS;
@@ -99,7 +99,7 @@ function parseBashRequest(raw: string): BashRequest | null {
 
 function resolveRawCommandBody(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   agentId?: string;
   isGroup: boolean;
 }) {
@@ -178,7 +178,7 @@ function buildUsageReply(): ReplyPayload {
 
 export async function handleBashChatCommand(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   agentId?: string;
   sessionKey: string;
   isGroup: boolean;
@@ -192,7 +192,7 @@ export async function handleBashChatCommand(params: {
     return buildDisabledCommandReply({
       label: "bash",
       configKey: "bash",
-      docsUrl: "https://docs.openclaw.ai/tools/slash-commands#config",
+      docsUrl: "https://docs.Ironcliw.ai/tools/slash-commands#config",
     });
   }
 
@@ -337,6 +337,7 @@ export async function handleBashChatCommand(params: {
     const notifyOnExit = params.cfg.tools?.exec?.notifyOnExit;
     const notifyOnExitEmptySuccess = params.cfg.tools?.exec?.notifyOnExitEmptySuccess;
     const execTool = createExecTool({
+      config: params.cfg,
       scopeKey: CHAT_BASH_SCOPE_KEY,
       allowBackground: true,
       timeoutSec,
@@ -400,3 +401,4 @@ export async function handleBashChatCommand(params: {
 export function resetBashChatCommandForTests() {
   activeJob = null;
 }
+

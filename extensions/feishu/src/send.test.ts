@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getMessageFeishu } from "./send.js";
 
@@ -55,7 +55,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as IroncliwConfig,
       messageId: "om_1",
     });
 
@@ -92,7 +92,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as IroncliwConfig,
       messageId: "om_post",
     });
 
@@ -124,7 +124,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as IroncliwConfig,
       messageId: "om_file",
     });
 
@@ -152,7 +152,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as IroncliwConfig,
       messageId: "om_single",
     });
 
@@ -166,3 +166,4 @@ describe("getMessageFeishu", () => {
     );
   });
 });
+

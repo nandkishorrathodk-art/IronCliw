@@ -1,4 +1,4 @@
-import { createDedupeCache } from "openclaw/plugin-sdk";
+import { createDedupeCache } from "Ironcliw/plugin-sdk";
 
 export type ProcessedMessageTracker = {
   mark: (id?: string | null) => boolean;
@@ -31,3 +31,4 @@ export function createProcessedMessageTracker(limit = 2000): ProcessedMessageTra
     size: () => dedupe.size(),
   };
 }
+

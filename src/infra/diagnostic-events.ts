@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 
 export type DiagnosticSessionState = "idle" | "processing" | "waiting";
 
@@ -176,19 +176,19 @@ type DiagnosticEventsGlobalState = {
 
 function getDiagnosticEventsState(): DiagnosticEventsGlobalState {
   const globalStore = globalThis as typeof globalThis & {
-    __openclawDiagnosticEventsState?: DiagnosticEventsGlobalState;
+    __IroncliwDiagnosticEventsState?: DiagnosticEventsGlobalState;
   };
-  if (!globalStore.__openclawDiagnosticEventsState) {
-    globalStore.__openclawDiagnosticEventsState = {
+  if (!globalStore.__IroncliwDiagnosticEventsState) {
+    globalStore.__IroncliwDiagnosticEventsState = {
       seq: 0,
       listeners: new Set<(evt: DiagnosticEventPayload) => void>(),
       dispatchDepth: 0,
     };
   }
-  return globalStore.__openclawDiagnosticEventsState;
+  return globalStore.__IroncliwDiagnosticEventsState;
 }
 
-export function isDiagnosticsEnabled(config?: OpenClawConfig): boolean {
+export function isDiagnosticsEnabled(config?: IroncliwConfig): boolean {
   return config?.diagnostics?.enabled === true;
 }
 
@@ -240,3 +240,4 @@ export function resetDiagnosticEventsForTest(): void {
   state.listeners.clear();
   state.dispatchDepth = 0;
 }
+

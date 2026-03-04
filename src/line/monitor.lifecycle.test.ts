@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 
 const { createLineBotMock, registerPluginHttpRouteMock, unregisterHttpMock } = vi.hoisted(() => ({
@@ -89,7 +89,7 @@ describe("monitorLineProvider lifecycle", () => {
     const task = monitorLineProvider({
       channelAccessToken: "token",
       channelSecret: "secret",
-      config: {} as OpenClawConfig,
+      config: {} as IroncliwConfig,
       runtime: {} as RuntimeEnv,
       abortSignal: abort.signal,
     }).then((monitor) => {
@@ -116,7 +116,7 @@ describe("monitorLineProvider lifecycle", () => {
     await monitorLineProvider({
       channelAccessToken: "token",
       channelSecret: "secret",
-      config: {} as OpenClawConfig,
+      config: {} as IroncliwConfig,
       runtime: {} as RuntimeEnv,
       abortSignal: abort.signal,
     });
@@ -130,7 +130,7 @@ describe("monitorLineProvider lifecycle", () => {
     const monitor = await monitorLineProvider({
       channelAccessToken: "token",
       channelSecret: "secret",
-      config: {} as OpenClawConfig,
+      config: {} as IroncliwConfig,
       runtime: {} as RuntimeEnv,
     });
 
@@ -140,3 +140,4 @@ describe("monitorLineProvider lifecycle", () => {
     expect(unregisterHttpMock).toHaveBeenCalledTimes(1);
   });
 });
+

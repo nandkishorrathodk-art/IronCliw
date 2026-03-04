@@ -38,7 +38,7 @@ describe("fetchMinimaxUsage", () => {
     const mockFetch = createProviderUsageFetch(async (_url, init) => {
       const headers = (init?.headers as Record<string, string> | undefined) ?? {};
       expect(headers.Authorization).toBe("Bearer key");
-      expect(headers["MM-API-Source"]).toBe("OpenClaw");
+      expect(headers["MM-API-Source"]).toBe("Ironcliw");
 
       return makeResponse(200, {
         data: {
@@ -149,3 +149,4 @@ describe("fetchMinimaxUsage", () => {
     expect(result.windows).toEqual([{ label: "1h", usedPercent: 20, resetAt: undefined }]);
   });
 });
+

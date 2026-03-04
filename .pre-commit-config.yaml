@@ -1,4 +1,4 @@
-# Pre-commit hooks for openclaw
+# Pre-commit hooks for Ironcliw
 # Install: prek install
 # Run manually: prek run --all-files
 #
@@ -129,3 +129,4 @@ repos:
         language: system
         pass_filenames: false
         types: [swift]
+

@@ -16,13 +16,13 @@ provider mixes reasoning into normal text.
 
 Use `/debug` in chat to set **runtime-only** config overrides (memory, not disk).
 `/debug` is disabled by default; enable with `commands.debug: true`.
-This is handy when you need to toggle obscure settings without editing `openclaw.json`.
+This is handy when you need to toggle obscure settings without editing `Ironcliw.json`.
 
 Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[openclaw]"
+/debug set messages.responsePrefix="[Ironcliw]"
 /debug unset messages.responsePrefix
 /debug reset
 ```
@@ -51,7 +51,7 @@ on each restart.
 Use the dev profile to isolate state and spin up a safe, disposable setup for
 debugging. There are **two** `--dev` flags:
 
-- **Global `--dev` (profile):** isolates state under `~/.openclaw-dev` and
+- **Global `--dev` (profile):** isolates state under `~/.Ironcliw-dev` and
   defaults the gateway port to `19001` (derived ports shift with it).
 - **`gateway --dev`: tells the Gateway to auto-create a default config +
   workspace** when missing (and skip BOOTSTRAP.md).
@@ -60,18 +60,18 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-OPENCLAW_PROFILE=dev openclaw tui
+IRONCLIW_PROFILE=dev Ironcliw tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm openclaw ...`.
+If you don’t have a global install yet, run the CLI via `pnpm Ironcliw ...`.
 
 What this does:
 
 1. **Profile isolation** (global `--dev`)
-   - `OPENCLAW_PROFILE=dev`
-   - `OPENCLAW_STATE_DIR=~/.openclaw-dev`
-   - `OPENCLAW_CONFIG_PATH=~/.openclaw-dev/openclaw.json`
-   - `OPENCLAW_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
+   - `IRONCLIW_PROFILE=dev`
+   - `IRONCLIW_STATE_DIR=~/.Ironcliw-dev`
+   - `IRONCLIW_CONFIG_PATH=~/.Ironcliw-dev/Ironcliw.json`
+   - `IRONCLIW_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
 
 2. **Dev bootstrap** (`gateway --dev`)
    - Writes a minimal config if missing (`gateway.mode=local`, bind loopback).
@@ -80,7 +80,7 @@ What this does:
    - Seeds the workspace files if missing:
      `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`.
    - Default identity: **C3‑PO** (protocol droid).
-   - Skips channel providers in dev mode (`OPENCLAW_SKIP_CHANNELS=1`).
+   - Skips channel providers in dev mode (`IRONCLIW_SKIP_CHANNELS=1`).
 
 Reset flow (fresh start):
 
@@ -92,7 +92,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-OPENCLAW_PROFILE=dev openclaw gateway --dev --reset
+IRONCLIW_PROFILE=dev Ironcliw gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -101,12 +101,12 @@ OPENCLAW_PROFILE=dev openclaw gateway --dev --reset
 Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 
 ```bash
-openclaw gateway stop
+Ironcliw gateway stop
 ```
 
-## Raw stream logging (OpenClaw)
+## Raw stream logging (Ironcliw)
 
-OpenClaw can log the **raw assistant stream** before any filtering/formatting.
+Ironcliw can log the **raw assistant stream** before any filtering/formatting.
 This is the best way to see whether reasoning is arriving as plain text deltas
 (or as separate thinking blocks).
 
@@ -119,19 +119,19 @@ pnpm gateway:watch --raw-stream
 Optional path override:
 
 ```bash
-pnpm gateway:watch --raw-stream --raw-stream-path ~/.openclaw/logs/raw-stream.jsonl
+pnpm gateway:watch --raw-stream --raw-stream-path ~/.Ironcliw/logs/raw-stream.jsonl
 ```
 
 Equivalent env vars:
 
 ```bash
-OPENCLAW_RAW_STREAM=1
-OPENCLAW_RAW_STREAM_PATH=~/.openclaw/logs/raw-stream.jsonl
+IRONCLIW_RAW_STREAM=1
+IRONCLIW_RAW_STREAM_PATH=~/.Ironcliw/logs/raw-stream.jsonl
 ```
 
 Default file:
 
-`~/.openclaw/logs/raw-stream.jsonl`
+`~/.Ironcliw/logs/raw-stream.jsonl`
 
 ## Raw chunk logging (pi-mono)
 
@@ -160,3 +160,4 @@ Default file:
 - Raw stream logs can include full prompts, tool output, and user data.
 - Keep logs local and delete them after debugging.
 - If you share logs, scrub secrets and PII first.
+

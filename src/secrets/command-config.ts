@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { coerceSecretRef, resolveSecretInputRef } from "../config/types.secrets.js";
 import { getPath } from "./path-utils.js";
 import { isExpectedResolvedSecretValue } from "./secret-value.js";
@@ -16,8 +16,8 @@ export type ResolveAssignmentsFromSnapshotResult = {
 };
 
 export function collectCommandSecretAssignmentsFromSnapshot(params: {
-  sourceConfig: OpenClawConfig;
-  resolvedConfig: OpenClawConfig;
+  sourceConfig: IroncliwConfig;
+  resolvedConfig: IroncliwConfig;
   commandName: string;
   targetIds: ReadonlySet<string>;
   inactiveRefPaths?: ReadonlySet<string>;
@@ -65,3 +65,4 @@ export function collectCommandSecretAssignmentsFromSnapshot(params: {
 
   return { assignments, diagnostics };
 }
+

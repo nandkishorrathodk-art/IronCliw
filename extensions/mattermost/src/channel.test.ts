@@ -1,5 +1,5 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
-import { createReplyPrefixOptions } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
+import { createReplyPrefixOptions } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 const { sendMessageMattermostMock } = vi.hoisted(() => ({
   sendMessageMattermostMock: vi.fn(),
@@ -90,7 +90,7 @@ describe("mattermostPlugin", () => {
     };
 
     it("exposes react when mattermost is configured", () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             enabled: true,
@@ -107,7 +107,7 @@ describe("mattermostPlugin", () => {
     });
 
     it("hides react when mattermost is not configured", () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             enabled: true,
@@ -120,7 +120,7 @@ describe("mattermostPlugin", () => {
     });
 
     it("hides react when actions.reactions is false", () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             enabled: true,
@@ -137,7 +137,7 @@ describe("mattermostPlugin", () => {
     });
 
     it("respects per-account actions.reactions in listActions", () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             enabled: true,
@@ -159,7 +159,7 @@ describe("mattermostPlugin", () => {
     });
 
     it("blocks react when default account disables reactions and accountId is omitted", async () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             enabled: true,
@@ -247,14 +247,14 @@ describe("mattermostPlugin", () => {
       const formatAllowFrom = mattermostPlugin.config.formatAllowFrom!;
 
       const formatted = formatAllowFrom({
-        cfg: {} as OpenClawConfig,
+        cfg: {} as IroncliwConfig,
         allowFrom: ["@Alice", "user:USER123", "mattermost:BOT999"],
       });
       expect(formatted).toEqual(["@alice", "user123", "bot999"]);
     });
 
     it("uses account responsePrefix overrides", () => {
-      const cfg: OpenClawConfig = {
+      const cfg: IroncliwConfig = {
         channels: {
           mattermost: {
             responsePrefix: "[Channel]",
@@ -276,3 +276,4 @@ describe("mattermostPlugin", () => {
     });
   });
 });
+

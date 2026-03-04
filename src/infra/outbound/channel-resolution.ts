@@ -1,9 +1,9 @@
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
-import { loadOpenClawPlugins } from "../../plugins/loader.js";
+import { loadIroncliwPlugins } from "../../plugins/loader.js";
 import { getActivePluginRegistry, getActivePluginRegistryKey } from "../../plugins/runtime.js";
 import {
   isDeliverableMessageChannel,
@@ -25,7 +25,7 @@ export function normalizeDeliverableOutboundChannel(
 
 function maybeBootstrapChannelPlugin(params: {
   channel: DeliverableMessageChannel;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
 }): void {
   const cfg = params.cfg;
   if (!cfg) {
@@ -48,7 +48,7 @@ function maybeBootstrapChannelPlugin(params: {
   const defaultAgentId = resolveDefaultAgentId(autoEnabled);
   const workspaceDir = resolveAgentWorkspaceDir(autoEnabled, defaultAgentId);
   try {
-    loadOpenClawPlugins({
+    loadIroncliwPlugins({
       config: autoEnabled,
       workspaceDir,
     });
@@ -60,7 +60,7 @@ function maybeBootstrapChannelPlugin(params: {
 
 export function resolveOutboundChannelPlugin(params: {
   channel: string;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
 }): ChannelPlugin | undefined {
   const normalized = normalizeDeliverableOutboundChannel(params.channel);
   if (!normalized) {
@@ -76,3 +76,4 @@ export function resolveOutboundChannelPlugin(params: {
   maybeBootstrapChannelPlugin({ channel: normalized, cfg: params.cfg });
   return resolve();
 }
+

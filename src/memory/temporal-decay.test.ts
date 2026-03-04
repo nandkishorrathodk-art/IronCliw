@@ -15,7 +15,7 @@ const NOW_MS = Date.UTC(2026, 1, 10, 0, 0, 0);
 const tempDirs: string[] = [];
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-temporal-decay-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-temporal-decay-"));
   tempDirs.push(dir);
   return dir;
 }
@@ -171,3 +171,4 @@ describe("temporal decay", () => {
     expect(decayed[0]?.score).toBeCloseTo(0.5, 2);
   });
 });
+

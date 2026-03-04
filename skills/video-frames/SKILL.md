@@ -4,7 +4,7 @@ description: Extract frames or short clips from videos using ffmpeg.
 homepage: https://ffmpeg.org
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🎞️",
         "requires": { "bins": ["ffmpeg"] },
@@ -44,3 +44,4 @@ At a timestamp:
 
 - Prefer `--time` for “what is happening around here?”.
 - Use a `.jpg` for quick share; use `.png` for crisp UI frames.
+

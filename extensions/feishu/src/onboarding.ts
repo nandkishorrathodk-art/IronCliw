@@ -1,25 +1,25 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  ClawdbotConfig,
+  IroncliwConfig,
   DmPolicy,
   SecretInput,
   WizardPrompter,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   hasConfiguredSecretInput,
   promptSingleChannelSecretInput,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { resolveFeishuCredentials } from "./accounts.js";
 import { probeFeishu } from "./probe.js";
 import type { FeishuConfig } from "./types.js";
 
 const channel = "feishu" as const;
 
-function setFeishuDmPolicy(cfg: ClawdbotConfig, dmPolicy: DmPolicy): ClawdbotConfig {
+function setFeishuDmPolicy(cfg: IroncliwConfig, dmPolicy: DmPolicy): IroncliwConfig {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.feishu?.allowFrom)?.map((entry) => String(entry))
@@ -37,7 +37,7 @@ function setFeishuDmPolicy(cfg: ClawdbotConfig, dmPolicy: DmPolicy): ClawdbotCon
   };
 }
 
-function setFeishuAllowFrom(cfg: ClawdbotConfig, allowFrom: string[]): ClawdbotConfig {
+function setFeishuAllowFrom(cfg: IroncliwConfig, allowFrom: string[]): IroncliwConfig {
   return {
     ...cfg,
     channels: {
@@ -58,9 +58,9 @@ function parseAllowFromInput(raw: string): string[] {
 }
 
 async function promptFeishuAllowFrom(params: {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   prompter: WizardPrompter;
-}): Promise<ClawdbotConfig> {
+}): Promise<IroncliwConfig> {
   const existing = params.cfg.channels?.feishu?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -126,9 +126,9 @@ async function promptFeishuAppId(params: {
 }
 
 function setFeishuGroupPolicy(
-  cfg: ClawdbotConfig,
+  cfg: IroncliwConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): ClawdbotConfig {
+): IroncliwConfig {
   return {
     ...cfg,
     channels: {
@@ -142,7 +142,7 @@ function setFeishuGroupPolicy(
   };
 }
 
-function setFeishuGroupAllowFrom(cfg: ClawdbotConfig, groupAllowFrom: string[]): ClawdbotConfig {
+function setFeishuGroupAllowFrom(cfg: IroncliwConfig, groupAllowFrom: string[]): IroncliwConfig {
   return {
     ...cfg,
     channels: {
@@ -441,3 +441,4 @@ export const feishuOnboardingAdapter: ChannelOnboardingAdapter = {
     },
   }),
 };
+

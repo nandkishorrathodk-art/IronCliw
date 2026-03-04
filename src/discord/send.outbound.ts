@@ -8,7 +8,7 @@ import { loadConfig } from "../config/config.js";
 import { resolveMarkdownTableMode } from "../config/markdown-tables.js";
 import { recordChannelActivity } from "../infra/channel-activity.js";
 import type { RetryConfig } from "../infra/retry.js";
-import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+import { resolvePreferredIroncliwTmpDir } from "../infra/tmp-Ironcliw-dir.js";
 import { convertMarkdownTables } from "../markdown/tables.js";
 import { maxBytesForKind } from "../media/constants.js";
 import { extensionForMime } from "../media/mime.js";
@@ -463,7 +463,7 @@ async function materializeVoiceMessageInput(mediaUrl: string): Promise<{ filePat
   const extFromName = media.fileName ? path.extname(media.fileName) : "";
   const extFromMime = media.contentType ? extensionForMime(media.contentType) : "";
   const ext = extFromName || extFromMime || ".bin";
-  const tempDir = resolvePreferredOpenClawTmpDir();
+  const tempDir = resolvePreferredIroncliwTmpDir();
   const filePath = path.join(tempDir, `voice-src-${crypto.randomUUID()}${ext}`);
   await fs.writeFile(filePath, media.buffer, { mode: 0o600 });
   return { filePath };
@@ -548,3 +548,4 @@ export async function sendVoiceMessageDiscord(
     await unlinkIfExists(localInputPath);
   }
 }
+

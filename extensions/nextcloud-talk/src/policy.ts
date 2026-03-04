@@ -3,14 +3,14 @@ import type {
   ChannelGroupContext,
   GroupPolicy,
   GroupToolPolicyConfig,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
   resolveChannelEntryMatchWithFallback,
   resolveMentionGatingWithBypass,
   resolveNestedAllowlistDecision,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import type { NextcloudTalkRoomConfig } from "./types.js";
 
 function normalizeAllowEntry(raw: string): string {
@@ -178,3 +178,4 @@ export function resolveNextcloudTalkMentionGate(params: {
   });
   return { shouldSkip: result.shouldSkip, shouldBypassMention: result.shouldBypassMention };
 }
+

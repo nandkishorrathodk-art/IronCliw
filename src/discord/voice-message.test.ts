@@ -77,8 +77,8 @@ vi.mock("node:child_process", async (importOriginal) => {
   };
 });
 
-vi.mock("../infra/tmp-openclaw-dir.js", () => ({
-  resolvePreferredOpenClawTmpDir: () => "/tmp",
+vi.mock("../infra/tmp-Ironcliw-dir.js", () => ({
+  resolvePreferredIroncliwTmpDir: () => "/tmp",
 }));
 
 const { ensureOggOpus } = await import("./voice-message.js");
@@ -144,3 +144,4 @@ describe("ensureOggOpus", () => {
     expect(ffmpegCalls[0].args).toEqual(expect.arrayContaining(["-vn", "-sn", "-dn"]));
   });
 });
+

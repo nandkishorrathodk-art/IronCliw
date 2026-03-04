@@ -10,7 +10,7 @@ read_when:
 
 # Tool-loop detection
 
-OpenClaw can keep agents from getting stuck in repeated tool-call patterns.
+Ironcliw can keep agents from getting stuck in repeated tool-call patterns.
 The guard is **disabled by default**.
 
 Enable it only where needed, because it can block legitimate repeated calls with strict settings.
@@ -86,7 +86,7 @@ Per-agent override (optional):
 
 ## Logs and expected behavior
 
-When a loop is detected, OpenClaw reports a loop event and blocks or dampens the next tool-cycle depending on severity.
+When a loop is detected, Ironcliw reports a loop event and blocks or dampens the next tool-cycle depending on severity.
 This protects users from runaway token spend and lockups while preserving normal tool access.
 
 - Prefer warning and temporary suppression first.
@@ -97,3 +97,4 @@ This protects users from runaway token spend and lockups while preserving normal
 - `tools.loopDetection` is merged with agent-level overrides.
 - Per-agent config fully overrides or extends global values.
 - If no config exists, guardrails stay off.
+

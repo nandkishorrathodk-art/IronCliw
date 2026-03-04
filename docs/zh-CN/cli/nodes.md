@@ -2,7 +2,7 @@
 read_when:
   - 你正在管理已配对的节点（摄像头、屏幕、画布）
   - 你需要批准请求或调用节点命令
-summary: "`openclaw nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
+summary: "`Ironcliw nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
 title: nodes
 x-i18n:
   generated_at: "2026-02-03T10:04:26Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `openclaw nodes`
+# `Ironcliw nodes`
 
 管理已配对的节点（设备）并调用节点功能。
 
@@ -30,14 +30,14 @@ x-i18n:
 ## 常用命令
 
 ```bash
-openclaw nodes list
-openclaw nodes list --connected
-openclaw nodes list --last-connected 24h
-openclaw nodes pending
-openclaw nodes approve <requestId>
-openclaw nodes status
-openclaw nodes status --connected
-openclaw nodes status --last-connected 24h
+Ironcliw nodes list
+Ironcliw nodes list --connected
+Ironcliw nodes list --last-connected 24h
+Ironcliw nodes pending
+Ironcliw nodes approve <requestId>
+Ironcliw nodes status
+Ironcliw nodes status --connected
+Ironcliw nodes status --last-connected 24h
 ```
 
 `nodes list` 打印待处理/已配对表格。已配对行包含最近连接时长（Last Connect）。
@@ -47,10 +47,10 @@ openclaw nodes status --last-connected 24h
 ## 调用 / 运行
 
 ```bash
-openclaw nodes invoke --node <id|name|ip> --command <command> --params <json>
-openclaw nodes run --node <id|name|ip> <command...>
-openclaw nodes run --raw "git status"
-openclaw nodes run --agent main --node <id|name|ip> --raw "git status"
+Ironcliw nodes invoke --node <id|name|ip> --command <command> --params <json>
+Ironcliw nodes run --node <id|name|ip> <command...>
+Ironcliw nodes run --raw "git status"
+Ironcliw nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 调用标志：
@@ -78,3 +78,4 @@ openclaw nodes run --agent main --node <id|name|ip> --raw "git status"
 - `--raw <command>`：运行 shell 字符串（`/bin/sh -lc` 或 `cmd.exe /c`）。
 - `--agent <id>`：智能体范围的审批/白名单（默认为已配置的智能体）。
 - `--ask <off|on-miss|always>`、`--security <deny|allowlist|full>`：覆盖选项。
+

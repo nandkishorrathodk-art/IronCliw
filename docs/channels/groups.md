@@ -7,19 +7,19 @@ title: "Groups"
 
 # Groups
 
-OpenClaw treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
+Ironcliw treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
 
 ## Beginner intro (2 minutes)
 
-OpenClaw “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, OpenClaw can see that group and respond there.
+Ironcliw “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, Ironcliw can see that group and respond there.
 
 Default behavior:
 
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger OpenClaw by mentioning it.
+Translation: allowlisted senders can trigger Ironcliw by mentioning it.
 
 > TL;DR
 >
@@ -232,7 +232,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@openclaw", "openclaw", "\\+15555550123"],
+          mentionPatterns: ["@Ironcliw", "Ironcliw", "\\+15555550123"],
           historyLimit: 50,
         },
       },
@@ -377,3 +377,4 @@ The agent system prompt includes a group intro on the first turn of a new group 
 ## WhatsApp specifics
 
 See [Group messages](/channels/group-messages) for WhatsApp-only behavior (history injection, mention handling details).
+

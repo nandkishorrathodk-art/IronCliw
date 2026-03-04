@@ -57,7 +57,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: OpenClaw version
+      label: Ironcliw version
       description: Exact version/build tested.
       placeholder: <version such as 2026.2.17>
     validations:
@@ -74,7 +74,7 @@ body:
     id: install_method
     attributes:
       label: Install method
-      description: How OpenClaw was installed or launched.
+      description: How Ironcliw was installed or launched.
       placeholder: npm global / pnpm dev / docker / mac app
   - type: textarea
     id: logs
@@ -104,3 +104,4 @@ body:
       label: Additional information
       description: Add any context that helps triage but does not fit above. If this is a regression, include the last known good and first known bad versions.
       placeholder: Last known good version <...>, first known bad version <...>, temporary workaround is ...
+

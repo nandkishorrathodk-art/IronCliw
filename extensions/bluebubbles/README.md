@@ -1,6 +1,6 @@
 # BlueBubbles extension (developer reference)
 
-This directory contains the **BlueBubbles external channel plugin** for OpenClaw.
+This directory contains the **BlueBubbles external channel plugin** for Ironcliw.
 
 If you’re looking for **how to use BlueBubbles as an agent/tool user**, see:
 
@@ -30,7 +30,7 @@ If you’re looking for **how to use BlueBubbles as an agent/tool user**, see:
 - BlueBubbles posts JSON to the gateway HTTP server.
 - Normalize sender/chat IDs defensively (payloads vary by version).
 - Skip messages marked as from self.
-- Route into core reply pipeline via the plugin runtime (`api.runtime`) and `openclaw/plugin-sdk` helpers.
+- Route into core reply pipeline via the plugin runtime (`api.runtime`) and `Ironcliw/plugin-sdk` helpers.
 - For attachments/stickers, use `<media:...>` placeholders when text is empty and attach media paths via `MediaUrl(s)` in the inbound context.
 
 ## Config (core)
@@ -43,3 +43,4 @@ If you’re looking for **how to use BlueBubbles as an agent/tool user**, see:
 - **Reactions:** the `react` action requires a `target` (phone number or chat identifier) in addition to `messageId`.
   Example:
   `action=react target=+15551234567 messageId=ABC123 emoji=❤️`
+

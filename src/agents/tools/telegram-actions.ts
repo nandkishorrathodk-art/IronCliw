@@ -1,5 +1,5 @@
 import type { AgentToolResult } from "@mariozechner/pi-agent-core";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import { createTelegramActionGate } from "../../telegram/accounts.js";
 import type { TelegramButtonStyle, TelegramInlineButtons } from "../../telegram/button-types.js";
 import {
@@ -84,7 +84,7 @@ export function readTelegramButtons(
 
 export async function handleTelegramAction(
   params: Record<string, unknown>,
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   options?: {
     mediaLocalRoots?: readonly string[];
   },
@@ -408,3 +408,4 @@ export async function handleTelegramAction(
 
   throw new Error(`Unsupported Telegram action: ${action}`);
 }
+

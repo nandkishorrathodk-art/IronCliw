@@ -5,7 +5,7 @@ const writeConfigFile = vi.fn().mockResolvedValue(undefined);
 const loadConfig = vi.fn().mockReturnValue({});
 
 vi.mock("../config/config.js", () => ({
-  CONFIG_PATH: "/tmp/openclaw.json",
+  CONFIG_PATH: "/tmp/Ironcliw.json",
   readConfigFileSnapshot,
   writeConfigFile,
   loadConfig,
@@ -13,7 +13,7 @@ vi.mock("../config/config.js", () => ({
 
 function mockConfigSnapshot(config: Record<string, unknown> = {}) {
   readConfigFileSnapshot.mockResolvedValue({
-    path: "/tmp/openclaw.json",
+    path: "/tmp/Ironcliw.json",
     exists: true,
     raw: "{}",
     parsed: {},
@@ -126,3 +126,4 @@ describe("models set + fallbacks", () => {
     });
   });
 });
+

@@ -1,7 +1,7 @@
 import { normalizeChatType, type ChatType } from "../../channels/chat-type.js";
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.js";
 import { formatCliCommand } from "../../cli/command-format.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { AgentDefaultsConfig } from "../../config/types.agent-defaults.js";
 import { parseDiscordTarget } from "../../discord/targets.js";
@@ -79,7 +79,7 @@ export function resolveSessionDeliveryTarget(params: {
    * Callers should set this to the channel that originated the current
    * agent turn so the reply always routes back to the correct channel.
    *
-   * @see https://github.com/openclaw/openclaw/issues/24152
+   * @see https://github.com/Ironcliw/Ironcliw/issues/24152
    */
   turnSourceChannel?: DeliverableMessageChannel;
   /** Turn-source `to` — paired with `turnSourceChannel`. */
@@ -171,7 +171,7 @@ export function resolveOutboundTarget(params: {
   channel: GatewayMessageChannel;
   to?: string;
   allowFrom?: string[];
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   accountId?: string | null;
   mode?: ChannelOutboundTargetMode;
 }): OutboundTargetResolution {
@@ -179,7 +179,7 @@ export function resolveOutboundTarget(params: {
     return {
       ok: false,
       error: new Error(
-        `Delivering to WebChat is not supported via \`${formatCliCommand("openclaw agent")}\`; use WhatsApp/Telegram or run with --deliver=false.`,
+        `Delivering to WebChat is not supported via \`${formatCliCommand("Ironcliw agent")}\`; use WhatsApp/Telegram or run with --deliver=false.`,
       ),
     };
   }
@@ -237,7 +237,7 @@ export function resolveOutboundTarget(params: {
 }
 
 export function resolveHeartbeatDeliveryTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   entry?: SessionEntry;
   heartbeat?: AgentDefaultsConfig["heartbeat"];
 }): OutboundTarget {
@@ -518,7 +518,7 @@ function resolveHeartbeatSenderId(params: {
 }
 
 export function resolveHeartbeatSenderContext(params: {
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   entry?: SessionEntry;
   delivery: OutboundTarget;
 }): HeartbeatSenderContext {
@@ -547,3 +547,4 @@ export function resolveHeartbeatSenderContext(params: {
 
   return { sender, provider, allowFrom };
 }
+

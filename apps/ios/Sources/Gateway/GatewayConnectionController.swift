@@ -6,7 +6,7 @@ import CryptoKit
 import EventKit
 import Foundation
 import Darwin
-import OpenClawKit
+import IroncliwKit
 import Network
 import Observation
 import Photos
@@ -754,7 +754,7 @@ final class GatewayConnectionController {
         if manualClientId?.isEmpty == false {
             return manualClientId!
         }
-        return "openclaw-ios"
+        return "Ironcliw-ios"
     }
 
     private func resolveManualPort(host: String, port: Int, useTLS: Bool) -> Int? {
@@ -784,32 +784,32 @@ final class GatewayConnectionController {
     }
 
     private func currentCaps() -> [String] {
-        var caps = [OpenClawCapability.canvas.rawValue, OpenClawCapability.screen.rawValue]
+        var caps = [IroncliwCapability.canvas.rawValue, IroncliwCapability.screen.rawValue]
 
         // Default-on: if the key doesn't exist yet, treat it as enabled.
         let cameraEnabled =
             UserDefaults.standard.object(forKey: "camera.enabled") == nil
                 ? true
                 : UserDefaults.standard.bool(forKey: "camera.enabled")
-        if cameraEnabled { caps.append(OpenClawCapability.camera.rawValue) }
+        if cameraEnabled { caps.append(IroncliwCapability.camera.rawValue) }
 
         let voiceWakeEnabled = UserDefaults.standard.bool(forKey: VoiceWakePreferences.enabledKey)
-        if voiceWakeEnabled { caps.append(OpenClawCapability.voiceWake.rawValue) }
+        if voiceWakeEnabled { caps.append(IroncliwCapability.voiceWake.rawValue) }
 
         let locationModeRaw = UserDefaults.standard.string(forKey: "location.enabledMode") ?? "off"
-        let locationMode = OpenClawLocationMode(rawValue: locationModeRaw) ?? .off
-        if locationMode != .off { caps.append(OpenClawCapability.location.rawValue) }
+        let locationMode = IroncliwLocationMode(rawValue: locationModeRaw) ?? .off
+        if locationMode != .off { caps.append(IroncliwCapability.location.rawValue) }
 
-        caps.append(OpenClawCapability.device.rawValue)
+        caps.append(IroncliwCapability.device.rawValue)
         if WatchMessagingService.isSupportedOnDevice() {
-            caps.append(OpenClawCapability.watch.rawValue)
+            caps.append(IroncliwCapability.watch.rawValue)
         }
-        caps.append(OpenClawCapability.photos.rawValue)
-        caps.append(OpenClawCapability.contacts.rawValue)
-        caps.append(OpenClawCapability.calendar.rawValue)
-        caps.append(OpenClawCapability.reminders.rawValue)
+        caps.append(IroncliwCapability.photos.rawValue)
+        caps.append(IroncliwCapability.contacts.rawValue)
+        caps.append(IroncliwCapability.calendar.rawValue)
+        caps.append(IroncliwCapability.reminders.rawValue)
         if Self.motionAvailable() {
-            caps.append(OpenClawCapability.motion.rawValue)
+            caps.append(IroncliwCapability.motion.rawValue)
         }
 
         return caps
@@ -817,58 +817,58 @@ final class GatewayConnectionController {
 
     private func currentCommands() -> [String] {
         var commands: [String] = [
-            OpenClawCanvasCommand.present.rawValue,
-            OpenClawCanvasCommand.hide.rawValue,
-            OpenClawCanvasCommand.navigate.rawValue,
-            OpenClawCanvasCommand.evalJS.rawValue,
-            OpenClawCanvasCommand.snapshot.rawValue,
-            OpenClawCanvasA2UICommand.push.rawValue,
-            OpenClawCanvasA2UICommand.pushJSONL.rawValue,
-            OpenClawCanvasA2UICommand.reset.rawValue,
-            OpenClawScreenCommand.record.rawValue,
-            OpenClawSystemCommand.notify.rawValue,
-            OpenClawChatCommand.push.rawValue,
-            OpenClawTalkCommand.pttStart.rawValue,
-            OpenClawTalkCommand.pttStop.rawValue,
-            OpenClawTalkCommand.pttCancel.rawValue,
-            OpenClawTalkCommand.pttOnce.rawValue,
+            IroncliwCanvasCommand.present.rawValue,
+            IroncliwCanvasCommand.hide.rawValue,
+            IroncliwCanvasCommand.navigate.rawValue,
+            IroncliwCanvasCommand.evalJS.rawValue,
+            IroncliwCanvasCommand.snapshot.rawValue,
+            IroncliwCanvasA2UICommand.push.rawValue,
+            IroncliwCanvasA2UICommand.pushJSONL.rawValue,
+            IroncliwCanvasA2UICommand.reset.rawValue,
+            IroncliwScreenCommand.record.rawValue,
+            IroncliwSystemCommand.notify.rawValue,
+            IroncliwChatCommand.push.rawValue,
+            IroncliwTalkCommand.pttStart.rawValue,
+            IroncliwTalkCommand.pttStop.rawValue,
+            IroncliwTalkCommand.pttCancel.rawValue,
+            IroncliwTalkCommand.pttOnce.rawValue,
         ]
 
         let caps = Set(self.currentCaps())
-        if caps.contains(OpenClawCapability.camera.rawValue) {
-            commands.append(OpenClawCameraCommand.list.rawValue)
-            commands.append(OpenClawCameraCommand.snap.rawValue)
-            commands.append(OpenClawCameraCommand.clip.rawValue)
+        if caps.contains(IroncliwCapability.camera.rawValue) {
+            commands.append(IroncliwCameraCommand.list.rawValue)
+            commands.append(IroncliwCameraCommand.snap.rawValue)
+            commands.append(IroncliwCameraCommand.clip.rawValue)
         }
-        if caps.contains(OpenClawCapability.location.rawValue) {
-            commands.append(OpenClawLocationCommand.get.rawValue)
+        if caps.contains(IroncliwCapability.location.rawValue) {
+            commands.append(IroncliwLocationCommand.get.rawValue)
         }
-        if caps.contains(OpenClawCapability.device.rawValue) {
-            commands.append(OpenClawDeviceCommand.status.rawValue)
-            commands.append(OpenClawDeviceCommand.info.rawValue)
+        if caps.contains(IroncliwCapability.device.rawValue) {
+            commands.append(IroncliwDeviceCommand.status.rawValue)
+            commands.append(IroncliwDeviceCommand.info.rawValue)
         }
-        if caps.contains(OpenClawCapability.watch.rawValue) {
-            commands.append(OpenClawWatchCommand.status.rawValue)
-            commands.append(OpenClawWatchCommand.notify.rawValue)
+        if caps.contains(IroncliwCapability.watch.rawValue) {
+            commands.append(IroncliwWatchCommand.status.rawValue)
+            commands.append(IroncliwWatchCommand.notify.rawValue)
         }
-        if caps.contains(OpenClawCapability.photos.rawValue) {
-            commands.append(OpenClawPhotosCommand.latest.rawValue)
+        if caps.contains(IroncliwCapability.photos.rawValue) {
+            commands.append(IroncliwPhotosCommand.latest.rawValue)
         }
-        if caps.contains(OpenClawCapability.contacts.rawValue) {
-            commands.append(OpenClawContactsCommand.search.rawValue)
-            commands.append(OpenClawContactsCommand.add.rawValue)
+        if caps.contains(IroncliwCapability.contacts.rawValue) {
+            commands.append(IroncliwContactsCommand.search.rawValue)
+            commands.append(IroncliwContactsCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.calendar.rawValue) {
-            commands.append(OpenClawCalendarCommand.events.rawValue)
-            commands.append(OpenClawCalendarCommand.add.rawValue)
+        if caps.contains(IroncliwCapability.calendar.rawValue) {
+            commands.append(IroncliwCalendarCommand.events.rawValue)
+            commands.append(IroncliwCalendarCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.reminders.rawValue) {
-            commands.append(OpenClawRemindersCommand.list.rawValue)
-            commands.append(OpenClawRemindersCommand.add.rawValue)
+        if caps.contains(IroncliwCapability.reminders.rawValue) {
+            commands.append(IroncliwRemindersCommand.list.rawValue)
+            commands.append(IroncliwRemindersCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.motion.rawValue) {
-            commands.append(OpenClawMotionCommand.activity.rawValue)
-            commands.append(OpenClawMotionCommand.pedometer.rawValue)
+        if caps.contains(IroncliwCapability.motion.rawValue) {
+            commands.append(IroncliwMotionCommand.activity.rawValue)
+            commands.append(IroncliwMotionCommand.pedometer.rawValue)
         }
 
         return commands
@@ -1056,3 +1056,4 @@ private final class GatewayTLSFingerprintProbe: NSObject, URLSessionDelegate, @u
         return digest.map { String(format: "%02x", $0) }.joined()
     }
 }
+

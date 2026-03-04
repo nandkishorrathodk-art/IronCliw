@@ -77,7 +77,7 @@ async function openVerifiedLocalFile(
   },
 ): Promise<SafeOpenResult> {
   // Reject directories before opening so we never surface EISDIR to callers (e.g. tool
-  // results that get sent to messaging channels). See openclaw/openclaw#31186.
+  // results that get sent to messaging channels). See Ironcliw/Ironcliw#31186.
   try {
     const preStat = await fs.lstat(filePath);
     if (preStat.isDirectory()) {
@@ -599,3 +599,4 @@ export async function writeFileFromPathWithinRoot(params: {
     rejectSourceHardlinks: true,
   });
 }
+

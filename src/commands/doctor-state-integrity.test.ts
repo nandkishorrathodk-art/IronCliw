@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { resolveStorePath, resolveSessionTranscriptsDirForAgent } from "../config/sessions.js";
 import { note } from "../terminal/note.js";
 import { noteStateIntegrity } from "./doctor-state-integrity.js";
@@ -13,17 +13,17 @@ vi.mock("../terminal/note.js", () => ({
 
 type EnvSnapshot = {
   HOME?: string;
-  OPENCLAW_HOME?: string;
-  OPENCLAW_STATE_DIR?: string;
-  OPENCLAW_OAUTH_DIR?: string;
+  IRONCLIW_HOME?: string;
+  IRONCLIW_STATE_DIR?: string;
+  IRONCLIW_OAUTH_DIR?: string;
 };
 
 function captureEnv(): EnvSnapshot {
   return {
     HOME: process.env.HOME,
-    OPENCLAW_HOME: process.env.OPENCLAW_HOME,
-    OPENCLAW_STATE_DIR: process.env.OPENCLAW_STATE_DIR,
-    OPENCLAW_OAUTH_DIR: process.env.OPENCLAW_OAUTH_DIR,
+    IRONCLIW_HOME: process.env.IRONCLIW_HOME,
+    IRONCLIW_STATE_DIR: process.env.IRONCLIW_STATE_DIR,
+    IRONCLIW_OAUTH_DIR: process.env.IRONCLIW_OAUTH_DIR,
   };
 }
 
@@ -38,7 +38,7 @@ function restoreEnv(snapshot: EnvSnapshot) {
   }
 }
 
-function setupSessionState(cfg: OpenClawConfig, env: NodeJS.ProcessEnv, homeDir: string) {
+function setupSessionState(cfg: IroncliwConfig, env: NodeJS.ProcessEnv, homeDir: string) {
   const agentId = "main";
   const sessionsDir = resolveSessionTranscriptsDirForAgent(agentId, env, () => homeDir);
   const storePath = resolveStorePath(cfg.session?.store, { agentId });
@@ -58,7 +58,7 @@ const OAUTH_PROMPT_MATCHER = expect.objectContaining({
   message: expect.stringContaining("Create OAuth dir at"),
 });
 
-async function runStateIntegrity(cfg: OpenClawConfig) {
+async function runStateIntegrity(cfg: IroncliwConfig) {
   setupSessionState(cfg, process.env, process.env.HOME ?? "");
   const confirmSkipInNonInteractive = vi.fn(async () => false);
   await noteStateIntegrity(cfg, { confirmSkipInNonInteractive });
@@ -66,7 +66,7 @@ async function runStateIntegrity(cfg: OpenClawConfig) {
 }
 
 function writeSessionStore(
-  cfg: OpenClawConfig,
+  cfg: IroncliwConfig,
   sessions: Record<string, { sessionId: string; updatedAt: number }>,
 ) {
   setupSessionState(cfg, process.env, process.env.HOME ?? "");
@@ -74,7 +74,7 @@ function writeSessionStore(
   fs.writeFileSync(storePath, JSON.stringify(sessions, null, 2));
 }
 
-async function runStateIntegrityText(cfg: OpenClawConfig): Promise<string> {
+async function runStateIntegrityText(cfg: IroncliwConfig): Promise<string> {
   await noteStateIntegrity(cfg, { confirmSkipInNonInteractive: vi.fn(async () => false) });
   return stateIntegrityText();
 }
@@ -85,12 +85,12 @@ describe("doctor state integrity oauth dir checks", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv();
-    tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-doctor-state-integrity-"));
+    tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "Ironcliw-doctor-state-integrity-"));
     process.env.HOME = tempHome;
-    process.env.OPENCLAW_HOME = tempHome;
-    process.env.OPENCLAW_STATE_DIR = path.join(tempHome, ".openclaw");
-    delete process.env.OPENCLAW_OAUTH_DIR;
-    fs.mkdirSync(process.env.OPENCLAW_STATE_DIR, { recursive: true, mode: 0o700 });
+    process.env.IRONCLIW_HOME = tempHome;
+    process.env.IRONCLIW_STATE_DIR = path.join(tempHome, ".Ironcliw");
+    delete process.env.IRONCLIW_OAUTH_DIR;
+    fs.mkdirSync(process.env.IRONCLIW_STATE_DIR, { recursive: true, mode: 0o700 });
     vi.mocked(note).mockClear();
   });
 
@@ -100,7 +100,7 @@ describe("doctor state integrity oauth dir checks", () => {
   });
 
   it("does not prompt for oauth dir when no whatsapp/pairing config is active", async () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IroncliwConfig = {};
     const confirmSkipInNonInteractive = await runStateIntegrity(cfg);
     expect(confirmSkipInNonInteractive).not.toHaveBeenCalledWith(OAUTH_PROMPT_MATCHER);
     const text = stateIntegrityText();
@@ -109,7 +109,7 @@ describe("doctor state integrity oauth dir checks", () => {
   });
 
   it("prompts for oauth dir when whatsapp is configured", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         whatsapp: {},
       },
@@ -120,7 +120,7 @@ describe("doctor state integrity oauth dir checks", () => {
   });
 
   it("prompts for oauth dir when a channel dmPolicy is pairing", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: IroncliwConfig = {
       channels: {
         telegram: {
           dmPolicy: "pairing",
@@ -131,16 +131,16 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(confirmSkipInNonInteractive).toHaveBeenCalledWith(OAUTH_PROMPT_MATCHER);
   });
 
-  it("prompts for oauth dir when OPENCLAW_OAUTH_DIR is explicitly configured", async () => {
-    process.env.OPENCLAW_OAUTH_DIR = path.join(tempHome, ".oauth");
-    const cfg: OpenClawConfig = {};
+  it("prompts for oauth dir when IRONCLIW_OAUTH_DIR is explicitly configured", async () => {
+    process.env.IRONCLIW_OAUTH_DIR = path.join(tempHome, ".oauth");
+    const cfg: IroncliwConfig = {};
     const confirmSkipInNonInteractive = await runStateIntegrity(cfg);
     expect(confirmSkipInNonInteractive).toHaveBeenCalledWith(OAUTH_PROMPT_MATCHER);
     expect(stateIntegrityText()).toContain("CRITICAL: OAuth dir missing");
   });
 
   it("detects orphan transcripts and offers archival remediation", async () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IroncliwConfig = {};
     setupSessionState(cfg, process.env, process.env.HOME ?? "");
     const sessionsDir = resolveSessionTranscriptsDirForAgent("main", process.env, () => tempHome);
     fs.writeFileSync(path.join(sessionsDir, "orphan-session.jsonl"), '{"type":"session"}\n');
@@ -158,8 +158,8 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(files.some((name) => name.startsWith("orphan-session.jsonl.deleted."))).toBe(true);
   });
 
-  it("prints openclaw-only verification hints when recent sessions are missing transcripts", async () => {
-    const cfg: OpenClawConfig = {};
+  it("prints Ironcliw-only verification hints when recent sessions are missing transcripts", async () => {
+    const cfg: IroncliwConfig = {};
     writeSessionStore(cfg, {
       "agent:main:main": {
         sessionId: "missing-transcript",
@@ -168,17 +168,17 @@ describe("doctor state integrity oauth dir checks", () => {
     });
     const text = await runStateIntegrityText(cfg);
     expect(text).toContain("recent sessions are missing transcripts");
-    expect(text).toMatch(/openclaw sessions --store ".*sessions\.json"/);
-    expect(text).toMatch(/openclaw sessions cleanup --store ".*sessions\.json" --dry-run/);
+    expect(text).toMatch(/Ironcliw sessions --store ".*sessions\.json"/);
+    expect(text).toMatch(/Ironcliw sessions cleanup --store ".*sessions\.json" --dry-run/);
     expect(text).toMatch(
-      /openclaw sessions cleanup --store ".*sessions\.json" --enforce --fix-missing/,
+      /Ironcliw sessions cleanup --store ".*sessions\.json" --enforce --fix-missing/,
     );
     expect(text).not.toContain("--active");
     expect(text).not.toContain(" ls ");
   });
 
   it("ignores slash-routing sessions for recent missing transcript warnings", async () => {
-    const cfg: OpenClawConfig = {};
+    const cfg: IroncliwConfig = {};
     writeSessionStore(cfg, {
       "agent:main:telegram:slash:6790081233": {
         sessionId: "missing-slash-transcript",
@@ -189,3 +189,4 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(text).not.toContain("recent sessions are missing transcripts");
   });
 });
+

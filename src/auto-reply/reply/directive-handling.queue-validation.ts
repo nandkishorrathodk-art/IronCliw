@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { ReplyPayload } from "../types.js";
 import type { InlineDirectives } from "./directive-handling.parse.js";
@@ -7,7 +7,7 @@ import { resolveQueueSettings } from "./queue.js";
 
 export function maybeHandleQueueDirective(params: {
   directives: InlineDirectives;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   channel: string;
   sessionEntry?: SessionEntry;
 }): ReplyPayload | undefined {
@@ -76,3 +76,4 @@ export function maybeHandleQueueDirective(params: {
 
   return undefined;
 }
+

@@ -1,4 +1,4 @@
-import type { OpenClawConfig, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { IroncliwConfig, RuntimeEnv } from "Ironcliw/plugin-sdk";
 import { describe, expect, it } from "vitest";
 import { msteamsPlugin } from "./channel.js";
 
@@ -27,7 +27,7 @@ describe("msteams directory", () => {
           },
         },
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as IroncliwConfig;
 
     expect(msteamsPlugin.directory).toBeTruthy();
     expect(msteamsPlugin.directory?.listPeers).toBeTruthy();
@@ -64,3 +64,4 @@ describe("msteams directory", () => {
     );
   });
 });
+

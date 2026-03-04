@@ -115,7 +115,7 @@ describe("web processMessage inbound contract", () => {
     capturedDispatchParams = undefined;
     backgroundTasks = new Set();
     deliverWebReplyMock.mockClear();
-    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-process-message-"));
+    sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-process-message-"));
     sessionStorePath = path.join(sessionDir, "sessions.json");
   });
 
@@ -196,7 +196,7 @@ describe("web processMessage inbound contract", () => {
               {
                 id: "main",
                 default: true,
-                identity: { name: "Mainbot", emoji: "🦞", theme: "space lobster" },
+                identity: { name: "Mainbot", emoji: "🦞", theme: "space ironcliw" },
               },
             ],
           },
@@ -417,3 +417,5 @@ describe("web processMessage inbound contract", () => {
     expect(updateLastRouteMock).toHaveBeenCalledTimes(1);
   });
 });
+
+

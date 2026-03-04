@@ -6,14 +6,14 @@ function createSandboxContext(overrides?: Partial<SandboxContext>): SandboxConte
   const base = {
     enabled: true,
     sessionKey: "session:test",
-    workspaceDir: "/tmp/openclaw-sandbox",
-    agentWorkspaceDir: "/tmp/openclaw-workspace",
+    workspaceDir: "/tmp/Ironcliw-sandbox",
+    agentWorkspaceDir: "/tmp/Ironcliw-workspace",
     workspaceAccess: "none",
-    containerName: "openclaw-sbx-test",
+    containerName: "Ironcliw-sbx-test",
     containerWorkdir: "/workspace",
     docker: {
-      image: "openclaw-sandbox:bookworm-slim",
-      containerPrefix: "openclaw-sbx-",
+      image: "Ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "Ironcliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: true,
       tmpfs: ["/tmp"],
@@ -30,7 +30,7 @@ function createSandboxContext(overrides?: Partial<SandboxContext>): SandboxConte
     browser: {
       bridgeUrl: "http://localhost:9222",
       noVncUrl: "http://localhost:6080",
-      containerName: "openclaw-sbx-browser-test",
+      containerName: "Ironcliw-sbx-browser-test",
     },
   } satisfies SandboxContext;
   return { ...base, ...overrides };
@@ -46,7 +46,7 @@ describe("buildEmbeddedSandboxInfo", () => {
 
     expect(buildEmbeddedSandboxInfo(sandbox)).toEqual({
       enabled: true,
-      workspaceDir: "/tmp/openclaw-sandbox",
+      workspaceDir: "/tmp/Ironcliw-sandbox",
       containerWorkspaceDir: "/workspace",
       workspaceAccess: "none",
       agentWorkspaceMount: undefined,
@@ -70,7 +70,7 @@ describe("buildEmbeddedSandboxInfo", () => {
       }),
     ).toEqual({
       enabled: true,
-      workspaceDir: "/tmp/openclaw-sandbox",
+      workspaceDir: "/tmp/Ironcliw-sandbox",
       containerWorkspaceDir: "/workspace",
       workspaceAccess: "none",
       agentWorkspaceMount: undefined,
@@ -79,3 +79,4 @@ describe("buildEmbeddedSandboxInfo", () => {
     });
   });
 });
+

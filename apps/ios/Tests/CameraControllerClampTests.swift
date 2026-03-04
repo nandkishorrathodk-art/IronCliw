@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @Suite struct CameraControllerClampTests {
     @Test func clampQualityDefaultsAndBounds() {
@@ -22,3 +22,4 @@ import Testing
         #expect(CameraController.clampDurationMs(60001) == 60000)
     }
 }
+

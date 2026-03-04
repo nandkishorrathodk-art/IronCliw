@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IroncliwConfig } from "../../../config/config.js";
 import { resolveGatewayService } from "../../../daemon/service.js";
 import { isSystemdUserServiceAvailable } from "../../../daemon/systemd.js";
 import type { RuntimeEnv } from "../../../runtime.js";
@@ -8,7 +8,7 @@ import type { OnboardOptions } from "../../onboard-types.js";
 import { ensureSystemdUserLingerNonInteractive } from "../../systemd-linger.js";
 
 export async function installGatewayDaemonNonInteractive(params: {
-  nextConfig: OpenClawConfig;
+  nextConfig: IroncliwConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
   port: number;
@@ -57,3 +57,4 @@ export async function installGatewayDaemonNonInteractive(params: {
   }
   await ensureSystemdUserLingerNonInteractive({ runtime });
 }
+

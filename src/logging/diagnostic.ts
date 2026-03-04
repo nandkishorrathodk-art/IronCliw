@@ -1,5 +1,5 @@
 import { loadConfig } from "../config/config.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import { emitDiagnosticEvent } from "../infra/diagnostic-events.js";
 import {
   diagnosticSessionStates,
@@ -30,7 +30,7 @@ function markActivity() {
   lastActivityAt = Date.now();
 }
 
-export function resolveStuckSessionWarnMs(config?: OpenClawConfig): number {
+export function resolveStuckSessionWarnMs(config?: IroncliwConfig): number {
   const raw = config?.diagnostics?.stuckSessionWarnMs;
   if (typeof raw !== "number" || !Number.isFinite(raw)) {
     return DEFAULT_STUCK_SESSION_WARN_MS;
@@ -322,7 +322,7 @@ export function logActiveRuns() {
 
 let heartbeatInterval: NodeJS.Timeout | null = null;
 
-export function startDiagnosticHeartbeat(config?: OpenClawConfig) {
+export function startDiagnosticHeartbeat(config?: IroncliwConfig) {
   if (heartbeatInterval) {
     return;
   }
@@ -423,3 +423,4 @@ export function resetDiagnosticStateForTest(): void {
 }
 
 export { diag as diagnosticLogger };
+

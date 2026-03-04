@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { IroncliwConfig } from "../../../config/config.js";
 
 vi.mock("../../../slack/send.js", () => ({
   sendMessageSlack: vi.fn().mockResolvedValue({ messageId: "1234.5678", channelId: "C123" }),
@@ -34,7 +34,7 @@ const BASE_SLACK_SEND_CTX = {
 const sendSlackText = async (ctx: SlackSendTextCtx) => {
   const sendText = slackOutbound.sendText as NonNullable<typeof slackOutbound.sendText>;
   return await sendText({
-    cfg: {} as OpenClawConfig,
+    cfg: {} as IroncliwConfig,
     ...ctx,
   });
 };
@@ -103,11 +103,11 @@ describe("slack outbound hook wiring", () => {
 
     await sendSlackTextWithDefaults({
       text: "hello",
-      identity: { emoji: ":lobster:" },
+      identity: { emoji: ":ironcliw:" },
     });
 
     expectSlackSendCalledWith("hello", {
-      identity: { iconEmoji: ":lobster:" },
+      identity: { iconEmoji: ":ironcliw:" },
     });
   });
 
@@ -169,3 +169,5 @@ describe("slack outbound hook wiring", () => {
     expect(sendMessageSlack).toHaveBeenCalled();
   });
 });
+
+

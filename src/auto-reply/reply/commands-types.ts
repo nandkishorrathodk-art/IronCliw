@@ -1,6 +1,6 @@
 import type { SkillCommandSpec } from "../../agents/skills.js";
 import type { ChannelId } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { IroncliwConfig } from "../../config/config.js";
 import type { SessionEntry, SessionScope } from "../../config/sessions.js";
 import type { MsgContext } from "../templating.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../thinking.js";
@@ -26,7 +26,7 @@ export type CommandContext = {
 
 export type HandleCommandsParams = {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: IroncliwConfig;
   command: CommandContext;
   agentId?: string;
   agentDir?: string;
@@ -65,3 +65,4 @@ export type CommandHandler = (
   params: HandleCommandsParams,
   allowTextCommands: boolean,
 ) => Promise<CommandHandlerResult | null>;
+

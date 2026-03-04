@@ -1,5 +1,5 @@
 import type { FinalizedMsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import type {
   PluginHookMessageContext,
   PluginHookMessageReceivedEvent,
@@ -211,8 +211,8 @@ export function toInternalMessageReceivedContext(
 
 export function toInternalMessageTranscribedContext(
   canonical: CanonicalInboundMessageHookContext,
-  cfg: OpenClawConfig,
-): MessageTranscribedHookContext & { cfg: OpenClawConfig } {
+  cfg: IroncliwConfig,
+): MessageTranscribedHookContext & { cfg: IroncliwConfig } {
   return {
     from: canonical.from,
     to: canonical.to,
@@ -236,8 +236,8 @@ export function toInternalMessageTranscribedContext(
 
 export function toInternalMessagePreprocessedContext(
   canonical: CanonicalInboundMessageHookContext,
-  cfg: OpenClawConfig,
-): MessagePreprocessedHookContext & { cfg: OpenClawConfig } {
+  cfg: IroncliwConfig,
+): MessagePreprocessedHookContext & { cfg: IroncliwConfig } {
   return {
     from: canonical.from,
     to: canonical.to,
@@ -277,3 +277,4 @@ export function toInternalMessageSentContext(
     ...(canonical.groupId ? { groupId: canonical.groupId } : {}),
   };
 }
+

@@ -1,4 +1,4 @@
-import type { OpenClawPluginConfigSchema } from "openclaw/plugin-sdk";
+import type { IroncliwPluginConfigSchema } from "Ironcliw/plugin-sdk";
 import {
   DIFF_IMAGE_QUALITY_PRESETS,
   DIFF_INDICATORS,
@@ -197,7 +197,7 @@ const DIFFS_PLUGIN_CONFIG_JSON_SCHEMA = {
   },
 } as const;
 
-export const diffsPluginConfigSchema: OpenClawPluginConfigSchema = {
+export const diffsPluginConfigSchema: IroncliwPluginConfigSchema = {
   safeParse(value: unknown) {
     if (value === undefined) {
       return { success: true, data: undefined };
@@ -401,3 +401,4 @@ export function resolveDiffImageRenderOptions(params: {
     maxPixels: profile.maxPixels,
   };
 }
+

@@ -97,7 +97,7 @@ export function createProfileTabOps({
   const enforceManagedTabLimit = async (keepTargetId: string): Promise<void> => {
     const profileState = getProfileState();
     if (
-      profile.driver !== "openclaw" ||
+      profile.driver !== "Ironcliw" ||
       !profile.cdpIsLoopback ||
       state().resolved.attachOnly ||
       !profileState.running
@@ -219,3 +219,4 @@ export function createProfileTabOps({
     openTab,
   };
 }
+

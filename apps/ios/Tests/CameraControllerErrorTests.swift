@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @Suite struct CameraControllerErrorTests {
     @Test func errorDescriptionsAreStable() {
@@ -12,3 +12,4 @@ import Testing
         #expect(CameraController.CameraError.exportFailed("export").errorDescription == "export")
     }
 }
+

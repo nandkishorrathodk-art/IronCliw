@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { triggerOpenClawRestart } from "./restart.js";
+import { triggerIroncliwRestart } from "./restart.js";
 import { hasSupervisorHint } from "./supervisor-markers.js";
 
 type RespawnMode = "spawned" | "supervised" | "disabled" | "failed";
@@ -25,18 +25,18 @@ function isLikelySupervisedProcess(env: NodeJS.ProcessEnv = process.env): boolea
 /**
  * Attempt to restart this process with a fresh PID.
  * - supervised environments (launchd/systemd): caller should exit and let supervisor restart
- * - OPENCLAW_NO_RESPAWN=1: caller should keep in-process restart behavior (tests/dev)
+ * - IRONCLIW_NO_RESPAWN=1: caller should keep in-process restart behavior (tests/dev)
  * - otherwise: spawn detached child with current argv/execArgv, then caller exits
  */
 export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
-  if (isTruthy(process.env.OPENCLAW_NO_RESPAWN)) {
+  if (isTruthy(process.env.IRONCLIW_NO_RESPAWN)) {
     return { mode: "disabled" };
   }
   if (isLikelySupervisedProcess(process.env)) {
     // On macOS under launchd, actively kickstart the supervised service to
     // bypass ThrottleInterval delays for intentional restarts.
-    if (process.platform === "darwin" && process.env.OPENCLAW_LAUNCHD_LABEL?.trim()) {
-      const restart = triggerOpenClawRestart();
+    if (process.platform === "darwin" && process.env.IRONCLIW_LAUNCHD_LABEL?.trim()) {
+      const restart = triggerIroncliwRestart();
       if (!restart.ok) {
         return {
           mode: "failed",
@@ -61,3 +61,4 @@ export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
     return { mode: "failed", detail };
   }
 }
+

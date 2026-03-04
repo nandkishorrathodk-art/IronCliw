@@ -5,7 +5,7 @@ import {
   DEFAULT_ACCOUNT_ID,
   formatPairingApproveHint,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import type { NostrProfile } from "./config-schema.js";
 import { NostrConfigSchema } from "./config-schema.js";
 import type { MetricEvent, MetricsSnapshot } from "./metrics.js";
@@ -214,7 +214,7 @@ export const nostrPlugin: ChannelPlugin<ResolvedNostrAccount> = {
             `[${account.accountId}] DM from ${senderPubkey}: ${text.slice(0, 50)}...`,
           );
 
-          // Forward to OpenClaw's message pipeline
+          // Forward to Ironcliw's message pipeline
           await (
             runtime.channel.reply as { handleInboundMessage?: (params: unknown) => Promise<void> }
           ).handleInboundMessage?.({
@@ -343,3 +343,4 @@ export async function getNostrProfileState(accountId: string = DEFAULT_ACCOUNT_I
   }
   return bus.getProfileState();
 }
+

@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=openclaw-sandbox:bookworm-slim
+ARG BASE_IMAGE=Ironcliw-sandbox:bookworm-slim
 FROM ${BASE_IMAGE}
 
 USER root
@@ -42,4 +42,5 @@ fi
 
 # Default is sandbox, but allow BASE_IMAGE overrides to select another final user.
 USER ${FINAL_USER}
+
 

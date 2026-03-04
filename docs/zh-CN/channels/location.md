@@ -15,7 +15,7 @@ x-i18n:
 
 # 渠道位置解析
 
-OpenClaw 将聊天渠道中分享的位置标准化为：
+Ironcliw 将聊天渠道中分享的位置标准化为：
 
 - 附加到入站消息体的可读文本，以及
 - 自动回复上下文负载中的结构化字段。
@@ -61,3 +61,4 @@ Meet here
 - **Telegram**：地点映射到 `LocationName/LocationAddress`；实时位置使用 `live_period`。
 - **WhatsApp**：`locationMessage.comment` 和 `liveLocationMessage.caption` 作为标题行附加。
 - **Matrix**：`geo_uri` 解析为图钉位置；忽略海拔高度，`LocationIsLive` 始终为 false。
+

@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { IroncliwConfig } from "../config/config.js";
 import {
   type AuthProfileCredential,
   type AuthProfileStore,
@@ -93,7 +93,7 @@ function buildProfileHealth(params: {
   profileId: string;
   credential: AuthProfileCredential;
   store: AuthProfileStore;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   now: number;
   warnAfterMs: number;
 }): AuthProfileHealth {
@@ -164,7 +164,7 @@ function buildProfileHealth(params: {
 
 export function buildAuthHealthSummary(params: {
   store: AuthProfileStore;
-  cfg?: OpenClawConfig;
+  cfg?: IroncliwConfig;
   warnAfterMs?: number;
   providers?: string[];
 }): AuthHealthSummary {
@@ -259,3 +259,4 @@ export function buildAuthHealthSummary(params: {
 
   return { now, warnAfterMs, profiles, providers };
 }
+

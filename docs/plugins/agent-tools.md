@@ -8,7 +8,7 @@ title: "Plugin Agent Tools"
 
 # Plugin agent tools
 
-OpenClaw plugins can register **agent tools** (JSON‑schema functions) that are exposed
+Ironcliw plugins can register **agent tools** (JSON‑schema functions) that are exposed
 to the LLM during agent runs. Tools can be **required** (always available) or
 **optional** (opt‑in).
 
@@ -97,3 +97,4 @@ Other config knobs that affect tool availability:
 - Plugin ids used in allowlists must not clash with core tool names.
 - Prefer `optional: true` for tools that trigger side effects or require extra
   binaries/credentials.
+

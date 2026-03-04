@@ -4,7 +4,7 @@ description: Summarize or extract text/transcripts from URLs, podcasts, and loca
 homepage: https://summarize.sh
 metadata:
   {
-    "openclaw":
+    "Ironcliw":
       {
         "emoji": "🧾",
         "requires": { "bins": ["summarize"] },
@@ -85,3 +85,4 @@ Optional services:
 
 - `FIRECRAWL_API_KEY` for blocked sites
 - `APIFY_API_TOKEN` for YouTube fallback
+

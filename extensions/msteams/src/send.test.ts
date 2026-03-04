@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { IroncliwConfig } from "Ironcliw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { sendMessageMSTeams } from "./send.js";
 
@@ -11,7 +11,7 @@ const mockState = vi.hoisted(() => ({
   sendMSTeamsMessages: vi.fn(),
 }));
 
-vi.mock("openclaw/plugin-sdk", () => ({
+vi.mock("Ironcliw/plugin-sdk", () => ({
   loadOutboundMediaFromUrl: mockState.loadOutboundMediaFromUrl,
 }));
 
@@ -80,7 +80,7 @@ describe("sendMessageMSTeams", () => {
     });
 
     await sendMessageMSTeams({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as IroncliwConfig,
       to: "conversation:19:conversation@thread.tacv2",
       text: "hello",
       mediaUrl: "file:///tmp/agent-workspace/inline.png",
@@ -107,3 +107,4 @@ describe("sendMessageMSTeams", () => {
     );
   });
 });
+

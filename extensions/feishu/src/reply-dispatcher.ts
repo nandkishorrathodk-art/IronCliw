@@ -2,10 +2,10 @@ import {
   createReplyPrefixContext,
   createTypingCallbacks,
   logTypingFailure,
-  type ClawdbotConfig,
+  type IroncliwConfig,
   type ReplyPayload,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk";
+} from "Ironcliw/plugin-sdk";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { sendMediaFeishu } from "./media.js";
@@ -37,7 +37,7 @@ function normalizeEpochMs(timestamp: number | undefined): number | undefined {
 }
 
 export type CreateFeishuReplyDispatcherParams = {
-  cfg: ClawdbotConfig;
+  cfg: IroncliwConfig;
   agentId: string;
   runtime: RuntimeEnv;
   chatId: string;
@@ -394,3 +394,4 @@ export function createFeishuReplyDispatcher(params: CreateFeishuReplyDispatcherP
     markDispatchIdle,
   };
 }
+

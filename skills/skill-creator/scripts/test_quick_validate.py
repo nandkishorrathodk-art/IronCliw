@@ -51,7 +51,7 @@ allowed-tools:
   - gh
 metadata: |
   {
-    "owners": ["team-openclaw"]
+    "owners": ["team-Ironcliw"]
   }
 ---
 # Skill
@@ -70,3 +70,4 @@ metadata: |
 
 if __name__ == "__main__":
     main()
+

@@ -1,8 +1,8 @@
 import Foundation
 import Network
-import OpenClawKit
+import IroncliwKit
 import Testing
-@testable import OpenClaw
+@testable import Ironcliw
 
 @Suite(.serialized) struct GatewayConnectionSecurityTests {
     private func makeController() -> GatewayConnectionController {
@@ -16,7 +16,7 @@ import Testing
         gatewayPort: Int?,
         fingerprint: String?) -> GatewayDiscoveryModel.DiscoveredGateway
     {
-        let endpoint: NWEndpoint = .service(name: "Test", type: "_openclaw-gw._tcp", domain: "local.", interface: nil)
+        let endpoint: NWEndpoint = .service(name: "Test", type: "_Ironcliw-gw._tcp", domain: "local.", interface: nil)
         return GatewayDiscoveryModel.DiscoveredGateway(
             name: "Test",
             endpoint: endpoint,
@@ -32,7 +32,7 @@ import Testing
     }
 
     private func clearTLSFingerprint(stableID: String) {
-        let suite = UserDefaults(suiteName: "ai.openclaw.shared") ?? .standard
+        let suite = UserDefaults(suiteName: "ai.Ironcliw.shared") ?? .standard
         suite.removeObject(forKey: "gateway.tls.\(stableID)")
     }
 
@@ -107,7 +107,7 @@ import Testing
         let controller = makeController()
 
         #expect(controller._test_resolveManualUseTLS(host: "gateway.example.com", useTLS: false) == true)
-        #expect(controller._test_resolveManualUseTLS(host: "openclaw.local", useTLS: false) == true)
+        #expect(controller._test_resolveManualUseTLS(host: "Ironcliw.local", useTLS: false) == true)
         #expect(controller._test_resolveManualUseTLS(host: "127.attacker.example", useTLS: false) == true)
 
         #expect(controller._test_resolveManualUseTLS(host: "localhost", useTLS: false) == false)
@@ -127,3 +127,4 @@ import Testing
         #expect(controller._test_resolveManualPort(host: "device.sample.ts.net", port: 18789, useTLS: true) == 18789)
     }
 }
+

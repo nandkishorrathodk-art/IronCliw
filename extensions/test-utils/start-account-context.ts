@@ -1,8 +1,8 @@
 import type {
   ChannelAccountSnapshot,
   ChannelGatewayContext,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk";
+  IroncliwConfig,
+} from "Ironcliw/plugin-sdk";
 import { vi } from "vitest";
 import { createRuntimeEnv } from "./runtime-env.js";
 
@@ -20,7 +20,7 @@ export function createStartAccountContext<TAccount extends { accountId: string }
   return {
     accountId: params.account.accountId,
     account: params.account,
-    cfg: {} as OpenClawConfig,
+    cfg: {} as IroncliwConfig,
     runtime: createRuntimeEnv(),
     abortSignal: params.abortSignal,
     log: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() },
@@ -31,3 +31,4 @@ export function createStartAccountContext<TAccount extends { accountId: string }
     },
   };
 }
+

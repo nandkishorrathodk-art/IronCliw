@@ -15,13 +15,13 @@ let fixtureCount = 0;
 async function makeEnv() {
   const dir = path.join(fixtureRoot, `case-${fixtureCount++}`);
   await fs.mkdir(dir, { recursive: true });
-  const configPath = path.join(dir, "openclaw.json");
+  const configPath = path.join(dir, "Ironcliw.json");
   await fs.writeFile(configPath, "{}", "utf8");
   await fs.mkdir(resolveGatewayLockDir(), { recursive: true });
   return {
     ...process.env,
-    OPENCLAW_STATE_DIR: dir,
-    OPENCLAW_CONFIG_PATH: configPath,
+    IRONCLIW_STATE_DIR: dir,
+    IRONCLIW_CONFIG_PATH: configPath,
   };
 }
 
@@ -139,7 +139,7 @@ async function writeRecentLockFile(env: NodeJS.ProcessEnv, startTime = 111) {
 
 describe("gateway lock", () => {
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-gateway-lock-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "Ironcliw-gateway-lock-"));
   });
 
   beforeEach(() => {
@@ -273,7 +273,7 @@ describe("gateway lock", () => {
   it("returns null when multi-gateway override is enabled", async () => {
     const env = await makeEnv();
     const lock = await acquireGatewayLock({
-      env: { ...env, OPENCLAW_ALLOW_MULTI_GATEWAY: "1", VITEST: "" },
+      env: { ...env, IRONCLIW_ALLOW_MULTI_GATEWAY: "1", VITEST: "" },
     });
     expect(lock).toBeNull();
   });
@@ -298,3 +298,4 @@ describe("gateway lock", () => {
     openSpy.mockRestore();
   });
 });
+

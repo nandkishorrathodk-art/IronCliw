@@ -9,7 +9,7 @@ describe("logger timestamp format", () => {
   let logPath = "";
 
   beforeEach(() => {
-    logPath = path.join(os.tmpdir(), `openclaw-log-ts-${crypto.randomUUID()}.log`);
+    logPath = path.join(os.tmpdir(), `Ironcliw-log-ts-${crypto.randomUUID()}.log`);
     resetLogger();
     setLoggerOverride(null);
   });
@@ -42,3 +42,4 @@ describe("logger timestamp format", () => {
     expect(lastLine.time).not.toMatch(/Z$/);
   });
 });
+
