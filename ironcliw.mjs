@@ -24,7 +24,7 @@ const ensureSupportedNodeVersion = () => {
   }
 
   process.stderr.write(
-    `openclaw: Node.js v${MIN_NODE_VERSION}+ is required (current: v${process.versions.node}).\n` +
+    `IronCliw: Node.js v${MIN_NODE_VERSION}+ is required (current: v${process.versions.node}).\n` +
       "If you use nvm, run:\n" +
       "  nvm install 22\n" +
       "  nvm use 22\n" +
@@ -80,10 +80,10 @@ const tryImport = async (specifier) => {
   }
 };
 
-if (await tryImport("./dist/entry.js")) {
+if (await tryImport("./dist/index.js")) {
   // OK
-} else if (await tryImport("./dist/entry.mjs")) {
+} else if (await tryImport("./dist/index.mjs")) {
   // OK
 } else {
-  throw new Error("openclaw: missing dist/entry.(m)js (build output).");
+  throw new Error("IronCliw: missing dist/index.(m)js (build output).");
 }
