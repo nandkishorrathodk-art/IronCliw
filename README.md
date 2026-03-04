@@ -24,7 +24,7 @@
 [![Node ≥22](https://img.shields.io/badge/Node-%E2%89%A522-00ff88.svg)](https://nodejs.org)
 [![Windows](https://img.shields.io/badge/Platform-Windows%2011%2F10-7c3aed.svg)](https://www.microsoft.com/windows)
 [![WSL2](https://img.shields.io/badge/WSL2-Supported-a855f7.svg)](https://learn.microsoft.com/en-us/windows/wsl/)
-[![Version](https://img.shields.io/badge/Version-2026.3.3-00d9ff.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2026.0.2-00d9ff.svg)](./CHANGELOG.md)
 [![Built in India](https://img.shields.io/badge/Made%20with%20%E2%9A%A1-India%20%F0%9F%87%AE%F0%9F%87%B3-ff6b35.svg)](#)
 
 </div>
@@ -232,3 +232,4 @@ This project stands on the shoulders of giants:
 [🌐 Website](https://ironcliw.ai) · [📖 Docs](./docs) · [☠️ Bug Bounty Guide](./BUGBOUNTY_SETUP.md) · [🔒 Security](./SECURITY.md)
 
 </div>
+
