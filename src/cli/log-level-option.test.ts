@@ -11,4 +11,3 @@ describe("parseCliLogLevelOption", () => {
     expect(() => parseCliLogLevelOption("loud")).toThrow("Invalid --log-level");
   });
 });
-

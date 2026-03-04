@@ -191,4 +191,3 @@ export function formatUserTime(
     return undefined;
   }
 }
-

@@ -204,4 +204,3 @@ export const evaluateTelegramGroupPolicyAccess = (params: {
   }
   return { allowed: true, groupPolicy };
 };
-

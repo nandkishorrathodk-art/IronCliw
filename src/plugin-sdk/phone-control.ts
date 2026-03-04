@@ -7,4 +7,3 @@ export type {
   IronCliwPluginService,
   PluginCommandContext,
 } from "../plugins/types.js";
-

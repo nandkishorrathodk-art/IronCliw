@@ -243,4 +243,3 @@ export async function resolveMatrixAuth(params?: {
 
   return auth;
 }
-

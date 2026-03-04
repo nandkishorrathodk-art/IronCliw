@@ -44,4 +44,3 @@ export function isMessagingToolDuplicate(text: string, sentTexts: string[]): boo
   }
   return isMessagingToolDuplicateNormalized(normalized, sentTexts.map(normalizeTextForComparison));
 }
-

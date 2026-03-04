@@ -563,4 +563,3 @@ export function resolveCallbackUrl(params: {
 
   return `http://${host}:${params.gatewayPort}${path}`;
 }
-

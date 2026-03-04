@@ -416,4 +416,3 @@ describe("startGatewayConfigReloader", () => {
     }
   });
 });
-

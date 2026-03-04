@@ -264,4 +264,3 @@ describe("Google Chat webhook routing", () => {
     }
   });
 });
-

@@ -193,4 +193,3 @@ describe("skills-install fallback edge cases", () => {
     expect(runCommandWithTimeoutMock).not.toHaveBeenCalled();
   });
 });
-

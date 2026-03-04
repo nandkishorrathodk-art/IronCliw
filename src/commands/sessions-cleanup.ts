@@ -466,4 +466,3 @@ export async function sessionsCleanupCommand(opts: SessionsCleanupOptions, runti
     runtime.log(`Applied maintenance. Current entries: ${summary.appliedCount ?? 0}`);
   }
 }
-

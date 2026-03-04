@@ -475,4 +475,3 @@ export function validateProviderConfig(config: VoiceCallConfig): {
 
   return { valid: errors.length === 0, errors };
 }
-

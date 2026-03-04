@@ -108,4 +108,3 @@ describe("chrome extension background utils", () => {
     expect(isRetryableReconnectError(new Error("Relay server not reachable"))).toBe(true);
   });
 });
-

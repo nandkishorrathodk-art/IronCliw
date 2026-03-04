@@ -12,4 +12,3 @@ export function getZalouserRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

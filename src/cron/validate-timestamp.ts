@@ -64,4 +64,3 @@ export function validateScheduleTimestamp(
 
   return { ok: true };
 }
-

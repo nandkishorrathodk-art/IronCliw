@@ -55,4 +55,3 @@ describe("sanitizeEnvVars", () => {
     expect(result.blocked).toEqual(["FOO"]);
   });
 });
-

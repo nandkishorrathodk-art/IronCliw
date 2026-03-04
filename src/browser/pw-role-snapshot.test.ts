@@ -88,4 +88,3 @@ describe("pw-role-snapshot", () => {
     expect(res.refs.e7).toMatchObject({ role: "button", name: "Save" });
   });
 });
-

@@ -13,4 +13,3 @@ export function getProgramContext(program: Command): ProgramContext | undefined 
     PROGRAM_CONTEXT_SYMBOL
   ];
 }
-

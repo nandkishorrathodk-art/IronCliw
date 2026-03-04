@@ -206,4 +206,3 @@ export async function getWebhookInfo(
 ): Promise<ZaloApiResponse<{ url?: string; has_custom_certificate?: boolean }>> {
   return callZaloApi("getWebhookInfo", token, undefined, { fetch: fetcher });
 }
-

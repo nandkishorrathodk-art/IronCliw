@@ -1540,4 +1540,3 @@ export const registerTelegramHandlers = ({
     });
   });
 };
-

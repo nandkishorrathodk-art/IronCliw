@@ -58,4 +58,3 @@ export type CronConfig = {
   /** Default destination for failure notifications across all cron jobs. */
   failureDestination?: CronFailureDestinationConfig;
 };
-

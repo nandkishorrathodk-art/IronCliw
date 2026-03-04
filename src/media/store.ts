@@ -329,4 +329,3 @@ export async function saveMediaBuffer(
   await fs.writeFile(dest, buffer, { mode: MEDIA_FILE_MODE });
   return { id, path: dest, size: buffer.byteLength, contentType: mime };
 }
-

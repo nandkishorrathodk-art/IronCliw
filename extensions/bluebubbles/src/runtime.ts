@@ -32,4 +32,3 @@ export function warnBlueBubbles(message: string): void {
   }
   console.warn(formatted);
 }
-

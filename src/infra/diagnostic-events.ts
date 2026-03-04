@@ -240,4 +240,3 @@ export function resetDiagnosticEventsForTest(): void {
   state.listeners.clear();
   state.dispatchDepth = 0;
 }
-

@@ -59,4 +59,3 @@ describe("runEmbeddedPiAgent usage reporting", () => {
     expect(usage?.total).toBe(200);
   });
 });
-

@@ -67,4 +67,3 @@ describe("classifySignalCliLogLine", () => {
     expect(classifySignalCliLogLine("   ")).toBe(null);
   });
 });
-

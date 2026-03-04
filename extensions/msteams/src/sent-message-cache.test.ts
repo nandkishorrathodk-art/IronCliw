@@ -13,4 +13,3 @@ describe("msteams sent message cache", () => {
     expect(wasMSTeamsMessageSent("conv-1", "msg-2")).toBe(false);
   });
 });
-

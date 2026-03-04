@@ -128,4 +128,3 @@ describe("boot-md handler", () => {
     });
   });
 });
-

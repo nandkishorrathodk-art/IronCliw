@@ -17,4 +17,3 @@ describe("zalouser reaction alias normalization", () => {
     expect(normalizeZaloReactionIcon("/custom")).toBe("/custom");
   });
 });
-

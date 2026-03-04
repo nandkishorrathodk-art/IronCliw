@@ -9,4 +9,3 @@ export function applyGoogleGeminiModelDefault(cfg: IronCliwConfig): {
 } {
   return applyAgentDefaultPrimaryModel({ cfg, model: GOOGLE_GEMINI_DEFAULT_MODEL });
 }
-

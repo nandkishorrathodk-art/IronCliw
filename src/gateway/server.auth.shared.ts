@@ -394,4 +394,3 @@ export { ConnectErrorDetailCodes } from "./protocol/connect-error-details.js";
 export { getHandshakeTimeoutMs } from "./server-constants.js";
 export { PROTOCOL_VERSION } from "./protocol/index.js";
 export { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
-

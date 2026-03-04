@@ -155,4 +155,3 @@ describe("failover-error", () => {
     expect(described.reason).toBeUndefined();
   });
 });
-

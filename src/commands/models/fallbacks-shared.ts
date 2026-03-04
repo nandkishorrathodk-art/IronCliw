@@ -153,4 +153,3 @@ export async function clearFallbacksCommand(
   logConfigUpdated(runtime);
   runtime.log(params.clearedMessage);
 }
-

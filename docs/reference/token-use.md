@@ -173,4 +173,3 @@ rejects that combination with HTTP 401.
 - Prefer smaller models for verbose, exploratory work.
 
 See [Skills](/tools/skills) for the exact skill list overhead formula.
-

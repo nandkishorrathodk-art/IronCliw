@@ -156,4 +156,3 @@ export async function generateVoiceResponse(
     return { text: null, error: String(err) };
   }
 }
-

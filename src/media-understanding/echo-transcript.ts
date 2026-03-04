@@ -68,4 +68,3 @@ export async function sendTranscriptEcho(params: {
     logVerbose(`media: echo-transcript delivery failed: ${String(err)}`);
   }
 }
-

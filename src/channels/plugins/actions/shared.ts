@@ -17,4 +17,3 @@ export function createUnionActionGate<TAccount, TKey extends string>(
   const gates = accounts.map((account) => createGate(account));
   return (key, defaultValue = true) => gates.some((gate) => gate(key, defaultValue));
 }
-

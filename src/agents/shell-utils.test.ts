@@ -207,4 +207,3 @@ describe("resolvePowerShellPath", () => {
     expect(resolvePowerShellPath()).toBe(ps51Path);
   });
 });
-

@@ -824,4 +824,3 @@ export function registerPluginsCli(program: Command) {
       defaultRuntime.log(lines.join("\n"));
     });
 }
-

@@ -1488,4 +1488,3 @@ describe("createReplyToModeFilter", () => {
     expect(filter({ text: "next", replyToId: "1" }).replyToId).toBeUndefined();
   });
 });
-

@@ -10,4 +10,3 @@ export function selectStyled<T>(params: Parameters<typeof select<T>>[0]) {
     ),
   });
 }
-

@@ -140,4 +140,3 @@ describe("linePlugin gateway.logoutAccount", () => {
     expect(mocks.writeConfigFile).not.toHaveBeenCalled();
   });
 });
-

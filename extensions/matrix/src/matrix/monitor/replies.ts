@@ -122,4 +122,3 @@ function isReasoningOnlyMessage(text: string): boolean {
   }
   return false;
 }
-

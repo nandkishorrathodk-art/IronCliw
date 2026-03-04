@@ -89,4 +89,3 @@ describe("retryAsync", () => {
     expect(delays[0]).toBe(250);
   });
 });
-

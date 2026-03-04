@@ -59,4 +59,3 @@ describe("getReplyFromConfig typing (heartbeat)", () => {
     expect(onReplyStart).not.toHaveBeenCalled();
   });
 });
-

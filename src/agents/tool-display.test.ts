@@ -295,4 +295,3 @@ describe("tool display details", () => {
     expect(nodeShortCheckDetail).toContain("check js syntax for /tmp/test.js");
   });
 });
-

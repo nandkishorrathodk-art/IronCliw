@@ -40,4 +40,3 @@ export async function startGatewayServerHarness(): Promise<GatewayServerHarness>
 
   return { port, server, openClient, close };
 }
-

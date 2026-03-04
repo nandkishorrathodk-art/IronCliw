@@ -88,4 +88,3 @@ function linearToMulaw(sample: number): number {
   const mantissa = (sample >> (exponent + 3)) & 0x0f;
   return ~(sign | (exponent << 4) | mantissa) & 0xff;
 }
-

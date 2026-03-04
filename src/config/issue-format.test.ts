@@ -92,4 +92,3 @@ describe("config issue format", () => {
     });
   });
 });
-

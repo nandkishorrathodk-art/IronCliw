@@ -5,4 +5,3 @@ export const shortenText = (value: string, maxLen: number) => {
   }
   return `${chars.slice(0, Math.max(0, maxLen - 1)).join("")}…`;
 };
-

@@ -37,4 +37,3 @@ export function appendCronStyleCurrentTimeLine(text: string, cfg: TimeConfigLike
   const { timeLine } = resolveCronStyleNow(cfg, nowMs);
   return `${base}\n${timeLine}`;
 }
-

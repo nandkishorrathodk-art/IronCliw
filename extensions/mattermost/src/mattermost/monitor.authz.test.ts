@@ -57,4 +57,3 @@ describe("mattermost monitor authz", () => {
     expect(commandGate.commandAuthorized).toBe(false);
   });
 });
-

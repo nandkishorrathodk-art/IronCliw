@@ -12,4 +12,3 @@ describe("createSystemPromptOverride", () => {
     expect(override()).toBe("");
   });
 });
-

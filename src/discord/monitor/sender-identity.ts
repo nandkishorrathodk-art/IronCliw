@@ -80,4 +80,3 @@ export function resolveDiscordSenderLabel(params: {
 }): string {
   return resolveDiscordSenderIdentity(params).label;
 }
-

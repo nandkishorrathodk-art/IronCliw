@@ -57,4 +57,3 @@ x-i18n:
 <Note>
 旧版 Claude、Codex、Gemini 和 Opencode 路径已被移除。Pi 是唯一的编程智能体路径。
 </Note>
-

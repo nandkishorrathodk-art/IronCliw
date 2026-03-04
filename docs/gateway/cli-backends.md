@@ -223,4 +223,3 @@ Override only if needed (common: absolute `command` path).
 - **No session continuity**: ensure `sessionArg` is set and `sessionMode` is not
   `none` (Codex CLI currently cannot resume with JSON output).
 - **Images ignored**: set `imageArg` (and verify CLI supports file paths).
-

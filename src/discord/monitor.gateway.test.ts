@@ -133,4 +133,3 @@ describe("waitForDiscordGatewayStop", () => {
     expect(disconnect).toHaveBeenCalledTimes(1);
   });
 });
-

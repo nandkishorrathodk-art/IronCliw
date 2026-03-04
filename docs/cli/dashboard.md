@@ -14,4 +14,3 @@ Open the Control UI using your current auth.
 IronCliw dashboard
 IronCliw dashboard --no-open
 ```
-

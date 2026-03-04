@@ -167,4 +167,3 @@ export function createDirectTextMediaOutbound<
   };
   return outbound;
 }
-

@@ -538,4 +538,3 @@ Primary reference:
 - [Troubleshooting](/channels/troubleshooting)
 - [Configuration](/gateway/configuration)
 - [Slash commands](/tools/slash-commands)
-

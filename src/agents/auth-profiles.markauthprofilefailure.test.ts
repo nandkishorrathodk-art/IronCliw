@@ -207,4 +207,3 @@ describe("calculateAuthProfileCooldownMs", () => {
     expect(calculateAuthProfileCooldownMs(5)).toBe(60 * 60_000);
   });
 });
-

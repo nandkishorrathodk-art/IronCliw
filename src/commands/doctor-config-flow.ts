@@ -2104,4 +2104,3 @@ export async function loadAndMaybeMigrateDoctorConfig(params: {
     sourceConfigValid: snapshot.valid,
   };
 }
-

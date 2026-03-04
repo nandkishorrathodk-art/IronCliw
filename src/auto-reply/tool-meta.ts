@@ -141,4 +141,3 @@ function maybeWrapMarkdown(value: string, markdown?: boolean): string {
   }
   return `\`${value}\``;
 }
-

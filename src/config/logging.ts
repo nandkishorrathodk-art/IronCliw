@@ -16,4 +16,3 @@ export function logConfigUpdated(runtime: RuntimeEnv, opts: LogConfigUpdatedOpti
   const suffix = opts.suffix ? ` ${opts.suffix}` : "";
   runtime.log(`Updated ${path}${suffix}`);
 }
-

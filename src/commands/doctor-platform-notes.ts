@@ -221,4 +221,3 @@ export function noteStartupOptimizationHints(
 
   noteFn([...lines, ...suggestions].join("\n"), "Startup optimization");
 }
-

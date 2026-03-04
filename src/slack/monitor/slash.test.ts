@@ -1004,4 +1004,3 @@ describe("slack slash command session metadata", () => {
     expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 });
-

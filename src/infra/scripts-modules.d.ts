@@ -20,4 +20,3 @@ declare module "../../scripts/ci-changed-scope.mjs" {
     runAndroid: boolean;
   };
 }
-

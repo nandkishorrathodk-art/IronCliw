@@ -53,4 +53,3 @@ function buildDiscordSystemEvent(message: Message, location: string, action: str
   const actor = authorLabel ? `${authorLabel} ` : "";
   return `Discord system: ${actor}${action} in ${location}`;
 }
-

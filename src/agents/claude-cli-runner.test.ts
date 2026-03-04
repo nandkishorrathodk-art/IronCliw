@@ -163,4 +163,3 @@ describe("runClaudeCliAgent", () => {
     await Promise.all([firstRun, secondRun]);
   });
 });
-

@@ -63,4 +63,3 @@ export function extractBlueBubblesMessageId(payload: unknown): string {
 
   return "unknown";
 }
-

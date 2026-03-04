@@ -116,4 +116,3 @@ export function resolveAssistantIdentity(params: {
 
   return { agentId, name, avatar, emoji };
 }
-

@@ -186,4 +186,3 @@ describe("DiffArtifactStore", () => {
     expect(cleanupSpy).toHaveBeenCalledTimes(2);
   });
 });
-

@@ -433,4 +433,3 @@ describe("secret ref resolver", () => {
     ).rejects.toThrow('has source "env" but ref requests "exec"');
   });
 });
-

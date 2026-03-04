@@ -70,4 +70,3 @@ The WhatsApp channel runs via **Baileys Web**. This document captures the curren
 - Cover send + reply flows for image/audio/document cases.
 - Validate recompression for images (size bound) and voice-note flag for audio.
 - Ensure multi-media replies fan out as sequential sends.
-

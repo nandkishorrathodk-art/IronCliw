@@ -54,4 +54,3 @@ export function getDefaultSsrFPolicy(): SsrFPolicy | undefined {
   // Default: block private networks for image uploads (safer default)
   return undefined;
 }
-

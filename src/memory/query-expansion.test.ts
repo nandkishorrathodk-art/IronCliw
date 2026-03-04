@@ -197,4 +197,3 @@ describe("expandQueryForFts", () => {
     expect(result.expanded).toBe("the");
   });
 });
-

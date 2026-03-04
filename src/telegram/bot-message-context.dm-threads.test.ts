@@ -147,4 +147,3 @@ describe("buildTelegramMessageContext direct peer routing", () => {
     expect(second?.ctxPayload?.SessionKey).toBe("agent:main:telegram:direct:987654321");
   });
 });
-

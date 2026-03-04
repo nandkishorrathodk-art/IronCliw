@@ -200,4 +200,3 @@ describe("control UI assets helpers (fs-mocked)", () => {
     expect(resolveControlUiRootSync({ moduleUrl })).toBe(uiDir);
   });
 });
-

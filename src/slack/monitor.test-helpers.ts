@@ -231,4 +231,3 @@ vi.mock("@slack/bolt", () => {
   }
   return { App, HTTPReceiver, default: { App, HTTPReceiver } };
 });
-

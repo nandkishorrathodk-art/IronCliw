@@ -26,4 +26,3 @@ export function restoreConsoleSnapshot(snapshot: ConsoleSnapshot): void {
   console.debug = snapshot.debug;
   console.trace = snapshot.trace;
 }
-

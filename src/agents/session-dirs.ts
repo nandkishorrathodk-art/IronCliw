@@ -20,4 +20,3 @@ export async function resolveAgentSessionDirs(stateDir: string): Promise<string[
     .map((entry) => path.join(agentsDir, entry.name, "sessions"))
     .toSorted((a, b) => a.localeCompare(b));
 }
-

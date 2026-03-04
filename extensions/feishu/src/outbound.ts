@@ -140,4 +140,3 @@ export const feishuOutbound: ChannelOutboundAdapter = {
     return { channel: "feishu", ...result };
   },
 };
-

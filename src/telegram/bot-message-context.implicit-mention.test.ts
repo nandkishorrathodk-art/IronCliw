@@ -145,4 +145,3 @@ describe("buildTelegramMessageContext implicitMention forum service messages", (
     expect(ctx).toBeNull();
   });
 });
-

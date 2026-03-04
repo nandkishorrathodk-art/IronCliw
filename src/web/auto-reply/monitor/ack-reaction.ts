@@ -72,4 +72,3 @@ export function maybeSendAckReaction(params: {
     logVerbose(`WhatsApp ack reaction failed for chat ${params.msg.chatId}: ${formatError(err)}`);
   });
 }
-

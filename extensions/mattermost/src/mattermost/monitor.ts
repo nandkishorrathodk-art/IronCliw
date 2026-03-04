@@ -1210,4 +1210,3 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     await slashShutdownCleanup;
   }
 }
-

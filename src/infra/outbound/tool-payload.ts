@@ -23,4 +23,3 @@ export function extractToolPayload(result: AgentToolResult<unknown>): unknown {
   }
   return result.content ?? result;
 }
-

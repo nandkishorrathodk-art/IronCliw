@@ -107,4 +107,3 @@ export async function repairSessionFileIfNeeded(params: {
   );
   return { repaired: true, droppedLines, backupPath };
 }
-

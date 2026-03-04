@@ -40,4 +40,3 @@ export function convertMarkdownTables(markdown: string, mode: MarkdownTableMode)
     },
   });
 }
-

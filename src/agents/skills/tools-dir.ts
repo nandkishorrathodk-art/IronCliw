@@ -9,4 +9,3 @@ export function resolveSkillToolsRootDir(entry: SkillEntry): string {
   const safeKey = safePathSegmentHashed(key);
   return path.join(resolveConfigDir(), "tools", safeKey);
 }
-

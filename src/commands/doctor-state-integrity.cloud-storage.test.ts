@@ -126,4 +126,3 @@ describe("detectMacCloudSyncedStateDir", () => {
     expect(result).toBeNull();
   });
 });
-

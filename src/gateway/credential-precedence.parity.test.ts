@@ -163,4 +163,3 @@ describe("gateway credential precedence parity", () => {
     expect({ token: auth.token, password: auth.password }).toEqual(expected.auth);
   });
 });
-

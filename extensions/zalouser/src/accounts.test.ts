@@ -212,4 +212,3 @@ describe("zalouser account resolution", () => {
     expect(await getZcaUserInfo("default")).toBeNull();
   });
 });
-

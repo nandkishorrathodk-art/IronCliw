@@ -104,4 +104,3 @@ export function setupTelegramHeartbeatPluginRuntimeForTests() {
     createTestRegistry([{ pluginId: "telegram", plugin: telegramPlugin, source: "test" }]),
   );
 }
-

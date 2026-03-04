@@ -30,4 +30,3 @@ describe("shouldSkipLoadConfigFallback", () => {
     expect(__test__.shouldSkipLoadConfigFallback(["node", "IronCliw", "status"])).toBe(false);
   });
 });
-

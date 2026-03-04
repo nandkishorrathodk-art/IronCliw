@@ -1347,4 +1347,3 @@ export function collectLikelyMultiUserSetupFindings(cfg: IronCliwConfig): Securi
 
   return findings;
 }
-

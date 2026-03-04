@@ -18,4 +18,3 @@ export function prefixSystemMessage(text: string): string {
   }
   return `${SYSTEM_MARK} ${normalized}`;
 }
-

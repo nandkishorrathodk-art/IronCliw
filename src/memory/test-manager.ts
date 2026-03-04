@@ -11,4 +11,3 @@ export async function createMemoryManagerOrThrow(
   }
   return result.manager as unknown as MemoryIndexManager;
 }
-

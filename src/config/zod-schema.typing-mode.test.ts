@@ -13,4 +13,3 @@ describe("typing mode schema reuse", () => {
     expect(() => AgentDefaultsSchema.parse({ typingMode: "soon" })).toThrow();
   });
 });
-

@@ -381,4 +381,3 @@ export async function handleIrcInbound(params: {
 export const __testing = {
   resolveIrcEffectiveAllowlists,
 };
-

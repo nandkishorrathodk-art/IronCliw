@@ -97,4 +97,3 @@ describe("acp runtime registry", () => {
     expect(backend?.runtime).toBe(runtime);
   });
 });
-

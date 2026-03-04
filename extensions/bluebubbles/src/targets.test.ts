@@ -200,4 +200,3 @@ describe("isAllowedBlueBubblesSender", () => {
     expect(allowed).toBe(true);
   });
 });
-

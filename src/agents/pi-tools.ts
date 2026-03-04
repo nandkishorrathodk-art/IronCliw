@@ -16,8 +16,8 @@ import {
 } from "./bash-tools.js";
 import { listChannelAgentTools } from "./channel-tools.js";
 import { resolveImageSanitizationLimits } from "./image-sanitization.js";
-import type { ModelAuthMode } from "./model-auth.js";
 import { createIronCliwTools } from "./IronCliw-tools.js";
+import type { ModelAuthMode } from "./model-auth.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
 import { wrapToolWithBeforeToolCallHook } from "./pi-tools.before-tool-call.js";
 import {
@@ -552,4 +552,3 @@ export function createIronCliwCodingTools(options?: {
   // on the wire and maps them back for tool dispatch.
   return withAbort;
 }
-

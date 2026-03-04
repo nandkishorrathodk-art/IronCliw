@@ -66,4 +66,3 @@ describe("googlechatPlugin gateway.startAccount", () => {
     expect(patches.some((entry) => entry.running === false)).toBe(true);
   });
 });
-

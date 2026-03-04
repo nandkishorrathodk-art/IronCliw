@@ -120,4 +120,3 @@ export async function deliverSessionMaintenanceWarning(params: WarningParams): P
     enqueueSystemEvent(text, { sessionKey: params.sessionKey });
   }
 }
-

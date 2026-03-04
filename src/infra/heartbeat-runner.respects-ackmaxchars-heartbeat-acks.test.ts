@@ -426,4 +426,3 @@ describe("runHeartbeatOnce ack handling", () => {
     await expectTelegramHeartbeatAccountId({ heartbeat, telegram, expectedAccountId });
   });
 });
-

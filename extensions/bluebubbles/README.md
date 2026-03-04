@@ -43,4 +43,3 @@ If you’re looking for **how to use BlueBubbles as an agent/tool user**, see:
 - **Reactions:** the `react` action requires a `target` (phone number or chat identifier) in addition to `messageId`.
   Example:
   `action=react target=+15551234567 messageId=ABC123 emoji=❤️`
-

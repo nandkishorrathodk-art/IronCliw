@@ -75,4 +75,3 @@ IronCliw agents add <name>
 - CLIコマンドリファレンス：[`IronCliw onboard`](/cli/onboard)
 - macOSアプリのオンボーディング：[オンボーディング](/start/onboarding)
 - エージェント初回起動の手順：[エージェントブートストラップ](/start/bootstrapping)
-

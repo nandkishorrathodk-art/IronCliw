@@ -55,4 +55,3 @@ describe("resolveBundledSkillsDir", () => {
     expect(resolved).toBe(path.join(root, "skills"));
   });
 });
-

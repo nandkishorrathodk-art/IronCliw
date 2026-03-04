@@ -61,4 +61,3 @@ export async function isWSL(): Promise<boolean> {
   }
   return wslCached;
 }
-

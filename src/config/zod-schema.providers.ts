@@ -45,4 +45,3 @@ export const ChannelsSchema = z
   })
   .passthrough() // Allow extension channel configs (nostr, matrix, zalo, etc.)
   .optional();
-

@@ -271,4 +271,3 @@ describe("browser server-context remote profile tab operations", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
-

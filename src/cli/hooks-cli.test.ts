@@ -70,4 +70,3 @@ describe("hooks cli formatting", () => {
     expect(output).toContain("plugin:voice-call");
   });
 });
-

@@ -346,4 +346,3 @@ IronCliw node run --host <gateway-host> --port 18789
 
 - macOS 菜单栏应用作为节点连接到 Gateway 网关 WS 服务器（因此 `IronCliw nodes …` 可以针对这台 Mac 工作）。
 - 在远程模式下，应用为 Gateway 网关端口打开 SSH 隧道并连接到 `localhost`。
-

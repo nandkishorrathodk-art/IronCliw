@@ -17,4 +17,3 @@ export function expectPosixMode(statMode: number, expectedMode: number): void {
   }
   expect(statMode & 0o777).toBe(expectedMode);
 }
-

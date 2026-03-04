@@ -107,4 +107,3 @@ describe("monitorSlackProvider threading", () => {
     expect(options).not.toMatchObject({ threadTs: "111.222" });
   });
 });
-

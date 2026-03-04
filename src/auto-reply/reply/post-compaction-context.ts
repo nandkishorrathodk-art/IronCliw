@@ -157,4 +157,3 @@ export function extractSections(content: string, sectionNames: string[]): string
 
   return results;
 }
-

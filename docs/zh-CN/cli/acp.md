@@ -171,4 +171,3 @@ IronCliw acp --session agent:qa:bug-123
 - `--server-args <args...>`：传递给 ACP 服务器的额外参数。
 - `--server-verbose`：启用 ACP 服务器的详细日志。
 - `--verbose, -v`：详细客户端日志。
-

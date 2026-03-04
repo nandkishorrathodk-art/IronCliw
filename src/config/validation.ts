@@ -620,4 +620,3 @@ function validateConfigObjectWithPluginsBase(
 
   return { ok: true, config, warnings };
 }
-

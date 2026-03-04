@@ -112,4 +112,3 @@ describe("resolveAuthLabel ref-aware labels", () => {
     expect(result.label).not.toContain("token:missing");
   });
 });
-

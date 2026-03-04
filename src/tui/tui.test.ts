@@ -206,4 +206,3 @@ describe("TUI shutdown safety", () => {
     }).toThrow("boom");
   });
 });
-

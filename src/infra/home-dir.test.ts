@@ -75,4 +75,3 @@ describe("expandHomePrefix", () => {
     expect(expandHomePrefix("/tmp/x")).toBe("/tmp/x");
   });
 });
-

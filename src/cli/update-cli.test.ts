@@ -725,4 +725,3 @@ describe("update-cli", () => {
     });
   });
 });
-

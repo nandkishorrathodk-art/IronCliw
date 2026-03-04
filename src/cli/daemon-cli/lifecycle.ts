@@ -143,4 +143,3 @@ export async function runDaemonRestart(opts: DaemonLifecycleOptions = {}): Promi
     },
   });
 }
-

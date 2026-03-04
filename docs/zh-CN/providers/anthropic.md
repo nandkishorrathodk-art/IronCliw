@@ -157,4 +157,3 @@ IronCliw onboard --auth-choice setup-token
 - 添加另一个 Anthropic 配置文件或等待冷却期结束。
 
 更多信息：[/gateway/troubleshooting](/gateway/troubleshooting) 和 [/help/faq](/help/faq)。
-

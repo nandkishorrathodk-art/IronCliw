@@ -89,4 +89,3 @@ describe("inheritOptionFromParent", () => {
     expect(inheritOptionFromParent<string>(undefined, "token")).toBeUndefined();
   });
 });
-

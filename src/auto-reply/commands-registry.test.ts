@@ -414,4 +414,3 @@ describe("commands registry args", () => {
     expect(menu).toBeNull();
   });
 });
-

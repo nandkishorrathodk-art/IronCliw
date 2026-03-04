@@ -21,4 +21,3 @@ export function collectConfigAssignments(params: {
     context: params.context,
   });
 }
-

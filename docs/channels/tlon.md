@@ -274,4 +274,3 @@ Provider options:
 - Thread replies: if the inbound message is in a thread, IronCliw replies in-thread.
 - Rich text: Markdown formatting (bold, italic, code, headers, lists) is converted to Tlon's native format.
 - Images: URLs are uploaded to Tlon storage and embedded as image blocks.
-

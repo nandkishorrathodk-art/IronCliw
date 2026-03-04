@@ -71,4 +71,3 @@ export function resolveHeartbeatVisibility(params: {
       DEFAULT_VISIBILITY.useIndicator,
   };
 }
-

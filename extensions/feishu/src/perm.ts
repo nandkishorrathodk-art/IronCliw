@@ -178,4 +178,3 @@ export function registerFeishuPermTools(api: IronCliwPluginApi) {
 
   api.logger.info?.(`feishu_perm: Registered feishu_perm tool`);
 }
-

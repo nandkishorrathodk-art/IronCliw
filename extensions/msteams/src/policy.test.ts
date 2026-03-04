@@ -219,4 +219,3 @@ describe("msteams policy", () => {
     });
   });
 });
-

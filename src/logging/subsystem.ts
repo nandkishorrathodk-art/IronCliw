@@ -392,4 +392,3 @@ export function createSubsystemRuntime(
 ): RuntimeEnv {
   return runtimeForLogger(createSubsystemLogger(subsystem), exit);
 }
-

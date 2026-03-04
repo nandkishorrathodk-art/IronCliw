@@ -526,4 +526,3 @@ export class OpenAIWebSocketManager extends EventEmitter<InternalEvents> {
     this.send(event);
   }
 }
-

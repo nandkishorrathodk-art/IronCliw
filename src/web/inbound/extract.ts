@@ -329,4 +329,3 @@ export function describeReplyContext(rawMessage: proto.IMessage | undefined): {
     senderE164,
   };
 }
-

@@ -70,4 +70,3 @@ IronCliw 将**唤醒词作为单一全局列表**，由 **Gateway 网关**拥有
 
 - 在设置中暴露唤醒词编辑器。
 - 通过 Gateway 网关 WS 调用 `voicewake.set`，使编辑在所有地方同步。
-

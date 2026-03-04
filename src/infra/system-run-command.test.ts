@@ -205,4 +205,3 @@ describe("system run command helpers", () => {
     expect(res.cmdText).toBe('/usr/bin/env BASH_ENV=/tmp/payload.sh bash -lc "echo hi"');
   });
 });
-

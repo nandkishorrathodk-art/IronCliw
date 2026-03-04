@@ -226,4 +226,3 @@ describe("cron store migration", () => {
     }
   });
 });
-

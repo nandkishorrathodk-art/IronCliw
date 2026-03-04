@@ -351,4 +351,3 @@ export async function statusAllCommand(
     progress.tick();
   });
 }
-

@@ -355,4 +355,3 @@ interface TelnyxCallResponse {
     record_type: string;
   };
 }
-

@@ -75,4 +75,3 @@ describe("evaluateStoredCredentialEligibility", () => {
     expect(result).toEqual({ eligible: false, reasonCode: "invalid_expires" });
   });
 });
-

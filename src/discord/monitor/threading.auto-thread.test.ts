@@ -89,4 +89,3 @@ describe("maybeCreateDiscordAutoThread", () => {
     expect(postMock).toHaveBeenCalled();
   });
 });
-

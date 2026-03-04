@@ -107,4 +107,3 @@ describe("Ollama auto-discovery", () => {
     warnSpy.mockRestore();
   });
 });
-

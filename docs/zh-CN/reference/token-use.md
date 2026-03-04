@@ -117,4 +117,3 @@ agents:
 - 对于冗长的探索性工作，优先使用较小的模型。
 
 精确的 skill 列表开销公式参见 [Skills](/tools/skills)。
-

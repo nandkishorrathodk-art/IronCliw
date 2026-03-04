@@ -110,4 +110,3 @@ export function resetDiagnosticSessionStateForTest(): void {
   diagnosticSessionStates.clear();
   lastSessionPruneAt = 0;
 }
-

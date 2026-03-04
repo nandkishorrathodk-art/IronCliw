@@ -746,4 +746,3 @@ async function fallbackToHttp(
     eventStream.push(event);
   }
 }
-

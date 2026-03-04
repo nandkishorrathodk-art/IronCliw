@@ -58,4 +58,3 @@ describe("config io EACCES handling", () => {
     expect(snapshot.issues[0].message).toContain("container");
   });
 });
-

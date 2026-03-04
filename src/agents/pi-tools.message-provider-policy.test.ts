@@ -17,4 +17,3 @@ describe("createIronCliwCodingTools message provider policy", () => {
     expect(names.has("tts")).toBe(true);
   });
 });
-

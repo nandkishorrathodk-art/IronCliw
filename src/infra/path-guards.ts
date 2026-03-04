@@ -46,4 +46,3 @@ export function isPathInside(root: string, target: string): boolean {
   const relative = path.relative(resolvedRoot, resolvedTarget);
   return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
-

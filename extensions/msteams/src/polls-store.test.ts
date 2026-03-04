@@ -36,4 +36,3 @@ describe.each([
     expect(poll?.votes["user-1"]).toEqual(["0"]);
   });
 });
-

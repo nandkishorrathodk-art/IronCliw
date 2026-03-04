@@ -62,4 +62,3 @@ export function resolveOptionFromCommand<T>(
   }
   return undefined;
 }
-

@@ -167,4 +167,3 @@ describe("server-context hot-reload profiles", () => {
     expect(Object.keys(state.resolved.profiles)).toContain("desktop");
   });
 });
-

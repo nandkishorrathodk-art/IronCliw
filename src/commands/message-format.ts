@@ -413,4 +413,3 @@ export function formatMessageCliText(result: MessageActionRunResult): string[] {
   }
   return lines;
 }
-

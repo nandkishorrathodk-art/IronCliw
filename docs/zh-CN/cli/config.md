@@ -55,4 +55,3 @@ IronCliw config set channels.whatsapp.groups '["*"]' --json
 ```
 
 编辑后请重启 Gateway 网关。
-

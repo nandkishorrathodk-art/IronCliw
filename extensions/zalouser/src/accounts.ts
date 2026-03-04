@@ -144,4 +144,3 @@ export async function getZcaUserInfo(
 export { checkZaloAuthenticated as checkZcaAuthenticated };
 
 export type { ResolvedZalouserAccount } from "./types.js";
-

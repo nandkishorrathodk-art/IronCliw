@@ -141,4 +141,3 @@ export type LineChannelData = {
   flexMessage?: LineFlexMessagePayload;
   templateMessage?: LineTemplateMessagePayload;
 };
-

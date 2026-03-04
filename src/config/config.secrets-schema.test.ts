@@ -174,4 +174,3 @@ describe("config secret refs schema", () => {
     }
   });
 });
-

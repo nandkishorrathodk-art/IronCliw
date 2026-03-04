@@ -235,4 +235,3 @@ export function registerFeishuWikiTools(api: IronCliwPluginApi) {
 
   api.logger.info?.(`feishu_wiki: Registered feishu_wiki tool`);
 }
-

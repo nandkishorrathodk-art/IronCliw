@@ -509,4 +509,3 @@ export function createImageTool(options?: {
     },
   };
 }
-

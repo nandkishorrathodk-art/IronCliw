@@ -1303,4 +1303,3 @@ describe("gateway server sessions", () => {
     ws.close();
   });
 });
-

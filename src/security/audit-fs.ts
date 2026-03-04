@@ -204,4 +204,3 @@ export function isGroupReadable(bits: number | null): boolean {
   }
   return (bits & 0o040) !== 0;
 }
-

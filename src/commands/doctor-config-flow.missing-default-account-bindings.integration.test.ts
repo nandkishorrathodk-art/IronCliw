@@ -120,4 +120,3 @@ describe("doctor missing default account binding warning", () => {
     );
   });
 });
-

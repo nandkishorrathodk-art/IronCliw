@@ -68,4 +68,3 @@ export function listEnabledIMessageAccounts(cfg: IronCliwConfig): ResolvedIMessa
     .map((accountId) => resolveIMessageAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

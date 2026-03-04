@@ -40,4 +40,3 @@ export type DiscoveredConfigSecretTarget = {
   providerId?: string;
   accountId?: string;
 };
-

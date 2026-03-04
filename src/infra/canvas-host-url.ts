@@ -91,4 +91,3 @@ export function resolveCanvasHostUrl(params: CanvasHostUrlParams) {
   const formatted = host.includes(":") ? `[${host}]` : host;
   return `${scheme}://${formatted}:${exposedPort}`;
 }
-

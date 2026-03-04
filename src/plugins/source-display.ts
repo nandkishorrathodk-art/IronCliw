@@ -64,4 +64,3 @@ export function formatPluginSourceForTable(
   // Keep this stable/pasteable; only ~-shorten.
   return { value: shortenHomeInString(raw) };
 }
-

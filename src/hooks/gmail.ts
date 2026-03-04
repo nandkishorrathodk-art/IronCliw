@@ -269,4 +269,3 @@ function joinUrl(base: string, path: string): string {
   url.pathname = `${basePath}${extra}`;
   return url.toString();
 }
-

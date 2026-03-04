@@ -43,4 +43,3 @@ export function resolveGatewayBindUrl(params: {
 
   return null;
 }
-

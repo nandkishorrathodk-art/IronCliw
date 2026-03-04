@@ -243,4 +243,3 @@ describe("telegram text fragments", () => {
     TEXT_FRAGMENT_TEST_TIMEOUT_MS,
   );
 });
-

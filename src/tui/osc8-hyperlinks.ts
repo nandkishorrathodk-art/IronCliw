@@ -229,4 +229,3 @@ export function addOsc8Hyperlinks(lines: string[], urls: string[]): string[] {
     return applyOsc8Ranges(line, result.ranges);
   });
 }
-

@@ -66,4 +66,3 @@ describe("SessionEntry cache fields", () => {
     expect(merged.cacheWrite).toBeUndefined();
   });
 });
-

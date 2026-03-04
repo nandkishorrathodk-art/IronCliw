@@ -47,4 +47,3 @@ export function compareIronCliwVersions(
   }
   return 0;
 }
-

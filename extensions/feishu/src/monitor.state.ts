@@ -150,4 +150,3 @@ export function stopFeishuMonitorState(accountId?: string): void {
   httpServers.clear();
   botOpenIds.clear();
 }
-

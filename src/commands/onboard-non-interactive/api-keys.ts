@@ -125,4 +125,3 @@ export async function resolveNonInteractiveApiKey(params: {
   params.runtime.exit(1);
   return null;
 }
-

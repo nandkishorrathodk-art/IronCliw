@@ -50,4 +50,3 @@ describe("compaction token accounting sanitization", () => {
     expect(calledWithDetails).toBe(false);
   });
 });
-

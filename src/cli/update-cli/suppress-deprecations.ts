@@ -14,4 +14,3 @@ export function suppressDeprecations(): void {
   }
   process.env.NODE_NO_WARNINGS = "1";
 }
-

@@ -43,4 +43,3 @@ describe("resolveGatewayRequestContext", () => {
     expect(result.sessionKey).toContain("openresponses-user:alice");
   });
 });
-

@@ -32,4 +32,3 @@ describe("thread binding persona", () => {
     expect(resolveThreadBindingPersonaFromRecord(record)).toBe("⚙️ codex-thread");
   });
 });
-

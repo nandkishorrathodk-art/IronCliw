@@ -144,4 +144,3 @@ describe("thread binding config keys", () => {
     );
   });
 });
-

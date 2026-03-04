@@ -412,4 +412,3 @@ export function requireApiKey(auth: ResolvedProviderAuth, provider: string): str
   }
   throw new Error(`No API key resolved for provider "${provider}" (auth mode: ${auth.mode}).`);
 }
-

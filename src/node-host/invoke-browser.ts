@@ -224,4 +224,3 @@ export async function runBrowserProxyCommand(paramsJSON?: string | null): Promis
   const payload: BrowserProxyResult = files ? { result, files } : { result };
   return JSON.stringify(payload);
 }
-

@@ -276,4 +276,3 @@ export async function browserClearPermissions(
     body: { targetId: opts.targetId, clear: true },
   });
 }
-

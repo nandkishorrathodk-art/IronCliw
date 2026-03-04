@@ -37,4 +37,3 @@ export async function urbitFetch(params: UrbitFetchOptions) {
     pinDns: params.pinDns,
   });
 }
-

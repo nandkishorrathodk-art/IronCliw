@@ -204,4 +204,3 @@ describe("Kilo Gateway provider config", () => {
     });
   });
 });
-

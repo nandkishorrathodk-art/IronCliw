@@ -173,4 +173,3 @@ describe("sendMessageSlack blocks", () => {
     expect(client.chat.postMessage).not.toHaveBeenCalled();
   });
 });
-

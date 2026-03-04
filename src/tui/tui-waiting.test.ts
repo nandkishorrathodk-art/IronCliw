@@ -39,4 +39,3 @@ describe("tui-waiting", () => {
     expect(msg).toContain("<d>");
   });
 });
-

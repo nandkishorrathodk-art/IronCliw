@@ -121,4 +121,3 @@ describe("stopKnownBrowserProfiles", () => {
     expect(onWarn).toHaveBeenCalledWith("IronCliw browser stop failed: Error: oops");
   });
 });
-

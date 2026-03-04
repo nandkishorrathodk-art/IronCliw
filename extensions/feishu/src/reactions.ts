@@ -158,4 +158,3 @@ export const FeishuEmoji = {
 } as const;
 
 export type FeishuEmojiType = (typeof FeishuEmoji)[keyof typeof FeishuEmoji];
-

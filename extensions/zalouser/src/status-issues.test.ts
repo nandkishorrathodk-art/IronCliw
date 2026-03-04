@@ -41,4 +41,3 @@ describe("collectZalouserStatusIssues", () => {
     expect(issues).toHaveLength(0);
   });
 });
-

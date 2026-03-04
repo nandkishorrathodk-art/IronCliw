@@ -123,4 +123,3 @@ Control UIが読み込まれれば、Gatewayは使用可能な状態です。
 - DMの安全性と承認：[ペアリング](/channels/pairing)
 - さらにチャンネルを接続：[チャンネル](/channels)
 - 高度なワークフローとソースからのビルド：[セットアップ](/start/setup)
-

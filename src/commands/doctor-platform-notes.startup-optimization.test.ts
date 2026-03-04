@@ -79,4 +79,3 @@ describe("noteStartupOptimizationHints", () => {
     expect(noteFn).not.toHaveBeenCalled();
   });
 });
-

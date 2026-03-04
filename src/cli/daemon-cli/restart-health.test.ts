@@ -148,4 +148,3 @@ describe("inspectGatewayRestart", () => {
     expect(snapshot.staleGatewayPids).toEqual([]);
   });
 });
-

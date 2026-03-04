@@ -168,4 +168,3 @@ describe("resolvePluginSkillDirs", () => {
     expect(dirs).toEqual([]);
   });
 });
-

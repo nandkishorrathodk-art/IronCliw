@@ -42,4 +42,3 @@ describe("resolveSandboxDockerUser", () => {
     expect(resolved.user).toBeUndefined();
   });
 });
-

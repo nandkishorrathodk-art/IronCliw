@@ -524,4 +524,3 @@ export class GatewayClient {
     return p;
   }
 }
-

@@ -164,4 +164,3 @@ export async function installPackageDirWithManifestDeps(params: {
     hasDeps: Object.keys(params.manifestDependencies ?? {}).length > 0,
   });
 }
-

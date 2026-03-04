@@ -606,4 +606,3 @@ export function resolveContextTokens(params: {
     params.agentCfg?.contextTokens ?? lookupContextTokens(params.model) ?? DEFAULT_CONTEXT_TOKENS
   );
 }
-

@@ -204,4 +204,3 @@ export async function pickWebChannel(
   }
   return choice;
 }
-

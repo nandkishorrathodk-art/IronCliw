@@ -132,4 +132,3 @@ export async function applyAuthChoiceAnthropic(
 
   return null;
 }
-

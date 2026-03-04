@@ -283,4 +283,3 @@ describe("google-shared convertMessages", () => {
     expect(contents[3].role).toBe("user");
   });
 });
-

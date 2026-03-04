@@ -125,4 +125,3 @@ export type SignalEventHandlerDeps = {
     groupLabel?: string;
   }) => string;
 };
-

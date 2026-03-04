@@ -6,4 +6,3 @@ export const zaiProvider: MediaUnderstandingProvider = {
   capabilities: ["image"],
   describeImage: describeImageWithModel,
 };
-

@@ -13,4 +13,3 @@ export function collectDockerFlagValues(args: string[], flag: string): string[] 
   }
   return values;
 }
-

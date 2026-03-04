@@ -108,4 +108,3 @@ export async function scheduleRestartSentinelWake(_params: { deps: CliDeps }) {
 export function shouldWakeFromRestartSentinel() {
   return !process.env.VITEST && process.env.NODE_ENV !== "test";
 }
-

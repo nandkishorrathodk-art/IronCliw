@@ -146,4 +146,3 @@ describe("restart sentinel message dedup", () => {
     expect(result).toContain("Reason: /restart");
   });
 });
-

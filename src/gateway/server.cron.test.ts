@@ -785,4 +785,3 @@ describe("gateway server cron", () => {
     }
   }, 45_000);
 });
-

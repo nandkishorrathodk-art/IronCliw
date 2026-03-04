@@ -238,4 +238,3 @@ export async function createSessionVisibilityGuard(params: {
 
   return { check };
 }
-

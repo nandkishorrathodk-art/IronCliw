@@ -247,4 +247,3 @@ describe("temp path guard", () => {
     expect(weakRandomMatches).toEqual([]);
   });
 });
-

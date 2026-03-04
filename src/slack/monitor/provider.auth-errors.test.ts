@@ -49,4 +49,3 @@ describe("isNonRecoverableSlackAuthError", () => {
     expect(isNonRecoverableSlackAuthError(new Error(""))).toBe(false);
   });
 });
-

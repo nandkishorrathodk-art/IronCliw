@@ -980,4 +980,3 @@ export async function agentCommandFromIngress(
     deps,
   );
 }
-

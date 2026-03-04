@@ -55,4 +55,3 @@ IronCliw approvals allowlist remove "~/Projects/**/bin/rg"
 - `--agent` 默认为 `"*"`，表示适用于所有智能体。
 - 节点主机必须公开 `system.execApprovals.get/set`（macOS 应用或无头节点主机）。
 - 审批文件按主机存储在 `~/.IronCliw/exec-approvals.json`。
-

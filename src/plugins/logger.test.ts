@@ -20,4 +20,3 @@ describe("plugins/logger", () => {
     expect(debug).toHaveBeenCalledWith("d");
   });
 });
-

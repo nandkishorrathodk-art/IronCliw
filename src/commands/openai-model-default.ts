@@ -45,4 +45,3 @@ export function applyOpenAIConfig(cfg: IronCliwConfig): IronCliwConfig {
     },
   };
 }
-

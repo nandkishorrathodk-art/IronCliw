@@ -89,4 +89,3 @@ Payload fields (all optional unless noted):
 
 Bridge is currently **implicit v1** (no min/max negotiation). Backward‑compat
 is expected; add a bridge protocol version field before any breaking changes.
-

@@ -71,4 +71,3 @@ describe("createDiscordMessageHandler bot-self filter", () => {
     }
   });
 });
-

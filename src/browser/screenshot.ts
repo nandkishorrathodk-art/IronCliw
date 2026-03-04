@@ -56,4 +56,3 @@ export async function normalizeBrowserScreenshot(
     `Browser screenshot could not be reduced below ${(maxBytes / (1024 * 1024)).toFixed(0)}MB (got ${(best.byteLength / (1024 * 1024)).toFixed(2)}MB)`,
   );
 }
-

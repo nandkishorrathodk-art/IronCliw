@@ -283,4 +283,3 @@ export async function authorizeSlackSystemEventSender(params: {
     channelName,
   };
 }
-

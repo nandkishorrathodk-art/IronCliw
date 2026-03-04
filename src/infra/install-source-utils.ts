@@ -262,4 +262,3 @@ export async function packNpmSpecToArchive(params: {
     metadata: parsedJson?.metadata ?? {},
   };
 }
-

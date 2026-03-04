@@ -52,4 +52,3 @@ export function isHeartbeatActionWakeReason(reason?: string): boolean {
   const kind = resolveHeartbeatReasonKind(reason);
   return kind === "manual" || kind === "exec-event" || kind === "hook";
 }
-

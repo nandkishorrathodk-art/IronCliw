@@ -85,4 +85,3 @@ describe("google-antigravity provider normalization", () => {
     expect(normalized).toBe(providers);
   });
 });
-

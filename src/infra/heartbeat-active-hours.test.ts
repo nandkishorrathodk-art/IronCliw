@@ -84,4 +84,3 @@ describe("isWithinActiveHours", () => {
     expect(isWithinActiveHours(cfg, heartbeat, Date.UTC(2025, 0, 1, 11, 0, 0))).toBe(false);
   });
 });
-

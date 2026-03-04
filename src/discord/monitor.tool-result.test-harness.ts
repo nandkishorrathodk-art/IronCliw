@@ -47,4 +47,3 @@ vi.mock("../config/sessions.js", async (importOriginal) => {
     resolveSessionKey: vi.fn(),
   };
 });
-

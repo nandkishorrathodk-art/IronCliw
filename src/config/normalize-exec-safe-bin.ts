@@ -35,4 +35,3 @@ export function normalizeExecSafeBinProfilesInConfig(cfg: IronCliwConfig): void 
     normalizeExec(agent?.tools?.exec);
   }
 }
-

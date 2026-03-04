@@ -21,4 +21,3 @@ export function resolveAcpInstallCommandHint(cfg: IronCliwConfig): string {
   }
   return `Install and enable the plugin that provides ACP backend "${backendId}".`;
 }
-

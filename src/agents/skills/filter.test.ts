@@ -33,4 +33,3 @@ describe("skills/filter", () => {
     expect(matchesSkillFilter([], undefined)).toBe(false);
   });
 });
-

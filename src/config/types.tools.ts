@@ -600,4 +600,3 @@ export type ToolsConfig = {
     };
   };
 };
-

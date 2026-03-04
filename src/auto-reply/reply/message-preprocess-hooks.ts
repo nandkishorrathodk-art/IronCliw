@@ -48,4 +48,3 @@ export function emitPreAgentMessageHooks(params: {
     "get-reply: message:preprocessed internal hook failed",
   );
 }
-

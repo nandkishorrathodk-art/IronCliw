@@ -81,4 +81,3 @@ describe("typing persistence bug fix", () => {
     expect(onCleanupSpy).toHaveBeenCalledTimes(1);
   });
 });
-

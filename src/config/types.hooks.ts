@@ -140,4 +140,3 @@ export type HooksConfig = {
   internal?: InternalHooksConfig;
 };
 import type { InstallRecordBase } from "./types.installs.js";
-

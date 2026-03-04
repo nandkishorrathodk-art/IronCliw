@@ -208,4 +208,3 @@ export async function ensureSandboxWorkspaceForSession(params: {
     containerWorkdir: cfg.docker.workdir,
   };
 }
-

@@ -149,4 +149,3 @@ export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promi
     defaultRuntime.exit(1);
   }
 }
-

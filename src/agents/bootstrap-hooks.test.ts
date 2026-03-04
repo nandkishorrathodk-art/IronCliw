@@ -45,4 +45,3 @@ describe("applyBootstrapHookOverrides", () => {
     expect(updated[1]?.path).toBe("/tmp/EXTRA.md");
   });
 });
-

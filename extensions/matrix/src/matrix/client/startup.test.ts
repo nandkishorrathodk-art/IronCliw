@@ -47,4 +47,3 @@ describe("startMatrixClientWithGrace", () => {
     vi.useRealTimers();
   });
 });
-

@@ -137,4 +137,3 @@ Details: [Gateway protocol](/gateway/protocol), [Pairing](/channels/pairing),
 - Exactly one Gateway controls a single Baileys session per host.
 - Handshake is mandatory; any non‑JSON or non‑connect first frame is a hard close.
 - Events are not replayed; clients must refresh on gaps.
-

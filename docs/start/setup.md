@@ -163,4 +163,3 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
 - [IronCliw assistant setup](/start/IronCliw)
 - [macOS app](/platforms/macos) (gateway lifecycle)
-

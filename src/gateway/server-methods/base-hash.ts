@@ -6,4 +6,3 @@ export function resolveBaseHashParam(params: unknown): string | null {
   const trimmed = raw.trim();
   return trimmed ? trimmed : null;
 }
-

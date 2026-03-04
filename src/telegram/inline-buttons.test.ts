@@ -35,4 +35,3 @@ describe("resolveTelegramTargetChatType", () => {
     expect(resolveTelegramTargetChatType("   ")).toBe("unknown");
   });
 });
-

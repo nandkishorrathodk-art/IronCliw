@@ -160,4 +160,3 @@ export async function recordDiscordModelPickerRecentModel(params: {
     await writeJsonFileAtomically(filePath, store);
   });
 }
-

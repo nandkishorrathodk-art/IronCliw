@@ -71,4 +71,3 @@ describe("runCommandWithTimeout no-output timer", () => {
     expect(fake.kill).not.toHaveBeenCalled();
   });
 });
-

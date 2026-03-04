@@ -568,4 +568,3 @@ describe("normalizeModelSelection", () => {
     expect(normalizeModelSelection(42)).toBeUndefined();
   });
 });
-

@@ -190,4 +190,3 @@ describe("update.run restart scheduling", () => {
     expect(payload?.restart).toBeNull();
   });
 });
-

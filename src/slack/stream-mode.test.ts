@@ -124,4 +124,3 @@ describe("buildStatusFinalPreviewText", () => {
     expect(buildStatusFinalPreviewText(3)).toBe("Status: thinking.");
   });
 });
-

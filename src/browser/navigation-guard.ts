@@ -102,4 +102,3 @@ export async function assertBrowserNavigationResultAllowed(
     await assertBrowserNavigationAllowed(opts);
   }
 }
-

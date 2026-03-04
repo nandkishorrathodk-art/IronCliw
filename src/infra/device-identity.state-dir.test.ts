@@ -14,4 +14,3 @@ describe("device identity state dir defaults", () => {
     });
   });
 });
-

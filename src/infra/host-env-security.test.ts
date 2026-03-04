@@ -192,4 +192,3 @@ describe("shell wrapper exploit regression", () => {
     expect(fs.existsSync(marker)).toBe(false);
   });
 });
-

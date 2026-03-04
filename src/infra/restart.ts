@@ -497,4 +497,3 @@ export const __testing = {
     clearPendingScheduledRestart();
   },
 };
-

@@ -48,4 +48,3 @@
 - Actions: read messages, list/remove reactions, pin/unpin/list pins, member info, room info.
 - Auto-join invites with allowlist support.
 - Status + probe reporting for health checks.
-

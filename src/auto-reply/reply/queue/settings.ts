@@ -66,4 +66,3 @@ export function resolveQueueSettings(params: ResolveQueueSettingsParams): QueueS
     dropPolicy: dropRaw,
   };
 }
-

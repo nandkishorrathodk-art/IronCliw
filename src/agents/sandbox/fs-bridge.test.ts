@@ -351,4 +351,3 @@ describe("sandbox fs bridge shell compatibility", () => {
     expect(scripts.some((script) => script.includes('cat -- "$1"'))).toBe(false);
   });
 });
-

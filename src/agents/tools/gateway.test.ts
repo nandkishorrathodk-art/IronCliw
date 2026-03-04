@@ -166,4 +166,3 @@ describe("gateway tool defaults", () => {
     ).rejects.toThrow(/gatewayUrl override rejected/i);
   });
 });
-

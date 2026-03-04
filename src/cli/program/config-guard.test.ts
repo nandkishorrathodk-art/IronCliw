@@ -149,4 +149,3 @@ describe("ensureConfigReady", () => {
     expect(output).toContain("Doctor warnings");
   });
 });
-

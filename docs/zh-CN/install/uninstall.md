@@ -133,4 +133,3 @@ Remove-Item -Force "$env:USERPROFILE\.IronCliw\gateway.cmd"
 1. 在删除仓库**之前**卸载 Gateway 网关服务（使用上面的简单方式或手动服务移除）。
 2. 删除仓库目录。
 3. 按上述方式移除状态 + 工作区。
-

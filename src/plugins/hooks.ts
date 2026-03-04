@@ -751,4 +751,3 @@ export function createHookRunner(registry: PluginRegistry, options: HookRunnerOp
 }
 
 export type HookRunner = ReturnType<typeof createHookRunner>;
-

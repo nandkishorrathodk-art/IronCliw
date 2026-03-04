@@ -125,4 +125,3 @@ describe("bundled plugin sources", () => {
     expect(missing).toBeUndefined();
   });
 });
-

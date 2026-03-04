@@ -1399,4 +1399,3 @@ export async function clearProfileRuntimeArtifacts(profileInput?: string | null)
   invalidateApi(profile);
   await fsp.mkdir(resolveCredentialsDir(), { recursive: true }).catch(() => undefined);
 }
-

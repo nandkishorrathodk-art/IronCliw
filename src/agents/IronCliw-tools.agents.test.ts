@@ -127,4 +127,3 @@ describe("agents_list", () => {
     expect(research?.configured).toBe(false);
   });
 });
-

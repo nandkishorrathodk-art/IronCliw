@@ -547,4 +547,3 @@ export default function register(api: IronCliwPluginApi) {
     },
   });
 }
-

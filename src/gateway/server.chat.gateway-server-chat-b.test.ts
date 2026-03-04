@@ -417,4 +417,3 @@ describe("gateway server chat", () => {
     });
   });
 });
-

@@ -11,4 +11,3 @@ export function getGatewayWsLogStyle(): GatewayWsLogStyle {
 }
 
 export const DEFAULT_WS_SLOW_MS = 50;
-

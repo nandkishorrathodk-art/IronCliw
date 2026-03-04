@@ -8,4 +8,3 @@ export async function compactWithSafetyTimeout<T>(
 ): Promise<T> {
   return await withTimeout(() => compact(), timeoutMs, "Compaction");
 }
-

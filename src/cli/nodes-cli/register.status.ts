@@ -406,4 +406,3 @@ export function registerNodesStatusCommands(nodes: Command) {
       }),
   );
 }
-

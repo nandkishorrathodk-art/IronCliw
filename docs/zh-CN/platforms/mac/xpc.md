@@ -66,4 +66,3 @@ Agent -> Gateway -> Node Service (WS)
 - 所有通信仅保持本地；不暴露网络套接字。
 - TCC 提示仅源自 GUI 应用包；在重建时保持签名的 bundle ID 稳定。
 - IPC 加固：套接字模式 `0600`、令牌、对等 UID 检查、HMAC 质询/响应、短 TTL。
-

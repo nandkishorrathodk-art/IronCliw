@@ -85,4 +85,3 @@ describe("buildSessionEntry", () => {
     expect(entry!.lineMap).toEqual([3, 5]);
   });
 });
-

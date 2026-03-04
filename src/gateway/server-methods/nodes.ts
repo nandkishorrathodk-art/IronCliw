@@ -854,4 +854,3 @@ function buildNodeCommandRejectionHint(
   }
   return `node command not allowed: ${reason}`;
 }
-

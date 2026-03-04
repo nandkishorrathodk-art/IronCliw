@@ -25,4 +25,3 @@ export function resolveDiscordRestFetch(
     return fetch;
   }
 }
-

@@ -50,4 +50,3 @@ describe("config: tools.alsoAllow", () => {
     expect(res.ok).toBe(true);
   });
 });
-

@@ -57,4 +57,3 @@ export async function closeDiscordThreadSessions(params: {
 
   return resetCount;
 }
-

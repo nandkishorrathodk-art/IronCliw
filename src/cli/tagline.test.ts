@@ -19,4 +19,3 @@ describe("pickTagline", () => {
     expect(value).not.toBe(DEFAULT_TAGLINE);
   });
 });
-

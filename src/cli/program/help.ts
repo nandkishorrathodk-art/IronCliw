@@ -134,4 +134,3 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     return `\n${theme.heading("Examples:")}\n${fmtExamples}\n\n${theme.muted("Docs:")} ${docs}\n`;
   });
 }
-

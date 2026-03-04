@@ -67,4 +67,3 @@ describe("createDiscordNativeCommand option wiring", () => {
     expect(readChoices(action)?.length).toBeGreaterThan(0);
   });
 });
-

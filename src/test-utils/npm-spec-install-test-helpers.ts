@@ -115,4 +115,3 @@ export async function expectInstallUsesIgnoreScripts(params: {
     expectedCwd: result.targetDir,
   });
 }
-

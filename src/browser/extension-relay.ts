@@ -1050,4 +1050,3 @@ export async function stopChromeExtensionRelayServer(opts: { cdpUrl: string }): 
   await existing.server.stop();
   return true;
 }
-

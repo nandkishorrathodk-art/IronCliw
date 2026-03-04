@@ -95,4 +95,3 @@ be enabled via `plugins.entries` + tool allowlists.
 
 It is **not** currently designed to be copied into
 `~/.IronCliw/extensions` as a standalone plugin directory.
-

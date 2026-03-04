@@ -417,4 +417,3 @@ describe("web processMessage inbound contract", () => {
     expect(updateLastRouteMock).toHaveBeenCalledTimes(1);
   });
 });
-

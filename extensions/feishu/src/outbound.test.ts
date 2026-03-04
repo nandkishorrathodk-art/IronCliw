@@ -179,4 +179,3 @@ describe("feishuOutbound.sendMedia renderMode", () => {
     expect(result).toEqual(expect.objectContaining({ channel: "feishu", messageId: "media_msg" }));
   });
 });
-

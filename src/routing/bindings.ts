@@ -111,4 +111,3 @@ export function resolvePreferredAccountId(params: {
   }
   return params.defaultAccountId;
 }
-

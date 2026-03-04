@@ -133,4 +133,3 @@ Full environment variable reference: [Environment vars](/help/environment).
 - DM safety and approvals: [Pairing](/channels/pairing)
 - Connect more channels: [Channels](/channels)
 - Advanced workflows and from source: [Setup](/start/setup)
-

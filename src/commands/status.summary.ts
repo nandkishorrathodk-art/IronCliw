@@ -232,4 +232,3 @@ export async function getStatusSummary(
   };
   return includeSensitive ? summary : redactSensitiveStatusSummary(summary);
 }
-

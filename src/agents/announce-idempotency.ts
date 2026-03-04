@@ -23,4 +23,3 @@ export function resolveQueueAnnounceId(params: {
   // Backward-compatible fallback for queue items that predate announceId.
   return `legacy:${params.sessionKey}:${params.enqueuedAt}`;
 }
-

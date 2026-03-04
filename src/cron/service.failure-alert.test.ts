@@ -268,4 +268,3 @@ describe("CronService failure alerts", () => {
     await store.cleanup();
   });
 });
-

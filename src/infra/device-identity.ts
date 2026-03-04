@@ -180,4 +180,3 @@ export function verifyDeviceSignature(
     return false;
   }
 }
-

@@ -176,4 +176,3 @@ export function listEnabledNextcloudTalkAccounts(cfg: CoreConfig): ResolvedNextc
     .map((accountId) => resolveNextcloudTalkAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

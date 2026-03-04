@@ -291,4 +291,3 @@ export async function handleDiscordMessageAction(
 
   throw new Error(`Action ${String(action)} is not supported for provider ${providerId}.`);
 }
-

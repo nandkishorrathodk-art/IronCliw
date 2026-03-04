@@ -364,4 +364,3 @@ describe("config strict validation", () => {
     });
   });
 });
-

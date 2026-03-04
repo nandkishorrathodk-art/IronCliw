@@ -137,4 +137,3 @@ function localReq(input: { method: string; url: string }): IncomingMessage {
     socket: { remoteAddress: "127.0.0.1" },
   } as unknown as IncomingMessage;
 }
-

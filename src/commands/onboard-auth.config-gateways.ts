@@ -89,4 +89,3 @@ export function applyCloudflareAiGatewayConfig(
   const next = applyCloudflareAiGatewayProviderConfig(cfg, params);
   return applyAgentDefaultModelPrimary(next, CLOUDFLARE_AI_GATEWAY_DEFAULT_MODEL_REF);
 }
-

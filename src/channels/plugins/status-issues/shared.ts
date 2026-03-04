@@ -61,4 +61,3 @@ export function collectIssuesForEnabledAccounts<
   }
   return issues;
 }
-

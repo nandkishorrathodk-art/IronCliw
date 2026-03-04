@@ -333,4 +333,3 @@ Windows 安装应使用 **WSL2** 并遵循上面的 Linux systemd 部分。
 
 - 淘汰 `IronCliw gateway` 和旧版 TCP 控制端口的使用。
 - 更新客户端以使用带有强制 connect 和结构化 presence 的 WS 协议。
-

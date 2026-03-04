@@ -51,4 +51,3 @@ export function buildTeamsFileInfoCard(file: DriveItemProperties): {
     },
   };
 }
-

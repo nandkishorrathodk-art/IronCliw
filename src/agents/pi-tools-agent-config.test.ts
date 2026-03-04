@@ -747,4 +747,3 @@ describe("Agent-specific tool filtering", () => {
     expect(details?.status).toBe("completed");
   });
 });
-

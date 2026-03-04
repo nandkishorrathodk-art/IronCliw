@@ -185,4 +185,3 @@ export async function noteSecurityWarnings(cfg: IronCliwConfig) {
   lines.push(auditHint);
   note(lines.join("\n"), "Security");
 }
-

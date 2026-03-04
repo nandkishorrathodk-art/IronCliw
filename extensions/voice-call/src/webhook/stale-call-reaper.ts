@@ -31,4 +31,3 @@ export function startStaleCallReaper(params: {
     clearInterval(interval);
   };
 }
-

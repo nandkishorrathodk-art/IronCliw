@@ -105,4 +105,3 @@ export function makeManagedTabsWithNew(params?: { newFirst?: boolean }): JsonLis
   const newTab = makeManagedTab("NEW", 9);
   return params?.newFirst ? [newTab, ...oldTabs] : [...oldTabs, newTab];
 }
-

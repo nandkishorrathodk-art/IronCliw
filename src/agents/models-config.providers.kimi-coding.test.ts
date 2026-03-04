@@ -43,4 +43,3 @@ describe("kimi-coding implicit provider (#22409)", () => {
     }
   });
 });
-

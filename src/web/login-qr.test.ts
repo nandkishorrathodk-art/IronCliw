@@ -61,4 +61,3 @@ describe("login-qr", () => {
     expect(logoutWebMock).not.toHaveBeenCalled();
   });
 });
-

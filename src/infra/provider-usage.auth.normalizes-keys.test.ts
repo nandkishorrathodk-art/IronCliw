@@ -404,4 +404,3 @@ describe("resolveProviderAuths key normalization", () => {
     }, {});
   });
 });
-

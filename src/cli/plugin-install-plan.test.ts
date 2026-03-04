@@ -65,4 +65,3 @@ describe("plugin install plan helpers", () => {
     expect(result).toBeNull();
   });
 });
-

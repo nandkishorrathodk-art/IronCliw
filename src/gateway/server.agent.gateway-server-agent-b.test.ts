@@ -407,4 +407,3 @@ describe("gateway server agent", () => {
     webchatWs.close();
   });
 });
-

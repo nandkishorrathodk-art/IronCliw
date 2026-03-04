@@ -13,4 +13,3 @@ export function groupChannelIssuesByChannel<T extends { channel: string }>(
   }
   return byChannel;
 }
-

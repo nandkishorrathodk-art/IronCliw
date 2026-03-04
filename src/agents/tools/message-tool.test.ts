@@ -387,4 +387,3 @@ describe("message tool sandbox passthrough", () => {
     expect(call?.requesterSenderId).toBe("1234567890");
   });
 });
-

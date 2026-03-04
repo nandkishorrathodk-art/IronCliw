@@ -49,4 +49,3 @@ export function extractModelDirective(
     hasDirective: !!match,
   };
 }
-

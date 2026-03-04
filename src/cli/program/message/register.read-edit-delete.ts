@@ -48,4 +48,3 @@ export function registerMessageReadEditDeleteCommands(
       await helpers.runMessageAction("delete", opts);
     });
 }
-

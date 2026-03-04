@@ -635,4 +635,3 @@ export function buildDiscordMediaPayload(
 } {
   return buildMediaPayload(mediaList);
 }
-

@@ -273,4 +273,3 @@ describe("finalizeNpmSpecArchiveInstall", () => {
     });
   });
 });
-

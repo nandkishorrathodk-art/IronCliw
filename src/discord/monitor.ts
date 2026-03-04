@@ -26,4 +26,3 @@ export type { MonitorDiscordOpts } from "./monitor/provider.js";
 export { monitorDiscordProvider } from "./monitor/provider.js";
 
 export { resolveDiscordReplyTarget, sanitizeDiscordThreadName } from "./monitor/threading.js";
-

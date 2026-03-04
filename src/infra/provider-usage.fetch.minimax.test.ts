@@ -149,4 +149,3 @@ describe("fetchMinimaxUsage", () => {
     expect(result.windows).toEqual([{ label: "1h", usedPercent: 20, resetAt: undefined }]);
   });
 });
-

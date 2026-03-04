@@ -627,4 +627,3 @@ describe("handleSlackAction", () => {
     expect(emojiKeys.every((k) => k in emojiMap)).toBe(true);
   });
 });
-

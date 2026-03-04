@@ -38,4 +38,3 @@ describe("gateway hook runner methods", () => {
     expect(runner.hasHooks("gateway_stop")).toBe(false);
   });
 });
-

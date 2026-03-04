@@ -139,4 +139,3 @@ if (isDirectRun()) {
     writeGitHubOutput({ runNode: true, runMacos: true, runAndroid: true, runWindows: true });
   }
 }
-

@@ -51,4 +51,3 @@ export function collectZaloStatusIssues(accounts: ChannelAccountSnapshot[]): Cha
   }
   return issues;
 }
-

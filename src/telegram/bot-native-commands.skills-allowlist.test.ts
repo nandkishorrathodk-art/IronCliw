@@ -103,4 +103,3 @@ describe("registerTelegramNativeCommands skill allowlist integration", () => {
     expect(registeredCommands.some((entry) => entry.command === "beta_skill")).toBe(false);
   });
 });
-

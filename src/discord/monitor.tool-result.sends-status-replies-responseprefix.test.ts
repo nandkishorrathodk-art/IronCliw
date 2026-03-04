@@ -225,4 +225,3 @@ describe("discord tool result dispatch", () => {
     expect(String(sendMock.mock.calls[0]?.[1] ?? "")).toContain("Pairing code: PAIRCODE");
   }, 10000);
 });
-

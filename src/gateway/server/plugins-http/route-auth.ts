@@ -26,4 +26,3 @@ export function shouldEnforceGatewayAuthForPluginPath(
   }
   return route.auth === "gateway";
 }
-

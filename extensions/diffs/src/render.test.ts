@@ -105,4 +105,3 @@ describe("renderDiffDocument", () => {
     ).rejects.toThrow("too many files");
   });
 });
-

@@ -58,4 +58,3 @@ export function formatAgentInternalEventsForPrompt(events?: AgentInternalEvent[]
     blocks.join("\n\n---\n\n"),
   ].join("\n");
 }
-

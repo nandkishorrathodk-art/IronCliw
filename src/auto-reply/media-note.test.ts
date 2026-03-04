@@ -177,4 +177,3 @@ describe("buildInboundMediaNote", () => {
     expect(note).toBe("[media attached: /tmp/voice.ogg (audio/ogg)]");
   });
 });
-

@@ -72,4 +72,3 @@ const contents =
 
 fs.mkdirSync(cliDir, { recursive: true });
 fs.writeFileSync(path.join(cliDir, "daemon-cli.js"), contents);
-

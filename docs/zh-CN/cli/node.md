@@ -113,4 +113,3 @@ IronCliw nodes approve <requestId>
 - `~/.IronCliw/exec-approvals.json`
 - [执行批准](/tools/exec-approvals)
 - `IronCliw approvals --node <id|name|ip>`（从 Gateway 网关编辑）
-

@@ -410,4 +410,3 @@ agents: {
 
 - `remote.*` 优先于 `models.providers.openai.*`。
 - `remote.headers` 与 OpenAI 标头合并；键冲突时 remote 优先。省略 `remote.headers` 以使用 OpenAI 默认值。
-

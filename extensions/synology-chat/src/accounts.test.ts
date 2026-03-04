@@ -131,4 +131,3 @@ describe("resolveAccount", () => {
     expect(account.allowedUserIds).toEqual(["u1", "u2"]);
   });
 });
-

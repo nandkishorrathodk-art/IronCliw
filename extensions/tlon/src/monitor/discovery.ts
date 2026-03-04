@@ -84,4 +84,3 @@ export async function fetchAllChannels(
   const { channels } = await fetchInitData(api, runtime);
   return channels;
 }
-

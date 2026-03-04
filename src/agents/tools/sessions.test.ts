@@ -440,4 +440,3 @@ describe("sessions_send gating", () => {
     expect(result.details).toMatchObject({ status: "forbidden" });
   });
 });
-

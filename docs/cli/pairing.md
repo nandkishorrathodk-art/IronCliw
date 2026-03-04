@@ -30,4 +30,3 @@ IronCliw pairing approve --channel telegram --account work <code> --notify
 - `pairing list` supports `--account <accountId>` for multi-account channels.
 - `pairing approve` supports `--account <accountId>` and `--notify`.
 - If only one pairing-capable channel is configured, `pairing approve <code>` is allowed.
-

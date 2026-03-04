@@ -595,4 +595,3 @@ describe("POST /tools/invoke", () => {
     expect(body.result?.observedFileFormat).toBeUndefined();
   });
 });
-

@@ -651,4 +651,3 @@ Key options:
 - ✅ Files
 - ✅ Audio
 - ⚠️ Rich text (partial support)
-

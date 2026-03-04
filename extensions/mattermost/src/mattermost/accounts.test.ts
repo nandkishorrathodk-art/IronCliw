@@ -50,4 +50,3 @@ describe("resolveDefaultMattermostAccountId", () => {
     expect(resolveDefaultMattermostAccountId(cfg)).toBe("default");
   });
 });
-

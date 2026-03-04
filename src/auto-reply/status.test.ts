@@ -705,4 +705,3 @@ describe("buildCommandsMessagePaginated", () => {
     expect(result.text).toContain("/plugin_cmd (demo-plugin) - Plugin command");
   });
 });
-

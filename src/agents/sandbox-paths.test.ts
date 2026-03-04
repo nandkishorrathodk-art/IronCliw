@@ -278,4 +278,3 @@ describe("resolveSandboxedMediaSource", () => {
     expect(result).toBe("");
   });
 });
-

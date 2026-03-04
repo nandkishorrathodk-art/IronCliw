@@ -390,4 +390,3 @@ describe("resolveTelegramAccount groups inheritance (#30673)", () => {
     expect(resolved.config.groups).toEqual({ "-100123": { requireMention: false } });
   });
 });
-

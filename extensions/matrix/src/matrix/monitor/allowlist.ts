@@ -90,4 +90,3 @@ export function resolveMatrixAllowListMatch(params: {
 export function resolveMatrixAllowListMatches(params: { allowList: string[]; userId?: string }) {
   return resolveMatrixAllowListMatch(params).allowed;
 }
-

@@ -341,4 +341,3 @@ const createMattermostLikePlugin = (opts: {
     sendMedia: async () => ({ channel: "mattermost", messageId: "m2" }),
   },
 });
-

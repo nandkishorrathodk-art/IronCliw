@@ -24,4 +24,3 @@ export const IRC_FIELD_HELP: Record<string, string> = {
   "channels.irc.nickserv.registerEmail":
     "Email used with NickServ REGISTER (required when register=true).",
 };
-

@@ -26,4 +26,3 @@ export function resolveMatrixBodyForAgent(params: {
   }
   return `${params.senderLabel}: ${params.bodyText}`;
 }
-

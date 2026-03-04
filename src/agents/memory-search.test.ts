@@ -261,4 +261,3 @@ describe("memory search config", () => {
     expect(resolved?.sources).toContain("sessions");
   });
 });
-

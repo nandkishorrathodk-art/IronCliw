@@ -46,4 +46,3 @@ launchctl getenv IronCliw_GATEWAY_PASSWORD
 launchctl unsetenv IronCliw_GATEWAY_TOKEN
 launchctl unsetenv IronCliw_GATEWAY_PASSWORD
 ```
-

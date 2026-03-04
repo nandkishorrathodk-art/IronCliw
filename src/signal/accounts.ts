@@ -67,4 +67,3 @@ export function listEnabledSignalAccounts(cfg: IronCliwConfig): ResolvedSignalAc
     .map((accountId) => resolveSignalAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

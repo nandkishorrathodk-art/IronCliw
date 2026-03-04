@@ -149,4 +149,3 @@ describe("resolveNodeIdFromCandidates", () => {
     ).toThrow(/ambiguous node: iphone.*matches:/);
   });
 });
-

@@ -214,4 +214,3 @@ Logs live under `/tmp/IronCliw/` (default: `IronCliw-YYYY-MM-DD.log`).
 - Windows status: [Windows (WSL2)](/platforms/windows)
 - Linux status: [Linux app](/platforms/linux)
 - Security: [Security](/gateway/security)
-

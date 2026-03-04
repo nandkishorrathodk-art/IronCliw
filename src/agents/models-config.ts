@@ -242,4 +242,3 @@ export async function ensureIronCliwModelsJson(
   await fs.writeFile(targetPath, next, { mode: 0o600 });
   return { agentDir, wrote: true };
 }
-

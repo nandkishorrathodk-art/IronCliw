@@ -265,4 +265,3 @@ describe("whatsappOnboardingAdapter.configure", () => {
     );
   });
 });
-

@@ -44,4 +44,3 @@ export async function applyAuthChoiceBytePlus(
     agentModelOverride: BYTEPLUS_DEFAULT_MODEL,
   };
 }
-

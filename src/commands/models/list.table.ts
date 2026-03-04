@@ -89,4 +89,3 @@ export function printModelTable(
     runtime.log(line);
   }
 }
-

@@ -165,4 +165,3 @@ describe("resolveAgentAvatar", () => {
     expect(data.kind).toBe("data");
   });
 });
-

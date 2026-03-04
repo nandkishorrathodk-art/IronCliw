@@ -384,4 +384,3 @@ describe("gateway canvas host auth", () => {
     });
   }, 60_000);
 });
-

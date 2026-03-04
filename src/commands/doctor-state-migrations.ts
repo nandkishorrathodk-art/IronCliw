@@ -10,4 +10,3 @@ export {
   resetAutoMigrateLegacyStateForTest,
   runLegacyStateMigrations,
 } from "../infra/state-migrations.js";
-

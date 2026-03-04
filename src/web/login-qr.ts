@@ -293,4 +293,3 @@ export async function waitForWebLogin(
     return { connected: false, message: "Login ended without a connection." };
   }
 }
-

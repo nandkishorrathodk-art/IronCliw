@@ -40,4 +40,3 @@ export async function guardedJsonApiRequest<T = unknown>(
     await release();
   }
 }
-

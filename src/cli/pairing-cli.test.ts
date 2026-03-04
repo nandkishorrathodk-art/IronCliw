@@ -236,4 +236,3 @@ describe("pairing cli", () => {
     await expect(runPairing(["pairing", "approve", "ABCDEFGH"])).rejects.toThrow("Usage:");
   });
 });
-

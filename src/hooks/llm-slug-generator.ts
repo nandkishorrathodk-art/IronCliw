@@ -98,4 +98,3 @@ Reply with ONLY the slug, nothing else. Examples: "vendor-pitch", "api-design", 
     }
   }
 }
-

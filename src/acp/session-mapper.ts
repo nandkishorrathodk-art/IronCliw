@@ -96,4 +96,3 @@ export async function resetSessionIfNeeded(params: {
   }
   await params.gateway.request("sessions.reset", { key: params.sessionKey });
 }
-

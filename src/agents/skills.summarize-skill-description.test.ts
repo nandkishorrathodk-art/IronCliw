@@ -15,4 +15,3 @@ describe("skills/summarize frontmatter", () => {
     expect(description).not.toContain("summarize.sh");
   });
 });
-

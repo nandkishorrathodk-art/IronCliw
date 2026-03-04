@@ -257,4 +257,3 @@ export async function browserScreenshotAction(
     timeoutMs: 20000,
   });
 }
-

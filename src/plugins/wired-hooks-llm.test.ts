@@ -70,4 +70,3 @@ describe("llm hook runner methods", () => {
     expect(runner.hasHooks("llm_output")).toBe(false);
   });
 });
-

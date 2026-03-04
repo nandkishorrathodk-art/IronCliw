@@ -108,4 +108,3 @@ export function registerNodeCli(program: Command) {
       await runNodeDaemonRestart(opts);
     });
 }
-

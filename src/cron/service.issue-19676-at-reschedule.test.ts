@@ -87,4 +87,3 @@ describe("Cron issue #19676 at-job reschedule", () => {
     expect(computeJobNextRunAtMs(job, nowMs)).toBeUndefined();
   });
 });
-

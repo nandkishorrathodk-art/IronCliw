@@ -217,4 +217,3 @@ If `~/.acpx/config.json` overrides `agents`, those overrides replace defaults.
 ### Output relay
 
 When relaying to user, return the final assistant text output from `acpx` command result. Avoid relaying raw local tool noise unless user asked for verbose logs.
-

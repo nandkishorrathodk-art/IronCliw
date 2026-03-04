@@ -29,4 +29,3 @@ export async function applyBootstrapHookOverrides(params: {
   const updated = (event.context as AgentBootstrapHookContext).bootstrapFiles;
   return Array.isArray(updated) ? updated : params.files;
 }
-

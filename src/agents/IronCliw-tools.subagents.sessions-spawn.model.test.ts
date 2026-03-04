@@ -305,4 +305,3 @@ describe("IronCliw-tools: subagents (sessions_spawn model + thinking)", () => {
     expect(spawnedTimeout).toBe(2);
   });
 });
-

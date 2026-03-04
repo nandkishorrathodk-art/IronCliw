@@ -113,4 +113,3 @@ describe("isCronSystemEvent", () => {
     expect(isCronSystemEvent("Send weekly status update to the team")).toBe(true);
   });
 });
-

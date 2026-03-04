@@ -683,4 +683,3 @@ describe("/acp command", () => {
     expect(result?.reply?.text).toContain("then: /acp doctor");
   });
 });
-

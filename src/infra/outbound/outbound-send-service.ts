@@ -198,4 +198,3 @@ export async function executePollAction(params: {
     pollResult: result,
   };
 }
-

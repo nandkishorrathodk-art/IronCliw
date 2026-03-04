@@ -63,4 +63,3 @@ describe("slack/allow-list", () => {
     );
   });
 });
-

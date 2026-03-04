@@ -39,4 +39,3 @@ IronCliw onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 - 也支持 `OPENCODE_ZEN_API_KEY`。
 - 你需要登录 Zen，添加账单信息，然后复制你的 API 密钥。
 - OpenCode Zen 按请求计费；详情请查看 OpenCode 控制台。
-

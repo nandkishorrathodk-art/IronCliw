@@ -529,4 +529,3 @@ Slack 工具操作可以通过 `channels.slack.actions.*` 进行门控：
 - 警告：如果你允许回复其他机器人（`channels.slack.allowBots=true` 或 `channels.slack.channels.<id>.allowBots=true`），请使用 `requireMention`、`channels.slack.channels.<id>.users` 白名单和/或在 `AGENTS.md` 和 `SOUL.md` 中设置明确的防护措施来防止机器人之间的回复循环。
 - 对于 Slack 工具，表情回应移除语义见 [/tools/reactions](/tools/reactions)。
 - 附件在允许且在大小限制内时会下载到媒体存储。
-

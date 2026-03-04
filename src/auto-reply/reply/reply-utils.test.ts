@@ -801,4 +801,3 @@ describe("hasTemplateVariables", () => {
     expect(hasTemplateVariables("[Claude]")).toBe(false);
   });
 });
-

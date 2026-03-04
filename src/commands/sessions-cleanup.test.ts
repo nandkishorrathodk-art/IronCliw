@@ -289,4 +289,3 @@ describe("sessionsCleanupCommand", () => {
     expect((payload.stores as unknown[]).length).toBe(2);
   });
 });
-

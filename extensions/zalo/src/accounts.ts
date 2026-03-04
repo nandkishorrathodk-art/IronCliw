@@ -90,4 +90,3 @@ export function listEnabledZaloAccounts(cfg: IronCliwConfig): ResolvedZaloAccoun
     .map((accountId) => resolveZaloAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

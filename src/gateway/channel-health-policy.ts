@@ -118,4 +118,3 @@ export function resolveChannelRestartReason(
   }
   return "stuck";
 }
-

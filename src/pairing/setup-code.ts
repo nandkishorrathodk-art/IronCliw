@@ -339,4 +339,3 @@ export async function resolvePairingSetupFromConfig(
     urlSource: urlResult.source ?? "unknown",
   };
 }
-

@@ -18,4 +18,3 @@ export function collectChannelStatusIssues(payload: Record<string, unknown>): Ch
   }
   return issues;
 }
-

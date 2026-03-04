@@ -114,4 +114,3 @@ export async function fetchSlackScopes(
     error: errors.length > 0 ? errors.join(" | ") : "no scopes returned",
   };
 }
-

@@ -169,4 +169,3 @@ export function listEnabledGoogleChatAccounts(cfg: IronCliwConfig): ResolvedGoog
     .map((accountId) => resolveGoogleChatAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

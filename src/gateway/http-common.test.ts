@@ -47,4 +47,3 @@ describe("setDefaultSecurityHeaders", () => {
     expect(setHeader).not.toHaveBeenCalledWith("Strict-Transport-Security", expect.anything());
   });
 });
-

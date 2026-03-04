@@ -63,4 +63,3 @@ export type {
 } from "./types.core.js";
 
 export type { ChannelPlugin } from "./types.plugin.js";
-

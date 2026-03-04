@@ -26,4 +26,3 @@ IronCliw logs --follow --local-time
 ```
 
 Use `--local-time` to render timestamps in your local timezone.
-

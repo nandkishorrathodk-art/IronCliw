@@ -23,4 +23,3 @@ describe("mattermost onboarding status", () => {
     expect(status.configured).toBe(true);
   });
 });
-

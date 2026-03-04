@@ -54,4 +54,3 @@ describe("redactSensitiveStatusSummary", () => {
     expect(redacted.channelSummary).toEqual(input.channelSummary);
   });
 });
-

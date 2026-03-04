@@ -117,4 +117,3 @@ describe("nostr-profile-import", () => {
     });
   });
 });
-

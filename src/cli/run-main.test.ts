@@ -126,4 +126,3 @@ describe("shouldEnsureCliPath", () => {
     expect(shouldEnsureCliPath(["node", "IronCliw", "acp", "-v"])).toBe(true);
   });
 });
-

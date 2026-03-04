@@ -246,4 +246,3 @@ describe("browser server-context tab selection state", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
-

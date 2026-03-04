@@ -455,4 +455,3 @@ describe("extractMentions", () => {
     expect(mentions).toEqual([]);
   });
 });
-

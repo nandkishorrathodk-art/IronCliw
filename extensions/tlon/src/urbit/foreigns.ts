@@ -47,4 +47,3 @@ export interface DmInvite {
   ship: string;
   // Additional fields may be present
 }
-

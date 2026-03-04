@@ -27,4 +27,3 @@ export async function transcribeAudioFile(params: {
   });
   return { text: transcript };
 }
-

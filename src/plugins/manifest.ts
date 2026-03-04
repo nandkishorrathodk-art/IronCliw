@@ -196,4 +196,3 @@ export function resolvePackageExtensionEntries(
   }
   return { status: "ok", entries };
 }
-

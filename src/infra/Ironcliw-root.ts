@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const CORE_PACKAGE_NAMES = new Set(["Ironcliw", "ironcliw", "IronCliw"]);
+const CORE_PACKAGE_NAMES = new Set(["IronCliw", "ironcliw", "IronCliw"]);
 
 async function readPackageName(dir: string): Promise<string | null> {
   try {
@@ -82,7 +82,7 @@ function candidateDirsFromArgv1(argv1: string): string[] {
   return candidates;
 }
 
-export async function resolveIroncliwPackageRoot(opts: {
+export async function resolveIronCliwPackageRoot(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;
@@ -97,7 +97,7 @@ export async function resolveIroncliwPackageRoot(opts: {
   return null;
 }
 
-export function resolveIroncliwPackageRootSync(opts: {
+export function resolveIronCliwPackageRootSync(opts: {
   cwd?: string;
   argv1?: string;
   moduleUrl?: string;
@@ -127,4 +127,3 @@ function buildCandidates(opts: { cwd?: string; argv1?: string; moduleUrl?: strin
 
   return candidates;
 }
-

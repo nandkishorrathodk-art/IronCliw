@@ -178,4 +178,3 @@ LINE 插件还提供 `/card` 命令用于 Flex 消息预设：
 - **Webhook 验证失败：** 确保 webhook URL 使用 HTTPS 且 `channelSecret` 与 LINE 控制台中的一致。
 - **没有入站事件：** 确认 webhook 路径与 `channels.line.webhookPath` 匹配，且 Gateway 网关可从 LINE 访问。
 - **媒体下载错误：** 如果媒体超过默认限制，请提高 `channels.line.mediaMaxMb`。
-

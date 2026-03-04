@@ -158,4 +158,3 @@ describe("WhatsApp dmPolicy precedence", () => {
     expect(sendMessageMock).not.toHaveBeenCalled();
   });
 });
-

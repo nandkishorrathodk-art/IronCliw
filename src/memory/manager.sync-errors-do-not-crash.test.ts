@@ -73,4 +73,3 @@ describe("memory manager sync failures", () => {
     expect(unhandled).toHaveLength(0);
   });
 });
-

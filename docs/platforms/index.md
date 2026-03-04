@@ -51,4 +51,3 @@ The service target depends on OS:
 
 - macOS: LaunchAgent (`ai.IronCliw.gateway` or `ai.IronCliw.<profile>`; legacy `com.IronCliw.*`)
 - Linux/WSL2: systemd user service (`IronCliw-gateway[-<profile>].service`)
-

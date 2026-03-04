@@ -415,4 +415,3 @@ export {
   promptRefreshTokenSetup,
   configureWithEnvToken,
 };
-

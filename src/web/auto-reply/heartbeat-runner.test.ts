@@ -216,4 +216,3 @@ describe("runWebHeartbeatOnce", () => {
     expect(childLoggerLogs).not.toContain('"preview"');
   });
 });
-

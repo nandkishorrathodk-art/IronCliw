@@ -107,4 +107,3 @@ describe("hooks install (e2e)", () => {
     expect(event.messages).toContain("hook-ok");
   });
 });
-

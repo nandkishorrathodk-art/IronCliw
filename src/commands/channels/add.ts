@@ -309,4 +309,3 @@ export async function channelsAddCommand(
   await writeConfigFile(nextConfig);
   runtime.log(`Added ${channelLabel(channel)} account "${accountId}".`);
 }
-

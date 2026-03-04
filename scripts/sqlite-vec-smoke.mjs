@@ -36,4 +36,3 @@ const rows = db
 
 console.log("sqlite-vec ok");
 console.log(rows);
-

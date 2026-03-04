@@ -43,4 +43,3 @@ describe("resolveTailnetDnsHint", () => {
     expect(getTailnetHostname).toHaveBeenCalledTimes(1);
   });
 });
-

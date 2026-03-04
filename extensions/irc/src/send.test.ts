@@ -114,4 +114,3 @@ describe("sendMessageIrc cfg threading", () => {
     expect(client.sendPrivmsg).toHaveBeenCalledWith("#ops", "ping");
   });
 });
-

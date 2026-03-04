@@ -277,4 +277,3 @@ describe("pruneHistoryForContextShare", () => {
     expect(pruned.droppedMessages).toBe(pruned.droppedMessagesList.length + 2);
   });
 });
-

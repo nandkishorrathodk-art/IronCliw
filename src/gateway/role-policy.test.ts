@@ -26,4 +26,3 @@ describe("gateway role policy", () => {
     expect(isRoleAuthorizedForMethod("operator", "node.event")).toBe(false);
   });
 });
-

@@ -381,4 +381,3 @@ export async function maybeScanExtraGatewayServices(
     "Gateway recommendation",
   );
 }
-

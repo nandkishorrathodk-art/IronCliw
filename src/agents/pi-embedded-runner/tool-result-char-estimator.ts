@@ -167,4 +167,3 @@ export function invalidateMessageCharsCacheEntry(
 ): void {
   cache.delete(msg);
 }
-

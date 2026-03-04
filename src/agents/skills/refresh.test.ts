@@ -71,4 +71,3 @@ describe("ensureSkillsWatcher", () => {
     expect(ignored.some((re) => re.test("/tmp/workspace/skills/my-skill/SKILL.md"))).toBe(false);
   });
 });
-

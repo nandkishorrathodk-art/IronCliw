@@ -9,4 +9,3 @@ export function ignoreCiaoCancellationRejection(reason: unknown): boolean {
   logDebug(`bonjour: ignoring unhandled ciao rejection: ${formatBonjourError(reason)}`);
   return true;
 }
-

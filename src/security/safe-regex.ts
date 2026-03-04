@@ -330,4 +330,3 @@ export function compileSafeRegex(source: string, flags = ""): RegExp | null {
   }
   return compiled;
 }
-

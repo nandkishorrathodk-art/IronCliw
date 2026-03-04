@@ -230,4 +230,3 @@ export function syncTelegramMenuCommands(params: {
     runtime.error?.(`Telegram command sync failed: ${String(err)}`);
   });
 }
-

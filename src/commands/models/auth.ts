@@ -387,4 +387,3 @@ export async function modelsAuthLoginCommand(opts: LoginOptions, runtime: Runtim
     await prompter.note(result.notes.join("\n"), "Provider notes");
   }
 }
-

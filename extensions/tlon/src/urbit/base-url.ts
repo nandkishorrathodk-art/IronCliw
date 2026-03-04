@@ -55,4 +55,3 @@ export function isBlockedUrbitHostname(hostname: string): boolean {
   }
   return isBlockedHostnameOrIp(normalized);
 }
-

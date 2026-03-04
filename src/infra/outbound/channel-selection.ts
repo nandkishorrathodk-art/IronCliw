@@ -132,4 +132,3 @@ export async function resolveMessageChannelSelection(params: {
     `Channel is required when multiple channels are configured: ${configured.join(", ")}`,
   );
 }
-

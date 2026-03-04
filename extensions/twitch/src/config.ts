@@ -114,4 +114,3 @@ export function listAccountIds(cfg: IronCliwConfig): string[] {
 
   return ids;
 }
-

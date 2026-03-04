@@ -87,4 +87,3 @@ describe("collectMissingDefaultAccountBindingWarnings", () => {
     expect(collectMissingDefaultAccountBindingWarnings(cfg)).toEqual([]);
   });
 });
-

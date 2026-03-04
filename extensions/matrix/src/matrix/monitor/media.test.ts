@@ -84,4 +84,3 @@ describe("downloadMatrixMedia", () => {
     expect(saveMediaBuffer).not.toHaveBeenCalled();
   });
 });
-

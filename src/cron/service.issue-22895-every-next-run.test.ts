@@ -49,4 +49,3 @@ describe("Cron issue #22895 interval scheduling", () => {
     expect(next).toBe(Date.parse("2026-02-22T10:44:00.000Z"));
   });
 });
-

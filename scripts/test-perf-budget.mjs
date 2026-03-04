@@ -125,4 +125,3 @@ console.log(
 if (failed) {
   process.exit(1);
 }
-

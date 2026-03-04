@@ -54,4 +54,3 @@ describe("ACP install hints", () => {
     expect(resolveAcpInstallCommandHint(cfg)).toContain('ACP backend "custom-backend"');
   });
 });
-

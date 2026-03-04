@@ -473,4 +473,3 @@ export async function monitorWebChannel(
 
   process.removeListener("SIGINT", handleSigint);
 }
-

@@ -131,4 +131,3 @@ export function startGatewayMaintenanceTimers(params: {
 
   return { tickInterval, healthInterval, dedupeCleanup };
 }
-

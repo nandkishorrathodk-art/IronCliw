@@ -70,4 +70,3 @@ export function getFollowupQueueDepth(key: string): number {
   }
   return queue.items.length;
 }
-

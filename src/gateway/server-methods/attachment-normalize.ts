@@ -30,4 +30,3 @@ export function normalizeRpcAttachmentsToChatAttachments(
       .filter((a) => a.content) ?? []
   );
 }
-

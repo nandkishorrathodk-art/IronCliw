@@ -58,4 +58,3 @@ describe("acp policy", () => {
     expect(resolveAcpAgentPolicyError(cfg, "codex")).toBeNull();
   });
 });
-

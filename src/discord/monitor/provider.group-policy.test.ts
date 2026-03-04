@@ -36,4 +36,3 @@ describe("resolveDiscordRuntimeGroupPolicy", () => {
     expect(resolved.providerMissingFallbackApplied).toBe(true);
   });
 });
-

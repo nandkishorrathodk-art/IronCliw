@@ -34,4 +34,3 @@ IronCliw onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 - `OPENCODE_ZEN_API_KEY` is also supported.
 - You sign in to Zen, add billing details, and copy your API key.
 - OpenCode Zen bills per request; check the OpenCode dashboard for details.
-

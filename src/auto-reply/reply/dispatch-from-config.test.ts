@@ -1625,4 +1625,3 @@ describe("dispatchReplyFromConfig", () => {
     expect(blockReplySentTexts).toContain("The answer is 42");
   });
 });
-

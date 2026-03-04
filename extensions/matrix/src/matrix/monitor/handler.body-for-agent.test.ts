@@ -140,4 +140,3 @@ describe("createMatrixRoomMessageHandler BodyForAgent sender label", () => {
     );
   });
 });
-

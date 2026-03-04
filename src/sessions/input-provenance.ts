@@ -77,4 +77,3 @@ export function hasInterSessionUserProvenance(
   }
   return isInterSessionInputProvenance(message.provenance);
 }
-

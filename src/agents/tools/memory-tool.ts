@@ -240,4 +240,3 @@ function deriveChatTypeFromSessionKey(sessionKey?: string): "direct" | "group" |
   }
   return "direct";
 }
-

@@ -112,4 +112,3 @@ describe("tui session actions", () => {
     expect(requestRender).toHaveBeenCalledTimes(2);
   });
 });
-

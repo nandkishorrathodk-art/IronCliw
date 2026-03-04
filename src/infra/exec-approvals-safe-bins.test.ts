@@ -490,4 +490,3 @@ describe("exec approvals safe bins", () => {
     expect(result.segments[0]?.resolution?.policyBlocked).toBe(true);
   });
 });
-

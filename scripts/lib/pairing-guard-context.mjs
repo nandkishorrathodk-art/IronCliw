@@ -11,4 +11,3 @@ export function createPairingGuardContext(importMetaUrl) {
       path.join(repoRoot, ...relativePath.split("/").filter(Boolean)),
   };
 }
-

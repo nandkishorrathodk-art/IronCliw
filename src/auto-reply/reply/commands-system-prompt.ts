@@ -134,4 +134,3 @@ export async function resolveCommandsSystemPromptBundle(
 
   return { systemPrompt, tools, skillsPrompt, bootstrapFiles, injectedFiles, sandboxRuntime };
 }
-

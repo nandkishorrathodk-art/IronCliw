@@ -360,4 +360,3 @@ export function installBrowserControlServerHooks() {
     await cleanupBrowserControlServerTestContext();
   });
 }
-

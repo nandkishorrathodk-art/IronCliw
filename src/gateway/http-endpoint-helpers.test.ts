@@ -78,4 +78,3 @@ describe("handleGatewayPostJsonEndpoint", () => {
     expect(result).toEqual({ body: { hello: "world" } });
   });
 });
-

@@ -156,4 +156,3 @@ export async function sendDiscordComponentMessage(
     channelId: result.channel_id ?? channelId,
   };
 }
-

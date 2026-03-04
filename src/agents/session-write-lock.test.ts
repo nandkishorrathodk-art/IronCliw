@@ -398,4 +398,3 @@ describe("acquireSessionWriteLock", () => {
     process.off("SIGINT", keepAlive);
   });
 });
-

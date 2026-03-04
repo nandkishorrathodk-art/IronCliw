@@ -145,4 +145,3 @@ describe('account dmPolicy="allowlist" uses inherited allowFrom', () => {
     expect(res.ok).toBe(true);
   });
 });
-

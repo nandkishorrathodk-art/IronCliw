@@ -234,4 +234,3 @@ describe("getReplyFromConfig message hooks", () => {
     expect(mocks.triggerInternalHook).not.toHaveBeenCalled();
   });
 });
-

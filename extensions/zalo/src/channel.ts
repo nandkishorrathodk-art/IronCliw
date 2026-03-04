@@ -431,4 +431,3 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     },
   },
 };
-

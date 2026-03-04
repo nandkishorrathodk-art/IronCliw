@@ -74,4 +74,3 @@ describe("buildEmbeddedPiSettingsSnapshot", () => {
     expect(snapshot.hideThinkingBlock).toBe(true);
   });
 });
-

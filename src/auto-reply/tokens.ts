@@ -87,4 +87,3 @@ export function isSilentReplyPrefixText(
   // because NO_REPLY streaming can transiently emit that fragment.
   return tokenUpper === SILENT_REPLY_TOKEN && normalized === "NO";
 }
-

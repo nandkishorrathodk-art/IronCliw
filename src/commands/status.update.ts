@@ -131,4 +131,3 @@ export function formatUpdateOneLiner(update: UpdateCheckResult): string {
   }
   return `Update: ${parts.join(" · ")}`;
 }
-

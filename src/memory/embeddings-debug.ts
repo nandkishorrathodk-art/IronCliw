@@ -11,4 +11,3 @@ export function debugEmbeddingsLog(message: string, meta?: Record<string, unknow
   const suffix = meta ? ` ${JSON.stringify(meta)}` : "";
   log.raw(`${message}${suffix}`);
 }
-

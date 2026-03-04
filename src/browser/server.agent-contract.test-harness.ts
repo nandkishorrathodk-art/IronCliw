@@ -24,4 +24,3 @@ export async function postJson<T>(url: string, body?: unknown): Promise<T> {
   });
   return (await res.json()) as T;
 }
-

@@ -50,4 +50,3 @@ export { slackOnboardingAdapter } from "../channels/plugins/onboarding/slack.js"
 export { SlackConfigSchema } from "../config/zod-schema.providers-core.js";
 
 export { handleSlackMessageAction } from "./slack-message-actions.js";
-

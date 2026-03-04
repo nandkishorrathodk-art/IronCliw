@@ -578,4 +578,3 @@ export async function applyMediaUnderstanding(params: {
     await cache.cleanup();
   }
 }
-

@@ -132,4 +132,3 @@ describe("isCommandFlagEnabled", () => {
     ).toBe(false);
   });
 });
-

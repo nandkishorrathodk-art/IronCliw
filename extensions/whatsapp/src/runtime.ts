@@ -12,4 +12,3 @@ export function getWhatsAppRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

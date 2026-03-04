@@ -168,4 +168,3 @@ export function makeRestrictedElevatedDisabledConfig(home: string) {
     session: { store: path.join(home, "sessions.json") },
   } as const;
 }
-

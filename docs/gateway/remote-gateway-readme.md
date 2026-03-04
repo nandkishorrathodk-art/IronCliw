@@ -156,4 +156,3 @@ launchctl bootout gui/$UID/ai.IronCliw.ssh-tunnel
 | `RunAtLoad`                          | Starts tunnel when the agent loads                           |
 
 IronCliw.app connects to `ws://127.0.0.1:18789` on your client machine. The SSH tunnel forwards that connection to port 18789 on the remote machine where the Gateway is running.
-

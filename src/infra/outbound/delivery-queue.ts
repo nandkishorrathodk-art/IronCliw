@@ -392,4 +392,3 @@ const PERMANENT_ERROR_PATTERNS: readonly RegExp[] = [
 export function isPermanentDeliveryError(error: string): boolean {
   return PERMANENT_ERROR_PATTERNS.some((re) => re.test(error));
 }
-

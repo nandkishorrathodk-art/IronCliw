@@ -119,4 +119,3 @@ export function formatGatewaySummary(params: {
   const messageId = params.messageId ?? "unknown";
   return `✅ ${action} via gateway${channelSuffix}. Message ID: ${messageId}`;
 }
-

@@ -43,4 +43,3 @@ export function resolveTimestampMs(timestamp?: string | null) {
   const parsed = Date.parse(timestamp);
   return Number.isNaN(parsed) ? undefined : parsed;
 }
-

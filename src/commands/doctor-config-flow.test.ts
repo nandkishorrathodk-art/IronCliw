@@ -719,4 +719,3 @@ describe("doctor config flow", () => {
     expectGoogleChatDmAllowFromRepaired(result.cfg);
   });
 });
-

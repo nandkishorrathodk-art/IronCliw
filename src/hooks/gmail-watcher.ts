@@ -244,4 +244,3 @@ export async function stopGmailWatcher(): Promise<void> {
 export function isGmailWatcherRunning(): boolean {
   return watcherProcess !== null && !shuttingDown;
 }
-

@@ -182,4 +182,3 @@ export function resolveSkillCommandInvocation(params: {
   const args = match[2]?.trim();
   return { command, args: args || undefined };
 }
-

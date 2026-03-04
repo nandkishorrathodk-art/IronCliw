@@ -139,4 +139,3 @@ describe("resolveRunWorkspaceDir", () => {
     expect(result.workspaceDir).toBe(path.resolve(fallbackWorkspace));
   });
 });
-

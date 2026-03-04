@@ -128,4 +128,3 @@ describe("createIronCliwCodingTools", () => {
     expect(offenders).toEqual([]);
   });
 });
-

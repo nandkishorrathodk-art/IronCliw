@@ -213,4 +213,3 @@ describe("ensureIronCliwCliOnPath", () => {
     expect(parts[1]).toBe(linuxbrewSbin);
   });
 });
-

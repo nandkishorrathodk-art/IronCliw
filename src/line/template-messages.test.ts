@@ -122,4 +122,3 @@ describe("createProductCarousel", () => {
     expect(columns[0].actions[0].type).toBe(expectedType);
   });
 });
-

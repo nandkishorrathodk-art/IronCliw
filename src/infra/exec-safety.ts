@@ -42,4 +42,3 @@ export function isSafeExecutableValue(value: string | null | undefined): boolean
   }
   return BARE_NAME_PATTERN.test(trimmed);
 }
-

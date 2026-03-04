@@ -132,4 +132,3 @@ describe("config backup rotation", () => {
     });
   });
 });
-

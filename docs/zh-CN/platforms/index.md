@@ -58,4 +58,3 @@ Windows 原生配套应用也在计划中；推荐通过 WSL2 使用 Gateway 网
 
 - macOS：LaunchAgent（`bot.molt.gateway` 或 `bot.molt.<profile>`；旧版 `com.IronCliw.*`）
 - Linux/WSL2：systemd 用户服务（`IronCliw-gateway[-<profile>].service`）
-

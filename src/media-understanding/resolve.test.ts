@@ -155,4 +155,3 @@ describe("resolveEntriesWithActiveFallback", () => {
     expect(entries).toHaveLength(0);
   });
 });
-

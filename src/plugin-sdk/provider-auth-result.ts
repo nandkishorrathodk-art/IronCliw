@@ -45,4 +45,3 @@ export function buildOauthProviderAuthResult(params: {
     notes: params.notes,
   };
 }
-

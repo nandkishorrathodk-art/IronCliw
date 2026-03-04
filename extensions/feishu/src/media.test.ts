@@ -497,4 +497,3 @@ describe("downloadMessageResourceFeishu", () => {
     expect(result.buffer).toBeInstanceOf(Buffer);
   });
 });
-

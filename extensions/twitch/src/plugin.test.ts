@@ -37,4 +37,3 @@ describe("twitchPlugin.status.buildAccountSnapshot", () => {
     expect(snapshot?.accountId).toBe("secondary");
   });
 });
-

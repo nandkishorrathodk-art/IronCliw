@@ -127,4 +127,3 @@ describe("installSkill code safety scanning", () => {
     });
   });
 });
-

@@ -114,4 +114,3 @@ export async function markAuthProfileGood(params: {
   store.lastGood = { ...store.lastGood, [provider]: profileId };
   saveAuthProfileStore(store, agentDir);
 }
-

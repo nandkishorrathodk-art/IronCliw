@@ -21,4 +21,3 @@ export function resolveEnvLogLevelOverride(): LogLevel | undefined {
   }
   return undefined;
 }
-

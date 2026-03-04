@@ -66,4 +66,3 @@ describe("resolveEffectiveBlockStreamingConfig", () => {
     expect(resolved.chunking.minChars).toBeLessThanOrEqual(resolved.chunking.maxChars);
   });
 });
-

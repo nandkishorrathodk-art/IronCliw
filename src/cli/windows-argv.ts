@@ -76,4 +76,3 @@ export function normalizeWindowsArgv(argv: string[]): string[] {
   }
   return cleaned;
 }
-

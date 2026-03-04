@@ -307,4 +307,3 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
   defaultRuntime.log(`${label("Troubles:")} run ${formatCliCommand("IronCliw status")}`);
   defaultRuntime.log(`${label("Troubleshooting:")} https://docs.IronCliw.ai/troubleshooting`);
 }
-

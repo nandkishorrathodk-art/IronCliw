@@ -29,4 +29,3 @@ export async function statRegularFile(absPath: string): Promise<RegularFileStatR
   }
   return { missing: false, stat };
 }
-

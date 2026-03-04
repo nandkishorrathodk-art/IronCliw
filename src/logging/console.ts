@@ -324,4 +324,3 @@ export function enableConsoleCapture(): void {
   console.debug = forward("debug", original.debug);
   console.trace = forward("trace", original.trace);
 }
-

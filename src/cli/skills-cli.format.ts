@@ -299,4 +299,3 @@ export function formatSkillsCheck(report: SkillStatusReport, opts: SkillsCheckOp
 
   return appendClawHubHint(lines.join("\n"), opts.json);
 }
-

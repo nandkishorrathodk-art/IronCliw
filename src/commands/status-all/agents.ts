@@ -70,4 +70,3 @@ export async function getAgentLocalStatuses(cfg: IronCliwConfig) {
     bootstrapPendingCount,
   };
 }
-

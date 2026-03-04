@@ -784,4 +784,3 @@ export type PluginHookRegistration<K extends PluginHookName = PluginHookName> = 
   priority?: number;
   source: string;
 };
-

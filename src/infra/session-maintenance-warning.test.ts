@@ -91,4 +91,3 @@ describe("deliverSessionMaintenanceWarning", () => {
     expect(mocks.enqueueSystemEvent).not.toHaveBeenCalled();
   });
 });
-

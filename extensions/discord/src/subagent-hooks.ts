@@ -150,4 +150,3 @@ export function registerDiscordSubagentHooks(api: IronCliwPluginApi) {
     };
   });
 }
-

@@ -73,4 +73,3 @@ export async function setupCommand(
   await fs.mkdir(sessionsDir, { recursive: true });
   runtime.log(`Sessions OK: ${shortenHomePath(sessionsDir)}`);
 }
-

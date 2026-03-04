@@ -190,4 +190,3 @@ Example:
     Project origins, contributors, and license.
   </Card>
 </Columns>
-

@@ -220,4 +220,3 @@ export function resolveGatewayCredentialsFromConfig(params: {
 
   return { token, password };
 }
-

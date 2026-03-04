@@ -17,4 +17,3 @@ describe("resolveAccountEntry", () => {
     expect(resolveAccountEntry(accounts, "default")).toBeUndefined();
   });
 });
-

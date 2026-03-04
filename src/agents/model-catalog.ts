@@ -273,4 +273,3 @@ export function findModelInCatalog(
       entry.id.toLowerCase() === normalizedModelId,
   );
 }
-

@@ -85,4 +85,3 @@ export function normalizeCanvasScopedUrl(rawUrl: string): NormalizedCanvasScoped
     malformedScopedPath,
   };
 }
-

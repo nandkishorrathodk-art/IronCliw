@@ -18,4 +18,3 @@ export function parseRestartRequestParams(params: unknown): {
       : undefined;
   return { sessionKey, note, restartDelayMs };
 }
-

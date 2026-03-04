@@ -47,4 +47,3 @@ export function getActivePluginRegistryKey(): string | null {
 export function getActivePluginRegistryVersion(): number {
   return state.version;
 }
-

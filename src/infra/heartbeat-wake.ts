@@ -260,4 +260,3 @@ export function resetHeartbeatWakeStateForTests() {
   handlerGeneration += 1;
   handler = null;
 }
-

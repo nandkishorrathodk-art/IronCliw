@@ -17,4 +17,3 @@ export function inferParamBFromIdOrName(text: string): number | null {
   }
   return best;
 }
-

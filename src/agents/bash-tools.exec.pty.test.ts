@@ -29,4 +29,3 @@ test("exec sets IronCliw_SHELL in pty mode", async () => {
   const text = result.content?.find((item) => item.type === "text")?.text ?? "";
   expect(text).toContain("exec");
 });
-

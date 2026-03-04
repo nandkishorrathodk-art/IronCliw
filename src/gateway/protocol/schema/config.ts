@@ -61,4 +61,3 @@ export const ConfigSchemaResponseSchema = Type.Object(
   },
   { additionalProperties: false },
 );
-

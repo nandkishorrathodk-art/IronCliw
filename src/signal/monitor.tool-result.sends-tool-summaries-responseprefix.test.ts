@@ -495,4 +495,3 @@ describe("monitorSignalProvider tool results", () => {
     expect(sendMock).toHaveBeenCalledTimes(1);
   });
 });
-

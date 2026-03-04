@@ -46,4 +46,3 @@ describe("sandbox explain command", () => {
     expect(parsed.fixIt).toContain("tools.sandbox.tools.deny");
   });
 });
-

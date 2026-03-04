@@ -292,4 +292,3 @@ export function listEnabledIrcAccounts(cfg: CoreConfig): ResolvedIrcAccount[] {
     .map((accountId) => resolveIrcAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

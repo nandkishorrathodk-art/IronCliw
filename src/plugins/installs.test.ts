@@ -43,4 +43,3 @@ describe("recordPluginInstall", () => {
     expect(typeof next.plugins?.installs?.demo?.installedAt).toBe("string");
   });
 });
-

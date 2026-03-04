@@ -69,4 +69,3 @@ export async function resolveChannelAccountConfigured(params: {
   }
   return true;
 }
-

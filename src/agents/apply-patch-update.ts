@@ -203,4 +203,3 @@ function normalizePunctuation(value: string): string {
     })
     .join("");
 }
-

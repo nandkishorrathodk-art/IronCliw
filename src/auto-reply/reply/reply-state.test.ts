@@ -459,4 +459,3 @@ describe("incrementCompactionCount", () => {
     expect(stored[sessionKey].totalTokens).toBe(180_000);
   });
 });
-

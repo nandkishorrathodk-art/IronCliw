@@ -693,4 +693,3 @@ describe("security: path traversal protection (CWE-22)", () => {
     });
   });
 });
-

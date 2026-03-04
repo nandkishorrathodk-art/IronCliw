@@ -218,4 +218,3 @@ describe("tailscale helpers", () => {
     expect(exec).toHaveBeenCalledTimes(2);
   });
 });
-

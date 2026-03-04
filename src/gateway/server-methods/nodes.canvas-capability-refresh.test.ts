@@ -61,4 +61,3 @@ describe("node.canvas.capability.refresh", () => {
     expect(call?.[2]?.code).toBe(ErrorCodes.UNAVAILABLE);
   });
 });
-

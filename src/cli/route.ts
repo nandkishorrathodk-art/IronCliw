@@ -45,4 +45,3 @@ export async function tryRouteCli(argv: string[]): Promise<boolean> {
   await prepareRoutedCommand({ argv, commandPath: path, loadPlugins: route.loadPlugins });
   return route.run(argv);
 }
-

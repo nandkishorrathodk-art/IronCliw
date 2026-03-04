@@ -41,4 +41,3 @@ export function restorePlatformPathEnv(snapshot: PlatformPathEnvSnapshot): void 
   }
 }
 export { createWindowsCmdShimFixture } from "../../shared/windows-cmd-shim-test-fixtures.js";
-

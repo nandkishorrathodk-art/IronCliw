@@ -1243,4 +1243,3 @@ describe("applyExtraParamsToAgent", () => {
     },
   );
 });
-

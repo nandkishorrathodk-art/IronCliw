@@ -15,4 +15,3 @@ export function createAcpGateway(
     request,
   } as unknown as GatewayClient;
 }
-

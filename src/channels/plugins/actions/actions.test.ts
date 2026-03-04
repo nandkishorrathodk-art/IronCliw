@@ -1095,4 +1095,3 @@ describe("slack actions adapter", () => {
     expect(handleSlackAction).not.toHaveBeenCalled();
   });
 });
-

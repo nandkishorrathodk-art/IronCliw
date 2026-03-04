@@ -26,4 +26,3 @@ export function isDeprecatedAuthChoice(
 ): authChoice is "claude-cli" | "codex-cli" {
   return authChoice === "claude-cli" || authChoice === "codex-cli";
 }
-

@@ -47,4 +47,3 @@ export function loadGatewayPlugins(params: {
   }
   return { pluginRegistry, gatewayMethods };
 }
-

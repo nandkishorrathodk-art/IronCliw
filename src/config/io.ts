@@ -1397,4 +1397,3 @@ export async function writeConfigFile(
     unsetPaths: options.unsetPaths,
   });
 }
-

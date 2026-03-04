@@ -18,4 +18,3 @@ export async function runDaemonStatus(opts: DaemonStatusOptions) {
     defaultRuntime.exit(1);
   }
 }
-

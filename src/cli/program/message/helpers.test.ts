@@ -219,4 +219,3 @@ describe("runMessageAction", () => {
     expectNoAccountFieldInPassedOptions();
   });
 });
-

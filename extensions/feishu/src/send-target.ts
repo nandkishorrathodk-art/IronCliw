@@ -27,4 +27,3 @@ export function resolveFeishuSendTarget(params: {
     receiveIdType: resolveReceiveIdType(withoutProviderPrefix),
   };
 }
-

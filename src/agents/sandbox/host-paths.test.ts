@@ -36,4 +36,3 @@ describe("resolveSandboxHostPathViaExistingAncestor", () => {
     expect(resolved).toBe(join(realpathSync.native(outside), "missing-leaf"));
   });
 });
-

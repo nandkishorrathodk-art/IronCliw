@@ -100,4 +100,3 @@ describe("channels dock", () => {
     expect(formatted).toEqual(["user", "foo", "plain"]);
   });
 });
-

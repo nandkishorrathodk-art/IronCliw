@@ -43,4 +43,3 @@ export class DiscordUiContainer extends Container {
     super(params.components, { accentColor, spoiler: params.spoiler });
   }
 }
-

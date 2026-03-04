@@ -143,4 +143,3 @@ describe("createTelegramSendChatActionHandler", () => {
     expect(fn).toHaveBeenCalledTimes(3);
   });
 });
-

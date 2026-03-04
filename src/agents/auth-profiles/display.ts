@@ -15,4 +15,3 @@ export function resolveAuthProfileDisplayLabel(params: {
   }
   return profileId;
 }
-

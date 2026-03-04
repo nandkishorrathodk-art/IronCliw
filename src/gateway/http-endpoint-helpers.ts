@@ -45,4 +45,3 @@ export async function handleGatewayPostJsonEndpoint(
 
   return { body };
 }
-

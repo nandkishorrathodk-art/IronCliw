@@ -113,4 +113,3 @@ export async function cleanupTailscaleExposure(config: VoiceCallConfig): Promise
   const mode = config.tailscale.mode === "funnel" ? "funnel" : "serve";
   await cleanupTailscaleExposureRoute({ mode, path: config.tailscale.path });
 }
-

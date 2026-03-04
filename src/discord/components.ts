@@ -1147,4 +1147,3 @@ export function formatDiscordComponentEventText(params: {
   }
   return `Selected ${values.join(", ")} from "${params.label}".`;
 }
-

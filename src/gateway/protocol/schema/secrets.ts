@@ -33,4 +33,3 @@ export const SecretsResolveResultSchema = Type.Object(
 );
 
 export type SecretsResolveResult = Static<typeof SecretsResolveResultSchema>;
-

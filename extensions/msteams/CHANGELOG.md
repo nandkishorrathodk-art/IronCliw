@@ -51,4 +51,3 @@
 - Attachment processing: placeholders + HTML summaries, inline image extraction (including data: URLs).
 - Media downloads with host allowlist, auth scope fallback, and Graph hostedContents/attachments fallback.
 - Retry/backoff on transient/throttled sends with classified errors + helpful hints.
-

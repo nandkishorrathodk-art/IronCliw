@@ -277,7 +277,7 @@ export async function monitorMSTeamsProvider(
     }
     next(err);
   });
-  expressApp.use(authorizeJWT(authConfig));
+  expressApp.use(authorizeJWT(authConfig) as any);
 
   // Set up the messages endpoint - use configured path and /api/messages as fallback
   const configuredPath = msteamsCfg.webhook?.path ?? "/api/messages";
@@ -343,4 +343,3 @@ export async function monitorMSTeamsProvider(
 
   return { app: expressApp, shutdown };
 }
-

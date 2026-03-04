@@ -65,4 +65,3 @@ x-i18n:
 3. 重构 `VoicePushToTalk`，使其接管现有会话并在松开时调用 `endCapture`；施加运行时冷却。
 4. 将 `VoiceWakeOverlayController` 连接到 publisher；移除来自 runtime/PTT 的直接调用。
 5. 添加会话接管、冷却和空文本关闭的集成测试。
-

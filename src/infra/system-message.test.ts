@@ -17,4 +17,3 @@ describe("system-message", () => {
     expect(hasSystemMark("hello")).toBe(false);
   });
 });
-

@@ -185,4 +185,3 @@ describe("openai-responses reasoning replay", () => {
     expect(types).toContain("message");
   });
 });
-

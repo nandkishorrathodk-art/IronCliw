@@ -104,4 +104,3 @@ describe("applyExclusiveSlotSelection", () => {
     expect(result.config).toBe(config);
   });
 });
-

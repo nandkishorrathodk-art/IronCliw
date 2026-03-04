@@ -42,4 +42,3 @@ describe("resolveDiscordPresenceUpdate", () => {
     expect(result!.activities[0].url).toBe("https://twitch.tv/test");
   });
 });
-

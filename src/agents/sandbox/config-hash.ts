@@ -54,4 +54,3 @@ function computeHash(input: unknown): string {
   const raw = JSON.stringify(payload);
   return hashTextSha256(raw);
 }
-

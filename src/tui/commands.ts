@@ -154,4 +154,3 @@ export function helpText(options: SlashCommandOptions = {}): string {
     "/exit",
   ].join("\n");
 }
-

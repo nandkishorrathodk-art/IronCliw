@@ -64,4 +64,3 @@ describe("zalouser message sid helpers", () => {
     expect(resolveZalouserMessageSid({ fallback: "t" })).toBe("t");
   });
 });
-

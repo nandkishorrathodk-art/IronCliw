@@ -97,4 +97,3 @@ describe("msteams monitor handler authz", () => {
     expect(conversationStore.upsert).not.toHaveBeenCalled();
   });
 });
-

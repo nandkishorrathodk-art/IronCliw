@@ -92,4 +92,3 @@ export function clearDeviceAuthToken(params: {
     role: params.role,
   });
 }
-

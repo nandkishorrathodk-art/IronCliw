@@ -7,4 +7,3 @@ describe("collapseInlineHorizontalWhitespace", () => {
     expect(collapseInlineHorizontalWhitespace(value)).toBe("hello world\n next line");
   });
 });
-

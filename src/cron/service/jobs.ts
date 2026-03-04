@@ -833,4 +833,3 @@ export function resolveJobPayloadTextForMain(job: CronJob): string | undefined {
   const text = normalizePayloadToSystemText(job.payload);
   return text.trim() ? text : undefined;
 }
-

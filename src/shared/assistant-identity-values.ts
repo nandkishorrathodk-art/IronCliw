@@ -14,4 +14,3 @@ export function coerceIdentityValue(
   }
   return trimmed.slice(0, maxLength);
 }
-

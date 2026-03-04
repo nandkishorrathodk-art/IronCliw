@@ -73,4 +73,3 @@ Notes:
 - Does not manage OAuth/tokens.
 - Uses timeouts, stdout caps, and strict JSON envelope parsing.
 - Ensure `lobster` is available on `PATH` for the gateway process.
-

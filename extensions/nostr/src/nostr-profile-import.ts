@@ -260,4 +260,3 @@ export function mergeProfiles(
     lud16: local.lud16 ?? imported.lud16,
   };
 }
-

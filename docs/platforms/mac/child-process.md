@@ -67,4 +67,3 @@ remote host and connects over that tunnel.
 
 If a true child‑process mode is ever needed again, it should be documented as a
 separate, explicit dev‑only mode.
-

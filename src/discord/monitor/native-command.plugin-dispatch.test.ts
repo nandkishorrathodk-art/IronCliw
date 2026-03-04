@@ -111,4 +111,3 @@ describe("Discord native plugin command dispatch", () => {
     );
   });
 });
-

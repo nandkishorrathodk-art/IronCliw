@@ -123,4 +123,3 @@ export function credentialsMatchConfig(
   }
   return stored.homeserver === config.homeserver && stored.userId === config.userId;
 }
-

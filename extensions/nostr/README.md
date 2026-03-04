@@ -134,4 +134,3 @@ docker run -p 7777:7777 ghcr.io/hoytech/strfry
 ## License
 
 MIT
-

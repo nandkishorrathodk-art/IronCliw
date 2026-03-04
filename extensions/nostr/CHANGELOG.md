@@ -60,4 +60,3 @@ Initial release.
 - NIP-17: Gift-wrapped DMs
 - NIP-44: Versioned encryption
 - Media attachments
-

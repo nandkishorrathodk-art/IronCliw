@@ -578,4 +578,3 @@ describe("createFollowupRunner agentDir forwarding", () => {
     expect(call?.agentDir).toBe(agentDir);
   });
 });
-

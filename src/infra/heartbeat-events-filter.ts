@@ -94,4 +94,3 @@ export function isCronSystemEvent(evt: string) {
   }
   return !isHeartbeatNoiseEvent(evt) && !isExecCompletionEvent(evt);
 }
-

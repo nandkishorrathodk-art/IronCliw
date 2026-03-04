@@ -65,4 +65,3 @@ export const BlueBubblesConfigSchema = bluebubblesAccountSchema.extend({
   defaultAccount: z.string().optional(),
   actions: bluebubblesActionSchema,
 });
-

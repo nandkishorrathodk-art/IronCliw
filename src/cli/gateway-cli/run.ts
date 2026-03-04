@@ -451,4 +451,3 @@ export function addGatewayRunCommand(cmd: Command): Command {
       await runGatewayCommand(resolveGatewayRunOptions(opts, command));
     });
 }
-

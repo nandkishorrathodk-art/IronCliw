@@ -315,4 +315,3 @@ export async function sendBlueBubblesMedia(params: {
 
   return attachmentResult;
 }
-

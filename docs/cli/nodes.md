@@ -73,4 +73,3 @@ Flags:
   (allowlist entry alone does not auto-allow the wrapper form).
 - `--agent <id>`: agent-scoped approvals/allowlists (defaults to configured agent).
 - `--ask <off|on-miss|always>`, `--security <deny|allowlist|full>`: overrides.
-

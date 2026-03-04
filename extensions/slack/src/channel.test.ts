@@ -183,4 +183,3 @@ describe("slackPlugin config", () => {
     expect(snapshot?.configured).toBe(false);
   });
 });
-

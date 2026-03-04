@@ -35,4 +35,3 @@ export function getGateway(accountId?: string): GatewayPlugin | undefined {
 export function clearGateways(): void {
   gatewayRegistry.clear();
 }
-

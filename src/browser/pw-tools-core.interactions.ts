@@ -648,4 +648,3 @@ export async function setInputFilesViaPlaywright(opts: {
     // Best-effort for sites that don't react to setInputFiles alone.
   }
 }
-

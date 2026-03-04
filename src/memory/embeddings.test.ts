@@ -525,4 +525,3 @@ describe("FTS-only fallback when no provider available", () => {
     expect(result.providerUnavailableReason).toContain("Fallback to gemini failed");
   });
 });
-

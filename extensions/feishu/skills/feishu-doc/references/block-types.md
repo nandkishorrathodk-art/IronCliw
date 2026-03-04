@@ -101,4 +101,3 @@ Currently, the API only supports appending to document end. For insertion at spe
 ### Delete multiple blocks
 
 Blocks must be deleted one at a time. Delete child blocks before parent containers.
-

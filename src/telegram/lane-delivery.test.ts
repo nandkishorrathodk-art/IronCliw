@@ -360,4 +360,3 @@ describe("createLaneTextDeliverer", () => {
     expect(harness.deletePreviewMessage).toHaveBeenCalledWith(4444);
   });
 });
-

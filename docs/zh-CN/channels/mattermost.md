@@ -142,4 +142,3 @@ Mattermost 支持在 `channels.mattermost.accounts` 下配置多个账户：
 - 频道中无回复：确保 bot 在频道中并提及它（oncall），使用触发前缀（onchar），或设置 `chatmode: "onmessage"`。
 - 认证错误：检查 bot token、基础 URL 以及账户是否已启用。
 - 多账户问题：环境变量仅适用于 `default` 账户。
-

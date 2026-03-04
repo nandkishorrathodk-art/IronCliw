@@ -35,4 +35,3 @@ export async function startGmailWatcherWithLogs(params: {
     params.log.error(`gmail watcher failed to start: ${String(err)}`);
   }
 }
-

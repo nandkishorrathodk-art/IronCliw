@@ -143,4 +143,3 @@ describeLaunchdIntegration("launchd integration", () => {
     await fs.access(resolveLaunchAgentPlistPath(launchEnv));
   }, 60_000);
 });
-

@@ -34,4 +34,3 @@ export function attachEarlyGatewayErrorGuard(client: Client): EarlyGatewayErrorG
     },
   };
 }
-

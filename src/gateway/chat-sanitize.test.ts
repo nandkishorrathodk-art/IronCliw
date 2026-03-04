@@ -90,4 +90,3 @@ describe("stripEnvelopeFromMessage", () => {
     expect(result.content).toBe("hello");
   });
 });
-

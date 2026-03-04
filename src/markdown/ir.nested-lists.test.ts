@@ -330,4 +330,3 @@ Paragraph after`;
     expect(result.text).not.toContain("\n\n\n");
   });
 });
-

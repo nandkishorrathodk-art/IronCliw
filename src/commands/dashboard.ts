@@ -67,4 +67,3 @@ export async function dashboardCommand(
     runtime.log(hint);
   }
 }
-

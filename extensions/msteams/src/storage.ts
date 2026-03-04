@@ -23,4 +23,3 @@ export function resolveMSTeamsStorePath(params: MSTeamsStorePathOptions): string
     : getMSTeamsRuntime().state.resolveStateDir(env);
   return path.join(stateDir, params.filename);
 }
-

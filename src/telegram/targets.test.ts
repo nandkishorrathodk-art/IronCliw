@@ -129,4 +129,3 @@ describe("isNumericTelegramChatId", () => {
     expect(isNumericTelegramChatId("t.me/mychannel")).toBe(false);
   });
 });
-

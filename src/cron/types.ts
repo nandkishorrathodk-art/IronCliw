@@ -155,4 +155,3 @@ export type CronJobPatch = Partial<Omit<CronJob, "id" | "createdAtMs" | "state" 
   delivery?: CronDeliveryPatch;
   state?: Partial<CronJobState>;
 };
-

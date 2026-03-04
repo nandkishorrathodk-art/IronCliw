@@ -44,4 +44,3 @@ describe("gateway tools.catalog", () => {
     });
   });
 });
-

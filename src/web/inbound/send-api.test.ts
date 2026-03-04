@@ -156,4 +156,3 @@ describe("createWebSendApi", () => {
     expect(sendPresenceUpdate).toHaveBeenCalledWith("composing", "1555@s.whatsapp.net");
   });
 });
-

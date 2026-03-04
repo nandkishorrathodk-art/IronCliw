@@ -14,4 +14,3 @@ export function resolveNonInteractiveWorkspaceDir(params: {
   ).trim();
   return resolveUserPath(raw);
 }
-

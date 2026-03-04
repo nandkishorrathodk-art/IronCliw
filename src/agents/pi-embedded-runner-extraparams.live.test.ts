@@ -230,4 +230,3 @@ describeGeminiLive("pi embedded extra params (gemini live)", () => {
     expect(textResult.stopReason).not.toBe("error");
   }, 45_000);
 });
-

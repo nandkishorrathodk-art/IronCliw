@@ -132,4 +132,3 @@ describe("healthCommand (coverage)", () => {
     expect(logWebSelfIdMock).toHaveBeenCalled();
   });
 });
-

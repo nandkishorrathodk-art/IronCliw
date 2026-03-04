@@ -36,4 +36,3 @@ export function renderPendingPairingRequestsTable(params: {
     }).trimEnd(),
   };
 }
-

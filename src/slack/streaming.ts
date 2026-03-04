@@ -154,4 +154,3 @@ export async function stopSlackStream(params: StopSlackStreamParams): Promise<vo
 
   logVerbose("slack-stream: stream stopped");
 }
-

@@ -308,4 +308,3 @@ describe("gateway bonjour advertiser", () => {
     await started.stop();
   });
 });
-

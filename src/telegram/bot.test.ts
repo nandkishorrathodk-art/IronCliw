@@ -1756,4 +1756,3 @@ describe("createTelegramBot", () => {
     expect(sessionKey).not.toContain(":topic:");
   });
 });
-

@@ -61,4 +61,3 @@ IronCliw directory groups list --channel zalouser
 IronCliw directory groups list --channel zalouser --query "work"
 IronCliw directory groups members --channel zalouser --group-id <id>
 ```
-

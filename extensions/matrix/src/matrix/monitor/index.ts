@@ -413,4 +413,3 @@ export async function monitorMatrixProvider(opts: MonitorMatrixOpts = {}): Promi
     opts.abortSignal?.addEventListener("abort", onAbort, { once: true });
   });
 }
-

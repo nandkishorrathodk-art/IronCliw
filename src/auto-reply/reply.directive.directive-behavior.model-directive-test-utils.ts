@@ -37,4 +37,3 @@ export async function runModelDirectiveText(
   );
   return replyText(res);
 }
-

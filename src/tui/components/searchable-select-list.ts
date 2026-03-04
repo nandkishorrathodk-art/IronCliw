@@ -391,4 +391,3 @@ export class SearchableSelectList implements Component {
     return this.filteredItems[this.selectedIndex] ?? null;
   }
 }
-

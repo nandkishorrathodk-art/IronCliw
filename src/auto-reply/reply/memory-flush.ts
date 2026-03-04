@@ -180,4 +180,3 @@ export function hasAlreadyFlushedForCurrentCompaction(
   const lastFlushAt = entry.memoryFlushCompactionCount;
   return typeof lastFlushAt === "number" && lastFlushAt === compactionCount;
 }
-

@@ -292,4 +292,3 @@ describe("IronCliw-tools: subagents (sessions_spawn allowlist)", () => {
     expect(details.status).toBe("accepted");
   });
 });
-

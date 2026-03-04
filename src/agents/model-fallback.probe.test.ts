@@ -323,4 +323,3 @@ describe("runWithModelFallback – probe logic", () => {
     expect(run).toHaveBeenNthCalledWith(2, "openai", "gpt-4.1-mini");
   });
 });
-

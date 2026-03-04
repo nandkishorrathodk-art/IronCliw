@@ -25,4 +25,3 @@ export function buildAssistantDeltaResult(params: {
   }
   return { payloads: [{ text: params.text }] };
 }
-

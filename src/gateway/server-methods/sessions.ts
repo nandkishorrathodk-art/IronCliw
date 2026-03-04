@@ -712,4 +712,3 @@ export const sessionsHandlers: GatewayRequestHandlers = {
     );
   },
 };
-

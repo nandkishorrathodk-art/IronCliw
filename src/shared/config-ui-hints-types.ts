@@ -11,4 +11,3 @@ export type ConfigUiHint = {
 };
 
 export type ConfigUiHints = Record<string, ConfigUiHint>;
-

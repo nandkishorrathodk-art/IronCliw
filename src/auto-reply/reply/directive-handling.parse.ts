@@ -213,4 +213,3 @@ export function isDirectiveOnly(params: {
   const noMentions = isGroup ? stripMentions(stripped, ctx, cfg, agentId) : stripped;
   return noMentions.length === 0;
 }
-

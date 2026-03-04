@@ -342,4 +342,3 @@ export function registerLineCardCommand(api: IronCliwPluginApi): void {
     },
   });
 }
-

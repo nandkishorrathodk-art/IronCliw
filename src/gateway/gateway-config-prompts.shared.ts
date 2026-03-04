@@ -91,4 +91,3 @@ export async function maybeAddTailnetOriginToControlUiAllowedOrigins(params: {
     },
   };
 }
-

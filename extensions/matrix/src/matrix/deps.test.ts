@@ -72,4 +72,3 @@ describe("ensureMatrixCryptoRuntime", () => {
     expect(requireFn).toHaveBeenCalledTimes(1);
   });
 });
-

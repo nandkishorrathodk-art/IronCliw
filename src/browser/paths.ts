@@ -254,4 +254,3 @@ async function resolveCheckedPathsWithinRoot(params: {
   }
   return { ok: true, paths: resolvedPaths };
 }
-

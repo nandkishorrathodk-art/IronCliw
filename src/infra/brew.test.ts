@@ -99,4 +99,3 @@ describe("brew helpers", () => {
     expect(dirs).toContain(path.join("/home/test", ".linuxbrew", "sbin"));
   });
 });
-

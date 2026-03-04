@@ -28,4 +28,3 @@ export function buildSlackThreadingToolContext(params: {
     hasRepliedRef: params.hasRepliedRef,
   };
 }
-

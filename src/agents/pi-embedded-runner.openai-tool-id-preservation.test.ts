@@ -71,4 +71,3 @@ describe("sanitizeSessionHistory openai tool id preservation", () => {
     expect(toolResult.toolCallId).toBe(expectedToolId);
   });
 });
-

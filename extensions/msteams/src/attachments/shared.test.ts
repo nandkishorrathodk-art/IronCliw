@@ -376,4 +376,3 @@ describe("attachment fetch auth helpers", () => {
     expect(fetchMock).toHaveBeenCalledOnce();
   });
 });
-

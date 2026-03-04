@@ -76,4 +76,3 @@ export async function promptAndConfigureVllm(params: {
 
   return { config: nextConfig, modelId, modelRef };
 }
-

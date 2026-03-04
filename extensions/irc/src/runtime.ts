@@ -12,4 +12,3 @@ export function getIrcRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

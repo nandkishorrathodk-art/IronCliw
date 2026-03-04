@@ -67,4 +67,3 @@ export function normalizeConfigPaths(cfg: IronCliwConfig): IronCliwConfig {
   normalizeAny(undefined, cfg);
   return cfg;
 }
-

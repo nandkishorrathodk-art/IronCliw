@@ -168,4 +168,3 @@ describe("npm-resolution helpers", () => {
     ]);
   });
 });
-

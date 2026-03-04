@@ -42,4 +42,3 @@ export type WebInboundMessage = {
   mediaUrl?: string;
   wasMentioned?: boolean;
 };
-

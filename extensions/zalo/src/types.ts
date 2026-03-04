@@ -48,4 +48,3 @@ export type ResolvedZaloAccount = {
   tokenSource: ZaloTokenSource;
   config: ZaloAccountConfig;
 };
-

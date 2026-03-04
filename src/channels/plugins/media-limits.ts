@@ -23,4 +23,3 @@ export function resolveChannelMediaMaxBytes(params: {
   }
   return undefined;
 }
-

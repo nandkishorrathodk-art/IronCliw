@@ -279,4 +279,3 @@ export function resolveAgentDir(cfg: IronCliwConfig, agentId: string) {
   const root = resolveStateDir(process.env);
   return path.join(root, "agents", id, "agent");
 }
-

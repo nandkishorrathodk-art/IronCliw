@@ -51,4 +51,3 @@ describe("inferUpdateFailureHints", () => {
     expect(inferUpdateFailureHints(result)).toEqual([]);
   });
 });
-

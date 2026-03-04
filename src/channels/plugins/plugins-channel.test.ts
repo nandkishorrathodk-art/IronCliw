@@ -211,4 +211,3 @@ describe("normalizeSignalAccountInput", () => {
     expect(normalizeSignalAccountInput("+1234567890123456")).toBeNull();
   });
 });
-

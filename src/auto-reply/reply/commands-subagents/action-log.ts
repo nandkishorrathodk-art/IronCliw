@@ -41,4 +41,3 @@ export async function handleSubagentsLogAction(
   }
   return stopWithText([header, ...lines].join("\n"));
 }
-

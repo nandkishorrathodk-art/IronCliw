@@ -149,4 +149,3 @@ describe("createLineWebhookMiddleware", () => {
     expect(runtime.error).toHaveBeenCalled();
   });
 });
-

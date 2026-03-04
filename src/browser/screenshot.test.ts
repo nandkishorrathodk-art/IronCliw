@@ -48,4 +48,3 @@ describe("browser screenshot normalization", () => {
     expect(normalized.buffer.equals(jpeg)).toBe(true);
   });
 });
-

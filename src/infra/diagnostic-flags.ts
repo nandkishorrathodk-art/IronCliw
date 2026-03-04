@@ -90,4 +90,3 @@ export function isDiagnosticFlagEnabled(
   const flags = resolveDiagnosticFlags(cfg, env);
   return matchesDiagnosticFlag(flag, flags);
 }
-

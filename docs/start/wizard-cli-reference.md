@@ -281,4 +281,3 @@ Signal setup behavior:
 - Onboarding hub: [Onboarding Wizard (CLI)](/start/wizard)
 - Automation and scripts: [CLI Automation](/start/wizard-cli-automation)
 - Command reference: [`IronCliw onboard`](/cli/onboard)
-

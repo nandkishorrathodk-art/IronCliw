@@ -34,4 +34,3 @@ export type Entry = {
   score: number;
   firstCommitDate: string;
 };
-

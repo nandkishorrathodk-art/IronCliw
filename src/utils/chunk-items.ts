@@ -8,4 +8,3 @@ export function chunkItems<T>(items: readonly T[], size: number): T[][] {
   }
   return rows;
 }
-

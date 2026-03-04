@@ -152,4 +152,3 @@ describe("acp cli option collisions", () => {
     expectCliError(/Failed to read Gateway token file/);
   });
 });
-

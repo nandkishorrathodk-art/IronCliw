@@ -230,4 +230,3 @@ describe("mattermost websocket monitor", () => {
     expect(payload.data?.reaction).toBeDefined();
   });
 });
-

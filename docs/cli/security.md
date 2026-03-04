@@ -69,4 +69,3 @@ IronCliw security audit --fix --json | jq '{fix: .fix.ok, summary: .report.summa
 - disable tools (`gateway`, `cron`, `exec`, etc.)
 - change gateway bind/auth/network exposure choices
 - remove or rewrite plugins/skills
-

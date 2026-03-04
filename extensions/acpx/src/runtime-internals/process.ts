@@ -274,4 +274,3 @@ function directoryExists(cwd: string): boolean {
     return false;
   }
 }
-

@@ -49,4 +49,3 @@ describe("setupOnboardingShellCompletion", () => {
     expect(prompter.note).not.toHaveBeenCalled();
   });
 });
-

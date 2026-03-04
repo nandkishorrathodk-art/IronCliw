@@ -152,4 +152,3 @@ describe("enqueueSend", () => {
     expect(delayFn).toHaveBeenNthCalledWith(2, 7);
   });
 });
-

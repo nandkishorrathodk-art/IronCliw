@@ -707,4 +707,3 @@ describe("resolveDiscordChannelInfo", () => {
     expect(fetchChannel).toHaveBeenCalledTimes(1);
   });
 });
-

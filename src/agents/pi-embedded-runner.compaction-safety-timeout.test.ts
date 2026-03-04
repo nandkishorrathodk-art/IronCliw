@@ -43,4 +43,3 @@ describe("compactWithSafetyTimeout", () => {
     expect(vi.getTimerCount()).toBe(0);
   });
 });
-

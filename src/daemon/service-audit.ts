@@ -403,4 +403,3 @@ export async function auditGatewayServiceConfig(params: {
 
   return { ok: issues.length === 0, issues };
 }
-

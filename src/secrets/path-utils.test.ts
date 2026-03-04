@@ -88,4 +88,3 @@ describe("secrets path utils", () => {
     ).toThrow(/Path segment does not exist/);
   });
 });
-

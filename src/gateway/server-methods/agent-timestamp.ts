@@ -78,4 +78,3 @@ export function timestampOptsFromConfig(cfg: IronCliwConfig): TimestampInjection
     timezone: resolveUserTimezone(cfg.agents?.defaults?.userTimezone),
   };
 }
-

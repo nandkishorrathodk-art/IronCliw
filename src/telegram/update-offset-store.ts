@@ -131,4 +131,3 @@ export async function deleteTelegramUpdateOffset(params: {
     throw err;
   }
 }
-

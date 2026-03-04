@@ -25,4 +25,3 @@ export function buildTlonAccountFields(input: TlonAccountFieldsInput) {
     ...(input.ownerShip ? { ownerShip: input.ownerShip } : {}),
   };
 }
-

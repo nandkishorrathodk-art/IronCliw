@@ -371,4 +371,3 @@ async function startGmailWatch(
     defaultRuntime.error(message);
   }
 }
-

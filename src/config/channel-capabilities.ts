@@ -65,4 +65,3 @@ export function resolveChannelCapabilities(params: {
     accountId: params.accountId,
   });
 }
-

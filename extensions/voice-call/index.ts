@@ -527,4 +527,3 @@ const voiceCallPlugin = {
 };
 
 export default voiceCallPlugin;
-

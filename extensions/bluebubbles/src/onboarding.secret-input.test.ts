@@ -79,4 +79,3 @@ describe("bluebubbles onboarding SecretInput", () => {
     expect(text).not.toHaveBeenCalled();
   });
 });
-

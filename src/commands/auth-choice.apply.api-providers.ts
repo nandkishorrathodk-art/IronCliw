@@ -675,4 +675,3 @@ export async function applyAuthChoiceApiProviders(
 
   return null;
 }
-

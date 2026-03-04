@@ -188,4 +188,3 @@ describe("computeSandboxBrowserConfigHash", () => {
     expect(left).not.toBe(right);
   });
 });
-

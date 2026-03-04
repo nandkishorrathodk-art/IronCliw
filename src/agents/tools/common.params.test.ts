@@ -98,4 +98,3 @@ describe("readReactionParams", () => {
     expect(result.emoji).toBe("✅");
   });
 });
-

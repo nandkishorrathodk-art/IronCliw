@@ -19,4 +19,3 @@ export async function transcribeGeminiAudio(
   });
   return { text, model };
 }
-

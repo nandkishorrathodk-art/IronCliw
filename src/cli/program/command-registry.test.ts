@@ -145,4 +145,3 @@ describe("command-registry", () => {
     expect(namesOf(program)).toEqual(["doctor", "dashboard", "reset", "uninstall"]);
   });
 });
-

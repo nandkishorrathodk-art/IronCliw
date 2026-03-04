@@ -916,4 +916,3 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     defaultRuntime.log(theme.muted(pickUpdateQuip()));
   }
 }
-

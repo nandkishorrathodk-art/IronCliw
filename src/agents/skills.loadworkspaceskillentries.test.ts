@@ -156,4 +156,3 @@ describe("loadWorkspaceSkillEntries", () => {
     expect(entries.map((entry) => entry.skill.name)).not.toContain("diffs");
   });
 });
-

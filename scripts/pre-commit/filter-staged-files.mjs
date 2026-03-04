@@ -37,4 +37,3 @@ for (const file of files) {
     process.stdout.write("\0");
   }
 }
-

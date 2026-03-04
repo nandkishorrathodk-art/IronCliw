@@ -22,4 +22,3 @@ describe("provider call status mapping", () => {
     expect(isProviderStatusTerminal("in-progress")).toBe(false);
   });
 });
-

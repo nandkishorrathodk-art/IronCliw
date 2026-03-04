@@ -13,4 +13,3 @@ export function splitTelegramCaption(text?: string): {
   }
   return { caption: trimmed, followUpText: undefined };
 }
-

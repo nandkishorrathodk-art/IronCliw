@@ -65,4 +65,3 @@ describe("auth profiles read-only external CLI sync", () => {
     }
   });
 });
-

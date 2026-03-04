@@ -193,4 +193,3 @@ export async function docsSearchCommand(queryParts: string[], runtime: RuntimeEn
   const markdown = buildMarkdown(query, results);
   await renderMarkdown(markdown, runtime);
 }
-

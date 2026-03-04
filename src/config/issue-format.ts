@@ -66,4 +66,3 @@ export function formatConfigIssueLines(
 ): string[] {
   return issues.map((issue) => formatConfigIssueLine(issue, marker, opts));
 }
-

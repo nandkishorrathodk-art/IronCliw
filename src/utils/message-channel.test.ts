@@ -32,4 +32,3 @@ describe("message-channel", () => {
     expect(resolveGatewayMessageChannel("teams")).toBe("msteams");
   });
 });
-

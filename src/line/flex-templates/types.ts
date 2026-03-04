@@ -20,4 +20,3 @@ export interface CardAction {
   label: string;
   action: Action;
 }
-

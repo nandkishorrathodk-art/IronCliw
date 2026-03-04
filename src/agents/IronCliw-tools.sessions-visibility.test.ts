@@ -116,4 +116,3 @@ describe("sessions tools visibility", () => {
     expect(denied.details).toMatchObject({ status: "forbidden" });
   });
 });
-

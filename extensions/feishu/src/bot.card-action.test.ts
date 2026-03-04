@@ -61,4 +61,3 @@ describe("Feishu Card Action Handler", () => {
     );
   });
 });
-

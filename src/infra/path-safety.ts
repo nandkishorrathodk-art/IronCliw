@@ -9,4 +9,3 @@ export function resolveSafeBaseDir(rootDir: string): string {
 export function isWithinDir(rootDir: string, targetPath: string): boolean {
   return isPathInside(rootDir, targetPath);
 }
-

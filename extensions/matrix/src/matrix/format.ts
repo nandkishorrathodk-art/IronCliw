@@ -20,4 +20,3 @@ export function markdownToMatrixHtml(markdown: string): string {
   const rendered = md.render(markdown ?? "");
   return rendered.trimEnd();
 }
-

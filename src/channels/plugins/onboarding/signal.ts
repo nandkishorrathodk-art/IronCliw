@@ -242,4 +242,3 @@ export const signalOnboardingAdapter: ChannelOnboardingAdapter = {
   dmPolicy,
   disable: (cfg) => onboardingHelpers.setOnboardingChannelEnabled(cfg, channel, false),
 };
-

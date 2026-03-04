@@ -229,4 +229,3 @@ IronCliw onboard --auth-choice setup-token
 - Add another Anthropic profile or wait for cooldown.
 
 More: [/gateway/troubleshooting](/gateway/troubleshooting) and [/help/faq](/help/faq).
-

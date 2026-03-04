@@ -43,4 +43,3 @@ describe("parseLogLine", () => {
     expect(parseLogLine("not-json")).toBeNull();
   });
 });
-

@@ -79,4 +79,3 @@ export async function listChannelsForTeam(token: string, teamId: string): Promis
   const res = await fetchGraphJson<GraphResponse<GraphChannel>>({ token, path });
   return res.value ?? [];
 }
-

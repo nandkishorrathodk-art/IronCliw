@@ -488,4 +488,3 @@ export function describeIMessageEchoDropLog(params: {
   const messageIdPart = params.messageId ? ` id=${params.messageId}` : "";
   return `imessage: skipping echo message${messageIdPart}: "${preview}"`;
 }
-

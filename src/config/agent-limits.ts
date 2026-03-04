@@ -20,4 +20,3 @@ export function resolveSubagentMaxConcurrent(cfg?: IronCliwConfig): number {
   }
   return DEFAULT_SUBAGENT_MAX_CONCURRENT;
 }
-

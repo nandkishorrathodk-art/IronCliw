@@ -131,4 +131,3 @@ describe("config irc", () => {
     expectValidConfig(res);
   });
 });
-

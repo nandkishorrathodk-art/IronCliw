@@ -25,4 +25,3 @@ describe("createNextcloudTalkWebhookServer backend allowlist", () => {
     expect(onMessage).not.toHaveBeenCalled();
   });
 });
-

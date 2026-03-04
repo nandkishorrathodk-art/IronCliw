@@ -28,4 +28,3 @@ export function runNodesCommand(label: string, action: () => Promise<void>) {
     defaultRuntime.exit(1);
   });
 }
-

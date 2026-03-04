@@ -116,4 +116,3 @@ describe("migrateTelegramGroupConfig", () => {
     });
   });
 });
-

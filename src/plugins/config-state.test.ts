@@ -85,4 +85,3 @@ describe("resolveEffectiveEnableState", () => {
     expect(state).toEqual({ enabled: false, reason: "disabled in config" });
   });
 });
-

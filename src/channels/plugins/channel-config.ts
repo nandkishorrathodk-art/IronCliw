@@ -8,4 +8,3 @@ export {
   resolveChannelMatchConfig,
   resolveNestedAllowlistDecision,
 } from "../channel-config.js";
-

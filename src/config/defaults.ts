@@ -533,4 +533,3 @@ export function applyCompactionDefaults(cfg: IronCliwConfig): IronCliwConfig {
 export function resetSessionDefaultsWarningForTests() {
   defaultWarnState = { warned: false };
 }
-

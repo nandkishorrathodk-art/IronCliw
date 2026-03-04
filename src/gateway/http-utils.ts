@@ -102,4 +102,3 @@ export function resolveGatewayRequestContext(params: {
 
   return { agentId, sessionKey, messageChannel };
 }
-

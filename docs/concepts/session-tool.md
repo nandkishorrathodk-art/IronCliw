@@ -221,4 +221,3 @@ Notes:
 - `agent`: any session belonging to the current agent id.
 - `all`: any session (cross-agent access still requires `tools.agentToAgent`).
 - When a session is sandboxed and `sessionToolsVisibility="spawned"`, IronCliw clamps visibility to `tree` even if you set `tools.sessions.visibility="all"`.
-

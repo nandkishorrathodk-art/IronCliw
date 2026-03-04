@@ -25,4 +25,3 @@ describe("createTempHomeEnv", () => {
     await expect(fs.stat(tempHome.home)).rejects.toThrow();
   });
 });
-

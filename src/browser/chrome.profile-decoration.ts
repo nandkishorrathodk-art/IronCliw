@@ -196,4 +196,3 @@ export function ensureProfileCleanExit(userDataDir: string) {
   setDeep(prefs, ["exited_cleanly"], true);
   safeWriteJson(preferencesPath, prefs);
 }
-

@@ -129,4 +129,3 @@ function resolveUserPath(p: string): string {
   }
   return p;
 }
-

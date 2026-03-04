@@ -224,4 +224,3 @@ export async function createGatewayRuntimeState(params: {
     toolEventRecipients,
   };
 }
-

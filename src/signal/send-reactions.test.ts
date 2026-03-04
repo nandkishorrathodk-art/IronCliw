@@ -63,4 +63,3 @@ describe("sendReactionSignal", () => {
     expect(params.remove).toBe(true);
   });
 });
-

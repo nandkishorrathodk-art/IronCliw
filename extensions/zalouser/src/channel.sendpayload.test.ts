@@ -115,4 +115,3 @@ describe("zalouserPlugin outbound sendPayload", () => {
     expect(result).toMatchObject({ channel: "zalouser" });
   });
 });
-

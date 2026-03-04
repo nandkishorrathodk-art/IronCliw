@@ -189,4 +189,3 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(text).not.toContain("recent sessions are missing transcripts");
   });
 });
-

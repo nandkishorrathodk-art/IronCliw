@@ -49,4 +49,3 @@ describe("probeLineBot", () => {
     expect(result.bot?.userId).toBe("U123");
   });
 });
-

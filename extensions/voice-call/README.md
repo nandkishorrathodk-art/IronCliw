@@ -179,4 +179,3 @@ Actions:
 - Twilio speech turns include a per-turn token so stale/replayed callbacks cannot complete a newer turn.
 - `responseModel` / `responseSystemPrompt` control AI auto-responses.
 - Media streaming requires `ws` and OpenAI Realtime API key.
-

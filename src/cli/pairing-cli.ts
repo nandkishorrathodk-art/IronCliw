@@ -171,4 +171,3 @@ export function registerPairingCli(program: Command) {
       });
     });
 }
-

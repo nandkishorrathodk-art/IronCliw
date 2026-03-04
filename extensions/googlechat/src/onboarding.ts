@@ -268,4 +268,3 @@ export const googlechatOnboardingAdapter: ChannelOnboardingAdapter = {
     return { cfg: namedConfig, accountId };
   },
 };
-

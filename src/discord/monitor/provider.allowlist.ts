@@ -342,4 +342,3 @@ export async function resolveDiscordAllowlistConfig(params: {
     allowFrom,
   };
 }
-

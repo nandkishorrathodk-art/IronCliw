@@ -37,4 +37,3 @@ export async function resolveStableNodePath(nodePath: string): Promise<string> {
 
   return nodePath;
 }
-

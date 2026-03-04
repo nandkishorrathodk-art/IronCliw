@@ -28,4 +28,3 @@ export function installTwitchTestHooks() {
     vi.restoreAllMocks();
   });
 }
-

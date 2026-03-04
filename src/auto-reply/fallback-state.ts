@@ -178,4 +178,3 @@ export function resolveFallbackTransition(params: {
     stateChanged,
   };
 }
-

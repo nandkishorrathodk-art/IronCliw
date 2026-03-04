@@ -15,4 +15,3 @@ const registry = createSessionManagerRuntimeRegistry<ContextPruningRuntimeValue>
 export const setContextPruningRuntime = registry.set;
 
 export const getContextPruningRuntime = registry.get;
-

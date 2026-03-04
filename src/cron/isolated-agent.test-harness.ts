@@ -64,4 +64,3 @@ export function makeJob(payload: CronJob["payload"]): CronJob {
     state: {},
   };
 }
-

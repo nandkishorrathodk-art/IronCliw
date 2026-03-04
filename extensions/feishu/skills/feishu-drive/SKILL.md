@@ -95,4 +95,3 @@ channels:
   - `create_folder` without `folder_token` will fail (400 error)
   - Bot can only access files/folders that have been **shared with it**
   - **Workaround**: User must first create a folder manually and share it with the bot, then bot can create subfolders inside it
-

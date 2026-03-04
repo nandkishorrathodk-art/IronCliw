@@ -200,4 +200,3 @@ Examples:
 IronCliw gateway discover --timeout 4000
 IronCliw gateway discover --json | jq '.beacons[].wsUrl'
 ```
-

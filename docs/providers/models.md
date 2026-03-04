@@ -42,4 +42,3 @@ model as `provider/model`.
 
 For the full provider catalog (xAI, Groq, Mistral, etc.) and advanced configuration,
 see [Model providers](/concepts/model-providers).
-

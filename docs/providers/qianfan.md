@@ -36,4 +36,3 @@ IronCliw onboard --auth-choice qianfan-api-key
 - [Model Providers](/concepts/model-providers)
 - [Agent Setup](/concepts/agent)
 - [Qianfan API Documentation](https://cloud.baidu.com/doc/qianfan-api/s/3m7of64lb)
-

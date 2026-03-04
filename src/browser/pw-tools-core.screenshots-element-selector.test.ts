@@ -156,4 +156,3 @@ describe("pw-tools-core", () => {
     expect(press).toHaveBeenCalledWith("Escape");
   });
 });
-

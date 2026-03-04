@@ -1158,4 +1158,3 @@ describe("loadIronCliwPlugins", () => {
     expect(resolved).toBe(srcFile);
   });
 });
-

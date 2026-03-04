@@ -216,4 +216,3 @@ export function reloadOnboardingPluginRegistry(params: {
     logger: createPluginLoaderLogger(log),
   });
 }
-

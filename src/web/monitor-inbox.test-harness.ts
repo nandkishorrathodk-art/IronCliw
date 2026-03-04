@@ -159,4 +159,3 @@ export function installWebMonitorInboxUnitTestHooks(opts?: { authDir?: boolean }
     }
   });
 }
-

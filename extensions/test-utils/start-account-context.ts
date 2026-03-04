@@ -31,4 +31,3 @@ export function createStartAccountContext<TAccount extends { accountId: string }
     },
   };
 }
-

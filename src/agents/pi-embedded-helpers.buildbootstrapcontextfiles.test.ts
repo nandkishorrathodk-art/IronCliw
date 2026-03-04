@@ -225,4 +225,3 @@ describe("resolveBootstrapPromptTruncationWarningMode", () => {
     ).toBe(DEFAULT_BOOTSTRAP_PROMPT_TRUNCATION_WARNING_MODE);
   });
 });
-

@@ -195,4 +195,3 @@ function booleanOption(value: unknown): boolean | undefined {
   }
   return Boolean(value);
 }
-

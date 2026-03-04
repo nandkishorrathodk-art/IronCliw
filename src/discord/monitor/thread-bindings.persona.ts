@@ -23,4 +23,3 @@ export function resolveThreadBindingPersonaFromRecord(record: ThreadBindingRecor
     agentId: record.agentId,
   });
 }
-

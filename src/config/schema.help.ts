@@ -1479,4 +1479,3 @@ export const FIELD_HELP: Record<string, string> = {
   "channels.slack.dmPolicy":
     'Direct message access control ("pairing" recommended). "open" requires channels.slack.allowFrom=["*"].',
 };
-

@@ -207,4 +207,3 @@ export async function handleA2uiHttpRequest(
     await result.handle.close().catch(() => {});
   }
 }
-

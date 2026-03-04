@@ -784,4 +784,3 @@ export class MemoryIndexManager extends MemoryManagerEmbeddingOps implements Mem
     INDEX_CACHE.delete(this.cacheKey);
   }
 }
-

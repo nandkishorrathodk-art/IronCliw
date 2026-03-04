@@ -415,4 +415,3 @@ describe("resolveMedia original filename preservation", () => {
     expect(result).not.toBeNull();
   });
 });
-

@@ -67,4 +67,3 @@ export type BrowserConfig = {
    */
   extraArgs?: string[];
 };
-

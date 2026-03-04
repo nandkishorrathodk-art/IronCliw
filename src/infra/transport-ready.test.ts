@@ -82,4 +82,3 @@ describe("waitForTransportReady", () => {
     expect(runtime.error).not.toHaveBeenCalled();
   });
 });
-

@@ -152,4 +152,3 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(prompt).not.toContain("alias-skill");
   });
 });
-

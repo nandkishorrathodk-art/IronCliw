@@ -352,4 +352,3 @@ export type StreamingEvent =
   | z.infer<typeof ContentPartDoneEventSchema>
   | z.infer<typeof OutputTextDeltaEventSchema>
   | z.infer<typeof OutputTextDoneEventSchema>;
-

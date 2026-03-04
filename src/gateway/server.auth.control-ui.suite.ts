@@ -877,4 +877,3 @@ export function registerControlUiAndPairingSuite(): void {
     }
   });
 }
-

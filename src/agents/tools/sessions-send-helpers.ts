@@ -164,4 +164,3 @@ export function resolvePingPongTurns(cfg?: IronCliwConfig) {
   const rounded = Math.floor(raw);
   return Math.max(0, Math.min(MAX_PING_PONG_TURNS, rounded));
 }
-

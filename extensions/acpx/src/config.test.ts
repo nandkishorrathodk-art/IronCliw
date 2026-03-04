@@ -133,4 +133,3 @@ describe("acpx plugin config parsing", () => {
     ).toThrow("strictWindowsCmdWrapper must be a boolean");
   });
 });
-

@@ -769,4 +769,3 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 ```
 
 **完整指南：** 参见 [browser-linux-troubleshooting](/tools/browser-linux-troubleshooting)
-

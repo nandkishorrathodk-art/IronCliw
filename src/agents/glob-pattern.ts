@@ -54,4 +54,3 @@ export function matchesAnyGlobPattern(value: string, patterns: CompiledGlobPatte
   }
   return false;
 }
-

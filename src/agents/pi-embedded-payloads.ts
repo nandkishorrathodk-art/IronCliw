@@ -7,4 +7,3 @@ export type BlockReplyPayload = {
   replyToTag?: boolean;
   replyToCurrent?: boolean;
 };
-

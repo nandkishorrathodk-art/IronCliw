@@ -164,4 +164,3 @@ export function listEnabledMattermostAccounts(cfg: IronCliwConfig): ResolvedMatt
     .map((accountId) => resolveMattermostAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

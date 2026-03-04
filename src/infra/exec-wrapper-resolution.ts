@@ -657,4 +657,3 @@ export function extractShellWrapperCommand(
 ): ShellWrapperCommand {
   return extractShellWrapperCommandInternal(argv, normalizeRawCommand(rawCommand), 0);
 }
-

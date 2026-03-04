@@ -115,4 +115,3 @@ export {
   type AllowlistMatchSource,
 } from "./allowlist-match.js";
 export type { ChannelId, ChannelPlugin } from "./types.js";
-

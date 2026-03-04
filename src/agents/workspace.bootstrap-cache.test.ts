@@ -166,4 +166,3 @@ describe("workspace bootstrap file caching", () => {
     expect(agentsFile?.content).toBeUndefined();
   });
 });
-

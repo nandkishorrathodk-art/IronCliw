@@ -223,4 +223,3 @@ describe("voice-call plugin", () => {
     logSpy.mockRestore();
   });
 });
-

@@ -25,4 +25,3 @@ export function hasAuthForProvider(params: { provider: string; agentDir: string 
   });
   return listProfilesForProvider(store, params.provider).length > 0;
 }
-

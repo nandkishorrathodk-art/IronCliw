@@ -106,4 +106,3 @@ describe("Synology channel wiring integration", () => {
     await started;
   });
 });
-

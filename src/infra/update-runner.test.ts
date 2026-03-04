@@ -587,4 +587,3 @@ describe("runGatewayUpdate", () => {
     expect(result.reason).toBe("ui-assets-missing");
   });
 });
-

@@ -1081,4 +1081,3 @@ describe("runMessageAction accountId defaults", () => {
     expect(ctx.params.accountId).toBe("account-b");
   });
 });
-

@@ -298,4 +298,3 @@ describe("resolveResponsePrefix with per-channel override", () => {
     });
   });
 });
-

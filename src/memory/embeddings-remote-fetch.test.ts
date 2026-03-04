@@ -51,4 +51,3 @@ describe("fetchRemoteEmbeddingVectors", () => {
     ).rejects.toThrow("embedding fetch failed: 403 forbidden");
   });
 });
-

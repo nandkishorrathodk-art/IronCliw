@@ -486,4 +486,3 @@ export function resolveControlUiLinks(params: {
     wsUrl: `ws://${host}:${port}${wsPath}`,
   };
 }
-

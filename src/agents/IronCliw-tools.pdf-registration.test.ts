@@ -31,4 +31,3 @@ describe("createIronCliwTools PDF registration", () => {
     });
   });
 });
-

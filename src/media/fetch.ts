@@ -189,4 +189,3 @@ export async function fetchRemoteMedia(options: FetchMediaOptions): Promise<Fetc
     }
   }
 }
-

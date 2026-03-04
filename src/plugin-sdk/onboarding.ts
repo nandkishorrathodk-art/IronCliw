@@ -43,4 +43,3 @@ export async function promptAccountId(params: PromptAccountIdParams): Promise<st
   }
   return normalized;
 }
-

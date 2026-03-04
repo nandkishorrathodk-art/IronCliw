@@ -649,4 +649,3 @@ describe("verifyTwilioWebhook", () => {
     expect(result.verifiedRequestKey).toMatch(/^twilio:req:/);
   });
 });
-

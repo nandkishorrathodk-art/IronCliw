@@ -39,4 +39,3 @@ export async function resolveOnboardingSecretInputString(params: {
 
   return normalizeSecretInputString(params.value);
 }
-

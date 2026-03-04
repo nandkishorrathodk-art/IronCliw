@@ -189,4 +189,3 @@ export async function fetchThreadHistory(
     return [];
   }
 }
-

@@ -134,4 +134,3 @@ export const searchableSelectListTheme: SearchableSelectListTheme = {
   searchInput: (text) => fg(palette.text)(text),
   matchHighlight: (text) => chalk.bold(fg(palette.accent)(text)),
 };
-

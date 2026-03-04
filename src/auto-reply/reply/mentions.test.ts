@@ -18,4 +18,3 @@ describe("stripStructuralPrefixes", () => {
     expect(stripStructuralPrefixes("just a message")).toBe("just a message");
   });
 });
-

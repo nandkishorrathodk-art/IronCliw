@@ -81,4 +81,3 @@ export async function withMockedGlobalFetch<T>(
     (globalThis as any).fetch = prevFetch;
   }
 }
-

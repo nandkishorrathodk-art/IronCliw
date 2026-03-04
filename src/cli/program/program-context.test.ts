@@ -36,4 +36,3 @@ describe("program context storage", () => {
     expect(getProgramContext(programB)).toBe(ctxB);
   });
 });
-

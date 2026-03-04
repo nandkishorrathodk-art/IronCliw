@@ -270,4 +270,3 @@ describe("nodes screen helpers", () => {
     expect(p).toBe(path.join("/tmp", "IronCliw-screen-record-id1.mp4"));
   });
 });
-

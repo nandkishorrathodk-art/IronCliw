@@ -275,4 +275,3 @@ export function assertHooksTokenSeparateFromGatewayAuth(params: {
     "Invalid config: hooks.token must not match gateway auth token. Set a distinct hooks.token for hook ingress.",
   );
 }
-

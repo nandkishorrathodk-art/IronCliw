@@ -1621,4 +1621,3 @@ export const __testing = {
   extractKimiCitations,
   resolveRedirectUrl: resolveCitationRedirectUrl,
 } as const;
-

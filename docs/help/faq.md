@@ -2961,4 +2961,3 @@ You can add options like `debounce:2s cap:25 drop:summarize` for followup modes.
 ---
 
 Still stuck? Ask in [Discord](https://discord.com/invite/clawd) or open a [GitHub discussion](https://github.com/IronCliw/IronCliw/discussions).
-

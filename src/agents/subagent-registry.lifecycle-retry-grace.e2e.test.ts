@@ -159,4 +159,3 @@ describe("subagent registry lifecycle error grace", () => {
     expect(readFirstAnnounceOutcome()?.error).toBe("fatal failure");
   });
 });
-

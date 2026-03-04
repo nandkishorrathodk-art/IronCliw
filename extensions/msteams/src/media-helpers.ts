@@ -103,4 +103,3 @@ export function extractMessageId(response: unknown): string | null {
   }
   return id;
 }
-

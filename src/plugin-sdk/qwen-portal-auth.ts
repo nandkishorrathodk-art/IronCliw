@@ -4,4 +4,3 @@
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 export type { IronCliwPluginApi, ProviderAuthContext } from "../plugins/types.js";
 export { generatePkceVerifierChallenge, toFormUrlEncoded } from "./oauth-utils.js";
-

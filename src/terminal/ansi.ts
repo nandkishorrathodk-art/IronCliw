@@ -12,4 +12,3 @@ export function stripAnsi(input: string): string {
 export function visibleWidth(input: string): number {
   return Array.from(stripAnsi(input)).length;
 }
-

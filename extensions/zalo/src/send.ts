@@ -122,4 +122,3 @@ export async function sendPhotoZalo(
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
 }
-

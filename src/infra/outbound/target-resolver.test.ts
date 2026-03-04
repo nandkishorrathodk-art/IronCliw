@@ -76,4 +76,3 @@ describe("resolveMessagingTarget (directory fallback)", () => {
     expect(mocks.listGroupsLive).not.toHaveBeenCalled();
   });
 });
-

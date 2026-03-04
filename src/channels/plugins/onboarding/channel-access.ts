@@ -96,4 +96,3 @@ export async function promptChannelAccessConfig(params: {
   });
   return { policy, entries };
 }
-

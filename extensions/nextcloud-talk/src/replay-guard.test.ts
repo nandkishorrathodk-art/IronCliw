@@ -68,4 +68,3 @@ describe("createNextcloudTalkReplayGuard", () => {
     expect(accountBFirst).toBe(true);
   });
 });
-

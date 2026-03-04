@@ -107,4 +107,3 @@ export async function maybeExplainGatewayServiceStop() {
     defaultRuntime.error(hint);
   }
 }
-

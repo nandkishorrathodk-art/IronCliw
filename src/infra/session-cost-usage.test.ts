@@ -443,4 +443,3 @@ example
     expect(lastPoint?.cumulativeCost).toBeCloseTo(0.055, 8);
   });
 });
-

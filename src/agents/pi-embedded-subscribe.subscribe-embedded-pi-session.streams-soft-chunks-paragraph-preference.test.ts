@@ -44,4 +44,3 @@ describe("subscribeEmbeddedPiSession", () => {
     expect(onBlockReply.mock.calls[2][0].text).toBe("Outro");
   });
 });
-

@@ -231,4 +231,3 @@ export function moveSingleAccountChannelSectionToDefaultAccount(params: {
     },
   } as IronCliwConfig;
 }
-

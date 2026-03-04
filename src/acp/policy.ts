@@ -68,4 +68,3 @@ export function resolveAcpAgentPolicyError(
     `ACP agent "${normalizeAgentId(agentId)}" is not allowed by policy.`,
   );
 }
-

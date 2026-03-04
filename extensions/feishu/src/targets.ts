@@ -105,4 +105,3 @@ export function looksLikeFeishuId(raw: string): boolean {
   }
   return false;
 }
-

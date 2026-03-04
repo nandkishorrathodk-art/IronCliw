@@ -24,4 +24,3 @@ describe("MatrixConfigSchema SecretInput", () => {
     expect(result.success).toBe(true);
   });
 });
-

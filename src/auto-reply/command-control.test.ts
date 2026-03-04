@@ -549,4 +549,3 @@ describe("control command parsing", () => {
     ).toBe(true);
   });
 });
-

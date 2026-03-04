@@ -26,4 +26,3 @@ describe("canvas host state dir defaults", () => {
     });
   });
 });
-

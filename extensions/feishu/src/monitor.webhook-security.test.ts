@@ -224,4 +224,3 @@ describe("Feishu webhook security hardening", () => {
     expect(getFeishuWebhookRateLimitStateSizeForTest()).toBe(1);
   });
 });
-

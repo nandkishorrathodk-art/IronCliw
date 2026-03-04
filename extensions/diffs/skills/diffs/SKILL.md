@@ -20,4 +20,3 @@ Use `mode=both` when you want both the gateway viewer URL and the rendered artif
 If the user has configured diffs plugin defaults, prefer omitting `mode`, `theme`, `layout`, and related presentation options unless you need to override them for this specific diff.
 
 Include `path` for before/after text when you know the file name.
-

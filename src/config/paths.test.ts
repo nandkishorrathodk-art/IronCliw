@@ -150,4 +150,3 @@ describe("state + config path candidates", () => {
     });
   });
 });
-

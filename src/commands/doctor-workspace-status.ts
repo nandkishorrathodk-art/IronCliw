@@ -66,4 +66,3 @@ export function noteWorkspaceStatus(cfg: IronCliwConfig) {
 
   return { workspaceDir };
 }
-

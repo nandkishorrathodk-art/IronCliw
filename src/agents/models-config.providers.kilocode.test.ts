@@ -67,4 +67,3 @@ describe("Kilo Gateway implicit provider", () => {
     }
   });
 });
-

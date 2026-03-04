@@ -179,4 +179,3 @@ describe("before_message_write hook", () => {
     expect(messages[0]?.role).toBe("user");
   });
 });
-

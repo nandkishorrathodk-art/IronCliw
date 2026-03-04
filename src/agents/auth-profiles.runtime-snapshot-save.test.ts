@@ -70,4 +70,3 @@ describe("auth profile runtime snapshot persistence", () => {
     }
   });
 });
-

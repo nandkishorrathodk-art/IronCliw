@@ -872,4 +872,3 @@ export async function registerSlackMonitorSlashCommands(params: {
   };
   registerArgAction(SLACK_COMMAND_ARG_ACTION_ID);
 }
-

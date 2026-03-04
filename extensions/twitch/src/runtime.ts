@@ -12,4 +12,3 @@ export function getTwitchRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

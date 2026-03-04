@@ -670,4 +670,3 @@ describe("monitorDiscordProvider", () => {
     expect(connectedFalse).toBeDefined();
   });
 });
-

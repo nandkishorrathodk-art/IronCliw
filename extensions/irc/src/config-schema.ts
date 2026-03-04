@@ -90,4 +90,3 @@ export const IrcConfigSchema = IrcAccountSchemaBase.extend({
     message: 'channels.irc.dmPolicy="open" requires channels.irc.allowFrom to include "*"',
   });
 });
-

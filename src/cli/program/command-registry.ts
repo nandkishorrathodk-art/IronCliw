@@ -302,4 +302,3 @@ export function registerProgramCommands(
   registerCoreCliCommands(program, ctx, argv);
   registerSubCliCommands(program, argv);
 }
-

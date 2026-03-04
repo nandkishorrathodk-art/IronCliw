@@ -23,4 +23,3 @@ describe("resolveReactionMessageId", () => {
     expect(result).toBe("9001");
   });
 });
-

@@ -98,4 +98,3 @@ describe("resolveAgentTimeoutMs", () => {
     expect(resolveAgentTimeoutMs({ overrideMs: 9_999_999_999 })).toBe(2_147_000_000);
   });
 });
-

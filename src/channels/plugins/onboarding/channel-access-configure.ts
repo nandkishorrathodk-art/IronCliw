@@ -39,4 +39,3 @@ export async function configureChannelAccessWithAllowlist<TResolved>(params: {
     resolved,
   });
 }
-

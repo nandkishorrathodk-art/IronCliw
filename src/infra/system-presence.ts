@@ -287,4 +287,3 @@ export function listSystemPresence(): SystemPresence[] {
   touchSelfPresence();
   return [...entries.values()].toSorted((a, b) => b.ts - a.ts);
 }
-

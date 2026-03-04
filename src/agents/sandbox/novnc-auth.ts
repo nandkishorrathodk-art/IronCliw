@@ -100,4 +100,3 @@ export function buildNoVncObserverTokenUrl(baseUrl: string, token: string) {
 export function resetNoVncObserverTokensForTests() {
   NO_VNC_OBSERVER_TOKENS.clear();
 }
-

@@ -421,4 +421,3 @@ describe("update-startup", () => {
     stop();
   });
 });
-

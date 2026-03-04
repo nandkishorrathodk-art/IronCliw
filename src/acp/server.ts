@@ -243,4 +243,3 @@ if (isMainModule({ currentFile: fileURLToPath(import.meta.url) })) {
     process.exit(1);
   });
 }
-

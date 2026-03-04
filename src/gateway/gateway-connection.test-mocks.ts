@@ -27,4 +27,3 @@ vi.mock("./net.js", async (importOriginal) => {
     pickPrimaryLanIPv4: pickPrimaryLanIPv4Mock,
   };
 });
-

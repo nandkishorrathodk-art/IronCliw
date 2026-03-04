@@ -56,4 +56,3 @@ describe("gateway ws log helpers", () => {
     });
   });
 });
-

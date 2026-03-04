@@ -12,4 +12,3 @@ export {
   triggerInternalHook as triggerHook,
   createInternalHookEvent as createHookEvent,
 } from "./internal-hooks.js";
-

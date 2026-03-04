@@ -409,4 +409,3 @@ WhatsApp 将音频作为**语音消息**（PTT 气泡）发送。
 
 - **不推荐** Bun。WhatsApp（Baileys）和 Telegram 在 Bun 上不可靠。
   请使用 **Node** 运行 Gateway 网关。（参见入门指南运行时说明。）
-

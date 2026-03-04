@@ -12,4 +12,3 @@ export function getTlonRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

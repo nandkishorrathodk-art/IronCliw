@@ -113,4 +113,3 @@ describe("rotateSessionFile", () => {
     expect(bakFiles.length).toBeLessThanOrEqual(3);
   });
 });
-

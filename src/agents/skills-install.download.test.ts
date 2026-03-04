@@ -385,4 +385,3 @@ describe("installDownloadSpec extraction safety (tar.bz2)", () => {
     expect(extractionAttempted).toBe(false);
   });
 });
-

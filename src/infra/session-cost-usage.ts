@@ -1014,4 +1014,3 @@ export async function loadSessionLogs(params: {
 
   return sortedLogs;
 }
-

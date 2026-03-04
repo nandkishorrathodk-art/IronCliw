@@ -84,4 +84,3 @@ describe("google-shared convertTools", () => {
     expect(asRecord(toolResponse.functionResponse).id).toBeUndefined();
   });
 });
-

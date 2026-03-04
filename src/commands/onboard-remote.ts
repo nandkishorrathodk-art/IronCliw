@@ -246,4 +246,3 @@ export async function promptRemoteGatewayConfig(
     },
   };
 }
-

@@ -14,4 +14,3 @@ describe("createTtsTool", () => {
     expect(tool.description).not.toContain("NO_REPLY");
   });
 });
-

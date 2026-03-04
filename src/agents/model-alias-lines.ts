@@ -18,4 +18,3 @@ export function buildModelAliasLines(cfg?: IronCliwConfig) {
     .toSorted((a, b) => a.alias.localeCompare(b.alias))
     .map((entry) => `- ${entry.alias}: ${entry.model}`);
 }
-

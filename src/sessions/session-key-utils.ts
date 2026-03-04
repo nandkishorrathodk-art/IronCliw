@@ -130,4 +130,3 @@ export function resolveThreadParentSessionKey(
   const parent = raw.slice(0, idx).trim();
   return parent ? parent : null;
 }
-

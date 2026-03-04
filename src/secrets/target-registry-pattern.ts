@@ -211,4 +211,3 @@ export function expandPathTokens(root: unknown, tokens: PathPatternToken[]): Exp
   walk(root, 0, [], []);
   return out;
 }
-

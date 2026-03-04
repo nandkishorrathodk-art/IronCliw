@@ -32,4 +32,3 @@ export const browserActionExamples = [
   "IronCliw browser console --level error",
   "IronCliw browser pdf",
 ];
-

@@ -70,4 +70,3 @@ export function listEnabledDiscordAccounts(cfg: IronCliwConfig): ResolvedDiscord
     .map((accountId) => resolveDiscordAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

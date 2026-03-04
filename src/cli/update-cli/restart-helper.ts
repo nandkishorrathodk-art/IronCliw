@@ -169,4 +169,3 @@ export async function runRestartScript(scriptPath: string): Promise<void> {
   });
   child.unref();
 }
-

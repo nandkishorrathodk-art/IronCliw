@@ -97,4 +97,3 @@ export function createTypingCallbacks(params: CreateTypingCallbacksParams): Typi
 
   return { onReplyStart, onIdle: fireStop, onCleanup: fireStop };
 }
-

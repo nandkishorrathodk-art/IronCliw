@@ -44,4 +44,3 @@ describe("feishu monitor state defaults", () => {
     });
   });
 });
-

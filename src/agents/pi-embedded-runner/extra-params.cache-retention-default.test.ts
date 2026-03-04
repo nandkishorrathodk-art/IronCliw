@@ -152,4 +152,3 @@ describe("cacheRetention default behavior", () => {
     expect(agent.streamFn).toBeDefined();
   });
 });
-

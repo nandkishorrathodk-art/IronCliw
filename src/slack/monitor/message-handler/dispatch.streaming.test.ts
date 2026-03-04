@@ -45,4 +45,3 @@ describe("slack native streaming thread hint", () => {
     ).toBe("2000.1");
   });
 });
-

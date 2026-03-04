@@ -31,4 +31,3 @@ export function applyChannelAccountConfig(params: {
   }
   return apply({ cfg: params.cfg, accountId, input: params.input });
 }
-

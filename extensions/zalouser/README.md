@@ -117,4 +117,3 @@ Available actions: `send`, `image`, `link`, `friends`, `groups`, `me`, `status`
 ## Credits
 
 Built on [zca-js](https://github.com/RFS-ADRENO/zca-js).
-

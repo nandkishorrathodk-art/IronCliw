@@ -32,4 +32,3 @@ export async function withStateDirEnv<T>(
     await fs.rm(tempRoot, { recursive: true, force: true });
   }
 }
-

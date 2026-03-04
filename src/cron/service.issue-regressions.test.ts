@@ -1500,4 +1500,3 @@ describe("Cron issue regressions", () => {
     expect(job.enabled).toBe(true);
   });
 });
-

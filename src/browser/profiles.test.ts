@@ -234,4 +234,3 @@ describe("getUsedColors", () => {
     expect(used).toEqual(new Set(["#FF4500", "#0066CC"]));
   });
 });
-

@@ -327,4 +327,3 @@ IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
 - **Gateway 网关无法访问？** 先运行 `IronCliw doctor`。
 - **日志为空？** 检查 Gateway 网关是否正在运行并写入 `logging.file` 中的文件路径。
 - **需要更多细节？** 将 `logging.level` 设置为 `debug` 或 `trace` 并重试。
-

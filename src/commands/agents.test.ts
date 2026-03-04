@@ -247,4 +247,3 @@ describe("agents helpers", () => {
     expect(result.removedAllow).toBe(1);
   });
 });
-

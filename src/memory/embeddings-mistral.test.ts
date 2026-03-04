@@ -17,4 +17,3 @@ describe("normalizeMistralModel", () => {
     expect(normalizeMistralModel("custom-embed-v2")).toBe("custom-embed-v2");
   });
 });
-

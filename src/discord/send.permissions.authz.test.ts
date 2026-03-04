@@ -154,4 +154,3 @@ describe("discord guild permission authorization", () => {
     });
   });
 });
-

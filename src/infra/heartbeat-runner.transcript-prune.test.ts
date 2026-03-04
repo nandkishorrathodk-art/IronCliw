@@ -111,4 +111,3 @@ describe("heartbeat transcript pruning", () => {
     });
   });
 });
-

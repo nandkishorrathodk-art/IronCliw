@@ -187,4 +187,3 @@ export function formatChannelSelectionLine(
   const extras = (meta.selectionExtras ?? []).filter(Boolean).join(" ");
   return `${meta.label} — ${meta.blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
 }
-

@@ -58,4 +58,3 @@ export async function promptAuthChoiceGrouped(params: {
     return methodSelection as AuthChoice;
   }
 }
-

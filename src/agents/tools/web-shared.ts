@@ -168,4 +168,3 @@ export async function readResponseText(
     return { text: "", truncated: false, bytesRead: 0 };
   }
 }
-

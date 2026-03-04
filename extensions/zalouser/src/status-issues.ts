@@ -68,4 +68,3 @@ export function collectZalouserStatusIssues(
   }
   return issues;
 }
-

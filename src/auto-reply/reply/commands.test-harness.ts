@@ -49,4 +49,3 @@ export function buildCommandTestParams(
   };
   return params;
 }
-

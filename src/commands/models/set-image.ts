@@ -13,4 +13,3 @@ export async function modelsSetImageCommand(modelRaw: string, runtime: RuntimeEn
     `Image model: ${resolveAgentModelPrimaryValue(updated.agents?.defaults?.imageModel) ?? modelRaw}`,
   );
 }
-

@@ -93,4 +93,3 @@ function resolveRepoRoot(params: {
   }
   return undefined;
 }
-

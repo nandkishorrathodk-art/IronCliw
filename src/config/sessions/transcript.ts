@@ -156,4 +156,3 @@ export async function appendAssistantMessageToSessionTranscript(params: {
   emitSessionTranscriptUpdate(sessionFile);
   return { ok: true, sessionFile };
 }
-

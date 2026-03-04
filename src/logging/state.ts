@@ -17,4 +17,3 @@ export const loggingState = {
     error: typeof console.error;
   } | null,
 };
-

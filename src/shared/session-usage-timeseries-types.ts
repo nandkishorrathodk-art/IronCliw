@@ -14,4 +14,3 @@ export type SessionUsageTimeSeries = {
   sessionId?: string;
   points: SessionUsageTimePoint[];
 };
-

@@ -567,4 +567,3 @@ describe("gateway send mirroring", () => {
     );
   });
 });
-

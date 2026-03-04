@@ -174,4 +174,3 @@ export type DiscordChannelPermissionSet = {
   allow?: string;
   deny?: string;
 };
-

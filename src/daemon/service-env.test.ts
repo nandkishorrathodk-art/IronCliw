@@ -479,4 +479,3 @@ describe("resolveGatewayStateDir", () => {
     expect(resolveGatewayStateDir(env)).toBe("C:\\State\\IronCliw");
   });
 });
-

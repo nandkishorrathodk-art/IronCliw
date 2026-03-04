@@ -119,4 +119,3 @@ Restrict pruning to specific tools:
 ```
 
 See config reference: [Gateway Configuration](/gateway/configuration)
-

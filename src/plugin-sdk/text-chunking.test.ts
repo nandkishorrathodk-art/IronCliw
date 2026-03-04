@@ -14,4 +14,3 @@ describe("chunkTextForOutbound", () => {
     expect(chunkTextForOutbound("abcdefghij", 4)).toEqual(["abcd", "efgh", "ij"]);
   });
 });
-

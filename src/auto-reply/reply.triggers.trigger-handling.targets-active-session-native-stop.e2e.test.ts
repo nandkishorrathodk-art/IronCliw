@@ -492,4 +492,3 @@ describe("trigger handling", () => {
     });
   });
 });
-

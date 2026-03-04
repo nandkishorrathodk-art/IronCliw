@@ -65,4 +65,3 @@ describe("fetchPluralKitMessageInfo", () => {
     expect(receivedHeaders?.Authorization).toBe("pk_test");
   });
 });
-

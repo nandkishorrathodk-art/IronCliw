@@ -31,4 +31,3 @@ export function ensureAuthStoreFile(pathname: string) {
   };
   saveJsonFile(pathname, payload);
 }
-

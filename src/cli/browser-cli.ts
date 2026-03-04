@@ -53,4 +53,3 @@ export function registerBrowserCli(program: Command) {
   registerBrowserDebugCommands(browser, parentOpts);
   registerBrowserStateCommands(browser, parentOpts);
 }
-

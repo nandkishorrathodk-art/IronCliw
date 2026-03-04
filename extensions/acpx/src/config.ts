@@ -262,4 +262,3 @@ export function resolveAcpxPluginConfig(params: {
     queueOwnerTtlSeconds: normalized.queueOwnerTtlSeconds ?? DEFAULT_QUEUE_OWNER_TTL_SECONDS,
   };
 }
-

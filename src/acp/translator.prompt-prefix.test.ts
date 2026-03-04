@@ -82,4 +82,3 @@ describe("acp prompt cwd prefix", () => {
     );
   });
 });
-

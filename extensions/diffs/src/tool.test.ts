@@ -497,4 +497,3 @@ function readTextContent(result: unknown, index: number): string {
   const entry = content?.[index];
   return entry?.type === "text" ? (entry.text ?? "") : "";
 }
-

@@ -97,4 +97,3 @@ apps/macos/Sources/IronCliw/Resources/Info.plist
 - [nix-IronCliw](https://github.com/IronCliw/nix-IronCliw) — 完整设置指南
 - [向导](/start/wizard) — 非 Nix CLI 设置
 - [Docker](/install/docker) — 容器化设置
-

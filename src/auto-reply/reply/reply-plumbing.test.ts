@@ -283,4 +283,3 @@ describe("subagents utils", () => {
     expect(formatDurationCompact(65_000)).toBe("1m5s");
   });
 });
-

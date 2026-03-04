@@ -107,4 +107,3 @@ To add quadlet **after** an initial setup that did not use it, re-run: `./setup-
 ## Optional: run as your own user
 
 To run the gateway as your normal user (no dedicated IronCliw user): build the image, create `~/.IronCliw/.env` with `IronCliw_GATEWAY_TOKEN`, and run the container with `--userns=keep-id` and mounts to your `~/.IronCliw`. The launch script is designed for the IronCliw-user flow; for a single-user setup you can instead run the `podman run` command from the script manually, pointing config and workspace to your home. Recommended for most users: use `setup-podman.sh` and run as the IronCliw user so config and process are isolated.
-

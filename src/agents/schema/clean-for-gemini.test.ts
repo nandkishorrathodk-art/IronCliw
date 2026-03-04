@@ -53,4 +53,3 @@ describe("cleanSchemaForGemini", () => {
     expect(cleaned.properties?.good?.type).toBe("string");
   });
 });
-

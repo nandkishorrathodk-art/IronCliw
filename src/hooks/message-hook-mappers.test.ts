@@ -152,4 +152,3 @@ describe("message hook mappers", () => {
     });
   });
 });
-

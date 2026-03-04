@@ -269,4 +269,3 @@ describe("installToolResultContextGuard", () => {
     expect(newResult.details).toBeUndefined();
   });
 });
-

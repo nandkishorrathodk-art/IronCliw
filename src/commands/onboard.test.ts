@@ -139,4 +139,3 @@ describe("onboardCommand", () => {
     expect(mocks.runNonInteractiveOnboarding).not.toHaveBeenCalled();
   });
 });
-

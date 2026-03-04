@@ -17,4 +17,3 @@ export function createOpenAIEmbeddingProviderMock(params: {
     },
   };
 }
-

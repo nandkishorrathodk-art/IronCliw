@@ -107,4 +107,3 @@ describe("phone-control plugin", () => {
     }
   });
 });
-

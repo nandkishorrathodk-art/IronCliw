@@ -201,4 +201,3 @@ export function handleAcpSessionsAction(
 
   return stopWithText(["ACP sessions:", "-----", ...rows].join("\n"));
 }
-

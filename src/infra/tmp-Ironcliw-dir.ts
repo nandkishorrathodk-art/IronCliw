@@ -167,4 +167,3 @@ export function resolvePreferredIronCliwTmpDir(
     return ensureTrustedFallbackDir();
   }
 }
-

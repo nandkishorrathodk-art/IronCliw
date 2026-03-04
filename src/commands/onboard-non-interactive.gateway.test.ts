@@ -267,4 +267,3 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
     });
   }, 60_000);
 });
-

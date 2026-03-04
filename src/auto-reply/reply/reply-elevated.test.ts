@@ -92,4 +92,3 @@ describe("resolveElevatedPermissions", () => {
     expect(result.failures).toHaveLength(0);
   });
 });
-

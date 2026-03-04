@@ -217,4 +217,3 @@ describe("/subagents spawn command", () => {
     expect(spawnSubagentDirectMock).not.toHaveBeenCalled();
   });
 });
-

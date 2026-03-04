@@ -236,4 +236,3 @@ export type IdentityConfig = {
   /** Avatar image: workspace-relative path, http(s) URL, or data URI. */
   avatar?: string;
 };
-

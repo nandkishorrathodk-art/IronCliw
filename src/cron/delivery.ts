@@ -299,4 +299,3 @@ export async function sendFailureNotificationAnnounce(
     clearTimeout(timeout);
   }
 }
-

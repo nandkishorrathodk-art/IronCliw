@@ -26,4 +26,3 @@ x-i18n:
 IronCliw pairing list whatsapp
 IronCliw pairing approve whatsapp <code> --notify
 ```
-

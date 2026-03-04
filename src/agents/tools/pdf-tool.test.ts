@@ -804,4 +804,3 @@ describe("model catalog document support", () => {
     expect(modelSupportsDocument(undefined)).toBe(false);
   });
 });
-

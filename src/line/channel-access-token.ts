@@ -12,4 +12,3 @@ export function resolveLineChannelAccessToken(
   }
   return params.channelAccessToken.trim();
 }
-

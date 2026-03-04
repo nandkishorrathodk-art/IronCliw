@@ -29,4 +29,3 @@ Behavioral notes
 
 - No external CLI/broker toggle for ears/working; keep it internal to the app’s own signals to avoid accidental flapping.
 - Keep TTLs short (&lt;10s) so the icon returns to baseline quickly if a job hangs.
-

@@ -162,4 +162,3 @@ describe("registerMaintenanceCommands doctor action", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 });
-

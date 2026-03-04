@@ -126,4 +126,3 @@ window.location.href = "IronCliw://agent?message=Review%20this%20design";
 - Canvas 方案阻止目录遍历；文件必须位于会话根目录下。
 - 本地 Canvas 内容使用自定义方案（不需要 loopback 服务器）。
 - 仅在显式导航时允许外部 `http(s)` URL。
-

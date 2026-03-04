@@ -6,4 +6,3 @@ export const minimaxProvider: MediaUnderstandingProvider = {
   capabilities: ["image"],
   describeImage: describeImageWithModel,
 };
-

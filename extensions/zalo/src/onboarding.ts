@@ -421,4 +421,3 @@ export const zaloOnboardingAdapter: ChannelOnboardingAdapter = {
     return { cfg: next, accountId: zaloAccountId };
   },
 };
-

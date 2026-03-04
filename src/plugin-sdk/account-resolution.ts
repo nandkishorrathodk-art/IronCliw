@@ -39,4 +39,3 @@ export function listConfiguredAccountIds(params: {
   }
   return [...ids];
 }
-

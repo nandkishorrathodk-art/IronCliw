@@ -125,4 +125,3 @@ describe("startPluginServices", () => {
     expect(stopThrows).toHaveBeenCalledOnce();
   });
 });
-

@@ -168,4 +168,3 @@ IronCliw models list
 - IronCliw 按以下顺序获取凭证来源：`AWS_BEARER_TOKEN_BEDROCK`，然后是 `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY`，然后是 `AWS_PROFILE`，最后是默认的 AWS SDK 链。
 - 推理支持取决于模型；请查看 Bedrock 模型卡了解当前功能。
 - 如果你更喜欢托管密钥流程，也可以在 Bedrock 前面放置一个 OpenAI 兼容的代理，并将其配置为 OpenAI 提供商。
-

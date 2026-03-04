@@ -297,4 +297,3 @@ describe("validateSandboxSecurity", () => {
     ).not.toThrow();
   });
 });
-

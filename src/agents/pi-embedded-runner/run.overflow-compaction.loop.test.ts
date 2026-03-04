@@ -336,4 +336,3 @@ describe("overflow compaction in run loop", () => {
     expect(result.meta.agentMeta?.promptTokens).toBe(2_000);
   });
 });
-

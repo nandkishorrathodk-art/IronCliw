@@ -68,4 +68,3 @@ describe("feishu_doc account selection", () => {
     expect(createFeishuClientMock.mock.calls.at(-1)?.[0]?.appId).toBe("app-a");
   });
 });
-

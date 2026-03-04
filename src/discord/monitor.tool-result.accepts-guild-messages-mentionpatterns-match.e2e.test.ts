@@ -507,4 +507,3 @@ describe("discord tool result dispatch", () => {
     expect(capturedCtx?.ParentSessionKey).toBe("agent:support:discord:channel:p1");
   });
 });
-

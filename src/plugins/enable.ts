@@ -22,4 +22,3 @@ export function enablePluginInConfig(cfg: IronCliwConfig, pluginId: string): Plu
   next = ensurePluginAllowlisted(next, resolvedId);
   return { config: next, enabled: true };
 }
-

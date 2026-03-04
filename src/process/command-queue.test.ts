@@ -335,4 +335,3 @@ describe("command queue", () => {
     await expect(enqueueCommand(async () => "ok")).resolves.toBe("ok");
   });
 });
-

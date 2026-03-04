@@ -90,4 +90,3 @@ describe("doctor command", () => {
     existsSpy.mockRestore();
   });
 });
-

@@ -80,4 +80,3 @@ export async function transcribeFirstAudio(params: {
     return undefined;
   }
 }
-

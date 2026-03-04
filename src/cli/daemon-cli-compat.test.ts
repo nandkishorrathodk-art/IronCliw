@@ -40,4 +40,3 @@ describe("resolveLegacyDaemonCliAccessors", () => {
     expect(resolveLegacyDaemonCliAccessors(bundle)).toBeNull();
   });
 });
-

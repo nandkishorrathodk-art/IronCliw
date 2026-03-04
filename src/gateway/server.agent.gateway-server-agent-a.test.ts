@@ -520,4 +520,3 @@ describe("gateway server agent", () => {
     expect(call.sessionId).toBe(tc.sessionId);
   });
 });
-

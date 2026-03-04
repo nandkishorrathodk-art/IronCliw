@@ -47,4 +47,3 @@ describe("sessions_spawn default runTimeoutSeconds (config absent)", () => {
     expect(readSpawnTimeout(gateway.calls)).toBe(0);
   });
 });
-

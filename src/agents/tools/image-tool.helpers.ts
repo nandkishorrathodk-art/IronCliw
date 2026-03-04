@@ -86,4 +86,3 @@ export function resolveProviderVisionModelFromConfig(params: {
   const id = (picked?.id ?? "").trim();
   return id ? `${params.provider}/${id}` : null;
 }
-

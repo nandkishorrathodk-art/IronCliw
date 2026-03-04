@@ -271,4 +271,3 @@ describe("extractKimiCitations", () => {
     ).toEqual(["https://example.com/a", "https://example.com/b", "https://example.com/c"]);
   });
 });
-

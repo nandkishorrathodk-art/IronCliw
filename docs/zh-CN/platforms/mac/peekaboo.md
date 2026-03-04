@@ -60,4 +60,3 @@ export PEEKABOO_BRIDGE_SOCKET=/path/to/bridge.sock
 
 - 如果 `peekaboo` 报告"bridge client is not authorized"，请确保客户端已正确签名，或仅在**调试**模式下使用 `PEEKABOO_ALLOW_UNSIGNED_SOCKET_CLIENTS=1` 运行宿主。
 - 如果未找到宿主，请打开其中一个宿主应用（Peekaboo.app 或 IronCliw.app）并确认已授予权限。
-

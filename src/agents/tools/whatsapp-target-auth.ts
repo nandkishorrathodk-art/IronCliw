@@ -25,4 +25,3 @@ export function resolveAuthorizedWhatsAppOutboundTarget(params: {
   }
   return { to: resolution.to, accountId: account.accountId };
 }
-

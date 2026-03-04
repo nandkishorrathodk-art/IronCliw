@@ -204,4 +204,3 @@ describe("ensurePiAuthJsonFromAuthProfiles", () => {
     expect(auth["openrouter"]).toMatchObject({ type: "api_key", key: "new-key" });
   });
 });
-

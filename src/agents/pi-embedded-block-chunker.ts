@@ -385,4 +385,3 @@ function findNextParagraphBreak(
   }
   return null;
 }
-

@@ -749,4 +749,3 @@ export async function healthCommand(
     runtime.exit(1);
   }
 }
-

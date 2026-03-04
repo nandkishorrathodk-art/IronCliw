@@ -91,4 +91,3 @@ Example with Deepgram options:
 - Authentication follows the standard provider auth order; `DEEPGRAM_API_KEY` is the simplest path.
 - Override endpoints or headers with `tools.media.audio.baseUrl` and `tools.media.audio.headers` when using a proxy.
 - Output follows the same audio rules as other providers (size caps, timeouts, transcript injection).
-

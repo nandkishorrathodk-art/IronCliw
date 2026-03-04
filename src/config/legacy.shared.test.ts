@@ -21,4 +21,3 @@ describe("mergeMissing prototype pollution guard", () => {
     expect((Object.prototype as Record<string, unknown>).polluted).toBeUndefined();
   });
 });
-

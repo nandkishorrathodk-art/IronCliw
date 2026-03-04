@@ -133,4 +133,3 @@ describe("sendMessageIMessage", () => {
     expect(stopMock).not.toHaveBeenCalled();
   });
 });
-

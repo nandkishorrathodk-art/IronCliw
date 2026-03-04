@@ -35,4 +35,3 @@ describe("resolveMemoryFlushPromptForRun", () => {
     expect((prompt.match(/Current time:/g) ?? []).length).toBe(1);
   });
 });
-

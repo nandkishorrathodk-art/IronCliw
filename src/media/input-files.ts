@@ -336,4 +336,3 @@ export async function extractFileContentFromSource(params: {
   const text = clampText(decodeTextContent(buffer, charset), limits.maxChars);
   return { filename, text };
 }
-

@@ -538,4 +538,3 @@ export function resetThreadBindingsForTests() {
   THREAD_BINDINGS_STATE.loadedBindings = false;
   THREAD_BINDINGS_STATE.lastPersistedAtMs = 0;
 }
-

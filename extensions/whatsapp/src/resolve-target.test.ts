@@ -148,4 +148,3 @@ describe("whatsapp resolveTarget", () => {
     implicitAllowFrom: ["5511999999999"],
   });
 });
-

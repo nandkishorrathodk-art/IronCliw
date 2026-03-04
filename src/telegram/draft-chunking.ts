@@ -39,4 +39,3 @@ export function resolveTelegramDraftStreamingChunking(
       : "paragraph";
   return { minChars, maxChars, breakPreference };
 }
-

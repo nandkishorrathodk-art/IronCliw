@@ -131,4 +131,3 @@ export function buildMentionedCardContent(targets: MentionTarget[], message: str
   const mentionParts = targets.map((t) => formatMentionForCard(t));
   return `${mentionParts.join(" ")} ${message}`;
 }
-

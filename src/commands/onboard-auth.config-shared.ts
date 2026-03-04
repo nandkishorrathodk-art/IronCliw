@@ -211,4 +211,3 @@ function buildProviderConfig(params: {
     models: params.mergedModels.length > 0 ? params.mergedModels : params.fallbackModels,
   };
 }
-

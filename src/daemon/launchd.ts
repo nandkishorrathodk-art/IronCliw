@@ -494,4 +494,3 @@ export async function restartLaunchAgent({
     }
   }
 }
-

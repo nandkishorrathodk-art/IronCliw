@@ -310,4 +310,3 @@ export function formatError(err: unknown): string {
 export function newConnectionId() {
   return randomUUID();
 }
-

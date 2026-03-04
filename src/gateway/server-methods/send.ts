@@ -470,4 +470,3 @@ export const sendHandlers: GatewayRequestHandlers = {
     }
   },
 };
-

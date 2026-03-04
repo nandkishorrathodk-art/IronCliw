@@ -12,4 +12,3 @@ export type InstallRecordBase = {
   resolvedAt?: string;
   installedAt?: string;
 };
-

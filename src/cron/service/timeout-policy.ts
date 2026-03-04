@@ -23,4 +23,3 @@ export function resolveCronJobTimeoutMs(job: CronJob): number | undefined {
   }
   return configuredTimeoutMs <= 0 ? undefined : configuredTimeoutMs;
 }
-

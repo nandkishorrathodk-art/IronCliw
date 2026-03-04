@@ -96,4 +96,3 @@ describe("resolveCliChannelOptions", () => {
     delete process.env.IronCliw_PLUGIN_CATALOG_PATHS;
   });
 });
-

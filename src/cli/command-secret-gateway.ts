@@ -315,4 +315,3 @@ export async function resolveCommandSecretRefsViaGateway(params: {
     diagnostics: dedupeDiagnostics(parsed.diagnostics),
   };
 }
-

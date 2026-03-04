@@ -485,4 +485,3 @@ describe("web auto-reply connection", () => {
     expect(markDispatchIdle).toHaveBeenCalled();
   });
 });
-

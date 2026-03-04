@@ -344,4 +344,3 @@ export async function sendPoll(params: MessagePollParams): Promise<MessagePollRe
     result,
   };
 }
-

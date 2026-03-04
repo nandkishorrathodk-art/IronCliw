@@ -39,4 +39,3 @@ describe("whatsappPlugin outbound sendMedia", () => {
     expect(result).toMatchObject({ channel: "whatsapp", messageId: "msg-1" });
   });
 });
-

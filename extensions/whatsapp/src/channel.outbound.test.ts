@@ -44,4 +44,3 @@ describe("whatsappPlugin outbound sendPoll", () => {
     expect(result).toEqual({ messageId: "wa-poll-1", toJid: "1555@s.whatsapp.net" });
   });
 });
-

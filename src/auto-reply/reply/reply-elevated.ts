@@ -233,4 +233,3 @@ export function resolveElevatedPermissions(params: {
   }
   return { enabled, allowed: globalAllowed && agentAllowed, failures };
 }
-

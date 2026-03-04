@@ -139,4 +139,3 @@ describe("pw-session ensurePageState", () => {
     expect(state2.requests).toEqual([]);
   });
 });
-

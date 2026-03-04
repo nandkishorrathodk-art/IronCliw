@@ -488,4 +488,3 @@ describe("stripToolResultDetails", () => {
     expect(out).toBe(input);
   });
 });
-

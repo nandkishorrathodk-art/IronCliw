@@ -144,4 +144,3 @@ export async function stopBrowserBridgeServer(server: Server): Promise<void> {
     server.close(() => resolve());
   });
 }
-

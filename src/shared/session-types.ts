@@ -26,4 +26,3 @@ export type SessionsPatchResultBase<TEntry> = {
   key: string;
   entry: TEntry;
 };
-

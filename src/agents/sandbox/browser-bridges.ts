@@ -9,4 +9,3 @@ export const BROWSER_BRIDGES = new Map<
     authPassword?: string;
   }
 >();
-

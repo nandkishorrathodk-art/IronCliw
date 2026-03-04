@@ -2,4 +2,3 @@
 // Keep this list additive and scoped to symbols used under extensions/open-prose.
 
 export type { IronCliwPluginApi } from "../plugins/types.js";
-

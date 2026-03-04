@@ -156,4 +156,3 @@ export function formatSlackStreamingBooleanMigrationMessage(
 ): string {
   return `Moved ${pathPrefix}.streaming (boolean) → ${pathPrefix}.nativeStreaming (${resolvedNativeStreaming}).`;
 }
-

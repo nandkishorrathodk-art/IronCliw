@@ -67,4 +67,3 @@ describe("run-node script", () => {
     },
   );
 });
-

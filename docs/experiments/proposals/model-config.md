@@ -34,4 +34,3 @@ Operators want:
 - Should profile rotation be per-provider or per-model?
 - How should the UI surface profile selection for a session?
 - What is the safest migration path from legacy config keys?
-

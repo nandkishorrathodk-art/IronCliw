@@ -15,4 +15,3 @@ export function createRuntimeMedia(): PluginRuntime["media"] {
     resizeToJpeg,
   };
 }
-

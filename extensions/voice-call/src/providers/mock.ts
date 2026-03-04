@@ -177,4 +177,3 @@ export class MockProvider implements VoiceCallProvider {
     return { status: "in-progress", isTerminal: false };
   }
 }
-

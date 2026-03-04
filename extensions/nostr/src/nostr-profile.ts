@@ -275,4 +275,3 @@ export function sanitizeProfileForDisplay(profile: NostrProfile): NostrProfile {
     lud16: escapeHtml(profile.lud16),
   };
 }
-

@@ -47,4 +47,3 @@ export function roleScopesAllow(params: {
   }
   return requested.every((scope) => operatorScopeSatisfied(scope, allowedSet));
 }
-

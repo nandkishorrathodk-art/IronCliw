@@ -31,4 +31,3 @@ export function buildMediaPayload(
     MediaTypes: mediaTypes.length > 0 ? mediaTypes : undefined,
   };
 }
-

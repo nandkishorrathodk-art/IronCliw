@@ -641,4 +641,3 @@ export async function runConfigureWizard(
     throw err;
   }
 }
-

@@ -76,4 +76,3 @@ export async function waitForDiscordGatewayStop(
     params.registerForceStop?.(onForceStop);
   });
 }
-

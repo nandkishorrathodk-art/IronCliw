@@ -48,4 +48,3 @@ describe("session hook runner methods", () => {
     expect(runner.hasHooks("session_end")).toBe(false);
   });
 });
-

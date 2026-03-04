@@ -31,4 +31,3 @@ describe("sameFileIdentity", () => {
     expect(sameFileIdentity(stat(0n, 11n), stat(8n, 11n), "win32")).toBe(true);
   });
 });
-

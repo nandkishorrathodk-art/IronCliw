@@ -72,4 +72,3 @@ describe("tool mutation helpers", () => {
     expect(isLikelyMutatingToolName("browser")).toBe(false);
   });
 });
-

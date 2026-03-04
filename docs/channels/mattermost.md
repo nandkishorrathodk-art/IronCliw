@@ -197,4 +197,3 @@ Mattermost supports multiple accounts under `channels.mattermost.accounts`:
 - No replies in channels: ensure the bot is in the channel and mention it (oncall), use a trigger prefix (onchar), or set `chatmode: "onmessage"`.
 - Auth errors: check the bot token, base URL, and whether the account is enabled.
 - Multi-account issues: env vars only apply to the `default` account.
-

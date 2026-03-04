@@ -378,4 +378,3 @@ function resolveBoundaryFilePath(params: {
 }): string | null {
   return withOpenedBoundaryFileSync(params, (opened) => opened.path);
 }
-

@@ -101,4 +101,3 @@ describe("browser.request profile selection", () => {
     );
   });
 });
-

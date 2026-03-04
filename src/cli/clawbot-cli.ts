@@ -14,4 +14,3 @@ export function registerClawbotCli(program: Command) {
     );
   registerQrCli(clawbot);
 }
-

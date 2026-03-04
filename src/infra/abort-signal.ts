@@ -10,4 +10,3 @@ export async function waitForAbortSignal(signal?: AbortSignal): Promise<void> {
     signal.addEventListener("abort", onAbort, { once: true });
   });
 }
-

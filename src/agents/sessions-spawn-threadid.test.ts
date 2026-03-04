@@ -67,4 +67,3 @@ describe("sessions_spawn requesterOrigin threading", () => {
     expect(run?.requesterOrigin?.threadId).toBeUndefined();
   });
 });
-

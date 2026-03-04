@@ -292,4 +292,3 @@ describe("resolveTelegramFetch", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
-

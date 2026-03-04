@@ -275,4 +275,3 @@ export function createGlobalCommandRunner(): CommandRunner {
     return { stdout: res.stdout, stderr: res.stderr, code: res.code };
   };
 }
-

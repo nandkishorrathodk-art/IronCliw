@@ -94,4 +94,3 @@ Updates only apply to plugins installed from npm (tracked in `plugins.installs`)
 When a stored integrity hash exists and the fetched artifact hash changes,
 IronCliw prints a warning and asks for confirmation before proceeding. Use
 global `--yes` to bypass prompts in CI/non-interactive runs.
-

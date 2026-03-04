@@ -31,4 +31,3 @@ You will be prompted to select an endpoint:
 
 - MiniMax OAuth uses a user-code login flow.
 - Currently, OAuth login is supported only for the Coding plan
-

@@ -39,4 +39,3 @@ export function resolveDiscordDraftStreamingChunking(
       : "paragraph";
   return { minChars, maxChars, breakPreference };
 }
-

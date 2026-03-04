@@ -84,4 +84,3 @@ describe("memory manager atomic reindex", () => {
     expect(afterStatus.chunks).toBeGreaterThan(0);
   });
 });
-

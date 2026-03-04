@@ -323,4 +323,3 @@ export const signalPlugin: ChannelPlugin<ResolvedSignalAccount> = {
     },
   },
 };
-

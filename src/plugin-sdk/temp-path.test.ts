@@ -69,4 +69,3 @@ describe("withTempDownloadPath", () => {
     expect(capturedPath).not.toContain("..");
   });
 });
-

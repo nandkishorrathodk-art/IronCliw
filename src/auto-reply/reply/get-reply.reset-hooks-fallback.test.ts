@@ -207,4 +207,3 @@ describe("getReplyFromConfig reset-hook fallback", () => {
     expect(mocks.emitResetCommandHooks).not.toHaveBeenCalled();
   });
 });
-

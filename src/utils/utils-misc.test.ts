@@ -107,4 +107,3 @@ describe("splitShellArgs", () => {
     expect(splitShellArgs(`echo 'oops`)).toBeNull();
   });
 });
-

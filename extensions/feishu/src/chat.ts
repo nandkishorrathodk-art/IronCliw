@@ -128,4 +128,3 @@ export function registerFeishuChatTools(api: IronCliwPluginApi) {
 
   api.logger.info?.("feishu_chat: Registered feishu_chat tool");
 }
-

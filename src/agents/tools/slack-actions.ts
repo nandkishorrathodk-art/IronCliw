@@ -396,4 +396,3 @@ export async function handleSlackAction(
 
   throw new Error(`Unknown action: ${action}`);
 }
-

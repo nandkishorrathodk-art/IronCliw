@@ -591,4 +591,3 @@ As a subagent in an OpenProse program:
 8. **Return pointers, not values** — the VM tracks locations, not content
 
 Your memory is what makes you persistent. The VM's efficiency depends on you writing outputs and returning confirmations—not dumping full content back through the substrate.
-

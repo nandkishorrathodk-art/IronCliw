@@ -42,4 +42,3 @@ export async function applySessionHints(params: {
 
   return prefixedBodyBase;
 }
-

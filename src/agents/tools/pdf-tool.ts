@@ -556,4 +556,3 @@ export function createPdfTool(options?: {
     },
   };
 }
-

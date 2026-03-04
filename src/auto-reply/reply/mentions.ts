@@ -177,4 +177,3 @@ export function stripMentions(
   result = result.replace(/@[0-9+]{5,}/g, " ");
   return result.replace(/\s+/g, " ").trim();
 }
-

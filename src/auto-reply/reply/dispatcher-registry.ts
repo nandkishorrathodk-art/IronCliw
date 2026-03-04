@@ -56,4 +56,3 @@ export function clearAllDispatchers(): void {
   }
   activeDispatchers.clear();
 }
-

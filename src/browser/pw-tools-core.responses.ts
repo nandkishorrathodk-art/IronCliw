@@ -121,4 +121,3 @@ export async function responseBodyViaPlaywright(opts: {
     truncated: bodyText.length > maxChars ? true : undefined,
   };
 }
-

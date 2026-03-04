@@ -548,4 +548,3 @@ export function resolveSecretsAuditExitCode(report: SecretsAuditReport, check: b
   }
   return 0;
 }
-

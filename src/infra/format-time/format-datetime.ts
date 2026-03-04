@@ -92,4 +92,3 @@ export function formatZonedTimestamp(
   }
   return `${yyyy}-${mm}-${dd} ${hh}:${min}${tz ? ` ${tz}` : ""}`;
 }
-

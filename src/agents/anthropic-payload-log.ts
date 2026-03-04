@@ -183,4 +183,3 @@ export function createAnthropicPayloadLogger(params: {
   log.info("anthropic payload logger enabled", { filePath: writer.filePath });
   return { enabled: true, wrapStreamFn, recordUsage };
 }
-

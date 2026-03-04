@@ -45,4 +45,3 @@ IronCliw models status --check
 - `scripts/termux-sync-widget.sh`：同步 Claude Code 凭证 → IronCliw。
 
 如果你不需要手机自动化或 systemd 定时器，可以跳过这些脚本。
-

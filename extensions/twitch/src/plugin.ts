@@ -272,4 +272,3 @@ export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {
     },
   },
 };
-

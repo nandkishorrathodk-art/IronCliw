@@ -89,4 +89,3 @@ x-i18n:
 - 回声抑制使用组合的批次字符串；如果你发送两次相同的文本但没有提及，只有第一次会得到响应。
 - 会话存储条目将在会话存储中显示为 `agent:<agentId>:whatsapp:group:<jid>`（默认为 `~/.IronCliw/agents/<agentId>/sessions/sessions.json`）；缺失条目只是意味着该群组尚未触发运行。
 - 群组中的输入指示器遵循 `agents.defaults.typingMode`（默认：未被提及时为 `message`）。
-

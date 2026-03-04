@@ -240,4 +240,3 @@ export function installUnhandledRejectionHandler(): void {
     process.exit(1);
   });
 }
-

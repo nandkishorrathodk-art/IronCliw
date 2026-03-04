@@ -14,4 +14,3 @@ describe("shortenText", () => {
     expect(shortenText("hello🙂world", 7)).toBe("hello🙂…");
   });
 });
-

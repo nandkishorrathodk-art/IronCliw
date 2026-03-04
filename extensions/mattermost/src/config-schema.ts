@@ -77,4 +77,3 @@ export const MattermostConfigSchema = MattermostAccountSchemaBase.extend({
       'channels.mattermost.dmPolicy="open" requires channels.mattermost.allowFrom to include "*"',
   });
 });
-

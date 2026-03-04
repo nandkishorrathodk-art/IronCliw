@@ -386,4 +386,3 @@ describe("discord subagent hook handlers", () => {
     expect(result).toBeUndefined();
   });
 });
-

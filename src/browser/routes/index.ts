@@ -9,4 +9,3 @@ export function registerBrowserRoutes(app: BrowserRouteRegistrar, ctx: BrowserRo
   registerBrowserTabRoutes(app, ctx);
   registerBrowserAgentRoutes(app, ctx);
 }
-

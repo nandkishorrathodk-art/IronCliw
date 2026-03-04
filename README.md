@@ -37,8 +37,8 @@
 
 IronCliw is a specialized derivative work that builds upon the foundation of an industry-leading AI gateway.
 
-*   **Original Project:** [OpenClaw](https://github.com/openclaw/openclaw) — A cross-platform AI agent system created by [Peter Steinberger](https://steipete.me).
-*   **Modified Version:** **IronCliw** — A dedicated Windows-native port and heavy modification by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art), engineered for security researchers and power users.
+- **Original Project:** [OpenClaw](https://github.com/openclaw/openclaw) — A cross-platform AI agent system created by [Peter Steinberger](https://steipete.me).
+- **Modified Version:** **IronCliw** — A dedicated Windows-native port and heavy modification by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art), engineered for security researchers and power users.
 
 ---
 
@@ -51,24 +51,24 @@ IronCliw is a specialized derivative work that builds upon the foundation of an 
 - 🤖 **Power users** who want JARVIS-class local AI automation
 - 🔒 **Security researchers** who need multi-channel AI with real shell access
 
-> *"Not for everyone. Built for one."* — Nandkishor Rathod
+> _"Not for everyone. Built for one."_ — Nandkishor Rathod
 
 ---
 
 ## 🆚 IronCliw vs OpenClaw
 
-| Feature | Original (OpenClaw) | **Modified (IronCliw)** 🛡️ |
-|---|---|---|
-| Bug Bounty Protocol | ✗ None | ✅ Built-In (6-phase) |
-| PowerShell Integration | ✗ Basic cmd.exe | ✅ Native `-ExecutionPolicy Bypass` |
-| Context Window | 8K tokens | ✅ 128K tokens |
-| Max Output Tokens | 4K | ✅ 16,384 |
-| Parallel Subagents | 4 | ✅ 16 agents |
-| Session Memory TTL | 1h | ✅ 4h TTL |
-| Agent Personality | Generic | ✅ Elite Specialist |
-| Auto Recon | ✗ | ✅ Autonomous |
-| Windows Native Daemon | ✗ | ✅ IronCliwDaemon (C#) |
-| Custom Branding | ✗ | ✅ Full IronCliw |
+| Feature                | Original (OpenClaw) | **Modified (IronCliw)** 🛡️          |
+| ---------------------- | ------------------- | ----------------------------------- |
+| Bug Bounty Protocol    | ✗ None              | ✅ Built-In (6-phase)               |
+| PowerShell Integration | ✗ Basic cmd.exe     | ✅ Native `-ExecutionPolicy Bypass` |
+| Context Window         | 8K tokens           | ✅ 128K tokens                      |
+| Max Output Tokens      | 4K                  | ✅ 16,384                           |
+| Parallel Subagents     | 4                   | ✅ 16 agents                        |
+| Session Memory TTL     | 1h                  | ✅ 4h TTL                           |
+| Agent Personality      | Generic             | ✅ Elite Specialist                 |
+| Auto Recon             | ✗                   | ✅ Autonomous                       |
+| Windows Native Daemon  | ✗                   | ✅ IronCliwDaemon (C#)              |
+| Custom Branding        | ✗                   | ✅ Full IronCliw                    |
 
 ---
 
@@ -151,27 +151,31 @@ ironcliw, footprint target.com
 
 This automatically chains:
 
-| Phase | Tool | Action |
-|---|---|---|
-| 01 | `subfinder` | Subdomain enumeration |
-| 02 | `httpx` | Alive host checking |
-| 03 | `nmap` | Port & service scanning |
-| 04 | `nuclei` | Low-hanging CVE detection |
-| 05 | `ffuf` | Directory & param fuzzing |
-| 06 | AI Engine | Auto-generates HackerOne-ready HTML/PDF report |
+| Phase | Tool        | Action                                         |
+| ----- | ----------- | ---------------------------------------------- |
+| 01    | `subfinder` | Subdomain enumeration                          |
+| 02    | `httpx`     | Alive host checking                            |
+| 03    | `nmap`      | Port & service scanning                        |
+| 04    | `nuclei`    | Low-hanging CVE detection                      |
+| 05    | `ffuf`      | Directory & param fuzzing                      |
+| 06    | AI Engine   | Auto-generates HackerOne-ready HTML/PDF report |
 
 ---
 
 ## 🔋 Power Features
 
 ### ⚡ PowerShell Integration
+
 All shell commands run through a persistent PowerShell runspace with `-NoProfile -NonInteractive -ExecutionPolicy Bypass`, retaining state between commands.
 
 ### 🧠 Self-Healing Code (Auto-Fixer)
+
 If a script fails, IronCliw reads the `stderr`, pipes it back to the LLM, auto-fixes the syntax, and retries — without asking you.
 
 ### 🪟 IronCliwDaemon (C# Native Layer)
+
 A background C# `.NET` service that gives IronCliw god-level Windows access:
+
 - **Window Control** — Native system interaction
 - **Clipboard Master** — Instant read/write access
 - **Input Simulation** — Automated keyboard/mouse control
@@ -229,7 +233,7 @@ This project stands on the shoulders of giants:
 
 **Built with ⚡ by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art) in India 🇮🇳**
 
-*"The Iron Grip of AI Automation."*
+_"The Iron Grip of AI Automation."_
 
 [🌐 Website](https://ironcliw.ai) · [📖 Docs](./docs) · [☠️ Bug Bounty Guide](./BUGBOUNTY_SETUP.md) · [🔒 Security](./SECURITY.md)
 

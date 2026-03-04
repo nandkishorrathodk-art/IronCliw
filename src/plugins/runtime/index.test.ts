@@ -54,4 +54,3 @@ describe("plugin runtime command execution", () => {
     expect(runtime.system.requestHeartbeatNow).toBe(requestHeartbeatNow);
   });
 });
-

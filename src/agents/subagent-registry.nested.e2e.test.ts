@@ -247,4 +247,3 @@ describe("subagent registry nested agent tracking", () => {
     expect(countPendingDescendantRunsExcludingRun("agent:main:main", "run-sibling")).toBe(1);
   });
 });
-

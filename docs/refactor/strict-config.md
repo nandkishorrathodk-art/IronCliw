@@ -91,4 +91,3 @@ Everything else must hard-fail with: “Config invalid. Run `IronCliw doctor --f
 - Plugin missing schema → plugin load blocked with clear error.
 - Invalid config → gateway startup blocked except diagnostic commands.
 - Doctor dry-run auto; `doctor --fix` writes corrected config.
-

@@ -144,4 +144,3 @@ describe("resolveMemoryBackendConfig", () => {
     expect(resolved.qmd?.searchMode).toBe("vsearch");
   });
 });
-

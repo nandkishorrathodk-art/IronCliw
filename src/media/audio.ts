@@ -46,4 +46,3 @@ export function isVoiceCompatibleAudio(opts: {
 }): boolean {
   return isTelegramVoiceCompatibleAudio(opts);
 }
-

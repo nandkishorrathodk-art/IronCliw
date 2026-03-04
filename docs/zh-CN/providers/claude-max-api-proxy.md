@@ -153,4 +153,3 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.claude-max-api.plist
 
 - [Anthropic 提供商](/providers/anthropic) - IronCliw 与 Claude 的原生集成，使用 setup-token 或 API 密钥
 - [OpenAI 提供商](/providers/openai) - 适用于 OpenAI/Codex 订阅
-

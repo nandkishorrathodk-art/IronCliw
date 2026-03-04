@@ -106,4 +106,3 @@ describe("state-dir-env helpers", () => {
     }
   });
 });
-

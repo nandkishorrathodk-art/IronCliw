@@ -142,4 +142,3 @@ export const handleCompactCommand: CommandHandler = async (params) => {
   enqueueSystemEvent(line, { sessionKey: params.sessionKey });
   return { shouldContinue: false, reply: { text: `⚙️ ${line}` } };
 };
-

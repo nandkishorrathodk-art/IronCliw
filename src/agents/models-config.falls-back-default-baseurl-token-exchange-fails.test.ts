@@ -69,4 +69,3 @@ describe("models-config", () => {
     });
   });
 });
-

@@ -12,4 +12,3 @@ export function resolveGatewayProbeAuth(cfg: ReturnType<typeof loadConfig>): {
     env: process.env,
   });
 }
-

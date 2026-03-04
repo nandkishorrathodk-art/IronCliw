@@ -44,4 +44,3 @@ describe("mistralProvider", () => {
     expect(getRequest().url).toBe("https://custom.mistral.example/v1/audio/transcriptions");
   });
 });
-

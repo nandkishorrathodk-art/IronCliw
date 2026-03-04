@@ -516,4 +516,3 @@ describe("resolveUninstallDirectoryTarget", () => {
     expect(target).toBe(resolvePluginInstallDir("my-plugin", extensionsDir));
   });
 });
-

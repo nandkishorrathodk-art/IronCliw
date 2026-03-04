@@ -148,4 +148,3 @@ describe("browser navigation guard", () => {
     ).resolves.toBeUndefined();
   });
 });
-

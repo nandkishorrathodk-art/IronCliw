@@ -284,4 +284,3 @@ describe("after_tool_call hook wiring", () => {
     expect(eventB?.params).toEqual({ path: "/tmp/path-b.txt" });
   });
 });
-

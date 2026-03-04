@@ -40,4 +40,3 @@ export function createProcessSessionFixture(params: {
   }
   return session;
 }
-

@@ -71,4 +71,3 @@ describe("update cli option collisions", () => {
     );
   });
 });
-

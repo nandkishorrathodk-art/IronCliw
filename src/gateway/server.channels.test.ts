@@ -168,4 +168,3 @@ describe("gateway server channels", () => {
     expect(snap.config?.channels?.telegram?.groups?.["*"]?.requireMention).toBe(false);
   });
 });
-

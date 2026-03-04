@@ -319,4 +319,3 @@ describe("heartbeat-wake", () => {
     );
   });
 });
-

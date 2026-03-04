@@ -255,4 +255,3 @@ describe("secrets audit", () => {
     expect(callCount).toBe(1);
   });
 });
-

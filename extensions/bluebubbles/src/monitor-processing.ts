@@ -1458,4 +1458,3 @@ export async function processReaction(
   });
   logVerbose(core, runtime, `reaction event enqueued: ${text}`);
 }
-

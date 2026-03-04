@@ -64,4 +64,3 @@ describe("tool-images log context", () => {
     expect(String(message)).toContain("sample-diagram.png");
   });
 });
-

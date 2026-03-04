@@ -38,4 +38,3 @@ export function resolveMSTeamsCredentials(cfg?: MSTeamsConfig): MSTeamsCredentia
 
   return { appId, appPassword, tenantId };
 }
-

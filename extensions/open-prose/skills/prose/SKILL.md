@@ -321,4 +321,3 @@ These documentation files were renamed in the skill itself (not user workspace):
 | `antipatterns.md` | `guidance/antipatterns.md` |
 
 If you encounter references to the old names in user prompts or external docs, map them to the current paths.
-

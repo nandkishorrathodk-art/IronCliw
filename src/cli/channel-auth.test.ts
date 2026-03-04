@@ -140,4 +140,3 @@ describe("channel-auth", () => {
     );
   });
 });
-

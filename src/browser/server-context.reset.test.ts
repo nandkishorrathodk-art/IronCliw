@@ -134,4 +134,3 @@ describe("createProfileResetOps", () => {
     expect(pwAiMocks.closePlaywrightBrowserConnection).toHaveBeenCalledTimes(2);
   });
 });
-

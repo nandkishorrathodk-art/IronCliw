@@ -28,4 +28,3 @@ export async function startGatewayMemoryBackend(params: {
     params.log.info?.(`qmd memory startup initialization armed for agent "${agentId}"`);
   }
 }
-

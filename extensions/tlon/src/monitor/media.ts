@@ -164,4 +164,3 @@ export async function downloadMessageImages(
 
   return attachments;
 }
-

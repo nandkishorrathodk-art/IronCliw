@@ -14,4 +14,3 @@ export const msteamsRuntimeStub = {
     },
   },
 } as unknown as PluginRuntime;
-

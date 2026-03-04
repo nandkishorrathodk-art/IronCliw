@@ -87,4 +87,3 @@ describe("pi embedded model e2e smoke", () => {
     expect(result.error).toBe("Unknown model: google-gemini-cli/gemini-4-unknown");
   });
 });
-

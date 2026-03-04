@@ -152,4 +152,3 @@ export async function sanitizeSessionMessagesImages(
   }
   return out;
 }
-

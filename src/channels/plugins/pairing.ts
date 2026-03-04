@@ -67,4 +67,3 @@ export async function notifyPairingApproved(params: {
     runtime: params.runtime,
   });
 }
-

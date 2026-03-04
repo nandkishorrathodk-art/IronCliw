@@ -29,4 +29,3 @@ export async function startBrowserControlServerIfEnabled(): Promise<BrowserContr
   await start();
   return { stop: stop ?? (async () => {}) };
 }
-

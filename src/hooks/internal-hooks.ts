@@ -446,4 +446,3 @@ export function isMessagePreprocessedEvent(
   }
   return hasStringContextField(context, "channelId");
 }
-

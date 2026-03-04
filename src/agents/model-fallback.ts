@@ -612,4 +612,3 @@ export async function runWithImageModelFallback<T>(params: {
     formatAttempt: (attempt) => `${attempt.provider}/${attempt.model}: ${attempt.error}`,
   });
 }
-

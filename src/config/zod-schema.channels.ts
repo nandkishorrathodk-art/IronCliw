@@ -8,4 +8,3 @@ export const ChannelHeartbeatVisibilitySchema = z
   })
   .strict()
   .optional();
-

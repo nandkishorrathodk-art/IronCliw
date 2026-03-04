@@ -39,4 +39,3 @@ export function validateSenderIdentity(ctx: MsgContext): string[] {
 
   return issues;
 }
-

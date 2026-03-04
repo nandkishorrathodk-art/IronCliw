@@ -88,4 +88,3 @@ describe("doctor command", () => {
     expect(warned).toBe(false);
   });
 });
-

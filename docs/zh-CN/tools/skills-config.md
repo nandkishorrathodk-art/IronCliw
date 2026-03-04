@@ -76,4 +76,3 @@ x-i18n:
 - 将环境变量烘焙到你的自定义沙箱镜像中
 
 全局 `env` 和 `skills.entries.<skill>.env/apiKey` 仅适用于**宿主机**运行。
-

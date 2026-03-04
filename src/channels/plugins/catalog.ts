@@ -305,4 +305,3 @@ export function getChannelPluginCatalogEntry(
   }
   return listChannelPluginCatalogEntries(options).find((entry) => entry.id === trimmed);
 }
-

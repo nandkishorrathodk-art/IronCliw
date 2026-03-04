@@ -102,4 +102,3 @@ describe("createLocalShellRunner", () => {
     expect(harness.messages).toContain("local shell: enabled for this session");
   });
 });
-

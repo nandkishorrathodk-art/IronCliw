@@ -174,4 +174,3 @@ export function getSubagentDepthFromSessionStore(
 
   return depthFromStore(raw) ?? fallbackDepth;
 }
-

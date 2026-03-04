@@ -295,4 +295,3 @@ describe("buildWorkspaceSkillSnapshot", () => {
     expect(snapshot.prompt).not.toContain("root-big-skill");
   });
 });
-

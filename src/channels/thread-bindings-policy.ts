@@ -199,4 +199,3 @@ export function formatThreadBindingSpawnDisabledError(params: {
   }
   return `Thread-bound ${params.kind} spawns are disabled for ${params.channel}.`;
 }
-

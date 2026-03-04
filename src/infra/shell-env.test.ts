@@ -297,4 +297,3 @@ describe("shell env fallback", () => {
     expect(exec).not.toHaveBeenCalled();
   });
 });
-

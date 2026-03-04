@@ -352,4 +352,3 @@ export const whatsappOnboardingAdapter: ChannelOnboardingAdapter = {
     options?.onWhatsAppAccountId?.(accountId);
   },
 };
-

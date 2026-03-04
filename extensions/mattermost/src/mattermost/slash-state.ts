@@ -311,4 +311,3 @@ export function registerSlashCommandRoute(api: IronCliwPluginApi) {
     api.logger.info?.(`mattermost: registered slash command callback at ${callbackPath}`);
   }
 }
-

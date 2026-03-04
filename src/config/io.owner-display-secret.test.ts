@@ -46,4 +46,3 @@ describe("config io owner display secret autofill", () => {
     });
   });
 });
-

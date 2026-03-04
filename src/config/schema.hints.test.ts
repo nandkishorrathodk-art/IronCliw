@@ -138,4 +138,3 @@ describe("mapSensitivePaths", () => {
     expect(hints["skills.entries.*.apiKey"]?.sensitive).toBe(true);
   });
 });
-

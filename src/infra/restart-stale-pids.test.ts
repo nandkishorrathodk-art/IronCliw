@@ -808,4 +808,3 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
     });
   });
 });
-

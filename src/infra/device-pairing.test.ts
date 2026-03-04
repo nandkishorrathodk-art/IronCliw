@@ -251,4 +251,3 @@ describe("device pairing tokens", () => {
     await expect(clearDevicePairing("device-1", baseDir)).resolves.toBe(false);
   });
 });
-

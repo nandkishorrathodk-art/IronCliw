@@ -548,4 +548,3 @@ describe("doctor legacy state migrations", () => {
     expectTargetAlreadyExistsWarning(result, targetDir);
   });
 });
-

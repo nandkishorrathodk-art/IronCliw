@@ -290,4 +290,3 @@ describe("spawnAndCollect", () => {
     expect(result.error?.name).toBe("AbortError");
   });
 });
-

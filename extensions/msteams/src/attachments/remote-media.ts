@@ -43,4 +43,3 @@ export async function downloadAndStoreMSTeamsRemoteMedia(params: {
       inferPlaceholder({ contentType: saved.contentType, fileName: params.filePathHint }),
   };
 }
-

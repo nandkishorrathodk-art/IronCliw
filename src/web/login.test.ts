@@ -69,4 +69,3 @@ describe("renderQrPngBase64", () => {
     expect(source).toContain("qrcode-terminal/vendor/QRCode/QRErrorCorrectLevel.js");
   });
 });
-

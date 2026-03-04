@@ -111,4 +111,3 @@ export async function resolveModelRuntimeApiKey(params: {
   params.authStorage.setRuntimeApiKey(params.model.provider, apiKey);
   return apiKey;
 }
-

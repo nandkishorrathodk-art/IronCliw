@@ -112,4 +112,3 @@ describeUnix("inspectPortUsage", () => {
     }
   });
 });
-

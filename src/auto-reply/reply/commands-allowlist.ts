@@ -740,4 +740,3 @@ export const handleAllowlistCommand: CommandHandler = async (params, allowTextCo
     reply: { text: `✅ ${scopeLabel} allowlist ${actionLabel} in pairing store.` },
   };
 };
-

@@ -19,4 +19,3 @@ export function writeFormattedLines(
     stdout.write(`${formatLine(line.label, line.value)}\n`);
   }
 }
-

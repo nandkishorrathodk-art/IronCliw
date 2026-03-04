@@ -254,4 +254,3 @@ describe("sendBlueBubblesMedia local-path hardening", () => {
     expect(sendBlueBubblesAttachmentMock).toHaveBeenCalledTimes(1);
   });
 });
-

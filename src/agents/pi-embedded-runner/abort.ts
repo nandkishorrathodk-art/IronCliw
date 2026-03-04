@@ -15,4 +15,3 @@ export function isRunnerAbortError(err: unknown): boolean {
     "message" in err && typeof err.message === "string" ? err.message.toLowerCase() : "";
   return message.includes("aborted");
 }
-

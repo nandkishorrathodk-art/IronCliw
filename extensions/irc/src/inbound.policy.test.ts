@@ -35,4 +35,3 @@ describe("irc inbound policy", () => {
     expect(resolved.effectiveGroupAllowFrom).toEqual([]);
   });
 });
-

@@ -97,4 +97,3 @@ export function resolveWhatsAppHeartbeatRecipients(
 
   return { recipients: allowFrom, source: "allowFrom" };
 }
-

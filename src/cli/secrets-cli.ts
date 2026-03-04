@@ -249,4 +249,3 @@ export function registerSecretsCli(program: Command) {
       }
     });
 }
-

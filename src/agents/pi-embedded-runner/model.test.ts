@@ -380,4 +380,3 @@ describe("resolveModel", () => {
     expect(result.error).toBe("Unknown model: google-antigravity/some-model");
   });
 });
-

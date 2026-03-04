@@ -297,4 +297,3 @@ describe("listSkillCommandsForAgents", () => {
     expect(commands.map((entry) => entry.skillName)).toContain("demo-skill");
   });
 });
-

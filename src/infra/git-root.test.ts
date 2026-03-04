@@ -57,4 +57,3 @@ describe("git-root", () => {
     expect(resolveGitHeadPath(nested, { maxDepth: 2 })).toBeNull();
   });
 });
-

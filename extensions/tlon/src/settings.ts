@@ -389,4 +389,3 @@ export function createSettingsManager(api: UrbitSSEClient, logger?: SettingsLogg
     },
   };
 }
-

@@ -40,4 +40,3 @@ describe("buildTelegramMessageContext sender prefix", () => {
     expect(ctx?.ctxPayload?.MessageSid).toBe("67890");
   });
 });
-

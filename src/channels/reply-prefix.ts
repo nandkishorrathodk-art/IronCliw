@@ -60,4 +60,3 @@ export function createReplyPrefixOptions(params: {
     createReplyPrefixContext(params);
   return { responsePrefix, responsePrefixContextProvider, onModelSelected };
 }
-

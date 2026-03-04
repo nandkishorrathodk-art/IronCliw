@@ -527,4 +527,3 @@ export async function ensureApiKeyFromEnvOrPrompt(params: {
   await params.setCredential(apiKey, selectedMode);
   return apiKey;
 }
-

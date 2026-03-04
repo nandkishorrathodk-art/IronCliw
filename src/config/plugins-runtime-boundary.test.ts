@@ -36,4 +36,3 @@ describe("plugins runtime boundary config", () => {
     expect(result.success).toBe(false);
   });
 });
-

@@ -437,4 +437,3 @@ export async function connectIrcClient(options: IrcClientOptions): Promise<IrcCl
     close,
   };
 }
-

@@ -547,4 +547,3 @@ describe("cron tool", () => {
     expect(params?.patch?.failureAlert).toEqual({ after: 3, cooldownMs: 60_000 });
   });
 });
-

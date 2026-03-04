@@ -330,4 +330,3 @@ export async function resolveVisibleSessionReference(params: {
 export function normalizeOptionalKey(value?: string) {
   return normalizeKey(value);
 }
-

@@ -8,4 +8,3 @@ export function looksLikeLocalInstallSpec(spec: string, knownSuffixes: readonly 
     knownSuffixes.some((suffix) => spec.endsWith(suffix))
   );
 }
-

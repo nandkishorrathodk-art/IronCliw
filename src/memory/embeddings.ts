@@ -304,4 +304,3 @@ function formatLocalSetupError(err: unknown): string {
     .filter(Boolean)
     .join("\n");
 }
-

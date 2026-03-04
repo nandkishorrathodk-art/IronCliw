@@ -144,4 +144,3 @@ export function requireTargetKind(params: {
   }
   return params.target.id;
 }
-

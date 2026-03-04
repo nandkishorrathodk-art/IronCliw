@@ -45,4 +45,3 @@ export function readNumber(
   }
   return undefined;
 }
-

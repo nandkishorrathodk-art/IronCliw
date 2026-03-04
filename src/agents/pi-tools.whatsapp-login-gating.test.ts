@@ -39,4 +39,3 @@ describe("owner-only tool gating", () => {
     expect(toolNames).not.toContain("gateway");
   });
 });
-

@@ -121,4 +121,3 @@ describe("zalouser monitor pairing account scoping", () => {
     expect(sendMessageZalouserMock).toHaveBeenCalled();
   });
 });
-

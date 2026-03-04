@@ -208,4 +208,3 @@ export async function removeTypingIndicator(params: {
     }
   }
 }
-

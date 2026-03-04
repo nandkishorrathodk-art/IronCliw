@@ -118,4 +118,3 @@ describe("doctor command", () => {
     ).toBe(true);
   });
 });
-

@@ -83,4 +83,3 @@ describe("matrix directory live", () => {
     expect(result[0].id).toBe(mixedCaseId);
   });
 });
-

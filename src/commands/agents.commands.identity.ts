@@ -231,4 +231,3 @@ export async function agentsSetIdentityCommand(
     runtime.log(`Workspace: ${shortenHomePath(workspaceDir)}`);
   }
 }
-

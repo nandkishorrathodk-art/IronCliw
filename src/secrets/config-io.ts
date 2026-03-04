@@ -12,4 +12,3 @@ export function createSecretsConfigIO(params: { env: NodeJS.ProcessEnv }) {
     logger: silentConfigIoLogger,
   });
 }
-

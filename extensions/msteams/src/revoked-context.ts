@@ -15,4 +15,3 @@ export async function withRevokedProxyFallback<T>(params: {
     return await params.onRevoked();
   }
 }
-

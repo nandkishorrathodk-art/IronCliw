@@ -205,4 +205,3 @@ export function ensureSkillsWatcher(params: { workspaceDir: string; config?: Iro
 
   watchers.set(workspaceDir, state);
 }
-

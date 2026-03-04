@@ -237,4 +237,3 @@ Check the server logs
     expect(isHeartbeatContentEffectivelyEmpty(content)).toBe(true);
   });
 });
-

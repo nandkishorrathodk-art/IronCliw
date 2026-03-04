@@ -114,4 +114,3 @@ export type DiscordMessagePreflightParams = {
   data: DiscordMessageEvent;
   client: Client;
 };
-

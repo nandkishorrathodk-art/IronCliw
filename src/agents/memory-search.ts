@@ -363,4 +363,3 @@ export function resolveMemorySearchConfig(
   }
   return resolved;
 }
-

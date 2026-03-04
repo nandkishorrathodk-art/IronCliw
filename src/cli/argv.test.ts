@@ -413,4 +413,3 @@ describe("argv helpers", () => {
     expect(shouldMigrateStateFromPath(path)).toBe(expected);
   });
 });
-

@@ -77,4 +77,3 @@ describe("resolveSessionStoreTargets", () => {
     ).toThrow(/cannot be combined/i);
   });
 });
-

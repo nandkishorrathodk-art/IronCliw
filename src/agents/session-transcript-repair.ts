@@ -500,4 +500,3 @@ export function repairToolUseResultPairing(messages: AgentMessage[]): ToolUseRep
     moved: changedOrMoved,
   };
 }
-

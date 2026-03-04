@@ -268,4 +268,3 @@ export const ToolsCatalogResultSchema = Type.Object(
   },
   { additionalProperties: false },
 );
-

@@ -95,4 +95,3 @@ export function resolveProviderEndpointLabel(
     api: api || undefined,
   };
 }
-

@@ -65,4 +65,3 @@ export function attachDiscordGatewayLogging(params: {
     emitter.removeListener("metrics", onGatewayMetrics);
   };
 }
-

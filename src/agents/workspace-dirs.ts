@@ -14,4 +14,3 @@ export function listAgentWorkspaceDirs(cfg: IronCliwConfig): string[] {
   dirs.add(resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg)));
   return [...dirs];
 }
-

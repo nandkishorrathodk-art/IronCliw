@@ -235,4 +235,3 @@ describe("daemon-cli coverage", () => {
     expect(parsed.some((entry) => entry.action === "stop" && entry.ok === true)).toBe(true);
   });
 });
-

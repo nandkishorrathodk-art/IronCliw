@@ -558,4 +558,3 @@ export const __testing = {
   releaseAllLocksSync,
   runLockWatchdogCheck,
 };
-

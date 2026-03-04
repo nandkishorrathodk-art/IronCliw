@@ -37,4 +37,3 @@ describe("subscribeEmbeddedPiSession", () => {
     expect(onBlockReply.mock.calls[1][0].text).toBe("~~~sh\nline1\nline2\n~~~");
   });
 });
-

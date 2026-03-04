@@ -452,4 +452,3 @@ export function buildRoleSnapshotFromAiSnapshot(
     refs,
   };
 }
-

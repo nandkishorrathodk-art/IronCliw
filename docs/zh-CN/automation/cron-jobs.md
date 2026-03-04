@@ -422,4 +422,3 @@ IronCliw system event --mode now --text "Next heartbeat: check battery."
 
 - 对于论坛主题，使用 `-100…:topic:<id>` 以确保明确无歧义。
 - 如果你在日志或存储的"最后路由"目标中看到 `telegram:...` 前缀，这是正常的；定时任务投递接受这些前缀并仍能正确解析主题 ID。
-

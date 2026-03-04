@@ -62,4 +62,3 @@ The built-in Kilo Gateway catalog currently surfaces these model refs:
 - Base URL: `https://api.kilo.ai/api/gateway/`
 - For more model/provider options, see [/concepts/model-providers](/concepts/model-providers).
 - Kilo Gateway uses a Bearer token with your API key under the hood.
-

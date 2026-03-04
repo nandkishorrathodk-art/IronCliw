@@ -30,4 +30,3 @@ describe("normalize target helpers", () => {
     });
   });
 });
-

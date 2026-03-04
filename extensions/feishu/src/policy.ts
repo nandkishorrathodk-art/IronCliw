@@ -122,4 +122,3 @@ export function resolveFeishuReplyPolicy(params: {
 
   return { requireMention };
 }
-

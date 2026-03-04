@@ -386,4 +386,3 @@ export async function fetchMinimaxUsage(
     plan: pickString(usageRecord, PLAN_KEYS) ?? pickString(payload, PLAN_KEYS),
   };
 }
-

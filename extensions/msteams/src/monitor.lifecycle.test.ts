@@ -212,4 +212,3 @@ describe("monitorMSTeamsProvider lifecycle", () => {
     ).rejects.toThrow(/EADDRINUSE/);
   });
 });
-

@@ -288,4 +288,3 @@ describe("resolvePreferredIronCliwTmpDir", () => {
     expect(warn).toHaveBeenCalledWith(expect.stringContaining("tightened permissions on temp dir"));
   });
 });
-

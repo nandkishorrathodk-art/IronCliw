@@ -265,4 +265,3 @@ describe("loadPluginManifestRegistry", () => {
     expect(hasUnsafeManifestDiagnostic(registry)).toBe(false);
   });
 });
-

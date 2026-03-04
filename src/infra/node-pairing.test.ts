@@ -80,4 +80,3 @@ describe("node pairing tokens", () => {
     });
   });
 });
-

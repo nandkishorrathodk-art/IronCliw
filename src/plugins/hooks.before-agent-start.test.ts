@@ -176,4 +176,3 @@ describe("before_agent_start hook merger", () => {
     expect(result?.providerOverride).toBe("ollama");
   });
 });
-

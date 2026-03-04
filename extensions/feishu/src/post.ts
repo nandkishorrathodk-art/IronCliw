@@ -272,4 +272,3 @@ export function parsePostContent(content: string): PostParseResult {
     return { textContent: FALLBACK_POST_TEXT, imageKeys: [], mediaKeys: [], mentionedOpenIds: [] };
   }
 }
-

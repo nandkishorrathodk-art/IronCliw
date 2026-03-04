@@ -112,4 +112,3 @@ describe("feishu policy", () => {
     });
   });
 });
-

@@ -49,4 +49,3 @@ export function createSlackSendTestClient(): SlackSendTestClient {
     },
   } as unknown as SlackSendTestClient;
 }
-

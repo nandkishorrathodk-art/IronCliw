@@ -11,4 +11,3 @@ export type GatewayServiceRuntime = {
   cachedLabel?: boolean;
   missingUnit?: boolean;
 };
-

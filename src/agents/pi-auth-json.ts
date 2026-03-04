@@ -70,4 +70,3 @@ export async function ensurePiAuthJsonFromAuthProfiles(agentDir: string): Promis
 
   return { wrote: true, authPath };
 }
-

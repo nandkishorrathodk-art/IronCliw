@@ -150,4 +150,3 @@ describe("resolveDeliveryTarget thread session lookup", () => {
     expect(result.threadId).toBe(1008013);
   });
 });
-

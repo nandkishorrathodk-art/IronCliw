@@ -296,4 +296,3 @@ export async function mergeTableCells(
   }
   return { success: true, block: res.data?.block };
 }
-

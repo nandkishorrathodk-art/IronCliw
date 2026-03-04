@@ -377,4 +377,3 @@ describe("browser chrome helpers", () => {
     expect(proc.kill).toHaveBeenNthCalledWith(2, "SIGKILL");
   });
 });
-

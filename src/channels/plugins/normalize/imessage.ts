@@ -45,4 +45,3 @@ export function looksLikeIMessageTargetId(raw: string): boolean {
     prefixPattern: /^(imessage:|sms:|auto:)/i,
   });
 }
-

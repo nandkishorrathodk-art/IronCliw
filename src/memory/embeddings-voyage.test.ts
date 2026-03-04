@@ -136,4 +136,3 @@ describe("voyage embedding provider", () => {
     expect(normalizeVoyageModel("")).toBe("voyage-4-large"); // Default
   });
 });
-

@@ -65,4 +65,3 @@ export async function waitForTransportReady(params: WaitForTransportReadyParams)
   );
   throw new Error(`${params.label} not ready (${lastError ?? "unknown error"})`);
 }
-

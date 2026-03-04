@@ -140,4 +140,3 @@ export function applyOutputTruncation(result: RunResult): void {
     result.stdout = `${result.stdout}\n${suffix}`;
   }
 }
-

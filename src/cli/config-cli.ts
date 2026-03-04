@@ -474,4 +474,3 @@ export function registerConfigCli(program: Command) {
       await runConfigValidate({ json: Boolean(opts.json) });
     });
 }
-

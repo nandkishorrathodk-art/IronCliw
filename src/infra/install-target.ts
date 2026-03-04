@@ -39,4 +39,3 @@ export async function ensureInstallTargetAvailable(params: {
   }
   return { ok: true };
 }
-

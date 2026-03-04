@@ -38,4 +38,3 @@ describe("subscribeEmbeddedPiSession", () => {
     }).not.toThrow();
   });
 });
-

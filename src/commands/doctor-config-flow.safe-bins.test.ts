@@ -132,4 +132,3 @@ describe("doctor config flow safe bins", () => {
     }
   });
 });
-

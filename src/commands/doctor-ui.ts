@@ -152,4 +152,3 @@ export async function maybeRepairUiProtocolFreshness(
     // runtime.debug(`UI freshness check failed: ${String(err)}`);
   }
 }
-

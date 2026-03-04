@@ -317,4 +317,3 @@ describe("models list/status", () => {
     expect(row.available).toBe(false);
   });
 });
-

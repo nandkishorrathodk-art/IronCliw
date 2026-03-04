@@ -118,4 +118,3 @@ describe("tools.catalog handler", () => {
     });
   });
 });
-

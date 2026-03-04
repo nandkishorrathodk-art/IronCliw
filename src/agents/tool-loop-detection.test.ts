@@ -592,4 +592,3 @@ describe("tool-loop-detection", () => {
     });
   });
 });
-

@@ -548,4 +548,3 @@ describe("classifyFailoverReason", () => {
     ).toBe("timeout");
   });
 });
-

@@ -810,4 +810,3 @@ export function registerMemoryCli(program: Command) {
       },
     );
 }
-

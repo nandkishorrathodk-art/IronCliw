@@ -296,4 +296,3 @@ describe("createModelSelectionState resolveDefaultReasoningLevel", () => {
     await expect(state.resolveDefaultReasoningLevel()).resolves.toBe("off");
   });
 });
-

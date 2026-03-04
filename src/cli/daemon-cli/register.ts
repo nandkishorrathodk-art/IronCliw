@@ -17,4 +17,3 @@ export function registerDaemonCli(program: Command) {
     statusDescription: "Show service install status + probe the Gateway",
   });
 }
-

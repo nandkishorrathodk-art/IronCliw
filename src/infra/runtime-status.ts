@@ -26,4 +26,3 @@ export function formatRuntimeStatusWithDetails({
   }
   return fullDetails.length > 0 ? `${runtimeStatus} (${fullDetails.join(", ")})` : runtimeStatus;
 }
-

@@ -401,4 +401,3 @@ describe("legacy config detection", () => {
     );
   });
 });
-

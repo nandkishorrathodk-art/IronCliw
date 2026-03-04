@@ -92,4 +92,3 @@ Pass `--token` or `--password` explicitly. Missing explicit credentials is an er
 - These commands require `operator.pairing` (or `operator.admin`) scope.
 - `devices clear` is intentionally gated by `--yes`.
 - If pairing scope is unavailable on local loopback (and no explicit `--url` is passed), list/approve can use a local pairing fallback.
-

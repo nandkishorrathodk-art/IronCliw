@@ -774,4 +774,3 @@ export function getNativeCommandSurfaces(): Set<string> {
   cachedNativeRegistry = registry;
   return cachedNativeCommandSurfaces;
 }
-

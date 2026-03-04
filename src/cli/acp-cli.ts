@@ -113,4 +113,3 @@ export function registerAcpCli(program: Command) {
       }
     });
 }
-

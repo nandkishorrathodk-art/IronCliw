@@ -151,4 +151,3 @@ describe("buildTelegramMessageContext audio transcript body", () => {
     expectAudioPlaceholderRendered(ctx);
   });
 });
-

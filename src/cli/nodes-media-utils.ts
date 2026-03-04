@@ -33,4 +33,3 @@ export function resolveTempPathParts(opts: { ext: string; tmpDir?: string; id?: 
     ext: opts.ext.startsWith(".") ? opts.ext : `.${opts.ext}`,
   };
 }
-

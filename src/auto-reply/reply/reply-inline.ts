@@ -43,4 +43,3 @@ export function stripInlineStatus(body: string): {
   const cleaned = collapseInlineHorizontalWhitespace(trimmed.replace(INLINE_STATUS_RE, " ")).trim();
   return { cleaned, didStrip: cleaned !== trimmed };
 }
-

@@ -29,4 +29,3 @@ export function resolveWebhookPath(params: {
   }
   return params.defaultPath ?? null;
 }
-

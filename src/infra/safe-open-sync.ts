@@ -99,4 +99,3 @@ function isAllowedType(stat: fs.Stats, allowedType: SafeOpenSyncAllowedType): bo
   }
   return stat.isFile();
 }
-

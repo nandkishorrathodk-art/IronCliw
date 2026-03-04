@@ -475,4 +475,3 @@ export const feishuOnboardingAdapter: ChannelOnboardingAdapter = {
     },
   }),
 };
-

@@ -394,4 +394,3 @@ describe("resolveApiKeyForProfile secret refs", () => {
     }
   });
 });
-

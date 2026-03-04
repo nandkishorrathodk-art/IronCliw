@@ -9,4 +9,3 @@ export function buildCommandTestParams(
 ) {
   return buildBaseCommandTestParams(commandBody, cfg, ctxOverrides);
 }
-

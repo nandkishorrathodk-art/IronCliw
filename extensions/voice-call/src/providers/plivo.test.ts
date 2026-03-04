@@ -47,4 +47,3 @@ describe("PlivoProvider", () => {
     expect(result.events[0]?.dedupeKey).toBe("plivo:v3:verified");
   });
 });
-

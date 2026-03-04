@@ -356,4 +356,3 @@ Best suited for:
 - Users who enjoy narrative framing
 
 The `frame` keyword for reusable blocks is especially apt—Scheherazade's frame story containing a thousand tales.
-

@@ -23,4 +23,3 @@ vi.mock("./server-plugins.js", async () => {
     },
   };
 });
-

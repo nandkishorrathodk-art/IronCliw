@@ -58,4 +58,3 @@ describe("sessions_spawn default runTimeoutSeconds", () => {
     expect(getSubagentTimeout(gateway.calls)).toBe(300);
   });
 });
-

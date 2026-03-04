@@ -381,4 +381,3 @@ export async function agentsUnbindCommand(
     runtime.exit(1);
   }
 }
-

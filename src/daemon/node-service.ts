@@ -64,4 +64,3 @@ export function resolveNodeService(): GatewayService {
     readRuntime: (env) => base.readRuntime(withNodeServiceEnv(env)),
   };
 }
-

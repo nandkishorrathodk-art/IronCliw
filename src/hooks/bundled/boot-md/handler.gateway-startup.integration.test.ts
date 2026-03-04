@@ -58,4 +58,3 @@ describe("boot-md startup hook integration", () => {
     );
   });
 });
-

@@ -128,4 +128,3 @@ describe("slash-http", () => {
     expect(response.getBody()).toContain("Unauthorized: invalid command token.");
   });
 });
-

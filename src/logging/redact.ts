@@ -149,4 +149,3 @@ export function redactToolDetail(detail: string): string {
 export function getDefaultRedactPatterns(): string[] {
   return [...DEFAULT_REDACT_PATTERNS];
 }
-

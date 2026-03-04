@@ -41,4 +41,3 @@ describe("iMessage sent-message echo cache", () => {
     expect(cache.has("acct:imessage:+1555", { messageId: "m-1" })).toBe(true);
   });
 });
-

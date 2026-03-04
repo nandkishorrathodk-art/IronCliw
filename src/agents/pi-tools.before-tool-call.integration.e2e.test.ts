@@ -279,4 +279,3 @@ describe("before_tool_call hook integration for client tools", () => {
     });
   });
 });
-

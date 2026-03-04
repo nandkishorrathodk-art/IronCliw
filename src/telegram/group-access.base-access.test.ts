@@ -54,4 +54,3 @@ describe("evaluateTelegramGroupBaseAccess", () => {
     expect(result).toEqual({ allowed: true });
   });
 });
-

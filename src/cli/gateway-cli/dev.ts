@@ -128,4 +128,3 @@ export async function ensureDevGatewayConfig(opts: { reset?: boolean }) {
   defaultRuntime.log(`Dev config ready: ${shortenHomePath(configPath)}`);
   defaultRuntime.log(`Dev workspace ready: ${shortenHomePath(resolveUserPath(workspace))}`);
 }
-

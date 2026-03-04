@@ -92,4 +92,3 @@ export function setJsonPointer(
     current = current[token] as Record<string, unknown>;
   }
 }
-

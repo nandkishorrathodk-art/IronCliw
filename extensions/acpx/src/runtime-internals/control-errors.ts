@@ -25,4 +25,3 @@ export function parseControlJsonError(value: unknown): AcpxErrorEvent | null {
     retryable: asOptionalBoolean(error.retryable),
   };
 }
-

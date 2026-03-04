@@ -105,4 +105,3 @@ export async function main() {
 }
 
 runAsScript(import.meta.url, main);
-

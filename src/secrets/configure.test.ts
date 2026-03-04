@@ -54,4 +54,3 @@ describe("runSecretsConfigureInteractive", () => {
     expect(readJsonObjectIfExistsMock).not.toHaveBeenCalled();
   });
 });
-

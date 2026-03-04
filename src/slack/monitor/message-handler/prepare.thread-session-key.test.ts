@@ -137,4 +137,3 @@ describe("thread-level session keys", () => {
     expect(sessionKey).not.toContain(":thread:");
   });
 });
-

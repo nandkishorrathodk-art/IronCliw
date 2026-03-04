@@ -151,4 +151,3 @@ describe("createWebhookAnomalyTracker", () => {
     expect(logs).toEqual(["hit:1", "hit:2"]);
   });
 });
-

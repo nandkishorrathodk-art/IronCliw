@@ -485,4 +485,3 @@ export async function authorizeWsControlUiGatewayConnect(
     authSurface: "ws-control-ui",
   });
 }
-

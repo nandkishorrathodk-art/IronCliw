@@ -105,4 +105,3 @@ export function resolveGroupSessionKey(ctx: MsgContext): GroupKeyResolution | nu
     chatType: kind === "channel" ? "channel" : "group",
   };
 }
-

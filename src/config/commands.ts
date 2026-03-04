@@ -88,4 +88,3 @@ export function isCommandFlagEnabled(
 export function isRestartEnabled(config?: { commands?: unknown }): boolean {
   return getOwnCommandFlagValue(config, "restart") !== false;
 }
-

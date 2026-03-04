@@ -295,4 +295,3 @@ export function noteSandboxScopeWarnings(cfg: IronCliwConfig) {
     note(warnings.join("\n"), "Sandbox");
   }
 }
-

@@ -271,4 +271,3 @@ describe("registerTelegramNativeCommands", () => {
     expect(sendMessage).not.toHaveBeenCalledWith(123, "Command not found.");
   });
 });
-

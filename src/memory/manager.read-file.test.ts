@@ -122,4 +122,3 @@ describe("MemoryIndexManager.readFile", () => {
     readSpy.mockRestore();
   });
 });
-

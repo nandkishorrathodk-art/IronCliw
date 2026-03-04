@@ -62,4 +62,3 @@ export function renderCmdSetAssignment(key: string, value: string): string {
   const escapedValue = escapeCmdSetAssignmentComponent(value);
   return `set "${escapedKey}=${escapedValue}"`;
 }
-

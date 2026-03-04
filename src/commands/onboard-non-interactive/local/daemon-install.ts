@@ -57,4 +57,3 @@ export async function installGatewayDaemonNonInteractive(params: {
   }
   await ensureSystemdUserLingerNonInteractive({ runtime });
 }
-

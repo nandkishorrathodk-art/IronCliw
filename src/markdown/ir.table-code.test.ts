@@ -87,4 +87,3 @@ describe("markdownToIR tableMode code - style overlap", () => {
     }
   });
 });
-

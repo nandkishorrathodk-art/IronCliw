@@ -123,4 +123,3 @@ export const handleApproveCommand: CommandHandler = async (params, allowTextComm
     reply: { text: `✅ Exec approval ${parsed.decision} submitted for ${parsed.id}.` },
   };
 };
-

@@ -171,4 +171,3 @@ describe("temporal decay", () => {
     expect(decayed[0]?.score).toBeCloseTo(0.5, 2);
   });
 });
-

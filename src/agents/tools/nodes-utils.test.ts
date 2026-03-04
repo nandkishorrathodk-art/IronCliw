@@ -83,4 +83,3 @@ describe("listNodes", () => {
     expect(gatewayMocks.callGatewayTool).toHaveBeenCalledWith("node.list", {}, {});
   });
 });
-

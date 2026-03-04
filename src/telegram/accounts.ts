@@ -185,4 +185,3 @@ export function listEnabledTelegramAccounts(cfg: IronCliwConfig): ResolvedTelegr
     .map((accountId) => resolveTelegramAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

@@ -110,4 +110,3 @@ The node host stores its node id, token, display name, and gateway connection in
 - `~/.IronCliw/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
 - `IronCliw approvals --node <id|name|ip>` (edit from the Gateway)
-

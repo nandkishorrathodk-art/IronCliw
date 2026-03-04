@@ -224,4 +224,3 @@ Then run any command to trigger auto-detect:
 ```bash
 clawdock-start
 ```
-

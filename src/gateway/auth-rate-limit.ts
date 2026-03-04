@@ -230,4 +230,3 @@ export function createAuthRateLimiter(config?: RateLimitConfig): AuthRateLimiter
 
   return { check, recordFailure, reset, size, prune, dispose };
 }
-

@@ -558,4 +558,3 @@ describe("createIronCliwCodingTools", () => {
     expect(details?.truncation).not.toHaveProperty("content");
   });
 });
-

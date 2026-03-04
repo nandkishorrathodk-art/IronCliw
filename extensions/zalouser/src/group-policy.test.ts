@@ -47,4 +47,3 @@ describe("zalouser group policy helpers", () => {
     expect(isZalouserGroupEntryAllowed(undefined)).toBe(false);
   });
 });
-

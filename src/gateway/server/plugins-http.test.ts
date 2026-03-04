@@ -190,4 +190,3 @@ describe("plugin HTTP route auth checks", () => {
     expect(shouldEnforceGatewayAuthForPluginPath(registry, "/not-plugin")).toBe(false);
   });
 });
-

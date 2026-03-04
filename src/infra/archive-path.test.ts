@@ -44,4 +44,3 @@ describe("archive path helpers", () => {
     ).toThrow("archive entry escapes targetDir: ../escape.txt");
   });
 });
-

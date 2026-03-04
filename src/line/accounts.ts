@@ -200,4 +200,3 @@ export function resolveDefaultLineAccountId(cfg: IronCliwConfig): string {
 export function normalizeAccountId(accountId: string | undefined): string {
   return normalizeSharedAccountId(accountId);
 }
-

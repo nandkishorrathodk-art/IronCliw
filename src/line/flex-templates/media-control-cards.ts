@@ -553,4 +553,3 @@ export function createDeviceControlCard(params: {
 
   return bubble;
 }
-

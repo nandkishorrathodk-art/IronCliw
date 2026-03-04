@@ -107,4 +107,3 @@ Or remove it from your config:
   }
 }
 ```
-

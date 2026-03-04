@@ -144,4 +144,3 @@ describe("tools invoke HTTP denylist", () => {
     expect(gatewayRes.status).toBe(404);
   });
 });
-

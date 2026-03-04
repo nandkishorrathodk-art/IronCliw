@@ -107,4 +107,3 @@ export function resolveFetch(fetchImpl?: typeof fetch): typeof fetch | undefined
   }
   return wrapFetchWithAbortSignal(resolved);
 }
-

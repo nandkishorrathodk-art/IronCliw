@@ -37,4 +37,3 @@ describe("buildProgram version alias handling", () => {
     expect(exitSpy).not.toHaveBeenCalled();
   });
 });
-

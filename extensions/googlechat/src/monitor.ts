@@ -546,4 +546,3 @@ export function resolveGoogleChatWebhookPath(params: {
 export function computeGoogleChatMediaMaxMb(params: { account: ResolvedGoogleChatAccount }) {
   return params.account.config.mediaMaxMb ?? 20;
 }
-

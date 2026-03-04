@@ -164,4 +164,3 @@ describe("TelnyxProvider.parseWebhookEvent", () => {
     expect(result.events[0]?.dedupeKey).toBe("telnyx:req:abc");
   });
 });
-

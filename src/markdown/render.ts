@@ -194,4 +194,3 @@ export function renderMarkdownWithMarkers(ir: MarkdownIR, options: RenderOptions
 
   return out;
 }
-

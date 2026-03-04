@@ -122,4 +122,3 @@ describe("registerSkillsCli", () => {
     expect(buildWorkspaceSkillStatusMock).not.toHaveBeenCalled();
   });
 });
-

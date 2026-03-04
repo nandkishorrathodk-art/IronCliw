@@ -66,4 +66,3 @@ describe("resolveSessionAgentIds", () => {
     expect(sessionAgentId).toBe("main");
   });
 });
-

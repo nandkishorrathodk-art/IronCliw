@@ -112,4 +112,3 @@ IronCliw gateway --verbose --ws-log full
 - **WhatsApp 消息正文**以 `debug` 级别记录（使用 `--verbose` 查看它们）
 
 这保持现有文件日志稳定，同时使交互式输出易于扫描。
-

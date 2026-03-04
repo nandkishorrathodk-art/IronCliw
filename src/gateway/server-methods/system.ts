@@ -132,4 +132,3 @@ export const systemHandlers: GatewayRequestHandlers = {
     respond(true, { ok: true }, undefined);
   },
 };
-

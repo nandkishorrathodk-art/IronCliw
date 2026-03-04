@@ -18,4 +18,3 @@ export function buildPairingReply(params: {
     formatCliCommand(`IronCliw pairing approve ${channel} ${code}`),
   ].join("\n");
 }
-

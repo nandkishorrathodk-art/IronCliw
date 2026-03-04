@@ -158,4 +158,3 @@ describe("gateway server sessions", () => {
     expect(stored.main).toBeUndefined();
   });
 });
-

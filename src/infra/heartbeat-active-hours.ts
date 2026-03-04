@@ -97,4 +97,3 @@ export function isWithinActiveHours(
   }
   return currentMin >= startMin || currentMin < endMin;
 }
-

@@ -656,4 +656,3 @@ describe("applyPathPrepend with case-insensitive PATH key", () => {
     expect("Path" in env).toBe(false);
   });
 });
-

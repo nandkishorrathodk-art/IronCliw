@@ -245,4 +245,3 @@ export function evaluateGatewayAuthSurfaceStates(params: {
     }),
   };
 }
-

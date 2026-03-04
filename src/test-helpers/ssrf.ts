@@ -12,4 +12,3 @@ export function mockPinnedHostnameResolution(addresses: string[] = ["93.184.216.
     };
   });
 }
-

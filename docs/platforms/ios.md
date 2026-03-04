@@ -106,4 +106,3 @@ IronCliw nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"ma
 - [Pairing](/channels/pairing)
 - [Discovery](/gateway/discovery)
 - [Bonjour](/gateway/bonjour)
-

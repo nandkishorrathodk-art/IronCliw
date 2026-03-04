@@ -50,4 +50,3 @@ describe("legacy state dir auto-migration", () => {
     expect(fs.readFileSync(path.join(root, ".clawdbot", "marker.txt"), "utf-8")).toBe("ok");
   });
 });
-

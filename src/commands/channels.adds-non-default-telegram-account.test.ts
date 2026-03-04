@@ -600,4 +600,3 @@ describe("channels command", () => {
     expect(offsetMocks.deleteTelegramUpdateOffset).not.toHaveBeenCalled();
   });
 });
-

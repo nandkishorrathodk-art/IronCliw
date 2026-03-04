@@ -816,4 +816,3 @@ describe("logs.tail", () => {
     await fsPromises.rm(tempDir, { recursive: true, force: true });
   });
 });
-

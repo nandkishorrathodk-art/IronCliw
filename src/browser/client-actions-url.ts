@@ -9,4 +9,3 @@ export function withBaseUrl(baseUrl: string | undefined, path: string): string {
   }
   return `${trimmed.replace(/\/$/, "")}${path}`;
 }
-

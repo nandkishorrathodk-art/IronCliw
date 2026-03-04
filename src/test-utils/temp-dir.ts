@@ -10,4 +10,3 @@ export async function withTempDir<T>(prefix: string, run: (dir: string) => Promi
     await fs.rm(dir, { recursive: true, force: true });
   }
 }
-

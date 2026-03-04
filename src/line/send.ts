@@ -472,4 +472,3 @@ export async function getUserDisplayName(
   const profile = await getUserProfile(userId, opts);
   return profile?.displayName ?? userId;
 }
-

@@ -186,4 +186,3 @@ export function buildMediaStory(text: string | undefined, mediaUrl: string | und
 
   return story.length > 0 ? story : [{ inline: [""] }];
 }
-

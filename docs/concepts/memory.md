@@ -738,4 +738,3 @@ Notes:
 
 - `remote.*` takes precedence over `models.providers.openai.*`.
 - `remote.headers` merge with OpenAI headers; remote wins on key conflicts. Omit `remote.headers` to use the OpenAI defaults.
-

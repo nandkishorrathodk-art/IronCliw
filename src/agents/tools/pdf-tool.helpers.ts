@@ -107,4 +107,3 @@ export function resolvePdfToolMaxTokens(
   }
   return Math.min(requestedMaxTokens, modelMaxTokens);
 }
-

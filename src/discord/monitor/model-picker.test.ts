@@ -636,4 +636,3 @@ describe("Discord model picker recents view", () => {
     expect(recentBtn?.label).toContain("anthropic/claude-sonnet-4-5");
   });
 });
-

@@ -109,4 +109,3 @@ describe("startBrowserBridgeServer auth", () => {
     expect(body).not.toContain("?password=");
   });
 });
-

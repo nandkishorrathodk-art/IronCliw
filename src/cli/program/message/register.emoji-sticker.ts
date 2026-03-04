@@ -55,4 +55,3 @@ export function registerMessageStickerCommands(message: Command, helpers: Messag
       await helpers.runMessageAction("sticker-upload", opts);
     });
 }
-

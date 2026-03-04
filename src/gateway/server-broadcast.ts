@@ -129,4 +129,3 @@ export function createGatewayBroadcaster(params: { clients: Set<GatewayWsClient>
 
   return { broadcast, broadcastToConnIds };
 }
-

@@ -64,4 +64,3 @@ Who receives it:
 
 - Voice Wake is currently disabled in Android runtime/Settings.
 - Android voice uses manual mic capture in the Voice tab instead of wake-word triggers.
-

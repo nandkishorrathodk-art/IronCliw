@@ -42,4 +42,3 @@ describe("registerBlueBubblesWebhookTarget", () => {
     expect(registry.httpRoutes).toHaveLength(0);
   });
 });
-

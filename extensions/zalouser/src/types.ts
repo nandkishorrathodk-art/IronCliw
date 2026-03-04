@@ -113,4 +113,3 @@ export type ResolvedZalouserAccount = {
   authenticated: boolean;
   config: ZalouserAccountConfig;
 };
-

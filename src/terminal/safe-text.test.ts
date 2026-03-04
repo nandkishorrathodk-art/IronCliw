@@ -10,4 +10,3 @@ describe("sanitizeTerminalText", () => {
     expect(sanitizeTerminalText("a\tb\nc\rd")).toBe("a\\tb\\nc\\rd");
   });
 });
-

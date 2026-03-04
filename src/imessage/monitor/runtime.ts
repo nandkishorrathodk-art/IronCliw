@@ -9,4 +9,3 @@ export function resolveRuntime(opts: MonitorIMessageOpts): RuntimeEnv {
 export function normalizeAllowList(list?: Array<string | number>) {
   return normalizeStringEntries(list);
 }
-

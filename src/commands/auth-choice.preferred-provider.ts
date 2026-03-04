@@ -52,4 +52,3 @@ const PREFERRED_PROVIDER_BY_AUTH_CHOICE: Partial<Record<AuthChoice, string>> = {
 export function resolvePreferredProviderForAuthChoice(choice: AuthChoice): string | undefined {
   return PREFERRED_PROVIDER_BY_AUTH_CHOICE[choice];
 }
-

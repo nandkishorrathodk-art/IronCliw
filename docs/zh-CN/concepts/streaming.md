@@ -131,4 +131,3 @@ Telegram（私聊 + 主题）
 
 - `sendMessageDraft`：Telegram 草稿气泡（不是真正的消息）。
 - `final reply`：普通 Telegram 消息发送。
-

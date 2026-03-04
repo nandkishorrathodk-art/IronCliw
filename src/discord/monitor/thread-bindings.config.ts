@@ -37,4 +37,3 @@ export function resolveDiscordThreadBindingMaxAgeMs(params: {
     sessionMaxAgeHoursRaw: params.cfg.session?.threadBindings?.maxAgeHours,
   });
 }
-

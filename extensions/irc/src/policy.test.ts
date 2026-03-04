@@ -147,4 +147,3 @@ describe("irc policy", () => {
     expect(inboundDisabled.groupConfig?.enabled).toBe(false);
   });
 });
-

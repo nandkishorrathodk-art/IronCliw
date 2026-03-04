@@ -389,4 +389,3 @@ export const nextcloudTalkOnboardingAdapter: ChannelOnboardingAdapter = {
     },
   }),
 };
-

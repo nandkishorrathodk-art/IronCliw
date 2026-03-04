@@ -78,4 +78,3 @@ export function clearFollowupQueue(key: string): number {
   FOLLOWUP_QUEUES.delete(cleaned);
   return cleared;
 }
-

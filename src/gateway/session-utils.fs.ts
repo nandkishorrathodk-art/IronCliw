@@ -734,4 +734,3 @@ export function readSessionPreviewItemsFromTranscript(
 
   return [];
 }
-

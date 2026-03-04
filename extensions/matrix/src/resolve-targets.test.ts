@@ -65,4 +65,3 @@ describe("resolveMatrixTargets (users)", () => {
     expect(result?.note).toBe("multiple matches; chose first");
   });
 });
-

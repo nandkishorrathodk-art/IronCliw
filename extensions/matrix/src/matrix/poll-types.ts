@@ -165,4 +165,3 @@ export function buildPollStartContent(poll: PollInput): PollStartContent {
     "org.matrix.msc1767.text": fallbackText,
   };
 }
-

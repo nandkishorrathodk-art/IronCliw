@@ -75,4 +75,3 @@ describe("getSoonestCooldownExpiry", () => {
     expect(getSoonestCooldownExpiry(store, ["openai:p1", "openai:p2"])).toBe(1_700_000_000_000);
   });
 });
-

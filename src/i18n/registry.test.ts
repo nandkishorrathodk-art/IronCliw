@@ -40,4 +40,3 @@ describe("ui i18n locale registry", () => {
     expect(await loadLazyLocaleTranslation("en")).toBeNull();
   });
 });
-

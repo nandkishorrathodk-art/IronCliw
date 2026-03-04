@@ -56,4 +56,3 @@ describe("channels/web entrypoint", () => {
     expect(webEntry.webAuthExists).toBe(channelWeb.webAuthExists);
   });
 });
-

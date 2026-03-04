@@ -358,4 +358,3 @@ Potential benchmarking questions:
 3. **Comprehension** — Do users understand `dreamer`/`dream` immediately?
 4. **Preference** — Which register do users find most pleasant?
 5. **Error rates** — Does the metaphorical mapping cause mistakes?
-

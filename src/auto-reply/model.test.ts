@@ -179,4 +179,3 @@ describe("extractModelDirective", () => {
     });
   });
 });
-

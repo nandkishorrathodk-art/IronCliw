@@ -133,4 +133,3 @@ describe("ensureBrowserControlAuth", () => {
     expect(mocks.writeConfigFile).not.toHaveBeenCalled();
   });
 });
-

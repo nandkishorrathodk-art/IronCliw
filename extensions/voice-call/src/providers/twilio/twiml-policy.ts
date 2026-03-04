@@ -89,4 +89,3 @@ export function decideTwimlResponse(input: TwimlPolicyInput): TwimlDecision {
 
   return input.canStream ? { kind: "stream" } : { kind: "pause" };
 }
-

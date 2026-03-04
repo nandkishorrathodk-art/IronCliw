@@ -108,4 +108,3 @@ describe("normalizeDiscordMessagingTarget", () => {
     expect(normalizeDiscordMessagingTarget("123")).toBe("channel:123");
   });
 });
-

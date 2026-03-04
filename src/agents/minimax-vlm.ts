@@ -111,4 +111,3 @@ export async function minimaxUnderstandImage(params: {
 
   return content;
 }
-

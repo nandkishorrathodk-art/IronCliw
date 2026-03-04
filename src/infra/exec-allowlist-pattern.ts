@@ -81,4 +81,3 @@ export function matchesExecAllowlistPattern(pattern: string, target: string): bo
   normalizedTarget = normalizeMatchTarget(normalizedTarget);
   return compileGlobRegex(normalizedPattern).test(normalizedTarget);
 }
-

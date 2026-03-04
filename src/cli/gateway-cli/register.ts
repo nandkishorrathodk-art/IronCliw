@@ -275,4 +275,3 @@ export function registerGatewayCli(program: Command) {
       }, "gateway discover failed");
     });
 }
-

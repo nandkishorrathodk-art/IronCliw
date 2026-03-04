@@ -67,4 +67,3 @@ describe("buildSlackDebounceKey", () => {
     expect(buildSlackDebounceKey(msg, accountId)).toBe("slack:default:C123:1709000000.000100:B999");
   });
 });
-

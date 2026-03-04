@@ -51,4 +51,3 @@ describe("skills.update", () => {
     });
   });
 });
-

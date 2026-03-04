@@ -71,4 +71,3 @@ export async function resolveSandboxedBridgeMediaPath(params: {
     return { resolved: resolvedFallback.hostPath, rewrittenFrom: filePath };
   }
 }
-

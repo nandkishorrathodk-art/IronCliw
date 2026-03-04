@@ -107,4 +107,3 @@ describe("matrix reaction actions", () => {
     expect(redactEvent).not.toHaveBeenCalled();
   });
 });
-

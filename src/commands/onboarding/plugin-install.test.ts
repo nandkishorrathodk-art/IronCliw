@@ -164,4 +164,3 @@ describe("ensureOnboardingPluginInstalled", () => {
     expect(runtime.error).not.toHaveBeenCalled();
   });
 });
-

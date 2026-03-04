@@ -64,4 +64,3 @@ export async function ensureNodeHostConfig(): Promise<NodeHostConfig> {
   await saveNodeHostConfig(normalized);
   return normalized;
 }
-

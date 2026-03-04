@@ -11,4 +11,3 @@ export {
   waitForWaConnection,
   webAuthExists,
 } from "../../channel-web.js";
-

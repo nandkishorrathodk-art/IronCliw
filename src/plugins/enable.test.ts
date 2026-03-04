@@ -73,4 +73,3 @@ describe("enablePluginInConfig", () => {
     expect(result.config.plugins?.entries?.telegram?.enabled).toBe(true);
   });
 });
-

@@ -97,4 +97,3 @@ export function assertSupportedRuntime(
   );
   runtime.exit(1);
 }
-

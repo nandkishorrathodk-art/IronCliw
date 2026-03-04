@@ -340,4 +340,3 @@ describe("assertHooksTokenSeparateFromGatewayAuth", () => {
     ).not.toThrow();
   });
 });
-

@@ -32,4 +32,3 @@ How to see whether the linked channel is healthy from the menu bar app.
 ## When in doubt
 
 - You can still use the CLI flow in [Gateway health](/gateway/health) (`IronCliw status`, `IronCliw status --deep`, `IronCliw health --json`) and tail `/tmp/IronCliw/IronCliw-*.log` for `web-heartbeat` / `web-reconnect`.
-

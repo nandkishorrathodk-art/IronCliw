@@ -33,4 +33,3 @@ export async function withTempConfig(params: {
     await rm(dir, { recursive: true, force: true });
   }
 }
-

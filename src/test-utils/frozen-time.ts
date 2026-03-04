@@ -8,4 +8,3 @@ export function useFrozenTime(at: string | number | Date): void {
 export function useRealTime(): void {
   vi.useRealTimers();
 }
-

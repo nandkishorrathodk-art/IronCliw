@@ -66,4 +66,3 @@ export function createSafeStreamWriter(options: SafeStreamWriterOptions = {}): S
     isClosed: () => closed,
   };
 }
-

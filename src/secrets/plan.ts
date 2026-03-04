@@ -193,4 +193,3 @@ export function normalizeSecretsPlanOptions(
     scrubLegacyAuthJson: options?.scrubLegacyAuthJson ?? true,
   };
 }
-

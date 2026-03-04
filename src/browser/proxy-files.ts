@@ -38,4 +38,3 @@ export function applyBrowserProxyPaths(result: unknown, mapping: Map<string, str
     }
   }
 }
-

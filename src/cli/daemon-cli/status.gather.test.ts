@@ -262,4 +262,3 @@ describe("gatherDaemonStatus", () => {
     expect(status.rpc).toBeUndefined();
   });
 });
-

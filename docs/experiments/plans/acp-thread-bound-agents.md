@@ -798,4 +798,3 @@ These are non-blocking follow-ups to keep the ACP path maintainable after the cu
 - ndjson event parsing/normalization
 - runtime API surface (`submit`, `cancel`, `close`, etc.)
 - improves testability and makes backend behavior easier to audit
-

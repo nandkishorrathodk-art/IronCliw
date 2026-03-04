@@ -207,4 +207,3 @@ message action=react channel=signal target=signal:group:<groupId> targetAuthor=u
 - `agents.list[].groupChat.mentionPatterns`（Signal 不支持原生提及）。
 - `messages.groupChat.mentionPatterns`（全局回退）。
 - `messages.responsePrefix`。
-

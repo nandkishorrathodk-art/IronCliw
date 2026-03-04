@@ -15,4 +15,3 @@ See the [Trust page](https://trust.IronCliw.ai) for full reporting instructions 
 
 - **Jamieson O'Reilly** ([@theonejvo](https://twitter.com/theonejvo)) - Security & Trust
 - Discord: #security channel
-

@@ -268,4 +268,3 @@ export function downgradeOpenAIReasoningBlocks(messages: AgentMessage[]): AgentM
 
   return out;
 }
-

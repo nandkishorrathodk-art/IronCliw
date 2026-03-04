@@ -97,4 +97,3 @@ describe("secret target registry", () => {
     expect(targets[0]?.path).toBe("talk.apiKey");
   });
 });
-

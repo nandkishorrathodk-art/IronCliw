@@ -57,4 +57,3 @@ describe("browser CLI --browser-profile flag", () => {
     expect(browserProfile).toBe("onasset");
   });
 });
-

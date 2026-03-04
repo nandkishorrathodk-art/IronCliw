@@ -41,4 +41,3 @@ describe("origin-routing helpers", () => {
     expect(accountId).toBe("work");
   });
 });
-

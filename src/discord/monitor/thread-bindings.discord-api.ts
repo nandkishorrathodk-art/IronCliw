@@ -287,4 +287,3 @@ export async function createThreadForBinding(params: {
     return null;
   }
 }
-

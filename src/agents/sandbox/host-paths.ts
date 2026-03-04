@@ -41,4 +41,3 @@ export function resolveSandboxHostPathViaExistingAncestor(sourcePath: string): s
   }
   return normalizeSandboxHostPath(resolvePathViaExistingAncestorSync(sourcePath));
 }
-

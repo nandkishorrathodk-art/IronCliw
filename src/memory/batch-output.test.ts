@@ -80,4 +80,3 @@ describe("applyEmbeddingBatchOutputLine", () => {
     expect(byCustomId.size).toBe(0);
   });
 });
-

@@ -242,4 +242,3 @@ describe("pairing setup code", () => {
     expect(runCommandWithTimeout).not.toHaveBeenCalled();
   });
 });
-

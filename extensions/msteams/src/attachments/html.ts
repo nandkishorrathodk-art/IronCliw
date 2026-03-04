@@ -88,4 +88,3 @@ export function buildMSTeamsAttachmentPlaceholder(
   const count = list.length;
   return `<media:document>${count > 1 ? ` (${count} files)` : ""}`;
 }
-

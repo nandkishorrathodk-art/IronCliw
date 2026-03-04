@@ -39,4 +39,3 @@ export function expectSingleNpmPackIgnoreScriptsCall(params: {
   const commandOptions = typeof options === "number" ? undefined : options;
   expect(commandOptions).toMatchObject({ env: { NPM_CONFIG_IGNORE_SCRIPTS: "true" } });
 }
-

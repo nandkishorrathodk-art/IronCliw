@@ -823,4 +823,3 @@ export function noteWorkspaceBackupTip(workspaceDir: string) {
     "Workspace",
   );
 }
-

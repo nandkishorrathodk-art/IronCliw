@@ -77,4 +77,3 @@ export function installBlueBubblesFetchTestHooks(params: {
     vi.unstubAllGlobals();
   });
 }
-

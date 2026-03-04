@@ -45,4 +45,3 @@ describe("skills entries config schema", () => {
     ).toBe(true);
   });
 });
-

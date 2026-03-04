@@ -58,5 +58,3 @@ describe("formatCliBannerLine", () => {
     expect(line).toBe("🦞 IronCliw 2026.0.2 (abc1234) — All your chats, one IronCliw.");
   });
 });
-
-

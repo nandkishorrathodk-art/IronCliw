@@ -677,4 +677,3 @@ describe("legacy config detection", () => {
     }
   });
 });
-

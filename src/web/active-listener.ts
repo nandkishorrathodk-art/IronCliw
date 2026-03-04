@@ -82,4 +82,3 @@ export function getActiveWebListener(accountId?: string | null): ActiveWebListen
   const id = resolveWebAccountId(accountId);
   return listeners.get(id) ?? null;
 }
-

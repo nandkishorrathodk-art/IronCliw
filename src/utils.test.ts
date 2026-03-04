@@ -246,4 +246,3 @@ describe("resolveUserPath", () => {
     expect(resolveUserPath(null as unknown as string)).toBe("");
   });
 });
-

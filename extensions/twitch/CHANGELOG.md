@@ -55,4 +55,3 @@
 - Added proper configuration schema with Zod validation
 - Added plugin descriptor (IronCliw.plugin.json)
 - Added comprehensive README and documentation
-

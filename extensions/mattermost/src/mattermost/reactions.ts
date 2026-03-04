@@ -122,4 +122,3 @@ async function deleteReaction(client: MattermostClient, params: MutationPayload)
     },
   );
 }
-

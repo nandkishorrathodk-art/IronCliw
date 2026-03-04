@@ -42,4 +42,3 @@ describe("tlon urbit auth ssrf", () => {
     expect(mockFetch).toHaveBeenCalled();
   });
 });
-

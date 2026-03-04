@@ -30,4 +30,3 @@ describe("IronCliwSchema logging levels", () => {
     ).toThrow();
   });
 });
-

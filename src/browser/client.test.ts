@@ -271,4 +271,3 @@ describe("browser client", () => {
     expect(screenshot?.init?.method).toBe("POST");
   });
 });
-

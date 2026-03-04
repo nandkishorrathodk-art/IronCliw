@@ -38,4 +38,3 @@ export function migrateLegacyCronPayload(payload: UnknownRecord): boolean {
 
   return mutated;
 }
-

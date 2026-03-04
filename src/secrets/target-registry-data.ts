@@ -720,4 +720,3 @@ const SECRET_TARGET_REGISTRY: SecretTargetRegistryEntry[] = [
 ];
 
 export { SECRET_TARGET_REGISTRY };
-

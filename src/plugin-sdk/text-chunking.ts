@@ -7,4 +7,3 @@ export function chunkTextForOutbound(text: string, limit: number): string[] {
     return lastNewline > 0 ? lastNewline : lastSpace;
   });
 }
-

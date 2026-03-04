@@ -54,4 +54,3 @@ describe("resolveMatrixConfig", () => {
     expect(resolved.encryption).toBe(false);
   });
 });
-

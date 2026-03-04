@@ -65,4 +65,3 @@ export async function authorizeSlackDirectMessage(params: {
   await params.onUnauthorized({ allowMatchMeta, senderName });
   return false;
 }
-

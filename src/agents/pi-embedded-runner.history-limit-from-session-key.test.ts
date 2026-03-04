@@ -29,4 +29,3 @@ describe("getDmHistoryLimitFromSessionKey", () => {
     expect(getDmHistoryLimitFromSessionKey("discord:slash:123", config)).toBeUndefined();
   });
 });
-

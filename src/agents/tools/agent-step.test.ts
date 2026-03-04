@@ -47,4 +47,3 @@ describe("readLatestAssistantReply", () => {
     expect(result).toBe("older output");
   });
 });
-

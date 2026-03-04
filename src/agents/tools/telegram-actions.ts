@@ -408,4 +408,3 @@ export async function handleTelegramAction(
 
   throw new Error(`Unsupported Telegram action: ${action}`);
 }
-

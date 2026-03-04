@@ -90,4 +90,3 @@ describe("getTelegramSequentialKey", () => {
     expect(getTelegramSequentialKey(input)).toBe(expected);
   });
 });
-

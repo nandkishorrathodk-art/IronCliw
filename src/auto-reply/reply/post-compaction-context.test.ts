@@ -227,4 +227,3 @@ Read WORKFLOW.md on startup.
     expect(result).toContain("Current time:");
   });
 });
-

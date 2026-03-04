@@ -38,4 +38,3 @@ export type MonitorIMessageOpts = {
   mediaMaxMb?: number;
   requireMention?: boolean;
 };
-

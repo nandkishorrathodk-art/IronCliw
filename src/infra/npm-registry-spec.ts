@@ -39,4 +39,3 @@ export function validateRegistryNpmSpec(rawSpec: string): string | null {
   }
   return null;
 }
-

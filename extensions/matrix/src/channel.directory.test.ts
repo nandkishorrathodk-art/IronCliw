@@ -152,4 +152,3 @@ describe("matrix directory", () => {
     ).toBe(false);
   });
 });
-

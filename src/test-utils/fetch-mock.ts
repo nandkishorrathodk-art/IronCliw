@@ -20,4 +20,3 @@ export function withFetchPreconnect(fn: object) {
     preconnect: (_url: string | URL, _options?: FetchPreconnectOptions) => {},
   });
 }
-

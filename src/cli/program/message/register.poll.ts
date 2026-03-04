@@ -30,4 +30,3 @@ export function registerMessagePollCommand(message: Command, helpers: MessageCli
       await helpers.runMessageAction("poll", opts);
     });
 }
-

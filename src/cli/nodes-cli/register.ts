@@ -37,4 +37,3 @@ export function registerNodesCli(program: Command) {
   registerNodesScreenCommands(nodes);
   registerNodesLocationCommands(nodes);
 }
-

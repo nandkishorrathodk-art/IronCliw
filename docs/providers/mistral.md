@@ -52,4 +52,3 @@ IronCliw onboard --mistral-api-key "$MISTRAL_API_KEY"
 - Media-understanding default audio model for Mistral is `voxtral-mini-latest`.
 - Media transcription path uses `/v1/audio/transcriptions`.
 - Memory embeddings path uses `/v1/embeddings` (default model: `mistral-embed`).
-

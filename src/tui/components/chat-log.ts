@@ -148,4 +148,3 @@ export class ChatLog extends Container {
     }
   }
 }
-

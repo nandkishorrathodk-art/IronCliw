@@ -117,4 +117,3 @@ describe("requireApiKey", () => {
     ).toThrow('No API key resolved for provider "openai"');
   });
 });
-

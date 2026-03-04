@@ -219,4 +219,3 @@ export type PluginRuntime = {
 - 外部插件可以在无需访问核心源码的情况下进行开发和更新。
 
 相关文档：[插件](/tools/plugin)、[渠道](/channels/index)、[配置](/gateway/configuration)。
-

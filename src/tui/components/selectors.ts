@@ -28,4 +28,3 @@ export function createSettingsList(
 ) {
   return new SettingsList(items, maxVisible, settingsListTheme, onChange, onCancel);
 }
-

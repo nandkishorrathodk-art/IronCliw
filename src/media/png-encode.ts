@@ -88,4 +88,3 @@ export function encodePngRgba(buffer: Buffer, width: number, height: number): Bu
     pngChunk("IEND", Buffer.alloc(0)),
   ]);
 }
-

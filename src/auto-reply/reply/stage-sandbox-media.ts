@@ -324,4 +324,3 @@ async function scpFile(remoteHost: string, remotePath: string, localPath: string
     });
   });
 }
-

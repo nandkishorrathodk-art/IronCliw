@@ -138,4 +138,3 @@ function eioError() {
   err.code = "EIO";
   return err;
 }
-

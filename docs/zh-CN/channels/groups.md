@@ -377,4 +377,3 @@ requireMention? 是 -> 被提及? 否 -> 仅存储为上下文
 ## WhatsApp 特定内容
 
 参见[群消息](/channels/group-messages)了解 WhatsApp 专有行为（历史注入、提及处理详情）。
-

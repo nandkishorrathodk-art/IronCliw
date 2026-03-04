@@ -12,4 +12,3 @@ export function buildMSTeamsMediaPayload(
 } {
   return buildMediaPayload(mediaList, { preserveMediaTypeCardinality: true });
 }
-

@@ -111,4 +111,3 @@ describe("chrome extension options validation", () => {
     });
   });
 });
-

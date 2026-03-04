@@ -601,4 +601,3 @@ T-EXEC-002 → T-EXFIL-001 → External exfiltration
 ---
 
 _This threat model is a living document. Report security issues to security@IronCliw.ai_
-

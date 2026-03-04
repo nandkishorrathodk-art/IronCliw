@@ -50,4 +50,3 @@ export function resolveMatrixGroupToolPolicy(
   const resolved = resolveMatrixRoomConfigForGroup(params);
   return resolved?.tools;
 }
-

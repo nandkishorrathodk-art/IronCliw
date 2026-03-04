@@ -72,4 +72,3 @@ describe("matrix pins actions", () => {
     ]);
   });
 });
-

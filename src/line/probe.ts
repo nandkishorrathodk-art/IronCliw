@@ -31,4 +31,3 @@ export async function probeLineBot(
     return { ok: false, error: message };
   }
 }
-

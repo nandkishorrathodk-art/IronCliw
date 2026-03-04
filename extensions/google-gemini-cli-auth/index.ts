@@ -73,4 +73,3 @@ const geminiCliPlugin = {
 };
 
 export default geminiCliPlugin;
-

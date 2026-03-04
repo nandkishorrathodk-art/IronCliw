@@ -671,4 +671,3 @@ function createFsAccessError(code: string, filePath: string): NodeJS.ErrnoExcept
   error.code = code;
   return error;
 }
-

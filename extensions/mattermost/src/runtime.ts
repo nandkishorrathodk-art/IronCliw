@@ -12,4 +12,3 @@ export function getMattermostRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

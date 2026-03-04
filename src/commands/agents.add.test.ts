@@ -71,4 +71,3 @@ describe("agents add command", () => {
     expect(writeConfigFileMock).not.toHaveBeenCalled();
   });
 });
-

@@ -76,4 +76,3 @@ describe("ensureOwnerDisplaySecret", () => {
     expect(result.config).toEqual(cfg);
   });
 });
-

@@ -85,4 +85,3 @@ export function normalizePayloadToSystemText(payload: CronPayload) {
   }
   return payload.message.trim();
 }
-

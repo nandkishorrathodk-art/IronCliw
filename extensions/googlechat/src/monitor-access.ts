@@ -355,4 +355,3 @@ export async function applyGoogleChatInboundAccessPolicy(params: {
     groupSystemPrompt: groupEntry?.systemPrompt?.trim() || undefined,
   };
 }
-

@@ -241,4 +241,3 @@ export async function uploadMattermostFile(
   }
   return info;
 }
-

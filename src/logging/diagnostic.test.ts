@@ -138,4 +138,3 @@ describe("stuck session diagnostics threshold", () => {
     expect(resolveStuckSessionWarnMs()).toBe(120_000);
   });
 });
-

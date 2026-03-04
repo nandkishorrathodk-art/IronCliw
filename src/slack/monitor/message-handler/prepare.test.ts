@@ -738,4 +738,3 @@ describe("prepareSlackMessage sender prefix", () => {
     expect(result?.ctxPayload.CommandAuthorized).toBe(true);
   });
 });
-

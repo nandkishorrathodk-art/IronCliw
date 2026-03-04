@@ -327,4 +327,3 @@ export async function setGroupIconBlueBubbles(
     throw new Error(`BlueBubbles setGroupIcon failed (${res.status}): ${errorText || "unknown"}`);
   }
 }
-

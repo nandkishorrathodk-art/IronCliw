@@ -101,4 +101,3 @@ describe("cleanup path removals", () => {
     expect(logs).toContain("[dry-run] remove /tmp/IronCliw-workspace-2");
   });
 });
-

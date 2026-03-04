@@ -315,4 +315,3 @@ describe("resolveCliNoOutputTimeoutMs", () => {
     expect(timeoutMs).toBe(42_000);
   });
 });
-

@@ -85,4 +85,3 @@ describe("message action capability checks", () => {
     expect(supportsChannelMessageCardsForChannel({ cfg: {} as IronCliwConfig })).toBe(false);
   });
 });
-

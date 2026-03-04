@@ -306,4 +306,3 @@ describe("restart-helper", () => {
     });
   });
 });
-

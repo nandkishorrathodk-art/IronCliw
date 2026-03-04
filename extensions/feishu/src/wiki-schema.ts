@@ -53,4 +53,3 @@ export const FeishuWikiSchema = Type.Union([
 ]);
 
 export type FeishuWikiParams = Static<typeof FeishuWikiSchema>;
-

@@ -91,4 +91,3 @@ export function readConnectErrorDetailCode(details: unknown): string | null {
   const code = (details as { code?: unknown }).code;
   return typeof code === "string" && code.trim().length > 0 ? code : null;
 }
-

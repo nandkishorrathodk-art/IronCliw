@@ -188,4 +188,3 @@ describe("browser extension install (fs-mocked)", () => {
     });
   });
 });
-

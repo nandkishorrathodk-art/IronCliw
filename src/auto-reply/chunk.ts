@@ -460,4 +460,3 @@ function scanParenAwareBreakpoints(
 
   return { lastNewline, lastWhitespace };
 }
-

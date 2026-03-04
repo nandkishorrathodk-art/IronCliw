@@ -456,4 +456,3 @@ export function createNoopMetrics(): NostrMetrics {
     reset: () => {},
   };
 }
-

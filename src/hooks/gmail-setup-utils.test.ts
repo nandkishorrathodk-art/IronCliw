@@ -122,4 +122,3 @@ describe("ensureTailscaleEndpoint", () => {
     expect(message).toContain("code=0");
   });
 });
-

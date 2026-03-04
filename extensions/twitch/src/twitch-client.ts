@@ -275,4 +275,3 @@ export class TwitchClientManager {
     this.messageHandlers.clear();
   }
 }
-

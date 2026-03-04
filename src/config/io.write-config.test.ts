@@ -527,4 +527,3 @@ describe("config io write", () => {
     });
   });
 });
-

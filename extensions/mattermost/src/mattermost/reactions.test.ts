@@ -101,4 +101,3 @@ describe("mattermost reactions", () => {
     expect(usersMeCalls).toHaveLength(1);
   });
 });
-

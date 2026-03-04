@@ -184,4 +184,3 @@ export function applyDerivedTags(hints: ConfigUiHints): ConfigUiHints {
   }
   return next;
 }
-

@@ -216,4 +216,3 @@ describe("CallManager closed-loop turns", () => {
     expect(provider.stopListeningCalls).toHaveLength(5);
   });
 });
-

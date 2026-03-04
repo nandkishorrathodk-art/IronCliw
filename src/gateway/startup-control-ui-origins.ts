@@ -31,4 +31,3 @@ function buildSeededOriginsInfoLog(origins: string[], bind: GatewayNonLoopbackBi
     "Add other origins to gateway.controlUi.allowedOrigins if needed."
   );
 }
-

@@ -408,4 +408,3 @@ describe("edge cases", () => {
     expect(verifyEvent(event)).toBe(true);
   });
 });
-

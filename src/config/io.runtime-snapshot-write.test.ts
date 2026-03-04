@@ -62,4 +62,3 @@ describe("runtime config snapshot writes", () => {
     });
   });
 });
-

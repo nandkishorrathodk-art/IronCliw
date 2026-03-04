@@ -54,4 +54,3 @@ export function getAgentScopedMediaLocalRoots(
   }
   return roots;
 }
-

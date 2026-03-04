@@ -20,4 +20,3 @@ export async function resolveCitationRedirectUrl(url: string): Promise<string> {
     return url;
   }
 }
-

@@ -76,4 +76,3 @@ export type SessionsPatchResult = SessionsPatchResultBase<SessionEntry> & {
     model?: string;
   };
 };
-

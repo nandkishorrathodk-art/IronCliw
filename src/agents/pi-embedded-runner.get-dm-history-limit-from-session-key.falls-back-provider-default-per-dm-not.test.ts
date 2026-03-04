@@ -58,4 +58,3 @@ describe("getDmHistoryLimitFromSessionKey", () => {
     expect(getDmHistoryLimitFromSessionKey("telegram:dm:123", config)).toBe(0);
   });
 });
-

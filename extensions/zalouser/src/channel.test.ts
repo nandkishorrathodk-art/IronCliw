@@ -138,4 +138,3 @@ describe("zalouser channel policies", () => {
     expect(result).toBeDefined();
   });
 });
-

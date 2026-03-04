@@ -80,4 +80,3 @@ export async function handleDiscordAction(
   }
   throw new Error(`Unknown action: ${action}`);
 }
-

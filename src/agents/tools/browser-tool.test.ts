@@ -560,4 +560,3 @@ describe("browser tool act stale target recovery", () => {
     expect(result?.details).toMatchObject({ ok: true });
   });
 });
-

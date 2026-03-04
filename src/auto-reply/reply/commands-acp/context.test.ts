@@ -49,4 +49,3 @@ describe("commands-acp context", () => {
     expect(isAcpCommandDiscordChannel(params)).toBe(false);
   });
 });
-

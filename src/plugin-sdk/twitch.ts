@@ -17,4 +17,3 @@ export type { PluginRuntime } from "../plugins/runtime/types.js";
 export type { IronCliwPluginApi } from "../plugins/types.js";
 export { formatDocsLink } from "../terminal/links.js";
 export type { WizardPrompter } from "../wizard/prompts.js";
-

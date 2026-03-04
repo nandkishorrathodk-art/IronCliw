@@ -9,4 +9,3 @@ export type NodeHostConfig = {
   /** Browser proxy settings for node hosts. */
   browserProxy?: NodeHostBrowserProxyConfig;
 };
-

@@ -189,4 +189,3 @@ export async function startGatewaySidecars(params: {
 
   return { browserControl, pluginServices };
 }
-

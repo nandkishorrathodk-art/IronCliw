@@ -172,4 +172,3 @@ Bonjour/DNS‑SD 经常将服务实例名称中的字节转义为十进制 `\DDD
 
 - 设备发现策略和传输选择：[设备发现](/gateway/discovery)
 - 节点配对 + 批准：[Gateway 网关配对](/gateway/pairing)
-

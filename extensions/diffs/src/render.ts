@@ -468,4 +468,3 @@ export async function renderDiffDocument(
     inputKind: input.kind,
   };
 }
-

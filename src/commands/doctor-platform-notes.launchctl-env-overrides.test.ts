@@ -82,4 +82,3 @@ describe("noteMacLaunchctlGatewayEnvOverrides", () => {
     expect(noteFn).not.toHaveBeenCalled();
   });
 });
-

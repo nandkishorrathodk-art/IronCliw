@@ -155,4 +155,3 @@ describe("registerTelegramNativeCommands (plugin auth)", () => {
     expect(bot.api.sendMessage).not.toHaveBeenCalled();
   });
 });
-

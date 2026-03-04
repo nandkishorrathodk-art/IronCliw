@@ -120,4 +120,3 @@ describe("noteSecurityWarnings gateway exposure", () => {
     expect(message).toContain("IronCliw approvals get --gateway");
   });
 });
-

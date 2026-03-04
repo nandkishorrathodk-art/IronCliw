@@ -178,4 +178,3 @@ describe("shared attachment validation", () => {
     }
   });
 });
-

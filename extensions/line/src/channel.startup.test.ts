@@ -129,4 +129,3 @@ describe("linePlugin gateway.startAccount", () => {
     await task;
   });
 });
-

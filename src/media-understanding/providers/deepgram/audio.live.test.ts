@@ -45,4 +45,3 @@ describeLive("deepgram live", () => {
     expect(result.text.trim().length).toBeGreaterThan(0);
   }, 30000);
 });
-

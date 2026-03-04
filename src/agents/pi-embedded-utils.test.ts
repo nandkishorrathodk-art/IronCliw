@@ -557,4 +557,3 @@ describe("empty input handling", () => {
     }
   });
 });
-

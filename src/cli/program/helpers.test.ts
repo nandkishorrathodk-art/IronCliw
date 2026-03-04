@@ -39,4 +39,3 @@ describe("program helpers", () => {
     expect(resolveActionArgs(undefined)).toEqual([]);
   });
 });
-

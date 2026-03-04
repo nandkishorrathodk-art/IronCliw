@@ -40,4 +40,3 @@ export function extensionUsesSkippedScannerPath(entry: string): boolean {
       (segment.startsWith(".") && segment !== "." && segment !== ".."),
   );
 }
-

@@ -115,4 +115,3 @@ export type DiffArtifactMeta = {
 
 export const DIFF_ARTIFACT_ID_PATTERN = /^[0-9a-f]{20}$/;
 export const DIFF_ARTIFACT_TOKEN_PATTERN = /^[0-9a-f]{48}$/;
-

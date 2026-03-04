@@ -651,4 +651,3 @@ export async function clearDevicePairing(deviceId: string, baseDir?: string): Pr
     return true;
   });
 }
-

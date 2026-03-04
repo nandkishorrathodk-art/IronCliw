@@ -384,4 +384,3 @@ describe("gateway server hooks", () => {
     });
   });
 });
-

@@ -95,4 +95,3 @@ describe("downloadLineMedia", () => {
     expect(result.path).toMatch(/\.mp4$/);
   });
 });
-

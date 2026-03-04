@@ -118,4 +118,3 @@ x-i18n:
 - 作用域规则采用首次匹配优先。`chatType` 会被规范化为 `direct`、`group` 或 `room`。
 - 确保你的 CLI 以退出码 0 退出并输出纯文本；JSON 格式需要通过 `jq -r .text` 进行转换。
 - 保持合理的超时时间（`timeoutSeconds`，默认 60 秒），以避免阻塞回复队列。
-

@@ -18,4 +18,3 @@ describe("image sanitization config", () => {
     ).toEqual({ maxDimensionPx: 1600 });
   });
 });
-

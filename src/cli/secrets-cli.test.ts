@@ -183,4 +183,3 @@ describe("secrets CLI", () => {
     );
   });
 });
-

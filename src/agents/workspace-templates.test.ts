@@ -52,4 +52,3 @@ describe("resolveWorkspaceTemplateDir", () => {
     expect(path.normalize(resolved)).toBe(path.resolve("docs", "reference", "templates"));
   });
 });
-

@@ -43,4 +43,3 @@ export function encodeSlackModalPrivateMetadata(input: SlackModalPrivateMetadata
   }
   return encoded;
 }
-

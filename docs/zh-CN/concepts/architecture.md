@@ -121,4 +121,3 @@ Client                    Gateway
 - 每台主机恰好一个 Gateway 网关控制单个 Baileys 会话。
 - 握手是强制的；任何非 JSON 或非 connect 的第一帧都会导致硬关闭。
 - 事件不会重放；客户端必须在出现间隙时刷新。
-

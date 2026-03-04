@@ -54,4 +54,3 @@ export async function warnIfModelConfigLooksOff(
     await prompter.note(warnings.join("\n"), "Model check");
   }
 }
-

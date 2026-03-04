@@ -238,4 +238,3 @@ describe("session_status tool", () => {
     expect(saved.authProfileOverride).toBeUndefined();
   });
 });
-

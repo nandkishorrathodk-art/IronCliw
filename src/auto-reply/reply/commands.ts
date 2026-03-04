@@ -6,4 +6,3 @@ export type {
   CommandHandlerResult,
   HandleCommandsParams,
 } from "./commands-types.js";
-

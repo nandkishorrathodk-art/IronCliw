@@ -36,4 +36,3 @@ x-i18n:
 IronCliw configure
 IronCliw configure --section models --section channels
 ```
-

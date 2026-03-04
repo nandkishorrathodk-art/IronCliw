@@ -507,4 +507,3 @@ export function saveAuthProfileStore(store: AuthProfileStore, agentDir?: string)
   } satisfies AuthProfileStore;
   saveJsonFile(authPath, payload);
 }
-

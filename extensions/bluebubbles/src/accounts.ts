@@ -99,4 +99,3 @@ export function listEnabledBlueBubblesAccounts(cfg: IronCliwConfig): ResolvedBlu
     .map((accountId) => resolveBlueBubblesAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

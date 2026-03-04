@@ -32,4 +32,3 @@ export type MatrixStoragePaths = {
   accountKey: string;
   tokenHash: string;
 };
-

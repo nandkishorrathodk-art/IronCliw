@@ -181,4 +181,3 @@ describe("runCapability auto audio entries", () => {
     expect(runResult.outputs[0]?.text).toBe("mistral");
   });
 });
-

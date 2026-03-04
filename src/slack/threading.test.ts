@@ -100,4 +100,3 @@ describe("resolveSlackThreadTargets", () => {
     expect(context.replyToId).toBe("456");
   });
 });
-

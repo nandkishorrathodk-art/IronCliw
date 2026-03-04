@@ -179,4 +179,3 @@ describe("applyMergePatch", () => {
     expect(merged.channels?.telegram?.allowFrom).toEqual(["333"]);
   });
 });
-

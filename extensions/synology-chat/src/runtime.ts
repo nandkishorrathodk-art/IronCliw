@@ -18,4 +18,3 @@ export function getSynologyRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

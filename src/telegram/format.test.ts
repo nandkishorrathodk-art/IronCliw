@@ -113,4 +113,3 @@ describe("markdownToTelegramHtml", () => {
     expect(res).toContain("trailing ||");
   });
 });
-

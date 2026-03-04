@@ -37,4 +37,3 @@ export function resolveEmbeddingMaxInputTokens(provider: EmbeddingProvider): num
 
   return DEFAULT_EMBEDDING_MAX_INPUT_TOKENS;
 }
-

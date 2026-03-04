@@ -130,4 +130,3 @@ export async function removeChannelPermissionDiscord(
   await rest.delete(`/channels/${channelId}/permissions/${targetId}`);
   return { ok: true };
 }
-

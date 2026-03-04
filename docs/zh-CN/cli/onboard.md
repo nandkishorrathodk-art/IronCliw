@@ -34,4 +34,3 @@ IronCliw onboard --mode remote --remote-url ws://gateway-host:18789
 - `quickstart`：最少提示，自动生成 Gateway 网关令牌。
 - `manual`：完整的端口/绑定/认证提示（`advanced` 的别名）。
 - 最快开始聊天：`IronCliw dashboard`（控制 UI，无需渠道设置）。
-

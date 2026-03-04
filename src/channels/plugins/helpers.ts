@@ -18,4 +18,3 @@ export function formatPairingApproveHint(channelId: string): string {
   const approveCmd = formatCliCommand(`IronCliw pairing approve ${channelId} <code>`);
   return `Approve via: ${listCmd} / ${approveCmd}`;
 }
-

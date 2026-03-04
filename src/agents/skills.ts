@@ -44,4 +44,3 @@ export function resolveSkillsInstallPreferences(config?: IronCliwConfig): Skills
       : "npm";
   return { preferBrew, nodeManager };
 }
-

@@ -27,4 +27,3 @@ export function resolveSlackUserToken(
 ): string | undefined {
   return normalizeResolvedSecretInputString({ value: raw, path });
 }
-

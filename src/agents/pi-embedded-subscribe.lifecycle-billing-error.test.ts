@@ -34,4 +34,3 @@ describe("subscribeEmbeddedPiSession lifecycle billing errors", () => {
     expect(lifecycleError?.data?.error).toContain("Anthropic (claude-3-5-sonnet)");
   });
 });
-

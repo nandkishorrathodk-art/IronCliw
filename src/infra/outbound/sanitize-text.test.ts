@@ -114,4 +114,3 @@ describe("sanitizeForPlainText", () => {
     expect(sanitizeForPlainText("a<br><br><br><br>b")).toBe("a\n\nb");
   });
 });
-

@@ -288,4 +288,3 @@ describe("resolveHookInvocationPolicy", () => {
     expect(resolveHookInvocationPolicy({ enabled: "on" }).enabled).toBe(true);
   });
 });
-

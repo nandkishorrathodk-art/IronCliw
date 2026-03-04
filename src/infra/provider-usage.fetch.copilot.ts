@@ -62,4 +62,3 @@ export async function fetchCopilotUsage(
     plan: data.copilot_plan,
   };
 }
-

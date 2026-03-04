@@ -9,4 +9,3 @@ export function normalizeTelegramAllowFromEntry(raw: unknown): string {
 export function isNumericTelegramUserId(raw: string): boolean {
   return /^-?\d+$/.test(raw);
 }
-

@@ -131,4 +131,3 @@ describe("runCapability proxy fetch passthrough", () => {
     expect(seenFetchFn).toBeUndefined();
   });
 });
-

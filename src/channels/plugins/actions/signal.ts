@@ -184,4 +184,3 @@ export const signalMessageActions: ChannelMessageActionAdapter = {
     throw new Error(`Action ${action} not supported for ${providerId}.`);
   },
 };
-

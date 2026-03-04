@@ -117,4 +117,3 @@ export type MSTeamsConfig = {
   /** Outbound response prefix override for this channel/account. */
   responsePrefix?: string;
 };
-

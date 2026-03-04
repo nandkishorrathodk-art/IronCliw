@@ -67,4 +67,3 @@ export function formatPortDiagnostics(diagnostics: PortUsage): string[] {
   }
   return lines;
 }
-

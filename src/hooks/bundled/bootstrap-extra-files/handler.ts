@@ -71,4 +71,3 @@ const bootstrapExtraFilesHook: HookHandler = async (event) => {
 };
 
 export default bootstrapExtraFilesHook;
-

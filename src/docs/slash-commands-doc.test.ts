@@ -34,4 +34,3 @@ describe("slash commands docs", () => {
     }
   });
 });
-

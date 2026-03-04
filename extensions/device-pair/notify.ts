@@ -458,4 +458,3 @@ export function registerPairingNotifierService(api: IronCliwPluginApi): void {
     },
   });
 }
-

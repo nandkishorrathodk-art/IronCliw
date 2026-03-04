@@ -71,4 +71,3 @@ export const formatDaemonRuntimeShort = (runtime?: {
     details,
   });
 };
-

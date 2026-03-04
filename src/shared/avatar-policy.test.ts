@@ -41,4 +41,3 @@ describe("avatar policy", () => {
     expect(resolveAvatarMime("a.bin")).toBe("application/octet-stream");
   });
 });
-

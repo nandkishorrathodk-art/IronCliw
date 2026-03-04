@@ -106,4 +106,3 @@ export function isAudioAttachment(attachment: MediaAttachment): boolean {
 export function isImageAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "image";
 }
-

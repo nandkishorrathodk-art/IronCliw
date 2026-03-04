@@ -145,4 +145,3 @@ describe("buildSlackThreadingToolContext", () => {
     expect(result.replyToMode).toBe("off");
   });
 });
-

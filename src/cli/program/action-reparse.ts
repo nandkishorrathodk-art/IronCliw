@@ -20,4 +20,3 @@ export async function reparseProgramFromActionArgs(
   });
   await program.parseAsync(parseArgv);
 }
-

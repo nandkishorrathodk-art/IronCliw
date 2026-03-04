@@ -51,4 +51,3 @@ title: "Features"
 Legacy Claude, Codex, Gemini, and Opencode paths have been removed. Pi is the only
 coding agent path.
 </Note>
-

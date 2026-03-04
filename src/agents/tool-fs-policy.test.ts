@@ -48,4 +48,3 @@ describe("resolveEffectiveToolFsWorkspaceOnly", () => {
     expect(resolveEffectiveToolFsWorkspaceOnly({ cfg, agentId: "main" })).toBe(true);
   });
 });
-

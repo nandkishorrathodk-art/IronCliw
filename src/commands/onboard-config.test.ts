@@ -50,4 +50,3 @@ describe("applyOnboardingLocalWorkspaceConfig", () => {
     expect(result.tools?.profile).toBe("full");
   });
 });
-

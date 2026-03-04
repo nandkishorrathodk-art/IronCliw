@@ -46,4 +46,3 @@ export function resolveProxyFetchFromEnv(): typeof fetch | undefined {
     return undefined;
   }
 }
-

@@ -278,4 +278,3 @@ export async function runNodeHost(opts: NodeHostRunOptions): Promise<void> {
   client.start();
   await new Promise(() => {});
 }
-

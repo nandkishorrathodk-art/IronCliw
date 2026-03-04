@@ -120,4 +120,3 @@ Filter by action:
 ```bash
 grep '"action":"new"' ~/.IronCliw/logs/commands.log | jq .
 ```
-

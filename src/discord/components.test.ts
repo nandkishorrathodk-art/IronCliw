@@ -96,4 +96,3 @@ describe("discord component registry", () => {
     expect(resolveDiscordComponentEntry({ id: "btn_1" })).toBeNull();
   });
 });
-

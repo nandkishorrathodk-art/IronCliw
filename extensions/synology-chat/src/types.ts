@@ -58,4 +58,3 @@ export interface SynologyWebhookPayload {
   text: string;
   trigger_word?: string;
 }
-

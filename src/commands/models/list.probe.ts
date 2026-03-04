@@ -616,4 +616,3 @@ export function describeProbeSummary(summary: AuthProbeSummary): string {
   }
   return `Probed ${summary.totalTargets} target${summary.totalTargets === 1 ? "" : "s"} in ${formatMs(summary.durationMs)}`;
 }
-

@@ -166,4 +166,3 @@ describe("googlechatPlugin outbound sendMedia", () => {
     });
   });
 });
-

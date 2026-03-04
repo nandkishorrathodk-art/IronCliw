@@ -91,4 +91,3 @@ export type NostrConfig = z.infer<typeof NostrConfigSchema>;
  * JSON Schema for Control UI (converted from Zod)
  */
 export const nostrChannelConfigSchema = buildChannelConfigSchema(NostrConfigSchema);
-

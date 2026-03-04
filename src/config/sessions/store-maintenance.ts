@@ -325,4 +325,3 @@ export async function rotateSessionFile(
 
   return true;
 }
-

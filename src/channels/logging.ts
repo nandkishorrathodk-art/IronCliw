@@ -31,4 +31,3 @@ export function logAckFailure(params: {
   const target = params.target ? ` target=${params.target}` : "";
   params.log(`${params.channel} ack cleanup failed${target}: ${String(params.error)}`);
 }
-

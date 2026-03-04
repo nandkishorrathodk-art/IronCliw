@@ -789,4 +789,3 @@ describe("config help copy quality", () => {
     expect(/pre-compaction|memory flush|token/i.test(flush)).toBe(true);
   });
 });
-

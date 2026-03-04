@@ -19,4 +19,3 @@ Current supported alias:
 Prefer modern top-level commands directly:
 
 - `IronCliw clawbot qr` -> `IronCliw qr`
-

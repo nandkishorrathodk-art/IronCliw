@@ -42,4 +42,3 @@ describe("irc protocol", () => {
     expect(chunks.every((chunk) => chunk.length <= 120)).toBe(true);
   });
 });
-

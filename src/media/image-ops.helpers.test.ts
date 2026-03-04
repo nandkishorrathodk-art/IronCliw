@@ -16,4 +16,3 @@ describe("IMAGE_REDUCE_QUALITY_STEPS", () => {
     expect([...IMAGE_REDUCE_QUALITY_STEPS]).toEqual([85, 75, 65, 55, 45, 35]);
   });
 });
-

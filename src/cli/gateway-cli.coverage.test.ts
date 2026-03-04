@@ -248,4 +248,3 @@ describe("gateway-cli coverage", () => {
     });
   });
 });
-

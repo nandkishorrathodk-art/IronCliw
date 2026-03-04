@@ -28,4 +28,3 @@ vi.mock("../../plugins/tools.js", () => ({
   resolvePluginTools: () => [],
   getPluginToolMeta: () => undefined,
 }));
-

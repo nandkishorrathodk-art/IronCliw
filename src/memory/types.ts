@@ -78,4 +78,3 @@ export interface MemorySearchManager {
   probeVectorAvailability(): Promise<boolean>;
   close?(): Promise<void>;
 }
-

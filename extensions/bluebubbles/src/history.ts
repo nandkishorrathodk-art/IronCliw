@@ -175,4 +175,3 @@ export async function fetchBlueBubblesHistory(
   // If none of the API paths worked, return empty history
   return { entries: [], resolved: false };
 }
-

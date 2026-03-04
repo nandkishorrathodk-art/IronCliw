@@ -156,4 +156,3 @@ IronCliw sandbox recreate --agent alfred
 - [沙箱文档](/gateway/sandboxing)
 - [智能体配置](/concepts/agent-workspace)
 - [Doctor 命令](/gateway/doctor) - 检查沙箱设置
-

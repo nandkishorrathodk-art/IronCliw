@@ -444,4 +444,3 @@ describe("gateway node command allowlist", () => {
     }
   });
 });
-

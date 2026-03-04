@@ -653,4 +653,3 @@ export async function loadExtraBootstrapFilesWithDiagnostics(
   }
   return { files, diagnostics };
 }
-

@@ -79,4 +79,3 @@ describe("IronCliw_LOG_LEVEL", () => {
     expect(warnings[0]).toContain('Ignoring invalid IronCliw_LOG_LEVEL="nope"');
   });
 });
-

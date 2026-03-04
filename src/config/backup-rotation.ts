@@ -123,4 +123,3 @@ export async function maintainConfigBackups(
   await hardenBackupPermissions(configPath, ioFs);
   await cleanOrphanBackups(configPath, ioFs);
 }
-

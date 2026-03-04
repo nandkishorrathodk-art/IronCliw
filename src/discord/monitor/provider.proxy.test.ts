@@ -195,4 +195,3 @@ describe("createDiscordGatewayPlugin", () => {
     expect(baseRegisterClientSpy).toHaveBeenCalledTimes(1);
   });
 });
-

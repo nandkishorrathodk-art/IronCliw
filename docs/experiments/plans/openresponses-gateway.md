@@ -124,4 +124,3 @@ Key points extracted:
 
 - Add a new docs page for `/v1/responses` usage and examples.
 - Update `/gateway/openai-http-api` with a legacy note and pointer to `/v1/responses`.
-

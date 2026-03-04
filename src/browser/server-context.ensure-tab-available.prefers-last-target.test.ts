@@ -123,4 +123,3 @@ describe("browser server-context ensureTabAvailable", () => {
     await expect(chrome.ensureTabAvailable()).rejects.toThrow(/no attached Chrome tabs/i);
   });
 });
-

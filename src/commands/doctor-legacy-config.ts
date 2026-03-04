@@ -450,4 +450,3 @@ export function normalizeCompatibilityConfigValues(cfg: IronCliwConfig): {
 
   return { config: next, changes };
 }
-

@@ -93,4 +93,3 @@ describe("doctor command", () => {
     expect(profiles["anthropic:default"]).toBeUndefined();
   }, 30_000);
 });
-

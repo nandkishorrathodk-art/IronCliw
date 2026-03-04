@@ -68,4 +68,3 @@ export function registerBrowserNavigationCommands(
   // Keep `requireRef` reachable; shared utilities are intended for other modules too.
   void requireRef;
 }
-

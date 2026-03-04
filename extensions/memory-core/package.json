@@ -5,7 +5,7 @@
   "description": "IronCliw core memory search plugin",
   "type": "module",
   "peerDependencies": {
-    "IronCliw": ">=2026.3.2"
+    "IronCliw": "workspace:*"
   },
   "peerDependenciesMeta": {
     "IronCliw": {
@@ -18,4 +18,3 @@
     ]
   }
 }
-

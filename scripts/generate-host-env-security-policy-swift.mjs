@@ -72,4 +72,3 @@ if (writeMode) {
   }
   console.log(`Wrote ${path.relative(repoRoot, outputPath)}`);
 }
-

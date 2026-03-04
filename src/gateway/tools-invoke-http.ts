@@ -336,4 +336,3 @@ export async function handleToolsInvokeHttpRequest(
 
   return true;
 }
-

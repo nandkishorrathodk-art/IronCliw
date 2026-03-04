@@ -20,4 +20,3 @@ declare module "zca-js" {
     loginQR(options?: unknown, callback?: (event: unknown) => unknown): Promise<unknown>;
   }
 }
-

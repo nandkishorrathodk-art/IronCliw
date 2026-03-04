@@ -51,4 +51,3 @@ describe("probeGateway", () => {
     expect(result.ok).toBe(true);
   });
 });
-

@@ -175,4 +175,3 @@ export async function listFeishuDirectoryGroupsLive(params: {
     return listFeishuDirectoryGroups(params);
   }
 }
-

@@ -85,4 +85,3 @@ describe("runtime-guard", () => {
     expect(runtime.exit).not.toHaveBeenCalled();
   });
 });
-

@@ -64,4 +64,3 @@ export async function buildTelegramMessageContextForTest(
     sendChatActionHandler: { sendChatAction: vi.fn() } as never,
   });
 }
-

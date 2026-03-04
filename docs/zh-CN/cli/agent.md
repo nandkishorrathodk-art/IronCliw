@@ -28,4 +28,3 @@ IronCliw agent --agent ops --message "Summarize logs"
 IronCliw agent --session-id 1234 --message "Summarize inbox" --thinking medium
 IronCliw agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```
-

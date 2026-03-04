@@ -29,4 +29,3 @@ export function applyNonInteractiveSkillsConfig(params: {
     },
   };
 }
-

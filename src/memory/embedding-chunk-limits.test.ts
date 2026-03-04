@@ -100,4 +100,3 @@ describe("embedding chunk limits", () => {
     expect(out.every((chunk) => estimateUtf8Bytes(chunk.text) <= 8000)).toBe(true);
   });
 });
-

@@ -21,4 +21,3 @@ export function splitTrailingAuthProfile(raw: string): {
 
   return { model, profile };
 }
-

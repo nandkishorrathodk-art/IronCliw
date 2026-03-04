@@ -81,4 +81,3 @@ describe("transcribeDeepgramAudio", () => {
     ).rejects.toThrow("Audio transcription response missing transcript");
   });
 });
-

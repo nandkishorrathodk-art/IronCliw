@@ -24,4 +24,3 @@ export type BrowserRouteRegistrar = {
   post: (path: string, handler: BrowserRouteHandler) => void;
   delete: (path: string, handler: BrowserRouteHandler) => void;
 };
-

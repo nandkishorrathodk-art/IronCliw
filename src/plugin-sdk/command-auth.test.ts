@@ -49,4 +49,3 @@ describe("plugin-sdk/command-auth", () => {
     expect(result.effectiveGroupAllowFrom).toEqual(["group-owner"]);
   });
 });
-

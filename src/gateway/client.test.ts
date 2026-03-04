@@ -424,4 +424,3 @@ describe("GatewayClient connect auth payload", () => {
     client.stop();
   });
 });
-

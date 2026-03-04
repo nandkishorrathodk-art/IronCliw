@@ -12,4 +12,3 @@ const outputPath = path.join(
 const matrix = buildSecretRefCredentialMatrix();
 fs.writeFileSync(outputPath, `${JSON.stringify(matrix, null, 2)}\n`, "utf8");
 console.log(`Wrote ${outputPath}`);
-

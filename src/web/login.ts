@@ -76,4 +76,3 @@ export async function loginWeb(
     }, 500);
   }
 }
-

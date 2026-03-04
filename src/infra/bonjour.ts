@@ -279,4 +279,3 @@ export async function startGatewayBonjourAdvertiser(
     },
   };
 }
-

@@ -44,4 +44,3 @@ describeLive("minimax live", () => {
     expect(text.length).toBeGreaterThan(0);
   }, 20000);
 });
-

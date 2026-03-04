@@ -74,4 +74,3 @@ function runCli(args: string[]): number {
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   process.exit(runCli(process.argv.slice(2)));
 }
-

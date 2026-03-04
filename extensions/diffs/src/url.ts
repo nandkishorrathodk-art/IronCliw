@@ -54,4 +54,3 @@ function resolveGatewayBaseUrl(config: IronCliwConfig): string {
   // container/bridge interfaces that are often unreachable from the caller.
   return `${scheme}://127.0.0.1:${port}`;
 }
-

@@ -154,4 +154,3 @@ describe("slash-commands", () => {
     expect(request).toHaveBeenCalledTimes(1);
   });
 });
-

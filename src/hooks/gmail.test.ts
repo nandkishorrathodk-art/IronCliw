@@ -125,4 +125,3 @@ describe("gmail hook config", () => {
     expectResolvedPaths(result, { servePath: "/custom", publicPath: "/custom", target });
   });
 });
-

@@ -40,4 +40,3 @@ export async function modelsImageFallbacksClearCommand(runtime: RuntimeEnv) {
     runtime,
   );
 }
-

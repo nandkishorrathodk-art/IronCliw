@@ -147,4 +147,3 @@ export async function updateColorText(
     block: res.data?.block,
   };
 }
-

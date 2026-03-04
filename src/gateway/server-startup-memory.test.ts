@@ -100,4 +100,3 @@ describe("startGatewayMemoryBackend", () => {
     expect(log.warn).not.toHaveBeenCalled();
   });
 });
-

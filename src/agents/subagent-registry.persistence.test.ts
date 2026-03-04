@@ -435,4 +435,3 @@ describe("subagent registry persistence", () => {
     expect(registryPath).toContain(path.join(os.tmpdir(), "IronCliw-test-state"));
   });
 });
-

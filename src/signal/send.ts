@@ -247,4 +247,3 @@ export async function sendReadReceiptSignal(
   });
   return true;
 }
-

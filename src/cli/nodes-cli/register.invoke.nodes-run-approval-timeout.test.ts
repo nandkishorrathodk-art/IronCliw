@@ -113,4 +113,3 @@ describe("nodes run: approval transport timeout (#12098)", () => {
     expect(callOpts.timeoutMs).toBe(130_000);
   });
 });
-

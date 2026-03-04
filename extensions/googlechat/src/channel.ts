@@ -595,4 +595,3 @@ export const googlechatPlugin: ChannelPlugin<ResolvedGoogleChatAccount> = {
     },
   },
 };
-

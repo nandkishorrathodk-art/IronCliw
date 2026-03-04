@@ -470,4 +470,3 @@ describe("resolveGroupRequireMention", () => {
     expect(resolveGroupRequireMention({ cfg, ctx, groupResolution })).toBe(false);
   });
 });
-

@@ -80,4 +80,3 @@ export async function withUnsafeMountedSandboxHarness(
     await fs.rm(stateDir, { recursive: true, force: true });
   }
 }
-

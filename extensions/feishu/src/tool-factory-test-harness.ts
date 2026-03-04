@@ -74,4 +74,3 @@ export function createToolFactoryHarness(cfg: IronCliwPluginApi["config"]) {
     resolveTool,
   };
 }
-

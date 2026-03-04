@@ -27,4 +27,3 @@ export function renderSystemdUnavailableHints(options: { wsl?: boolean } = {}): 
     `If you're in a container, run the gateway in the foreground instead of \`${formatCliCommand("IronCliw gateway")}\`.`,
   ];
 }
-

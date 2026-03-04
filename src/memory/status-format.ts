@@ -43,4 +43,3 @@ export function resolveMemoryCacheState(cache: { enabled: boolean }): {
 } {
   return cache.enabled ? { tone: "ok", state: "enabled" } : { tone: "muted", state: "disabled" };
 }
-

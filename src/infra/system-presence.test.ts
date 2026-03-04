@@ -82,4 +82,3 @@ describe("system-presence", () => {
     expect(entries.some((entry) => entry.reason === "self")).toBe(true);
   });
 });
-

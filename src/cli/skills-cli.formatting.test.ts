@@ -83,4 +83,3 @@ describe("skills-cli (e2e)", () => {
     expect(output).toContain("Details:");
   });
 });
-

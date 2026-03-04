@@ -58,4 +58,3 @@ export function buildUsageHttpErrorSnapshot(
   const suffix = options.message?.trim() ? `: ${options.message.trim()}` : "";
   return buildUsageErrorSnapshot(options.provider, `HTTP ${options.status}${suffix}`);
 }
-

@@ -155,4 +155,3 @@ describe("wrapNoteMessage", () => {
     expect(wrapped).toBe(input);
   });
 });
-

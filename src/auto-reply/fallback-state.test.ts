@@ -121,4 +121,3 @@ describe("fallback-state", () => {
     expect(resolved.nextState.reason).toBeUndefined();
   });
 });
-

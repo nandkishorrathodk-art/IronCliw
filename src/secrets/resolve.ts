@@ -955,4 +955,3 @@ export async function resolveSecretRefString(
   }
   return resolved;
 }
-

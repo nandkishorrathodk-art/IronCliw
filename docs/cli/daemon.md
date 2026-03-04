@@ -41,4 +41,3 @@ IronCliw daemon uninstall
 ## Prefer
 
 Use [`IronCliw gateway`](/cli/gateway) for current docs and examples.
-

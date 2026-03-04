@@ -35,4 +35,3 @@ export function countRunning<T extends { running: boolean }>(items: T[]): number
 export function countMismatches<T extends { imageMatch: boolean }>(items: T[]): number {
   return items.filter((item) => !item.imageMatch).length;
 }
-

@@ -65,4 +65,3 @@ describe("BlueBubblesConfigSchema", () => {
     expect(parsed.success).toBe(true);
   });
 });
-

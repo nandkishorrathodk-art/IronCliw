@@ -10,4 +10,3 @@ export function resolveProcessScopedMap<T>(key: symbol): Map<string, T> {
   proc[key] = created;
   return created;
 }
-

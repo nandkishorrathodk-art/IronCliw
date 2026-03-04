@@ -180,4 +180,3 @@ diff --git a/src/example.ts b/src/example.ts
 - If your delivery channel compresses images heavily (for example Telegram or WhatsApp), prefer `fileFormat: "pdf"` to preserve readability.
 - `N unmodified lines` rows may not always include expand controls for patch input, because many patch hunks do not carry full expandable context data.
 - Diff rendering is powered by [Diffs](https://diffs.com).
-

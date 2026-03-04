@@ -349,4 +349,3 @@ describe("createSlackThreadTsResolver", () => {
     expect(historyMock).toHaveBeenCalledTimes(1);
   });
 });
-

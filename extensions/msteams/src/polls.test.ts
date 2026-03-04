@@ -57,4 +57,3 @@ describe("msteams polls", () => {
     expect(stored?.votes["user-1"]).toEqual(["0"]);
   });
 });
-

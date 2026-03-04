@@ -571,4 +571,3 @@ export const telegramPlugin: ChannelPlugin<ResolvedTelegramAccount, TelegramProb
     },
   },
 };
-

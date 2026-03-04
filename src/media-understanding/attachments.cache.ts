@@ -321,4 +321,3 @@ export class MediaAttachmentCache {
     return await this.canonicalLocalPathRoots;
   }
 }
-

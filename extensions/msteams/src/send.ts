@@ -528,4 +528,3 @@ export async function listMSTeamsConversations(): Promise<
     conversationType: reference.conversation?.conversationType,
   }));
 }
-

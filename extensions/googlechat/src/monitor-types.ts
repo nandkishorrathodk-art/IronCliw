@@ -31,4 +31,3 @@ export type WebhookTarget = {
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   mediaMaxMb: number;
 };
-

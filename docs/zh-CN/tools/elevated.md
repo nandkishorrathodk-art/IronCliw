@@ -62,4 +62,3 @@ x-i18n:
 
 - Elevated exec 调用以 info 级别记录。
 - 会话状态包括 elevated 模式（例如 `elevated=ask`、`elevated=full`）。
-

@@ -78,4 +78,3 @@ export type MattermostConfig = {
   /** Optional default account id when multiple accounts are configured. */
   defaultAccount?: string;
 } & MattermostAccountConfig;
-

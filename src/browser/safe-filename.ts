@@ -24,4 +24,3 @@ export function sanitizeUntrustedFileName(fileName: string, fallbackName: string
   }
   return base;
 }
-

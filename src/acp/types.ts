@@ -32,4 +32,3 @@ export const ACP_AGENT_INFO = {
   title: "IronCliw ACP Gateway",
   version: VERSION,
 };
-

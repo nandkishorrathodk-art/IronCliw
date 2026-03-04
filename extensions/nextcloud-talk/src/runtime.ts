@@ -12,4 +12,3 @@ export function getNextcloudTalkRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

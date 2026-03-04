@@ -159,4 +159,3 @@ describe("resolveIronCliwPackageRoot", () => {
     await expect(resolveIronCliwPackageRoot({ cwd: fx("missing") })).resolves.toBeNull();
   });
 });
-

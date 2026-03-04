@@ -56,4 +56,3 @@ describe("discord wildcard component registration ids", () => {
     }
   });
 });
-

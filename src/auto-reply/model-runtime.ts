@@ -91,4 +91,3 @@ export function resolveSelectedAndActiveModel(params: {
     activeDiffers,
   };
 }
-

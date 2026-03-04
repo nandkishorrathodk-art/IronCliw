@@ -134,4 +134,3 @@ describe("runDaemonRestart health checks", () => {
     expect(renderRestartDiagnostics).toHaveBeenCalledTimes(1);
   });
 });
-

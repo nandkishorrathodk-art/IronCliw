@@ -127,4 +127,3 @@ describe("feishu tool account routing", () => {
     expect(createFeishuClientMock.mock.calls[1]?.[0]?.appId).toBe("app-a");
   });
 });
-

@@ -219,4 +219,3 @@ function reasonToString(reason: Buffer | string | undefined): string {
   }
   return reason.length > 0 ? reason.toString("utf8") : "";
 }
-

@@ -144,4 +144,3 @@ export async function resetCommand(runtime: RuntimeEnv, opts: ResetOptions) {
     return;
   }
 }
-

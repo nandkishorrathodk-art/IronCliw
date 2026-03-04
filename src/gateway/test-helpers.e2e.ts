@@ -244,4 +244,3 @@ export async function startGatewayWithClient(params: {
 
   return { port, server, client };
 }
-

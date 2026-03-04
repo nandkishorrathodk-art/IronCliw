@@ -66,4 +66,3 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.IronCliw.ai/cli/m
   registerMessageStickerCommands(message, helpers);
   registerMessageDiscordAdminCommands(message, helpers);
 }
-

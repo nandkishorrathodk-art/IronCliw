@@ -162,4 +162,3 @@ export async function ensureUrbitChannelOpen(
   });
   await wakeUrbitChannel(deps);
 }
-

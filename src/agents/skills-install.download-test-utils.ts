@@ -64,4 +64,3 @@ metadata: ${JSON.stringify(meta)}
   await fs.writeFile(path.join(skillDir, "runner.js"), "export {};\n", "utf-8");
   return skillDir;
 }
-

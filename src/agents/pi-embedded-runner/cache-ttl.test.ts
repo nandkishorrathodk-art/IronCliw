@@ -28,4 +28,3 @@ describe("isCacheTtlEligibleProvider", () => {
     expect(isCacheTtlEligibleProvider("openrouter", "openai/gpt-4o")).toBe(false);
   });
 });
-

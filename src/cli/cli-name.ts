@@ -28,4 +28,3 @@ export function replaceCliName(command: string, cliName = resolveCliName()): str
     return `${runner ?? ""}${cliName}`;
   });
 }
-

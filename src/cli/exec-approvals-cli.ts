@@ -480,4 +480,3 @@ export function registerExecApprovalsCli(program: Command) {
     },
   });
 }
-

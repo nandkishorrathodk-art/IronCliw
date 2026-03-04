@@ -74,4 +74,3 @@ export function resetSlackSlashMocks() {
   mocks.recordSessionMetaFromInboundMock.mockReset().mockResolvedValue(undefined);
   mocks.resolveStorePathMock.mockReset().mockReturnValue("/tmp/IronCliw-sessions.json");
 }
-

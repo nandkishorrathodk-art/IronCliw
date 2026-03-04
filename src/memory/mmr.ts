@@ -212,4 +212,3 @@ export function applyMMRToHybridResults<
   // Map back to original items using the ID
   return reranked.map((item) => itemById.get(item.id)!);
 }
-

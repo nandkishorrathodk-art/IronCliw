@@ -312,4 +312,3 @@ describe("canvas host", () => {
     }
   });
 });
-

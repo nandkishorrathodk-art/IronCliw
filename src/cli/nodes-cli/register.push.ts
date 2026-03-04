@@ -86,4 +86,3 @@ export function registerNodesPushCommand(nodes: Command) {
     { timeoutMs: 25_000 },
   );
 }
-

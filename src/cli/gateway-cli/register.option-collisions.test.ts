@@ -154,4 +154,3 @@ describe("gateway register option collisions", () => {
     );
   });
 });
-

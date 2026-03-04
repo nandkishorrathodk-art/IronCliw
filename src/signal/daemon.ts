@@ -145,4 +145,3 @@ export function spawnSignalDaemon(opts: SignalDaemonOpts): SignalDaemonHandle {
     },
   };
 }
-

@@ -75,4 +75,3 @@ export function expandHomePrefix(
   }
   return input.replace(/^~(?=$|[\\/])/, home);
 }
-

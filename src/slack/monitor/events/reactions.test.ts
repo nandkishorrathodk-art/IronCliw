@@ -154,4 +154,3 @@ describe("registerSlackReactionEvents", () => {
     expect(trackEvent).toHaveBeenCalledTimes(1);
   });
 });
-

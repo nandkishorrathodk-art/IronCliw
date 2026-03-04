@@ -15,4 +15,3 @@ export function splitSdkTools(options: { tools: AnyAgentTool[]; sandboxEnabled: 
     customTools: toToolDefinitions(tools),
   };
 }
-

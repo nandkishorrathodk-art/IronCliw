@@ -117,4 +117,3 @@ describe("markdownToIR tableMode bullets", () => {
     expect(ir.links.some((link) => link.href === "https://example.com")).toBe(true);
   });
 });
-

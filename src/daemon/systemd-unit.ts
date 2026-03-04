@@ -115,4 +115,3 @@ export function parseSystemdEnvAssignment(raw: string): { key: string; value: st
   const value = unquoted.slice(eq + 1);
   return { key, value };
 }
-

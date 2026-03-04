@@ -691,4 +691,3 @@ export function createMSTeamsMessageHandler(deps: MSTeamsMessageHandlerDeps) {
     });
   };
 }
-

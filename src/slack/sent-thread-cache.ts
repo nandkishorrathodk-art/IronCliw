@@ -69,4 +69,3 @@ export function hasSlackThreadParticipation(
 export function clearSlackThreadParticipationCache(): void {
   threadParticipation.clear();
 }
-

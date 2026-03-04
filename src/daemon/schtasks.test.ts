@@ -272,4 +272,3 @@ describe("readScheduledTaskCommand", () => {
     );
   });
 });
-

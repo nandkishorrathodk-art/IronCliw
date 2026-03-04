@@ -194,4 +194,3 @@ Zalo 是一款专注于越南市场的即时通讯应用；其 Bot API 让 Gatew
 - `channels.zalo.accounts.<id>.webhookSecret`：每账户 webhook secret。
 - `channels.zalo.accounts.<id>.webhookPath`：每账户 webhook 路径。
 - `channels.zalo.accounts.<id>.proxy`：每账户代理 URL。
-

@@ -689,4 +689,3 @@ describe("monitorSlackProvider tool results", () => {
     expectSingleSendWithThread("789");
   });
 });
-

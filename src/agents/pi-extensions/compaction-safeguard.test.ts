@@ -776,4 +776,3 @@ describe("readWorkspaceContextForSummary", () => {
     },
   );
 });
-

@@ -146,4 +146,3 @@ describe("session store key normalization", () => {
     expect(store[CANONICAL_KEY]?.origin?.provider).toBe("webchat");
   });
 });
-

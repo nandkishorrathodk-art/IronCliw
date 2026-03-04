@@ -64,4 +64,3 @@ describe("getResolvedLoggerSettings", () => {
     expect(settings.level).toBe("info");
   });
 });
-

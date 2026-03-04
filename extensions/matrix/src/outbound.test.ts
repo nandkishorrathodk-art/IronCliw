@@ -157,4 +157,3 @@ describe("matrixOutbound cfg threading", () => {
     );
   });
 });
-

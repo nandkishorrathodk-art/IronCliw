@@ -58,4 +58,3 @@ export function getAgentRuntimeCommandSecretTargetIds(): Set<string> {
 export function getStatusCommandSecretTargetIds(): Set<string> {
   return toTargetIdSet(COMMAND_SECRET_TARGETS.status);
 }
-

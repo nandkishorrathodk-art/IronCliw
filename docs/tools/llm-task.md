@@ -113,4 +113,3 @@ IronCliw.invoke --tool llm-task --action json --args-json '{
 - No tools are exposed to the model for this run.
 - Treat output as untrusted unless you validate with `schema`.
 - Put approvals before any side-effecting step (send, post, exec).
-

@@ -45,4 +45,3 @@ describe("resolveDefaultChannelAccountContext", () => {
     expect(result.configured).toBe(false);
   });
 });
-

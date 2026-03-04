@@ -94,4 +94,3 @@ describe("patchAllowlistUsersInConfigEntries", () => {
     expect((patched.beta as { users: string[] }).users).toEqual(["*"]);
   });
 });
-

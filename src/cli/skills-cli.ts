@@ -79,4 +79,3 @@ export function registerSkillsCli(program: Command) {
     await runSkillsAction((report) => formatSkillsList(report, {}));
   });
 }
-

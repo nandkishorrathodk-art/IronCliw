@@ -112,4 +112,3 @@ describe("media store redirects", () => {
     expect(mockRequest).toHaveBeenCalledTimes(1);
   });
 });
-

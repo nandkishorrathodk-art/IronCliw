@@ -162,4 +162,3 @@ describe("config identity defaults", () => {
     });
   });
 });
-

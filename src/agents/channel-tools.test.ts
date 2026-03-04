@@ -50,4 +50,3 @@ describe("channel tools", () => {
     expect(errorSpy).toHaveBeenCalledTimes(1);
   });
 });
-

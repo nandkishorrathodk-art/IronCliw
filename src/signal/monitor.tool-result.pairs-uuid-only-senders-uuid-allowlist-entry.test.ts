@@ -117,4 +117,3 @@ describe("monitorSignalProvider tool results", () => {
     }
   });
 });
-

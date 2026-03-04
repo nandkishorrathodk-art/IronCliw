@@ -45,4 +45,3 @@ export function resolveMatrixRoomConfig(params: {
     matchSource,
   };
 }
-

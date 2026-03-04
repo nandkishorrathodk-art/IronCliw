@@ -56,4 +56,3 @@ export function resolveBrowserProfileWithHotReload(params: {
   profile = resolveProfile(params.current.resolved, params.name);
   return profile;
 }
-

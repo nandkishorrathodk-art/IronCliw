@@ -3,4 +3,3 @@ export function normalizeFingerprint(input: string): string {
   const withoutPrefix = trimmed.replace(/^sha-?256\s*:?\s*/i, "");
   return withoutPrefix.replace(/[^a-fA-F0-9]/g, "").toLowerCase();
 }
-

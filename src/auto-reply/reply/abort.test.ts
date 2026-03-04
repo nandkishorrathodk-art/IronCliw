@@ -655,4 +655,3 @@ describe("abort detection", () => {
     );
   });
 });
-

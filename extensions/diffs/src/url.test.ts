@@ -53,4 +53,3 @@ describe("diffs viewer URL helpers", () => {
     );
   });
 });
-

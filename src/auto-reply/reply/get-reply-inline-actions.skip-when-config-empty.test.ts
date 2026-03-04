@@ -222,4 +222,3 @@ describe("handleInlineActions", () => {
     expect(handleCommandsMock).toHaveBeenCalledTimes(1);
   });
 });
-

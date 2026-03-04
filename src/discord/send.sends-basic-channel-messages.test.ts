@@ -586,4 +586,3 @@ describe("searchMessagesDiscord", () => {
     );
   });
 });
-

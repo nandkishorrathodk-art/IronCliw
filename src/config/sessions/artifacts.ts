@@ -65,4 +65,3 @@ export function parseSessionArchiveTimestamp(
   const timestamp = Date.parse(restoreSessionArchiveTimestamp(raw));
   return Number.isNaN(timestamp) ? null : timestamp;
 }
-

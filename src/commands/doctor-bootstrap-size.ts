@@ -99,4 +99,3 @@ export async function noteBootstrapFileSize(cfg: IronCliwConfig) {
   note(lines.join("\n"), "Bootstrap file size");
   return analysis;
 }
-

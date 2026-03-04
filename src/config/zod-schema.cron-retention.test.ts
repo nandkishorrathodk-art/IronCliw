@@ -38,4 +38,3 @@ describe("IronCliwSchema cron retention and run-log validation", () => {
     ).toThrow(/runLog|maxBytes|size/i);
   });
 });
-

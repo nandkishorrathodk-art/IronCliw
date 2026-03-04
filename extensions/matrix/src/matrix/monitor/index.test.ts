@@ -16,4 +16,3 @@ describe("monitorMatrixProvider helpers", () => {
     expect(DEFAULT_STARTUP_GRACE_MS).toBe(5000);
   });
 });
-

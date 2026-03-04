@@ -503,4 +503,3 @@ export async function finalizeOnboardingWizard(
 
   return { launchedTui };
 }
-

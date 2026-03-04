@@ -142,4 +142,3 @@ describe("tui command handlers", () => {
     expect(setActivityStatus).toHaveBeenLastCalledWith("disconnected");
   });
 });
-

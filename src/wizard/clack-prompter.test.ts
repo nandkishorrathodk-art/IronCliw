@@ -33,4 +33,3 @@ describe("tokenizedOptionFilter", () => {
     expect(tokenizedOptionFilter("openai gpt-5.2", option)).toBe(true);
   });
 });
-

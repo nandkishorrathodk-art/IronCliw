@@ -87,4 +87,3 @@ describe("getConsoleSettings", () => {
     state.loggingState.resolvingConsoleSettings = false;
   });
 });
-

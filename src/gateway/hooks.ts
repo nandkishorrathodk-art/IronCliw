@@ -407,4 +407,3 @@ export function normalizeAgentPayload(payload: Record<string, unknown>):
     },
   };
 }
-

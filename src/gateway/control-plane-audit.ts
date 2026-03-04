@@ -38,4 +38,3 @@ export function summarizeChangedPaths(paths: string[], maxPaths = 8): string {
   const head = paths.slice(0, maxPaths).join(",");
   return `${head},+${paths.length - maxPaths} more`;
 }
-

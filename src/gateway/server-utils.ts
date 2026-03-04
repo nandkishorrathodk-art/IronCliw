@@ -38,4 +38,3 @@ export function formatError(err: unknown): string {
     return String(err);
   }
 }
-

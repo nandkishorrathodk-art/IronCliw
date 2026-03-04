@@ -347,4 +347,3 @@ OpenProse 与 Lobster 配合良好：使用 `/prose` 编排多智能体准备，
 
 - 帖子：https://x.com/plattenschieber/status/2014508656335770033
 - 仓库：https://github.com/bloomedai/brain-cli
-

@@ -108,4 +108,3 @@ describe("memory vector dedupe", () => {
     expect(deleteIndex).toBeLessThan(insertIndex);
   });
 });
-

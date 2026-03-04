@@ -92,4 +92,3 @@ describe("startGmailWatcherWithLogs", () => {
     expect(log.error).toHaveBeenCalledWith("gmail watcher failed to start: Error: boom");
   });
 });
-

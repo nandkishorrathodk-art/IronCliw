@@ -183,4 +183,3 @@ export async function resolveGatewayRuntimeConfig(params: {
     canvasHostEnabled,
   };
 }
-

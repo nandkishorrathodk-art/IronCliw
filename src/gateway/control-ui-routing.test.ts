@@ -64,4 +64,3 @@ describe("classifyControlUiRequest", () => {
     expect(classified).toEqual({ kind: "serve" });
   });
 });
-

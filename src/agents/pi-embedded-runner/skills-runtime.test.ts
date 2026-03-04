@@ -68,4 +68,3 @@ describe("resolveEmbeddedRunSkillEntries", () => {
     expect(hoisted.loadWorkspaceSkillEntries).not.toHaveBeenCalled();
   });
 });
-

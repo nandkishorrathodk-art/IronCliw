@@ -185,4 +185,3 @@ export async function removeBrowserRegistryEntry(containerName: string) {
     },
   );
 }
-

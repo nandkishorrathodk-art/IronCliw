@@ -316,4 +316,3 @@ export class CallManager {
     return getCallHistoryFromStore(this.storePath, limit);
   }
 }
-

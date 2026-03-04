@@ -115,4 +115,3 @@ describe("createChildAdapter", () => {
     expect(spawnArgs.options?.env).toEqual({ FOO: "bar", COUNT: "12" });
   });
 });
-

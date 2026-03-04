@@ -55,4 +55,3 @@ export function resolveSlackChannelId(raw: string): string {
   const target = parseSlackTarget(raw, { defaultKind: "channel" });
   return requireTargetKind({ platform: "Slack", target, kind: "channel" });
 }
-

@@ -338,4 +338,3 @@ describe("exec approval forwarder", () => {
     expect(getFirstDeliveryText(deliver)).toContain("Command:\n````\necho ```danger```\n````");
   });
 });
-

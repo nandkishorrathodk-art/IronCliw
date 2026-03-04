@@ -45,4 +45,3 @@ export type SkillsConfig = {
   limits?: SkillsLimitsConfig;
   entries?: Record<string, SkillConfig>;
 };
-

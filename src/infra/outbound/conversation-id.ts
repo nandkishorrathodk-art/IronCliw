@@ -39,4 +39,3 @@ export function resolveConversationIdFromTargets(params: {
 
   return undefined;
 }
-

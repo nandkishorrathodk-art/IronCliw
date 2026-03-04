@@ -127,4 +127,3 @@ x-i18n:
 ```
 
 参阅配置参考：[Gateway 网关配置](/gateway/configuration)
-

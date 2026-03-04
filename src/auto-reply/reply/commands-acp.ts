@@ -81,4 +81,3 @@ export const handleAcpCommand: CommandHandler = async (params, allowTextCommands
   const handler = ACP_ACTION_HANDLERS[action];
   return handler ? await handler(params, tokens) : stopWithText(resolveAcpHelpText());
 };
-

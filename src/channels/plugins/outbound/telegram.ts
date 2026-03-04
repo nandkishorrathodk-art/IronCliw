@@ -138,4 +138,3 @@ export const telegramOutbound: ChannelOutboundAdapter = {
     return { channel: "telegram", ...(finalResult ?? { messageId: "unknown", chatId: to }) };
   },
 };
-

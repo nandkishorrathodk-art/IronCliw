@@ -28,4 +28,3 @@ function formatTargetHint(hint?: string, withLabel = false): string {
   }
   return withLabel ? ` Hint: ${hint}` : ` ${hint}`;
 }
-

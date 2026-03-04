@@ -65,4 +65,3 @@ export type CommandHandler = (
   params: HandleCommandsParams,
   allowTextCommands: boolean,
 ) => Promise<CommandHandlerResult | null>;
-

@@ -47,4 +47,3 @@ export function formatHealthCheckFailure(err: unknown, opts: { rich?: boolean } 
   }
   return out.join("\n");
 }
-

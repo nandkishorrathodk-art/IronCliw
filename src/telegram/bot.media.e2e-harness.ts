@@ -127,4 +127,3 @@ vi.mock("../auto-reply/reply.js", () => {
   });
   return { getReplyFromConfig: replySpy, __replySpy: replySpy };
 });
-

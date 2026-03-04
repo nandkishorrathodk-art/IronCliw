@@ -135,4 +135,3 @@ describe("resolveWhatsAppHeartbeatRecipients", () => {
     expect(result).toEqual({ recipients: ["+15550000009"], source: "allowFrom" });
   });
 });
-

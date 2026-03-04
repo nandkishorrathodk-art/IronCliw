@@ -76,4 +76,3 @@ describe("inbound-path-policy", () => {
     ]);
   });
 });
-

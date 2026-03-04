@@ -221,4 +221,3 @@ main().catch((err) => {
   console.error(theme.error(`Error: ${String(err)}`));
   process.exit(1);
 });
-

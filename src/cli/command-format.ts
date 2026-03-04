@@ -23,4 +23,3 @@ export function formatCliCommand(
   }
   return normalizedCommand.replace(CLI_PREFIX_RE, (match) => `${match} --profile ${profile}`);
 }
-

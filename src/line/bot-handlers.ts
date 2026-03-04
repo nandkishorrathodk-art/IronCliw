@@ -573,4 +573,3 @@ export async function handleLineWebhookEvents(
     throw firstError;
   }
 }
-

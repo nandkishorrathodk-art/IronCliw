@@ -190,4 +190,3 @@ export function imageMimeFromFormat(format?: string | null): string | undefined 
 export function kindFromMime(mime?: string | null): MediaKind {
   return mediaKindFromMime(normalizeMimeType(mime));
 }
-

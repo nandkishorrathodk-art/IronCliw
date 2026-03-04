@@ -289,4 +289,3 @@ function parseHexByte(raw: string): number | null {
   }
   return value;
 }
-

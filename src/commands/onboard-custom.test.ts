@@ -462,4 +462,3 @@ describe("parseNonInteractiveCustomApiFlags", () => {
     expect(() => parseNonInteractiveCustomApiFlags(flags)).toThrow(expectedMessage);
   });
 });
-

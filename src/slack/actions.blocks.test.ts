@@ -123,4 +123,3 @@ describe("editSlackMessage blocks", () => {
     expect(client.chat.update).not.toHaveBeenCalled();
   });
 });
-

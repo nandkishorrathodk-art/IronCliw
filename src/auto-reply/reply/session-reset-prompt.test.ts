@@ -32,4 +32,3 @@ describe("buildBareSessionResetPrompt", () => {
     expect(prompt).toContain("Current time:");
   });
 });
-

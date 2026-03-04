@@ -204,4 +204,3 @@ export function validateSafeBinArgv(args: string[], profile: SafeBinProfile): bo
 
   return validatePositionalCount(positional, profile);
 }
-

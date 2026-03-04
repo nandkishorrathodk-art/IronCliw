@@ -360,4 +360,3 @@ export async function sanitizeToolResultImages(
   const next = await sanitizeContentBlocksImages(content, label, opts);
   return { ...result, content: next };
 }
-

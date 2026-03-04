@@ -46,4 +46,3 @@ export function readDiscordModerationCommand(
     deleteMessageDays: readNumberParam(params, "deleteMessageDays", { integer: true }),
   };
 }
-

@@ -895,4 +895,3 @@ export function buildCommandsMessagePaginated(
     hasPrev: currentPage > 1,
   };
 }
-

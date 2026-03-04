@@ -31,4 +31,3 @@ declare module "pdfjs-dist/legacy/build/pdf.mjs" {
     promise: Promise<PDFDocumentProxy>;
   };
 }
-

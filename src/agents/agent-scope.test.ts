@@ -428,4 +428,3 @@ describe("resolveAgentConfig", () => {
     expect(agentDir).toBe(path.join(path.resolve(home), ".IronCliw", "agents", "main", "agent"));
   });
 });
-

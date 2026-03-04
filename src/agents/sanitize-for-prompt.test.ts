@@ -53,4 +53,3 @@ describe("buildAgentSystemPrompt uses sanitized workspace/sandbox strings", () =
     expect(prompt).not.toContain("\nui");
   });
 });
-

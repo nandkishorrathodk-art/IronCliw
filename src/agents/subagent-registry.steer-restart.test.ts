@@ -558,4 +558,3 @@ describe("subagent registry steer restarts", () => {
     expect(parent?.cleanupHandled).toBe(false);
   });
 });
-

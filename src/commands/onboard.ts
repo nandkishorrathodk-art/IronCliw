@@ -94,4 +94,3 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
 }
 
 export type { OnboardOptions } from "./onboard-types.js";
-

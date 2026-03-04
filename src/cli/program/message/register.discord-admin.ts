@@ -155,4 +155,3 @@ export function registerMessageDiscordAdminCommands(message: Command, helpers: M
       await helpers.runMessageAction("ban", opts);
     });
 }
-

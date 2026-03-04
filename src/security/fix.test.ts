@@ -256,4 +256,3 @@ describe("security fix", () => {
     expectPerms((await fs.stat(includePath)).mode & 0o777, 0o600);
   });
 });
-

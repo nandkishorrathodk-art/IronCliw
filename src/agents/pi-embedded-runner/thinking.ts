@@ -51,4 +51,3 @@ export function dropThinkingBlocks(messages: AgentMessage[]): AgentMessage[] {
   }
   return touched ? out : messages;
 }
-

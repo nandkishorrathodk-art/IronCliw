@@ -153,4 +153,3 @@ function buildUnknownModelError(provider: string, modelId: string): string {
   const hint = LOCAL_PROVIDER_HINTS[provider.toLowerCase()];
   return hint ? `${base}. ${hint}` : base;
 }
-

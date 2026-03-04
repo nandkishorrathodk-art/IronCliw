@@ -70,4 +70,3 @@ describe("authorizeGatewayBearerRequestOrReply", () => {
     expect(vi.mocked(sendGatewayAuthFailure)).not.toHaveBeenCalled();
   });
 });
-

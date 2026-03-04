@@ -341,4 +341,3 @@ export function validateSandboxSecurity(
   validateSeccompProfile(cfg.seccompProfile);
   validateApparmorProfile(cfg.apparmorProfile);
 }
-

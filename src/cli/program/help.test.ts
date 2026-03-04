@@ -123,4 +123,3 @@ describe("configureProgramHelp", () => {
     exitSpy.mockRestore();
   });
 });
-

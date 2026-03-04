@@ -487,4 +487,3 @@ export async function checkUpdateStatus(params: {
     registry,
   };
 }
-

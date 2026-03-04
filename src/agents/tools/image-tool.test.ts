@@ -855,4 +855,3 @@ describe("image tool response validation", () => {
     expect(text).toBe("hello");
   });
 });
-

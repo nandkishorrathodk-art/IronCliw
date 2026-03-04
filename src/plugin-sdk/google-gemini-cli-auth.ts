@@ -6,4 +6,3 @@ export { isWSL2Sync } from "../infra/wsl.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
 export type { IronCliwPluginApi, ProviderAuthContext } from "../plugins/types.js";
 export { buildOauthProviderAuthResult } from "./provider-auth-result.js";
-

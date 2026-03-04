@@ -107,4 +107,3 @@ describe("setInputFilesViaPlaywright", () => {
     expect(setInputFiles).not.toHaveBeenCalled();
   });
 });
-

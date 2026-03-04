@@ -587,4 +587,3 @@ describe("gateway plugin HTTP auth boundary", () => {
     });
   });
 });
-

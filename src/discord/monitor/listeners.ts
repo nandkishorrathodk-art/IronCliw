@@ -778,4 +778,3 @@ export class DiscordThreadUpdateListener extends ThreadUpdateListener {
     });
   }
 }
-

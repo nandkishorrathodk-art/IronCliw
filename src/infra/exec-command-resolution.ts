@@ -245,4 +245,3 @@ export function parseExecArgvToken(raw: string): ExecArgvToken {
     flags: cluster.split("").map((entry) => `-${entry}`),
   };
 }
-

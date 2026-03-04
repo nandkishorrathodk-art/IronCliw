@@ -238,4 +238,3 @@ describe("registerPreActionHooks", () => {
     preActionHook = hooks?.[0] ?? null;
   });
 });
-

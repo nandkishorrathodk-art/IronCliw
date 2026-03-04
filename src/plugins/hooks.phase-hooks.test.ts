@@ -73,4 +73,3 @@ describe("phase hooks merger", () => {
     expect(result?.systemPrompt).toBe("system A");
   });
 });
-

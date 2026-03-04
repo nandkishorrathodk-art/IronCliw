@@ -15,4 +15,3 @@ export function createPluginLoaderLogger(logger: LoggerLike): PluginLogger {
     debug: (msg) => logger.debug?.(msg),
   };
 }
-

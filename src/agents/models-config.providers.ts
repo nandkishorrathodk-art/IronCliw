@@ -1229,4 +1229,3 @@ export async function resolveImplicitBedrockProvider(params: {
     models,
   } satisfies ProviderConfig;
 }
-

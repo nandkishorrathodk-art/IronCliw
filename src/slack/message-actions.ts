@@ -60,4 +60,3 @@ export function extractSlackToolSend(args: Record<string, unknown>): ChannelTool
   const accountId = typeof args.accountId === "string" ? args.accountId.trim() : undefined;
   return { to, accountId };
 }
-

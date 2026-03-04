@@ -247,4 +247,3 @@ type ZaloCtor = new (options?: { logging?: boolean; selfListen?: boolean }) => {
 };
 
 export const Zalo = ZaloRuntime as unknown as ZaloCtor;
-

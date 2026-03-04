@@ -146,4 +146,3 @@ export type ConfigFileSnapshot = {
   warnings: ConfigValidationIssue[];
   legacyIssues: LegacyConfigIssue[];
 };
-

@@ -123,4 +123,3 @@ describe("detectLinuxSdBackedStateDir", () => {
     expect(warning).not.toContain("mount /home/pi/mnt\nspoofed");
   });
 });
-

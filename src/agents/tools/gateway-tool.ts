@@ -220,4 +220,3 @@ export function createGatewayTool(opts?: {
     },
   };
 }
-

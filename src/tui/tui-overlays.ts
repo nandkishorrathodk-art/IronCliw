@@ -17,4 +17,3 @@ export function createOverlayHandlers(host: OverlayHost, fallbackFocus: Componen
 
   return { openOverlay, closeOverlay };
 }
-

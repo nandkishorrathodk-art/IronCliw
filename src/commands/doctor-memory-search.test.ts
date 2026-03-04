@@ -270,4 +270,3 @@ describe("detectLegacyWorkspaceDirs", () => {
     expect(detection.legacyDirs).toEqual([]);
   });
 });
-

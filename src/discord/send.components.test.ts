@@ -51,4 +51,3 @@ describe("sendDiscordComponentMessage", () => {
     expect(args?.entries[0]?.sessionKey).toBe("agent:main:discord:channel:dm-1");
   });
 });
-

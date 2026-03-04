@@ -60,4 +60,3 @@ export function normalizeScpRemoteHost(value: string | null | undefined): string
 export function isSafeScpRemoteHost(value: string | null | undefined): boolean {
   return normalizeScpRemoteHost(value) !== undefined;
 }
-

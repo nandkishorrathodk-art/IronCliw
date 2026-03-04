@@ -16,4 +16,3 @@ describe("isPlainObject", () => {
     expect(isPlainObject(42)).toBe(false);
   });
 });
-

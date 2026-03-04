@@ -150,4 +150,3 @@ describe("hooks workspace", () => {
     expect(entries.some((e) => e.hook.name === "hardlink-handler-hook")).toBe(false);
   });
 });
-

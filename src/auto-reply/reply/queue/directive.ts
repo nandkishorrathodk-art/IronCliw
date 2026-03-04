@@ -174,4 +174,3 @@ export function extractQueueDirective(body?: string): {
     hasOptions: parsed.hasOptions,
   };
 }
-

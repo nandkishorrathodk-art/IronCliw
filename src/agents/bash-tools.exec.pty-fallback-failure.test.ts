@@ -47,4 +47,3 @@ test("exec cleans session state when PTY fallback spawn also fails", async () =>
 
   expect(listRunningSessions()).toHaveLength(0);
 });
-

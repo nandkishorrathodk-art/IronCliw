@@ -69,4 +69,3 @@ describe("emitNodeRuntimeWarning", () => {
     expect(warn).not.toHaveBeenCalled();
   });
 });
-

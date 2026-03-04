@@ -823,4 +823,3 @@ export function normalizeWebhookReaction(
     fromMe,
   };
 }
-

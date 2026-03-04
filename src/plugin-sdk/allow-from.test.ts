@@ -102,4 +102,3 @@ describe("isNormalizedSenderAllowed", () => {
     ).toBe(false);
   });
 });
-

@@ -17,4 +17,3 @@ export function applyOpencodeZenModelDefault(cfg: IronCliwConfig): {
     legacyModels: LEGACY_OPENCODE_ZEN_DEFAULT_MODELS,
   });
 }
-

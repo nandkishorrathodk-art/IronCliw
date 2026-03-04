@@ -65,4 +65,3 @@ describe("slack sent-thread-cache", () => {
     expect(hasSlackThreadParticipation("A1", "C123", "1700000000.005000")).toBe(true);
   });
 });
-

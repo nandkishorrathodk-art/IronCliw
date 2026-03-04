@@ -52,4 +52,3 @@ describe("system-run command contract fixtures", () => {
     });
   }
 });
-

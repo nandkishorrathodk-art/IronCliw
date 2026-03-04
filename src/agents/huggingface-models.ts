@@ -228,4 +228,3 @@ export async function discoverHuggingfaceModels(apiKey: string): Promise<ModelDe
     return HUGGINGFACE_MODEL_CATALOG.map(buildHuggingfaceModelDefinition);
   }
 }
-

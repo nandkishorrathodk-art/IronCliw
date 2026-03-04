@@ -11,4 +11,3 @@ export function createIosNodeListResponse(ts: number = Date.now()) {
     nodes: [IOS_NODE],
   };
 }
-

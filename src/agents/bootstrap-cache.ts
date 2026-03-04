@@ -23,4 +23,3 @@ export function clearBootstrapSnapshot(sessionKey: string): void {
 export function clearAllBootstrapSnapshots(): void {
   cache.clear();
 }
-

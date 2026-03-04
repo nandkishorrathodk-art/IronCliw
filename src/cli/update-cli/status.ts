@@ -126,4 +126,3 @@ export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<vo
     defaultRuntime.log(theme.warn(updateHint));
   }
 }
-

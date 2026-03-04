@@ -77,4 +77,3 @@ describe("resolveAckReaction", () => {
     expect(resolveAckReaction(cfg, "main", { channel: "telegram" })).toBe("");
   });
 });
-

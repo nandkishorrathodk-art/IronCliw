@@ -10,4 +10,3 @@ export function createStubTool(name: string): AgentTool {
     execute: async () => ({}) as AgentToolResult<unknown>,
   };
 }
-

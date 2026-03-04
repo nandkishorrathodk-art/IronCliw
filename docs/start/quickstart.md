@@ -20,4 +20,3 @@ Quick start is now part of [Getting Started](/start/getting-started).
     Full CLI wizard reference and advanced options.
   </Card>
 </Columns>
-

@@ -42,4 +42,3 @@ export function createRestrictedAgentSandboxConfig(params: {
       : {}),
   } as IronCliwConfig;
 }
-

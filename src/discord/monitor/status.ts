@@ -19,4 +19,3 @@ export type DiscordMonitorStatusPatch = {
 };
 
 export type DiscordMonitorStatusSink = (patch: DiscordMonitorStatusPatch) => void;
-

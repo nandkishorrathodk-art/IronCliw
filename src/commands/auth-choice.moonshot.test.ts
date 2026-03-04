@@ -103,4 +103,3 @@ describe("applyAuthChoice (moonshot)", () => {
     expect(parsed.profiles?.["moonshot:default"]?.key).toBe("sk-moonshot-cn-test");
   });
 });
-

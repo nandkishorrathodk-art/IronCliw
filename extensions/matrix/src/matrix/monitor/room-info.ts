@@ -53,4 +53,3 @@ export function createMatrixRoomInfoResolver(client: MatrixClient) {
     getMemberDisplayName,
   };
 }
-

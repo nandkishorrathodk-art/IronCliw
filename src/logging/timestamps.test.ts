@@ -63,4 +63,3 @@ describe("isValidTimeZone", () => {
     expect(isValidTimeZone("")).toBe(false);
   });
 });
-

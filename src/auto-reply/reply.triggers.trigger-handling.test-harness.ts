@@ -395,4 +395,3 @@ export function createBlockReplyCollector() {
     },
   };
 }
-

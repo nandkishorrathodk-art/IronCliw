@@ -82,4 +82,3 @@ export function buildGatewayRuntimeHints(
   }
   return hints;
 }
-

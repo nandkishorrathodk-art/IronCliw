@@ -436,4 +436,3 @@ function logWsCompact(direction: "in" | "out", kind: string, meta?: Record<strin
 
   logWsInfoLine({ prefix, statusToken, headline, durationToken, restMeta, trailing });
 }
-

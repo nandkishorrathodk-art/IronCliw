@@ -98,4 +98,3 @@ export type ChannelOnboardingAdapter = {
   onAccountRecorded?: (accountId: string, options?: SetupChannelsOptions) => void;
   disable?: (cfg: IronCliwConfig) => IronCliwConfig;
 };
-

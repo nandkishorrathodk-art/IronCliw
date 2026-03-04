@@ -227,4 +227,3 @@ export const tlonOnboardingAdapter: ChannelOnboardingAdapter = {
     return { cfg: next, accountId };
   },
 };
-

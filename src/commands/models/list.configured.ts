@@ -102,4 +102,3 @@ export function resolveConfiguredEntries(cfg: IronCliwConfig) {
 
   return { entries };
 }
-

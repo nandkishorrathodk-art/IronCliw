@@ -81,4 +81,3 @@ describe("buildAuthChoiceOptions", () => {
     expect(chutesGroup?.options.some((opt) => opt.value === "chutes")).toBe(true);
   });
 });
-

@@ -581,4 +581,3 @@ export async function scanDirectoryWithSummary(
     findings: allFindings,
   };
 }
-

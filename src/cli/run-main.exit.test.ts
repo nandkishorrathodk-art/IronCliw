@@ -47,4 +47,3 @@ describe("runCli exit behavior", () => {
     exitSpy.mockRestore();
   });
 });
-

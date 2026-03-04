@@ -33,4 +33,3 @@ describe("buildSystemdUnit", () => {
     ).toThrow(/CR or LF/);
   });
 });
-

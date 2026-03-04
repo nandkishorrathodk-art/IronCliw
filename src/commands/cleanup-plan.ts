@@ -23,4 +23,3 @@ export function resolveCleanupPlanFromDisk(): {
   const plan = buildCleanupPlan({ cfg, stateDir, configPath, oauthDir });
   return { cfg, stateDir, configPath, oauthDir, ...plan };
 }
-

@@ -13,4 +13,3 @@ export type {
   DaemonStatusOptions,
   GatewayRpcOpts,
 } from "./daemon-cli/types.js";
-

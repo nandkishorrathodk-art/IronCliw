@@ -70,4 +70,3 @@ describe("describeMoonshotVideo", () => {
     expect(result.model).toBe("kimi-k2.5");
   });
 });
-

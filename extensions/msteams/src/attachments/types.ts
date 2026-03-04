@@ -35,4 +35,3 @@ export type MSTeamsGraphMediaResult = {
   messageUrl?: string;
   tokenError?: boolean;
 };
-

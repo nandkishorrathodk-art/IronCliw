@@ -332,4 +332,3 @@ export class FeishuStreamingSession {
     return this.state !== null && !this.closed;
   }
 }
-

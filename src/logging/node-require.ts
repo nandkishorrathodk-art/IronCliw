@@ -20,4 +20,3 @@ export function resolveNodeRequireFromMeta(
     return null;
   }
 }
-

@@ -739,4 +739,3 @@ describe("onboard (non-interactive): provider auth", () => {
     );
   });
 });
-

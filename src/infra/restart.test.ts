@@ -109,4 +109,3 @@ describe.runIf(process.platform !== "win32")("cleanStaleGatewayProcessesSync", (
     expect(killSpy).not.toHaveBeenCalled();
   });
 });
-

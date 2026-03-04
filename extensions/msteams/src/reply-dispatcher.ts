@@ -158,4 +158,3 @@ export function createMSTeamsReplyDispatcher(params: {
     markDispatchIdle,
   };
 }
-

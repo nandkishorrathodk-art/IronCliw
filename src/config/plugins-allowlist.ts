@@ -13,4 +13,3 @@ export function ensurePluginAllowlisted(cfg: IronCliwConfig, pluginId: string): 
     },
   };
 }
-

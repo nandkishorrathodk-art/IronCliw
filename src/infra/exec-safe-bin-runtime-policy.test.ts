@@ -136,4 +136,3 @@ describe("exec safe-bin runtime policy", () => {
     }
   });
 });
-

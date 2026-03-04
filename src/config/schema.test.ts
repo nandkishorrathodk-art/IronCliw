@@ -203,4 +203,3 @@ describe("config schema", () => {
     }
   });
 });
-

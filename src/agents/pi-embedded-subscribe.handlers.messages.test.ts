@@ -29,4 +29,3 @@ describe("resolveSilentReplyFallbackText", () => {
     ).toBe("NO_REPLY");
   });
 });
-

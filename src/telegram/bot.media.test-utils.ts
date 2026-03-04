@@ -112,4 +112,3 @@ vi.mock("./sticker-cache.js", () => ({
   getCachedSticker: (...args: unknown[]) => getCachedStickerSpy(...args),
   describeStickerImage: (...args: unknown[]) => describeStickerImageSpy(...args),
 }));
-

@@ -161,4 +161,3 @@ describe("#16156: cron.list() must not silently advance past-due recurring jobs"
     cron.stop();
   });
 });
-

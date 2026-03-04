@@ -209,4 +209,3 @@ channels:
 ## Permissions
 
 Required: `docx:document`, `docx:document:readonly`, `docx:document.block:convert`, `drive:drive`
-

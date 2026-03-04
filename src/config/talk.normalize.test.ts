@@ -170,4 +170,3 @@ describe("talk normalization", () => {
     });
   });
 });
-

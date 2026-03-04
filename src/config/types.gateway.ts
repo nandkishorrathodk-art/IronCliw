@@ -365,4 +365,3 @@ export type GatewayConfig = {
    */
   channelHealthCheckMinutes?: number;
 };
-

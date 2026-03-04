@@ -18,4 +18,3 @@ export function redactSecretRefId(params: {
   }
   return redacted;
 }
-

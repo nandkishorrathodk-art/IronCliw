@@ -78,4 +78,3 @@ describe("dispatchChannelMessageAction trusted sender guard", () => {
     expect(handleAction).toHaveBeenCalledOnce();
   });
 });
-

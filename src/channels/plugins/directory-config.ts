@@ -219,4 +219,3 @@ export async function listWhatsAppDirectoryGroupsFromConfig(
     .filter((id) => Boolean(id) && id !== "*");
   return toDirectoryEntries("group", applyDirectoryQueryAndLimit(ids, params));
 }
-

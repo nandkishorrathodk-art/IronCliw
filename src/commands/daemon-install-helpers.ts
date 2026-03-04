@@ -79,4 +79,3 @@ export function gatewayInstallErrorHint(platform = process.platform): string {
     ? "Tip: rerun from an elevated PowerShell (Start → type PowerShell → right-click → Run as administrator) or skip service install."
     : `Tip: rerun \`${formatCliCommand("IronCliw gateway install")}\` after fixing the error.`;
 }
-

@@ -17,4 +17,3 @@ export class MarkdownMessageComponent extends Container {
     this.body.setText(text);
   }
 }
-

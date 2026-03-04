@@ -41,4 +41,3 @@ export async function createTempHomeEnv(prefix: string): Promise<TempHomeEnv> {
     },
   };
 }
-

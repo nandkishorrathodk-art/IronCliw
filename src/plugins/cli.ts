@@ -57,4 +57,3 @@ export function registerPluginCliCommands(program: Command, cfg?: IronCliwConfig
     }
   }
 }
-

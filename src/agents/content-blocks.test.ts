@@ -17,4 +17,3 @@ describe("collectTextContentBlocks", () => {
     expect(collectTextContentBlocks([{ type: "text", text: 1 }, undefined, "x"])).toEqual([]);
   });
 });
-

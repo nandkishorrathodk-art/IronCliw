@@ -68,4 +68,3 @@ export function normalizeMessageActionInput(params: {
 
   return normalizedArgs;
 }
-

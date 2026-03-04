@@ -124,4 +124,3 @@ export async function uploadToConsentUrl(params: {
     throw new Error(`File upload to consent URL failed: ${res.status} ${res.statusText}`);
   }
 }
-

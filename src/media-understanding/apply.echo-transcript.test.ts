@@ -331,4 +331,3 @@ describe("applyMediaUnderstanding – echo transcript", () => {
     expect(mockDeliverOutboundPayloads).toHaveBeenCalledOnce();
   });
 });
-

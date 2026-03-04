@@ -115,4 +115,3 @@ export function clearCronScheduleCacheForTest(): void {
 export function getCronScheduleCacheSizeForTest(): number {
   return cronEvalCache.size;
 }
-

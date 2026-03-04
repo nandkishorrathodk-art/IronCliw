@@ -405,4 +405,3 @@ When you fix a provider/model issue discovered in live:
 - Prefer targeting the smallest layer that catches the bug:
   - provider request conversion/replay bug → direct models test
   - gateway session/history/tool pipeline bug → gateway live smoke or CI-safe gateway mock test
-

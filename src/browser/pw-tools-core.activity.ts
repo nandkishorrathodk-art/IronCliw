@@ -66,4 +66,3 @@ export async function getConsoleMessagesViaPlaywright(opts: {
   const min = consolePriority(opts.level);
   return state.console.filter((msg) => consolePriority(msg.type) >= min);
 }
-

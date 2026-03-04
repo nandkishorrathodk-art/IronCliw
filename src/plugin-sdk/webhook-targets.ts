@@ -225,4 +225,3 @@ export function rejectNonPostWebhookRequest(req: IncomingMessage, res: ServerRes
   res.end("Method Not Allowed");
   return true;
 }
-

@@ -859,4 +859,3 @@ describe("installPluginFromNpmSpec", () => {
     }
   });
 });
-

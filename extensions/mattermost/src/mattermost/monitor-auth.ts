@@ -59,4 +59,3 @@ export function isMattermostSenderAllowed(params: {
   });
   return match.allowed;
 }
-

@@ -64,4 +64,3 @@ export const MatrixConfigSchema = z.object({
   rooms: z.object({}).catchall(matrixRoomSchema).optional(),
   actions: matrixActionSchema,
 });
-

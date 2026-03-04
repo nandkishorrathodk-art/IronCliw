@@ -294,4 +294,3 @@ describe("SearchableSelectList", () => {
     expect(cancelled).toBe(true);
   });
 });
-

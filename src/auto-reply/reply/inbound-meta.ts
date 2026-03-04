@@ -231,4 +231,3 @@ export function buildInboundUserContextPrefix(ctx: TemplateContext): string {
 
   return blocks.filter(Boolean).join("\n\n");
 }
-

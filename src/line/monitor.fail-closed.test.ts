@@ -26,4 +26,3 @@ describe("monitorLineProvider fail-closed webhook auth", () => {
     ).rejects.toThrow("LINE webhook mode requires a non-empty channel access token.");
   });
 });
-

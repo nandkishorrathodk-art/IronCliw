@@ -211,4 +211,3 @@ IronCliw 也自带 `codex-cli` 的默认值：
 - **模型名称错误**：使用 `modelAliases` 将 `provider/model` 映射到 CLI 模型。
 - **无会话连续性**：确保设置了 `sessionArg` 且 `sessionMode` 不是 `none`（Codex CLI 目前无法使用 JSON 输出恢复）。
 - **图像被忽略**：设置 `imageArg`（并验证 CLI 支持文件路径）。
-

@@ -286,4 +286,3 @@ describe("config plugin validation", () => {
     }
   });
 });
-

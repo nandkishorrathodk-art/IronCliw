@@ -143,4 +143,3 @@ export function collectTelegramStatusIssues(
   }
   return issues;
 }
-

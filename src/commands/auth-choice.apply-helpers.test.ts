@@ -408,4 +408,3 @@ describe("ensureApiKeyFromOptionEnvOrPrompt", () => {
     expect(setCredential).toHaveBeenCalledWith("env-key", "plaintext");
   });
 });
-

@@ -90,4 +90,3 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
       process.exit(1);
     });
 }
-

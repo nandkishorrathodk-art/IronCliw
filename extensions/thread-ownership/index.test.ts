@@ -178,4 +178,3 @@ describe("thread-ownership plugin", () => {
     });
   });
 });
-

@@ -109,4 +109,3 @@ describe("loadExtraBootstrapFiles", () => {
     expect(diagnostics.some((d) => d.reason === "security")).toBe(true);
   });
 });
-

@@ -204,4 +204,3 @@ IronCliw message send --target +15555550123 --message "Hello from IronCliw"
 - iOS/Android 节点（Canvas/相机/语音）：[节点](/nodes)
 - 远程访问（SSH 隧道 / Tailscale Serve）：[远程访问](/gateway/remote) 和 [Tailscale](/gateway/tailscale)
 - 常开 / VPN 设置：[远程访问](/gateway/remote)、[exe.dev](/install/exe-dev)、[Hetzner](/install/hetzner)、[macOS 远程](/platforms/mac/remote)
-

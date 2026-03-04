@@ -89,4 +89,3 @@ describe("system-cli", () => {
     expect(runtimeLogs).toEqual([JSON.stringify({ method }, null, 2)]);
   });
 });
-

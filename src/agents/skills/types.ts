@@ -87,4 +87,3 @@ export type SkillSnapshot = {
   resolvedSkills?: Skill[];
   version?: number;
 };
-

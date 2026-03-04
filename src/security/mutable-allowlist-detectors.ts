@@ -99,4 +99,3 @@ export function isIrcMutableAllowEntry(raw: string): boolean {
 
   return !normalized.includes("!") && !normalized.includes("@");
 }
-

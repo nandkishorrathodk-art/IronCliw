@@ -159,4 +159,3 @@ describe("gateway usage helpers", () => {
     expect(vi.mocked(loadCostUsageSummary)).toHaveBeenCalledTimes(1);
   });
 });
-

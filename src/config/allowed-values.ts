@@ -96,4 +96,3 @@ export function appendAllowedValuesHint(message: string, summary: AllowedValuesS
   }
   return `${message} (allowed: ${summary.formatted})`;
 }
-

@@ -39,4 +39,3 @@ export function normalizeSlackChannelType(
   }
   return inferred ?? "channel";
 }
-

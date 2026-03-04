@@ -1156,4 +1156,3 @@ describe("applyMediaUnderstanding", () => {
     expect(ctx.Body).toContain("vendor-json");
   });
 });
-

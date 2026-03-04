@@ -277,4 +277,3 @@ export function toInternalMessageSentContext(
     ...(canonical.groupId ? { groupId: canonical.groupId } : {}),
   };
 }
-

@@ -28,4 +28,3 @@ export function formatElevatedUnavailableMessage(params: {
   }
   return lines.join("\n");
 }
-

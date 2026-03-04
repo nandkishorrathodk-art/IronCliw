@@ -413,4 +413,3 @@ export function cleanSchemaForGemini(schema: unknown): unknown {
   const defs = extendSchemaDefs(undefined, schema as Record<string, unknown>);
   return cleanSchemaForGeminiWithDefs(schema, defs, undefined);
 }
-

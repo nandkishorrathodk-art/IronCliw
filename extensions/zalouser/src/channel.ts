@@ -703,4 +703,3 @@ export const zalouserPlugin: ChannelPlugin<ResolvedZalouserAccount> = {
 };
 
 export type { ResolvedZalouserAccount };
-

@@ -415,4 +415,3 @@ Pick one before implementation to avoid drift.
 - Pain: approvals + duplication + two stacks.
 - Proposal: one WS protocol with explicit roles + scopes, unified pairing + TLS pinning, gateway‑hosted approvals, stable device IDs + cute slugs.
 - Outcome: simpler UX, stronger security, less duplication, better mobile routing.
-

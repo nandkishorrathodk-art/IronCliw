@@ -58,4 +58,3 @@ export function isRegisteredPluginHttpRoutePath(
 ): boolean {
   return findRegisteredPluginHttpRoute(registry, pathname) !== undefined;
 }
-

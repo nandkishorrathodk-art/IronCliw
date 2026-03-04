@@ -178,4 +178,3 @@ IronCliw also maps runtime `/think` levels for Moonshot:
 - any non-off thinking level -> `thinking.type=enabled`
 
 When Moonshot thinking is enabled, `tool_choice` must be `auto` or `none`. IronCliw normalizes incompatible `tool_choice` values to `auto` for compatibility.
-

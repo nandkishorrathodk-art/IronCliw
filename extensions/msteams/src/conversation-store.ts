@@ -39,4 +39,3 @@ export type MSTeamsConversationStore = {
   remove: (conversationId: string) => Promise<boolean>;
   findByUserId: (id: string) => Promise<MSTeamsConversationStoreEntry | null>;
 };
-

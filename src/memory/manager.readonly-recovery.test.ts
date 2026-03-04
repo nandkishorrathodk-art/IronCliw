@@ -110,4 +110,3 @@ describe("memory manager readonly recovery", () => {
     expect(openDatabaseSpy).toHaveBeenCalledTimes(0);
   });
 });
-

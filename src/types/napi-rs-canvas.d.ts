@@ -5,4 +5,3 @@ declare module "@napi-rs/canvas" {
 
   export function createCanvas(width: number, height: number): Canvas;
 }
-

@@ -75,4 +75,3 @@ describe("sanitizeToolCallInputs redacts sessions_spawn attachments", () => {
     expect(JSON.stringify(out)).not.toContain(secret);
   });
 });
-

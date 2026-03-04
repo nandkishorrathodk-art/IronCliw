@@ -400,4 +400,3 @@ describe("docker-setup.sh", () => {
     expect(compose).toContain("depends_on:\n      - IronCliw-gateway");
   });
 });
-

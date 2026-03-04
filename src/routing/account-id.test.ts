@@ -36,4 +36,3 @@ describe("account id normalization", () => {
     expect(normalizeOptionalAccountId("  Business  ")).toBe("business");
   });
 });
-

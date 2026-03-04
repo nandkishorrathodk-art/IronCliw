@@ -138,4 +138,3 @@ describe("refreshQwenPortalCredentials", () => {
     await expect(runRefresh()).rejects.toThrow("Qwen OAuth refresh failed: gateway down");
   });
 });
-

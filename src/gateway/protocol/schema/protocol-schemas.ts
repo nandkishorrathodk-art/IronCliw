@@ -285,4 +285,3 @@ export const ProtocolSchemas = {
 } satisfies Record<string, TSchema>;
 
 export const PROTOCOL_VERSION = 3 as const;
-

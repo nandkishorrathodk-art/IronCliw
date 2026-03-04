@@ -123,4 +123,3 @@ function getExtensionForContentType(contentType: string): string {
       return ".bin";
   }
 }
-

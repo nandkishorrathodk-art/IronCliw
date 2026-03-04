@@ -33,4 +33,3 @@ export function buildSlackSlashCommandMatcher(name: string) {
   const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`^/?${escaped}$`);
 }
-

@@ -11,4 +11,3 @@ type RequiredDockerConfigKeys =
 
 export type SandboxDockerConfig = Omit<SandboxDockerSettings, RequiredDockerConfigKeys> &
   Required<Pick<SandboxDockerSettings, RequiredDockerConfigKeys>>;
-

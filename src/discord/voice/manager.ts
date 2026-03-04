@@ -896,4 +896,3 @@ export class DiscordVoiceReadyListener extends ReadyListener {
 function isVoiceChannel(type: ChannelType) {
   return type === ChannelType.GuildVoice || type === ChannelType.GuildStageVoice;
 }
-

@@ -274,4 +274,3 @@ describe("resolveForwardCompatModel", () => {
     expect(model).toBeUndefined();
   });
 });
-

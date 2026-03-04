@@ -10,4 +10,3 @@ export function formatLinkUnderstandingBody(params: { body?: string; outputs: st
   }
   return `${base}\n\n${outputs.join("\n")}`;
 }
-

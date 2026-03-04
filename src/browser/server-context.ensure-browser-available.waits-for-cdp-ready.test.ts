@@ -106,4 +106,3 @@ describe("browser server-context ensureBrowserAvailable", () => {
     expect(stopIronCliwChrome).toHaveBeenCalledTimes(1);
   });
 });
-

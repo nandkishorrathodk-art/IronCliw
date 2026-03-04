@@ -115,4 +115,3 @@ export async function runAcpRuntimeAdapterContract(
     reason: "contract-close",
   });
 }
-

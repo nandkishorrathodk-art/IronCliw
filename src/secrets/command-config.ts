@@ -65,4 +65,3 @@ export function collectCommandSecretAssignmentsFromSnapshot(params: {
 
   return { assignments, diagnostics };
 }
-

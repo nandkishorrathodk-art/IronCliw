@@ -131,4 +131,3 @@ describe("config pruning defaults", () => {
     });
   });
 });
-

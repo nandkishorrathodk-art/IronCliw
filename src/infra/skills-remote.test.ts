@@ -34,4 +34,3 @@ describe("skills-remote", () => {
     }).not.toThrow();
   });
 });
-

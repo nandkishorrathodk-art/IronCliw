@@ -401,4 +401,3 @@ export function resolveDiffImageRenderOptions(params: {
     maxPixels: profile.maxPixels,
   };
 }
-

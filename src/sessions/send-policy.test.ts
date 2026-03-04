@@ -69,4 +69,3 @@ describe("resolveSendPolicy", () => {
     expect(resolveSendPolicy({ cfg, sessionKey: "agent:main:slack:group:dev" })).toBe("allow");
   });
 });
-

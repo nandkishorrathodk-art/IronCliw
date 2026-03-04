@@ -22,4 +22,3 @@ describe("MattermostConfigSchema SecretInput", () => {
     expect(result.success).toBe(true);
   });
 });
-

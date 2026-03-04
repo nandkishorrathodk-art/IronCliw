@@ -18,4 +18,3 @@ export function sanitizeTerminalText(input: string): string {
   }
   return sanitized;
 }
-

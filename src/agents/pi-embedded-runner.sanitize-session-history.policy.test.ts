@@ -61,4 +61,3 @@ describe("sanitizeSessionHistory e2e smoke", () => {
     expect(result).toEqual([]);
   });
 });
-

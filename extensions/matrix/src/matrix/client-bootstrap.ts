@@ -45,4 +45,3 @@ export async function createPreparedMatrixClient(opts: {
   });
   return client;
 }
-

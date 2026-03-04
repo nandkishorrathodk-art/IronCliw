@@ -651,4 +651,3 @@ describe("sanitizeSessionHistory", () => {
     expect(types).toContain("thinking");
   });
 });
-

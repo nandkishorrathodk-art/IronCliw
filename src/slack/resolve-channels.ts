@@ -130,4 +130,3 @@ export async function resolveSlackChannelAllowlist(params: {
 
   return results;
 }
-

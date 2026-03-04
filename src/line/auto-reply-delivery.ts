@@ -173,4 +173,3 @@ export async function deliverLineAutoReply(params: {
 
   return { replyTokenUsed };
 }
-

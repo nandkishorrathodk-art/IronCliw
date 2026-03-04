@@ -23,4 +23,3 @@ export function stripOncharPrefix(
   }
   return { triggered: false, stripped: text };
 }
-

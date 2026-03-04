@@ -188,4 +188,3 @@ describe("BrowserProfilesService", () => {
     expect(movePathToTrash).toHaveBeenCalledWith(path.dirname(userDataDir));
   });
 });
-

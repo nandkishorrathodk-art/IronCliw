@@ -126,4 +126,3 @@ If you need local time, convert it downstream using the known timezone.
 - [System Prompt](/concepts/system-prompt)
 - [Timezones](/concepts/timezone)
 - [Messages](/concepts/messages)
-

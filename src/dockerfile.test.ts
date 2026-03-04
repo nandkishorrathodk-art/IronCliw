@@ -34,4 +34,3 @@ describe("Dockerfile", () => {
     expect(dockerfile).not.toContain('\\"fpr\\"');
   });
 });
-

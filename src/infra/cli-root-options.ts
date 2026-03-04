@@ -29,4 +29,3 @@ export function consumeRootOptionToken(args: ReadonlyArray<string>, index: numbe
   }
   return 0;
 }
-

@@ -66,4 +66,3 @@ describe("markdownToSignalText", () => {
     expect(res.styles).toEqual([{ start: prefix.length, length: 4, style: "BOLD" }]);
   });
 });
-

@@ -527,4 +527,3 @@ describe("gateway agents", () => {
     await server.close();
   });
 });
-

@@ -159,4 +159,3 @@ describe("restartGatewayProcessWithFreshPid", () => {
     expect(result.detail).toContain("spawn failed");
   });
 });
-

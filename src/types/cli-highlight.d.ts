@@ -8,4 +8,3 @@ declare module "cli-highlight" {
   export function highlight(code: string, options?: HighlightOptions): string;
   export function supportsLanguage(language: string): boolean;
 }
-

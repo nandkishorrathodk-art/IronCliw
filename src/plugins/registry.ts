@@ -545,4 +545,3 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     registerTypedHook,
   };
 }
-

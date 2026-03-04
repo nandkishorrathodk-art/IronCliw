@@ -171,4 +171,3 @@ describe("slack outbound hook wiring", () => {
     expect(sendMessageSlack).toHaveBeenCalled();
   });
 });
-

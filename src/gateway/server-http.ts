@@ -765,4 +765,3 @@ export function attachGatewayUpgradeHandler(opts: {
     });
   });
 }
-

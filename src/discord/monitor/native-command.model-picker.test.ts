@@ -449,4 +449,3 @@ describe("Discord model picker interactions", () => {
     expect(mismatchLog).toContain("session key agent:worker:subagent:bound");
   });
 });
-

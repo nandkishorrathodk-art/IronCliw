@@ -54,4 +54,3 @@ describe("acp session mapper", () => {
     expect(request).not.toHaveBeenCalled();
   });
 });
-

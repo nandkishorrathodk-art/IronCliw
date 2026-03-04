@@ -177,4 +177,3 @@ export async function ensureCompletionCacheExists(binName = "IronCliw"): Promise
 
   return generateCompletionCache();
 }
-

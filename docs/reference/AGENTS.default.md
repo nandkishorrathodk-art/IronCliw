@@ -122,4 +122,3 @@ git commit -m "Add Clawd workspace"
 - For browser-driven verification, use `IronCliw browser` (tabs/status/screenshot) with the IronCliw-managed Chrome profile.
 - For DOM inspection, use `IronCliw browser eval|query|dom|snapshot` (and `--json`/`--out` when you need machine output).
 - For interactions, use `IronCliw browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run` (click/type require snapshot refs; use `evaluate` for CSS selectors).
-

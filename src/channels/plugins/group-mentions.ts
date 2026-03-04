@@ -322,4 +322,3 @@ export function resolveBlueBubblesGroupToolPolicy(
 ): GroupToolPolicyConfig | undefined {
   return resolveChannelToolPolicyForSender(params, "bluebubbles");
 }
-

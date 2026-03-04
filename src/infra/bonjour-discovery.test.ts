@@ -309,4 +309,3 @@ describe("bonjour-discovery", () => {
     expect(calls.filter((c) => c[1] === "-B")[0]?.[3]).toBe("local.");
   });
 });
-

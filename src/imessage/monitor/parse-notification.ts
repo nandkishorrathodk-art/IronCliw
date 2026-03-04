@@ -81,4 +81,3 @@ export function parseIMessageNotification(raw: unknown): IMessagePayload | null 
 
   return message;
 }
-

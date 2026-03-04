@@ -102,4 +102,3 @@ export async function assertCanonicalPathWithinBase(params: {
   }
   await validateDirectory(path.dirname(candidatePath));
 }
-

@@ -126,4 +126,3 @@ Each account can override token, incoming URL, webhook path, DM policy, and limi
 - Keep `allowInsecureSsl: false` unless you explicitly trust a self-signed local NAS cert.
 - Inbound webhook requests are token-verified and rate-limited per sender.
 - Prefer `dmPolicy: "allowlist"` for production.
-

@@ -41,4 +41,3 @@ export async function getDaemonStatusSummary(): Promise<DaemonStatusSummary> {
 export async function getNodeDaemonStatusSummary(): Promise<DaemonStatusSummary> {
   return await buildDaemonStatusSummary(resolveNodeService(), "Node");
 }
-

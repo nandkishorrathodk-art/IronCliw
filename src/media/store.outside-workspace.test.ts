@@ -44,4 +44,3 @@ describe("media store outside-workspace mapping", () => {
     });
   });
 });
-

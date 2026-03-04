@@ -27,4 +27,3 @@ describe("resolveIMessageRuntimeGroupPolicy", () => {
     expect(resolved.providerMissingFallbackApplied).toBe(true);
   });
 });
-

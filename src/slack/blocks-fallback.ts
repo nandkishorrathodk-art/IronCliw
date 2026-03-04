@@ -93,4 +93,3 @@ export function buildSlackBlocksFallbackText(blocks: (Block | KnownBlock)[]): st
 
   return "Shared a Block Kit message";
 }
-

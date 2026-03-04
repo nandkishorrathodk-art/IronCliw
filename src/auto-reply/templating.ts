@@ -218,4 +218,3 @@ export function applyTemplate(str: string | undefined, ctx: TemplateContext) {
     return formatTemplateValue(value);
   });
 }
-

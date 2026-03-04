@@ -79,4 +79,3 @@ describe("memory manager cache hydration", () => {
     await managers[0].close();
   });
 });
-

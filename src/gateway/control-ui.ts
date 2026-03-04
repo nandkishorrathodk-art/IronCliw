@@ -462,4 +462,3 @@ export function handleControlUiHttpRequest(
   respondControlUiNotFound(res);
   return true;
 }
-

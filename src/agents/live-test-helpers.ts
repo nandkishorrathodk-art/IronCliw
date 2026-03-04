@@ -22,4 +22,3 @@ export function extractNonEmptyAssistantText(
     .filter(Boolean)
     .join(" ");
 }
-

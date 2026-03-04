@@ -50,4 +50,3 @@ describe("formatPluginSourceForTable", () => {
     expect(out.rootKey).toBe("global");
   });
 });
-

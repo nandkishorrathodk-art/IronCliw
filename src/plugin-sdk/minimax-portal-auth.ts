@@ -8,4 +8,3 @@ export type {
   ProviderAuthResult,
 } from "../plugins/types.js";
 export { generatePkceVerifierChallenge, toFormUrlEncoded } from "./oauth-utils.js";
-

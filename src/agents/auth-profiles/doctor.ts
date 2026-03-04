@@ -45,4 +45,3 @@ export function formatAuthDoctorHint(params: {
     `Fix: run "${formatCliCommand("IronCliw doctor --yes")}"`,
   ].join("\n");
 }
-

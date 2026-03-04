@@ -965,4 +965,3 @@ export function applyExtraParamsToAgent(
   // server-side compaction for compatible OpenAI Responses payloads.
   agent.streamFn = createOpenAIResponsesContextManagementWrapper(agent.streamFn, merged);
 }
-

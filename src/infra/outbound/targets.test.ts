@@ -666,4 +666,3 @@ describe("resolveSessionDeliveryTarget — cross-channel reply guard (#24152)", 
     expect(resolved.to).toBe("+15550000000");
   });
 });
-

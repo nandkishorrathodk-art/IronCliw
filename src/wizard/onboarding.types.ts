@@ -24,4 +24,3 @@ export type GatewayWizardSettings = {
   tailscaleMode: "off" | "serve" | "funnel";
   tailscaleResetOnExit: boolean;
 };
-

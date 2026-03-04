@@ -46,4 +46,3 @@ describe("feishuPlugin.status.probeAccount", () => {
     expect(result).toMatchObject({ ok: true, appId: "cli_main" });
   });
 });
-

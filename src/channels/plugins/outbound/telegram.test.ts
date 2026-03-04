@@ -140,4 +140,3 @@ describe("telegramOutbound", () => {
     expect(result).toEqual({ channel: "telegram", messageId: "tg-2", chatId: "123" });
   });
 });
-

@@ -246,4 +246,3 @@ export function resetShellPathCacheForTests(): void {
 export function getShellEnvAppliedKeys(): string[] {
   return [...lastAppliedKeys];
 }
-

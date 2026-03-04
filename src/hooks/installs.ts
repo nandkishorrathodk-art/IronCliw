@@ -28,4 +28,3 @@ export function recordHookInstall(cfg: IronCliwConfig, update: HookInstallUpdate
     },
   };
 }
-

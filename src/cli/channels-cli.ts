@@ -254,4 +254,3 @@ export function registerChannelsCli(program: Command) {
       }, "Channel logout failed");
     });
 }
-

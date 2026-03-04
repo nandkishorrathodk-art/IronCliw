@@ -226,4 +226,3 @@ describe("LINE send helpers", () => {
     expect(firstCall[0].messages[0].quickReply?.items).toHaveLength(13);
   });
 });
-

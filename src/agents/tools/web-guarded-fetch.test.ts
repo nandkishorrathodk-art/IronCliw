@@ -66,4 +66,3 @@ describe("web-guarded-fetch", () => {
     expect(call?.mode).toBe(GUARDED_FETCH_MODE.STRICT);
   });
 });
-

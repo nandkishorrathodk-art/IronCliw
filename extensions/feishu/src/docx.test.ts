@@ -443,4 +443,3 @@ describe("feishu_doc image fetch hardening", () => {
     }
   });
 });
-

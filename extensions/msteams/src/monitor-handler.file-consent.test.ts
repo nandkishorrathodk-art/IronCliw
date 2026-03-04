@@ -226,4 +226,3 @@ describe("msteams file consent invoke authz", () => {
     expect(sendActivity).toHaveBeenCalledTimes(1);
   });
 });
-

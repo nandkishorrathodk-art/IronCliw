@@ -30,4 +30,3 @@ export function createSubmitHarness(): SubmitHarness {
   });
   return { editor, handleCommand, sendMessage, handleBangLine, onSubmit };
 }
-

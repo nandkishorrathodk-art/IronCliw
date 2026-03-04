@@ -138,4 +138,3 @@ test("process poll resets retryInMs when output appears and clears on completion
   expect(pollStatus(pollFinished)).toBe("completed");
   expect(retryMs(pollFinished)).toBeUndefined();
 });
-

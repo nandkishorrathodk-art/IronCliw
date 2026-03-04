@@ -220,4 +220,3 @@ describe("resolveDiscordUserAllowlist", () => {
     expect(results.every((r) => !r.resolved)).toBe(true);
   });
 });
-

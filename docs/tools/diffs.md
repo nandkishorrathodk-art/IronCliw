@@ -356,4 +356,3 @@ Diff rendering engine:
 - [Tools overview](/tools)
 - [Plugins](/tools/plugin)
 - [Browser](/tools/browser)
-

@@ -46,4 +46,3 @@ IronCliw 使用 Brave Search 作为 `web_search` 的默认提供商。
 - Brave 提供免费层级和付费套餐；请查看 Brave API 门户了解当前限制。
 
 请参阅 [Web 工具](/tools/web) 了解完整的 web_search 配置。
-

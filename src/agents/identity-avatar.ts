@@ -91,4 +91,3 @@ export function resolveAgentAvatar(cfg: IronCliwConfig, agentId: string): AgentA
   }
   return { kind: "local", filePath: resolved.filePath };
 }
-

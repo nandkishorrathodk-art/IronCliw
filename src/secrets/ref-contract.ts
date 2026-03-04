@@ -69,4 +69,3 @@ export function isValidFileSecretRefId(value: string): boolean {
 export function isValidSecretProviderAlias(value: string): boolean {
   return SECRET_PROVIDER_ALIAS_PATTERN.test(value);
 }
-

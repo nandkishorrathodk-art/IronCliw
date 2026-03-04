@@ -492,4 +492,3 @@ export async function syncPluginsForUpdateChannel(params: {
 
   return { config: next, changed, summary };
 }
-

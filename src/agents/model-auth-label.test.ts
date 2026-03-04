@@ -99,4 +99,3 @@ describe("resolveModelAuthLabel", () => {
     expect(label).toBe("oauth (anthropic:oauth)");
   });
 });
-

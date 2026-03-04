@@ -191,4 +191,3 @@ export PATH="$(npm prefix -g)/bin:$PATH"
 - 更新：[更新](/install/updating)
 - 迁移到新机器：[迁移](/install/migrating)
 - 卸载：[卸载](/install/uninstall)
-

@@ -486,4 +486,3 @@ export const __testing = {
   getSocketEmitter,
   waitForSlackSocketDisconnect,
 };
-

@@ -289,4 +289,3 @@ describe("resolveAuthProfileOrder", () => {
     expect(order).toEqual(["anthropic:oauth"]);
   });
 });
-

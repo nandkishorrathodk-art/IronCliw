@@ -27,4 +27,3 @@ test("exec falls back when PTY spawn fails", async () => {
   expect(text).toContain("ok");
   expect(text).toContain("PTY spawn failed");
 });
-

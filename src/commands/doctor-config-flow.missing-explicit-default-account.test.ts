@@ -125,4 +125,3 @@ describe("collectMissingExplicitDefaultAccountWarnings", () => {
     expect(warnings.some((line) => line.includes("channels.slack"))).toBe(true);
   });
 });
-

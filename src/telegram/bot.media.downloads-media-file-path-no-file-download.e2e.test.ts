@@ -383,4 +383,3 @@ describe("telegram forwarded bursts", () => {
     FORWARD_BURST_TEST_TIMEOUT_MS,
   );
 });
-

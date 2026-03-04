@@ -222,4 +222,3 @@ describe("loadModelCatalog", () => {
     expect(matches[0]?.name).toBe("Claude Opus 4.6");
   });
 });
-

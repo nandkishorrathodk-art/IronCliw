@@ -215,4 +215,3 @@ export function registerBrowserTabRoutes(app: BrowserRouteRegistrar, ctx: Browse
     });
   });
 }
-

@@ -159,4 +159,3 @@ export function clearSecretsRuntimeSnapshot(): void {
   clearRuntimeConfigSnapshot();
   clearRuntimeAuthProfileStoreSnapshots();
 }
-

@@ -78,4 +78,3 @@ export function resolveZalouserMessageSid(params: {
   }
   return toMessageSidPart(params.fallback) || undefined;
 }
-

@@ -128,4 +128,3 @@ describe("irc onboarding", () => {
     expect(updated.channels?.irc?.accounts?.work?.allowFrom).toBeUndefined();
   });
 });
-

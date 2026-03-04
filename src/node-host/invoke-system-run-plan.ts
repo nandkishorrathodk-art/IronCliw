@@ -251,4 +251,3 @@ export function buildSystemRunApprovalPlan(params: {
     cmdText: command.cmdText,
   };
 }
-

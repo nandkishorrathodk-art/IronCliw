@@ -96,4 +96,3 @@ export function resolveSlackMessageSubtypeHandler(
   }
   return SUBTYPE_HANDLER_REGISTRY[subtype];
 }
-

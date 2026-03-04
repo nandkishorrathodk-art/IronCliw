@@ -116,4 +116,3 @@ export const __testing = {
     return resolveAcpRuntimeRegistryGlobalState();
   },
 };
-

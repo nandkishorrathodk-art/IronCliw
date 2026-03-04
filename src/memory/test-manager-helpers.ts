@@ -17,4 +17,3 @@ export async function getRequiredMemoryIndexManager(params: {
   }
   return result.manager as unknown as MemoryIndexManager;
 }
-

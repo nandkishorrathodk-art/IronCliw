@@ -18,4 +18,3 @@ export function hasSupervisorHint(env: NodeJS.ProcessEnv = process.env): boolean
     return typeof value === "string" && value.trim().length > 0;
   });
 }
-

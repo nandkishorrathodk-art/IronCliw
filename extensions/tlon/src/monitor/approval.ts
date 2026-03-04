@@ -276,4 +276,3 @@ export function formatPendingList(approvals: PendingApproval[]): string {
     .map((a) => `• ${a.id}: ${a.type} from ${a.requestingShip}`)
     .join("\n")}`;
 }
-

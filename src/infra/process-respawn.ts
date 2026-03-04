@@ -61,4 +61,3 @@ export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
     return { mode: "failed", detail };
   }
 }
-

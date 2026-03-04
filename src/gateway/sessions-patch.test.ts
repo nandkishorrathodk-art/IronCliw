@@ -335,4 +335,3 @@ describe("gateway sessions patch", () => {
     expect(entry.modelOverride).toBe("hf:moonshotai/Kimi-K2.5");
   });
 });
-

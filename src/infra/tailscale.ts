@@ -498,4 +498,3 @@ export async function readTailscaleWhoisIdentity(
     return null;
   }
 }
-

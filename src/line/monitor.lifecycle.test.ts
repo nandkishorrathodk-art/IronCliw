@@ -140,4 +140,3 @@ describe("monitorLineProvider lifecycle", () => {
     expect(unregisterHttpMock).toHaveBeenCalledTimes(1);
   });
 });
-

@@ -1135,4 +1135,3 @@ describe("realredactConfigSnapshot_real", () => {
     expect(restored.agents.list[0].memorySearch.remote.apiKey).toBe("6789");
   });
 });
-

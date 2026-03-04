@@ -11,4 +11,3 @@ export function toStringEnv(env?: NodeJS.ProcessEnv): Record<string, string> {
   }
   return out;
 }
-

@@ -124,4 +124,3 @@ describe("runServiceRestart token drift", () => {
     expect(payload.warnings).toBeUndefined();
   });
 });
-

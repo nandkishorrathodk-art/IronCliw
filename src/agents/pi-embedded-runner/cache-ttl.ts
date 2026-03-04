@@ -74,4 +74,3 @@ export function appendCacheTtlTimestamp(sessionManager: unknown, data: CacheTtlE
     // ignore persistence failures
   }
 }
-

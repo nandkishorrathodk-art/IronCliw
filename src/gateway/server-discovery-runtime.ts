@@ -98,4 +98,3 @@ export async function startGatewayDiscovery(params: {
 
   return { bonjourStop };
 }
-

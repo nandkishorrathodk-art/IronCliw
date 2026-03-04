@@ -39,4 +39,3 @@ Override auto-detected credentials with:
 
 - `IronCliw_GEMINI_OAUTH_CLIENT_ID` / `GEMINI_CLI_OAUTH_CLIENT_ID`
 - `IronCliw_GEMINI_OAUTH_CLIENT_SECRET` / `GEMINI_CLI_OAUTH_CLIENT_SECRET`
-

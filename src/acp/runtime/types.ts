@@ -129,4 +129,3 @@ export interface AcpRuntime {
 
   close(input: { handle: AcpRuntimeHandle; reason: string }): Promise<void>;
 }
-

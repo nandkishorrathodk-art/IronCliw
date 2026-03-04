@@ -105,4 +105,3 @@ describe("discord audit", () => {
     expect(collected.unresolvedChannels).toBe(0);
   });
 });
-

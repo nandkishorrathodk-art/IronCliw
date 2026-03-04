@@ -428,4 +428,3 @@ Some SecretInput unions are easier to configure in raw editor mode than in form 
 - Auth setup: [Authentication](/gateway/authentication)
 - Security posture: [Security](/gateway/security)
 - Environment precedence: [Environment Variables](/help/environment)
-

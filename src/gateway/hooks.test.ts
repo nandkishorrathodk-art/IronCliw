@@ -326,4 +326,3 @@ describe("gateway hooks helpers", () => {
 });
 
 const emptyRegistry = createTestRegistry([]);
-

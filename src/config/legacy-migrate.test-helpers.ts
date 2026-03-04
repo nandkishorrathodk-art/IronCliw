@@ -9,4 +9,3 @@ export const WHISPER_BASE_AUDIO_MODEL = {
     },
   ],
 };
-

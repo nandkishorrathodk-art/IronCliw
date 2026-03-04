@@ -131,4 +131,3 @@ export function listTlonAccountIds(cfg: IronCliwConfig): string[] {
   const accounts = base.accounts ?? {};
   return [...(base.ship ? ["default"] : []), ...Object.keys(accounts)];
 }
-

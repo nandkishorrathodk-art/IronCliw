@@ -14,4 +14,3 @@ describe("resolveRuntimeStatusColor", () => {
     expect(resolveRuntimeStatusColor(undefined)).toBe(theme.muted);
   });
 });
-

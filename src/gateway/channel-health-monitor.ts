@@ -198,4 +198,3 @@ export function startChannelHealthMonitor(deps: ChannelHealthMonitorDeps): Chann
 
   return { stop };
 }
-

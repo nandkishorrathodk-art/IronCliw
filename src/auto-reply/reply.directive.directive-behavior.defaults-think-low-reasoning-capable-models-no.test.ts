@@ -429,4 +429,3 @@ describe("directive behavior", () => {
     });
   });
 });
-

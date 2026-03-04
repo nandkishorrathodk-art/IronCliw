@@ -346,4 +346,3 @@ describe("resolveFeishuAccount", () => {
     ).not.toThrow();
   });
 });
-

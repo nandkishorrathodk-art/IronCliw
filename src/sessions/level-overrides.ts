@@ -30,4 +30,3 @@ export function applyVerboseOverride(entry: SessionEntry, level: VerboseLevel | 
   }
   entry.verboseLevel = level;
 }
-

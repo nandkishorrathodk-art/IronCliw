@@ -182,4 +182,3 @@ describe("version resolution", () => {
     ).toBe(VERSION);
   });
 });
-

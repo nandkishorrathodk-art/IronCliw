@@ -13,4 +13,3 @@ export function extractFirstTextBlock(message: unknown): string | undefined {
   const text = (first as { text?: unknown }).text;
   return typeof text === "string" ? text : undefined;
 }
-

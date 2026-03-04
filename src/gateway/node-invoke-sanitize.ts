@@ -21,4 +21,3 @@ export function sanitizeNodeInvokeParamsForForwarding(opts: {
   }
   return { ok: true, params: opts.rawParams };
 }
-

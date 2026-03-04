@@ -92,4 +92,3 @@ export const KILOCODE_DEFAULT_COST = {
   cacheRead: 0,
   cacheWrite: 0,
 } as const;
-

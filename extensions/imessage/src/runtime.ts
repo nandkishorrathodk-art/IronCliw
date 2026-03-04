@@ -12,4 +12,3 @@ export function getIMessageRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

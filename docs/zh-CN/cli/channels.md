@@ -84,4 +84,3 @@ IronCliw channels resolve --channel matrix "Project Room"
 
 - 使用 `--kind user|group|auto` 强制指定目标类型。
 - 当多个条目共享相同名称时，解析优先选择活跃的匹配项。
-

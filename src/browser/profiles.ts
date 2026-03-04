@@ -111,4 +111,3 @@ export function getUsedColors(
   }
   return new Set(Object.values(profiles).map((p) => p.color.toUpperCase()));
 }
-

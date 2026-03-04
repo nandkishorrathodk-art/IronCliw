@@ -177,4 +177,3 @@ describe("resolveSessionKeyForRequest", () => {
     expect(storePaths).toContain(MYBOT_STORE_PATH);
   });
 });
-

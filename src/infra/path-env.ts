@@ -126,4 +126,3 @@ export function ensureIronCliwCliOnPath(opts: EnsureIronCliwPathOpts = {}) {
     process.env.PATH = merged;
   }
 }
-

@@ -29,4 +29,3 @@ export async function resolveWritableOutputPathOrRespond(params: {
   }
   return pathResult.path;
 }
-

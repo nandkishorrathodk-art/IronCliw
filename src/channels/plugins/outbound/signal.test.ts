@@ -68,4 +68,3 @@ describe("signalOutbound", () => {
     expect(result).toEqual({ channel: "signal", messageId: "sig-media-1", timestamp: 456 });
   });
 });
-

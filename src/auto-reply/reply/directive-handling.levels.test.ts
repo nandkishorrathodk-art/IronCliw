@@ -34,4 +34,3 @@ describe("resolveCurrentDirectiveLevels", () => {
     expect(resolveDefaultThinkingLevel).not.toHaveBeenCalled();
   });
 });
-

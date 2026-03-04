@@ -183,4 +183,3 @@ describe("CronService store migrations", () => {
     await stopCronAndCleanup(cron, store);
   });
 });
-

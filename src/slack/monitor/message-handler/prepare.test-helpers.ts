@@ -67,4 +67,3 @@ export function createSlackTestAccount(
     dm: config.dm,
   };
 }
-

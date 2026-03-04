@@ -464,4 +464,3 @@ export const configHandlers: GatewayRequestHandlers = {
     );
   },
 };
-

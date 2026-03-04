@@ -144,4 +144,3 @@ describe("ensureOggOpus", () => {
     expect(ffmpegCalls[0].args).toEqual(expect.arrayContaining(["-vn", "-sn", "-dn"]));
   });
 });
-

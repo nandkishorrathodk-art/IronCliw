@@ -55,4 +55,3 @@ describe("createEditorSubmitHandler", () => {
     expect(handleBangLine).toHaveBeenCalledWith("!ls");
   });
 });
-

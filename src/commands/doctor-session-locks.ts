@@ -83,4 +83,3 @@ export async function noteSessionLockHealth(params?: { shouldRepair?: boolean; s
 
   note(lines.join("\n"), "Session locks");
 }
-

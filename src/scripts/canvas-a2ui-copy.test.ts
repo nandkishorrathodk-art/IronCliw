@@ -55,4 +55,3 @@ describe("canvas a2ui copy", () => {
     });
   });
 });
-

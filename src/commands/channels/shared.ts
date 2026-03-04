@@ -59,4 +59,3 @@ export function formatChannelAccountLabel(params: {
 export function shouldUseWizard(params?: { hasFlags?: boolean }) {
   return params?.hasFlags === false;
 }
-

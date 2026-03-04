@@ -29,4 +29,3 @@ export function formatUnavailableBatchError(err: unknown): string | undefined {
   const message = err instanceof Error ? err.message : String(err);
   return message ? `error file unavailable: ${message}` : undefined;
 }
-

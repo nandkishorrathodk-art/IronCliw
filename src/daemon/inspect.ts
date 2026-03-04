@@ -430,4 +430,3 @@ export async function findExtraGatewayServices(
 
   return results;
 }
-

@@ -527,4 +527,3 @@ export async function sendApnsBackgroundWake(params: {
     priority: "5",
   });
 }
-

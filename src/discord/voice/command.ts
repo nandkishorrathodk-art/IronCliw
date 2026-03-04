@@ -370,4 +370,3 @@ export function createDiscordVoiceCommand(params: VoiceCommandContext): CommandW
 function isVoiceChannelType(type: CarbonChannelType) {
   return type === CarbonChannelType.GuildVoice || type === CarbonChannelType.GuildStageVoice;
 }
-

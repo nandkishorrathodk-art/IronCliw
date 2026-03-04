@@ -317,4 +317,3 @@ export function parsePromptEventLine(line: string): AcpRuntimeEvent | null {
       return null;
   }
 }
-

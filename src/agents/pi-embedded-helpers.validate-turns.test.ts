@@ -529,4 +529,3 @@ describe("validateAnthropicTurns strips dangling tool_use blocks", () => {
     expect(result).toHaveLength(3);
   });
 });
-

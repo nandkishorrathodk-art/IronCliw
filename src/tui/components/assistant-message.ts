@@ -20,4 +20,3 @@ export class AssistantMessageComponent extends Container {
     this.body.setText(text);
   }
 }
-

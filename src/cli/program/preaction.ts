@@ -138,4 +138,3 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     }
   });
 }
-

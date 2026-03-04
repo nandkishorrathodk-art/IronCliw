@@ -57,4 +57,3 @@ describe("shouldEnqueueCronMainSummary", () => {
     ).toBe(false);
   });
 });
-

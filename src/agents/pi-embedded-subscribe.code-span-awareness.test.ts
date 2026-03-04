@@ -60,4 +60,3 @@ describe("subscribeEmbeddedPiSession thinking tag code span awareness", () => {
     expect(lastCall[0].text).toContain("world");
   });
 });
-

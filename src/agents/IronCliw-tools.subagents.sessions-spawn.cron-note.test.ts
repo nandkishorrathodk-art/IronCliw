@@ -63,4 +63,3 @@ describe("sessions_spawn: cron isolated session note suppression", () => {
     expect((result.details as SpawnResult).note).toBe(SUBAGENT_SPAWN_ACCEPTED_NOTE);
   });
 });
-

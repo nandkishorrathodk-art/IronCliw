@@ -127,4 +127,3 @@ export function resolveSlackReplyToMode(
   }
   return account.replyToMode ?? "off";
 }
-

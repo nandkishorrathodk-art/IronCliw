@@ -249,4 +249,3 @@ export function resolveBlockStreamingCoalescing(
     flushOnEnqueue: chunkMode === "newline",
   };
 }
-

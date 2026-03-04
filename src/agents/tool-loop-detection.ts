@@ -621,4 +621,3 @@ export function getToolCallStats(state: SessionState): {
     mostFrequent,
   };
 }
-

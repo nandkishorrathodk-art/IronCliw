@@ -17,4 +17,3 @@ export function requireNodeSqlite(): typeof import("node:sqlite") {
     );
   }
 }
-

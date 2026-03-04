@@ -281,4 +281,3 @@ describe("normalizeExecApprovals handles string allowlist entries (#9790)", () =
     }
   });
 });
-

@@ -60,4 +60,3 @@ export async function applyAuthChoice(
 
   return { config: params.config };
 }
-

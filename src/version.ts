@@ -126,4 +126,3 @@ export const VERSION = resolveBinaryVersion({
   injectedVersion: typeof __IronCliw_VERSION__ === "string" ? __IronCliw_VERSION__ : undefined,
   bundledVersion: process.env.IronCliw_BUNDLED_VERSION,
 });
-

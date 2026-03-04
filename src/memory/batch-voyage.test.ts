@@ -174,4 +174,3 @@ describe("runVoyageEmbeddingBatches", () => {
     expect(results.get("req-2")).toEqual([2]);
   });
 });
-

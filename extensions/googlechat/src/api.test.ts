@@ -106,4 +106,3 @@ describe("sendGoogleChatMessage", () => {
     expect(String(url)).not.toContain("messageReplyOption=");
   });
 });
-

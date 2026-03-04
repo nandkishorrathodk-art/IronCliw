@@ -113,4 +113,3 @@ describe("parseDurationMs", () => {
     expect(() => parseDurationMs("1h-30m")).toThrow();
   });
 });
-

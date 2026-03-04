@@ -362,4 +362,3 @@ export async function applySessionsPatchToStore(params: {
   store[storeKey] = next;
   return { ok: true, entry: next };
 }
-

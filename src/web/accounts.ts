@@ -152,4 +152,3 @@ export function listEnabledWhatsAppAccounts(cfg: IronCliwConfig): ResolvedWhatsA
     .map((accountId) => resolveWhatsAppAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

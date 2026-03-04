@@ -21,4 +21,3 @@ describe("createProcessedMessageTracker", () => {
     expect(tracker.has("d")).toBe(true);
   });
 });
-

@@ -19,4 +19,3 @@ export async function requireValidConfigSnapshot(
   }
   return snapshot.config;
 }
-

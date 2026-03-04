@@ -134,4 +134,3 @@ IronCliw 可以从以下来源获取凭据：
 Skills 可以在 `skills.entries.<name>.apiKey` 中存储 `apiKey`。如果 Skills 使用该密钥调用外部 API，则会根据 Skills 的提供商产生费用。
 
 请参阅[Skills](/tools/skills)。
-

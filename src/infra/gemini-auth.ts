@@ -38,4 +38,3 @@ export function parseGeminiAuth(apiKey: string): { headers: Record<string, strin
     },
   };
 }
-

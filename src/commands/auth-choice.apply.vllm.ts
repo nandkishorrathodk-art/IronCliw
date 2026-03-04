@@ -44,4 +44,3 @@ export async function applyAuthChoiceVllm(
   await params.prompter.note(`Default model set to ${modelRef}`, "Model configured");
   return { config: applyVllmDefaultModel(nextConfig, modelRef) };
 }
-

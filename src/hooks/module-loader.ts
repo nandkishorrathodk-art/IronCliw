@@ -44,4 +44,3 @@ export function resolveFunctionModuleExport<T extends GenericFunction>(params: {
   }
   return undefined;
 }
-

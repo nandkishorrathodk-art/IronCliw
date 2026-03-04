@@ -79,4 +79,3 @@ export type {
   DiscordTimeoutTarget,
 } from "./send.types.js";
 export { DiscordSendError } from "./send.types.js";
-

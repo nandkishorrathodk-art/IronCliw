@@ -88,4 +88,3 @@ describe("subagent registry archive behavior", () => {
     expect(run?.archiveAtMs).toBeUndefined();
   });
 });
-

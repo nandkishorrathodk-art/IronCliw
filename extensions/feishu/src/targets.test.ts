@@ -68,4 +68,3 @@ describe("looksLikeFeishuId", () => {
     expect(looksLikeFeishuId("channel:oc_456")).toBe(true);
   });
 });
-

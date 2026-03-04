@@ -418,4 +418,3 @@ describe("formatError", () => {
     expect(formatError({ code: "ENOENT" })).toBe("status=unknown code=ENOENT");
   });
 });
-

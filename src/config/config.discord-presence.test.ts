@@ -98,4 +98,3 @@ describe("config discord presence", () => {
     expect(res.ok).toBe(false);
   });
 });
-

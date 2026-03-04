@@ -120,4 +120,3 @@ describe("detectChangedScope", () => {
     expect(fs.existsSync(markerPath)).toBe(false);
   });
 });
-

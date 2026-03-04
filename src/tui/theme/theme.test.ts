@@ -80,4 +80,3 @@ describe("list themes", () => {
     expect(stripAnsi(searchableSelectListTheme.matchHighlight("match"))).toBe("match");
   });
 });
-

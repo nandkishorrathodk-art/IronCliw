@@ -691,4 +691,3 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
     formatSystemEvent: formatSlackInteractionSystemEvent,
   });
 }
-

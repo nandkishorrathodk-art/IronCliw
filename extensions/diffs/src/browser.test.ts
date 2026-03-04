@@ -254,4 +254,3 @@ function createMockPage(options?: {
     close: vi.fn(async () => {}),
   };
 }
-

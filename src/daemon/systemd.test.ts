@@ -253,4 +253,3 @@ describe("systemd service control", () => {
     ).rejects.toThrow("systemctl stop failed: permission denied");
   });
 });
-

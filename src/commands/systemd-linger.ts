@@ -119,4 +119,3 @@ export async function ensureSystemdUserLingerNonInteractive(params: {
     `Systemd lingering is disabled for ${status.user}. Run: sudo loginctl enable-linger ${status.user}`,
   );
 }
-

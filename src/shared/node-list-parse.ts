@@ -15,4 +15,3 @@ export function parseNodeList(value: unknown): NodeListNode[] {
   const obj = asRecord(value);
   return Array.isArray(obj.nodes) ? (obj.nodes as NodeListNode[]) : [];
 }
-

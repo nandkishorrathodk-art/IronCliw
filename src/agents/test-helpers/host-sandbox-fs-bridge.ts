@@ -78,4 +78,3 @@ export function createHostSandboxFsBridge(rootDir: string): SandboxFsBridge {
 
   return createSandboxFsBridgeFromResolver(resolvePath);
 }
-

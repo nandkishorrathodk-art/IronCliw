@@ -43,4 +43,3 @@ export function buildCommandContext(params: {
     to: auth.to,
   };
 }
-

@@ -78,4 +78,3 @@ export async function stopBrowserControlService(): Promise<void> {
     // ignore
   }
 }
-

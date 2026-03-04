@@ -677,4 +677,3 @@ export async function promptLegacyChannelAllowFrom(params: {
     allowFrom: unique,
   });
 }
-

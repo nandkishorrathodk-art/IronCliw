@@ -61,4 +61,3 @@ Meet here
 - **Telegram**：地点映射到 `LocationName/LocationAddress`；实时位置使用 `live_period`。
 - **WhatsApp**：`locationMessage.comment` 和 `liveLocationMessage.caption` 作为标题行附加。
 - **Matrix**：`geo_uri` 解析为图钉位置；忽略海拔高度，`LocationIsLive` 始终为 false。
-

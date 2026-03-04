@@ -364,4 +364,3 @@ export const ircPlugin: ChannelPlugin<ResolvedIrcAccount, IrcProbe> = {
     },
   },
 };
-

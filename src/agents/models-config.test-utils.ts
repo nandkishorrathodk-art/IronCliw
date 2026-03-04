@@ -7,4 +7,3 @@ export async function readGeneratedModelsJson<T>(): Promise<T> {
   const raw = await fs.readFile(modelPath, "utf8");
   return JSON.parse(raw) as T;
 }
-

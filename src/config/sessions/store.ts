@@ -860,4 +860,3 @@ export async function updateLastRoute(params: {
     });
   });
 }
-

@@ -136,4 +136,3 @@ describe("LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES", () => {
     expect(LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES).toContain("moltbot-gateway");
   });
 });
-

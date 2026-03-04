@@ -360,4 +360,3 @@ describe("formatReplyContext", () => {
     ).toBe("[Replying to unknown sender]\noriginal\n[/Replying]");
   });
 });
-

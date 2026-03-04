@@ -269,4 +269,3 @@ describe("renderSignalMentions", () => {
     expect(normalized).toBe("@valid ping");
   });
 });
-

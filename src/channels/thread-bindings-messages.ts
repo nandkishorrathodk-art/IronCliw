@@ -111,4 +111,3 @@ export function resolveThreadBindingFarewellText(params: {
 
   return prefixSystemMessage(DEFAULT_THREAD_BINDING_FAREWELL_TEXT);
 }
-

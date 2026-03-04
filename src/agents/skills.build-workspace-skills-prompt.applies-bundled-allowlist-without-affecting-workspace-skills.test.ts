@@ -35,4 +35,3 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(prompt).not.toContain("peekaboo");
   });
 });
-

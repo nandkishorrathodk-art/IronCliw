@@ -25,4 +25,3 @@ export type DaemonInstallOptions = {
 export type DaemonLifecycleOptions = {
   json?: boolean;
 };
-

@@ -77,4 +77,3 @@ describe("OpenAI HTTP message channel", () => {
     );
   });
 });
-

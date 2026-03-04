@@ -216,4 +216,3 @@ export async function resolveConnectAuthDecision(params: {
 
   return { authResult, authOk, authMethod };
 }
-

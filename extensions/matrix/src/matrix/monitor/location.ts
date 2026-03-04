@@ -98,4 +98,3 @@ export function resolveMatrixLocation(params: {
     context: toLocationContext(location),
   };
 }
-

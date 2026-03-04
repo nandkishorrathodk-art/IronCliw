@@ -163,4 +163,3 @@ describe("buildGatewayAuthConfig", () => {
     expect(result).not.toHaveProperty("password");
   });
 });
-

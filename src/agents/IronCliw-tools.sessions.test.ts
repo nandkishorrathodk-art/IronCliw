@@ -1186,4 +1186,3 @@ describe("sessions tools", () => {
     expect(worker?.endedAt).toBeTypeOf("number");
   });
 });
-

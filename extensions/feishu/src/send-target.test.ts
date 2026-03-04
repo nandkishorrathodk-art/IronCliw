@@ -72,4 +72,3 @@ describe("resolveFeishuSendTarget", () => {
     ).toThrow('Feishu account "default" not configured');
   });
 });
-

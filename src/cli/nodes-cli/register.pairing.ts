@@ -98,4 +98,3 @@ export function registerNodesPairingCommands(nodes: Command) {
       }),
   );
 }
-

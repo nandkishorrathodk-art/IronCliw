@@ -139,4 +139,3 @@ describe("buildWorkspaceSkillsPrompt — .agents/skills/ directories", () => {
     expect(prompt).toContain("workspace-only");
   });
 });
-

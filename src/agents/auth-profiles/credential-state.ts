@@ -72,4 +72,3 @@ export function evaluateStoredCredentialEligibility(params: {
   }
   return { eligible: true, reasonCode: "ok" };
 }
-

@@ -182,4 +182,3 @@ describe("FS tools with workspaceOnly=false", () => {
     ).rejects.toThrow(/Path escapes (workspace|sandbox) root/);
   });
 });
-

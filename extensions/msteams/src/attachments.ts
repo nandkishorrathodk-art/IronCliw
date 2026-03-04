@@ -16,4 +16,3 @@ export type {
   MSTeamsHtmlAttachmentSummary,
   MSTeamsInboundMedia,
 } from "./attachments/types.js";
-

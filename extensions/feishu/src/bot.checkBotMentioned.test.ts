@@ -183,4 +183,3 @@ describe("parseFeishuMessageEvent – mentionedBot", () => {
     expect(ctx.content).toBe("[Forwarded message: sc_abc123]");
   });
 });
-

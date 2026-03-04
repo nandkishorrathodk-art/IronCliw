@@ -100,4 +100,3 @@ describe("zaloPlugin outbound sendPayload", () => {
     expect(result).toMatchObject({ channel: "zalo" });
   });
 });
-

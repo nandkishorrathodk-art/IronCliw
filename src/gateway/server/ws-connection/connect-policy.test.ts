@@ -239,4 +239,3 @@ describe("ws connect policy", () => {
     }
   });
 });
-

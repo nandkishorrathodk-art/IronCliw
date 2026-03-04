@@ -65,4 +65,3 @@ describe("resolveIronCliwMetadata install validation", () => {
     expect(install).toBeUndefined();
   });
 });
-

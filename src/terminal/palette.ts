@@ -10,4 +10,3 @@ export const LOBSTER_PALETTE = {
   error: "#E23D2D",
   muted: "#8B7F77",
 } as const;
-

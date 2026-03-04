@@ -244,4 +244,3 @@ describe("getMemorySearchManager caching", () => {
     await expect(firstManager.search("hello")).rejects.toThrow("qmd query failed");
   });
 });
-

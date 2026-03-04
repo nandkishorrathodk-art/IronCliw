@@ -219,4 +219,3 @@ E2EE 配置（启用端到端加密）：
 - `channels.matrix.autoJoin`：邀请处理（`always | allowlist | off`，默认：always）。
 - `channels.matrix.autoJoinAllowlist`：自动加入的允许房间 ID/别名。
 - `channels.matrix.actions`：每个操作的工具限制（reactions/messages/pins/memberInfo/channelInfo）。
-

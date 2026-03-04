@@ -422,4 +422,3 @@ export function parseComponentsParam(params: Record<string, unknown>): void {
     throw new Error("--components must be valid JSON");
   }
 }
-

@@ -114,4 +114,3 @@ describe("dashboardCommand bind selection", () => {
     });
   });
 });
-

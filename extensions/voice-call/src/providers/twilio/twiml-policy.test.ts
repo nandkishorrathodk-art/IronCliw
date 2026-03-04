@@ -82,4 +82,3 @@ describe("twiml policy", () => {
     expect(decision.kind).toBe("empty");
   });
 });
-

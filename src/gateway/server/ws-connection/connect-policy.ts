@@ -100,4 +100,3 @@ export function evaluateMissingDeviceIdentity(params: {
   }
   return { kind: "reject-device-required" };
 }
-

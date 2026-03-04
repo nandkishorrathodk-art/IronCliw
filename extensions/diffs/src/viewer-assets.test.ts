@@ -20,4 +20,3 @@ describe("viewer assets", () => {
     await expect(getServedViewerAsset("/plugins/diffs/assets/not-real.js")).resolves.toBeNull();
   });
 });
-

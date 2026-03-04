@@ -1967,4 +1967,3 @@ function appendOutputWithCap(
   }
   return { text: appended.slice(-maxChars), truncated: true };
 }
-

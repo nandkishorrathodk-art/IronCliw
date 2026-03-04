@@ -80,4 +80,3 @@ describe("requirements helpers", () => {
     expect(res.eligible).toBe(false);
   });
 });
-

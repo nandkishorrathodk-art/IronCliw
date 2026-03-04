@@ -39,4 +39,3 @@ describe("whatsappOutbound sendPoll", () => {
     expect(result).toEqual({ messageId: "poll-1", toJid: "1555@s.whatsapp.net" });
   });
 });
-

@@ -219,4 +219,3 @@ export function applyCrossContextDecoration(params: {
   const message = `${params.decoration.prefix}${params.message}${params.decoration.suffix}`;
   return { message, usedComponents: false };
 }
-

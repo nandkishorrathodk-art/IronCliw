@@ -272,4 +272,3 @@ describe("cron run log", () => {
     });
   });
 });
-

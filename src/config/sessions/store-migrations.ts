@@ -25,4 +25,3 @@ export function applySessionStoreMigrations(store: Record<string, SessionEntry>)
     }
   }
 }
-

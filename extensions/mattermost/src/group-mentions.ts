@@ -13,4 +13,3 @@ export function resolveMattermostGroupRequireMention(
   }
   return true;
 }
-

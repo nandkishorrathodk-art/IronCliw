@@ -367,4 +367,3 @@ export async function runGeminiEmbeddingBatches(
     },
   });
 }
-

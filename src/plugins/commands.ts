@@ -330,4 +330,3 @@ export function getPluginCommandSpecs(): Array<{
     acceptsArgs: cmd.acceptsArgs ?? false,
   }));
 }
-

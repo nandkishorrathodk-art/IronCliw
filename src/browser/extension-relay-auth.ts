@@ -71,4 +71,3 @@ export async function probeAuthenticatedIronCliwRelay(params: {
     clearTimeout(timer);
   }
 }
-

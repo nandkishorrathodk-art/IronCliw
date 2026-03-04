@@ -4,4 +4,3 @@ export function resolveMatrixActionLimit(raw: unknown, fallback: number): number
   }
   return Math.max(1, Math.floor(raw));
 }
-

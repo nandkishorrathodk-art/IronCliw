@@ -113,4 +113,3 @@ describe("buildSystemPromptReport", () => {
     expect(report.injectedWorkspaceFiles[0]?.injectedChars).toBe("trimmed".length);
   });
 });
-

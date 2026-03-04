@@ -83,4 +83,3 @@ IronCliw models auth paste-token
 
 - `setup-token` 会提示输入 setup-token 值（在任意机器上使用 `claude setup-token` 生成）。
 - `paste-token` 接受在其他地方或通过自动化生成的令牌字符串。
-

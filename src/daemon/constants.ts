@@ -111,4 +111,3 @@ export function formatNodeServiceDescription(params?: { version?: string }): str
   }
   return `IronCliw Node Host (v${version})`;
 }
-

@@ -313,4 +313,3 @@ export function createMSTeamsPollStoreFs(params?: MSTeamsPollStoreFsOptions): MS
 
   return { createPoll, getPoll, recordVote };
 }
-

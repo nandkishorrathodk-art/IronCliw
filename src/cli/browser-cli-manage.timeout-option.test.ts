@@ -77,4 +77,3 @@ describe("browser manage start timeout option", () => {
     expect(startCall?.[2]).toBeUndefined();
   });
 });
-

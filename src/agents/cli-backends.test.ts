@@ -141,4 +141,3 @@ describe("resolveCliBackendConfig claude-cli defaults", () => {
     expect(resolved?.config.resumeArgs).not.toContain("bypassPermissions");
   });
 });
-

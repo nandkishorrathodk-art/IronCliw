@@ -104,4 +104,3 @@ describe("zalo group policy access", () => {
     });
   });
 });
-

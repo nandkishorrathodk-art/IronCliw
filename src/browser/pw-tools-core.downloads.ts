@@ -278,4 +278,3 @@ export async function downloadViaPlaywright(opts: {
     throw err;
   }
 }
-

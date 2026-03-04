@@ -57,4 +57,3 @@ describe("media server outside-workspace mapping", () => {
     expect(await response.text()).toBe("file is outside workspace root");
   });
 });
-

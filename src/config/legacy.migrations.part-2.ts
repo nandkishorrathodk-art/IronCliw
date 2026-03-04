@@ -424,4 +424,3 @@ export const LEGACY_CONFIG_MIGRATIONS_PART_2: LegacyConfigMigration[] = [
     },
   },
 ];
-

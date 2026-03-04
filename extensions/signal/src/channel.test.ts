@@ -32,4 +32,3 @@ describe("signalPlugin outbound sendMedia", () => {
     );
   });
 });
-

@@ -89,4 +89,3 @@ export type ResolveQueueSettingsParams = {
   inlineMode?: QueueMode;
   inlineOptions?: Partial<QueueSettings>;
 };
-

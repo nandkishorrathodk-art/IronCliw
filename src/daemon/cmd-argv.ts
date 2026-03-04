@@ -24,4 +24,3 @@ export function parseCmdScriptCommandLine(value: string): string[] {
     unescapeCmdScriptArg,
   );
 }
-

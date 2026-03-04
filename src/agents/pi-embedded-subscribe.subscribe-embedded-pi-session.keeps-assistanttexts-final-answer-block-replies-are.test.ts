@@ -55,4 +55,3 @@ describe("subscribeEmbeddedPiSession", () => {
     expect(subscription.assistantTexts).toEqual(["Final answer"]);
   });
 });
-

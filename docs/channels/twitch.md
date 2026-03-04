@@ -377,4 +377,3 @@ Example:
 - **500 characters** per message (auto-chunked at word boundaries)
 - Markdown is stripped before chunking
 - No rate limiting (uses Twitch's built-in rate limits)
-

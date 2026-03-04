@@ -80,4 +80,3 @@ export function formatElevatedUnavailableText(params: {
   }
   return lines.join("\n");
 }
-

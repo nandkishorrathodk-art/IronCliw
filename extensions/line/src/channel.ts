@@ -809,4 +809,3 @@ export const linePlugin: ChannelPlugin<ResolvedLineAccount> = {
     ],
   },
 };
-

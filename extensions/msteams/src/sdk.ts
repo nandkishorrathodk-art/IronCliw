@@ -31,4 +31,3 @@ export async function loadMSTeamsSdkWithAuth(creds: MSTeamsCredentials) {
   const authConfig = buildMSTeamsAuthConfig(creds, sdk);
   return { sdk, authConfig };
 }
-

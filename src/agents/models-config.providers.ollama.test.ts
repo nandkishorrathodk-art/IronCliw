@@ -279,4 +279,3 @@ describe("Ollama provider", () => {
     expect(providers?.ollama?.apiKey).toBe("config-ollama-key");
   });
 });
-

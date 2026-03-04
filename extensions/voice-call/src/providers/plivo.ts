@@ -591,4 +591,3 @@ type PlivoCreateCallResponse = {
   message?: string;
   request_uuid?: string | string[];
 };
-

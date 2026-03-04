@@ -53,4 +53,3 @@ describe("resolveDiscordThreadStarter", () => {
     expect(result?.text).toBe("starter content");
   });
 });
-

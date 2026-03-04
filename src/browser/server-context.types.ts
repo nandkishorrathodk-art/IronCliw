@@ -63,4 +63,3 @@ export type ContextOptions = {
   onEnsureAttachTarget?: (profile: ResolvedBrowserProfile) => Promise<void>;
   refreshConfigFromDisk?: boolean;
 };
-

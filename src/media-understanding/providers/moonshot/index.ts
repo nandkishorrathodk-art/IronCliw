@@ -8,4 +8,3 @@ export const moonshotProvider: MediaUnderstandingProvider = {
   describeImage: describeImageWithModel,
   describeVideo: describeMoonshotVideo,
 };
-

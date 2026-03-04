@@ -272,4 +272,3 @@ IronCliw system event --text "Check for urgent follow-ups" --mode now
 ## 成本意识
 
 心跳运行完整的智能体轮次。更短的间隔消耗更多 token。保持 `HEARTBEAT.md` 小巧，如果你只想要内部状态更新，考虑使用更便宜的 `model` 或 `target: "none"`。
-

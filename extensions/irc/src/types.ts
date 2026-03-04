@@ -98,4 +98,3 @@ export type IrcProbe = BaseProbeResult<string> & {
   nick: string;
   latencyMs?: number;
 };
-

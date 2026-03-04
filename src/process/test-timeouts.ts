@@ -18,4 +18,3 @@ export const PROCESS_TEST_NO_OUTPUT_TIMEOUT_MS = {
   supervisor: 100,
   streamingAllowance: 6_000,
 } as const;
-

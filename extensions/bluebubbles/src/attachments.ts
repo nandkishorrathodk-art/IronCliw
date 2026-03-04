@@ -280,4 +280,3 @@ export async function sendBlueBubblesAttachment(params: {
     return { messageId: "ok" };
   }
 }
-

@@ -46,4 +46,3 @@ export function evaluateZaloGroupAccess(params: {
     isSenderAllowed: isZaloSenderAllowed,
   });
 }
-

@@ -52,4 +52,3 @@ export function createAccountListHelpers(channelKey: string) {
 
   return { listConfiguredAccountIds, listAccountIds, resolveDefaultAccountId };
 }
-

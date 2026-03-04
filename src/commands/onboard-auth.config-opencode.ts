@@ -26,4 +26,3 @@ export function applyOpencodeZenConfig(cfg: IronCliwConfig): IronCliwConfig {
   const next = applyOpencodeZenProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, OPENCODE_ZEN_DEFAULT_MODEL_REF);
 }
-

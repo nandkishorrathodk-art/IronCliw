@@ -475,4 +475,3 @@ export async function monitorSignalProvider(opts: MonitorSignalOpts = {}): Promi
     daemonLifecycle.stop();
   }
 }
-

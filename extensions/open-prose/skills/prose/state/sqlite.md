@@ -572,4 +572,3 @@ SQLite state management:
 7. Is **experimental**—expect changes
 
 The core contract: the VM manages execution flow and spawns subagents; subagents write their own outputs directly to the database. Both maintain the principle that what happens is recorded, and what is recorded can be queried.
-

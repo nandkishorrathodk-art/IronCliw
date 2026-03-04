@@ -40,4 +40,3 @@ IronCliw qr --url wss://gateway.example/ws --token '<token>'
 - After scanning, approve device pairing with:
   - `IronCliw devices list`
   - `IronCliw devices approve <requestId>`
-

@@ -47,4 +47,3 @@ describe("makeProxyFetch", () => {
     expect(mocks.setGlobalDispatcher).not.toHaveBeenCalled();
   });
 });
-

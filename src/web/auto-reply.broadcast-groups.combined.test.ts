@@ -192,4 +192,3 @@ describe("broadcast groups", () => {
     resetLoadConfigMock();
   });
 });
-

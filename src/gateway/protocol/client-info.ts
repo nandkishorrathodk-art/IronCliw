@@ -84,4 +84,3 @@ export function hasGatewayClientCap(
   }
   return caps.includes(cap);
 }
-

@@ -14,4 +14,3 @@ declare module "osc-progress" {
 
   export function supportsOscProgress(env: NodeJS.ProcessEnv, isTty: boolean): boolean;
 }
-

@@ -91,4 +91,3 @@ writeFileSync(
   )}\n`,
   "utf8",
 );
-

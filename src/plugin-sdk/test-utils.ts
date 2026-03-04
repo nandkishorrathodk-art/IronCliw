@@ -6,4 +6,3 @@ export type { ChannelAccountSnapshot, ChannelGatewayContext } from "../channels/
 export type { IronCliwConfig } from "../config/config.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
 export type { RuntimeEnv } from "../runtime.js";
-

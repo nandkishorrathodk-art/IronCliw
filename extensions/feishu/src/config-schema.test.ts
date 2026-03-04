@@ -186,4 +186,3 @@ describe("FeishuConfigSchema defaultAccount", () => {
     }
   });
 });
-

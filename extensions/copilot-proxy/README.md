@@ -22,4 +22,3 @@ IronCliw models auth login --provider copilot-proxy --set-default
 
 - Copilot Proxy must be running in VS Code.
 - Base URL must include `/v1`.
-

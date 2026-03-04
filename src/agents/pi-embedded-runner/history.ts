@@ -113,4 +113,3 @@ export function getHistoryLimitFromSessionKey(
  * Alias for backward compatibility.
  */
 export const getDmHistoryLimitFromSessionKey = getHistoryLimitFromSessionKey;
-

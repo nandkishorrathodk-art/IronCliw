@@ -194,4 +194,3 @@ describe("memory manager mistral provider wiring", () => {
     expect(fallbackCall?.model).toBe(DEFAULT_OLLAMA_EMBEDDING_MODEL);
   });
 });
-

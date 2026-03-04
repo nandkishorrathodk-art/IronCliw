@@ -13,4 +13,3 @@ export {
 } from "./exec-safe-bin-policy-profiles.js";
 
 export { validateSafeBinArgv } from "./exec-safe-bin-policy-validator.js";
-

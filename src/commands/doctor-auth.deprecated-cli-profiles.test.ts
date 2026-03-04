@@ -101,4 +101,3 @@ describe("maybeRemoveDeprecatedCliAuthProfiles", () => {
     expect(next.auth?.order?.["openai-codex"]).toBeUndefined();
   });
 });
-

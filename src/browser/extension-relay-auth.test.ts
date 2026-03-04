@@ -129,4 +129,3 @@ describe("extension-relay-auth", () => {
     );
   });
 });
-

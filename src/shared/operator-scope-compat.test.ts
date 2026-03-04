@@ -87,4 +87,3 @@ describe("roleScopesAllow", () => {
     ).toBe(false);
   });
 });
-

@@ -75,4 +75,3 @@ describe("noteBootstrapFileSize", () => {
     expect(note).not.toHaveBeenCalled();
   });
 });
-

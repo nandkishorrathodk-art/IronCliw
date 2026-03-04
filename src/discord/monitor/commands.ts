@@ -7,4 +7,3 @@ export function resolveDiscordSlashCommandConfig(
     ephemeral: raw?.ephemeral !== false,
   };
 }
-

@@ -132,4 +132,3 @@ export async function modelsAuthOrderSetCommand(
   runtime.log(`Provider: ${provider}`);
   runtime.log(`Order override: ${describeOrder(updated, provider).join(", ")}`);
 }
-

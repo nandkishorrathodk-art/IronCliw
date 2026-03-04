@@ -13,4 +13,3 @@ vi.mock("./chrome.js", () => ({
   resolveIronCliwUserDataDir: vi.fn(() => chromeUserDataDir.dir),
   stopIronCliwChrome: vi.fn(async () => {}),
 }));
-

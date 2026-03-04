@@ -113,4 +113,3 @@ export function getRegisteredClientManagerCount(): number {
 export function _clearAllClientManagersForTest(): void {
   registry.clear();
 }
-

@@ -194,4 +194,3 @@ describe("wrapFetchWithAbortSignal", () => {
     expect(seenThis).toBe(fetchImpl);
   });
 });
-

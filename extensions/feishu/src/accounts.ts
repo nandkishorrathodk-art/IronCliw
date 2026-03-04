@@ -238,4 +238,3 @@ export function listEnabledFeishuAccounts(cfg: ClawdbotConfig): ResolvedFeishuAc
     .map((accountId) => resolveFeishuAccount({ cfg, accountId }))
     .filter((account) => account.enabled && account.configured);
 }
-

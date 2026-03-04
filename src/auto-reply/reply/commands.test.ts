@@ -1469,4 +1469,3 @@ describe("handleCommands /tts", () => {
     expect(result.reply?.text).toContain("TTS status");
   });
 });
-

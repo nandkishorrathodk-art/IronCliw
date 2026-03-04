@@ -255,4 +255,3 @@ await web_search({
 - 响应会被缓存（默认 15 分钟）以减少重复获取。
 - 如果你使用工具配置文件/允许列表，添加 `web_search`/`web_fetch` 或 `group:web`。
 - 如果缺少 Brave 密钥，`web_search` 返回一个简短的设置提示和文档链接。
-

@@ -717,4 +717,3 @@ export function resolveAgentRoute(input: ResolveAgentRouteInput): ResolvedAgentR
 
   return choose(resolveDefaultAgentId(input.cfg), "default");
 }
-

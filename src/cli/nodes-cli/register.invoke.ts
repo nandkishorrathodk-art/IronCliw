@@ -481,4 +481,3 @@ export function registerNodesInvokeCommands(nodes: Command) {
     { timeoutMs: 35_000 },
   );
 }
-

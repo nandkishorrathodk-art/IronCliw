@@ -241,4 +241,3 @@ describe("startHeartbeatRunner", () => {
     runner.stop();
   });
 });
-

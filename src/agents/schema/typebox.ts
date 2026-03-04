@@ -41,4 +41,3 @@ export function channelTargetsSchema(options?: { description?: string }) {
     channelTargetSchema({ description: options?.description ?? CHANNEL_TARGETS_DESCRIPTION }),
   );
 }
-

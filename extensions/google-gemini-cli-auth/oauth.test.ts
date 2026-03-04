@@ -421,4 +421,3 @@ describe("loginGeminiCliOAuth", () => {
     expect(requests.some((url) => url.includes("v1internal:onboardUser"))).toBe(false);
   });
 });
-

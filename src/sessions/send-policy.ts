@@ -121,4 +121,3 @@ export function resolveSendPolicy(params: {
   const fallback = normalizeSendPolicy(policy.default);
   return fallback ?? "allow";
 }
-

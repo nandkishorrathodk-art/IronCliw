@@ -382,4 +382,3 @@ describe("resolveAndPersistSessionFile", () => {
     expect(saved[sessionKey]?.sessionFile).toBe(fallbackSessionFile);
   });
 });
-

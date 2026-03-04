@@ -13,4 +13,3 @@ export function resolveChannelAccountConfigBasePath(params: {
     ? `channels.${params.channelKey}.accounts.${params.accountId}.`
     : `channels.${params.channelKey}.`;
 }
-

@@ -97,4 +97,3 @@ IronCliw nodes rename --node <id|name|ip> --name "Living Room iPad"
 - 传输层是**无状态的**；它不存储成员资格。
 - 如果 Gateway 网关离线或配对被禁用，节点无法配对。
 - 如果 Gateway 网关处于远程模式，配对仍然针对远程 Gateway 网关的存储进行。
-

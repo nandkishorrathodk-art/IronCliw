@@ -45,4 +45,3 @@ export function resolveSubagentSessionEndedOutcome(
   }
   return SUBAGENT_ENDED_OUTCOME_DELETED;
 }
-

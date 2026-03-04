@@ -15,4 +15,3 @@ export function resolveImageSanitizationLimits(cfg?: IronCliwConfig): ImageSanit
   }
   return { maxDimensionPx: Math.max(1, Math.floor(configured)) };
 }
-

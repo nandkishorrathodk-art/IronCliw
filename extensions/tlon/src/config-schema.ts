@@ -44,4 +44,3 @@ export const TlonConfigSchema = z.object({
 });
 
 export const tlonChannelConfigSchema = buildChannelConfigSchema(TlonConfigSchema);
-

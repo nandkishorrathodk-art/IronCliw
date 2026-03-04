@@ -535,4 +535,3 @@ describe("tilde expansion in file tools", () => {
     });
   });
 });
-

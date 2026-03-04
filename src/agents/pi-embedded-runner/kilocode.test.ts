@@ -19,4 +19,3 @@ describe("kilocode cache-ttl eligibility", () => {
     expect(isCacheTtlEligibleProvider("KILOCODE", "Anthropic/claude-opus-4.6")).toBe(true);
   });
 });
-

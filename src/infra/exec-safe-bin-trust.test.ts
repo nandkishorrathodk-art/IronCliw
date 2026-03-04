@@ -94,4 +94,3 @@ describe("exec safe bin trust", () => {
     }
   });
 });
-

@@ -53,4 +53,3 @@ describe("irc normalize", () => {
     ).toBe(true);
   });
 });
-

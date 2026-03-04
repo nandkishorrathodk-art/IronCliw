@@ -46,4 +46,3 @@ export const isSenderAllowed = (params: {
 };
 
 export { firstDefined };
-

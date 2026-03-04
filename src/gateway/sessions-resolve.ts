@@ -150,4 +150,3 @@ export async function resolveSessionKeyFromResolveParams(params: {
 
   return { ok: true, key: String(list.sessions[0]?.key ?? "") };
 }
-

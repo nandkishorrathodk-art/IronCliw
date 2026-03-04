@@ -73,4 +73,3 @@ describe("github-copilot token", () => {
     expect(saveJsonFile).toHaveBeenCalledTimes(1);
   });
 });
-

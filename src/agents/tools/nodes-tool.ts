@@ -695,4 +695,3 @@ export function createNodesTool(options?: {
     },
   };
 }
-

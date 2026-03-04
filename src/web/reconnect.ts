@@ -50,4 +50,3 @@ export { computeBackoff, sleepWithAbort };
 export function newConnectionId() {
   return randomUUID();
 }
-

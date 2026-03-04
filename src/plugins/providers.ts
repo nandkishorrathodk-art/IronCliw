@@ -17,4 +17,3 @@ export function resolvePluginProviders(params: {
 
   return registry.providers.map((entry) => entry.provider);
 }
-

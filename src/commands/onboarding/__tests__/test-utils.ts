@@ -22,4 +22,3 @@ export const makePrompter = (overrides: Partial<WizardPrompter> = {}): WizardPro
   progress: vi.fn(() => ({ update: vi.fn(), stop: vi.fn() })),
   ...overrides,
 });
-

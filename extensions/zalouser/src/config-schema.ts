@@ -27,4 +27,3 @@ export const ZalouserConfigSchema = zalouserAccountSchema.extend({
   accounts: z.object({}).catchall(zalouserAccountSchema).optional(),
   defaultAccount: z.string().optional(),
 });
-

@@ -142,4 +142,3 @@ describe("buildSlackSlashCommandMatcher", () => {
     expect(matcher.test("IronCliw-bot")).toBe(false);
   });
 });
-

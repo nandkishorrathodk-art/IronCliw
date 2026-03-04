@@ -297,4 +297,3 @@ describe("web monitor inbox", () => {
     });
   });
 });
-

@@ -206,4 +206,3 @@ export function resetTelegramFetchStateForTests(): void {
   appliedDnsResultOrder = null;
   appliedGlobalDispatcherAutoSelectFamily = null;
 }
-

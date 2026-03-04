@@ -62,4 +62,3 @@ describe("emitExecSystemEvent", () => {
     expect(requestHeartbeatNowMock).not.toHaveBeenCalled();
   });
 });
-

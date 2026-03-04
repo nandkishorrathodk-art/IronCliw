@@ -42,4 +42,3 @@ export function resolveIMessageConfigDefaultTo(params: {
 }): string | undefined {
   return resolveIMessageAccount(params).config.defaultTo?.trim() || undefined;
 }
-

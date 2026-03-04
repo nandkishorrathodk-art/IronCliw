@@ -25,4 +25,3 @@ export function createMockServerResponse(): ServerResponse & { body?: string } {
   };
   return res as unknown as ServerResponse & { body?: string };
 }
-

@@ -203,4 +203,3 @@ describe("resolveSandboxToolPolicyForAgent", () => {
     expect(resolved.deny).toEqual(["image"]);
   });
 });
-

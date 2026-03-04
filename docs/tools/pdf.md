@@ -154,4 +154,3 @@ Page-filtered fallback model:
   "prompt": "Extract only customer-impacting incidents"
 }
 ```
-

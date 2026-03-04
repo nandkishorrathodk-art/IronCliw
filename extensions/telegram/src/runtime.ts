@@ -12,4 +12,3 @@ export function getTelegramRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

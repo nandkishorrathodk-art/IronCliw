@@ -49,4 +49,3 @@ export type PairingList = {
   pending: PendingRequest[];
   paired: PairedNode[];
 };
-

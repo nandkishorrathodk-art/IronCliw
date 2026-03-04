@@ -16,4 +16,3 @@ export function hasProxyEnvConfigured(env: NodeJS.ProcessEnv = process.env): boo
   }
   return false;
 }
-

@@ -233,4 +233,3 @@ describe("Session Store Cache", () => {
     expect(loaded2["session:2"].displayName).toBe("Added");
   });
 });
-

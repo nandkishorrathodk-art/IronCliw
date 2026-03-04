@@ -55,4 +55,3 @@ export function extractDeliveryInfo(sessionKey: string | undefined): {
   }
   return { deliveryContext, threadId };
 }
-

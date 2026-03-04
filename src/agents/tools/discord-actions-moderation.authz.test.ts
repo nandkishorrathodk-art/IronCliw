@@ -155,4 +155,3 @@ describe("discord moderation sender authorization", () => {
     );
   });
 });
-

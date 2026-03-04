@@ -30,4 +30,3 @@ export function normalizeBrowserFormField(
   const value = normalizeBrowserFormFieldValue(record.value);
   return value === undefined ? { ref, type } : { ref, type, value };
 }
-

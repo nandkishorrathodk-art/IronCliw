@@ -825,4 +825,3 @@ export const __testing = {
   resolveDiscordRestFetch,
   resolveThreadBindingsEnabled,
 };
-

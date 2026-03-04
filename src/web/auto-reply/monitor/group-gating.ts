@@ -154,4 +154,3 @@ export function applyGroupGating(params: ApplyGroupGatingParams) {
 
   return { shouldProcess: true };
 }
-

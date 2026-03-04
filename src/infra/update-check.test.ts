@@ -73,4 +73,3 @@ describe("resolveNpmChannelTag", () => {
     expect(resolved).toEqual({ tag: "latest", version: "1.0.1" });
   });
 });
-

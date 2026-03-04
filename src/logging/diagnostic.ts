@@ -431,4 +431,3 @@ export function resetDiagnosticStateForTest(): void {
 }
 
 export { diag as diagnosticLogger };
-

@@ -153,4 +153,3 @@ describe("validateGatewayPasswordInput", () => {
     expect(validateGatewayPasswordInput(" secret ")).toBeUndefined();
   });
 });
-

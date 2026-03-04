@@ -345,4 +345,3 @@ function pruneOldRollingLogs(dir: string): void {
     // ignore missing dir or read errors
   }
 }
-

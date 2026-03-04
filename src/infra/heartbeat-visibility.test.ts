@@ -291,4 +291,3 @@ describe("resolveHeartbeatVisibility", () => {
     expect(result.showOk).toBe(true);
   });
 });
-

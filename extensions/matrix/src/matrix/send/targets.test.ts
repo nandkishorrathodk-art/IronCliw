@@ -96,4 +96,3 @@ describe("normalizeThreadId", () => {
     expect(normalizeThreadId("$thread")).toBe("$thread");
   });
 });
-

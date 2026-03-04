@@ -93,4 +93,3 @@ export async function ensureBrowserControlAuth(params: {
     generatedToken: ensured.generatedToken,
   };
 }
-

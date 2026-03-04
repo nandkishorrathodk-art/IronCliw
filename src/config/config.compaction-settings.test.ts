@@ -84,4 +84,3 @@ describe("config compaction settings", () => {
     );
   });
 });
-

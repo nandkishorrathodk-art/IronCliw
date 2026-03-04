@@ -502,4 +502,3 @@ function coerceStatType(typeRaw?: string): "file" | "directory" | "other" {
   }
   return "other";
 }
-

@@ -74,4 +74,3 @@ export async function downloadInboundMedia(
     return undefined;
   }
 }
-

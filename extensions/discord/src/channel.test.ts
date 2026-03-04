@@ -34,4 +34,3 @@ describe("discordPlugin outbound", () => {
     expect(result).toMatchObject({ channel: "discord", messageId: "m1" });
   });
 });
-

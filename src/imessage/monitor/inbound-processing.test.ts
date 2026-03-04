@@ -112,4 +112,3 @@ describe("resolveIMessageInboundDecision command auth", () => {
     expect(decision.commandAuthorized).toBe(true);
   });
 });
-

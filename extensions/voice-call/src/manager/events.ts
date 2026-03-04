@@ -256,4 +256,3 @@ export function processEvent(ctx: EventContext, event: NormalizedEvent): void {
 
   persistCallRecord(ctx.storePath, call);
 }
-

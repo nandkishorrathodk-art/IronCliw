@@ -5,4 +5,3 @@ export async function execSchtasks(
 ): Promise<{ stdout: string; stderr: string; code: number }> {
   return await execFileUtf8("schtasks", args, { windowsHide: true });
 }
-

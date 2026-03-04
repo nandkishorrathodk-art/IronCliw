@@ -40,4 +40,3 @@ describe("telegram custom commands schema", () => {
     ]);
   });
 });
-

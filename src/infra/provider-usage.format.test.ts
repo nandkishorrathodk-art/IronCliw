@@ -108,4 +108,3 @@ describe("provider-usage.format", () => {
     ]);
   });
 });
-

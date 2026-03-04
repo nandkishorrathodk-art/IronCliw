@@ -40,4 +40,3 @@ export function resolveGatewayStateDir(env: Record<string, string | undefined>):
   const suffix = resolveGatewayProfileSuffix(env.IronCliw_PROFILE);
   return path.join(home, `.IronCliw${suffix}`);
 }
-

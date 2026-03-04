@@ -54,4 +54,3 @@ describe("collectWhatsAppStatusIssues", () => {
     expect(issues).toEqual([]);
   });
 });
-

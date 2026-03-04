@@ -70,4 +70,3 @@ describe("resolveSlackMessageSubtypeHandler", () => {
     expect(resolveSlackMessageSubtypeHandler(event)).toBeUndefined();
   });
 });
-

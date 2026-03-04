@@ -46,4 +46,3 @@ export function stripMessageIdHints(text: string): string {
   const filtered = lines.filter((line) => !MESSAGE_ID_LINE.test(line));
   return filtered.length === lines.length ? text : filtered.join("\n");
 }
-

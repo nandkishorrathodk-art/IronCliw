@@ -412,4 +412,3 @@ export function registerDefaultAuthTokenSuite(): void {
     });
   });
 }
-

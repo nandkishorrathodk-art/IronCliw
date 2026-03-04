@@ -107,4 +107,3 @@ export async function setupOnboardingShellCompletion(params: {
   }
   // Case 4: Both profile and cache exist (using cached version) - all good, nothing to do
 }
-

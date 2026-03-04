@@ -539,4 +539,3 @@ describe("memory cli", () => {
     expect(close).toHaveBeenCalled();
   });
 });
-

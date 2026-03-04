@@ -264,4 +264,3 @@ export const browserHandlers: GatewayRequestHandlers = {
     respond(true, result.body);
   },
 };
-

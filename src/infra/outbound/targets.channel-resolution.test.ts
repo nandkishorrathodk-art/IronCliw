@@ -102,4 +102,3 @@ describe("resolveOutboundTarget channel resolution", () => {
     expect(mocks.loadIronCliwPlugins).toHaveBeenCalledTimes(2);
   });
 });
-

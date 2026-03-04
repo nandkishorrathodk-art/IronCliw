@@ -78,4 +78,3 @@ describe("process supervisor PTY command contract", () => {
     expect(createPtyAdapterMock).not.toHaveBeenCalled();
   });
 });
-

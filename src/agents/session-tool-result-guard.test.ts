@@ -508,4 +508,3 @@ describe("installSessionToolResultGuard", () => {
     expect(syntheticForError).toHaveLength(0);
   });
 });
-

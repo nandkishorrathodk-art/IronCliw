@@ -37,4 +37,3 @@ vi.mock("./embeddings.js", () => ({
     },
   }),
 }));
-

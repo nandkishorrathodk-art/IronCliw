@@ -778,4 +778,3 @@ export const registerTelegramNativeCommands = ({
     }).catch(() => {});
   }
 };
-

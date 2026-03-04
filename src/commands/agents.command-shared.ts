@@ -9,4 +9,3 @@ export function createQuietRuntime(runtime: RuntimeEnv): RuntimeEnv {
 export async function requireValidConfig(runtime: RuntimeEnv): Promise<IronCliwConfig | null> {
   return await requireValidConfigSnapshot(runtime);
 }
-

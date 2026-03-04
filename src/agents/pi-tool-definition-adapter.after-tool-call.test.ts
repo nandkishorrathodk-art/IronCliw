@@ -109,4 +109,3 @@ describe("pi tool definition adapter after_tool_call", () => {
     expect(hookMocks.consumeAdjustedParamsForToolCall).not.toHaveBeenCalled();
   });
 });
-

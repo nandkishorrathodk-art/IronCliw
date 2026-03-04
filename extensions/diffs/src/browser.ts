@@ -534,4 +534,3 @@ async function isExecutable(candidate: string): Promise<boolean> {
     return false;
   }
 }
-

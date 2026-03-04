@@ -30,4 +30,3 @@ describe("resolveSkillsPromptForRun", () => {
     expect(prompt).toContain("/app/skills/demo-skill/SKILL.md");
   });
 });
-

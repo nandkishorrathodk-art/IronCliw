@@ -129,4 +129,3 @@ describe("media server", () => {
     expect(await res.text()).toBe("invalid path");
   });
 });
-

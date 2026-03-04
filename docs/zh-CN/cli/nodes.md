@@ -78,4 +78,3 @@ IronCliw nodes run --agent main --node <id|name|ip> --raw "git status"
 - `--raw <command>`：运行 shell 字符串（`/bin/sh -lc` 或 `cmd.exe /c`）。
 - `--agent <id>`：智能体范围的审批/白名单（默认为已配置的智能体）。
 - `--ask <off|on-miss|always>`、`--security <deny|allowlist|full>`：覆盖选项。
-

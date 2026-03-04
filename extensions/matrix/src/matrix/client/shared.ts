@@ -208,4 +208,3 @@ export function stopSharedClientForAccount(auth: MatrixAuth, accountId?: string 
   const key = buildSharedClientKey(auth, normalizeAccountId(accountId));
   stopSharedClient(key);
 }
-

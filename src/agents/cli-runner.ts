@@ -508,4 +508,3 @@ export async function runClaudeCliAgent(params: {
     images: params.images,
   });
 }
-

@@ -61,4 +61,3 @@ export function isAuthorizedBrowserRequest(
 
   return false;
 }
-

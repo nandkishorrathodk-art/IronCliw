@@ -46,4 +46,3 @@ describe("resolveActiveRunQueueAction", () => {
     ).toBe("enqueue-followup");
   });
 });
-

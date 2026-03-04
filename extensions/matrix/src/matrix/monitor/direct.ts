@@ -115,4 +115,3 @@ export function createDirectRoomTracker(client: MatrixClient, opts: DirectRoomTr
     },
   };
 }
-

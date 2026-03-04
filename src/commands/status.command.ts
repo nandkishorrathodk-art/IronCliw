@@ -666,4 +666,3 @@ export async function statusCommand(
     runtime.log(`  Fix reachability first: ${formatCliCommand("IronCliw gateway probe")}`);
   }
 }
-

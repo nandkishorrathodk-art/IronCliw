@@ -14,4 +14,3 @@ export type BrowserActionPathResult = {
 };
 
 export type BrowserActionTargetOk = { ok: true; targetId: string };
-

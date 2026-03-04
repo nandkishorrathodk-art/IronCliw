@@ -46,4 +46,3 @@ export type AcpConfig = {
   stream?: AcpStreamConfig;
   runtime?: AcpRuntimeConfig;
 };
-

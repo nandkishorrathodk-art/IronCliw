@@ -73,4 +73,3 @@ describe("createTelephonyTtsProvider deepMerge hardening", () => {
     expect(openai.model).toBe("safe");
   });
 });
-

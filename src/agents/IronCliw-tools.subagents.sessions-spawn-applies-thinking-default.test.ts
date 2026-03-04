@@ -83,4 +83,3 @@ describe("sessions_spawn thinking defaults", () => {
     });
   });
 });
-

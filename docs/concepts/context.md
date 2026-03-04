@@ -161,4 +161,3 @@ Docs: [Session](/concepts/session), [Compaction](/concepts/compaction), [Session
 - `System prompt (estimate)` = computed on the fly when no run report exists (or when running via a CLI backend that doesn’t generate the report).
 
 Either way, it reports sizes and top contributors; it does **not** dump the full system prompt or tool schemas.
-

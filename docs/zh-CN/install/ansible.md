@@ -213,4 +213,3 @@ IronCliw channels login
 - [Docker](/install/docker) — 容器化 Gateway 网关设置
 - [沙箱隔离](/gateway/sandboxing) — 智能体沙箱配置
 - [多智能体沙箱与工具](/tools/multi-agent-sandbox-tools) — 每个智能体的隔离
-

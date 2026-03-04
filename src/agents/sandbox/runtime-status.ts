@@ -136,4 +136,3 @@ export function formatSandboxToolPolicyBlockedMessage(params: {
 
   return lines.join("\n");
 }
-

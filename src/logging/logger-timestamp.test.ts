@@ -42,4 +42,3 @@ describe("logger timestamp format", () => {
     expect(lastLine.time).not.toMatch(/Z$/);
   });
 });
-

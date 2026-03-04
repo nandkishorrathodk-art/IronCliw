@@ -30,4 +30,3 @@ export function resolveChannelConfigWrites(params: {
   const value = accountConfig?.configWrites ?? channelConfig.configWrites;
   return value !== false;
 }
-

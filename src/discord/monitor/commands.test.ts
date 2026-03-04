@@ -22,4 +22,3 @@ describe("resolveDiscordSlashCommandConfig", () => {
     expect(result.ephemeral).toBe(true);
   });
 });
-

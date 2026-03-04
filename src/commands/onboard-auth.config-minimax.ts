@@ -213,4 +213,3 @@ function applyMinimaxApiConfigWithBaseUrl(
   const next = applyMinimaxApiProviderConfigWithBaseUrl(cfg, params);
   return applyAgentDefaultModelPrimary(next, `${params.providerId}/${params.modelId}`);
 }
-

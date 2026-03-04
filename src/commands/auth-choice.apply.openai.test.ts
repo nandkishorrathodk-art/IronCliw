@@ -114,4 +114,3 @@ describe("applyAuthChoiceOpenAI", () => {
     expect(parsed.profiles?.["openai:default"]?.keyRef).toBeUndefined();
   });
 });
-

@@ -565,4 +565,3 @@ describe("agent request events", () => {
     });
   });
 });
-

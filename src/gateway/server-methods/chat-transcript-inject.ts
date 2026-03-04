@@ -73,4 +73,3 @@ export function appendInjectedAssistantMessageToTranscript(params: {
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
 }
-

@@ -339,4 +339,3 @@ export function wrapWebContent(
   // Marker sanitization happens in wrapExternalContent
   return wrapExternalContent(content, { source, includeWarning });
 }
-

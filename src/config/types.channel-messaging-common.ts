@@ -48,4 +48,3 @@ export type CommonChannelMessagingConfig = {
   /** Max outbound media size in MB. */
   mediaMaxMb?: number;
 };
-

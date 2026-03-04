@@ -58,4 +58,3 @@ export async function uploadImageFromUrl(imageUrl: string): Promise<string> {
     return imageUrl;
   }
 }
-

@@ -14,4 +14,3 @@ describe("readLineWebhookRequestBody", () => {
     await expect(readLineWebhookRequestBody(req, 128)).rejects.toThrow("PayloadTooLarge");
   });
 });
-

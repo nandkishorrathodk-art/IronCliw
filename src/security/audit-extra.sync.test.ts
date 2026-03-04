@@ -53,4 +53,3 @@ describe("safeEqualSecret", () => {
     expect(safeEqualSecret(null, "secret")).toBe(false);
   });
 });
-

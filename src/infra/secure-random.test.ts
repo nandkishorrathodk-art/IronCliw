@@ -18,4 +18,3 @@ describe("secure-random", () => {
     expect(token18).toMatch(/^[A-Za-z0-9_-]{24}$/);
   });
 });
-

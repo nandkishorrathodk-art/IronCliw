@@ -80,4 +80,3 @@ export function applyDefaultModel(cfg: IronCliwConfig, model: string): IronCliwC
     },
   };
 }
-

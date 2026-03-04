@@ -134,4 +134,3 @@ export async function fetchDiscord<T>(
     },
   );
 }
-

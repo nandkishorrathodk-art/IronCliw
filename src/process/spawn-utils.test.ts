@@ -78,4 +78,3 @@ describe("restart-recovery", () => {
     expect(onRestart).toHaveBeenCalledTimes(2);
   });
 });
-

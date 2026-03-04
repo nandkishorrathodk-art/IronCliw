@@ -92,4 +92,3 @@ export async function probeMSTeams(cfg?: MSTeamsConfig): Promise<ProbeMSTeamsRes
     };
   }
 }
-

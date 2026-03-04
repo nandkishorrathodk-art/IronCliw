@@ -13,4 +13,3 @@ export const LEGACY_CANVAS_HANDLER_NAMES = [] as const;
 export const MACOS_APP_SOURCES_DIR = "apps/macos/Sources/IronCliw" as const;
 
 export const LEGACY_MACOS_APP_SOURCES_DIRS = [] as const;
-

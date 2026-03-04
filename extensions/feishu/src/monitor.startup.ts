@@ -49,4 +49,3 @@ export async function fetchBotOpenIdForMonitor(
   }
   return undefined;
 }
-

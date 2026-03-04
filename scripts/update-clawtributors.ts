@@ -571,4 +571,3 @@ function pickDisplay(
   }
   return login;
 }
-

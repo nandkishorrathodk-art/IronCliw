@@ -143,4 +143,3 @@ describe("web_fetch SSRF protection", () => {
     });
   });
 });
-

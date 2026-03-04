@@ -313,4 +313,3 @@ describe("linePlugin groups.resolveRequireMention", () => {
     expect(requireMention).toBe(true);
   });
 });
-

@@ -52,4 +52,3 @@ export type AgentBinding = {
     roles?: string[];
   };
 };
-

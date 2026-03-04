@@ -65,4 +65,3 @@ export function formatGatewayAuthFailureMessage(params: {
   }
   return "unauthorized";
 }
-

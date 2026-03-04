@@ -65,4 +65,3 @@ describe("discord model picker preferences", () => {
     expect(recent).toEqual([]);
   });
 });
-

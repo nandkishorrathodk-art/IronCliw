@@ -202,4 +202,3 @@ export const skillsHandlers: GatewayRequestHandlers = {
     respond(true, { ok: true, skillKey: p.skillKey, config: current }, undefined);
   },
 };
-

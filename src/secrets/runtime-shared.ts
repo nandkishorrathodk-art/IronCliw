@@ -144,4 +144,3 @@ export function isChannelAccountEffectivelyEnabled(
 ): boolean {
   return isEnabledFlag(channel) && isEnabledFlag(account);
 }
-

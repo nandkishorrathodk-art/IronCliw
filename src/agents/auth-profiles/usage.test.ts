@@ -636,4 +636,3 @@ describe("markAuthProfileFailure — active windows do not extend on retry", () 
     });
   }
 });
-

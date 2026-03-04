@@ -420,4 +420,3 @@ describe("edge cases", () => {
     expect(result).toContain('title="C.sh"');
   });
 });
-

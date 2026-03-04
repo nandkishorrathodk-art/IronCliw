@@ -282,4 +282,3 @@ export function resolveGatewayPort(
   }
   return DEFAULT_GATEWAY_PORT;
 }
-

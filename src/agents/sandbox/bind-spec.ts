@@ -32,4 +32,3 @@ function getHostContainerSeparatorIndex(spec: string): number {
   }
   return -1;
 }
-

@@ -138,4 +138,3 @@ describe("profile CRUD endpoints", () => {
     expect(deleteInvalidBody.error).toContain("invalid profile name");
   });
 });
-

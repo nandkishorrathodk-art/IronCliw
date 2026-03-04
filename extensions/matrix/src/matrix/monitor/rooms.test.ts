@@ -37,4 +37,3 @@ describe("resolveMatrixRoomConfig", () => {
     expect(byName.config).toBeUndefined();
   });
 });
-

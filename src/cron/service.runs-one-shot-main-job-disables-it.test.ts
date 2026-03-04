@@ -827,4 +827,3 @@ describe("CronService", () => {
     await store.cleanup();
   });
 });
-

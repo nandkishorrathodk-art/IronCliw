@@ -88,4 +88,3 @@ describe("resolveEmbeddedRunSkillEntries (integration)", () => {
     expect(result.skillEntries.map((entry) => entry.skill.name)).not.toContain("diffs");
   });
 });
-

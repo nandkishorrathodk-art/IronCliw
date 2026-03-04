@@ -34,4 +34,3 @@ export function collectAuthStorePaths(config: IronCliwConfig, stateDir: string):
 
   return [...paths];
 }
-

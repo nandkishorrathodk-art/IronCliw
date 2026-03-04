@@ -38,4 +38,3 @@ export function takeDirectiveToken(
   }
   return { token, nextIndex: i };
 }
-

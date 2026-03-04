@@ -116,4 +116,3 @@ describe("cron isolated job HEARTBEAT_OK summary suppression (#32013)", () => {
     );
   });
 });
-

@@ -8,4 +8,3 @@ vi.mock("../tools/browser-tool.js", () => ({
 vi.mock("../tools/canvas-tool.js", () => ({
   createCanvasTool: () => stubTool("canvas"),
 }));
-

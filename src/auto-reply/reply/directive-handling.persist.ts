@@ -234,4 +234,3 @@ export function resolveDefaultModel(params: { cfg: IronCliwConfig; agentId?: str
   });
   return { defaultProvider, defaultModel, aliasIndex };
 }
-

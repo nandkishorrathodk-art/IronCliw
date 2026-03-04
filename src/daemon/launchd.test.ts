@@ -345,4 +345,3 @@ describe("resolveLaunchAgentPlistPath", () => {
     expect(resolveLaunchAgentPlistPath(env)).toBe(expected);
   });
 });
-

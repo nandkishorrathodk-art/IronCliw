@@ -132,4 +132,3 @@ When set, `IronCliw_HOME` replaces the system home directory (`$HOME` / `os.home
 - [Gateway configuration](/gateway/configuration)
 - [FAQ: env vars and .env loading](/help/faq#env-vars-and-env-loading)
 - [Models overview](/concepts/models)
-

@@ -21,4 +21,3 @@ export function saveJsonFile(pathname: string, data: unknown) {
   fs.writeFileSync(pathname, `${JSON.stringify(data, null, 2)}\n`, "utf8");
   fs.chmodSync(pathname, 0o600);
 }
-

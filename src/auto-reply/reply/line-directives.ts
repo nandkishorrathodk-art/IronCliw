@@ -340,4 +340,3 @@ export function hasLineDirectives(text: string): boolean {
     text,
   );
 }
-

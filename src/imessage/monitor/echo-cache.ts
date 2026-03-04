@@ -83,4 +83,3 @@ class DefaultSentMessageCache implements SentMessageCache {
 export function createSentMessageCache(): SentMessageCache {
   return new DefaultSentMessageCache();
 }
-

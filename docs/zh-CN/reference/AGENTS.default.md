@@ -129,4 +129,3 @@ git commit -m "Add Clawd workspace"
 - 对于浏览器驱动的验证，使用带有 IronCliw 管理的 Chrome 配置文件的 `IronCliw browser`（tabs/status/screenshot）。
 - 对于 DOM 检查，使用 `IronCliw browser eval|query|dom|snapshot`（需要机器输出时使用 `--json`/`--out`）。
 - 对于交互，使用 `IronCliw browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run`（click/type 需要 snapshot 引用；CSS 选择器使用 `evaluate`）。
-

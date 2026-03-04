@@ -137,4 +137,3 @@ describe("resolveTelegramReactionLevel", () => {
     expectMinimalFlags(result);
   });
 });
-

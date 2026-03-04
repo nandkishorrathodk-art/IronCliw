@@ -180,4 +180,3 @@ export const FeishuDocSchema = Type.Union([
 ]);
 
 export type FeishuDocParams = Static<typeof FeishuDocSchema>;
-

@@ -27,4 +27,3 @@ export async function resolveDefaultChannelAccountContext(
     : true;
   return { accountIds, defaultAccountId, account, enabled, configured };
 }
-

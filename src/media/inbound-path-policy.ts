@@ -148,4 +148,3 @@ export function resolveIMessageRemoteAttachmentRoots(params: {
     DEFAULT_IMESSAGE_ATTACHMENT_ROOTS,
   );
 }
-

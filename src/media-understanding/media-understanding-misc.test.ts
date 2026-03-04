@@ -118,4 +118,3 @@ describe("media understanding attachments SSRF", () => {
     });
   });
 });
-

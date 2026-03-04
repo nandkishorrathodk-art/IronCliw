@@ -77,4 +77,3 @@ export function applyPathPrepend(
     env[pathKey] = merged;
   }
 }
-

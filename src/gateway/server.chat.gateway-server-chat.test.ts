@@ -848,4 +848,3 @@ describe("gateway server chat", () => {
     }
   });
 });
-

@@ -46,4 +46,3 @@ export async function stopKnownBrowserProfiles(params: {
     params.onWarn(`IronCliw browser stop failed: ${String(err)}`);
   }
 }
-

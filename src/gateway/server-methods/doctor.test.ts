@@ -110,4 +110,3 @@ describe("doctor.memory.status", () => {
     expect(close).toHaveBeenCalled();
   });
 });
-

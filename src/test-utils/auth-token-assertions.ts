@@ -11,4 +11,3 @@ export function expectGeneratedTokenPersistedToGatewayAuth(params: {
   expect(params.persistedConfig?.gateway?.auth?.mode).toBe("token");
   expect(params.persistedConfig?.gateway?.auth?.token).toBe(params.generatedToken);
 }
-

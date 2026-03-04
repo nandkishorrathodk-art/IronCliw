@@ -264,4 +264,3 @@ export function resolveProviderScopedAuthProfile(params: {
     authProfileIdSource: authProfileId ? params.authProfileIdSource : undefined,
   };
 }
-

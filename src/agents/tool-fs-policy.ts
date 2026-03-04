@@ -29,4 +29,3 @@ export function resolveEffectiveToolFsWorkspaceOnly(params: {
 }): boolean {
   return resolveToolFsConfig(params).workspaceOnly === true;
 }
-

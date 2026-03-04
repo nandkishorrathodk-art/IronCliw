@@ -271,4 +271,3 @@ export async function monitorTwitchProvider(
 
   return { stop };
 }
-

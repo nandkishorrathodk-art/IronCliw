@@ -205,4 +205,3 @@ describe("createDefaultMenuConfig", () => {
     expect(commands).toContain("/settings");
   });
 });
-

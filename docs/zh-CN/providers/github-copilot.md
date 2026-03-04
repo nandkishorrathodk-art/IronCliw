@@ -65,4 +65,3 @@ IronCliw models set github-copilot/gpt-4o
 - 需要交互式 TTY；请直接在终端中运行。
 - Copilot 模型的可用性取决于你的订阅计划；如果某个模型被拒绝，请尝试其他 ID（例如 `github-copilot/gpt-4.1`）。
 - 登录会将 GitHub 令牌存储在认证配置文件中，并在 IronCliw 运行时将其兑换为 Copilot API 令牌。
-

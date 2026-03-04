@@ -420,4 +420,3 @@ describe("gmail watcher", () => {
     expect(isAddressInUseError("some other error")).toBe(false);
   });
 });
-

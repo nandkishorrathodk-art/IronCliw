@@ -71,4 +71,3 @@ describe("resolveSlackEffectiveAllowFrom", () => {
     expect(readChannelAllowFromStoreMock).toHaveBeenCalledTimes(2);
   });
 });
-

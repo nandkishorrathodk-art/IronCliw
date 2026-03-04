@@ -64,4 +64,3 @@ describe("security/dm-policy-shared channel smoke", () => {
     }
   }
 });
-

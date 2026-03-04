@@ -658,4 +658,3 @@ async function sendNodeEvent(client: GatewayClient, event: string, payload: unkn
     // ignore: node events are best-effort
   }
 }
-

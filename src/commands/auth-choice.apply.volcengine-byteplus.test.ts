@@ -139,4 +139,3 @@ describe("volcengine/byteplus auth choice", () => {
     expect(parsed.profiles?.["volcengine:default"]?.keyRef).toBeUndefined();
   });
 });
-

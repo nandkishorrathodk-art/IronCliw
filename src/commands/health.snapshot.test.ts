@@ -251,4 +251,3 @@ describe("getHealthSnapshot", () => {
     expect(ops?.heartbeat.every).toBe("1h");
   });
 });
-

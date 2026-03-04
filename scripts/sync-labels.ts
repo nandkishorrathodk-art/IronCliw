@@ -98,4 +98,3 @@ function fetchExistingLabels(repo: string): Map<string, RepoLabel> {
   const labels = JSON.parse(raw) as RepoLabel[];
   return new Map(labels.map((label) => [label.name, label]));
 }
-

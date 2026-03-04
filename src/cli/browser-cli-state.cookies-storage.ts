@@ -227,4 +227,3 @@ export function registerBrowserCookiesAndStorageCommands(
   registerStorageKind("local");
   registerStorageKind("session");
 }
-

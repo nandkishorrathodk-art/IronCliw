@@ -961,4 +961,3 @@ export async function runTui(opts: TuiOptions) {
     process.once("exit", finish);
   });
 }
-

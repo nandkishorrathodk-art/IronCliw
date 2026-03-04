@@ -427,4 +427,3 @@ export async function reconcileAcpThreadBindingsOnStartup(params: {
     staleSessionKeys: [...new Set(staleSessionKeys)],
   };
 }
-

@@ -86,4 +86,3 @@ IronCliw directory peers list --channel zalouser --query "name"
 工具名称：`zalouser`
 
 操作：`send`、`image`、`link`、`friends`、`groups`、`me`、`status`
-

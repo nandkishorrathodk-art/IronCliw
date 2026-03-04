@@ -25,4 +25,3 @@ export function registerCronCli(program: Command) {
   registerCronSimpleCommands(cron);
   registerCronEditCommand(cron);
 }
-

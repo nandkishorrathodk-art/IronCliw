@@ -60,4 +60,3 @@ describe("buildImportUrl", () => {
     expect(url).toMatch(/\?t=\d+/);
   });
 });
-

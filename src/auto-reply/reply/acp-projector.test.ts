@@ -736,4 +736,3 @@ describe("createAcpReplyProjector", () => {
     expect(combinedBlockText(deliveries)).toBe("AB");
   });
 });
-

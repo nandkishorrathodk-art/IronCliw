@@ -290,4 +290,3 @@ describe("gateway-status command", () => {
     expect(call.identity).toBe("/tmp/explicit_id");
   });
 });
-

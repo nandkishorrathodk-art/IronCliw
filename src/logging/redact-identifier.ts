@@ -12,4 +12,3 @@ export function redactIdentifier(value: string | undefined, opts?: { len?: numbe
   }
   return `sha256:${sha256HexPrefix(trimmed, opts?.len ?? 12)}`;
 }
-

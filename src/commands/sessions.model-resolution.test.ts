@@ -61,4 +61,3 @@ describe("sessionsCommand model resolution", () => {
     expect(model).toBe("gpt-5.3-codex");
   });
 });
-

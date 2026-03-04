@@ -63,4 +63,3 @@ describe("telegram audit", () => {
     expect(res.groups[0]?.status).toBe("left");
   });
 });
-

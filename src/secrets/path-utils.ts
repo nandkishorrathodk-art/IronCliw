@@ -202,4 +202,3 @@ export function deletePathStrict(root: IronCliwConfig, segments: string[]): bool
   delete cursor[leaf];
   return true;
 }
-

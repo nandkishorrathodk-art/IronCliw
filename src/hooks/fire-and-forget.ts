@@ -9,4 +9,3 @@ export function fireAndForgetHook(
     logger(`${label}: ${String(err)}`);
   });
 }
-

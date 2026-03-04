@@ -372,4 +372,3 @@ export function collectCoreConfigAssignments(params: {
   collectToolsWebSearchAssignments(params);
   collectCronAssignments(params);
 }
-

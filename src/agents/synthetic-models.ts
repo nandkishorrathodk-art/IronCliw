@@ -194,4 +194,3 @@ export function buildSyntheticModelDefinition(entry: SyntheticCatalogEntry): Mod
     maxTokens: entry.maxTokens,
   };
 }
-

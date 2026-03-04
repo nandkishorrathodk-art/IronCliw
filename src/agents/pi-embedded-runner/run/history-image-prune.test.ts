@@ -64,4 +64,3 @@ describe("pruneProcessedHistoryImages", () => {
     expect(firstUser?.content).toBe("noop");
   });
 });
-

@@ -497,4 +497,3 @@ export async function lookupDirectoryDisplay(params: {
   const entry = findMatch(groups) ?? findMatch(users);
   return entry?.name ?? entry?.handle ?? undefined;
 }
-

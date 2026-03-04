@@ -77,4 +77,3 @@ describe("gateway tailscale bind validation", () => {
     }
   });
 });
-

@@ -177,4 +177,3 @@ describe("gateway auth browser hardening", () => {
     });
   });
 });
-

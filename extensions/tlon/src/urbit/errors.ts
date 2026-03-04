@@ -49,4 +49,3 @@ export class UrbitAuthError extends UrbitError {
     this.name = "UrbitAuthError";
   }
 }
-

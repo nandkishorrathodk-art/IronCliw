@@ -33,4 +33,3 @@ export function resolveTelegramVoiceSend(opts: {
   }
   return { useVoice: decision.useVoice };
 }
-

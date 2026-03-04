@@ -228,4 +228,3 @@ describe("infra store", () => {
     });
   });
 });
-

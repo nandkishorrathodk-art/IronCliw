@@ -146,4 +146,3 @@ export function formatSessionFlagsCell(
   const label = flags.join(" ");
   return label.length === 0 ? "" : rich ? theme.muted(label) : label;
 }
-

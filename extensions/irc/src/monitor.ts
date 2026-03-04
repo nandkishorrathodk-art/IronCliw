@@ -144,4 +144,3 @@ export async function monitorIrcProvider(opts: IrcMonitorOptions): Promise<{ sto
     },
   };
 }
-

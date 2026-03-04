@@ -234,4 +234,3 @@ export function toClientToolDefinitions(
     } satisfies ToolDefinition;
   });
 }
-

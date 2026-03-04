@@ -58,4 +58,3 @@ describe("runCapability image skip", () => {
     }
   });
 });
-

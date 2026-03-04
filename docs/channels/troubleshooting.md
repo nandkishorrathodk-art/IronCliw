@@ -115,4 +115,3 @@ Full troubleshooting: [/channels/signal#troubleshooting](/channels/signal#troubl
 | Encrypted rooms fail                | Verify crypto module and encryption settings | Enable encryption support and rejoin/sync room. |
 
 Full troubleshooting: [/channels/matrix#troubleshooting](/channels/matrix#troubleshooting)
-

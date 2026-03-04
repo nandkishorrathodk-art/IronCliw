@@ -81,4 +81,3 @@ for (const [index, item] of top.entries()) {
   const tests = String(item.testCount).padStart(4, " ");
   console.log(`${label}. ${duration} | tests=${tests} | ${item.file}`);
 }
-

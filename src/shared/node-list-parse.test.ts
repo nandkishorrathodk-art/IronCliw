@@ -22,4 +22,3 @@ describe("shared/node-list-parse", () => {
     expect(parsePairingList(undefined)).toEqual({ pending: [], paired: [] });
   });
 });
-

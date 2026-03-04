@@ -49,4 +49,3 @@ describe("media-understanding formatDecisionSummary guards", () => {
     expect(run()).toBe("audio: failed (0/1)");
   });
 });
-

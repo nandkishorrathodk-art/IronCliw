@@ -522,4 +522,3 @@ export async function sendMSTeamsMessages(params: {
 
   return await sendProactively(messages, 0);
 }
-

@@ -45,4 +45,3 @@ describe("resolveEffectiveAgentDir via findDuplicateAgentDirs", () => {
     expect(dupes).toHaveLength(0);
   });
 });
-

@@ -41,4 +41,3 @@ export function buildCopilotModelDefinition(modelId: string): ModelDefinitionCon
     maxTokens: DEFAULT_MAX_TOKENS,
   };
 }
-

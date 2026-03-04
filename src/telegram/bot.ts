@@ -385,4 +385,3 @@ export function createTelegramBot(opts: TelegramBotOptions) {
 export function createTelegramWebhookCallback(bot: Bot, path = "/telegram-webhook") {
   return { path, handler: webhookCallback(bot, "http") };
 }
-

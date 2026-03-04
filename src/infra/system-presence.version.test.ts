@@ -56,4 +56,3 @@ describe("system-presence version fallback", () => {
     );
   });
 });
-

@@ -163,4 +163,3 @@ export async function startCronForStore(params: {
   await cron.start();
   return cron;
 }
-

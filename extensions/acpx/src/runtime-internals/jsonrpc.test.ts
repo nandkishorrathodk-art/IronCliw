@@ -65,4 +65,3 @@ describe("jsonrpc helpers", () => {
     ).toBe(false);
   });
 });
-

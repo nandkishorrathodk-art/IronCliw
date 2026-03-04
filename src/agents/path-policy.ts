@@ -114,4 +114,3 @@ export function toRelativeSandboxPath(
 export function resolvePathFromInput(filePath: string, cwd: string): string {
   return path.normalize(resolveSandboxInputPath(filePath, cwd));
 }
-

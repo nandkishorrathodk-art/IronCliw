@@ -65,4 +65,3 @@ export type HookSnapshot = {
   resolvedHooks?: Hook[];
   version?: number;
 };
-

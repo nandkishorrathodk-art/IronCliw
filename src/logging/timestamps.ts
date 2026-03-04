@@ -34,4 +34,3 @@ export function formatLocalIsoWithOffset(now: Date, timeZone?: string): string {
 
   return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}.${parts.fractionalSecond}${offset}`;
 }
-

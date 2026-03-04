@@ -1193,4 +1193,3 @@ Found a vulnerability in IronCliw? Please report responsibly:
 1. Email: [security@IronCliw.ai](mailto:security@IronCliw.ai)
 2. Don't post publicly until fixed
 3. We'll credit you (unless you prefer anonymity)
-

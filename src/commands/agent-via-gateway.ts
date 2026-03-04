@@ -194,4 +194,3 @@ export async function agentCliCommand(opts: AgentCliOpts, runtime: RuntimeEnv, d
     return await agentCommand(localOpts, runtime, deps);
   }
 }
-

@@ -25,4 +25,3 @@ export async function rejectPendingPairingRequest<
     [params.idKey]: params.getId(pending),
   } as { requestId: string } & Record<TIdKey, string>;
 }
-

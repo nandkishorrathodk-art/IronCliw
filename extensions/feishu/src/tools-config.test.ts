@@ -19,4 +19,3 @@ describe("feishu tools config", () => {
     expect(parsed.tools?.chat).toBe(false);
   });
 });
-

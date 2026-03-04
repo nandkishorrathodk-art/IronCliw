@@ -37,4 +37,3 @@ export const DANGEROUS_ACP_TOOL_NAMES = [
 ] as const;
 
 export const DANGEROUS_ACP_TOOLS = new Set<string>(DANGEROUS_ACP_TOOL_NAMES);
-

@@ -34,4 +34,3 @@ vi.mock("../config/config.js", async (importOriginal) => {
     resolveGatewayPort: () => 18789,
   };
 });
-

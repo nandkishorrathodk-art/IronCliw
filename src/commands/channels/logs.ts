@@ -111,4 +111,3 @@ export async function channelsLogsCommand(
     runtime.log(`${ts}${level}${line.message}`.trim());
   }
 }
-

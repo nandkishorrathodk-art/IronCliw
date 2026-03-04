@@ -137,4 +137,3 @@ describe("channelsCapabilitiesCommand", () => {
     expect(output).toContain("Files.Read.All (files (OneDrive))");
   });
 });
-

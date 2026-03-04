@@ -72,4 +72,3 @@ export const NextcloudTalkConfigSchema = NextcloudTalkAccountSchemaBase.extend({
       'channels.nextcloud-talk.dmPolicy="open" requires channels.nextcloud-talk.allowFrom to include "*"',
   });
 });
-

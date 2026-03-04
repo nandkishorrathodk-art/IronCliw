@@ -80,4 +80,3 @@ export function registerNodesScreenCommands(nodes: Command) {
     { timeoutMs: 180_000 },
   );
 }
-

@@ -392,4 +392,3 @@ export function formatTerminalLink(
 
 // Configuration root; can be overridden via IronCliw_STATE_DIR.
 export const CONFIG_DIR = resolveConfigDir();
-

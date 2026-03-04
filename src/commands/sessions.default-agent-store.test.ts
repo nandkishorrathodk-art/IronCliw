@@ -154,4 +154,3 @@ describe("sessionsCommand default store agent selection", () => {
     expect(logs[2]).toContain("Agent");
   });
 });
-

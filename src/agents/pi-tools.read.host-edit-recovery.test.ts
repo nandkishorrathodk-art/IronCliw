@@ -87,4 +87,3 @@ describe("createHostWorkspaceEditTool post-write recovery", () => {
     ).rejects.toThrow("Simulated post-write failure");
   });
 });
-

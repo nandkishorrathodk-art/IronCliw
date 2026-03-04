@@ -35,4 +35,3 @@ describe("gateway chat.inject transcript writes", () => {
     }
   });
 });
-

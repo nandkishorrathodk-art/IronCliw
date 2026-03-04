@@ -75,4 +75,3 @@ describe("formatConsoleTimestamp", () => {
     expect([beforeDate, afterDate]).toContain(datePart);
   });
 });
-

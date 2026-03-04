@@ -370,4 +370,3 @@ IronCliw agents list --bindings
 对于群组定向，使用 `agents.list[].groupChat.mentionPatterns` 使 @提及清晰地映射到目标智能体。
 
 参见 [多智能体沙箱和工具](/tools/multi-agent-sandbox-tools) 了解详细示例。
-

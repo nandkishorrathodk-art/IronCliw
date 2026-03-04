@@ -210,4 +210,3 @@ export const LEGACY_CONFIG_RULES: LegacyConfigRule[] = [
       "top-level heartbeat is not a valid config path; use agents.defaults.heartbeat (cadence/target/model settings) or channels.defaults.heartbeat (showOk/showAlerts/useIndicator).",
   },
 ];
-

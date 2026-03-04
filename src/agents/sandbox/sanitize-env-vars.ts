@@ -108,4 +108,3 @@ export function getBlockedPatterns(): string[] {
 export function getAllowedPatterns(): string[] {
   return ALLOWED_ENV_VAR_PATTERNS.map((pattern) => pattern.source);
 }
-

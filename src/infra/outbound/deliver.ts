@@ -779,4 +779,3 @@ async function deliverOutboundPayloadsCore(
 
   return results;
 }
-

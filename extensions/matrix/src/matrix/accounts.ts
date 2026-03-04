@@ -148,4 +148,3 @@ export function listEnabledMatrixAccounts(cfg: CoreConfig): ResolvedMatrixAccoun
     .map((accountId) => resolveMatrixAccount({ cfg, accountId }))
     .filter((account) => account.enabled);
 }
-

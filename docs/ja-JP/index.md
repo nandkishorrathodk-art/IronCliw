@@ -184,4 +184,3 @@ Gatewayの起動後、ブラウザでControl UIを開きます。
     プロジェクトの起源、貢献者、ライセンス。
   </Card>
 </Columns>
-

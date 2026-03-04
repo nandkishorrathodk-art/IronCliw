@@ -221,4 +221,3 @@ describe("applyAuthChoiceMiniMax", () => {
     expect(parsed.profiles?.["minimax:default"]?.key).toBe("mm-lightning-token");
   });
 });
-

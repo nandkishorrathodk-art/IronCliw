@@ -355,4 +355,3 @@ describe("processEvent (functional)", () => {
     expect(Array.from(ctx.processedEventIds)).toEqual(["stable-key-1"]);
   });
 });
-

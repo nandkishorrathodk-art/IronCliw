@@ -496,4 +496,3 @@ If execution is interrupted, resume by:
 
 The `state.md` file contains everything needed to understand where execution stopped and what has been accomplished.
 ```
-

@@ -34,4 +34,3 @@ export async function buildChannelAccountSnapshot<ResolvedAccount>(params: {
     configured,
   };
 }
-

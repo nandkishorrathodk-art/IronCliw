@@ -15,4 +15,3 @@ export async function writeWorkspaceFile(params: {
   await fs.writeFile(filePath, params.content, "utf-8");
   return filePath;
 }
-

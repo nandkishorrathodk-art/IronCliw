@@ -49,4 +49,3 @@ Use this format when adding entries:
   npm: `@icesword760/IronCliw-wechat`
   repo: `https://github.com/icesword0760/IronCliw-wechat`
   install: `IronCliw plugins install @icesword760/IronCliw-wechat`
-

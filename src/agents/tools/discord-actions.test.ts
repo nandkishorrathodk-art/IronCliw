@@ -698,4 +698,3 @@ describe("handleDiscordAction per-account gating", () => {
     );
   });
 });
-

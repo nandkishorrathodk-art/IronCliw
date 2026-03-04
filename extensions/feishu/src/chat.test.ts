@@ -87,4 +87,3 @@ describe("registerFeishuChatTools", () => {
     expect(registerTool).not.toHaveBeenCalled();
   });
 });
-

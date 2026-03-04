@@ -101,4 +101,3 @@ describe("target registry pattern helpers", () => {
     ]);
   });
 });
-

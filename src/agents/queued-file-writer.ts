@@ -32,4 +32,3 @@ export function getQueuedFileWriter(
   writers.set(filePath, writer);
   return writer;
 }
-

@@ -104,4 +104,3 @@ If apply fails with an invalid target path message, regenerate the plan with `Ir
 - [CLI `secrets`](/cli/secrets)
 - [SecretRef Credential Surface](/reference/secretref-credential-surface)
 - [Configuration Reference](/gateway/configuration-reference)
-

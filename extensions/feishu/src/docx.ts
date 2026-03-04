@@ -1458,4 +1458,3 @@ export function registerFeishuDocTools(api: IronCliwPluginApi) {
     api.logger.info?.(`feishu_doc: Registered ${registered.join(", ")}`);
   }
 }
-

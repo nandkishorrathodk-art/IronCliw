@@ -46,4 +46,3 @@ describe("promptYesNo", () => {
     expect(resultYes).toBe(true);
   });
 });
-

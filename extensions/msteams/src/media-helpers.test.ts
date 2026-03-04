@@ -200,4 +200,3 @@ describe("msteams media-helpers", () => {
     });
   });
 });
-

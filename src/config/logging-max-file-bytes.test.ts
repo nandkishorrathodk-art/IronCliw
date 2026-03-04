@@ -23,4 +23,3 @@ describe("logging.maxFileBytes config", () => {
     }
   });
 });
-

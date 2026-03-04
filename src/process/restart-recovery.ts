@@ -14,4 +14,3 @@ export function createRestartIterationHook(onRestart: () => void): () => boolean
     return true;
   };
 }
-

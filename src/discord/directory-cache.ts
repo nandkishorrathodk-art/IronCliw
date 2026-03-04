@@ -109,4 +109,3 @@ export function resolveDiscordDirectoryUserId(params: {
 export function __resetDiscordDirectoryCacheForTest(): void {
   DIRECTORY_HANDLE_CACHE.clear();
 }
-

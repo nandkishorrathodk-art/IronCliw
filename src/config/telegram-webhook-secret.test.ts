@@ -94,4 +94,3 @@ describe("Telegram webhook config", () => {
     }
   });
 });
-

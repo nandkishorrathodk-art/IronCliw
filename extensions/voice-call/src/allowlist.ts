@@ -17,4 +17,3 @@ export function isAllowlistedCaller(
     return normalizedAllow !== "" && normalizedAllow === normalizedFrom;
   });
 }
-

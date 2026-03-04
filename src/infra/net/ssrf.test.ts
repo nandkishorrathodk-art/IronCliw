@@ -141,4 +141,3 @@ describe("isBlockedHostnameOrIp", () => {
     expect(isBlockedHostnameOrIp("2130706433")).toBe(true);
   });
 });
-

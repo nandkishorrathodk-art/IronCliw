@@ -468,4 +468,3 @@ export async function installSkill(params: SkillInstallRequest): Promise<SkillIn
 
   return withWarnings(await executeInstallCommand({ argv, timeoutMs, env }), warnings);
 }
-

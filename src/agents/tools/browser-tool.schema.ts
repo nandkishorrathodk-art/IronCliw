@@ -136,4 +136,3 @@ export const BrowserToolSchema = Type.Object({
   fn: Type.Optional(Type.String()),
   request: Type.Optional(BrowserActSchema),
 });
-

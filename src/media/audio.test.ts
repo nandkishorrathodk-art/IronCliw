@@ -39,4 +39,3 @@ describe("isVoiceCompatibleAudio", () => {
     expect(isVoiceCompatibleAudio({ contentType: "audio/mpeg", fileName: "file.wav" })).toBe(true);
   });
 });
-

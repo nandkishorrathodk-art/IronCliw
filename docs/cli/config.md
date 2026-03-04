@@ -66,4 +66,3 @@ gateway.
 IronCliw config validate
 IronCliw config validate --json
 ```
-

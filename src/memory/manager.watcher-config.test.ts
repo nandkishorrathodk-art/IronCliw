@@ -107,4 +107,3 @@ describe("memory watcher config", () => {
     expect(ignored?.(path.join(workspaceDir, "memory", "project", "notes.md"))).toBe(false);
   });
 });
-

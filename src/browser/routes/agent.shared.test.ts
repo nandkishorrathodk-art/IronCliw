@@ -37,4 +37,3 @@ describe("browser route shared helpers", () => {
     });
   });
 });
-

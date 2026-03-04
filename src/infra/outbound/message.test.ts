@@ -96,4 +96,3 @@ describe("sendMessage", () => {
     expect(mocks.loadIronCliwPlugins).toHaveBeenCalledTimes(1);
   });
 });
-

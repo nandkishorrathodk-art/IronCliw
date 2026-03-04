@@ -259,4 +259,3 @@ export function loadPluginManifestRegistry(params: {
   }
   return registry;
 }
-

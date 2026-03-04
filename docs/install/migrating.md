@@ -190,4 +190,3 @@ On the new machine, confirm:
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
 - [Where does IronCliw store its data?](/help/faq#where-does-IronCliw-store-its-data)
-

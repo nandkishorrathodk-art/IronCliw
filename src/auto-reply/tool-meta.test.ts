@@ -59,4 +59,3 @@ describe("tool meta formatting", () => {
     expect(formatToolPrefix("x", `${home}/a.txt`)).toBe("🧩 X: ~/a.txt");
   });
 });
-

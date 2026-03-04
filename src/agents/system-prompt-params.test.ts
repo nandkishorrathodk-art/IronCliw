@@ -102,4 +102,3 @@ describe("buildSystemPromptParams repo root", () => {
     expect(runtimeInfo.repoRoot).toBeUndefined();
   });
 });
-

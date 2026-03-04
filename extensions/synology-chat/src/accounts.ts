@@ -85,4 +85,3 @@ export function resolveAccount(cfg: any, accountId?: string | null): ResolvedSyn
     allowInsecureSsl: accountOverride.allowInsecureSsl ?? channelCfg.allowInsecureSsl ?? false,
   };
 }
-

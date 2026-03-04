@@ -27,4 +27,3 @@ describe("device-auth payload vectors", () => {
     expect(normalizeDeviceMetadataForAuth(undefined)).toBe("");
   });
 });
-

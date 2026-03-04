@@ -547,4 +547,3 @@ export function resolveHeartbeatSenderContext(params: {
 
   return { sender, provider, allowFrom };
 }
-

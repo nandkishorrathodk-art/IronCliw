@@ -139,4 +139,3 @@ describe("issue #13992 regression - cron jobs skip execution", () => {
     expect(malformedJob.state.lastError).toMatch(/^schedule error:/);
   });
 });
-

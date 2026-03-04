@@ -196,4 +196,3 @@ describe("/session idle and /session max-age", () => {
     expect(result?.reply?.text).toContain("Only owner-1 can update session lifecycle settings");
   });
 });
-

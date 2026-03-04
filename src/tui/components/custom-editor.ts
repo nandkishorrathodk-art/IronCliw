@@ -58,4 +58,3 @@ export class CustomEditor extends Editor {
     super.handleInput(data);
   }
 }
-

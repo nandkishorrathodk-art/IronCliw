@@ -93,4 +93,3 @@ export async function monitorFeishuProvider(opts: MonitorFeishuOpts = {}): Promi
 export function stopFeishuMonitor(accountId?: string): void {
   stopFeishuMonitorState(accountId);
 }
-

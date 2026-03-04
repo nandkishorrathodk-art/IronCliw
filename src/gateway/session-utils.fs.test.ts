@@ -787,4 +787,3 @@ describe("archiveSessionTranscripts", () => {
     expect(fs.existsSync(transcriptPath)).toBe(false);
   });
 });
-

@@ -363,4 +363,3 @@ export async function readScheduledTaskRuntime(
     ...(derived.detail ? { detail: derived.detail } : {}),
   };
 }
-

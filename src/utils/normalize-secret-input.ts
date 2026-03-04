@@ -18,4 +18,3 @@ export function normalizeOptionalSecretInput(value: unknown): string | undefined
   const normalized = normalizeSecretInput(value);
   return normalized ? normalized : undefined;
 }
-

@@ -189,4 +189,3 @@ http://localhost:5173/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-toke
 - 当 Gateway 网关在 TLS 后面时（Tailscale Serve、HTTPS 代理等），使用 `wss://`。
 
 远程访问设置详情：[远程访问](/gateway/remote)。
-

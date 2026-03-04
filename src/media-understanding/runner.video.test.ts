@@ -133,4 +133,3 @@ describe("runCapability video provider wiring", () => {
     );
   });
 });
-

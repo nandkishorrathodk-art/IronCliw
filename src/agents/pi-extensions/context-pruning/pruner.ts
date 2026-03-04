@@ -339,4 +339,3 @@ export function pruneContextMessages(params: {
 
   return next ?? messages;
 }
-

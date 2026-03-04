@@ -131,4 +131,3 @@ describe("computeSinceTimestamp", () => {
     expect(computeSinceTimestamp(state, 1700000000)).toBe(1700000000);
   });
 });
-

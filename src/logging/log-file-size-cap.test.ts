@@ -66,4 +66,3 @@ describe("log file size cap", () => {
     expect(capWarnings).toHaveLength(1);
   });
 });
-

@@ -300,4 +300,3 @@ export async function installSignalCli(runtime: RuntimeEnv): Promise<SignalInsta
 
   return installSignalCliViaBrew(runtime);
 }
-

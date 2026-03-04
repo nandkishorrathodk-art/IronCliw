@@ -148,4 +148,3 @@ describe("gateway control-plane write rate limit", () => {
     expect(key).toBe("unknown-device|10.0.0.10");
   });
 });
-

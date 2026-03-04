@@ -56,4 +56,3 @@ export function applyOpenAICodexModelDefault(cfg: IronCliwConfig): {
     changed: true,
   };
 }
-

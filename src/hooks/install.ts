@@ -470,4 +470,3 @@ export async function installHooksFromPath(
     ...forwardParams,
   });
 }
-

@@ -949,4 +949,3 @@ When reviewing OpenProse programs, ask:
 - Would a stranger understand this code?
 
 Fix antipatterns early. They compound over time into unmaintainable systems.
-

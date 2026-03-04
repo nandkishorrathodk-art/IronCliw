@@ -517,4 +517,3 @@ describe("channel-health-monitor", () => {
     });
   });
 });
-

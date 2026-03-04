@@ -17,4 +17,3 @@ describe("DEFAULT_AGENT_WORKSPACE_DIR", () => {
     );
   });
 });
-

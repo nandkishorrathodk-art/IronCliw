@@ -67,4 +67,3 @@ export function getSessionSnapshot(
     idleExpiresAt: freshness.idleExpiresAt,
   };
 }
-

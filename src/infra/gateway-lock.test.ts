@@ -298,4 +298,3 @@ describe("gateway lock", () => {
     openSpy.mockRestore();
   });
 });
-

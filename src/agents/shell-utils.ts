@@ -190,4 +190,3 @@ export function killProcessTree(pid: number): void {
     }
   }
 }
-

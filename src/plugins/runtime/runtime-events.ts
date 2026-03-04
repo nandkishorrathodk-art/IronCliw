@@ -8,4 +8,3 @@ export function createRuntimeEvents(): PluginRuntime["events"] {
     onSessionTranscriptUpdate,
   };
 }
-

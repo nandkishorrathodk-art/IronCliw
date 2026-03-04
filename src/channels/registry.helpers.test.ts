@@ -40,4 +40,3 @@ describe("channel registry helpers", () => {
     expect(line).toContain("https://IronCliw.ai");
   });
 });
-

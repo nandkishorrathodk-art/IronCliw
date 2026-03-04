@@ -345,4 +345,3 @@ export function resolveProfile(
 export function shouldStartLocalBrowserServer(_resolved: ResolvedBrowserConfig) {
   return true;
 }
-

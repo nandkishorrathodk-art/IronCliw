@@ -144,4 +144,3 @@ export function buildWorkspaceHookStatus(
     hooks: hookEntries.map((entry) => buildHookStatus(entry, opts?.config, opts?.eligibility)),
   };
 }
-

@@ -99,4 +99,3 @@ describe("session hook context wiring", () => {
     expect(startEvent).toMatchObject({ resumedFrom: "old-session" });
   });
 });
-

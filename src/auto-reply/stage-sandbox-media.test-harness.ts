@@ -43,4 +43,3 @@ export function createSandboxMediaStageConfig(home: string): IronCliwConfig {
     session: { store: join(home, "sessions.json") },
   } as IronCliwConfig;
 }
-

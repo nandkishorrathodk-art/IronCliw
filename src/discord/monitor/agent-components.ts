@@ -1774,4 +1774,3 @@ export function createDiscordComponentChannelSelect(ctx: AgentComponentContext):
 export function createDiscordComponentModal(ctx: AgentComponentContext): Modal {
   return new DiscordComponentModal(ctx);
 }
-

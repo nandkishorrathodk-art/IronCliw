@@ -461,4 +461,3 @@ describe("registerQrCli", () => {
     expect(payload.urlSource).toBe("gateway.tailscale.mode=serve");
   });
 });
-

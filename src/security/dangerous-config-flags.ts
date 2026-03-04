@@ -26,4 +26,3 @@ export function collectEnabledInsecureOrDangerousFlags(cfg: IronCliwConfig): str
   }
   return enabledFlags;
 }
-

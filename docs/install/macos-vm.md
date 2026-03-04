@@ -279,4 +279,3 @@ For true always-on, consider a dedicated Mac mini or a small VPS. See [VPS hosti
 - [Lume CLI Reference](https://cua.ai/docs/lume/reference/cli-reference)
 - [Unattended VM Setup](https://cua.ai/docs/lume/guide/fundamentals/unattended-setup) (advanced)
 - [Docker Sandboxing](/install/docker) (alternative isolation approach)
-

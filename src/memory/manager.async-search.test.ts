@@ -102,4 +102,3 @@ describe("memory search async sync", () => {
     manager = null;
   });
 });
-

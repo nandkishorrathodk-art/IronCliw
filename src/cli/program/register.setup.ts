@@ -51,4 +51,3 @@ export function registerSetupCommand(program: Command) {
       });
     });
 }
-

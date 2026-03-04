@@ -132,4 +132,3 @@ describe("CronService restart catch-up", () => {
     await store.cleanup();
   });
 });
-

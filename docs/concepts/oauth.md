@@ -156,4 +156,3 @@ Related docs:
 
 - [/concepts/model-failover](/concepts/model-failover) (rotation + cooldown rules)
 - [/tools/slash-commands](/tools/slash-commands) (command surface)
-

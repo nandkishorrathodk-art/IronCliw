@@ -73,4 +73,3 @@ export function inferAuthChoiceFromFlags(opts: OnboardOptions): AuthChoiceInfere
     matches,
   };
 }
-

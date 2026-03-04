@@ -1042,4 +1042,3 @@ export function collectChannelConfigAssignments(params: {
   collectFeishuAssignments(params);
   collectZaloAssignments(params);
 }
-

@@ -573,4 +573,3 @@ export function applyQianfanConfig(cfg: IronCliwConfig): IronCliwConfig {
   const next = applyQianfanProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, QIANFAN_DEFAULT_MODEL_REF);
 }
-

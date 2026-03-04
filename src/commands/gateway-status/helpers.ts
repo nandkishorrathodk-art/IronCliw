@@ -284,4 +284,3 @@ export function renderProbeSummaryLine(probe: GatewayProbeResult, rich: boolean)
 
   return `${colorize(rich, theme.error, "Connect: failed")}${detail}`;
 }
-

@@ -8,4 +8,3 @@ export function urlToString(url: Request | URL | string): string {
   }
   return "url" in url ? url.url : String(url);
 }
-

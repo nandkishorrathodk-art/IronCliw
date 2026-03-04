@@ -486,4 +486,3 @@ describe("/focus, /unfocus, /agents", () => {
     expect(result?.reply?.text).toContain("only available on Discord");
   });
 });
-

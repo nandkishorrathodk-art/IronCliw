@@ -28,4 +28,3 @@ export async function applyDefaultModelChoice(params: {
   await params.noteAgentModel(params.defaultModel);
   return { config: nextWithModel, agentModelOverride: params.defaultModel };
 }
-

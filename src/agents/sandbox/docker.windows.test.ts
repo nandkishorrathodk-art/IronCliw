@@ -66,4 +66,3 @@ describe("resolveDockerSpawnInvocation", () => {
     expect(resolved.windowsHide).toBeUndefined();
   });
 });
-

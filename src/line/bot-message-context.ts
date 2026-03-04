@@ -499,4 +499,3 @@ export async function buildLinePostbackContext(params: {
 export type LineMessageContext = NonNullable<Awaited<ReturnType<typeof buildLineMessageContext>>>;
 export type LinePostbackContext = NonNullable<Awaited<ReturnType<typeof buildLinePostbackContext>>>;
 export type LineInboundContext = LineMessageContext | LinePostbackContext;
-

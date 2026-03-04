@@ -285,4 +285,3 @@ Pi 还在扩展 API 中公开了 `session_before_compact` 钩子，但 IronCliw 
   - 压缩设置（`reserveTokens` 对于模型窗口来说太高会导致更早的压缩）
   - 工具结果膨胀：启用/调整会话修剪
 - 静默回合泄漏？确认回复以 `NO_REPLY`（精确 token）开头，并且你使用的构建版本包含流式输出抑制修复。
-

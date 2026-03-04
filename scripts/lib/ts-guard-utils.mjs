@@ -155,4 +155,3 @@ export function runAsScript(importMetaUrl, main) {
     process.exit(1);
   });
 }
-

@@ -21,4 +21,3 @@
   "blockedOverrideKeys": ["HOME", "ZDOTDIR"],
   "blockedPrefixes": ["DYLD_", "LD_", "BASH_FUNC_"]
 }
-

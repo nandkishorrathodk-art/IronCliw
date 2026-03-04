@@ -113,4 +113,3 @@ function resolveSimpleAllowFrom(allowFrom: Array<string | number>): {
   SIMPLE_ALLOWLIST_CACHE.set(allowFrom, built);
   return built;
 }
-

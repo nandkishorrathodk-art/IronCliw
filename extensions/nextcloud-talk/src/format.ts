@@ -77,4 +77,3 @@ export function truncateNextcloudTalkText(text: string, maxLength: number, suffi
   }
   return truncated + suffix;
 }
-

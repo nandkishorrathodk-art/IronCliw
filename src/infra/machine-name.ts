@@ -50,4 +50,3 @@ export async function getMachineDisplayName(): Promise<string> {
   })();
   return cachedPromise;
 }
-

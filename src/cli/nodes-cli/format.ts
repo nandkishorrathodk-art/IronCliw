@@ -14,4 +14,3 @@ export function formatPermissions(raw: unknown) {
   const parts = entries.map(([key, granted]) => `${key}=${granted ? "yes" : "no"}`);
   return `[${parts.join(", ")}]`;
 }
-

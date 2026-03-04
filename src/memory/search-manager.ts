@@ -234,4 +234,3 @@ function buildQmdCacheKey(agentId: string, config: ResolvedQmdConfig): string {
   // Fast stringify avoids deep key-sorting overhead on this hot path.
   return `${agentId}:${JSON.stringify(config)}`;
 }
-

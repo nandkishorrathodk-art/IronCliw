@@ -377,4 +377,3 @@ export function resolveCommandAuthorization(params: {
     to: to || undefined,
   };
 }
-

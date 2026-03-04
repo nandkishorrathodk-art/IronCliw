@@ -354,4 +354,3 @@ describe("resolveCommandSecretRefsViaGateway", () => {
     expect(result.diagnostics).toEqual(["memory search ref inactive"]);
   });
 });
-

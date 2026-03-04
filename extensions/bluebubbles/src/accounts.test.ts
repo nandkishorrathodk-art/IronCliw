@@ -23,4 +23,3 @@ describe("resolveBlueBubblesAccount", () => {
     expect(resolved.baseUrl).toBe("http://localhost:1234");
   });
 });
-

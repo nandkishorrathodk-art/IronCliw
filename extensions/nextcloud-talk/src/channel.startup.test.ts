@@ -81,4 +81,3 @@ describe("nextcloudTalkPlugin gateway.startAccount", () => {
     expect(stop).toHaveBeenCalledOnce();
   });
 });
-

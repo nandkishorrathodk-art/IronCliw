@@ -266,4 +266,3 @@ export function sanitizeToolCallIdsForCloudCodeAssist(
 
   return changed ? out : messages;
 }
-

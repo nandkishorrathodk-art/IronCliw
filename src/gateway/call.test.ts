@@ -1023,4 +1023,3 @@ describe("callGateway password resolution", () => {
     expect(lastClientOptions?.[testCase.authKey]).toBe(testCase.explicitValue);
   });
 });
-

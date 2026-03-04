@@ -61,4 +61,3 @@ describe("normalizeSlackMessagingTarget", () => {
     expect(normalizeSlackMessagingTarget("C123")).toBe("channel:c123");
   });
 });
-

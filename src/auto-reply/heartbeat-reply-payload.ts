@@ -20,4 +20,3 @@ export function resolveHeartbeatReplyPayload(
   }
   return undefined;
 }
-

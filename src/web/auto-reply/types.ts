@@ -35,4 +35,3 @@ export type WebMonitorTuning = {
   /** Debounce window (ms) for batching rapid consecutive messages from the same sender. */
   debounceMs?: number;
 };
-

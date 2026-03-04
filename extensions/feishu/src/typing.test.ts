@@ -142,4 +142,3 @@ describe("FeishuBackoffError", () => {
     expect(caught).toBeInstanceOf(FeishuBackoffError);
   });
 });
-

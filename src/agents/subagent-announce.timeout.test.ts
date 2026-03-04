@@ -149,4 +149,3 @@ describe("subagent announce timeout config", () => {
     expect(sendCall?.timeoutMs).toBe(90_000);
   });
 });
-

@@ -232,4 +232,3 @@ describe("resolveChatUserId", () => {
     expect(httpsGet).toHaveBeenCalledTimes(2);
   });
 });
-

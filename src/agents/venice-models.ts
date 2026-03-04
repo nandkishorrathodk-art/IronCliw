@@ -507,4 +507,3 @@ export async function discoverVeniceModels(): Promise<ModelDefinitionConfig[]> {
     return staticVeniceModelDefinitions();
   }
 }
-

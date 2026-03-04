@@ -723,4 +723,3 @@ export function registerFeishuBitableTools(api: IronCliwPluginApi) {
 
   api.logger.info?.("feishu_bitable: Registered bitable tools");
 }
-

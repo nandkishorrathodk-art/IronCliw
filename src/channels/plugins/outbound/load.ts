@@ -15,4 +15,3 @@ export async function loadChannelOutboundAdapter(
 ): Promise<ChannelOutboundAdapter | undefined> {
   return loadOutboundAdapterFromRegistry(id);
 }
-

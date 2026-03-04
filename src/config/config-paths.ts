@@ -80,4 +80,3 @@ export function getConfigValueAtPath(root: PathNode, path: string[]): unknown {
   }
   return cursor;
 }
-

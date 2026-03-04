@@ -278,4 +278,3 @@ describe("registerAgentCommands", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 });
-

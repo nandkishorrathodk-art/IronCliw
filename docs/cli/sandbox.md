@@ -150,4 +150,3 @@ Sandbox settings live in `~/.IronCliw/IronCliw.json` under `agents.defaults.sand
 - [Sandbox Documentation](/gateway/sandboxing)
 - [Agent Configuration](/concepts/agent-workspace)
 - [Doctor Command](/gateway/doctor) - Check sandbox setup
-

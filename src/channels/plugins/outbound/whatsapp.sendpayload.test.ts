@@ -104,4 +104,3 @@ describe("whatsappOutbound sendPayload", () => {
     expect(result).toMatchObject({ channel: "whatsapp" });
   });
 });
-

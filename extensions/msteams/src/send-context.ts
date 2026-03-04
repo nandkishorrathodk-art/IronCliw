@@ -162,4 +162,3 @@ export async function resolveMSTeamsSendContext(params: {
     mediaMaxBytes,
   };
 }
-

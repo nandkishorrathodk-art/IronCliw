@@ -598,4 +598,3 @@ describe("gateway agent handler", () => {
     );
   });
 });
-

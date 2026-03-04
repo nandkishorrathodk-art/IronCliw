@@ -178,4 +178,3 @@ export function stripLeadingInboundMetadata(text: string): string {
   const strippedRemainder = stripTrailingUntrustedContextSuffix(lines.slice(index));
   return strippedRemainder.join("\n");
 }
-

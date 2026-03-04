@@ -40,4 +40,3 @@ describeLive("byteplus coding plan live", () => {
     expect(text.length).toBeGreaterThan(0);
   }, 30000);
 });
-

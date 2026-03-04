@@ -138,4 +138,3 @@ describe("registerOnboardCommand", () => {
     expect(runtime.exit).toHaveBeenCalledWith(1);
   });
 });
-

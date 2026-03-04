@@ -17,4 +17,3 @@ export type MSTeamsTurnContext = {
     activities: Array<{ type: string } & Record<string, unknown>>,
   ) => Promise<unknown>;
 };
-

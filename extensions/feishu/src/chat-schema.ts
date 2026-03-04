@@ -22,4 +22,3 @@ export const FeishuChatSchema = Type.Object({
 });
 
 export type FeishuChatParams = Static<typeof FeishuChatSchema>;
-

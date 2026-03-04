@@ -23,4 +23,3 @@ export function sameFileIdentity(
   }
   return platform === "win32" && (isZero(left.dev) || isZero(right.dev));
 }
-

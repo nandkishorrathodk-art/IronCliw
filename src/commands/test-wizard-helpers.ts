@@ -90,4 +90,3 @@ export async function readAuthProfilesForAgent<T>(agentDir: string): Promise<T> 
   const raw = await fs.readFile(authProfilePathForAgent(agentDir), "utf8");
   return JSON.parse(raw) as T;
 }
-

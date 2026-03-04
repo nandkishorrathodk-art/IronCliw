@@ -1232,4 +1232,3 @@ export function formatToolDetailText(
   }
   return opts.prefixWithWith ? `with ${normalized}` : normalized;
 }
-

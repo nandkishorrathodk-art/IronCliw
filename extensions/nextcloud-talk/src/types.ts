@@ -188,4 +188,3 @@ export type NextcloudTalkSendOptions = {
   message: string;
   replyTo?: string;
 };
-

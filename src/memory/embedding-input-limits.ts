@@ -65,4 +65,3 @@ export function splitTextToUtf8ByteLimit(text: string, maxUtf8Bytes: number): st
 
   return parts;
 }
-

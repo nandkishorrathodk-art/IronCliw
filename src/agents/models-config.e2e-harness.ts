@@ -145,4 +145,3 @@ export const CUSTOM_PROXY_MODELS_CONFIG: IronCliwConfig = {
     },
   },
 };
-

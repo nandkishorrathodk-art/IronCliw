@@ -98,4 +98,3 @@ describe("repairSessionFileIfNeeded", () => {
     expect(warn).toHaveBeenCalledTimes(1);
   });
 });
-

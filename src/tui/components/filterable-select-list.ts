@@ -141,4 +141,3 @@ export class FilterableSelectList implements Component {
     return this.filterText;
   }
 }
-

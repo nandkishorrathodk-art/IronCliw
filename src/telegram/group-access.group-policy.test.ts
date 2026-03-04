@@ -27,4 +27,3 @@ describe("resolveTelegramRuntimeGroupPolicy", () => {
     expect(resolved.providerMissingFallbackApplied).toBe(true);
   });
 });
-

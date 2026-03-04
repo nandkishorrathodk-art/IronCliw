@@ -35,4 +35,3 @@ export function resolveAgentOutboundIdentity(
     avatarUrl: avatar.kind === "remote" ? avatar.url : undefined,
   });
 }
-

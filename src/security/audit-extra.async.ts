@@ -1312,4 +1312,3 @@ export async function collectInstalledSkillsCodeSafetyFindings(params: {
 
   return findings;
 }
-

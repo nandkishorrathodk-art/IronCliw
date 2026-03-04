@@ -44,4 +44,3 @@ export function createNativeCommandTestParams(params: {
     opts: params.opts ?? { token: "token" },
   };
 }
-

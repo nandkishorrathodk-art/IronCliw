@@ -532,4 +532,3 @@ export async function monitorSingleAccount(params: MonitorSingleAccountParams): 
   }
   return monitorWebSocket({ account, accountId, runtime, abortSignal, eventDispatcher });
 }
-

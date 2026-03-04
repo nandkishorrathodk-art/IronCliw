@@ -97,4 +97,3 @@ All models below use cost `0` (input/output/cache).
 - If you enable a model allowlist (`agents.defaults.models`), add every model you
   plan to use.
 - See [Model providers](/concepts/model-providers) for provider rules.
-

@@ -70,4 +70,3 @@ describe("pruneStickerMediaFromContext", () => {
     expectSingleImageMedia(ctx, "/tmp/replied.jpg");
   });
 });
-

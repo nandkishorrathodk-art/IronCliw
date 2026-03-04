@@ -599,4 +599,3 @@ export async function writeFileFromPathWithinRoot(params: {
     rejectSourceHardlinks: true,
   });
 }
-

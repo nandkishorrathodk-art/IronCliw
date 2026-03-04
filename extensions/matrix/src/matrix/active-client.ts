@@ -30,4 +30,3 @@ export function getAnyActiveMatrixClient(): MatrixClient | null {
 export function clearAllActiveMatrixClients(): void {
   activeClients.clear();
 }
-

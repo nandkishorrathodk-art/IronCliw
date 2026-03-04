@@ -183,4 +183,3 @@ describe("setupSkills", () => {
     expect(brewNote).toBeDefined();
   });
 });
-

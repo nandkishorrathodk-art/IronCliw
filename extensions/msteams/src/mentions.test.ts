@@ -233,4 +233,3 @@ describe("formatMentionText", () => {
     expect(result).toBe("Hey <at>John(Test)</at> and <at>Alice.Smith</at>");
   });
 });
-

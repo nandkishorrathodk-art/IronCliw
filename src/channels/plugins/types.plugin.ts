@@ -83,4 +83,3 @@ export type ChannelPlugin<ResolvedAccount = any, Probe = unknown, Audit = unknow
   // Channel-owned agent tools (login flows, etc.).
   agentTools?: ChannelAgentToolFactory | ChannelAgentTool[];
 };
-

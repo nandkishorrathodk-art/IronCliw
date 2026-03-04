@@ -26,4 +26,3 @@ export function formatNativeDependencyHint(params: NativeDependencyHintParams): 
   }
   return `Install ${params.packageName} and rebuild its native module (${steps.join("; ")}).`;
 }
-

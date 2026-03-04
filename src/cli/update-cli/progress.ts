@@ -196,4 +196,3 @@ export function printResult(result: UpdateRunResult, opts: PrintResultOptions): 
   defaultRuntime.log("");
   defaultRuntime.log(`Total time: ${theme.muted(formatDurationPrecise(result.durationMs))}`);
 }
-

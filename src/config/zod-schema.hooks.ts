@@ -159,4 +159,3 @@ export const HooksGmailSchema = z
   })
   .strict()
   .optional();
-

@@ -35,4 +35,3 @@ describe("connect params client id validation", () => {
     expect(ok).toBe(false);
   });
 });
-

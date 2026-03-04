@@ -54,4 +54,3 @@ export function createSlackSystemEventTestHarness(overrides?: SlackSystemEventTe
     },
   };
 }
-

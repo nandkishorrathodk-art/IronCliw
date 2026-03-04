@@ -167,4 +167,3 @@ Screen commands:
   - `calendar.events`, `calendar.add`
   - `motion.activity`, `motion.pedometer`
   - `app.update`
-

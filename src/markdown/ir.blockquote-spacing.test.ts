@@ -200,4 +200,3 @@ describe("comparison with other block elements (control group)", () => {
     expect(result.text).not.toContain("\n\n\n");
   });
 });
-

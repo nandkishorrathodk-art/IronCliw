@@ -47,4 +47,3 @@ describe("telegram disableAudioPreflight schema", () => {
     expect(res.success).toBe(false);
   });
 });
-

@@ -42,4 +42,3 @@ export function logGatewayStartup(params: {
     params.log.warn(warning);
   }
 }
-

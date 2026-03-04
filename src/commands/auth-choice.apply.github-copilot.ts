@@ -61,4 +61,3 @@ export async function applyAuthChoiceGitHubCopilot(
 
   return { config: nextConfig };
 }
-

@@ -248,4 +248,3 @@ export async function pdfViaPlaywright(opts: {
   const buffer = await page.pdf({ printBackground: true });
   return { buffer };
 }
-

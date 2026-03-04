@@ -67,4 +67,3 @@ describe("imessageOutbound", () => {
     expect(result).toEqual({ channel: "imessage", messageId: "media-1" });
   });
 });
-

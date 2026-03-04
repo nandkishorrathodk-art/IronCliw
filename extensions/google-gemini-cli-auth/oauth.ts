@@ -732,4 +732,3 @@ export async function loginGeminiCliOAuth(
     throw err;
   }
 }
-

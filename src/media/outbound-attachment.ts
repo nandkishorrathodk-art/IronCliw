@@ -22,4 +22,3 @@ export async function resolveOutboundAttachmentFromUrl(
   );
   return { path: saved.path, contentType: saved.contentType };
 }
-

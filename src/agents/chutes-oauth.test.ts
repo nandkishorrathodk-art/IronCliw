@@ -50,4 +50,3 @@ describe("generateChutesPkce", () => {
     expect(pkce.challenge).toMatch(/^[A-Za-z0-9_-]+$/);
   });
 });
-

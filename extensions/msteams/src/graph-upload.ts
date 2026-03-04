@@ -450,4 +450,3 @@ export async function uploadAndShareSharePoint(params: {
     name: uploaded.name,
   };
 }
-

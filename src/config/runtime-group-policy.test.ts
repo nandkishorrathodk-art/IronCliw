@@ -99,4 +99,3 @@ describe("warnMissingProviderGroupPolicyFallbackOnce", () => {
     expect(lines[0]).toContain("room messages blocked");
   });
 });
-

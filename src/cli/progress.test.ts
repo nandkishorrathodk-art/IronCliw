@@ -44,4 +44,3 @@ describe("cli progress", () => {
     expect(write).not.toHaveBeenCalled();
   });
 });
-

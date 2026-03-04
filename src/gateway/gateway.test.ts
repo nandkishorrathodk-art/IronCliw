@@ -245,4 +245,3 @@ describe("gateway e2e", () => {
     },
   );
 });
-

@@ -229,4 +229,3 @@ describe("googlechat outbound cfg threading", () => {
     );
   });
 });
-

@@ -194,4 +194,3 @@ describe("evaluateTelegramGroupPolicyAccess – chat allowlist vs sender allowli
     expect(result).toEqual({ allowed: true, groupPolicy: "allowlist" });
   });
 });
-

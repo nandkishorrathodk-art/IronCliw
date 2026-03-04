@@ -81,4 +81,3 @@ export function resolveCronSession(params: {
   };
   return { storePath, store, sessionEntry, systemSent, isNewSession };
 }
-

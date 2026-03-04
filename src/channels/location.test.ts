@@ -55,4 +55,3 @@ describe("provider location helpers", () => {
     });
   });
 });
-

@@ -104,4 +104,3 @@ export function resolveTelegramDnsResultOrderDecision(params?: {
 export function resetTelegramNetworkConfigStateForTests(): void {
   wsl2SyncCache = undefined;
 }
-

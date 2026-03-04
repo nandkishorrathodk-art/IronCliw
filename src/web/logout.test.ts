@@ -96,4 +96,3 @@ describe("web logout", () => {
     expect(fs.existsSync(path.join(credsDir, "session-abc.json"))).toBe(false);
   });
 });
-

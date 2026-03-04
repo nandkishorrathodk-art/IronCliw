@@ -38,4 +38,3 @@ export function getAvailableCommands(): AvailableCommand[] {
     { name: "compact", description: "Compact the session history." },
   ];
 }
-

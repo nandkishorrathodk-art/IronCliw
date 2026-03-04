@@ -76,4 +76,3 @@ export function isZalouserGroupEntryAllowed(entry: ZalouserGroupConfig | undefin
   }
   return entry.allow !== false && entry.enabled !== false;
 }
-

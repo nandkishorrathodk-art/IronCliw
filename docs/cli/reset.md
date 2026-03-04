@@ -15,4 +15,3 @@ IronCliw reset
 IronCliw reset --dry-run
 IronCliw reset --scope config+creds+sessions --yes --non-interactive
 ```
-

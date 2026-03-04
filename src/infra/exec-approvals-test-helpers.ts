@@ -57,4 +57,3 @@ export function loadWrapperResolutionParityFixtureCases(): WrapperResolutionPari
   ) as WrapperResolutionParityFixture;
   return fixture.cases;
 }
-

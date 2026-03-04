@@ -42,4 +42,3 @@ export function pruneProcessedHistoryImages(messages: AgentMessage[]): boolean {
 
   return didMutate;
 }
-

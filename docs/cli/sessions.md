@@ -102,4 +102,3 @@ IronCliw sessions cleanup --json
 Related:
 
 - Session config: [Configuration reference](/gateway/configuration-reference#session)
-

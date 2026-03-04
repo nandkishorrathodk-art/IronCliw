@@ -74,4 +74,3 @@ export function createRequestCaptureJsonFetch(responseBody: unknown) {
     getRequest: () => ({ url: seenUrl, init: seenInit }),
   };
 }
-

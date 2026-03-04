@@ -81,4 +81,3 @@ export function expectConvertedRoles(contents: Array<{ role?: string }>, expecte
     expect(contents[index]?.role).toBe(role);
   }
 }
-

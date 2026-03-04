@@ -154,4 +154,3 @@ const INVISIBLE_UNICODE_RE =
 export function stripInvisibleUnicode(text: string): string {
   return text.replace(INVISIBLE_UNICODE_RE, "");
 }
-

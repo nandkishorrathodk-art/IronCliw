@@ -104,4 +104,3 @@ function normalizeQmdSessionKey(key?: string): string | undefined {
   }
   return normalized;
 }
-

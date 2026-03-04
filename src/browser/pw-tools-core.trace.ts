@@ -43,4 +43,3 @@ export async function traceStopViaPlaywright(opts: {
   });
   ctxState.traceActive = false;
 }
-

@@ -58,4 +58,3 @@ describe("usage-format", () => {
     expect(total).toBeCloseTo(0.003);
   });
 });
-

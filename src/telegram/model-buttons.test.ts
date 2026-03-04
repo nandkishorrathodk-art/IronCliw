@@ -412,4 +412,3 @@ describe("large model lists (OpenRouter-scale)", () => {
     expect(modelButtons[1]?.[0]?.text).toBe("another-short");
   });
 });
-

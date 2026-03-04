@@ -474,4 +474,3 @@ export async function buildChannelsTable(
     details,
   };
 }
-

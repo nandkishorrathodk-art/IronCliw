@@ -123,4 +123,3 @@ Out-of-scope credentials include:
 Rationale:
 
 - These credentials are minted, rotated, session-bearing, or OAuth-durable classes that do not fit read-only external SecretRef resolution.
-

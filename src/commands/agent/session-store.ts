@@ -109,4 +109,3 @@ export async function updateSessionStoreAfterAgentRun(params: {
   });
   sessionStore[sessionKey] = persisted;
 }
-

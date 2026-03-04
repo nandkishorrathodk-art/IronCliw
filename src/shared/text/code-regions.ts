@@ -29,4 +29,3 @@ export function findCodeRegions(text: string): CodeRegion[] {
 export function isInsideCode(pos: number, regions: CodeRegion[]): boolean {
   return regions.some((r) => pos >= r.start && pos < r.end);
 }
-

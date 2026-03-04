@@ -102,4 +102,3 @@ function clearStaleAssistantUsageOnSessionMessages(ctx: EmbeddedPiSubscribeConte
     candidate.usage = makeZeroUsageSnapshot();
   }
 }
-

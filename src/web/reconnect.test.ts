@@ -49,4 +49,3 @@ describe("web reconnect helpers", () => {
     await expect(promise).rejects.toThrow("aborted");
   });
 });
-

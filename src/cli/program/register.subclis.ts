@@ -346,4 +346,3 @@ export function registerSubCliCommands(program: Command, argv: string[] = proces
     registerLazyCommand(program, candidate);
   }
 }
-

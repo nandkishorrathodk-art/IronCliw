@@ -478,4 +478,3 @@ describe("gateway server misc", () => {
     );
   });
 });
-

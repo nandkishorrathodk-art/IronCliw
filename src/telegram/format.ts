@@ -369,4 +369,3 @@ export function markdownToTelegramChunks(
 export function markdownToTelegramHtmlChunks(markdown: string, limit: number): string[] {
   return markdownToTelegramChunks(markdown, limit).map((chunk) => chunk.html);
 }
-

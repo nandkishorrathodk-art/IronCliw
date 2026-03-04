@@ -22,4 +22,3 @@ export function formatDocsRootLink(label?: string): string {
     fallback: DOCS_ROOT,
   });
 }
-

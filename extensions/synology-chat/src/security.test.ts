@@ -144,4 +144,3 @@ describe("RateLimiter", () => {
     expect(limiter.size()).toBeLessThanOrEqual(3);
   });
 });
-

@@ -490,4 +490,3 @@ export async function sanitizeSessionHistory(params: {
     sessionId: params.sessionId,
   }).messages;
 }
-

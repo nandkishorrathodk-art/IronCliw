@@ -27,4 +27,3 @@ To run the wizard via setup:
 ```bash
 IronCliw setup --wizard
 ```
-

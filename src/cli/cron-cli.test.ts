@@ -715,4 +715,3 @@ describe("cron cli", () => {
     expect(patch?.patch?.failureAlert?.accountId).toBe("bot-a");
   });
 });
-

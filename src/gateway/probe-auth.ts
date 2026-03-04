@@ -14,4 +14,3 @@ export function resolveGatewayProbeAuth(params: {
     remoteTokenFallback: "remote-only",
   });
 }
-

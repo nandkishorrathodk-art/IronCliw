@@ -207,4 +207,3 @@ export class NodeRegistry {
     return this.sendEventInternal(node, event, payload);
   }
 }
-

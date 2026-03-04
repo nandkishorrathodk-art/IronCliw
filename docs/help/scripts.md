@@ -26,4 +26,3 @@ Auth monitoring scripts are documented here:
 
 - Keep scripts focused and documented.
 - Add a short entry in the relevant doc (or create one if missing).
-

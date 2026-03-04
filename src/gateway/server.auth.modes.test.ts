@@ -7,4 +7,3 @@ installGatewayTestHooks({ scope: "suite" });
 describe("gateway server auth/connect", () => {
   registerAuthModesSuite();
 });
-

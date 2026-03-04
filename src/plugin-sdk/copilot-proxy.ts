@@ -7,4 +7,3 @@ export type {
   ProviderAuthContext,
   ProviderAuthResult,
 } from "../plugins/types.js";
-

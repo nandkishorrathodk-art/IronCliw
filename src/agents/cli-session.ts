@@ -35,4 +35,3 @@ export function setCliSessionId(entry: SessionEntry, provider: string, sessionId
     entry.claudeCliSessionId = trimmed;
   }
 }
-

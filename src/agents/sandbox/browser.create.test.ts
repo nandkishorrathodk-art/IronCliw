@@ -207,4 +207,3 @@ describe("ensureSandboxBrowser create args", () => {
     expect(createArgs).not.toContain("/tmp/workspace:/workspace:ro");
   });
 });
-

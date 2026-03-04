@@ -313,4 +313,3 @@ export function isToolAllowedByPolicies(
 ) {
   return policies.every((policy) => isToolAllowedByPolicyName(name, policy));
 }
-

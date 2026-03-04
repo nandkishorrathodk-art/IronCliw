@@ -81,4 +81,3 @@ export function isSupportedLocalAvatarExtension(filePath: string): boolean {
   const ext = path.extname(filePath).toLowerCase();
   return LOCAL_AVATAR_EXTENSIONS.has(ext);
 }
-

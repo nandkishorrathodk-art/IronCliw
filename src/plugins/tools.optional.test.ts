@@ -154,4 +154,3 @@ describe("resolvePluginTools optional tools", () => {
     expect(registry.diagnostics).toHaveLength(0);
   });
 });
-

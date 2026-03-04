@@ -208,4 +208,3 @@ export function pruneAgentConfig(
     removedAllow: allow.length - filteredAllow.length,
   };
 }
-

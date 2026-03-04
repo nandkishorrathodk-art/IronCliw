@@ -146,4 +146,3 @@ describe("resolved session visibility checks", () => {
     ).resolves.toBe(true);
   });
 });
-

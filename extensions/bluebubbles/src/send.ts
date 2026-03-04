@@ -475,4 +475,3 @@ export async function sendMessageBlueBubbles(
     return { messageId: "ok" };
   }
 }
-

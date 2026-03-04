@@ -22,4 +22,3 @@ IronCliw uninstall
 IronCliw uninstall --all --yes
 IronCliw uninstall --dry-run
 ```
-

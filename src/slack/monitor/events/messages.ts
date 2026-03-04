@@ -81,4 +81,3 @@ export function registerSlackMessageEvents(params: {
     }
   });
 }
-

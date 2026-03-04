@@ -31,4 +31,3 @@ vi.mock("../telegram/update-offset-store.js", async (importOriginal) => {
     deleteTelegramUpdateOffset: offsetMocks.deleteTelegramUpdateOffset,
   };
 });
-

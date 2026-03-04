@@ -27,4 +27,3 @@ export function resolveOriginAccountId(params: {
 }): string | undefined {
   return params.originatingAccountId ?? params.accountId;
 }
-

@@ -103,4 +103,3 @@ describe("cron protocol validators", () => {
     ).toBe(false);
   });
 });
-

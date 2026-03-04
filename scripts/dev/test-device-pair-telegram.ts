@@ -60,4 +60,3 @@ if (result.text) {
 
 // eslint-disable-next-line no-console
 console.log("Sent split /pair messages to", chatId, accountId ? `(${accountId})` : "");
-

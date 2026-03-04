@@ -219,4 +219,3 @@ export function evaluateRequirementsFromMetadataWithRemote(
     isConfigSatisfied: params.isConfigSatisfied,
   });
 }
-

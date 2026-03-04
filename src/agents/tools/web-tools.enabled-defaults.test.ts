@@ -564,4 +564,3 @@ describe("web_search external content wrapping", () => {
     expect(details.results?.[0]?.published).not.toContain("<<<EXTERNAL_UNTRUSTED_CONTENT>>>");
   });
 });
-

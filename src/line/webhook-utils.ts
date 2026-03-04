@@ -13,4 +13,3 @@ export function isLineWebhookVerificationRequest(
 ): boolean {
   return !!body && Array.isArray(body.events) && body.events.length === 0;
 }
-

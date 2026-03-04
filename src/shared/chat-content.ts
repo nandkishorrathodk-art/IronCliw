@@ -40,4 +40,3 @@ export function extractTextFromChatContent(
   const joined = normalize(chunks.join(joinWith));
   return joined ? joined : null;
 }
-

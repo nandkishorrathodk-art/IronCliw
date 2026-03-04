@@ -86,4 +86,3 @@ describe("nostr outbound cfg threading", () => {
     cleanup.stop();
   });
 });
-

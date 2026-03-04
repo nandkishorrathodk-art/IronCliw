@@ -9,4 +9,3 @@ export function createToolSummaryPreviewTranscriptLines(sessionId: string): stri
     JSON.stringify({ message: { role: "assistant", content: "Forecast ready" } }),
   ];
 }
-

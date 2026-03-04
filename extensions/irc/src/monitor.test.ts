@@ -41,4 +41,3 @@ describe("irc monitor inbound target", () => {
     });
   });
 });
-

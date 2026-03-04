@@ -244,4 +244,3 @@ describe("stripInvisibleUnicode", () => {
     expect(stripInvisibleUnicode("")).toBe("");
   });
 });
-

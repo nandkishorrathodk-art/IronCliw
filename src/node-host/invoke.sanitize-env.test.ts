@@ -113,4 +113,3 @@ describe("buildNodeInvokeResultParams", () => {
     expect(params.payload).toEqual({ reason: "bad" });
   });
 });
-

@@ -62,4 +62,3 @@ export function hasLegacyAcpIdentityProjection(meta: SessionAcpMeta): boolean {
     Object.hasOwn(raw, "sessionIdsProvisional")
   );
 }
-

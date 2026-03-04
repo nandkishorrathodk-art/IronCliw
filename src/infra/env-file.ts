@@ -52,4 +52,3 @@ export function upsertSharedEnvVar(params: {
 
   return { path: filepath, updated, created: !raw };
 }
-

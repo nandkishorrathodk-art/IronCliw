@@ -230,4 +230,3 @@ export async function fetchChannelPermissionsDiscord(
     channelType,
   };
 }
-

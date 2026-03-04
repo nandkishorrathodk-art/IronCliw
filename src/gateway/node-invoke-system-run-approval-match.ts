@@ -53,4 +53,3 @@ export function evaluateSystemRunApprovalMatch(params: {
     actualEnvKeys: actualBinding.envKeys,
   });
 }
-

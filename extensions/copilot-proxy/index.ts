@@ -152,4 +152,3 @@ const copilotProxyPlugin = {
 };
 
 export default copilotProxyPlugin;
-

@@ -134,4 +134,3 @@ export function displayRecreateResult(
     runtime.log("\nContainers will be automatically recreated when the agent is next used.");
   }
 }
-

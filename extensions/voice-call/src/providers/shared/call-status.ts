@@ -21,4 +21,3 @@ export function mapProviderStatusToEndReason(status: string | null | undefined):
 export function isProviderStatusTerminal(status: string | null | undefined): boolean {
   return mapProviderStatusToEndReason(status) !== null;
 }
-

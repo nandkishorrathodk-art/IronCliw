@@ -208,4 +208,3 @@ describe("onboard auth credentials secret refs", () => {
     expect(parsed.profiles?.["byteplus:default"]?.key).toBeUndefined();
   });
 });
-

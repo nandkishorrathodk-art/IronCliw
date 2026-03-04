@@ -59,4 +59,3 @@ export function readSessionStoreJson5(storePath: string): {
   }
   return { store: {}, ok: false };
 }
-

@@ -9,4 +9,3 @@ vi.mock("./probe.js", async () => {
   const { createBlueBubblesProbeMockModule } = await import("./test-harness.js");
   return createBlueBubblesProbeMockModule();
 });
-

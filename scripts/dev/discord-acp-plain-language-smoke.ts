@@ -866,4 +866,3 @@ printOutput({
 });
 
 process.exit(result.ok ? 0 : 1);
-

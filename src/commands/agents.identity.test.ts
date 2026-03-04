@@ -209,4 +209,3 @@ describe("agents set-identity command", () => {
     expect(configMocks.writeConfigFile).not.toHaveBeenCalled();
   });
 });
-

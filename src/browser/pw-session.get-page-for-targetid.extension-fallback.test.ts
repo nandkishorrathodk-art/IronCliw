@@ -51,4 +51,3 @@ describe("pw-session getPageForTargetId", () => {
     expect(browserClose).toHaveBeenCalled();
   });
 });
-

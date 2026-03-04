@@ -37,4 +37,3 @@ describe("github-copilot-models", () => {
     });
   });
 });
-

@@ -63,4 +63,3 @@ export function applyLitellmConfig(cfg: IronCliwConfig): IronCliwConfig {
   const next = applyLitellmProviderConfig(cfg);
   return applyAgentDefaultModelPrimary(next, LITELLM_DEFAULT_MODEL_REF);
 }
-

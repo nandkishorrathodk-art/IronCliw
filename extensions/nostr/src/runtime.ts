@@ -12,4 +12,3 @@ export function getNostrRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

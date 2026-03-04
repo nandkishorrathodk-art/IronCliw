@@ -137,4 +137,3 @@ export function createStreamingDirectiveAccumulator() {
     reset,
   };
 }
-

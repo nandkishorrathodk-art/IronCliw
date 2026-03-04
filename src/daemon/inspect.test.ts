@@ -85,4 +85,3 @@ describe("findExtraGatewayServices (win32)", () => {
     ]);
   });
 });
-

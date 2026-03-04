@@ -82,4 +82,3 @@ describe("nextcloud-talk inbound authz", () => {
     expect(buildMentionRegexes).not.toHaveBeenCalled();
   });
 });
-

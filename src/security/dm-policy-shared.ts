@@ -318,4 +318,3 @@ export async function resolveDmAllowState(params: {
     isMultiUserDm: hasWildcard || allowCount > 1,
   };
 }
-

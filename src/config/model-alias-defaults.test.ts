@@ -144,4 +144,3 @@ describe("applyModelDefaults", () => {
     expect(model?.api).toBe("openai-completions");
   });
 });
-

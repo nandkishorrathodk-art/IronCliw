@@ -54,4 +54,3 @@ export function isXaiProvider(modelProvider?: string, modelId?: string): boolean
   }
   return false;
 }
-

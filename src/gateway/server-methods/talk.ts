@@ -94,4 +94,3 @@ export const talkHandlers: GatewayRequestHandlers = {
     respond(true, payload, undefined);
   },
 };
-

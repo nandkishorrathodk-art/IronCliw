@@ -40,4 +40,3 @@ describe("compaction identifier policy", () => {
     expect(built).toBe("Additional focus:\nTrack release blockers.");
   });
 });
-

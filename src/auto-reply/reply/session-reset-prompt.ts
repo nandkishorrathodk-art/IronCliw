@@ -19,4 +19,3 @@ export function buildBareSessionResetPrompt(cfg?: IronCliwConfig, nowMs?: number
 
 /** @deprecated Use buildBareSessionResetPrompt(cfg) instead */
 export const BARE_SESSION_RESET_PROMPT = BARE_SESSION_RESET_PROMPT_BASE;
-

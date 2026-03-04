@@ -315,4 +315,3 @@ export function resolveHeartbeatRecipients(
 ) {
   return resolveWhatsAppHeartbeatRecipients(cfg, opts);
 }
-

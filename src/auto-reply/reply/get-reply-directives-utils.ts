@@ -56,4 +56,3 @@ export function clearExecInlineDirectives(directives: InlineDirectives): InlineD
     ...CLEARED_EXEC_FIELDS,
   };
 }
-

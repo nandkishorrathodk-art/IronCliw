@@ -316,4 +316,3 @@ export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnecti
     });
   });
 }
-

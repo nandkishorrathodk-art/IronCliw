@@ -659,4 +659,3 @@ export async function collectChannelSecurityFindings(params: {
 
   return dedupeFindings(findings);
 }
-

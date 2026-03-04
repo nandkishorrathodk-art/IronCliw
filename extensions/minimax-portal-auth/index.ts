@@ -170,4 +170,3 @@ const minimaxPortalPlugin = {
 };
 
 export default minimaxPortalPlugin;
-

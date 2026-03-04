@@ -394,4 +394,3 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
     return { cfg: next, accountId };
   },
 };
-

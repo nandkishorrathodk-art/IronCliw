@@ -50,4 +50,3 @@ export function resolveBlueBubblesServerAccount(params: BlueBubblesAccountResolv
     allowPrivateNetwork: account.config.allowPrivateNetwork === true,
   };
 }
-

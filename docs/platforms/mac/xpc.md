@@ -59,4 +59,3 @@ Agent -> Gateway -> Node Service (WS)
 - All communication remains local-only; no network sockets are exposed.
 - TCC prompts originate only from the GUI app bundle; keep the signed bundle ID stable across rebuilds.
 - IPC hardening: socket mode `0600`, token, peer-UID checks, HMAC challenge/response, short TTL.
-

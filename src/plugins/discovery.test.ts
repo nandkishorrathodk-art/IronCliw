@@ -388,4 +388,3 @@ describe("discoverIronCliwPlugins", () => {
     expect(third.candidates.some((candidate) => candidate.idHint === "cached")).toBe(false);
   });
 });
-

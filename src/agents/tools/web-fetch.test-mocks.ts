@@ -12,4 +12,3 @@ vi.mock("./web-fetch-utils.js", async () => {
     }),
   };
 });
-

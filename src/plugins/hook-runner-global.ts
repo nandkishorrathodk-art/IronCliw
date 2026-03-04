@@ -86,4 +86,3 @@ export function resetGlobalHookRunner(): void {
   globalHookRunner = null;
   globalRegistry = null;
 }
-

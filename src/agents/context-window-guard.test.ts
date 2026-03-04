@@ -147,4 +147,3 @@ describe("context-window-guard", () => {
     expect(CONTEXT_WINDOW_WARN_BELOW_TOKENS).toBe(32_000);
   });
 });
-

@@ -205,4 +205,3 @@ export function normalizeToolParameters(
 export function cleanToolSchemaForGemini(schema: Record<string, unknown>): unknown {
   return cleanSchemaForGemini(schema);
 }
-

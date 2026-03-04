@@ -149,4 +149,3 @@ const baseRegistry = createTestRegistry([
 ]);
 
 const createMSTeamsPlugin = (): ChannelPlugin => createStubPlugin("msteams");
-

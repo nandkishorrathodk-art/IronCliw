@@ -142,4 +142,3 @@ curl -s http://127.0.0.1:18791/tabs
 
 - `chrome` 配置文件在可能时使用你的**系统默认 Chromium 浏览器**。
 - 本地 `IronCliw` 配置文件自动分配 `cdpPort`/`cdpUrl`；仅为远程 CDP 设置这些。
-

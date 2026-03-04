@@ -32,4 +32,3 @@ describe("createAccountActionGate", () => {
     expect(gate("send")).toBe(true);
   });
 });
-

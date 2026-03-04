@@ -174,4 +174,3 @@ export type ProviderCommandsConfig = {
   /** Override native skill command registration for this provider (bool or "auto"). */
   nativeSkills?: NativeCommandsSetting;
 };
-

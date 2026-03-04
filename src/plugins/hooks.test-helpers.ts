@@ -47,4 +47,3 @@ export function addTestHook(params: {
     source: "test",
   } as PluginHookRegistration);
 }
-

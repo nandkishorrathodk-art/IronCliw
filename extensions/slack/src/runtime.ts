@@ -12,4 +12,3 @@ export function getSlackRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

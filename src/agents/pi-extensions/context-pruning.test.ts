@@ -424,4 +424,3 @@ describe("context-pruning", () => {
     expect(text).toContain("[Tool result trimmed:");
   });
 });
-

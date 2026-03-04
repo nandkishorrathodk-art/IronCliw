@@ -61,4 +61,3 @@ export function parseLogLine(raw: string): ParsedLogLine | null {
     return null;
   }
 }
-

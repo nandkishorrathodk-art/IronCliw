@@ -12,4 +12,3 @@ export function getFeishuRuntime(): PluginRuntime {
   }
   return runtime;
 }
-

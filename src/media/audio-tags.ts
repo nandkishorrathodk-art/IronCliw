@@ -17,4 +17,3 @@ export function parseAudioTag(text?: string): {
     hadTag: result.hasAudioTag,
   };
 }
-

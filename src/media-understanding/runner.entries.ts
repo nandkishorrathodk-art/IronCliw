@@ -643,4 +643,3 @@ export async function runCliEntry(params: {
     await fs.rm(outputDir, { recursive: true, force: true }).catch(() => {});
   }
 }
-

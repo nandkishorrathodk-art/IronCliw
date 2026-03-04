@@ -68,4 +68,3 @@ export function looksLikeSignalTargetId(raw: string, normalized?: string): boole
 
   return false;
 }
-

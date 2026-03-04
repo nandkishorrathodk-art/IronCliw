@@ -103,4 +103,3 @@ describe("push.test handler", () => {
     expect(call?.[1]).toMatchObject({ ok: true, status: 200 });
   });
 });
-

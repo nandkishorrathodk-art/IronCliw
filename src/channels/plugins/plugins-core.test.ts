@@ -491,4 +491,3 @@ describe("directory (config-backed)", () => {
     expect(whatsAppGroups.map((entry) => entry.id)).toEqual(["111@g.us"]);
   });
 });
-

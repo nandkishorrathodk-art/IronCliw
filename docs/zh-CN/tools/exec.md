@@ -167,4 +167,3 @@ IronCliw config set agents.list[0].tools.exec.node "node-id-or-name"
 - 仅适用于 OpenAI/OpenAI Codex 模型。
 - 工具策略仍然适用；`allow: ["exec"]` 隐式允许 `apply_patch`。
 - 配置位于 `tools.exec.applyPatch` 下。
-

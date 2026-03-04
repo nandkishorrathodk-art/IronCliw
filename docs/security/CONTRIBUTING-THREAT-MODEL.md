@@ -88,4 +88,3 @@ If you're unsure about the risk level, just describe the impact and we'll assess
 ## Recognition
 
 Contributors to the threat model are recognized in the threat model acknowledgments, release notes, and the IronCliw security hall of fame for significant contributions.
-

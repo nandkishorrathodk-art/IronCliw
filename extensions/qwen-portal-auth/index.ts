@@ -132,4 +132,3 @@ const qwenPortalPlugin = {
 };
 
 export default qwenPortalPlugin;
-

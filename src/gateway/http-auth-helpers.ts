@@ -27,4 +27,3 @@ export async function authorizeGatewayBearerRequestOrReply(params: {
   }
   return true;
 }
-

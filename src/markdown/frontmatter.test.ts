@@ -102,4 +102,3 @@ metadata:
     expect(parseFrontmatterBlock(content)).toEqual({});
   });
 });
-

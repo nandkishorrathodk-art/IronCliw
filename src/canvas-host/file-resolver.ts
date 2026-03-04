@@ -48,4 +48,3 @@ export async function resolveFileWithinRoot(
 
   return await tryOpen(rel);
 }
-

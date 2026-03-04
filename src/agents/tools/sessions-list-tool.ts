@@ -256,4 +256,3 @@ export function createSessionsListTool(opts?: {
     },
   };
 }
-

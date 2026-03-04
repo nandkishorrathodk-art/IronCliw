@@ -1169,4 +1169,3 @@ describe("chrome extension relay server", () => {
     await new Promise<void>((resolve) => blocker.close(() => resolve()));
   });
 });
-

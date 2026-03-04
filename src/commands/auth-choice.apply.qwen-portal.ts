@@ -12,4 +12,3 @@ export async function applyAuthChoiceQwenPortal(
     label: "Qwen",
   });
 }
-

@@ -35,4 +35,3 @@ export const healthHandlers: GatewayRequestHandlers = {
     respond(true, status, undefined);
   },
 };
-

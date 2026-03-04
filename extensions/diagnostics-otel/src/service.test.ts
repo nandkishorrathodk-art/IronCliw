@@ -367,4 +367,3 @@ describe("diagnostics-otel service", () => {
     await service.stop?.(ctx);
   });
 });
-

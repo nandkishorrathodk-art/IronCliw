@@ -259,4 +259,3 @@ export function splitMediaFromOutput(raw: string): {
     ...(hasAudioAsVoice ? { audioAsVoice: true } : {}),
   };
 }
-

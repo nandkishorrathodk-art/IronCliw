@@ -197,4 +197,3 @@ export async function writeWideAreaGatewayZone(
   fs.writeFileSync(zonePath, next, "utf-8");
   return { zonePath, changed: true };
 }
-

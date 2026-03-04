@@ -494,4 +494,3 @@ describe("pairing store", () => {
     });
   });
 });
-

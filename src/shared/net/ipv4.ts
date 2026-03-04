@@ -14,4 +14,3 @@ export function validateDottedDecimalIPv4Input(value: string | undefined): strin
 export function validateIPv4AddressInput(value: string | undefined): string | undefined {
   return validateDottedDecimalIPv4Input(value);
 }
-

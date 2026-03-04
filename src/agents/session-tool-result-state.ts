@@ -38,4 +38,3 @@ export function createPendingToolCallState(): PendingToolCallState {
     shouldFlushBeforeNewToolCalls: (toolCallCount: number) => pending.size > 0 && toolCallCount > 0,
   };
 }
-

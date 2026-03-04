@@ -46,4 +46,3 @@ export function buildInboundLine(params: {
     fromMe: msg.fromMe,
   });
 }
-

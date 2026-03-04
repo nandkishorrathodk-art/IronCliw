@@ -103,4 +103,3 @@ describe("registerSubCliCommands", () => {
     expect(acpAction).toHaveBeenCalledTimes(1);
   });
 });
-

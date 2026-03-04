@@ -257,4 +257,3 @@ export function formatThreadStarterEnvelope(params: {
     body: params.body,
   });
 }
-

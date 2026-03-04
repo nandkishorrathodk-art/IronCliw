@@ -211,4 +211,3 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(emptyPrompt).toBe("");
   });
 });
-

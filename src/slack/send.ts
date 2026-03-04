@@ -358,4 +358,3 @@ export async function sendMessageSlack(
     channelId,
   };
 }
-

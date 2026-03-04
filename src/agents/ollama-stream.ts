@@ -529,4 +529,3 @@ export function createOllamaStreamFn(baseUrl: string): StreamFn {
     return stream;
   };
 }
-

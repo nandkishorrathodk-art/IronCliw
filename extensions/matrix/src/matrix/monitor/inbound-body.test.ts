@@ -71,4 +71,3 @@ describe("resolveMatrixBodyForAgent", () => {
     ).toBe("Bu (bu): show me my commits");
   });
 });
-

@@ -100,4 +100,3 @@ export function shouldIncludeSkill(params: {
     isConfigPathTruthy: (configPath) => isConfigPathTruthy(config, configPath),
   });
 }
-

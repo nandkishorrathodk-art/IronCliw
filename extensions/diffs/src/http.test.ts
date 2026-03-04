@@ -198,4 +198,3 @@ function remoteReq(input: { method: string; url: string }): IncomingMessage {
     socket: { remoteAddress: "203.0.113.10" },
   } as unknown as IncomingMessage;
 }
-

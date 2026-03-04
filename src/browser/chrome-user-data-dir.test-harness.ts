@@ -16,4 +16,3 @@ export function installChromeUserDataDirHooks(chromeUserDataDir: ChromeUserDataD
     await fs.rm(chromeUserDataDir.dir, { recursive: true, force: true });
   });
 }
-

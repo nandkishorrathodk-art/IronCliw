@@ -373,4 +373,3 @@ export type BaseTokenResolution = {
   token: string;
   source: string;
 };
-
