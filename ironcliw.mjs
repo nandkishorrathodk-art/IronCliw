@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 import module from "node:module";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const MIN_NODE_MAJOR = 22;
 const MIN_NODE_MINOR = 12;
@@ -51,7 +55,8 @@ const installProcessWarningFilter = async () => {
   // Keep bootstrap warnings consistent with the TypeScript runtime.
   for (const specifier of ["./dist/warning-filter.js", "./dist/warning-filter.mjs"]) {
     try {
-      const mod = await import(specifier);
+      const fullPath = path.join(__dirname, specifier);
+      const mod = await import(`file://${fullPath}`);
       if (typeof mod.installProcessWarningFilter === "function") {
         mod.installProcessWarningFilter();
         return;
@@ -69,7 +74,8 @@ await installProcessWarningFilter();
 
 const tryImport = async (specifier) => {
   try {
-    await import(specifier);
+    const fullPath = path.join(__dirname, specifier);
+    await import(`file://${fullPath}`);
     return true;
   } catch (err) {
     // Only swallow missing-module errors; rethrow real runtime errors.
