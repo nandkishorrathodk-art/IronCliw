@@ -109,6 +109,16 @@ export function createClackPrompter(): WizardPrompter {
         }),
       );
     },
+    password: async (params) => {
+      const validate = params.validate;
+      return guardCancel(
+        await password({
+          message: stylePromptMessage(params.message),
+          mask: params.mask,
+          validate: validate ? (value) => validate(value ?? "") : undefined,
+        }),
+      );
+    },
     confirm: async (params) =>
       guardCancel(
         await confirm({
