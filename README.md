@@ -26,10 +26,30 @@
 [![Node ≥22](https://img.shields.io/badge/Node-%E2%89%A522-00e676.svg)](https://nodejs.org)
 [![Windows](https://img.shields.io/badge/Platform-Windows%2011%2F10-546e7a.svg)](https://www.microsoft.com/windows)
 [![WSL2](https://img.shields.io/badge/WSL2-Supported-008b99.svg)](https://learn.microsoft.com/en-us/windows/wsl/)
-[![Version](https://img.shields.io/badge/Version-2026.0.2-5aeeff.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-2026.0.3-5aeeff.svg)](./CHANGELOG.md)
 [![Built in India](https://img.shields.io/badge/Made%20with%20%E2%9A%A1-India%20%F0%9F%87%AE%F0%9F%87%B3-ff1744.svg)](#)
 
 </div>
+
+---
+
+## 🚀 Upgrade Plan: Project JARVIS (v2026.0.3+)
+
+The evolution from a tool to a living assistant.
+
+### **Phase 1: Zero-Latency Voice (Multimodal Live)** 🎙️
+Integration with **Gemini 2.0 Multimodal Live API**.
+- **Real-time Streaming:** Skip the "Stop-and-Process" delay. Direct audio-to-audio communication.
+- **Natural Response:** JARVIS-like voice output directly through system speakers.
+- **Interruptible Speech:** Talk to the agent while it’s speaking, just like a human.
+
+### **Phase 2: Visual Mastery & Self-Learning** 👁️
+- **Computer Vision (Kimi 2.x):** Operates desktop apps (like Burp Suite) by "seeing" the UI.
+- **Autonomous Tutorials:** Reads documentation/tutorials to learn new software features on the fly.
+
+### **Phase 3: Native OS Dominance** 🦾
+- **Kernel-Level Interaction:** Deep C# Daemon integration for total Windows control.
+- **Proactive Heartbeats:** Agent initiates contact based on system events or pending tasks.
 
 ---
 

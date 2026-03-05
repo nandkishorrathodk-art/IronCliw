@@ -111,7 +111,7 @@ export function printWizardHeader(runtime: RuntimeEnv) {
   runtime.log("");
   art.forEach(line => runtime.log(theme.accent(line)));
   runtime.log("");
-  runtime.log(`  ${theme.cyber(" SYSTEM INITIALIZATION ")} ${theme.accent("🦾 IRONCLIW v2026.0.2")}`);
+  runtime.log(`  ${theme.cyber(" SYSTEM INITIALIZATION ")} ${theme.accent("🦾 IRONCLIW v2026.0.3")}`);
   runtime.log(`  ${theme.muted("  >> The Iron Grip of AI Automation.")}`);
   runtime.log("");
 }

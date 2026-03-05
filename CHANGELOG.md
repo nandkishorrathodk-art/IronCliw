@@ -2,6 +2,13 @@
 
 Docs: https://docs.IronCliw.ai
 
+## 2026.0.3
+
+- **Project JARVIS Roadmap:** Initiated the evolution towards zero-latency multimodal interaction.
+- **Burp Suite Mastery:** Added visual automation and Fireworks Kimi 2.x Vision Engine integration.
+- **Self-Learning:** Implemented Knowledge Base system for autonomous tutorial ingestion.
+- **Modern UI:** Complete rebranding to IronCliw with Neon Cyber theme and 'SYSTEM INITIALIZATION' setup flow.
+
 ## 2026.0.2
 
 ### Changes
