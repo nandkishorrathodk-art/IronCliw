@@ -1,15 +1,15 @@
 import AVFoundation
 import Foundation
-import OpenClawChatUI
-import OpenClawKit
+import IronCliwChatUI
+import IronCliwKit
 import OSLog
 import Speech
 
 actor TalkModeRuntime {
     static let shared = TalkModeRuntime()
 
-    private let logger = Logger(subsystem: "ai.openclaw", category: "talk.runtime")
-    private let ttsLogger = Logger(subsystem: "ai.openclaw", category: "talk.tts")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "talk.runtime")
+    private let ttsLogger = Logger(subsystem: "ai.IronCliw", category: "talk.tts")
     private static let defaultModelIdFallback = "eleven_v3"
     private static let defaultTalkProvider = "elevenlabs"
 
@@ -423,9 +423,9 @@ actor TalkModeRuntime {
         do {
             let history = try await GatewayConnection.shared.chatHistory(sessionKey: sessionKey)
             let messages = history.messages ?? []
-            let decoded: [OpenClawChatMessage] = messages.compactMap { item in
+            let decoded: [IronCliwChatMessage] = messages.compactMap { item in
                 guard let data = try? JSONEncoder().encode(item) else { return nil }
-                return try? JSONDecoder().decode(OpenClawChatMessage.self, from: data)
+                return try? JSONDecoder().decode(IronCliwChatMessage.self, from: data)
             }
             let assistant = decoded.last { message in
                 guard message.role == "assistant" else { return false }

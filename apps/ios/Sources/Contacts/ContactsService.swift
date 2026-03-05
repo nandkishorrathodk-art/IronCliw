@@ -1,6 +1,6 @@
 import Contacts
 import Foundation
-import OpenClawKit
+import IronCliwKit
 
 final class ContactsService: ContactsServicing {
     private static var payloadKeys: [CNKeyDescriptor] {
@@ -14,7 +14,7 @@ final class ContactsService: ContactsServicing {
         ]
     }
 
-    func search(params: OpenClawContactsSearchParams) async throws -> OpenClawContactsSearchPayload {
+    func search(params: IronCliwContactsSearchParams) async throws -> IronCliwContactsSearchPayload {
         let store = try await Self.authorizedStore()
 
         let limit = max(1, min(params.limit ?? 25, 200))
@@ -36,10 +36,10 @@ final class ContactsService: ContactsServicing {
         let sliced = Array(contacts.prefix(limit))
         let payload = sliced.map { Self.payload(from: $0) }
 
-        return OpenClawContactsSearchPayload(contacts: payload)
+        return IronCliwContactsSearchPayload(contacts: payload)
     }
 
-    func add(params: OpenClawContactsAddParams) async throws -> OpenClawContactsAddPayload {
+    func add(params: IronCliwContactsAddParams) async throws -> IronCliwContactsAddPayload {
         let store = try await Self.authorizedStore()
 
         let givenName = params.givenName?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -64,7 +64,7 @@ final class ContactsService: ContactsServicing {
                 phoneNumbers: phoneNumbers,
                 emails: emails)
             {
-                return OpenClawContactsAddPayload(contact: Self.payload(from: existing))
+                return IronCliwContactsAddPayload(contact: Self.payload(from: existing))
             }
         }
 
@@ -95,7 +95,7 @@ final class ContactsService: ContactsServicing {
             persisted = contact
         }
 
-        return OpenClawContactsAddPayload(contact: Self.payload(from: persisted))
+        return IronCliwContactsAddPayload(contact: Self.payload(from: persisted))
     }
 
     private static func ensureAuthorization(store: CNContactStore, status: CNAuthorizationStatus) async -> Bool {
@@ -190,8 +190,8 @@ final class ContactsService: ContactsServicing {
         return normalized.isEmpty ? trimmed : normalized
     }
 
-    private static func payload(from contact: CNContact) -> OpenClawContactPayload {
-        OpenClawContactPayload(
+    private static func payload(from contact: CNContact) -> IronCliwContactPayload {
+        IronCliwContactPayload(
             identifier: contact.identifier,
             displayName: CNContactFormatter.string(from: contact, style: .fullName)
                 ?? "\(contact.givenName) \(contact.familyName)".trimmingCharacters(in: .whitespacesAndNewlines),

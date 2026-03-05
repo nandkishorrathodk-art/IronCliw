@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-    namespace = "ai.openclaw.android"
+    namespace = "ai.IronCliw.android"
     compileSdk = 36
 
     sourceSets {
         getByName("main") {
-            assets.directories.add("../../shared/OpenClawKit/Sources/OpenClawKit/Resources")
+            assets.directories.add("../../shared/IronCliwKit/Sources/IronCliwKit/Resources")
         }
     }
 
     defaultConfig {
-        applicationId = "ai.openclaw.android"
+        applicationId = "ai.IronCliw.android"
         minSdk = 31
         targetSdk = 36
         versionCode = 202603010
@@ -87,7 +87,7 @@ androidComponents {
                 val versionName = output.versionName.orNull ?: "0"
                 val buildType = variant.buildType
 
-                val outputFileName = "openclaw-$versionName-$buildType.apk"
+                val outputFileName = "IronCliw-$versionName-$buildType.apk"
                 output.outputFileName = outputFileName
             }
     }

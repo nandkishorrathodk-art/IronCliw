@@ -10,7 +10,7 @@ public enum LocationCurrentRequest {
     @MainActor
     public static func resolve(
         manager: CLLocationManager,
-        desiredAccuracy: OpenClawLocationAccuracy,
+        desiredAccuracy: IronCliwLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?,
         request: @escaping @Sendable () async throws -> CLLocation,
@@ -31,7 +31,7 @@ public enum LocationCurrentRequest {
         }
     }
 
-    public static func accuracyValue(_ accuracy: OpenClawLocationAccuracy) -> CLLocationAccuracy {
+    public static func accuracyValue(_ accuracy: IronCliwLocationAccuracy) -> CLLocationAccuracy {
         switch accuracy {
         case .coarse:
             kCLLocationAccuracyKilometer

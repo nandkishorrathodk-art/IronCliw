@@ -805,7 +805,7 @@ Monitor gateway logs to see hook execution:
 
 ```bash
 # macOS
-./scripts/clawlog.sh -f
+./scripts/ironlog.sh -f
 
 # Other platforms
 tail -f ~/.IronCliw/gateway.log
@@ -934,7 +934,7 @@ Look for missing:
 3. Check gateway logs for errors:
 
    ```bash
-   ./scripts/clawlog.sh | grep hook
+   ./scripts/ironlog.sh | grep hook
    ```
 
 ### Handler Errors

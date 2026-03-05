@@ -1,4 +1,4 @@
-import OpenClawKit
+import IronCliwKit
 import Foundation
 
 // NOTE: keep this file lightweight; decode must be resilient to varying transcript formats.
@@ -6,14 +6,14 @@ import Foundation
 #if canImport(AppKit)
 import AppKit
 
-public typealias OpenClawPlatformImage = NSImage
+public typealias IronCliwPlatformImage = NSImage
 #elseif canImport(UIKit)
 import UIKit
 
-public typealias OpenClawPlatformImage = UIImage
+public typealias IronCliwPlatformImage = UIImage
 #endif
 
-public struct OpenClawChatUsageCost: Codable, Hashable, Sendable {
+public struct IronCliwChatUsageCost: Codable, Hashable, Sendable {
     public let input: Double?
     public let output: Double?
     public let cacheRead: Double?
@@ -21,12 +21,12 @@ public struct OpenClawChatUsageCost: Codable, Hashable, Sendable {
     public let total: Double?
 }
 
-public struct OpenClawChatUsage: Codable, Hashable, Sendable {
+public struct IronCliwChatUsage: Codable, Hashable, Sendable {
     public let input: Int?
     public let output: Int?
     public let cacheRead: Int?
     public let cacheWrite: Int?
-    public let cost: OpenClawChatUsageCost?
+    public let cost: IronCliwChatUsageCost?
     public let total: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -45,7 +45,7 @@ public struct OpenClawChatUsage: Codable, Hashable, Sendable {
         self.output = try container.decodeIfPresent(Int.self, forKey: .output)
         self.cacheRead = try container.decodeIfPresent(Int.self, forKey: .cacheRead)
         self.cacheWrite = try container.decodeIfPresent(Int.self, forKey: .cacheWrite)
-        self.cost = try container.decodeIfPresent(OpenClawChatUsageCost.self, forKey: .cost)
+        self.cost = try container.decodeIfPresent(IronCliwChatUsageCost.self, forKey: .cost)
         self.total =
             try container.decodeIfPresent(Int.self, forKey: .total) ??
             container.decodeIfPresent(Int.self, forKey: .totalTokens)
@@ -62,7 +62,7 @@ public struct OpenClawChatUsage: Codable, Hashable, Sendable {
     }
 }
 
-public struct OpenClawChatMessageContent: Codable, Hashable, Sendable {
+public struct IronCliwChatMessageContent: Codable, Hashable, Sendable {
     public let type: String?
     public let text: String?
     public let thinking: String?
@@ -135,14 +135,14 @@ public struct OpenClawChatMessageContent: Codable, Hashable, Sendable {
     }
 }
 
-public struct OpenClawChatMessage: Codable, Identifiable, Sendable {
+public struct IronCliwChatMessage: Codable, Identifiable, Sendable {
     public var id: UUID = .init()
     public let role: String
-    public let content: [OpenClawChatMessageContent]
+    public let content: [IronCliwChatMessageContent]
     public let timestamp: Double?
     public let toolCallId: String?
     public let toolName: String?
-    public let usage: OpenClawChatUsage?
+    public let usage: IronCliwChatUsage?
     public let stopReason: String?
 
     enum CodingKeys: String, CodingKey {
@@ -160,11 +160,11 @@ public struct OpenClawChatMessage: Codable, Identifiable, Sendable {
     public init(
         id: UUID = .init(),
         role: String,
-        content: [OpenClawChatMessageContent],
+        content: [IronCliwChatMessageContent],
         timestamp: Double?,
         toolCallId: String? = nil,
         toolName: String? = nil,
-        usage: OpenClawChatUsage? = nil,
+        usage: IronCliwChatUsage? = nil,
         stopReason: String? = nil)
     {
         self.id = id
@@ -187,10 +187,10 @@ public struct OpenClawChatMessage: Codable, Identifiable, Sendable {
         self.toolName =
             try container.decodeIfPresent(String.self, forKey: .toolName) ??
             container.decodeIfPresent(String.self, forKey: .tool_name)
-        self.usage = try container.decodeIfPresent(OpenClawChatUsage.self, forKey: .usage)
+        self.usage = try container.decodeIfPresent(IronCliwChatUsage.self, forKey: .usage)
         self.stopReason = try container.decodeIfPresent(String.self, forKey: .stopReason)
 
-        if let decoded = try? container.decode([OpenClawChatMessageContent].self, forKey: .content) {
+        if let decoded = try? container.decode([IronCliwChatMessageContent].self, forKey: .content) {
             self.content = decoded
             return
         }
@@ -198,7 +198,7 @@ public struct OpenClawChatMessage: Codable, Identifiable, Sendable {
         // Some session log formats store `content` as a plain string.
         if let text = try? container.decode(String.self, forKey: .content) {
             self.content = [
-                OpenClawChatMessageContent(
+                IronCliwChatMessageContent(
                     type: "text",
                     text: text,
                     thinking: nil,
@@ -228,40 +228,40 @@ public struct OpenClawChatMessage: Codable, Identifiable, Sendable {
     }
 }
 
-public struct OpenClawChatHistoryPayload: Codable, Sendable {
+public struct IronCliwChatHistoryPayload: Codable, Sendable {
     public let sessionKey: String
     public let sessionId: String?
     public let messages: [AnyCodable]?
     public let thinkingLevel: String?
 }
 
-public struct OpenClawSessionPreviewItem: Codable, Hashable, Sendable {
+public struct IronCliwSessionPreviewItem: Codable, Hashable, Sendable {
     public let role: String
     public let text: String
 }
 
-public struct OpenClawSessionPreviewEntry: Codable, Sendable {
+public struct IronCliwSessionPreviewEntry: Codable, Sendable {
     public let key: String
     public let status: String
-    public let items: [OpenClawSessionPreviewItem]
+    public let items: [IronCliwSessionPreviewItem]
 }
 
-public struct OpenClawSessionsPreviewPayload: Codable, Sendable {
+public struct IronCliwSessionsPreviewPayload: Codable, Sendable {
     public let ts: Int
-    public let previews: [OpenClawSessionPreviewEntry]
+    public let previews: [IronCliwSessionPreviewEntry]
 
-    public init(ts: Int, previews: [OpenClawSessionPreviewEntry]) {
+    public init(ts: Int, previews: [IronCliwSessionPreviewEntry]) {
         self.ts = ts
         self.previews = previews
     }
 }
 
-public struct OpenClawChatSendResponse: Codable, Sendable {
+public struct IronCliwChatSendResponse: Codable, Sendable {
     public let runId: String
     public let status: String
 }
 
-public struct OpenClawChatEventPayload: Codable, Sendable {
+public struct IronCliwChatEventPayload: Codable, Sendable {
     public let runId: String?
     public let sessionKey: String?
     public let state: String?
@@ -269,7 +269,7 @@ public struct OpenClawChatEventPayload: Codable, Sendable {
     public let errorMessage: String?
 }
 
-public struct OpenClawAgentEventPayload: Codable, Sendable, Identifiable {
+public struct IronCliwAgentEventPayload: Codable, Sendable, Identifiable {
     public var id: String { "\(self.runId)-\(self.seq ?? -1)" }
     public let runId: String
     public let seq: Int?
@@ -278,7 +278,7 @@ public struct OpenClawAgentEventPayload: Codable, Sendable, Identifiable {
     public let data: [String: AnyCodable]
 }
 
-public struct OpenClawChatPendingToolCall: Identifiable, Hashable, Sendable {
+public struct IronCliwChatPendingToolCall: Identifiable, Hashable, Sendable {
     public var id: String { self.toolCallId }
     public let toolCallId: String
     public let name: String
@@ -287,18 +287,18 @@ public struct OpenClawChatPendingToolCall: Identifiable, Hashable, Sendable {
     public let isError: Bool?
 }
 
-public struct OpenClawGatewayHealthOK: Codable, Sendable {
+public struct IronCliwGatewayHealthOK: Codable, Sendable {
     public let ok: Bool?
 }
 
-public struct OpenClawPendingAttachment: Identifiable {
+public struct IronCliwPendingAttachment: Identifiable {
     public let id = UUID()
     public let url: URL?
     public let data: Data
     public let fileName: String
     public let mimeType: String
     public let type: String
-    public let preview: OpenClawPlatformImage?
+    public let preview: IronCliwPlatformImage?
 
     public init(
         url: URL?,
@@ -306,7 +306,7 @@ public struct OpenClawPendingAttachment: Identifiable {
         fileName: String,
         mimeType: String,
         type: String = "file",
-        preview: OpenClawPlatformImage?)
+        preview: IronCliwPlatformImage?)
     {
         self.url = url
         self.data = data
@@ -317,7 +317,7 @@ public struct OpenClawPendingAttachment: Identifiable {
     }
 }
 
-public struct OpenClawChatAttachmentPayload: Codable, Sendable, Hashable {
+public struct IronCliwChatAttachmentPayload: Codable, Sendable, Hashable {
     public let type: String
     public let mimeType: String
     public let fileName: String

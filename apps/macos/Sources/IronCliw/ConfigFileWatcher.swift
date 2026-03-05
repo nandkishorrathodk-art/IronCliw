@@ -17,7 +17,7 @@ final class ConfigFileWatcher: @unchecked Sendable, SimpleFileWatcherOwner {
         let targetName = self.targetName
         self.watcher = SimpleFileWatcher(CoalescingFSEventsWatcher(
             paths: [watchedDirPath],
-            queueLabel: "ai.openclaw.configwatcher",
+            queueLabel: "ai.IronCliw.configwatcher",
             shouldNotify: { _, eventPaths in
                 guard let eventPaths else { return true }
                 let paths = unsafeBitCast(eventPaths, to: NSArray.self)

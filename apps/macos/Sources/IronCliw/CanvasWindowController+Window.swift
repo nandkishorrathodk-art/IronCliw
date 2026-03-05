@@ -1,5 +1,5 @@
 import AppKit
-import OpenClawIPC
+import IronCliwIPC
 
 extension CanvasWindowController {
     // MARK: - Window
@@ -12,7 +12,7 @@ extension CanvasWindowController {
                 styleMask: [.titled, .closable, .resizable, .miniaturizable],
                 backing: .buffered,
                 defer: false)
-            window.title = "OpenClaw Canvas"
+            window.title = "IronCliw Canvas"
             window.isReleasedWhenClosed = false
             window.contentView = contentView
             window.center()

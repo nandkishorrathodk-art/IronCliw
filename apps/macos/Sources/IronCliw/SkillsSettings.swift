@@ -1,5 +1,5 @@
 import Observation
-import OpenClawProtocol
+import IronCliwProtocol
 import SwiftUI
 
 struct SkillsSettings: View {
@@ -225,15 +225,15 @@ private struct SkillRow: View {
 
     private var sourceLabel: String {
         switch self.skill.source {
-        case "openclaw-bundled":
+        case "IronCliw-bundled":
             "Bundled"
-        case "openclaw-managed":
+        case "IronCliw-managed":
             "Managed"
-        case "openclaw-workspace":
+        case "IronCliw-workspace":
             "Workspace"
-        case "openclaw-extra":
+        case "IronCliw-extra":
             "Extra"
-        case "openclaw-plugin":
+        case "IronCliw-plugin":
             "Plugin"
         default:
             self.skill.source
@@ -573,7 +573,7 @@ extension SkillsSettings {
         let skill = SkillStatus(
             name: "Test Skill",
             description: "Test description",
-            source: "openclaw-bundled",
+            source: "IronCliw-bundled",
             filePath: "/tmp/skills/test",
             baseDir: "/tmp/skills",
             skillKey: "test",

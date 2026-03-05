@@ -52,7 +52,6 @@ const isModuleNotFoundError = (err) =>
   err && typeof err === "object" && "code" in err && err.code === "ERR_MODULE_NOT_FOUND";
 
 const installProcessWarningFilter = async () => {
-  // Keep bootstrap warnings consistent with the TypeScript runtime.
   for (const specifier of ["./dist/warning-filter.js", "./dist/warning-filter.mjs"]) {
     try {
       const fullPath = path.join(__dirname, specifier);
@@ -74,15 +73,16 @@ await installProcessWarningFilter();
 
 const tryImport = async (specifier) => {
   try {
-    const fullPath = path.join(__dirname, specifier);
+    const fullPath = path.resolve(__dirname, specifier);
     await import(`file://${fullPath}`);
     return true;
   } catch (err) {
-    // Only swallow missing-module errors; rethrow real runtime errors.
     if (isModuleNotFoundError(err)) {
       return false;
     }
-    throw err;
+    // Log the actual error instead of swallowing it silently
+    console.error("Failed to load IronCliw:", err);
+    process.exit(1);
   }
 };
 
@@ -91,5 +91,6 @@ if (await tryImport("./dist/index.js")) {
 } else if (await tryImport("./dist/index.mjs")) {
   // OK
 } else {
-  throw new Error("IronCliw: missing dist/index.(m)js (build output).");
+  console.error("IronCliw: missing dist/index.js (build output). Please run 'pnpm build' first.");
+  process.exit(1);
 }

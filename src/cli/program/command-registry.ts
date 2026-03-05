@@ -123,6 +123,19 @@ const coreEntries: CoreCliEntry[] = [
   {
     commands: [
       {
+        name: "burp",
+        description: "Burp Suite Professional integration and visual automation",
+        hasSubcommands: true,
+      },
+    ],
+    register: async ({ program }) => {
+      const mod = await import("./register.burp.js");
+      mod.registerBurpCommand(program);
+    },
+  },
+  {
+    commands: [
+      {
         name: "message",
         description: "Send, read, and manage messages",
         hasSubcommands: true,

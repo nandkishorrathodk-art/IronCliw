@@ -1,8 +1,8 @@
 import Cocoa
 import Foundation
 import Observation
-import OpenClawKit
-import OpenClawProtocol
+import IronCliwKit
+import IronCliwProtocol
 import OSLog
 
 struct InstanceInfo: Identifiable, Codable {
@@ -41,7 +41,7 @@ final class InstancesStore {
     var statusMessage: String?
     var isLoading = false
 
-    private let logger = Logger(subsystem: "ai.openclaw", category: "instances")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "instances")
     private var task: Task<Void, Never>?
     private let interval: TimeInterval = 30
     private var eventTask: Task<Void, Never>?
@@ -231,7 +231,7 @@ final class InstancesStore {
         }
     }
 
-    func handlePresenceEventPayload(_ payload: OpenClawProtocol.AnyCodable) {
+    func handlePresenceEventPayload(_ payload: IronCliwProtocol.AnyCodable) {
         do {
             let wrapper = try GatewayPayloadDecoding.decode(payload, as: PresenceEventPayload.self)
             self.applyPresence(wrapper.presence)

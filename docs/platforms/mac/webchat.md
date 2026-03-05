@@ -24,7 +24,7 @@ agent (with a session switcher for other sessions).
   dist/IronCliw.app/Contents/MacOS/IronCliw --webchat
   ```
 
-- Logs: `./scripts/clawlog.sh` (subsystem `ai.IronCliw`, category `WebChatSwiftUI`).
+- Logs: `./scripts/ironlog.sh` (subsystem `ai.IronCliw`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

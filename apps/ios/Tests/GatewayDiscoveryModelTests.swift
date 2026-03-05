@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import IronCliw
 
 @Suite(.serialized) struct GatewayDiscoveryModelTests {
     @Test @MainActor func debugLoggingCapturesLifecycleAndResets() {

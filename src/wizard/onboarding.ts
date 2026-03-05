@@ -484,6 +484,10 @@ export async function runOnboardingWizard(
   const { setupInternalHooks } = await import("../commands/onboard-hooks.js");
   nextConfig = await setupInternalHooks(nextConfig, runtime, prompter);
 
+  // Setup security tools (Burp Suite)
+  const { setupSecurityTools } = await import("../commands/onboard-security.js");
+  await setupSecurityTools(runtime, prompter);
+
   nextConfig = onboardHelpers.applyWizardMetadata(nextConfig, { command: "onboard", mode });
   await writeConfigFile(nextConfig);
 

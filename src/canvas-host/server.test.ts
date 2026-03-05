@@ -275,8 +275,15 @@ describe("canvas host", () => {
       createdBundle = true;
     }
 
-    await fs.symlink(path.join(process.cwd(), "package.json"), linkPath);
-    createdLink = true;
+    try {
+      await fs.symlink(path.join(process.cwd(), "package.json"), linkPath);
+      createdLink = true;
+    } catch (err) {
+      if (process.platform === "win32" && (err as any).code === "EPERM") {
+        return;
+      }
+      throw err;
+    }
 
     const server = await startFixtureCanvasHost(dir);
 

@@ -2,10 +2,11 @@ import { formatCliCommand } from "../cli/command-format.js";
 import type { PortListener, PortListenerKind, PortUsage } from "./ports-types.js";
 
 export function classifyPortListener(listener: PortListener, port: number): PortListenerKind {
-  const raw = `${listener.commandLine ?? ""} ${listener.command ?? ""}`.trim().toLowerCase();
-  if (raw.includes("IronCliw")) {
+  const commandLine = `${listener.commandLine ?? ""} ${listener.command ?? ""}`.trim();
+  if (/IronCliw/i.test(commandLine)) {
     return "gateway";
   }
+  const raw = commandLine.toLowerCase();
   if (raw.includes("ssh")) {
     const portToken = String(port);
     const tunnelPattern = new RegExp(

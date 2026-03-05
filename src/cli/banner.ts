@@ -61,8 +61,8 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   const commitLabel = commit ?? "unknown";
   const tagline = pickTagline({ ...options, mode: resolveTaglineMode(options) });
   const rich = options.richTty ?? isRich();
-  const title = "🦞 IronCliw";
-  const prefix = "🦞 ";
+  const title = "🦾 IronCliw";
+  const prefix = "🦾 ";
   const columns = options.columns ?? process.stdout.columns ?? 120;
   const plainBaseLine = `${title} ${version} (${commitLabel})`;
   const plainFullLine = tagline ? `${plainBaseLine} — ${tagline}` : plainBaseLine;
@@ -96,45 +96,33 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   return `${line1}\n${line2}`;
 }
 
-const LOBSTER_ASCII = [
-  "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
-  "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██",
-  "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
-  "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
-  "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
-  "                  🦞 IronCliw 🦞                    ",
+const IRONCLIW_ASCII = [
+  "  ___ ____   ___  _   _  ____ _     _____        __ ",
+  " |_ _|  _ \\ / _ \\| \\ | |/ ___| |   |_ _\\ \\      / / ",
+  "  | || |_) | | | |  \\| | |   | |    | | \\ \\ /\\ / /  ",
+  "  | ||  _ <| |_| | |\\  | |___| |___ | |  \\ V  V /   ",
+  " |___|_| \\_\\\\___/|_| \\_|\\____|_____|___|  \\_/\\_/    ",
+  "                                                    ",
+  "                  🦾 IronCliw 🦾                    ",
   " ",
 ];
 
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
   if (!rich) {
-    return LOBSTER_ASCII.join("\n");
+    return IRONCLIW_ASCII.join("\n");
   }
 
-  const colorChar = (ch: string) => {
-    if (ch === "█") {
-      return theme.accentBright(ch);
-    }
-    if (ch === "░") {
-      return theme.accentDim(ch);
-    }
-    if (ch === "▀") {
-      return theme.accent(ch);
-    }
-    return theme.muted(ch);
-  };
-
-  const colored = LOBSTER_ASCII.map((line) => {
+  const colored = IRONCLIW_ASCII.map((line) => {
     if (line.includes("IronCliw")) {
       return (
         theme.muted("              ") +
-        theme.accent("🦞") +
+        theme.accent("🦾") +
         theme.info(" IronCliw ") +
-        theme.accent("🦞")
+        theme.accent("🦾")
       );
     }
-    return splitGraphemes(line).map(colorChar).join("");
+    return theme.accent(line);
   });
 
   return colored.join("\n");

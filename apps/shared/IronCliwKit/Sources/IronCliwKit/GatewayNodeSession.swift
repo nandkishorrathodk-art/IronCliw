@@ -1,4 +1,4 @@
-import OpenClawProtocol
+import IronCliwProtocol
 import Foundation
 import OSLog
 
@@ -13,7 +13,7 @@ private struct NodeInvokeRequestPayload: Codable, Sendable {
 
 
 public actor GatewayNodeSession {
-    private let logger = Logger(subsystem: "ai.openclaw", category: "node.gateway")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "node.gateway")
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private static let defaultInvokeTimeoutMs = 30_000
@@ -36,7 +36,7 @@ public actor GatewayNodeSession {
         timeoutMs: Int?,
         onInvoke: @escaping @Sendable (BridgeInvokeRequest) async -> BridgeInvokeResponse
     ) async -> BridgeInvokeResponse {
-        let timeoutLogger = Logger(subsystem: "ai.openclaw", category: "node.gateway")
+        let timeoutLogger = Logger(subsystem: "ai.IronCliw", category: "node.gateway")
         let timeout: Int = {
             if let timeoutMs { return max(0, timeoutMs) }
             return Self.defaultInvokeTimeoutMs
@@ -97,7 +97,7 @@ public actor GatewayNodeSession {
                 latch.resume(BridgeInvokeResponse(
                     id: request.id,
                     ok: false,
-                    error: OpenClawNodeError(
+                    error: IronCliwNodeError(
                         code: .unavailable,
                         message: "node invoke timed out")
                 ))
@@ -366,7 +366,7 @@ public actor GatewayNodeSession {
         }
     }
 
-    private func decodeInvokeRequest(from payload: OpenClawProtocol.AnyCodable) throws -> NodeInvokeRequestPayload {
+    private func decodeInvokeRequest(from payload: IronCliwProtocol.AnyCodable) throws -> NodeInvokeRequestPayload {
         do {
             let data = try self.encoder.encode(payload)
             return try self.decoder.decode(NodeInvokeRequestPayload.self, from: data)

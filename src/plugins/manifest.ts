@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { MANIFEST_KEY } from "../compat/legacy-names.js";
+import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { isRecord } from "../utils.js";
 import type { PluginConfigUiHint, PluginKind } from "./types.js";
@@ -178,7 +178,14 @@ export function getPackageManifestMetadata(
   if (!manifest) {
     return undefined;
   }
-  return manifest[MANIFEST_KEY];
+  const keys = [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS];
+  for (const key of keys) {
+    const section = manifest[key as ManifestKey];
+    if (section && typeof section === "object") {
+      return section as IronCliwPackageManifest;
+    }
+  }
+  return undefined;
 }
 
 export function resolvePackageExtensionEntries(

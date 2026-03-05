@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { MANIFEST_KEY } from "../compat/legacy-names.js";
+import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
 import type { IronCliwConfig } from "../config/config.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -24,7 +24,7 @@ import type {
 
 type HookPackageManifest = {
   name?: string;
-} & Partial<Record<typeof MANIFEST_KEY, { hooks?: string[] }>>;
+} & Record<string, any>;
 const log = createSubsystemLogger("hooks/workspace");
 
 function filterHookEntries(
@@ -53,7 +53,13 @@ function readHookPackageManifest(dir: string): HookPackageManifest | null {
 }
 
 function resolvePackageHooks(manifest: HookPackageManifest): string[] {
-  const raw = manifest[MANIFEST_KEY]?.hooks;
+  let raw: unknown;
+  for (const key of [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS]) {
+    if (manifest[key] && typeof manifest[key] === "object") {
+      raw = manifest[key].hooks;
+      if (raw !== undefined) break;
+    }
+  }
   if (!Array.isArray(raw)) {
     return [];
   }

@@ -1235,7 +1235,7 @@ describe("registerSlackInteractionEvents", () => {
         expect.objectContaining({
           actionId: "url_input",
           inputKind: "url",
-          inputUrl: "https://docs.IronCliw.ai/",
+          "inputUrl": "https://docs.IronCliw.ai",
         }),
         expect.objectContaining({
           actionId: "richtext_input",

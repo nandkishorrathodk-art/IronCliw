@@ -37,14 +37,14 @@
 
 IronCliw is a specialized derivative work that builds upon the foundation of an industry-leading AI gateway.
 
-- **Original Project:** [OpenClaw](https://github.com/openclaw/openclaw) — A cross-platform AI agent system created by [Peter Steinberger](https://steipete.me).
+- **Original Project:** [IronCliw](https://github.com/IronCliw/IronCliw) — A cross-platform AI agent system created by [Peter Steinberger](https://steipete.me).
 - **Modified Version:** **IronCliw** — A dedicated Windows-native port and heavy modification by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art), engineered for security researchers and power users.
 
 ---
 
 ## ⚡ What is IronCliw?
 
-**IronCliw** is a **Windows-native port and heavy modification** of the OpenClaw AI agent gateway. While the original was designed to be cross-platform and casual-user friendly, IronCliw is built as a **precision weapon** — tuned exclusively for:
+**IronCliw** is a **Windows-native port and heavy modification** of the IronCliw AI agent gateway. While the original was designed to be cross-platform and casual-user friendly, IronCliw is built as a **precision weapon** — tuned exclusively for:
 
 - 🪟 **Native Windows 11/10** environments (with WSL2 + PowerShell integration)
 - ☠️ **Bug Bounty hunters** who need an autonomous AI recon co-pilot
@@ -55,9 +55,9 @@ IronCliw is a specialized derivative work that builds upon the foundation of an 
 
 ---
 
-## 🆚 IronCliw vs OpenClaw
+## 🆚 IronCliw vs IronCliw
 
-| Feature                | Original (OpenClaw) | **Modified (IronCliw)** 🛡️          |
+| Feature                | Original (IronCliw) | **Modified (IronCliw)** 🛡️          |
 | ---------------------- | ------------------- | ----------------------------------- |
 | Bug Bounty Protocol    | ✗ None              | ✅ Built-In (6-phase)               |
 | PowerShell Integration | ✗ Basic cmd.exe     | ✅ Native `-ExecutionPolicy Bypass` |
@@ -105,13 +105,13 @@ IronCliw operates on a **3-Tier Architecture** designed for maximum Windows perf
 
 ```powershell
 # Install globally
-npm install -g ironcliw
+npm install -g IronCliw
 
 # Run the onboarding wizard
-ironcliw onboard
+IronCliw onboard
 
 # Start your gateway
-ironcliw gateway start
+IronCliw gateway start
 ```
 
 > Gateway will be live at → `http://127.0.0.1:18789`
@@ -133,7 +133,7 @@ pnpm ui:build
 pnpm build
 
 # Onboard
-pnpm ironcliw onboard --install-daemon
+pnpm IronCliw onboard --install-daemon
 
 # Dev loop (hot-reload on TypeScript changes)
 pnpm gateway:watch
@@ -146,7 +146,7 @@ pnpm gateway:watch
 IronCliw has a **built-in 6-phase Bug Bounty Protocol**. Trigger a full recon with a single command:
 
 ```
-ironcliw, footprint target.com
+IronCliw, footprint target.com
 ```
 
 This automatically chains:
@@ -204,8 +204,8 @@ MIT License
 
 Copyright (c) 2026 Nandkishor Rathod (Windows Port & IronCliw Modifications)
 
-This project is a heavily modified Windows port and extension of OpenClaw
-(https://github.com/openclaw/openclaw), originally created by Peter Steinberger.
+This project is a heavily modified Windows port and extension of IronCliw
+(https://github.com/IronCliw/IronCliw), originally created by Peter Steinberger.
 
 Modifications by Nandkishor Rathod include:
   1. Native Windows API Integration via C# Interop (IronCliwDaemon)
@@ -213,7 +213,7 @@ Modifications by Nandkishor Rathod include:
   3. PowerShell-first Execution Engine with God Mode
   4. Custom UI/UX Dashboard for Cybersecurity Recon
 
-Original OpenClaw is MIT Licensed. This derivative work is also MIT Licensed.
+Original IronCliw is MIT Licensed. This derivative work is also MIT Licensed.
 Full license text: ./LICENSE
 ```
 
@@ -223,8 +223,8 @@ Full license text: ./LICENSE
 
 This project stands on the shoulders of giants:
 
-- **[Peter Steinberger](https://steipete.me)** — Creator of OpenClaw (Original Architecture)
-- **The OpenClaw Community** — Original framework development
+- **[Peter Steinberger](https://steipete.me)** — Creator of IronCliw (Original Architecture)
+- **The IronCliw Community** — Original framework development
 - **[Mario Zechner](https://github.com/badlogic)** — pi-mono support
 
 ---
@@ -235,6 +235,6 @@ This project stands on the shoulders of giants:
 
 _"The Iron Grip of AI Automation."_
 
-[🌐 Website](https://ironcliw.ai) · [📖 Docs](./docs) · [☠️ Bug Bounty Guide](./BUGBOUNTY_SETUP.md) · [🔒 Security](./SECURITY.md)
+[🌐 Website](https://IronCliw.ai) · [📖 Docs](./docs) · [☠️ Bug Bounty Guide](./BUGBOUNTY_SETUP.md) · [🔒 Security](./SECURITY.md)
 
 </div>

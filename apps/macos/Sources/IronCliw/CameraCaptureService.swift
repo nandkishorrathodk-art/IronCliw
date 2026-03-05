@@ -1,8 +1,8 @@
 import AVFoundation
 import CoreGraphics
 import Foundation
-import OpenClawIPC
-import OpenClawKit
+import IronCliwIPC
+import IronCliwKit
 import OSLog
 
 actor CameraCaptureService {
@@ -36,7 +36,7 @@ actor CameraCaptureService {
         }
     }
 
-    private let logger = Logger(subsystem: "ai.openclaw", category: "camera")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "camera")
 
     func listDevices() -> [CameraDeviceInfo] {
         Self.availableCameras().map { device in
@@ -138,7 +138,7 @@ actor CameraCaptureService {
         defer { session.stopRunning() }
 
         let tmpMovURL = FileManager().temporaryDirectory
-            .appendingPathComponent("openclaw-camera-\(UUID().uuidString).mov")
+            .appendingPathComponent("IronCliw-camera-\(UUID().uuidString).mov")
         defer { try? FileManager().removeItem(at: tmpMovURL) }
 
         let outputURL: URL = {
@@ -146,7 +146,7 @@ actor CameraCaptureService {
                 return URL(fileURLWithPath: outPath)
             }
             return FileManager().temporaryDirectory
-                .appendingPathComponent("openclaw-camera-\(UUID().uuidString).mp4")
+                .appendingPathComponent("IronCliw-camera-\(UUID().uuidString).mp4")
         }()
         // Ensure we don't fail exporting due to an existing file.
         try? FileManager().removeItem(at: outputURL)

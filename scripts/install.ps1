@@ -14,11 +14,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 # Colors
-$ACCENT = "`e[38;2;255;77;77m"    # coral-bright
-$SUCCESS = "`e[38;2;0;229;204m"    # cyan-bright
-$WARN = "`e[38;2;255;176;32m"     # amber
-$ERROR = "`e[38;2;230;57;70m"     # coral-mid
-$MUTED = "`e[38;2;90;100;128m"    # text-muted
+$ACCENT = "`e[38;2;0;229;255m"    # Neon Cyan
+$SUCCESS = "`e[38;2;0;230;118m"   # Neon Green
+$WARN = "`e[38;2;255;196;0m"      # Gold
+$ERROR = "`e[38;2;255;23;68m"     # Neon Red
+$MUTED = "`e[38;2;84;110;122m"    # Slate Gray
 $NC = "`e[0m"                     # No Color
 
 function Write-Host {
@@ -34,8 +34,14 @@ function Write-Host {
 
 function Write-Banner {
     Write-Host ""
-    Write-Host "${ACCENT}  🦞 IronCliw Installer$NC" -Level info
-    Write-Host "${MUTED}  All your chats, one IronCliw.$NC" -Level info
+    Write-Host "${ACCENT}  ___ ____   ___  _   _  ____ _     _____        __ $NC" -Level info
+    Write-Host "${ACCENT} |_ _|  _ \ / _ \| \ | |/ ___| |   |_ _\ \      / / $NC" -Level info
+    Write-Host "${ACCENT}  | || |_) | | | |  \| | |   | |    | | \ \ /\ / /  $NC" -Level info
+    Write-Host "${ACCENT}  | ||  _ <| |_| | |\  | |___| |___ | |  \ V  V /   $NC" -Level info
+    Write-Host "${ACCENT} |___|_| \_\\___/|_| \_|\____|_____|___|  \_/\_/    $NC" -Level info
+    Write-Host ""
+    Write-Host "${ACCENT}                  🦾 IronCliw Installer$NC" -Level info
+    Write-Host "${MUTED}                  The Iron Grip of AI Automation.$NC" -Level info
     Write-Host ""
 }
 
@@ -323,7 +329,7 @@ function Main {
     }
     
     Write-Host ""
-    Write-Host "🦞 IronCliw installed successfully!" -Level success
+    Write-Host "🦾 IronCliw installed successfully!" -Level success
 }
 
 Main

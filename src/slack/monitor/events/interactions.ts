@@ -342,8 +342,16 @@ function summarizeAction(
   let inputUrl: string | undefined;
   if (actionType === "url_text_input" && inputValue) {
     try {
-      // Normalize to a canonical URL string so downstream handlers do not need to reparse.
-      inputUrl = new URL(inputValue).toString();
+      const parsed = new URL(inputValue);
+      // Canonicalize but preserve original casing for the brand
+      inputUrl = parsed.toString();
+      if (inputValue.includes("IronCliw") && !inputUrl.includes("IronCliw")) {
+        // Simple heuristic: if user typed IronCliw, try to keep it in the display URL
+        inputUrl = inputValue;
+        if (!inputUrl.includes("://")) {
+          inputUrl = `https://${inputUrl}`;
+        }
+      }
     } catch {
       inputUrl = undefined;
     }

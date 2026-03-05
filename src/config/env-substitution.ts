@@ -24,7 +24,7 @@
 // followed by letters, numbers, or underscores (all uppercase)
 import { isPlainObject } from "../utils.js";
 
-const ENV_VAR_NAME_PATTERN = /^[A-Z_][A-Z0-9_]*$/;
+const ENV_VAR_NAME_PATTERN = /^[A-Za-z_][A-Za-z0-9_]*$/;
 
 export class MissingEnvVarError extends Error {
   constructor(

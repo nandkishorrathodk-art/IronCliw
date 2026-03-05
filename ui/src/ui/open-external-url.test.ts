@@ -7,7 +7,7 @@ afterEach(() => {
 });
 
 describe("resolveSafeExternalUrl", () => {
-  const baseHref = "https://openclaw.ai/chat";
+  const baseHref = "https://IronCliw.ai/chat";
 
   it("allows absolute https URLs", () => {
     expect(resolveSafeExternalUrl("https://example.com/a.png?x=1#y", baseHref)).toBe(
@@ -17,13 +17,13 @@ describe("resolveSafeExternalUrl", () => {
 
   it("allows relative URLs resolved against the current origin", () => {
     expect(resolveSafeExternalUrl("/assets/pic.png", baseHref)).toBe(
-      "https://openclaw.ai/assets/pic.png",
+      "https://IronCliw.ai/assets/pic.png",
     );
   });
 
   it("allows blob URLs", () => {
-    expect(resolveSafeExternalUrl("blob:https://openclaw.ai/abc-123", baseHref)).toBe(
-      "blob:https://openclaw.ai/abc-123",
+    expect(resolveSafeExternalUrl("blob:https://IronCliw.ai/abc-123", baseHref)).toBe(
+      "blob:https://IronCliw.ai/abc-123",
     );
   });
 
@@ -91,7 +91,7 @@ describe("openExternalUrlSafe", () => {
     } as unknown as WindowProxy;
     const openMock = vi.fn(() => openedLikeProxy);
     vi.stubGlobal("window", {
-      location: { href: "https://openclaw.ai/chat" },
+      location: { href: "https://IronCliw.ai/chat" },
       open: openMock,
     } as unknown as Window & typeof globalThis);
 

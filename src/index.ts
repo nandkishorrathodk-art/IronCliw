@@ -74,6 +74,12 @@ export {
 
 const isMain = isMainModule({
   currentFile: fileURLToPath(import.meta.url),
+  wrapperEntryPairs: [
+    { wrapperBasename: "IronCliw.mjs", entryBasename: "index.js" },
+    { wrapperBasename: "IronCliw.js", entryBasename: "index.js" },
+    { wrapperBasename: "ironcliw.mjs", entryBasename: "index.js" },
+    { wrapperBasename: "ironcliw.js", entryBasename: "index.js" },
+  ],
 });
 
 if (isMain) {

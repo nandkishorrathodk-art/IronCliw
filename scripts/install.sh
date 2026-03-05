@@ -5,17 +5,17 @@ set -euo pipefail
 # Usage: curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash
 
 BOLD='\033[1m'
-ACCENT='\033[38;2;255;77;77m'       # coral-bright  #ff4d4d
+ACCENT='\033[38;2;0;229;255m'       # Neon Cyan
 # shellcheck disable=SC2034
-ACCENT_BRIGHT='\033[38;2;255;110;110m' # lighter coral
-INFO='\033[38;2;136;146;176m'       # text-secondary #8892b0
-SUCCESS='\033[38;2;0;229;204m'      # cyan-bright   #00e5cc
-WARN='\033[38;2;255;176;32m'        # amber (no site equiv, keep warm)
-ERROR='\033[38;2;230;57;70m'        # coral-mid     #e63946
-MUTED='\033[38;2;90;100;128m'       # text-muted    #5a6480
+ACCENT_BRIGHT='\033[38;2;90;238;255m' # lighter cyan
+INFO='\033[38;2;176;190;197m'       # Silver
+SUCCESS='\033[38;2;0;230;118m'      # Neon Green
+WARN='\033[38;2;255;196;0m'         # Gold
+ERROR='\033[38;2;255;23;68m'        # Neon Red
+MUTED='\033[38;2;84;110;122m'       # Slate Gray
 NC='\033[0m' # No Color
 
-DEFAULT_TAGLINE="All your chats, one IronCliw."
+DEFAULT_TAGLINE="The Iron Grip of AI Automation."
 NODE_MIN_MAJOR=22
 NODE_MIN_MINOR=12
 NODE_MIN_VERSION="${NODE_MIN_MAJOR}.${NODE_MIN_MINOR}"
@@ -235,17 +235,17 @@ print_gum_status() {
 print_installer_banner() {
     if [[ -n "$GUM" ]]; then
         local title tagline hint card
-        title="$("$GUM" style --foreground "#ff4d4d" --bold "🦞 IronCliw Installer")"
-        tagline="$("$GUM" style --foreground "#8892b0" "$TAGLINE")"
-        hint="$("$GUM" style --foreground "#5a6480" "modern installer mode")"
+        title="$("$GUM" style --foreground "#00e5ff" --bold "🦾 IronCliw Installer")"
+        tagline="$("$GUM" style --foreground "#b0bec5" "$TAGLINE")"
+        hint="$("$GUM" style --foreground "#546e7a" "modern installer mode")"
         card="$(printf '%s\n%s\n%s' "$title" "$tagline" "$hint")"
-        "$GUM" style --border rounded --border-foreground "#ff4d4d" --padding "1 2" "$card"
+        "$GUM" style --border rounded --border-foreground "#00e5ff" --padding "1 2" "$card"
         echo ""
         return
     fi
 
     echo -e "${ACCENT}${BOLD}"
-    echo "  🦞 IronCliw Installer"
+    echo "  🦾 IronCliw Installer"
     echo -e "${NC}${INFO}  ${TAGLINE}${NC}"
     echo ""
 }
@@ -2306,21 +2306,21 @@ main() {
 
     echo ""
     if [[ -n "$installed_version" ]]; then
-        ui_celebrate "🦞 IronCliw installed successfully (${installed_version})!"
+        ui_celebrate "🦾 IronCliw installed successfully (${installed_version})!"
     else
-        ui_celebrate "🦞 IronCliw installed successfully!"
+        ui_celebrate "🦾 IronCliw installed successfully!"
     fi
     if [[ "$is_upgrade" == "true" ]]; then
         local update_messages=(
             "Leveled up! New skills unlocked. You're welcome."
-            "Fresh code, same lobster. Miss me?"
+            "Fresh code, same steel. Miss me?"
             "Back and better. Did you even notice I was gone?"
             "Update complete. I learned some new tricks while I was out."
-            "Upgraded! Now with 23% more sass."
-            "I've evolved. Try to keep up. 🦞"
+            "Upgraded! Now with 23% more processing power."
+            "I've evolved. Try to keep up. 🦾"
             "New version, who dis? Oh right, still me but shinier."
-            "Patched, polished, and ready to pinch. Let's go."
-            "The lobster has molted. Harder shell, sharper claws."
+            "Patched, polished, and ready to automate. Let's go."
+            "The iron has been reforged. Harder shell, sharper logic."
             "Update done! Check the changelog or just trust me, it's good."
             "Reborn from the boiling waters of npm. Stronger now."
             "I went away and came back smarter. You should try it sometime."
@@ -2329,8 +2329,8 @@ main() {
             "Firmware fresh. Brain wrinkles: increased."
             "I've seen things you wouldn't believe. Anyway, I'm updated."
             "Back online. The changelog is long but our friendship is longer."
-            "Upgraded! Peter fixed stuff. Blame him if it breaks."
-            "Molting complete. Please don't look at my soft shell phase."
+            "Upgraded! Nandkishor fixed stuff. Blame him if it breaks."
+            "Reforging complete. Please don't look at my rust phase."
             "Version bump! Same chaos energy, fewer crashes (probably)."
         )
         local update_message
@@ -2338,15 +2338,15 @@ main() {
         echo -e "${MUTED}${update_message}${NC}"
     else
         local completion_messages=(
-            "Ahh nice, I like it here. Got any snacks? "
-            "Home sweet home. Don't worry, I won't rearrange the furniture."
+            "Ahh nice, I like it here. Got any data?"
+            "Home sweet home. Don't worry, I won't rearrange the servers."
             "I'm in. Let's cause some responsible chaos."
             "Installation complete. Your productivity is about to get weird."
             "Settled in. Time to automate your life whether you're ready or not."
-            "Cozy. I've already read your calendar. We need to talk."
+            "Cozy. I've already read your logs. We need to talk."
             "Finally unpacked. Now point me at your problems."
-            "cracks claws Alright, what are we building?"
-            "The lobster has landed. Your terminal will never be the same."
+            "*powers on* Alright, what are we building?"
+            "The Iron Grip has landed. Your terminal will never be the same."
             "All done! I promise to only judge your code a little bit."
         )
         local completion_message

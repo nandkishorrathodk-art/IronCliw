@@ -6,7 +6,7 @@ final class CanvasFileWatcher: @unchecked Sendable, SimpleFileWatcherOwner {
     init(url: URL, onChange: @escaping () -> Void) {
         self.watcher = SimpleFileWatcher(CoalescingFSEventsWatcher(
             paths: [url.path],
-            queueLabel: "ai.openclaw.canvaswatcher",
+            queueLabel: "ai.IronCliw.canvaswatcher",
             onChange: onChange))
     }
 }

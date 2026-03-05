@@ -1,7 +1,7 @@
 import Foundation
 import Network
 import Observation
-import OpenClawKit
+import IronCliwKit
 import OSLog
 
 @MainActor
@@ -78,7 +78,7 @@ public final class GatewayDiscoveryModel {
     private var wideAreaFallbackGateways: [DiscoveredGateway] = []
     private var tailscaleServeFallbackTask: Task<Void, Never>?
     private var tailscaleServeFallbackGateways: [DiscoveredGateway] = []
-    private let logger = Logger(subsystem: "ai.openclaw", category: "gateway-discovery")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "gateway-discovery")
 
     public init(
         localDisplayName: String? = nil,
@@ -93,11 +93,11 @@ public final class GatewayDiscoveryModel {
     public func start() {
         if !self.browsers.isEmpty { return }
 
-        for domain in OpenClawBonjour.gatewayServiceDomains {
+        for domain in IronCliwBonjour.gatewayServiceDomains {
             let browser = GatewayDiscoveryBrowserSupport.makeBrowser(
-                serviceType: OpenClawBonjour.gatewayServiceType,
+                serviceType: IronCliwBonjour.gatewayServiceType,
                 domain: domain,
-                queueLabelPrefix: "ai.openclaw.macos.gateway-discovery",
+                queueLabelPrefix: "ai.IronCliw.macos.gateway-discovery",
                 onState: { [weak self] state in
                     guard let self else { return }
                     self.statesByDomain[domain] = state
@@ -117,7 +117,7 @@ public final class GatewayDiscoveryModel {
     }
 
     public func refreshWideAreaFallbackNow(timeoutSeconds: TimeInterval = 5.0) {
-        guard let domain = OpenClawBonjour.wideAreaGatewayServiceDomain else { return }
+        guard let domain = IronCliwBonjour.wideAreaGatewayServiceDomain else { return }
         Task.detached(priority: .utility) { [weak self] in
             guard let self else { return }
             let beacons = WideAreaGatewayDiscovery.discover(timeoutSeconds: timeoutSeconds)
@@ -289,7 +289,7 @@ public final class GatewayDiscoveryModel {
         }
         .sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
 
-        if let wideAreaDomain = OpenClawBonjour.wideAreaGatewayServiceDomain,
+        if let wideAreaDomain = IronCliwBonjour.wideAreaGatewayServiceDomain,
            domain == wideAreaDomain,
            self.hasUsableWideAreaResults
         {
@@ -298,7 +298,7 @@ public final class GatewayDiscoveryModel {
     }
 
     private func scheduleWideAreaFallback() {
-        guard let domain = OpenClawBonjour.wideAreaGatewayServiceDomain else { return }
+        guard let domain = IronCliwBonjour.wideAreaGatewayServiceDomain else { return }
         if Self.isRunningTests { return }
         guard self.wideAreaFallbackTask == nil else { return }
         self.wideAreaFallbackTask = Task.detached(priority: .utility) { [weak self] in
@@ -364,7 +364,7 @@ public final class GatewayDiscoveryModel {
     }
 
     private var hasUsableWideAreaResults: Bool {
-        guard let domain = OpenClawBonjour.wideAreaGatewayServiceDomain else { return false }
+        guard let domain = IronCliwBonjour.wideAreaGatewayServiceDomain else { return false }
         guard let gateways = self.gatewaysByDomain[domain], !gateways.isEmpty else { return false }
         if !self.filterLocalGateways { return true }
         return gateways.contains(where: { !$0.isLocal })
@@ -523,7 +523,7 @@ public final class GatewayDiscoveryModel {
 
     private nonisolated static func prettifyInstanceName(_ decodedName: String) -> String {
         let normalized = decodedName.split(whereSeparator: \.isWhitespace).joined(separator: " ")
-        let stripped = normalized.replacingOccurrences(of: " (OpenClaw)", with: "")
+        let stripped = normalized.replacingOccurrences(of: " (IronCliw)", with: "")
             .replacingOccurrences(of: #"\s+\(\d+\)$"#, with: "", options: .regularExpression)
         return stripped.trimmingCharacters(in: .whitespacesAndNewlines)
     }

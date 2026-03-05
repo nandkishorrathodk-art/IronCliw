@@ -1,4 +1,4 @@
-import OpenClawProtocol
+import IronCliwProtocol
 import SwiftUI
 
 extension ChannelsSettings {

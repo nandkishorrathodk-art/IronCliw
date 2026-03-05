@@ -203,13 +203,13 @@ describe("resolveConfigEnvVars", () => {
           name: "lowercase placeholder",
           config: { key: "${lowercase}" },
           env: { lowercase: "value" },
-          expected: { key: "${lowercase}" },
+          expected: { key: "value" },
         },
         {
           name: "mixed-case placeholder",
           config: { key: "${MixedCase}" },
           env: { MixedCase: "value" },
-          expected: { key: "${MixedCase}" },
+          expected: { key: "value" },
         },
         {
           name: "invalid numeric prefix",

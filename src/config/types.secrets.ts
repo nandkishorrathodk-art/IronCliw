@@ -15,7 +15,7 @@ export type SecretRef = {
 
 export type SecretInput = string | SecretRef;
 export const DEFAULT_SECRET_PROVIDER_ALIAS = "default";
-const ENV_SECRET_TEMPLATE_RE = /^\$\{([A-Z][A-Z0-9_]{0,127})\}$/;
+const ENV_SECRET_TEMPLATE_RE = /^\$\{([A-Za-z][A-Za-z0-9_]{0,127})\}$/;
 type SecretDefaults = {
   env?: string;
   file?: string;

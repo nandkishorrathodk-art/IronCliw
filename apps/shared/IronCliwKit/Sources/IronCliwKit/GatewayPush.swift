@@ -1,4 +1,4 @@
-import OpenClawProtocol
+import IronCliwProtocol
 
 /// Server-push messages from the gateway websocket.
 ///

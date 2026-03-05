@@ -9,18 +9,18 @@ import Security
 final class PeekabooBridgeHostCoordinator {
     static let shared = PeekabooBridgeHostCoordinator()
 
-    private let logger = Logger(subsystem: "ai.openclaw", category: "PeekabooBridge")
+    private let logger = Logger(subsystem: "ai.IronCliw", category: "PeekabooBridge")
 
     private var host: PeekabooBridgeHost?
-    private var services: OpenClawPeekabooBridgeServices?
+    private var services: IronCliwPeekabooBridgeServices?
 
     private static let legacySocketDirectoryNames = ["clawdbot", "clawdis", "moltbot"]
 
-    private static var openclawSocketPath: String {
+    private static var IronCliwSocketPath: String {
         let fileManager = FileManager.default
         let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
-        return Self.makeSocketPath(for: "OpenClaw", in: base)
+        return Self.makeSocketPath(for: "IronCliw", in: base)
     }
 
     private static func makeSocketPath(for directoryName: String, in baseDirectory: URL) -> String {
@@ -64,7 +64,7 @@ final class PeekabooBridgeHostCoordinator {
 
         self.ensureLegacySocketSymlinks()
 
-        let services = OpenClawPeekabooBridgeServices()
+        let services = IronCliwPeekabooBridgeServices()
         let server = PeekabooBridgeServer(
             services: services,
             hostKind: .gui,
@@ -72,7 +72,7 @@ final class PeekabooBridgeHostCoordinator {
             allowlistedBundles: allowlistedBundles)
 
         let host = PeekabooBridgeHost(
-            socketPath: Self.openclawSocketPath,
+            socketPath: Self.IronCliwSocketPath,
             server: server,
             allowedTeamIDs: allowlistedTeamIDs,
             requestTimeoutSec: 10)
@@ -82,7 +82,7 @@ final class PeekabooBridgeHostCoordinator {
 
         await host.start()
         self.logger
-            .info("PeekabooBridge host started at \(Self.openclawSocketPath, privacy: .public)")
+            .info("PeekabooBridge host started at \(Self.IronCliwSocketPath, privacy: .public)")
     }
 
     private func ensureLegacySocketSymlinks() {
@@ -108,14 +108,14 @@ final class PeekabooBridgeHostCoordinator {
                 let destination = try FileManager.default.destinationOfSymbolicLink(atPath: legacyPath)
                 let destinationURL = URL(fileURLWithPath: destination, relativeTo: linkURL.deletingLastPathComponent())
                     .standardizedFileURL
-                if destinationURL.path == URL(fileURLWithPath: Self.openclawSocketPath).standardizedFileURL.path {
+                if destinationURL.path == URL(fileURLWithPath: Self.IronCliwSocketPath).standardizedFileURL.path {
                     return
                 }
                 try fileManager.removeItem(atPath: legacyPath)
             } else if fileManager.fileExists(atPath: legacyPath) {
                 try fileManager.removeItem(atPath: legacyPath)
             }
-            try fileManager.createSymbolicLink(atPath: legacyPath, withDestinationPath: Self.openclawSocketPath)
+            try fileManager.createSymbolicLink(atPath: legacyPath, withDestinationPath: Self.IronCliwSocketPath)
         } catch {
             let message = "Failed to create legacy PeekabooBridge socket symlink: \(error.localizedDescription)"
             self.logger
@@ -153,7 +153,7 @@ final class PeekabooBridgeHostCoordinator {
 }
 
 @MainActor
-private final class OpenClawPeekabooBridgeServices: PeekabooBridgeServiceProviding {
+private final class IronCliwPeekabooBridgeServices: PeekabooBridgeServiceProviding {
     let permissions: PermissionsService
     let screenCapture: any ScreenCaptureServiceProtocol
     let automation: any UIAutomationServiceProtocol
@@ -165,7 +165,7 @@ private final class OpenClawPeekabooBridgeServices: PeekabooBridgeServiceProvidi
     let snapshots: any SnapshotManagerProtocol
 
     init() {
-        let logging = LoggingService(subsystem: "ai.openclaw.peekaboo")
+        let logging = LoggingService(subsystem: "ai.IronCliw.peekaboo")
         let feedbackClient: any AutomationFeedbackClient = NoopAutomationFeedbackClient()
 
         let snapshots = InMemorySnapshotManager(options: .init(

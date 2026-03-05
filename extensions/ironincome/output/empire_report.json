@@ -1,0 +1,25 @@
+{
+  "niche": "technology",
+  "articles_generated": [
+    {
+      "keyword": "how to choose for",
+      "file": "output/how_to_choose_for.md"
+    },
+    {
+      "keyword": "top 10 for",
+      "file": "output/top_10_for.md"
+    },
+    {
+      "keyword": "for for beginners",
+      "file": "output/for_for_beginners.md"
+    }
+  ],
+  "articles_with_links": [
+    "output/how_to_choose_for.md",
+    "output/top_10_for.md",
+    "output/for_for_beginners.md"
+  ],
+  "articles_published": [],
+  "start_time": "2026-03-05T08:47:08.046629",
+  "estimated_monthly_earnings": 112.5
+}

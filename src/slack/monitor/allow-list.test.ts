@@ -11,8 +11,8 @@ describe("slack/allow-list", () => {
   it("normalizes lists and slugs", () => {
     expect(normalizeAllowList(["  Alice  ", 7, "", "  "])).toEqual(["Alice", "7"]);
     expect(normalizeAllowListLower(["  Alice  ", 7])).toEqual(["alice", "7"]);
-    expect(normalizeSlackSlug(" Team Space  ")).toBe("team-space");
-    expect(normalizeSlackSlug(" #Ops.Room ")).toBe("#ops.room");
+    expect(normalizeSlackSlug(" Team Space  ")).toBe("Team-Space");
+    expect(normalizeSlackSlug(" #Ops.Room ")).toBe("#Ops.Room");
   });
 
   it("matches wildcard and id candidates by default", () => {

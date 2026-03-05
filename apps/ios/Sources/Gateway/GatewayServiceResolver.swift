@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import IronCliwKit
 
 // NetService-based resolver for Bonjour services.
 // Used to resolve the service endpoint (SRV + A/AAAA) without trusting TXT for routing.
