@@ -99,7 +99,7 @@ IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
 Override fields explicitly:
 
 ```bash
-IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦞" --avatar avatars/IronCliw.png
+IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾" --avatar avatars/IronCliw.png
 ```
 
 Config sample:
@@ -112,8 +112,8 @@ Config sample:
         id: "main",
         identity: {
           name: "IronCliw",
-          theme: "space lobster",
-          emoji: "🦞",
+          theme: "iron grip",
+          emoji: "🦾",
           avatar: "avatars/IronCliw.png",
         },
       },

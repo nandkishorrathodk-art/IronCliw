@@ -20,6 +20,7 @@ export const theme = {
   error: hex(IRONCLIW_PALETTE.error),
   muted: hex(IRONCLIW_PALETTE.muted),
   heading: baseChalk.bold.hex(IRONCLIW_PALETTE.accent),
+  cyber: baseChalk.bold.bgHex(IRONCLIW_PALETTE.accent).black,
   command: hex(IRONCLIW_PALETTE.accentBright),
   option: hex(IRONCLIW_PALETTE.warn),
 } as const;

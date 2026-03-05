@@ -324,7 +324,7 @@ export async function launchIronCliwChrome(
         name: profile.name,
         color: profile.color,
       });
-      log.info(`🦞 IronCliw browser profile decorated (${profile.color})`);
+      log.info(`🦾 IronCliw browser profile decorated (${profile.color})`);
     } catch (err) {
       log.warn(`IronCliw browser profile decoration failed: ${String(err)}`);
     }
@@ -381,7 +381,7 @@ export async function launchIronCliwChrome(
 
   const pid = proc.pid ?? -1;
   log.info(
-    `🦞 IronCliw browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
+    `🦾 IronCliw browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
   );
 
   return {

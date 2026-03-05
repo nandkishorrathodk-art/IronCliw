@@ -58,7 +58,7 @@ IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
 显式覆盖字段：
 
 ```bash
-IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦞" --avatar avatars/IronCliw.png
+IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾" --avatar avatars/IronCliw.png
 ```
 
 配置示例：
@@ -71,8 +71,8 @@ IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦞" --ava
         id: "main",
         identity: {
           name: "IronCliw",
-          theme: "space lobster",
-          emoji: "🦞",
+          theme: "iron grip",
+          emoji: "🦾",
           avatar: "avatars/IronCliw.png",
         },
       },

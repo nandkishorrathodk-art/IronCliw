@@ -70,8 +70,8 @@ describe("config identity defaults", () => {
               id: "main",
               identity: {
                 name: "Samantha Sloth",
-                theme: "space lobster",
-                emoji: "🦞",
+                theme: "iron grip",
+                emoji: "🦾",
               },
               groupChat: { mentionPatterns: ["@IronCliw"] },
             },
@@ -92,7 +92,7 @@ describe("config identity defaults", () => {
       const cfg = await writeAndLoadConfig(home, {
         messages: {
           messagePrefix: "[IronCliw]",
-          responsePrefix: "🦞",
+          responsePrefix: "🦾",
         },
         channels: {
           whatsapp: { allowFrom: ["+15555550123"], textChunkLimit: 4444 },

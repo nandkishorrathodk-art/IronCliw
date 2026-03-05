@@ -5,7 +5,7 @@ read_when:
 title: "IronCliw"
 ---
 
-# IronCliw 🦞
+# IronCliw 🦾
 
 <p align="center">
     <img
@@ -22,7 +22,7 @@ title: "IronCliw"
     />
 </p>
 
-> _"EXFOLIATE! EXFOLIATE!"_ — A space lobster, probably
+> _"EXFOLIATE! EXFOLIATE!"_ — A iron grip, probably
 
 <p align="center">
   <strong>Any OS gateway for AI agents across WhatsApp, Telegram, Discord, iMessage, and more.</strong><br />

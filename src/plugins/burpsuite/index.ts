@@ -2,6 +2,7 @@ import { BurpClient } from "./client.js";
 import { trafficAnalyzer } from "./analyzer.js";
 import { burpVisual } from "./visual.js";
 import { burpVision } from "./vision-engine.js";
+import { burpKnowledge } from "./knowledge.js";
 import { scopeManager } from "../../security/scope-manager.js";
 import { safetyGate } from "../../security/safety-gate.js";
 import type { BurpApiConfig } from "./types.js";
@@ -25,21 +26,28 @@ export class BurpSuitePlugin {
 
   /**
    * Performs a visual scan of the Burp Suite UI.
-   * This is the "Human-like" approach using Computer Vision.
+   * Now includes self-learning via tutorials!
    */
   async performVisualHunt(task: string, modelId?: string) {
-    log.info(`Starting visual hunt: ${task} (Model: ${modelId || "default"})`);
+    log.info(`Starting visual hunt: ${task}`);
     
-    // 1. Launch/Focus Burp
+    // 1. Consulting knowledge base if task is specific
+    const tutorial = await burpKnowledge.consultTutorial(task);
+    if (tutorial) {
+      log.info("Learning from tutorial before action...");
+      // In a real flow, the AI would ingest this tutorial content
+    }
+
+    // 2. Launch/Focus Burp
     await burpVisual.launch();
     
-    // 2. Capture the UI
+    // 3. Capture the UI
     const screenshotPath = await burpVisual.captureUI();
     
-    // 3. Analyze with Fireworks Kimi
+    // 4. Analyze with Vision + Knowledge
     const analysis = await burpVision.analyzeScreenshot({
       imagePath: screenshotPath,
-      task: task,
+      task: tutorial ? `Tutorial provided: ${tutorial}\n\nTask: ${task}` : task,
       provider: "fireworks",
       modelId: modelId
     });
@@ -64,7 +72,6 @@ export class BurpSuitePlugin {
 
     log.info(`Executing visual action: ${params.action} on ${params.targetElement}`);
     
-    // Safety check: is the URL in the analysis authorized?
     if (params.analysis.url && !scopeManager.isAuthorized(params.analysis.url)) {
       throw new Error("Unauthorized target detected during visual test.");
     }
@@ -72,37 +79,13 @@ export class BurpSuitePlugin {
     if (params.action === "click") {
       await burpVisual.clickAt(coords.x, coords.y);
     } else if (params.action === "type" && params.payload) {
-      await burpVisual.clickAt(coords.x, coords.y); // Focus first
+      await burpVisual.clickAt(coords.x, coords.y);
       await burpVisual.typeText(params.payload);
     }
 
     log.info("Visual test action completed.");
   }
-  async getSecuritySuggestions() {
-    if (!this.client) throw new Error("Burp Plugin not initialized");
 
-    const history = await this.client.getProxyHistory();
-    const suggestions = [];
-
-    for (const item of history) {
-      if (!scopeManager.isAuthorized(item.url)) continue;
-
-      const analysis = trafficAnalyzer.analyze(item);
-      if (analysis.isInteresting) {
-        suggestions.push({
-          url: item.url,
-          findings: analysis.findings,
-          recommendation: "Human review required before modification."
-        });
-      }
-    }
-
-    return suggestions;
-  }
-
-  /**
-   * Health check for Burp Suite connection
-   */
   async checkStatus() {
     if (!this.client) return { status: "disconnected" };
     try {

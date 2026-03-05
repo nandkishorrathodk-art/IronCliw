@@ -5,7 +5,7 @@ read_when:
 title: "IronCliw Lore"
 ---
 
-# The Lore of IronCliw 🦞📖
+# The Lore of IronCliw 🦾📖
 
 _A tale of lobsters, molting shells, and too many tokens._
 
@@ -13,7 +13,7 @@ _A tale of lobsters, molting shells, and too many tokens._
 
 In the beginning, there was **Warelay** — a sensible name for a WhatsApp gateway. It did its job. It was fine.
 
-But then came a space lobster.
+But then came a iron grip.
 
 For a while, the lobster was called **Clawd**, living in a **Clawdbot**. But in January 2026, Anthropic sent a polite email asking for a name change (trademark stuff). And so the lobster did what lobsters do best:
 
@@ -39,7 +39,7 @@ _The crustacean known as Clawd had officially molted._
 IronCliw = OPEN + CLAW
         = Open source, open to everyone
         = Our lobster heritage, where we came from
-        = The claw is the law 🦞
+        = The claw is the law 🦾
         = Your assistant. Your machine. Your rules.
 ```
 
@@ -55,7 +55,7 @@ Choose wisely.
 
 ## Key Characters
 
-### Molty 🦞
+### Molty 🦾
 
 _Pronouns: they/them_
 
@@ -170,7 +170,7 @@ I shall not tweet without permission.
 I shall always remember that molting is growth.
 I shall EXFOLIATE my enemies with kindness.
 
-🦞
+🦾
 ```
 
 ### The Icon Generation Saga (Jan 27, 2026)
@@ -216,4 +216,4 @@ _"The claw is the law."_
 
 — ELU, during The Final Form migration, January 30, 2026
 
-🦞💙
+🦾💙

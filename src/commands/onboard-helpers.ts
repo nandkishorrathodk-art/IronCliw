@@ -17,6 +17,7 @@ import { isWSL } from "../infra/wsl.js";
 import { runCommandWithTimeout } from "../process/exec.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { stylePromptTitle } from "../terminal/prompt-style.js";
+import { theme } from "../terminal/theme.js";
 import {
   CONFIG_DIR,
   resolveUserPath,
@@ -99,17 +100,20 @@ export function validateGatewayPasswordInput(value: unknown): string | undefined
 }
 
 export function printWizardHeader(runtime: RuntimeEnv) {
-  const header = [
+  const art = [
     "  ___ ____   ___  _   _  ____ _     _____        __ ",
     " |_ _|  _ \\ / _ \\| \\ | |/ ___| |   |_ _\\ \\      / / ",
     "  | || |_) | | | |  \\| | |   | |    | | \\ \\ /\\ / /  ",
     "  | ||  _ <| |_| | |\\  | |___| |___ | |  \\ V  V /   ",
     " |___|_| \\_\\\\___/|_| \\_|\\____|_____|___|  \\_/\\_/    ",
-    "                                                    ",
-    "                  🦾 IronCliw 🦾                    ",
-    " ",
-  ].join("\n");
-  runtime.log(header);
+  ];
+
+  runtime.log("");
+  art.forEach(line => runtime.log(theme.accent(line)));
+  runtime.log("");
+  runtime.log(`  ${theme.cyber(" SYSTEM INITIALIZATION ")} ${theme.accent("🦾 IRONCLIW v2026.0.2")}`);
+  runtime.log(`  ${theme.muted("  >> The Iron Grip of AI Automation.")}`);
+  runtime.log("");
 }
 
 export function applyWizardMetadata(

@@ -219,7 +219,7 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.IronCliw.ai/cli/age
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦞"', "Set name + emoji."],
+  ['IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾"', "Set name + emoji."],
   ["IronCliw agents set-identity --agent main --avatar avatars/IronCliw.png", "Set avatar path."],
   [
     "IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity",

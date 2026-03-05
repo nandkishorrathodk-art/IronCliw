@@ -12,7 +12,7 @@ x-i18n:
   workflow: 15
 ---
 
-# IronCliw 🦞
+# IronCliw 🦾
 
 <p align="center">
     <img

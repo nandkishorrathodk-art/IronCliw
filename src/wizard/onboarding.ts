@@ -77,9 +77,10 @@ export async function runOnboardingWizard(
 ) {
   const onboardHelpers = await import("../commands/onboard-helpers.js");
   onboardHelpers.printWizardHeader(runtime);
-  await prompter.intro("IronCliw onboarding");
+  await prompter.intro(theme.cyber(" IRONCLIW INITIALIZATION SEQUENCE "));
   await requireRiskAcknowledgement({ opts, prompter });
 
+  runtime.log(theme.muted("  >> Checking system environment..."));
   const snapshot = await readConfigFileSnapshot();
   let baseConfig: IronCliwConfig = snapshot.valid ? snapshot.config : {};
 
@@ -102,6 +103,7 @@ export async function runOnboardingWizard(
     return;
   }
 
+  runtime.log(theme.cyber(" OPERATION MODE "));
   const quickstartHint = `Configure details later via ${formatCliCommand("IronCliw configure")}.`;
   const manualHint = "Configure port, network, Tailscale, and auth options.";
   const explicitFlowRaw = opts.flow?.trim();
@@ -122,10 +124,10 @@ export async function runOnboardingWizard(
   let flow: WizardFlow =
     explicitFlow ??
     (await prompter.select({
-      message: "Onboarding mode",
+      message: "Select deployment protocol",
       options: [
-        { value: "quickstart", label: "QuickStart", hint: quickstartHint },
-        { value: "advanced", label: "Manual", hint: manualHint },
+        { value: "quickstart", label: "QuickStart (Standard)", hint: quickstartHint },
+        { value: "advanced", label: "Advanced (Manual)", hint: manualHint },
       ],
       initialValue: "quickstart",
     }));
@@ -139,17 +141,18 @@ export async function runOnboardingWizard(
   }
 
   if (snapshot.exists) {
+    runtime.log(theme.cyber(" LEGACY DATA DETECTED "));
     await prompter.note(
       onboardHelpers.summarizeExistingConfig(baseConfig),
-      "Existing config detected",
+      "Current Configuration",
     );
 
     const action = await prompter.select({
-      message: "Config handling",
+      message: "How should I handle existing data?",
       options: [
-        { value: "keep", label: "Use existing values" },
-        { value: "modify", label: "Update values" },
-        { value: "reset", label: "Reset" },
+        { value: "keep", label: "Inherit existing values" },
+        { value: "modify", label: "Patch/Update values" },
+        { value: "reset", label: "Factory Reset" },
       ],
     });
 
@@ -157,16 +160,16 @@ export async function runOnboardingWizard(
       const workspaceDefault =
         baseConfig.agents?.defaults?.workspace ?? onboardHelpers.DEFAULT_WORKSPACE;
       const resetScope = (await prompter.select({
-        message: "Reset scope",
+        message: "Select reset depth",
         options: [
-          { value: "config", label: "Config only" },
+          { value: "config", label: "Config parameters only" },
           {
             value: "config+creds+sessions",
-            label: "Config + creds + sessions",
+            label: "Config + credentials + chat history",
           },
           {
             value: "full",
-            label: "Full reset (config + creds + sessions + workspace)",
+            label: "Full wipe (config + history + workspace files)",
           },
         ],
       })) as ResetScope;
@@ -174,6 +177,8 @@ export async function runOnboardingWizard(
       baseConfig = {};
     }
   }
+
+  runtime.log(theme.cyber(" CORE INFRASTRUCTURE "));
 
   const quickstartGateway: QuickstartGatewayDefaults = (() => {
     const hasExisting =
@@ -377,6 +382,7 @@ export async function runOnboardingWizard(
     await import("../commands/auth-choice.js");
   const { applyPrimaryModel, promptDefaultModel } = await import("../commands/model-picker.js");
 
+  runtime.log(theme.cyber(" BRAIN & INTELLIGENCE "));
   const authStore = ensureAuthProfileStore(undefined, {
     allowKeychainPrompt: false,
   });
@@ -431,6 +437,7 @@ export async function runOnboardingWizard(
 
   await warnIfModelConfigLooksOff(nextConfig, prompter);
 
+  runtime.log(theme.cyber(" NETWORK INTERFACE "));
   const { configureGatewayForOnboarding } = await import("./onboarding.gateway-config.js");
   const gateway = await configureGatewayForOnboarding({
     flow,
@@ -445,6 +452,7 @@ export async function runOnboardingWizard(
   nextConfig = gateway.nextConfig;
   const settings = gateway.settings;
 
+  runtime.log(theme.cyber(" COMMUNICATION CHANNELS "));
   if (opts.skipChannels ?? opts.skipProviders) {
     await prompter.note("Skipping channel setup.", "Channels");
   } else {
@@ -473,6 +481,7 @@ export async function runOnboardingWizard(
     skipBootstrap: Boolean(nextConfig.agents?.defaults?.skipBootstrap),
   });
 
+  runtime.log(theme.cyber(" SKILLS & PLUGINS "));
   if (opts.skipSkills) {
     await prompter.note("Skipping skills setup.", "Skills");
   } else {
@@ -488,6 +497,7 @@ export async function runOnboardingWizard(
   const { setupSecurityTools } = await import("../commands/onboard-security.js");
   await setupSecurityTools(runtime, prompter);
 
+  runtime.log(theme.cyber(" FINALIZING PROTOCOLS "));
   nextConfig = onboardHelpers.applyWizardMetadata(nextConfig, { command: "onboard", mode });
   await writeConfigFile(nextConfig);
 

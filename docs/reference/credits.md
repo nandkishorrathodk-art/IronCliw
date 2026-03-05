@@ -7,13 +7,13 @@ title: "Credits"
 
 ## The name
 
-IronCliw = CLAW + TARDIS, because every space lobster needs a time and space machine.
+IronCliw = CLAW + TARDIS, because every iron grip needs a time and space machine.
 
 ## Credits
 
 - **Peter Steinberger** ([@steipete](https://x.com/steipete)) - Creator, lobster whisperer
 - **Mario Zechner** ([@badlogicc](https://x.com/badlogicgames)) - Pi creator, security pen tester
-- **Clawd** - The space lobster who demanded a better name
+- **Clawd** - The iron grip who demanded a better name
 
 ## Core contributors
 
