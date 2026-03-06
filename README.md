@@ -3,13 +3,15 @@
 </p>
 
 <p align="center">
-  <strong>Mastery of Windows | Autonomous AI Control | Multi-Channel Integration</strong>
+  <strong>Windows-Native AI Automation · Voice I/O · Multi-Channel · Security Research</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
-  <a href="https://github.com/nandkishorrathodk-art/IronCliw/releases"><img src="https://img.shields.io/github/v/release/nandkishorrathodk-art/IronCliw?style=for-the-badge&color=00e5ff" alt="Release"></a>
-  <img src="https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge&logo=windows" alt="Platform Windows">
+  <img src="https://img.shields.io/badge/Version-2026.0.3-00e5ff?style=for-the-badge" alt="Version">
+  <img src="https://img.shields.io/badge/Platform-Windows%2010%2F11-546e7a?style=for-the-badge&logo=windows" alt="Windows">
+  <img src="https://img.shields.io/badge/Node-%E2%89%A522-00e676?style=for-the-badge" alt="Node">
+  <img src="https://img.shields.io/badge/Made%20in-India%20%F0%9F%87%AE%F0%9F%87%B3-ff1744?style=for-the-badge" alt="India">
 </p>
 
 ---
@@ -20,12 +22,9 @@
 
 ### **The Iron Grip of AI Automation**
 
----
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-00e5ff.svg)](./LICENSE)
 [![Node ≥22](https://img.shields.io/badge/Node-%E2%89%A522-00e676.svg)](https://nodejs.org)
 [![Windows](https://img.shields.io/badge/Platform-Windows%2011%2F10-546e7a.svg)](https://www.microsoft.com/windows)
-[![WSL2](https://img.shields.io/badge/WSL2-Supported-008b99.svg)](https://learn.microsoft.com/en-us/windows/wsl/)
 [![Version](https://img.shields.io/badge/Version-2026.0.3-5aeeff.svg)](./CHANGELOG.md)
 [![Built in India](https://img.shields.io/badge/Made%20with%20%E2%9A%A1-India%20%F0%9F%87%AE%F0%9F%87%B3-ff1744.svg)](#)
 
@@ -33,46 +32,33 @@
 
 ---
 
-## 🚀 Upgrade Plan: Project JARVIS (v2026.0.3+)
-
-The evolution from a tool to a living assistant.
-
-### **Phase 1: Zero-Latency Voice (Multimodal Live)** 🎙️
-Integration with **Gemini 2.0 Multimodal Live API**.
-- **Real-time Streaming:** Skip the "Stop-and-Process" delay. Direct audio-to-audio communication.
-- **Natural Response:** JARVIS-like voice output directly through system speakers.
-- **Interruptible Speech:** Talk to the agent while it’s speaking, just like a human.
-
-### **Phase 2: Visual Mastery & Self-Learning** 👁️
-- **Computer Vision (Kimi 2.x):** Operates desktop apps (like Burp Suite) by "seeing" the UI.
-- **Autonomous Tutorials:** Reads documentation/tutorials to learn new software features on the fly.
-
-### **Phase 3: Native OS Dominance** 🦾
-- **Kernel-Level Interaction:** Deep C# Daemon integration for total Windows control.
-- **Proactive Heartbeats:** Agent initiates contact based on system events or pending tasks.
-
----
-
-## 🔄 Evolution
-
-IronCliw is a specialized derivative work that builds upon the foundation of an industry-leading AI gateway.
-
-- **Original Project:** [OpenClaw](https://github.com/openclaw/openclaw) — A cross-platform AI agent system created by [Peter Steinberger](https://steipete.me).
-- **IronCliw Version:** A dedicated **Windows-native port** and heavy modification by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art), engineered for high-performance automation and advanced system control.
-
----
-
 ## ⚡ What is IronCliw?
 
-**IronCliw** is a precision-engineered AI agent gateway optimized for the Windows ecosystem. It transforms your local machine into an autonomous workstation capable of executing complex tasks through simple natural language commands.
+**IronCliw** is a precision-engineered AI agent gateway built for the Windows ecosystem. It transforms your local machine into an autonomous workstation capable of executing complex tasks through simple natural language — with voice, vision, and multi-channel control.
 
-- 🪟 **Windows Native Mastery:** Built-in C# Daemon for direct OS-level interaction.
-- 🐚 **PowerShell First:** Executes native scripts with `-ExecutionPolicy Bypass` reliability.
-- 🧠 **Expanded Brain:** 128K context window support with parallel sub-agent orchestration.
-- 📱 **Multi-Channel:** Control your PC via WhatsApp, Telegram, Discord, or iMessage.
-- 👁️ **Visual Intelligence:** Uses Computer Vision (Kimi 2.x) to "see" and operate desktop applications.
+- 🎙️ **Voice I/O** — Talk to IronCliw. It listens (Deepgram Nova-2), responds (ElevenLabs / Edge TTS), and executes.
+- 🪟 **Windows Native** — Deep OS integration via C# Daemon for registry, services, clipboard, and input control.
+- 🧠 **128K Context** — Parallel sub-agent orchestration with up to 16 simultaneous agents.
+- �️ **Visual Intelligence** — Uses Fireworks Kimi 2.x Computer Vision to operate any desktop application.
+- 📱 **Multi-Channel** — Control your PC from WhatsApp, Telegram, Discord, Signal, or iMessage.
+- ⚡ **HyperTask Engine** — 8-worker parallel task queue for 5× faster multi-step operations.
+- 🛡️ **Health Monitor** — Real-time CPU, RAM, Disk watchdog with auto-alerts when resources hit critical thresholds.
+- 🕵️ **Browser Stealth** — Anti-bot-detection engine with UA rotation, viewport randomization, and mouse jitter.
 
 > _"The Iron Grip of AI Automation."_
+
+---
+
+## 🔄 Built On The Shoulders of Giants
+
+IronCliw is a specialized derivative work that builds upon the foundation of **OpenClaw** — an open-source AI gateway project.
+
+| | |
+|---|---|
+| **Original Project** | [OpenClaw](https://github.com/openclaw/openclaw) — Cross-platform AI agent system by [Peter Steinberger](https://steipete.me) |
+| **IronCliw** | A dedicated **Windows-native port** and heavy modification by [Nandkishor Rathod](https://github.com/nandkishorrathodk-art), engineered for high-performance automation, voice I/O, and advanced system control |
+
+Huge respect and thanks to the OpenClaw team for their open-source work. 🙏
 
 ---
 
@@ -82,12 +68,14 @@ IronCliw is a specialized derivative work that builds upon the foundation of an 
 | ---------------------- | ------------------- | ----------------------------------- |
 | Primary OS Focus       | Cross-Platform      | ✅ Windows Native Optimized         |
 | Shell Integration      | Basic cmd.exe       | ✅ Native PowerShell 7+             |
+| Voice I/O              | ✗ None              | ✅ Deepgram STT + ElevenLabs TTS    |
 | UI Automation          | ✗ Browser only      | ✅ Full Desktop GUI Control         |
-| Visual Learning        | ✗ None              | ✅ Vision-Aided Task Execution      |
+| Visual Learning        | ✗ None              | ✅ Vision-Aided (Kimi 2.x)          |
 | Context Window         | 8K tokens           | ✅ 128K tokens                      |
 | Parallel Subagents     | 4                   | ✅ 16 agents                        |
 | Windows Native Daemon  | ✗                   | ✅ IronCliwDaemon (C#)              |
-| Branding               | Lobster             | ✅ Iron/Cyber Theme                 |
+| Parallel Task Engine   | ✗                   | ✅ HyperTask (8-worker queue)       |
+| System Health Monitor  | ✗                   | ✅ CPU/RAM/Disk watchdog             |
 
 ---
 
@@ -107,12 +95,12 @@ IronCliw operates on a **3-Tier Industrial Architecture**:
 │                   TIER 2 — THE MUSCLE                           │
 │              IronCliwDaemon.exe  (C# .NET Native)               │
 │  Window Control · Clipboard · Input Simulation · System Stats   │
-└──────────────────────────▼──────────────────────────────────────┐
-                           │  Native API / vision-engine
+└──────────────────────────▼──────────────────────────────────────┘
+                           │  Native API / Vision Engine
 ┌──────────────────────────▼──────────────────────────────────────┐
 │                   TIER 3 — THE TOOLS                            │
 │         Desktop Applications · CLI Tools · Cloud APIs           │
-│    Burp Suite · Playwright · Docker · Git · Python · Node       │
+│    Playwright · Burp Suite · Docker · Git · Python · Node       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -120,50 +108,76 @@ IronCliw operates on a **3-Tier Industrial Architecture**:
 
 ## 🚀 Quick Start (Windows)
 
-**Runtime: Node ≥ 22 | Windows 10/11 | PowerShell 7+**
+**Requirements: Node ≥ 22 · Windows 10/11 · PowerShell 7+**
 
 ```powershell
 # Install globally
 npm install -g IronCliw
 
-# Run the modern initialization sequence
+# Initialize (first run)
 IronCliw onboard
 
-# Start your gateway
+# Start the gateway
 IronCliw gateway start
 ```
+
+Open your browser at `http://localhost:18789` and start chatting.
 
 ---
 
 ## 📦 Build from Source
 
 ```powershell
-# Clone the repository
 git clone https://github.com/nandkishorrathodk-art/IronCliw.git
 cd IronCliw
-
-# Install dependencies
 pnpm install
-
-# Build UI + core
 pnpm build
-
-# Launch the initialization sequence
 node IronCliw.mjs onboard
 ```
 
 ---
 
+## 🎙️ Voice Mode Setup
+
+IronCliw supports full **talk-to-agent** voice interaction.
+
+```powershell
+# Add to your .env file:
+DEEPGRAM_API_KEY=your_deepgram_key       # Speech-to-Text (Nova-2, ~300ms latency)
+ELEVENLABS_API_KEY=your_elevenlabs_key   # Text-to-Speech (human-quality voice)
+```
+
+Restart the gateway — the 🎙️ mic button appears in the chat UI automatically.
+
+| Role | Primary | Fallback |
+|------|---------|---------|
+| STT (Speech → Text) | Deepgram Nova-2 | OpenAI Whisper |
+| TTS (Text → Speech) | ElevenLabs | Edge TTS (free, no key needed) |
+
+---
+
 ## 🔋 Power Features
 
-### ⚡ Deep OS Integration
-All shell commands run through a persistent PowerShell runspace, retaining state between commands. The AI can manage your Windows Registry, services, and system configuration autonomously.
+### ⚡ HyperTask Parallel Engine
+Runs up to 8 tasks simultaneously — 5× faster than sequential execution.
 
-### 👁️ Visual Mastery (Computer Vision)
-Integration with **Fireworks Kimi 2.x** allows IronCliw to take screenshots of desktop applications (like Burp Suite), analyze the UI, and perform actions like a human operator.
+### �️ Browser Stealth Mode
+Bypasses bot detection: hides `navigator.webdriver`, randomizes UA and viewport, adds human-like mouse timing.
 
-### 🛡️ Security Guardrails
-IronCliw includes a strict **Scope Manager** and **Command Filter**. You define authorized domains and operations, and the agent requires human-in-the-loop approval for any out-of-scope or sensitive actions.
+### 🛡️ Health Watchdog
+Monitors CPU, RAM, Disk every 30 seconds. Auto-alerts at 90% CPU, 85% RAM, 90% Disk.
+
+### 🧩 Smart Context Cache
+Reduces LLM token usage by caching tool results (60s), deduplicating calls, and compressing output.
+
+---
+
+## � Security Guardrails
+
+IronCliw includes built-in **authorized-targets scope management**:
+- Define which domains/IPs are in-scope
+- All sensitive actions require explicit user authorization
+- Rate limiter + circuit breaker prevents runaway automation
 
 ---
 
@@ -171,17 +185,18 @@ IronCliw includes a strict **Scope Manager** and **Command Filter**. You define 
 
 ```
 MIT License
-
 Copyright (c) 2026 Nandkishor Rathod
 
-This project is a heavily modified Windows port and extension of OpenClaw
-(https://github.com/openclaw/openclaw).
+IronCliw is a heavily modified Windows port and extension built upon
+the open-source OpenClaw project (https://github.com/openclaw/openclaw).
 
-Modifications include:
+Major modifications include:
   1. Native Windows API Integration via C# Interop (IronCliwDaemon)
-  2. Industrial 'Iron' UI/UX and modern terminal theming
-  3. Vision-aided GUI automation engine
-  4. PowerShell-first execution environment
+  2. Voice I/O Pipeline (Deepgram STT + ElevenLabs TTS)
+  3. Industrial 'Iron' UI/UX and cyber terminal theming
+  4. Vision-aided GUI automation engine (Fireworks Kimi 2.x)
+  5. HyperTask parallel execution engine (8-worker queue)
+  6. System Health Watchdog (CPU / RAM / Disk)
 ```
 
 ---
@@ -192,6 +207,6 @@ Modifications include:
 
 _"The Iron Grip of AI Automation."_
 
-[🌐 Website](https://IronCliw.ai) · [📖 Docs](./docs) · [🔒 Security](./SECURITY.md)
+[📖 Docs](./docs) · [🔒 Security](./SECURITY.md) · [📋 Changelog](./CHANGELOG.md)
 
 </div>
