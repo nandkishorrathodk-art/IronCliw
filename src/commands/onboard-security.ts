@@ -1,5 +1,4 @@
 import { burpPlugin } from "../plugins/burpsuite/index.js";
-import { scopeManager } from "../security/scope-manager.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { theme } from "../terminal/theme.js";
@@ -40,7 +39,7 @@ export async function setupSecurityTools(
 
     try {
       const p = prompter.progress("Testing link...");
-      await burpPlugin.init({ baseUrl: url as string, apiKey: key as string });
+      await burpPlugin.init({ baseUrl: url, apiKey: key });
       const status = await burpPlugin.checkStatus();
       p.stop(status.status === "connected" ? "Link Established" : "Link Failed");
       
@@ -66,7 +65,7 @@ export async function setupSecurityTools(
     });
 
     if (scopeInput) {
-      const domains = (scopeInput as string).split(",").map(d => d.trim()).filter(Boolean);
+      const domains = (scopeInput).split(",").map(d => d.trim()).filter(Boolean);
       runtime.log(theme.info(`  [SCOPE] Authorized: ${domains.join(", ")}`));
       runtime.log(theme.muted("  >> authorized_scopes.json updated."));
     }

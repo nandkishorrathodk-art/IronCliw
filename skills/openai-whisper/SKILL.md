@@ -11,6 +11,20 @@ metadata:
         "install":
           [
             {
+              "id": "pip",
+              "kind": "pip",
+              "package": "openai-whisper",
+              "bins": ["whisper"],
+              "label": "Install OpenAI Whisper (pip)",
+            },
+            {
+              "id": "choco",
+              "kind": "choco",
+              "package": "openai-whisper",
+              "bins": ["whisper"],
+              "label": "Install OpenAI Whisper (choco)",
+            },
+            {
               "id": "brew",
               "kind": "brew",
               "formula": "openai-whisper",

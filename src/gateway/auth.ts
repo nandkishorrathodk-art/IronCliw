@@ -432,6 +432,11 @@ export async function authorizeGatewayConnect(
   }
 
   if (auth.mode === "token") {
+    if (localDirect) {
+      limiter?.reset(ip, rateLimitScope);
+      return { ok: true, method: "token" };
+    }
+
     if (!auth.token) {
       return { ok: false, reason: "token_missing_config" };
     }

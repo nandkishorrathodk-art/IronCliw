@@ -1877,7 +1877,7 @@ describe("QmdMemoryManager", () => {
     try {
       await fs.symlink(target, link);
     } catch (err) {
-      if (process.platform === "win32" && (err as any).code === "EPERM") {
+      if (process.platform === "win32" && (err as { code?: string }).code === "EPERM") {
         await manager.close();
         return;
       }
@@ -2311,7 +2311,7 @@ describe("QmdMemoryManager", () => {
             try {
               stat = await fs.lstat(customModelsDir);
             } catch (err) {
-              if (process.platform === "win32" && (err as any).code === "ENOENT") {
+              if (process.platform === "win32" && (err as { code?: string }).code === "ENOENT") {
                 // If symlink failed during manager init, it might not exist
                 return;
               }

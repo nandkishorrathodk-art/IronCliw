@@ -109,6 +109,9 @@ import {
 import { loadGatewayTlsRuntime } from "./server/tls.js";
 import { ensureGatewayStartupAuth } from "./startup-auth.js";
 import { maybeSeedControlUiAllowedOriginsAtStartup } from "./startup-control-ui-origins.js";
+import { AuditLogger } from "../security/audit-logger.js";
+import { PluginManager } from "../plugins/plugin-manager.js";
+import { setAuditLogger } from "./server-methods.js";
 
 export { __resetModelCatalogCacheForTest } from "./server-model-catalog.js";
 
@@ -235,6 +238,23 @@ export async function startGatewayServer(
 ): Promise<GatewayServer> {
   const minimalTestGateway =
     process.env.VITEST === "1" && process.env.IronCliw_TEST_MINIMAL_GATEWAY === "1";
+
+  // Initialize Enterprise Security Modules
+  const auditLogger = new AuditLogger();
+  await auditLogger.initialize();
+  setAuditLogger(auditLogger);
+
+  // Initialize Plugin System (Phase 3)
+  const pluginManager = new PluginManager();
+  await pluginManager.discoverAndLoad();
+
+  await auditLogger.log({
+    user: "SYSTEM",
+    action: "gateway_startup_init",
+    target: `port:${port}`,
+    status: "success",
+    metadata: { pid: process.pid }
+  });
 
   // Ensure all default port derivations (browser/canvas) see the actual runtime port.
   process.env.IronCliw_GATEWAY_PORT = String(port);

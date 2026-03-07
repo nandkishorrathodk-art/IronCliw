@@ -182,7 +182,7 @@ export function getPackageManifestMetadata(
   for (const key of keys) {
     const section = manifest[key as ManifestKey];
     if (section && typeof section === "object") {
-      return section as IronCliwPackageManifest;
+      return section;
     }
   }
   return undefined;

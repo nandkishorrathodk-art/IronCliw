@@ -12,6 +12,13 @@ metadata:
         "install":
           [
             {
+              "id": "go",
+              "kind": "go",
+              "module": "github.com/steipete/sag/cmd/sag@latest",
+              "bins": ["sag"],
+              "label": "Install sag (go)",
+            },
+            {
               "id": "brew",
               "kind": "brew",
               "formula": "steipete/tap/sag",

@@ -145,6 +145,24 @@ function buildInstallCommand(
       }
       return { argv: ["uv", "tool", "install", spec.package] };
     }
+    case "choco": {
+      if (!spec.package) {
+        return { argv: null, error: "missing choco package" };
+      }
+      return { argv: ["choco", "install", "-y", spec.package] };
+    }
+    case "scoop": {
+      if (!spec.package) {
+        return { argv: null, error: "missing scoop package" };
+      }
+      return { argv: ["scoop", "install", spec.package] };
+    }
+    case "pip": {
+      if (!spec.package) {
+        return { argv: null, error: "missing pip package" };
+      }
+      return { argv: ["pip", "install", spec.package] };
+    }
     case "download": {
       return { argv: null, error: "download install handled separately" };
     }
@@ -246,10 +264,12 @@ async function runBestEffortCommand(
 
 function resolveBrewMissingFailure(spec: SkillInstallSpec): SkillInstallResult {
   const formula = spec.formula ?? "this package";
-  const hint =
-    process.platform === "linux"
-      ? `Homebrew is not installed. Install it from https://brew.sh or install "${formula}" manually using your system package manager (e.g. apt, dnf, pacman).`
-      : "Homebrew is not installed. Install it from https://brew.sh";
+  let hint = "Homebrew is not installed. Install it from https://brew.sh";
+  if (process.platform === "linux") {
+    hint = `Homebrew is not installed. Install it from https://brew.sh or install "${formula}" manually using your system package manager (e.g. apt, dnf, pacman).`;
+  } else if (process.platform === "win32") {
+    hint = `Homebrew is not available on Windows. Try installing "${formula}" manually using Chocolatey (choco) or Scoop, or check if an npm/go/uv installer is available for this skill.`;
+  }
   return createInstallFailure({ message: `brew not installed — ${hint}` });
 }
 

@@ -462,7 +462,16 @@ export function createImageTool(options?: {
                 localRoots,
               });
         if (media.kind !== "image") {
-          throw new Error(`Unsupported media type: ${media.kind}`);
+          // Return a structured result so the agent knows to use web_fetch instead of crashing.
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text: `The URL did not return an image — it returned a ${media.kind} (e.g. an HTML web page). Use the \`web_fetch\` tool to read web pages, or provide a direct image URL (ending in .jpg / .png / .webp etc.).`,
+              },
+            ],
+            details: { error: "not_an_image", kind: media.kind, image: imageRawInput },
+          };
         }
 
         const mimeType =

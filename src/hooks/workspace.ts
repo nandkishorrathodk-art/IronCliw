@@ -24,7 +24,7 @@ import type {
 
 type HookPackageManifest = {
   name?: string;
-} & Record<string, any>;
+} & Record<string, unknown>;
 const log = createSubsystemLogger("hooks/workspace");
 
 function filterHookEntries(
@@ -57,7 +57,7 @@ function resolvePackageHooks(manifest: HookPackageManifest): string[] {
   for (const key of [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS]) {
     if (manifest[key] && typeof manifest[key] === "object") {
       raw = manifest[key].hooks;
-      if (raw !== undefined) break;
+      if (raw !== undefined) {break;}
     }
   }
   if (!Array.isArray(raw)) {

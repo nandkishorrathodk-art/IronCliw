@@ -90,11 +90,20 @@ export function createCanvasTool(options?: { config?: IronCliwConfig }): AnyAgen
       const action = readStringParam(params, "action", { required: true });
       const gatewayOpts = readGatewayCallOptions(params);
 
-      const nodeId = await resolveNodeId(
-        gatewayOpts,
-        readStringParam(params, "node", { trim: true }),
-        true,
-      );
+      let nodeId: string;
+      try {
+        nodeId = await resolveNodeId(
+          gatewayOpts,
+          readStringParam(params, "node", { trim: true }),
+          true,
+        );
+      } catch {
+        throw new Error(
+          "Canvas requires a connected IronCliw node. " +
+            "Pair one with: ironcliw node add  " +
+            "(or pass node=<id> if you have a specific node in mind).",
+        );
+      }
 
       const invoke = async (command: string, invokeParams?: Record<string, unknown>) =>
         await callGatewayTool("node.invoke", gatewayOpts, {

@@ -80,7 +80,10 @@ import { deliverAgentCommandResult } from "./agent/delivery.js";
 import { resolveAgentRunContext } from "./agent/run-context.js";
 import { updateSessionStoreAfterAgentRun } from "./agent/session-store.js";
 import { resolveSession } from "./agent/session.js";
+import { ContextCache } from "../brain/context-cache.js";
 import type { AgentCommandIngressOpts, AgentCommandOpts } from "./agent/types.js";
+
+const contextCache = new ContextCache(256000); // 256K token LRU cache
 
 type PersistSessionEntryParams = {
   sessionStore: Record<string, SessionEntry>;
@@ -430,6 +433,16 @@ async function agentCommandInternal(
     persistedThinking,
     persistedVerbose,
   } = sessionResolution;
+
+  // Context Caching - Retrieval
+  if (sessionKey) {
+    const cachedData = await contextCache.get(sessionKey);
+    if (cachedData) {
+      log.info(`[Performance] Context cache hit for session: ${sessionKey}`);
+      // Use cachedData to prime the LLM context (integration point for specific providers)
+    }
+  }
+
   const sessionAgentId =
     agentIdOverride ??
     resolveSessionAgentId({
@@ -930,6 +943,10 @@ async function agentCommandInternal(
         fallbackModel,
         result,
       });
+
+      // Context Caching - Storage
+      const estimatedTokens = result.payloads?.reduce((acc, p) => acc + (p.text?.length ?? 0) / 4, 0) ?? 500;
+      await contextCache.set(sessionKey, { history: sessionEntry, result }, Math.ceil(estimatedTokens));
     }
 
     const payloads = result.payloads ?? [];

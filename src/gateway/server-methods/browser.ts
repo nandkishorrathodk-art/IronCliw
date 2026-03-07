@@ -139,7 +139,21 @@ function applyProxyPaths(result: unknown, mapping: Map<string, string>) {
   applyBrowserProxyPaths(result, mapping);
 }
 
+import { visualBrowser } from "../../browser/visual-browser.js";
+import { getPageForTargetId } from "../../browser/pw-session.js";
+
 export const browserHandlers: GatewayRequestHandlers = {
+  "browser.visual_click": async ({ params, respond }) => {
+    const { targetId, prompt, cdpUrl } = params as { targetId: string, prompt: string, cdpUrl: string };
+    try {
+      const page = await getPageForTargetId({ cdpUrl, targetId });
+      const success = await visualBrowser.visualClick(page, prompt);
+      respond(true, { success });
+    } catch (err: unknown) {
+      respond(false, undefined, errorShape(ErrorCodes.UNAVAILABLE, (err as Error).message));
+    }
+  },
+
   "browser.request": async ({ params, respond, context }) => {
     const typed = params as BrowserRequestParams;
     const methodRaw = typeof typed.method === "string" ? typed.method.trim().toUpperCase() : "";

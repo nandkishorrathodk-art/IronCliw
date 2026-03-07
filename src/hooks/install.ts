@@ -35,7 +35,7 @@ type HookPackageManifest = {
   name?: string;
   version?: string;
   dependencies?: Record<string, string>;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export type InstallHooksResult =
   | {
@@ -117,7 +117,7 @@ async function ensureIronCliwHooks(manifest: HookPackageManifest) {
   for (const key of [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS]) {
     if (manifest[key] && typeof manifest[key] === "object") {
       hooks = manifest[key].hooks;
-      if (hooks !== undefined) break;
+      if (hooks !== undefined) {break;}
     }
   }
   if (!Array.isArray(hooks)) {

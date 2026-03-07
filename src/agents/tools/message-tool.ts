@@ -43,7 +43,12 @@ function actionNeedsExplicitTarget(action: ChannelMessageActionName): boolean {
 function buildRoutingSchema() {
   return {
     channel: Type.Optional(Type.String()),
-    target: Type.Optional(channelTargetSchema({ description: "Target channel/user id or name." })),
+    target: Type.Optional(
+      channelTargetSchema({
+        description:
+          "Target channel/user id or name. For WhatsApp, use E.164 phone numbers (e.g. +91...) or group JIDs. Words like 'webchat' are invalid.",
+      }),
+    ),
     targets: Type.Optional(channelTargetsSchema()),
     accountId: Type.Optional(Type.String()),
     dryRun: Type.Optional(Type.Boolean()),

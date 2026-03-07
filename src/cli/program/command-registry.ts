@@ -123,6 +123,19 @@ const coreEntries: CoreCliEntry[] = [
   {
     commands: [
       {
+        name: "desktop",
+        description: "Desktop automation and vision control",
+        hasSubcommands: true,
+      },
+    ],
+    register: async ({ program }) => {
+      const mod = await import("./register.desktop.js");
+      mod.registerDesktopCommand(program);
+    },
+  },
+  {
+    commands: [
+      {
         name: "burp",
         description: "Burp Suite Professional integration and visual automation",
         hasSubcommands: true,
@@ -131,6 +144,19 @@ const coreEntries: CoreCliEntry[] = [
     register: async ({ program }) => {
       const mod = await import("./register.burp.js");
       mod.registerBurpCommand(program);
+    },
+  },
+  {
+    commands: [
+      {
+        name: "scan",
+        description: "IronCliw ProScan — AI-powered autonomous security scanner (Burp Suite alternative)",
+        hasSubcommands: true,
+      },
+    ],
+    register: async ({ program }) => {
+      const mod = await import("./register.proscan.js");
+      mod.registerProScanCommand(program);
     },
   },
   {

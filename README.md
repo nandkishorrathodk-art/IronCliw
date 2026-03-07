@@ -39,11 +39,12 @@
 - 🎙️ **Voice I/O** — Talk to IronCliw. It listens (Deepgram Nova-2), responds (ElevenLabs / Edge TTS), and executes.
 - 🪟 **Windows Native** — Deep OS integration via C# Daemon for registry, services, clipboard, and input control.
 - 🧠 **128K Context** — Parallel sub-agent orchestration with up to 16 simultaneous agents.
-- �️ **Visual Intelligence** — Uses Fireworks Kimi 2.x Computer Vision to operate any desktop application.
+- 🖥️ **Visual Intelligence** — Uses Fireworks Kimi 2.x Computer Vision to operate any desktop application.
 - 📱 **Multi-Channel** — Control your PC from WhatsApp, Telegram, Discord, Signal, or iMessage.
 - ⚡ **HyperTask Engine** — 8-worker parallel task queue for 5× faster multi-step operations.
 - 🛡️ **Health Monitor** — Real-time CPU, RAM, Disk watchdog with auto-alerts when resources hit critical thresholds.
 - 🕵️ **Browser Stealth** — Anti-bot-detection engine with UA rotation, viewport randomization, and mouse jitter.
+- 🔍 **ProScan AI Scanner** — Built-in autonomous security scanner (Burp Suite alternative): crawl, passive analysis, active injection (XSS/SQLi/SSTI/IDOR), JS endpoint extraction, auth bypass detection, and auto bug-bounty report generation.
 
 > _"The Iron Grip of AI Automation."_
 
@@ -76,6 +77,8 @@ Huge respect and thanks to the OpenClaw team for their open-source work. 🙏
 | Windows Native Daemon  | ✗                   | ✅ IronCliwDaemon (C#)              |
 | Parallel Task Engine   | ✗                   | ✅ HyperTask (8-worker queue)       |
 | System Health Monitor  | ✗                   | ✅ CPU/RAM/Disk watchdog             |
+| Security Scanner       | ✗                   | ✅ ProScan (XSS/SQLi/IDOR/SSTI/CSRF) |
+| Bug Bounty Reports     | ✗                   | ✅ Auto Bugcrowd/HackerOne reports   |
 
 ---
 
@@ -111,8 +114,14 @@ IronCliw operates on a **3-Tier Industrial Architecture**:
 **Requirements: Node ≥ 22 · Windows 10/11 · PowerShell 7+**
 
 ```powershell
-# Install globally
-npm install -g IronCliw
+# Clone and build
+git clone https://github.com/nandkishorrathodk-art/IronCliw.git
+cd IronCliw
+pnpm install
+pnpm build
+
+# Install globally so IronCliw command works anywhere
+npm install -g .
 
 # Initialize (first run)
 IronCliw onboard
@@ -172,7 +181,39 @@ Reduces LLM token usage by caching tool results (60s), deduplicating calls, and 
 
 ---
 
-## � Security Guardrails
+## 🔍 ProScan — AI Security Scanner
+
+IronCliw ships with **ProScan**, a fully autonomous security scanner that replaces Burp Suite for bug bounty hunting:
+
+```powershell
+# Quick passive scan (headers, SSL, info disclosure)
+IronCliw scan quick https://target.com
+
+# Full autonomous scan (crawl → passive → active injection → API)
+IronCliw scan scope --add target.com
+IronCliw scan target https://target.com --depth 3 --pages 30
+
+# Bug bounty mode — scan all program targets + auto-generate report
+IronCliw scan bounty --program "Fireblocks" --scope "sb-console-api.fireblocks.io,sandbox-api.fireblocks.io" --platform bugcrowd --researcher yourhandle
+
+# Generate Bugcrowd/HackerOne formatted report from findings
+IronCliw scan report findings.json --platform bugcrowd --out report.md
+```
+
+| Capability | Burp Suite Free | **IronCliw ProScan** |
+|---|---|---|
+| Passive analysis | ✅ | ✅ |
+| Form injection (XSS/SQLi/SSTI) | ✅ | ✅ |
+| JS endpoint extraction | ✅ | ✅ |
+| Authenticated scan | ✅ | ✅ |
+| IDOR / API fuzzing | ✅ | ✅ |
+| Auth bypass header testing | ✅ | ✅ |
+| Auto bug-bounty report | ✗ | ✅ |
+| Burp Pro required | ✅ | **Free — built in** |
+
+---
+
+## 🔒 Security Guardrails
 
 IronCliw includes built-in **authorized-targets scope management**:
 - Define which domains/IPs are in-scope

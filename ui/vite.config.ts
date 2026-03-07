@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
+
 function normalizeBase(input: string): string {
   const trimmed = input.trim();
   if (!trimmed) {
@@ -21,9 +22,17 @@ function normalizeBase(input: string): string {
 export default defineConfig(() => {
   const envBase = process.env.IronCliw_CONTROL_UI_BASE_PATH?.trim();
   const base = envBase ? normalizeBase(envBase) : "./";
+
+  // Expose voice API keys at build time so the browser can use them directly
+  const deepgramKey = process.env.DEEPGRAM_API_KEY ?? "";
+
   return {
     base,
     publicDir: path.resolve(here, "public"),
+    define: {
+      // Exposes as window.DEEPGRAM_API_KEY in the browser bundle
+      "window.DEEPGRAM_API_KEY": JSON.stringify(deepgramKey),
+    },
     optimizeDeps: {
       include: ["lit/directives/repeat.js"],
     },

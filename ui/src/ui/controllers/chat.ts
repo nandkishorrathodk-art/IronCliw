@@ -241,6 +241,8 @@ export async function abortChatRun(state: ChatState): Promise<boolean> {
   }
 }
 
+// Removed TTS functionally per user request
+
 export function handleChatEvent(state: ChatState, payload?: ChatEventPayload) {
   if (!payload) {
     return null;
@@ -285,6 +287,7 @@ export function handleChatEvent(state: ChatState, payload?: ChatEventPayload) {
         },
       ];
     }
+
     state.chatStream = null;
     state.chatRunId = null;
     state.chatStreamStartedAt = null;

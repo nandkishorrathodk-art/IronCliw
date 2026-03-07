@@ -96,4 +96,7 @@ async function computeHash(inputs) {
   return hash.digest("hex");
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

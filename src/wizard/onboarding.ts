@@ -503,7 +503,7 @@ export async function runOnboardingWizard(
   await writeConfigFile(nextConfig);
 
   const { finalizeOnboardingWizard } = await import("./onboarding.finalize.js");
-  const { launchedTui } = await finalizeOnboardingWizard({
+  await finalizeOnboardingWizard({
     flow,
     opts,
     baseConfig,
@@ -513,7 +513,4 @@ export async function runOnboardingWizard(
     prompter,
     runtime,
   });
-  if (launchedTui) {
-    return;
-  }
 }

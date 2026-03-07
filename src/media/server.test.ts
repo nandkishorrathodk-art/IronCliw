@@ -96,7 +96,7 @@ describe("media server", () => {
         try {
           await fs.symlink(target, link);
         } catch (err) {
-          if (process.platform === "win32" && (err as any).code === "EPERM") {
+          if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
             return { skipOnWindows: true };
           }
           throw err;

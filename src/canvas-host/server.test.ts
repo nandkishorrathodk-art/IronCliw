@@ -279,7 +279,7 @@ describe("canvas host", () => {
       await fs.symlink(path.join(process.cwd(), "package.json"), linkPath);
       createdLink = true;
     } catch (err) {
-      if (process.platform === "win32" && (err as any).code === "EPERM") {
+      if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
         return;
       }
       throw err;

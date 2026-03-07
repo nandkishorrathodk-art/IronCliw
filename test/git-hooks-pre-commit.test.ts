@@ -32,7 +32,7 @@ describe("git-hooks/pre-commit (integration)", () => {
         path.join(dir, "git-hooks", "pre-commit"),
       );
     } catch (err) {
-      if (process.platform === "win32" && (err as any).code === "EPERM") {
+      if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
         console.warn("Skipping symlink test on Windows due to missing privileges");
         return;
       }

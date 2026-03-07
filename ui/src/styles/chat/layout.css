@@ -353,6 +353,8 @@
   box-sizing: border-box;
 }
 
+/* Voice input styles removed */
+
 /* Chat controls - moved to content-header area, left aligned */
 .chat-controls {
   display: flex;
