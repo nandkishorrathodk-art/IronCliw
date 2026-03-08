@@ -38,6 +38,12 @@ export interface SystemStats {
     usagePercent: number;
     freeMb: number;
   };
+  heap: {
+    usedMb: number;
+    totalMb: number;
+    externalMb: number;
+    usagePercent: number;
+  };
   disk: {
     usedGb: number;
     totalGb: number;
@@ -175,6 +181,8 @@ export class HealthWatchdog extends EventEmitter {
   private timer: ReturnType<typeof setInterval> | null = null;
   private _latest: SystemStats | null = null;
   private _running = false;
+  private readonly _history: SystemStats[] = [];
+  private static readonly HISTORY_SIZE = 10;
 
   constructor(opts: WatchdogOptions = {}) {
     super();
@@ -217,6 +225,23 @@ export class HealthWatchdog extends EventEmitter {
     return this._latest;
   }
 
+  /** Get last N stats samples (up to HISTORY_SIZE). */
+  history(): SystemStats[] {
+    return [...this._history];
+  }
+
+  /** Average CPU usage over the last N samples (default: all history). */
+  avgCpu(samples?: number): number {
+    const slice = samples ? this._history.slice(-samples) : this._history;
+    if (slice.length === 0) { return 0; }
+    return Math.round(slice.reduce((s, h) => s + h.cpu.usagePercent, 0) / slice.length);
+  }
+
+  /** Peak CPU usage across history. */
+  peakCpu(): number {
+    return this._history.reduce((max, h) => Math.max(max, h.cpu.usagePercent), 0);
+  }
+
   /** Force an immediate stats collection and return result. */
   async snapshot(): Promise<SystemStats> {
     return this.sample();
@@ -230,6 +255,10 @@ export class HealthWatchdog extends EventEmitter {
     const memPercent = Math.round((usedMem / totalMem) * 100);
     const disk = getDiskInfo();
     const coreList = cpus();
+    const heapRaw = process.memoryUsage();
+    const heapUsedMb = Math.round(heapRaw.heapUsed / 1_048_576);
+    const heapTotalMb = Math.round(heapRaw.heapTotal / 1_048_576);
+    const externalMb = Math.round(heapRaw.external / 1_048_576);
     const warnings: string[] = [];
 
     // Determine alert thresholds
@@ -265,6 +294,12 @@ export class HealthWatchdog extends EventEmitter {
         usagePercent: memPercent,
         freeMb: Math.round(freeMem / 1_048_576),
       },
+      heap: {
+        usedMb: heapUsedMb,
+        totalMb: heapTotalMb,
+        externalMb,
+        usagePercent: heapTotalMb > 0 ? Math.round((heapUsedMb / heapTotalMb) * 100) : 0,
+      },
       disk,
       system: {
         platform: platform(),
@@ -278,6 +313,10 @@ export class HealthWatchdog extends EventEmitter {
     };
 
     this._latest = stats;
+    this._history.push(stats);
+    if (this._history.length > HealthWatchdog.HISTORY_SIZE) {
+      this._history.shift();
+    }
     this.emit("stats", stats);
 
     if (warnings.length > 0) {
@@ -302,6 +341,7 @@ export class HealthWatchdog extends EventEmitter {
       `────────────────────────────────`,
       `🧠 CPU:    ${stats.cpu.usagePercent}% (${stats.cpu.cores} cores — ${stats.cpu.model})`,
       `💾 RAM:    ${stats.memory.usedMb} MB / ${stats.memory.totalMb} MB (${stats.memory.usagePercent}%)`,
+      `🔮 Heap:   ${stats.heap.usedMb} MB / ${stats.heap.totalMb} MB (${stats.heap.usagePercent}%) + ${stats.heap.externalMb} MB external`,
       `💿 Disk:   ${stats.disk.usedGb} GB / ${stats.disk.totalGb} GB (${stats.disk.usagePercent}%)`,
       `🌐 Host:   ${stats.system.hostname} | ${stats.system.platform}`,
       `⬆️  Uptime: ${Math.round(stats.system.uptimeSeconds / 3600)}h ${Math.round((stats.system.uptimeSeconds % 3600) / 60)}m`,

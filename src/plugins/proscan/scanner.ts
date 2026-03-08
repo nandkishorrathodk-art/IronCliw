@@ -75,14 +75,26 @@ export class ProScanner extends EventEmitter {
   private discoveredUrls: Set<string> = new Set();
   private discoveredEndpoints: Set<string> = new Set();
   private browser: Browser | null = null;
+  private seenFindingKeys: Set<string> = new Set();
+  private scanStartTime = 0;
+  private totalPhases = 4;
+  private currentPhase = 0;
+
+  private makeDedupeKey(f: { category: string; url: string; parameter?: string; payload?: string }): string {
+    return `${f.category}:${f.url}:${f.parameter ?? ""}:${f.payload?.slice(0, 30) ?? ""}`;
+  }
 
   async scan(target: ScanTarget, opts: ScanOptions = {}): Promise<ProFinding[]> {
     this.findings = [];
     this.capturedRequests = [];
     this.discoveredUrls = new Set();
     this.discoveredEndpoints = new Set();
+    this.seenFindingKeys = new Set();
+    this.scanStartTime = Date.now();
+    this.currentPhase = 0;
 
     const onFinding = opts.onFinding ?? (() => {});
+    const timeoutMs = target.timeoutMs ?? 10 * 60 * 1000;
 
     log.info(`[ProScan] Starting full scan: ${target.url}`);
 
@@ -98,6 +110,12 @@ export class ProScanner extends EventEmitter {
       ],
     });
 
+    const scanAbort = new AbortController();
+    const timeoutHandle = setTimeout(() => {
+      log.warn(`[ProScan] Scan timeout reached (${timeoutMs / 1000}s). Aborting.`);
+      scanAbort.abort();
+    }, timeoutMs);
+
     try {
       const ctx = await this.browser.newContext({
         ignoreHTTPSErrors: true,
@@ -107,6 +125,10 @@ export class ProScanner extends EventEmitter {
       });
 
       await ctx.route("**/*", async (route) => {
+        if (scanAbort.signal.aborted) {
+          await route.abort();
+          return;
+        }
         const req = route.request();
         const captured: CapturedRequest = {
           url: req.url(),
@@ -137,28 +159,47 @@ export class ProScanner extends EventEmitter {
         await this.loginToApp(page, target.credentials);
       }
 
-      log.info("[Phase 1] 🕷️  Crawling...");
-      await this.crawlPhase(page, target, onFinding);
+      this.emitProgress(1, "Crawling");
+      if (!scanAbort.signal.aborted) {
+        log.info("[Phase 1] 🕷️  Crawling...");
+        await this.crawlPhase(page, target, onFinding);
+      }
 
-      log.info("[Phase 2] 👁️  Passive analysis...");
-      await this.passivePhase(onFinding);
+      this.emitProgress(2, "Passive analysis");
+      if (!scanAbort.signal.aborted) {
+        log.info("[Phase 2] 👁️  Passive analysis...");
+        await this.passivePhase(onFinding);
+      }
 
-      log.info("[Phase 3] ⚡ Active injection...");
-      await this.activePhase(ctx, target, onFinding);
+      this.emitProgress(3, "Active injection");
+      if (!scanAbort.signal.aborted) {
+        log.info("[Phase 3] ⚡ Active injection...");
+        await this.activePhase(ctx, target, onFinding, opts.concurrency ?? 3);
+      }
 
-      if (target.includeAPIs !== false) {
+      if (target.includeAPIs !== false && !scanAbort.signal.aborted) {
+        this.emitProgress(4, "API testing");
         log.info("[Phase 4] 🔌 API testing...");
         await this.apiPhase(onFinding);
       }
 
       await ctx.close();
     } finally {
+      clearTimeout(timeoutHandle);
       await this.browser.close();
       this.browser = null;
     }
 
-    log.info(`[ProScan] Scan complete. Found ${this.findings.length} issues.`);
+    const elapsed = ((Date.now() - this.scanStartTime) / 1000).toFixed(1);
+    log.info(`[ProScan] Scan complete in ${elapsed}s. Found ${this.findings.length} issues.`);
     return this.findings;
+  }
+
+  private emitProgress(phase: number, name: string) {
+    this.currentPhase = phase;
+    const pct = Math.round((phase / this.totalPhases) * 100);
+    this.emit("progress", { phase, name, percent: pct });
+    console.log(`\n  [${"█".repeat(Math.round(pct / 5))}${"░".repeat(20 - Math.round(pct / 5))}] ${pct}% — Phase ${phase}/${this.totalPhases}: ${name}`);
   }
 
   private async loginToApp(
@@ -513,29 +554,84 @@ export class ProScanner extends EventEmitter {
     ctx: BrowserContext,
     target: ScanTarget,
     onFinding: (f: ProFinding) => void,
+    concurrency: number,
   ) {
-    const page = await ctx.newPage();
-
     const testUrls = [...this.discoveredUrls].slice(0, 20);
 
-    for (const url of testUrls) {
-      try {
-        await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15000 });
-        await page.waitForTimeout(1000);
-
-        const forms = await this.discoverForms(page, url);
-
-        for (const form of forms) {
-          await this.testFormInjection(page, url, form, onFinding);
-        }
-
-        await this.testUrlParams(page, url, onFinding);
-      } catch (err) {
-        log.warn(`  ✗ Active test failed for ${url}: ${(err as Error).message}`);
-      }
+    const chunks: string[][] = [];
+    for (let i = 0; i < testUrls.length; i += concurrency) {
+      chunks.push(testUrls.slice(i, i + concurrency));
     }
 
-    await page.close();
+    for (const chunk of chunks) {
+      await Promise.allSettled(
+        chunk.map(async (url) => {
+          const page = await ctx.newPage();
+          try {
+            await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15000 });
+            await page.waitForTimeout(800);
+
+            const forms = await this.discoverForms(page, url);
+            for (const form of forms) {
+              await this.testFormInjection(page, url, form, onFinding);
+            }
+
+            await this.testUrlParams(page, url, onFinding);
+            await this.testOpenRedirect(page, url, onFinding);
+          } catch (err) {
+            log.warn(`  ✗ Active test failed for ${url}: ${(err as Error).message}`);
+          } finally {
+            await page.close().catch(() => {});
+          }
+        }),
+      );
+    }
+  }
+
+  private async testOpenRedirect(
+    page: Page,
+    url: string,
+    onFinding: (f: ProFinding) => void,
+  ) {
+    const urlObj = new URL(url);
+    const redirectParams = ["redirect", "url", "next", "return", "returnTo", "redirect_uri", "goto", "dest", "destination", "redir"];
+    const testPayload = "https://evil.ironcliw-test.example.com";
+
+    for (const param of redirectParams) {
+      if (!urlObj.searchParams.has(param)) {
+        continue;
+      }
+      try {
+        const testUrl = new URL(url);
+        testUrl.searchParams.set(param, testPayload);
+        const resp = await page.goto(testUrl.toString(), { waitUntil: "commit", timeout: 8000 });
+        const finalUrl = page.url();
+        const status = resp?.status() ?? 0;
+
+        if (
+          finalUrl.includes("evil.ironcliw-test") ||
+          (status >= 300 && status < 400 && resp?.headers()["location"]?.includes("evil.ironcliw-test"))
+        ) {
+          this.emitFinding(
+            {
+              id: makeFindingId(),
+              timestamp: new Date(),
+              title: `Open Redirect in Parameter '${param}'`,
+              severity: "medium",
+              category: "Open Redirect",
+              url,
+              parameter: param,
+              payload: testPayload,
+              evidence: `Redirect to attacker URL confirmed — final URL: ${finalUrl.slice(0, 100)}`,
+              phase: "active",
+              cvss: 6.1,
+            },
+            onFinding,
+          );
+        }
+      } catch {
+      }
+    }
   }
 
   private async testFormInjection(
@@ -807,12 +903,11 @@ export class ProScanner extends EventEmitter {
   }
 
   private emitFinding(finding: ProFinding, onFinding: (f: ProFinding) => void) {
-    const duplicate = this.findings.find(
-      (f) => f.title === finding.title && f.url === finding.url,
-    );
-    if (duplicate) {
+    const key = this.makeDedupeKey(finding);
+    if (this.seenFindingKeys.has(key)) {
       return;
     }
+    this.seenFindingKeys.add(key);
 
     this.findings.push(finding);
     this.emit("finding", finding);

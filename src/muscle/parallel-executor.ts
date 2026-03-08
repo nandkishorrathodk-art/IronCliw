@@ -8,6 +8,10 @@ export interface Task {
   dependencies?: string[];
   /** Per-task timeout in ms. If exceeded, task fails with a timeout error. */
   timeoutMs?: number;
+  /** Max retry attempts on failure. Default 0 (no retry). */
+  maxRetries?: number;
+  /** Base backoff ms for retries (exponential). Default 500ms. */
+  retryBaseMs?: number;
 }
 
 export class ParallelExecutor extends EventEmitter {
@@ -165,26 +169,43 @@ export class ParallelExecutor extends EventEmitter {
     this.activeWorkers++;
     this.status.set(task.id, "running");
 
-    try {
-      let executePromise = task.execute();
-      if (task.timeoutMs != null && task.timeoutMs > 0) {
-        const timeoutPromise = new Promise<never>((_, reject) =>
-          setTimeout(
-            () => reject(new Error(`Task "${task.id}" timed out after ${task.timeoutMs}ms`)),
-            task.timeoutMs,
-          ),
-        );
-        executePromise = Promise.race([executePromise, timeoutPromise]);
+    const maxRetries = task.maxRetries ?? 0;
+    const retryBaseMs = task.retryBaseMs ?? 500;
+    let attempt = 0;
+    let lastErr: unknown;
+
+    while (attempt <= maxRetries) {
+      try {
+        let executePromise = task.execute();
+        if (task.timeoutMs != null && task.timeoutMs > 0) {
+          const timeoutPromise = new Promise<never>((_, reject) =>
+            setTimeout(
+              () => reject(new Error(`Task "${task.id}" timed out after ${task.timeoutMs}ms`)),
+              task.timeoutMs,
+            ),
+          );
+          executePromise = Promise.race([executePromise, timeoutPromise]);
+        }
+        const result = await executePromise;
+        this.results.set(task.id, result);
+        this.status.set(task.id, "completed");
+        this.activeWorkers--;
+        this.emit("taskFinished", task.id);
+        return;
+      } catch (err: unknown) {
+        lastErr = err;
+        attempt++;
+        if (attempt <= maxRetries) {
+          const backoffMs = retryBaseMs * Math.pow(2, attempt - 1);
+          this.emit("taskRetry", { id: task.id, attempt, backoffMs });
+          await new Promise((r) => setTimeout(r, backoffMs));
+        }
       }
-      const result = await executePromise;
-      this.results.set(task.id, result);
-      this.status.set(task.id, "completed");
-    } catch (err: unknown) {
-      this.errors.set(task.id, err as Error);
-      this.status.set(task.id, "failed");
-    } finally {
-      this.activeWorkers--;
-      this.emit("taskFinished", task.id);
     }
+
+    this.errors.set(task.id, lastErr as Error);
+    this.status.set(task.id, "failed");
+    this.activeWorkers--;
+    this.emit("taskFinished", task.id);
   }
 }
