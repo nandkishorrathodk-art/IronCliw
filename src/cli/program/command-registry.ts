@@ -149,6 +149,19 @@ const coreEntries: CoreCliEntry[] = [
   {
     commands: [
       {
+        name: "hunt",
+        description: "🦾 Autonomous bug hunter — give a URL, IronCliw does everything automatically",
+        hasSubcommands: false,
+      },
+    ],
+    register: async ({ program }) => {
+      const mod = await import("./register.hunt.js");
+      mod.registerHuntCommand(program);
+    },
+  },
+  {
+    commands: [
+      {
         name: "scan",
         description: "IronCliw ProScan — AI-powered autonomous security scanner (Burp Suite alternative)",
         hasSubcommands: true,
