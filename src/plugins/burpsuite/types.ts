@@ -51,3 +51,12 @@ export type BurpScanTask = {
   progress: number;
   issuesCount: number;
 };
+
+export type BurpFireRequestResult = {
+  response: string;
+  statusCode: number;
+  responseLength: number;
+  responseTime: number;
+  responseHeaders: Record<string, string>;
+  responseBody: string;
+};

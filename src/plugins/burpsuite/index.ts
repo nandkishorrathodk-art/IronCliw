@@ -2,61 +2,53 @@ import { BurpClient } from "./client.js";
 import { burpVisual } from "./visual.js";
 import { burpVision } from "./vision-engine.js";
 import { burpKnowledge } from "./knowledge.js";
+import { BurpRepeater } from "./repeater.js";
+import { BurpIntruder } from "./intruder.js";
+import { BurpInterceptor } from "./interceptor.js";
+import { responseAnalyzer } from "./response-analyzer.js";
 import { scopeManager } from "../../security/scope-manager.js";
 import type { BurpApiConfig } from "./types.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 
 const log = createSubsystemLogger("burp/plugin");
 
-/**
- * IronCliw Burp Suite Integration Plugin
- */
 export class BurpSuitePlugin {
   private client?: BurpClient;
+  public repeater?: BurpRepeater;
+  public intruder?: BurpIntruder;
+  public interceptor?: BurpInterceptor;
 
-  /**
-   * Initialize the plugin with Burp configuration
-   */
   async init(config: BurpApiConfig) {
     this.client = new BurpClient(config);
+    this.repeater = new BurpRepeater(this.client);
+    this.intruder = new BurpIntruder(this.client);
+    this.interceptor = new BurpInterceptor(this.client);
     await scopeManager.load();
+    log.info("[BurpPlugin] Initialized — Repeater, Intruder, Interceptor, ResponseAnalyzer ready.");
   }
 
-  /**
-   * Performs a visual scan of the Burp Suite UI.
-   * Now includes self-learning via tutorials!
-   */
+  private ensureClient(): BurpClient {
+    if (!this.client) {
+      throw new Error("Burp not initialized. Run: IronCliw burp init");
+    }
+    return this.client;
+  }
+
   async performVisualHunt(task: string, modelId?: string) {
     log.info(`Starting visual hunt: ${task}`);
-    
-    // 1. Consulting knowledge base if task is specific
     const tutorial = await burpKnowledge.consultTutorial(task);
-    if (tutorial) {
-      log.info("Learning from tutorial before action...");
-      // In a real flow, the AI would ingest this tutorial content
-    }
-
-    // 2. Launch/Focus Burp
     await burpVisual.launch();
-    
-    // 3. Capture the UI
     const screenshotPath = await burpVisual.captureUI();
-    
-    // 4. Analyze with Vision + Knowledge
     const analysis = await burpVision.analyzeScreenshot({
       imagePath: screenshotPath,
       task: tutorial ? `Tutorial provided: ${tutorial}\n\nTask: ${task}` : task,
       provider: "fireworks",
-      modelId: modelId
+      modelId,
     });
-
     log.info("Visual analysis complete.");
     return analysis;
   }
 
-  /**
-   * Executes a specific security test visually after approval.
-   */
   async executeVisualTest(params: {
     analysis: { url?: string; elements: { label: string; x: number; y: number }[] };
     targetElement: string;
@@ -67,21 +59,128 @@ export class BurpSuitePlugin {
     if (!coords) {
       throw new Error(`Could not find element: ${params.targetElement}`);
     }
-
-    log.info(`Executing visual action: ${params.action} on ${params.targetElement}`);
-    
     if (params.analysis.url && !scopeManager.isAuthorized(params.analysis.url)) {
       throw new Error("Unauthorized target detected during visual test.");
     }
-
     if (params.action === "click") {
       await burpVisual.clickAt(coords.x, coords.y);
     } else if (params.action === "type" && params.payload) {
       await burpVisual.clickAt(coords.x, coords.y);
       await burpVisual.typeText(params.payload);
     }
+  }
 
-    log.info("Visual test action completed.");
+  /**
+   * Autonomous repeater hunt — pull proxy history, inject payloads, confirm bugs.
+   */
+  async repeaterHunt(opts: {
+    filterUrl?: string;
+    vulnTypes?: string[];
+    maxRequests?: number;
+  } = {}) {
+    const client = this.ensureClient();
+    const rep = this.repeater ?? new BurpRepeater(client);
+    return await rep.huntFromHistory(opts);
+  }
+
+  /**
+   * Autonomous Intruder attack on a target URL.
+   */
+  async intruderAttack(params: {
+    url: string;
+    method?: string;
+    headers?: Record<string, string>;
+    body?: string;
+    payloads: string[][];
+    positionNames: string[];
+    mode?: "sniper" | "battering-ram" | "pitchfork" | "cluster-bomb";
+    maxRequests?: number;
+  }) {
+    const client = this.ensureClient();
+    const intr = this.intruder ?? new BurpIntruder(client);
+    const positions = params.positionNames.map((name, i) => ({ name, start: i * 10, end: i * 10 + 5 }));
+    return await intr.attack({
+      url: params.url,
+      method: params.method,
+      headers: params.headers,
+      body: params.body,
+      positions,
+      payloadSets: params.payloads,
+      mode: params.mode,
+      maxRequests: params.maxRequests,
+    });
+  }
+
+  /**
+   * Start autonomous proxy interceptor with optional rules.
+   */
+  async startInterceptor(opts: {
+    injectHeader?: { name: string; value: string };
+    injectPayload?: { param: string; payload: string };
+    maxMessages?: number;
+    onIntercept?: (req: unknown, action: string) => void;
+  } = {}) {
+    const client = this.ensureClient();
+    const icept = this.interceptor ?? new BurpInterceptor(client);
+
+    if (opts.injectHeader) {
+      icept.addHeaderInjectionRule(opts.injectHeader.name, opts.injectHeader.value);
+    }
+    if (opts.injectPayload) {
+      icept.addPayloadInjectionRule(opts.injectPayload.param, opts.injectPayload.payload);
+    }
+
+    return icept.start({ maxMessages: opts.maxMessages, onIntercept: opts.onIntercept });
+  }
+
+  /**
+   * Launch Burp's built-in active scanner on a target URL.
+   */
+  async startActiveScan(targetUrl: string, opts: {
+    username?: string;
+    password?: string;
+    waitForCompletion?: boolean;
+    timeoutMs?: number;
+  } = {}) {
+    const client = this.ensureClient();
+    const { taskId } = await client.startScan(targetUrl, {
+      username: opts.username,
+      password: opts.password,
+    });
+    log.info(`[BurpPlugin] Active scan started — task ID: ${taskId}`);
+
+    if (opts.waitForCompletion) {
+      const result = await client.waitForScan(taskId, opts.timeoutMs);
+      const issues = await client.getScanIssues();
+      return { taskId, result, issues };
+    }
+
+    return { taskId };
+  }
+
+  /**
+   * Analyze a raw response to confirm/detect vulnerabilities.
+   */
+  analyzeResponse(params: {
+    responseBody: string;
+    statusCode: number;
+    responseHeaders: Record<string, string>;
+    responseTimeMs: number;
+    requestUrl: string;
+    requestPayload?: string;
+    vulnType?: string;
+  }) {
+    if (params.vulnType) {
+      return responseAnalyzer.confirmVulnerability({
+        payload: params.requestPayload ?? "",
+        vulnType: params.vulnType,
+        responseBody: params.responseBody,
+        statusCode: params.statusCode,
+        responseHeaders: params.responseHeaders,
+        responseTimeMs: params.responseTimeMs,
+      });
+    }
+    return responseAnalyzer.autoDetect(params);
   }
 
   async checkStatus() {
@@ -90,9 +189,10 @@ export class BurpSuitePlugin {
     }
     try {
       const ok = await this.client.healthCheck();
-      return { 
+      return {
         status: ok ? "connected" : "error",
-        authorizedScopes: scopeManager.getScopes()
+        authorizedScopes: scopeManager.getScopes(),
+        capabilities: ["visual-hunt", "repeater", "intruder", "interceptor", "active-scan", "response-analyzer"],
       };
     } catch {
       return { status: "error" };
@@ -101,3 +201,4 @@ export class BurpSuitePlugin {
 }
 
 export const burpPlugin = new BurpSuitePlugin();
+export { responseAnalyzer };
