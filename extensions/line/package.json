@@ -1,0 +1,27 @@
+{
+  "name": "@IronCliw/line",
+  "version": "2026.3.2",
+  "private": true,
+  "description": "IronCliw LINE channel plugin",
+  "type": "module",
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "line",
+      "label": "LINE",
+      "selectionLabel": "LINE (Messaging API)",
+      "docsPath": "/channels/line",
+      "docsLabel": "line",
+      "blurb": "LINE Messaging API bot for Japan/Taiwan/Thailand markets.",
+      "order": 75,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@IronCliw/line",
+      "localPath": "extensions/line",
+      "defaultChoice": "npm"
+    }
+  }
+}

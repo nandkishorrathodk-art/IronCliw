@@ -1,0 +1,14 @@
+{
+  "name": "@IronCliw/acpx",
+  "version": "2026.3.2",
+  "description": "IronCliw ACP runtime backend via acpx",
+  "type": "module",
+  "dependencies": {
+    "acpx": "0.1.15"
+  },
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

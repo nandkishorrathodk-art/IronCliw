@@ -1,0 +1,52 @@
+{
+  "niches": [
+    {
+      "niche": "VPN for Privacy",
+      "cpc": 8.5,
+      "volume": 120000,
+      "difficulty": "High",
+      "affiliate": "NordVPN, ExpressVPN",
+      "opportunity_score": 340.0
+    },
+    {
+      "niche": "Budget Gaming Laptops",
+      "cpc": 3.8,
+      "volume": 90000,
+      "difficulty": "Medium",
+      "affiliate": "Amazon, Newegg",
+      "opportunity_score": 171.0
+    },
+    {
+      "niche": "Wireless Earbuds Under $50",
+      "cpc": 2.1,
+      "volume": 60000,
+      "difficulty": "Low",
+      "affiliate": "Amazon",
+      "opportunity_score": 126.0
+    },
+    {
+      "niche": "Smart Home Devices 2024",
+      "cpc": 3.2,
+      "volume": 75000,
+      "difficulty": "Medium",
+      "affiliate": "Amazon, Google",
+      "opportunity_score": 120.0
+    },
+    {
+      "niche": "AI Tools for Students",
+      "cpc": 2.4,
+      "volume": 45000,
+      "difficulty": "Low",
+      "affiliate": "Amazon, Hostinger",
+      "opportunity_score": 108.0
+    }
+  ],
+  "top_pick": {
+    "niche": "VPN for Privacy",
+    "cpc": 8.5,
+    "volume": 120000,
+    "difficulty": "High",
+    "affiliate": "NordVPN, ExpressVPN",
+    "opportunity_score": 340.0
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "keyword": "for review",
+    "monthly_volume": 40320,
+    "difficulty": "High",
+    "cpc": 5.41,
+    "intent": "commercial"
+  },
+  {
+    "keyword": "how to choose for",
+    "monthly_volume": 38665,
+    "difficulty": "Low",
+    "cpc": 6.5,
+    "intent": "informational"
+  },
+  {
+    "keyword": "top 10 for",
+    "monthly_volume": 36391,
+    "difficulty": "Medium",
+    "cpc": 4.72,
+    "intent": "informational"
+  },
+  {
+    "keyword": "for for beginners",
+    "monthly_volume": 34545,
+    "difficulty": "Medium",
+    "cpc": 4.97,
+    "intent": "informational"
+  },
+  {
+    "keyword": "best for 2024",
+    "monthly_volume": 24357,
+    "difficulty": "Low",
+    "cpc": 1.44,
+    "intent": "commercial"
+  },
+  {
+    "keyword": "for vs for comparison",
+    "monthly_volume": 7011,
+    "difficulty": "Low",
+    "cpc": 5.25,
+    "intent": "informational"
+  }
+]

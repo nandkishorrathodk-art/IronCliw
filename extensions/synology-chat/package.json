@@ -1,0 +1,28 @@
+{
+  "name": "@IronCliw/synology-chat",
+  "version": "2026.3.2",
+  "description": "Synology Chat channel plugin for IronCliw",
+  "type": "module",
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "synology-chat",
+      "label": "Synology Chat",
+      "selectionLabel": "Synology Chat (Webhook)",
+      "docsPath": "/channels/synology-chat",
+      "docsLabel": "synology-chat",
+      "blurb": "Connect your Synology NAS Chat to IronCliw with full agent capabilities.",
+      "order": 90
+    },
+    "install": {
+      "npmSpec": "@IronCliw/synology-chat",
+      "localPath": "extensions/synology-chat",
+      "defaultChoice": "npm"
+    }
+  }
+}

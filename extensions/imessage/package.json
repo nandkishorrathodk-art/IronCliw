@@ -1,0 +1,12 @@
+{
+  "name": "@IronCliw/imessage",
+  "version": "2026.3.2",
+  "private": true,
+  "description": "IronCliw iMessage channel plugin",
+  "type": "module",
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

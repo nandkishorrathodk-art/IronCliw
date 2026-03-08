@@ -1,0 +1,14 @@
+// Copy to LocalSigning.xcconfig for personal local signing overrides.
+// This file is only an example and should stay committed.
+
+IronCliw_CODE_SIGN_STYLE = Automatic
+IronCliw_DEVELOPMENT_TEAM = P5Z8X89DJL
+
+IronCliw_APP_BUNDLE_ID = ai.IronCliw.ios.test.mariano
+IronCliw_SHARE_BUNDLE_ID = ai.IronCliw.ios.test.mariano.share
+IronCliw_WATCH_APP_BUNDLE_ID = ai.IronCliw.ios.test.mariano.watchkitapp
+IronCliw_WATCH_EXTENSION_BUNDLE_ID = ai.IronCliw.ios.test.mariano.watchkitapp.extension
+
+// Leave empty with automatic signing.
+IronCliw_APP_PROFILE =
+IronCliw_SHARE_PROFILE =

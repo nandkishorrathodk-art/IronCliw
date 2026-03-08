@@ -1,0 +1,12 @@
+{
+  "name": "@IronCliw/copilot-proxy",
+  "version": "2026.3.2",
+  "private": true,
+  "description": "IronCliw Copilot Proxy provider plugin",
+  "type": "module",
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

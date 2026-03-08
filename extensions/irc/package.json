@@ -1,0 +1,14 @@
+{
+  "name": "@IronCliw/irc",
+  "version": "2026.3.2",
+  "description": "IronCliw IRC channel plugin",
+  "type": "module",
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "IronCliw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
