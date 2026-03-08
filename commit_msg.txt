@@ -1,3 +1,0 @@
-feat: IronCliw v2026.0.3 — Windows-native AI automation gateway
-
-Built by Nandkishor Rathod. Credit to OpenClaw (MIT) in LICENSE and README.

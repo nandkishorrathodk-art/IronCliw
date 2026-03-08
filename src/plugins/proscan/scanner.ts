@@ -306,7 +306,7 @@ export class ProScanner extends EventEmitter {
       for (const pattern of apiPatterns) {
         let match;
         while ((match = pattern.exec(scripts)) !== null) {
-          const ep = match[1]!;
+          const ep = match[1];
           if (ep.startsWith("/") || ep.includes(baseHost)) {
             endpoints.push(ep.startsWith("/") ? `https://${baseHost}${ep}` : ep);
           }

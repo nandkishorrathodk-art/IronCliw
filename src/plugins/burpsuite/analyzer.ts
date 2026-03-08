@@ -54,12 +54,12 @@ export class TrafficAnalyzer {
     const findings: string[] = [];
 
     // Simple heuristic analysis (The "Eye")
-    const sensitiveParams = ["id", "uid", "user", "admin", "role", "key", "token", "password"];
+    const sensitiveParams = new Set(["id", "uid", "user", "admin", "role", "key", "token", "password"]);
     
     // Check URL params
     const url = new URL(item.url);
     url.searchParams.forEach((_, key) => {
-      if (sensitiveParams.includes(key.toLowerCase())) {
+      if (sensitiveParams.has(key.toLowerCase())) {
         findings.push(`Sensitive URL parameter detected: ${key}`);
       }
     });

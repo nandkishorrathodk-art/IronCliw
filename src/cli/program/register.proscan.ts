@@ -3,7 +3,7 @@ import { proScanPlugin } from "../../plugins/proscan/index.js";
 import { scopeManager } from "../../security/scope-manager.js";
 import { generateReport } from "../../plugins/proscan/reporter.js";
 import { ProScanner, formatFindingForDisplay } from "../../plugins/proscan/scanner.js";
-import fs from "node:fs/promises";
+
 
 export function registerProScanCommand(program: Command) {
   const scan = program

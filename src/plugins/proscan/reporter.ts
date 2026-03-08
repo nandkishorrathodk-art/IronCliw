@@ -207,7 +207,7 @@ function buildSingleReport(finding: ProFinding): BugReport {
   };
 }
 
-function renderBugcrowdFormat(report: BugReport, opts: ReportOptions): string {
+function renderBugcrowdFormat(report: BugReport, _opts: ReportOptions): string {
   const { priority } = SEVERITY_MAP[report.severity];
   const sep = "─".repeat(72);
 
@@ -239,7 +239,7 @@ function renderBugcrowdFormat(report: BugReport, opts: ReportOptions): string {
   ].join("\n");
 }
 
-function renderHackeroneFormat(report: BugReport, opts: ReportOptions): string {
+function renderHackeroneFormat(report: BugReport, _opts: ReportOptions): string {
   return [
     `# ${report.title}`,
     "",

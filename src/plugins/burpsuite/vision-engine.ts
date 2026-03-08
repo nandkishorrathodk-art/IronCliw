@@ -51,7 +51,7 @@ export class BurpVisionEngine {
           return JSON.parse(jsonMatch[0]);
         }
         return { findings: response, elements: [], suggestion: "Could not parse structured data." };
-      } catch (err) {
+      } catch {
         log.warn("Failed to parse AI response as JSON, returning raw text.");
         return { findings: response, elements: [], suggestion: "Manual review required." };
       }
@@ -64,7 +64,7 @@ export class BurpVisionEngine {
   /**
    * Translates a label (like 'Proxy') to coordinates based on the last analysis.
    */
-  getCoordinates(label: string, elements: any[]) {
+  getCoordinates(label: string, elements: { label: string; x: number; y: number }[]) {
     const element = elements.find(e => e.label.toLowerCase().includes(label.toLowerCase()));
     return element ? { x: element.x, y: element.y } : null;
   }

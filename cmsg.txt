@@ -1,0 +1,1 @@
+fix: resolve 18 lint errors in proscan and burpsuite plugins

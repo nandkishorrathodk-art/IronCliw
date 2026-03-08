@@ -116,7 +116,7 @@ export class BurpVisualController {
   async typeText(text: string) {
     log.info(`Typing text: ${text.slice(0, 20)}...`);
     await this.ensureFocus();
-    const escaped = text.replace(/([%+^~{}()\[\]])/g, '{$1}');
+    const escaped = text.replace(/([%+^~{}()[\]])/g, '{$1}');
     await this.sendKeyPress(escaped);
   }
 

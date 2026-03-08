@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import { burpPlugin } from "../../plugins/burpsuite/index.js";
 import { scopeManager } from "../../security/scope-manager.js";
-import { loadConfig } from "../../config/config.js";
+
 import { promptYesNo } from "../prompt.js";
 
 export function registerBurpCommand(program: Command) {

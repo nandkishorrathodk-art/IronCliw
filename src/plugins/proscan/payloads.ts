@@ -203,7 +203,7 @@ export const VULN_SIGNATURES: Record<string, RegExp[]> = {
 export const SENSITIVE_DATA_PATTERNS: Record<string, RegExp> = {
   "AWS Access Key": /AKIA[0-9A-Z]{16}/,
   "AWS Secret Key": /aws_secret_access_key.*?=.*?[A-Za-z0-9+/]{40}/i,
-  "API Key Generic": /api[_-]?key.*?['":\s]+[a-zA-Z0-9_\-]{20,}/i,
+  "API Key Generic": /api[_-]?key.*?['":\s]+[a-zA-Z0-9_-]{20,}/i,
   "Private Key": /-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----/,
   "JWT Token": /eyJ[a-zA-Z0-9_-]+\.eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+/,
   "Google API": /AIza[0-9A-Za-z\-_]{35}/,

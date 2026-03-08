@@ -1,10 +1,8 @@
 import { BurpClient } from "./client.js";
-import { trafficAnalyzer } from "./analyzer.js";
 import { burpVisual } from "./visual.js";
 import { burpVision } from "./vision-engine.js";
 import { burpKnowledge } from "./knowledge.js";
 import { scopeManager } from "../../security/scope-manager.js";
-import { safetyGate } from "../../security/safety-gate.js";
 import type { BurpApiConfig } from "./types.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 
@@ -60,7 +58,7 @@ export class BurpSuitePlugin {
    * Executes a specific security test visually after approval.
    */
   async executeVisualTest(params: {
-    analysis: any;
+    analysis: { url?: string; elements: { label: string; x: number; y: number }[] };
     targetElement: string;
     action: "click" | "type";
     payload?: string;
@@ -87,7 +85,9 @@ export class BurpSuitePlugin {
   }
 
   async checkStatus() {
-    if (!this.client) return { status: "disconnected" };
+    if (!this.client) {
+      return { status: "disconnected" };
+    }
     try {
       const ok = await this.client.healthCheck();
       return { 

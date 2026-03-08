@@ -17,11 +17,10 @@ export class BurpClient {
     const url = new URL(path, this.config.baseUrl).toString();
     const response = await fetch(url, {
       ...options,
-      headers: {
-        ...options.headers,
+      headers: Object.assign({}, options.headers as Record<string, string>, {
         "Authorization": this.config.apiKey,
         "Accept": "application/json",
-      },
+      }),
     });
 
     if (!response.ok) {

@@ -27,7 +27,7 @@ export class BurpKnowledgeBase {
         log.info(`Found relevant tutorial: ${bestMatch}`);
         return content;
       }
-    } catch (err) {
+    } catch {
       log.error("Failed to read tutorials directory.");
     }
 
@@ -38,7 +38,7 @@ export class BurpKnowledgeBase {
   /**
    * Asks the AI to translate a text tutorial into specific GUI actions.
    */
-  async extractActionsFromTutorial(tutorial: string, task: string) {
+  async extractActionsFromTutorial(_tutorial: string, _task: string) {
     log.info("AI is extracting step-by-step actions from the tutorial...");
     
     // This would be a call to the LLM (Fireworks Kimi)
