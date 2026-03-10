@@ -360,7 +360,8 @@ export function renderCron(props: CronProps) {
     props.runsScope === "all"
       ? t("cron.jobList.allJobs")
       : (selectedJob?.name ?? props.runsJobId ?? t("cron.jobList.selectJob"));
-  const runs = props.runs;
+  const sortDir = props.runsSortDir ?? "desc";
+  const runs = [...props.runs].sort((a, b) => (sortDir === "desc" ? b.ts - a.ts : a.ts - b.ts));
   const runStatusOptions = getRunStatusOptions();
   const runDeliveryOptions = getRunDeliveryOptions();
   const selectedStatusLabels = runStatusOptions

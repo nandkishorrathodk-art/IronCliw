@@ -144,6 +144,85 @@
   flex-shrink: 0;
 }
 
+/* Agent Mood Indicator */
+.chat-mood {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-mono, monospace);
+  width: fit-content;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.chat-mood__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chat-mood__label {
+  opacity: 0.9;
+}
+
+.chat-mood--thinking {
+  color: var(--accent, #00e5ff);
+  background: rgba(0, 229, 255, 0.07);
+  border-color: rgba(0, 229, 255, 0.25);
+}
+.chat-mood--thinking .chat-mood__dot {
+  background: var(--accent, #00e5ff);
+  animation: moodPulse 1.2s ease-in-out infinite;
+}
+
+.chat-mood--reading {
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.07);
+  border-color: rgba(167, 139, 250, 0.25);
+}
+.chat-mood--reading .chat-mood__dot {
+  background: #a78bfa;
+  animation: moodPulse 1.6s ease-in-out infinite;
+}
+
+.chat-mood--tool {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.07);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+.chat-mood--tool .chat-mood__dot {
+  background: #fbbf24;
+  animation: moodPulse 0.8s ease-in-out infinite;
+}
+
+.chat-mood--ratelimit {
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.07);
+  border-color: rgba(251, 146, 60, 0.25);
+}
+.chat-mood--ratelimit .chat-mood__dot {
+  background: #fb923c;
+}
+
+.chat-mood--offline {
+  color: var(--muted, #6b7280);
+  background: rgba(107, 114, 128, 0.07);
+  border-color: rgba(107, 114, 128, 0.2);
+}
+.chat-mood--offline .chat-mood__dot {
+  background: var(--muted, #6b7280);
+}
+
+@keyframes moodPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.7); }
+}
+
 /* Chat compose - sticky at bottom, premium glass */
 .chat-compose {
   position: sticky;

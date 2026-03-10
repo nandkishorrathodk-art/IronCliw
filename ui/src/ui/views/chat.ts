@@ -31,6 +31,8 @@ export type FallbackIndicatorStatus = {
   occurredAt: number;
 };
 
+export type AgentMood = "idle" | "thinking" | "reading" | "tool-running" | "rate-limited" | "disconnected";
+
 export type ChatProps = {
   sessionKey: string;
   onSessionKeyChange: (next: string) => void;
@@ -39,6 +41,7 @@ export type ChatProps = {
   loading: boolean;
   sending: boolean;
   canAbort?: boolean;
+  agentMood?: AgentMood;
   compactionStatus?: CompactionIndicatorStatus | null;
   fallbackStatus?: FallbackIndicatorStatus | null;
   messages: unknown[];
@@ -202,6 +205,26 @@ function handlePaste(e: ClipboardEvent, props: ChatProps) {
     });
     reader.readAsDataURL(file);
   }
+}
+
+function renderMoodIndicator(mood: AgentMood | undefined) {
+  if (!mood || mood === "idle") {
+    return nothing;
+  }
+  const config: Record<Exclude<AgentMood, "idle">, { label: string; cls: string }> = {
+    thinking:      { label: "Thinking…",    cls: "thinking" },
+    reading:       { label: "Reading…",     cls: "reading" },
+    "tool-running":{ label: "Running tool", cls: "tool" },
+    "rate-limited":{ label: "Rate limited", cls: "ratelimit" },
+    disconnected:  { label: "Offline",      cls: "offline" },
+  };
+  const { label, cls } = config[mood as Exclude<AgentMood, "idle">];
+  return html`
+    <div class="chat-mood chat-mood--${cls}" role="status" aria-live="polite">
+      <span class="chat-mood__dot"></span>
+      <span class="chat-mood__label">${label}</span>
+    </div>
+  `;
 }
 
 function renderAttachmentPreview(props: ChatProps) {
@@ -422,6 +445,7 @@ export function renderChat(props: ChatProps) {
       }
 
       <div class="chat-compose">
+        ${renderMoodIndicator(props.agentMood)}
         ${renderAttachmentPreview(props)}
         <div class="chat-compose__row">
           <label class="field chat-compose__field">
@@ -576,6 +600,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
   // Interleave stream segments and tool cards in order. Each segment
   // contains text that was streaming before the corresponding tool started.
   // This ensures correct visual ordering: text → tool → text → tool → ...
+  // Tool messages (live tool call outputs) are only shown when showThinking is enabled.
   const segments = props.streamSegments ?? [];
   const maxLen = Math.max(segments.length, tools.length);
   for (let i = 0; i < maxLen; i++) {
@@ -587,7 +612,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
         startedAt: segments[i].ts,
       });
     }
-    if (i < tools.length) {
+    if (i < tools.length && props.showThinking) {
       items.push({
         kind: "message",
         key: messageKey(tools[i], i + history.length),

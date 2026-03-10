@@ -2,11 +2,13 @@ import type { IronCliwApp } from "./app.ts";
 import { loadDebug } from "./controllers/debug.ts";
 import { loadLogs } from "./controllers/logs.ts";
 import { loadNodes } from "./controllers/nodes.ts";
+import { loadSessions } from "./controllers/sessions.ts";
 
 type PollingHost = {
   nodesPollInterval: number | null;
   logsPollInterval: number | null;
   debugPollInterval: number | null;
+  sessionsPollInterval: number | null;
   tab: string;
 };
 
@@ -66,4 +68,24 @@ export function stopDebugPolling(host: PollingHost) {
   }
   clearInterval(host.debugPollInterval);
   host.debugPollInterval = null;
+}
+
+export function startSessionsPolling(host: PollingHost) {
+  if (host.sessionsPollInterval != null) {
+    return;
+  }
+  host.sessionsPollInterval = window.setInterval(() => {
+    if (host.tab !== "sessions") {
+      return;
+    }
+    void loadSessions(host as unknown as IronCliwApp);
+  }, 10_000);
+}
+
+export function stopSessionsPolling(host: PollingHost) {
+  if (host.sessionsPollInterval == null) {
+    return;
+  }
+  clearInterval(host.sessionsPollInterval);
+  host.sessionsPollInterval = null;
 }

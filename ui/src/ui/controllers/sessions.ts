@@ -117,6 +117,18 @@ export async function deleteSession(state: SessionsState, key: string): Promise<
   }
 }
 
+export async function killSession(state: SessionsState, key: string): Promise<void> {
+  if (!state.client || !state.connected) {
+    return;
+  }
+  try {
+    await state.client.request("chat.abort", { sessionKey: key });
+    await loadSessions(state);
+  } catch (err) {
+    state.sessionsError = String(err);
+  }
+}
+
 export async function deleteSessionAndRefresh(state: SessionsState, key: string): Promise<boolean> {
   const deleted = await deleteSession(state, key);
   if (!deleted) {

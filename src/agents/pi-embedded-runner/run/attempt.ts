@@ -608,11 +608,25 @@ export function composeSystemPromptWithHookContext(params: {
   );
 }
 
-export function resolvePromptModeForSession(sessionKey?: string): "minimal" | "full" {
+const COMPACT_PROMPT_CTX_THRESHOLD = 32_000;
+
+export function resolvePromptModeForSession(
+  sessionKey?: string,
+  contextWindowTokens?: number,
+): "minimal" | "full" {
   if (!sessionKey) {
     return "full";
   }
-  return isSubagentSessionKey(sessionKey) || isCronSessionKey(sessionKey) ? "minimal" : "full";
+  if (isSubagentSessionKey(sessionKey) || isCronSessionKey(sessionKey)) {
+    return "minimal";
+  }
+  if (
+    typeof contextWindowTokens === "number" &&
+    contextWindowTokens <= COMPACT_PROMPT_CTX_THRESHOLD
+  ) {
+    return "minimal";
+  }
+  return "full";
 }
 
 export function resolveAttemptFsWorkspaceOnly(params: {
@@ -984,7 +998,10 @@ export async function runEmbeddedAttempt(
       },
     });
     const isDefaultAgent = sessionAgentId === defaultAgentId;
-    const promptMode = resolvePromptModeForSession(params.sessionKey);
+    const promptMode = resolvePromptModeForSession(
+      params.sessionKey,
+      params.model.contextWindow,
+    );
     const docsPath = await resolveIronCliwDocsPath({
       workspaceDir: effectiveWorkspace,
       argv1: process.argv[1],

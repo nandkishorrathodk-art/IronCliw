@@ -29,6 +29,7 @@ export type SessionsProps = {
       reasoningLevel?: string | null;
     },
   ) => void;
+  onKill: (key: string) => void;
   onDelete: (key: string) => void;
 };
 
@@ -41,6 +42,14 @@ const VERBOSE_LEVELS = [
   { value: "full", label: "full" },
 ] as const;
 const REASONING_LEVELS = ["", "off", "on", "stream"] as const;
+
+function isSubagentKey(key: string): boolean {
+  return key.toLowerCase().includes(":subagent:");
+}
+
+function isCronKey(key: string): boolean {
+  return key.toLowerCase().startsWith("cron:") || key.toLowerCase().includes(":cron:");
+}
 
 function normalizeProviderId(provider?: string | null): string {
   if (!provider) {
@@ -206,7 +215,7 @@ export function renderSessions(props: SessionsProps) {
                 <div class="muted">No sessions found.</div>
               `
             : rows.map((row) =>
-                renderRow(row, props.basePath, props.onPatch, props.onDelete, props.loading),
+                renderRow(row, props.basePath, props.onPatch, props.onKill, props.onDelete, props.loading),
               )
         }
       </div>
@@ -218,9 +227,12 @@ function renderRow(
   row: GatewaySessionRow,
   basePath: string,
   onPatch: SessionsProps["onPatch"],
+  onKill: SessionsProps["onKill"],
   onDelete: SessionsProps["onDelete"],
   disabled: boolean,
 ) {
+  const isSubagent = isSubagentKey(row.key);
+  const isCron = isCronKey(row.key);
   const updated = row.updatedAt ? formatRelativeTimestamp(row.updatedAt) : "n/a";
   const rawThinking = row.thinkingLevel ?? "";
   const isBinaryThinking = isBinaryThinkingProvider(row.modelProvider);
@@ -242,8 +254,10 @@ function renderRow(
     : null;
 
   return html`
-    <div class="table-row">
-      <div class="mono session-key-cell">
+    <div class="table-row${isSubagent ? " session-row--subagent" : ""}">
+      <div class="mono session-key-cell${isSubagent ? " session-key-cell--indented" : ""}">
+        ${isSubagent ? html`<span class="session-badge session-badge--sub">sub</span>` : nothing}
+        ${isCron ? html`<span class="session-badge session-badge--cron">cron</span>` : nothing}
         ${canLink ? html`<a href=${chatUrl} class="session-link">${row.key}</a>` : row.key}
         ${showDisplayName ? html`<span class="muted session-key-display-name">${displayName}</span>` : nothing}
       </div>
@@ -311,7 +325,10 @@ function renderRow(
           )}
         </select>
       </div>
-      <div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="btn warning" ?disabled=${disabled} @click=${() => onKill(row.key)}>
+          Kill
+        </button>
         <button class="btn danger" ?disabled=${disabled} @click=${() => onDelete(row.key)}>
           Delete
         </button>

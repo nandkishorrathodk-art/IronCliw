@@ -127,6 +127,7 @@ export class GatewayBrowserClient {
   private connectTimer: number | null = null;
   private backoffMs = 800;
   private pendingConnectError: GatewayErrorInfo | undefined;
+  private fastRetryPending = false;
 
   constructor(private opts: GatewayBrowserClientOptions) {}
 
@@ -152,7 +153,11 @@ export class GatewayBrowserClient {
       return;
     }
     this.ws = new WebSocket(this.opts.url);
-    this.ws.addEventListener("open", () => this.queueConnect());
+    this.ws.addEventListener("open", () => {
+      this.fastRetryPending = false;
+      this.backoffMs = 800;
+      this.queueConnect();
+    });
     this.ws.addEventListener("message", (ev) => this.handleMessage(String(ev.data ?? "")));
     this.ws.addEventListener("close", (ev) => {
       const reason = String(ev.reason ?? "");
@@ -172,6 +177,11 @@ export class GatewayBrowserClient {
 
   private scheduleReconnect() {
     if (this.closed) {
+      return;
+    }
+    if (!this.fastRetryPending) {
+      this.fastRetryPending = true;
+      window.setTimeout(() => this.connect(), 500);
       return;
     }
     const delay = this.backoffMs;

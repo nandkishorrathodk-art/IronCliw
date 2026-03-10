@@ -57,7 +57,7 @@ import {
 import { loadLogs } from "./controllers/logs.ts";
 import { loadNodes } from "./controllers/nodes.ts";
 import { loadPresence } from "./controllers/presence.ts";
-import { deleteSessionAndRefresh, loadSessions, patchSession } from "./controllers/sessions.ts";
+import { deleteSessionAndRefresh, killSession, loadSessions, patchSession } from "./controllers/sessions.ts";
 import {
   installSkill,
   loadSkills,
@@ -77,7 +77,7 @@ import {
 } from "./views/agents-utils.ts";
 import { renderAgents } from "./views/agents.ts";
 import { renderChannels } from "./views/channels.ts";
-import { renderChat } from "./views/chat.ts";
+import { renderChat, type AgentMood } from "./views/chat.ts";
 import { renderConfig } from "./views/config.ts";
 import { renderCron } from "./views/cron.ts";
 import { renderDebug } from "./views/debug.ts";
@@ -161,6 +161,17 @@ export function renderApp(state: AppViewState) {
   const sessionsCount = state.sessionsResult?.count ?? null;
   const cronNext = state.cronStatus?.nextWakeAtMs ?? null;
   const chatDisabledReason = state.connected ? null : t("chat.disconnected");
+  const agentMood: AgentMood = !state.connected
+    ? "disconnected"
+    : state.lastErrorCode?.includes("RATE_LIMIT") || state.lastErrorCode?.includes("rate_limit")
+      ? "rate-limited"
+      : (state as unknown as { toolStreamOrder?: string[] }).toolStreamOrder?.length
+        ? "tool-running"
+        : state.chatStream !== null
+          ? "thinking"
+          : state.chatSending
+            ? "reading"
+            : "idle";
   const isChat = state.tab === "chat";
   const chatFocus = isChat && (state.settings.chatFocusMode || state.onboarding);
   const showThinking = state.onboarding ? false : state.settings.chatShowThinking;
@@ -444,6 +455,7 @@ export function renderApp(state: AppViewState) {
                 },
                 onRefresh: () => loadSessions(state),
                 onPatch: (key, patch) => patchSession(state, key, patch),
+                onKill: (key) => killSession(state, key),
                 onDelete: (key) => deleteSessionAndRefresh(state, key),
               })
             : nothing
@@ -976,6 +988,7 @@ export function renderApp(state: AppViewState) {
                 showThinking,
                 loading: state.chatLoading,
                 sending: state.chatSending,
+                agentMood,
                 compactionStatus: state.compactionStatus,
                 fallbackStatus: state.fallbackStatus,
                 assistantAvatarUrl: chatAvatarUrl,
