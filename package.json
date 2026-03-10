@@ -344,7 +344,6 @@
     "@homebridge/ciao": "^1.3.5",
     "@larksuiteoapi/node-sdk": "^1.59.0",
     "@line/bot-sdk": "^10.6.0",
-    "@lydell/node-pty": "1.2.0-beta.3",
     "@mariozechner/pi-agent-core": "0.57.1",
     "@mariozechner/pi-ai": "0.57.1",
     "@mariozechner/pi-coding-agent": "0.57.1",
@@ -387,7 +386,10 @@
     "zod": "^4.3.6"
   },
   "optionalDependencies": {
+    "@lydell/node-pty": "1.2.0-beta.3",
+    "@napi-rs/canvas": "^0.1.89",
     "@whiskeysockets/baileys": "7.0.0-rc.9",
+    "node-llama-cpp": "3.16.2",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
@@ -412,10 +414,7 @@
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
-  "peerDependencies": {
-    "@napi-rs/canvas": "^0.1.89",
-    "node-llama-cpp": "3.16.2"
-  },
+  "peerDependencies": {},
   "engines": {
     "node": ">=22.12.0"
   },
