@@ -43,6 +43,8 @@ function buildCmdExeCommandLine(resolvedCommand: string, args: string[]): string
  * without shell, causing EINVAL. Resolve npm/npx to node + cli script so we
  * spawn node.exe instead of npm.cmd.
  */
+const npmCliPathCache = new Map<string, string | false>();
+
 function resolveNpmArgvForWindows(argv: string[]): string[] | null {
   if (process.platform !== "win32" || argv.length === 0) {
     return null;
@@ -57,7 +59,12 @@ function resolveNpmArgvForWindows(argv: string[]): string[] | null {
   }
   const nodeDir = path.dirname(process.execPath);
   const cliPath = path.join(nodeDir, "node_modules", "npm", "bin", cliName);
-  if (!fs.existsSync(cliPath)) {
+  const cached = npmCliPathCache.get(cliPath);
+  const exists = cached !== undefined ? cached !== false : fs.existsSync(cliPath);
+  if (cached === undefined) {
+    npmCliPathCache.set(cliPath, exists ? cliPath : false);
+  }
+  if (!exists) {
     // Bun-based runs don't ship npm-cli.js next to process.execPath.
     // Fall back to npm.cmd/npx.cmd so we still route through cmd wrapper
     // (avoids direct .cmd spawn EINVAL on patched Node).

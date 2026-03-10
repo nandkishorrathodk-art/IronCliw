@@ -52,6 +52,8 @@ type LaneState = {
 const lanes = new Map<string, LaneState>();
 let nextTaskId = 1;
 
+const drainListeners: Set<() => void> = new Set();
+
 function getLaneState(lane: string): LaneState {
   const existing = lanes.get(lane);
   if (existing) {
@@ -69,75 +71,85 @@ function getLaneState(lane: string): LaneState {
   return created;
 }
 
+function notifyDrainListeners() {
+  if (drainListeners.size === 0) {
+    return;
+  }
+  for (const [s] of lanes) {
+    const state = lanes.get(s)!;
+    if (state.activeTaskIds.size > 0) {
+      return;
+    }
+  }
+  for (const fn of drainListeners) {
+    fn();
+  }
+}
+
 function completeTask(state: LaneState, taskId: number, taskGeneration: number): boolean {
   if (taskGeneration !== state.generation) {
     return false;
   }
   state.activeTaskIds.delete(taskId);
+  if (drainListeners.size > 0) {
+    notifyDrainListeners();
+  }
   return true;
 }
 
 function drainLane(lane: string) {
   const state = getLaneState(lane);
   if (state.draining) {
-    if (state.activeTaskIds.size === 0 && state.queue.length > 0) {
-      diag.warn(
-        `drainLane blocked: lane=${lane} draining=true active=0 queue=${state.queue.length}`,
-      );
-    }
     return;
   }
   state.draining = true;
 
   const pump = () => {
-    try {
-      while (state.activeTaskIds.size < state.maxConcurrent && state.queue.length > 0) {
-        const entry = state.queue.shift() as QueueEntry;
-        const waitedMs = Date.now() - entry.enqueuedAt;
-        if (waitedMs >= entry.warnAfterMs) {
-          try {
-            entry.onWait?.(waitedMs, state.queue.length);
-          } catch (err) {
-            diag.error(`lane onWait callback failed: lane=${lane} error="${String(err)}"`);
-          }
-          diag.warn(
-            `lane wait exceeded: lane=${lane} waitedMs=${waitedMs} queueAhead=${state.queue.length}`,
-          );
+    while (state.activeTaskIds.size < state.maxConcurrent && state.queue.length > 0) {
+      const entry = state.queue.shift() as QueueEntry;
+      const waitedMs = Date.now() - entry.enqueuedAt;
+      if (waitedMs >= entry.warnAfterMs) {
+        try {
+          entry.onWait?.(waitedMs, state.queue.length);
+        } catch (err) {
+          diag.error(`lane onWait callback failed: lane=${lane} error="${String(err)}"`);
         }
-        logLaneDequeue(lane, waitedMs, state.queue.length);
-        const taskId = nextTaskId++;
-        const taskGeneration = state.generation;
-        state.activeTaskIds.add(taskId);
-        void (async () => {
-          const startTime = Date.now();
-          try {
-            const result = await entry.task();
-            const completedCurrentGeneration = completeTask(state, taskId, taskGeneration);
-            if (completedCurrentGeneration) {
-              diag.debug(
-                `lane task done: lane=${lane} durationMs=${Date.now() - startTime} active=${state.activeTaskIds.size} queued=${state.queue.length}`,
-              );
-              pump();
-            }
-            entry.resolve(result);
-          } catch (err) {
-            const completedCurrentGeneration = completeTask(state, taskId, taskGeneration);
-            const isProbeLane = lane.startsWith("auth-probe:") || lane.startsWith("session:probe-");
-            if (!isProbeLane) {
-              diag.error(
-                `lane task error: lane=${lane} durationMs=${Date.now() - startTime} error="${String(err)}"`,
-              );
-            }
-            if (completedCurrentGeneration) {
-              pump();
-            }
-            entry.reject(err);
-          }
-        })();
+        diag.warn(
+          `lane wait exceeded: lane=${lane} waitedMs=${waitedMs} queueAhead=${state.queue.length}`,
+        );
       }
-    } finally {
-      state.draining = false;
+      logLaneDequeue(lane, waitedMs, state.queue.length);
+      const taskId = nextTaskId++;
+      const taskGeneration = state.generation;
+      state.activeTaskIds.add(taskId);
+      void (async () => {
+        const startTime = Date.now();
+        try {
+          const result = await entry.task();
+          const completedCurrentGeneration = completeTask(state, taskId, taskGeneration);
+          if (completedCurrentGeneration) {
+            diag.debug(
+              `lane task done: lane=${lane} durationMs=${Date.now() - startTime} active=${state.activeTaskIds.size} queued=${state.queue.length}`,
+            );
+            pump();
+          }
+          entry.resolve(result);
+        } catch (err) {
+          const completedCurrentGeneration = completeTask(state, taskId, taskGeneration);
+          const isProbeLane = lane.startsWith("auth-probe:") || lane.startsWith("session:probe-");
+          if (!isProbeLane) {
+            diag.error(
+              `lane task error: lane=${lane} durationMs=${Date.now() - startTime} error="${String(err)}"`,
+            );
+          }
+          if (completedCurrentGeneration) {
+            pump();
+          }
+          entry.reject(err);
+        }
+      })();
     }
+    state.draining = false;
   };
 
   pump();
@@ -272,16 +284,13 @@ export function getActiveTaskCount(): number {
 
 /**
  * Wait for all currently active tasks across all lanes to finish.
- * Polls at a short interval; resolves when no tasks are active or
- * when `timeoutMs` elapses (whichever comes first).
+ * Event-driven: resolves immediately when active task count reaches zero
+ * or when `timeoutMs` elapses, whichever comes first.
  *
  * New tasks enqueued after this call are ignored — only tasks that are
  * already executing are waited on.
  */
 export function waitForActiveTasks(timeoutMs: number): Promise<{ drained: boolean }> {
-  // Keep shutdown/drain checks responsive without busy looping.
-  const POLL_INTERVAL_MS = 50;
-  const deadline = Date.now() + timeoutMs;
   const activeAtStart = new Set<number>();
   for (const state of lanes.values()) {
     for (const taskId of state.activeTaskIds) {
@@ -289,13 +298,27 @@ export function waitForActiveTasks(timeoutMs: number): Promise<{ drained: boolea
     }
   }
 
+  if (activeAtStart.size === 0) {
+    return Promise.resolve({ drained: true });
+  }
+
   return new Promise((resolve) => {
-    const check = () => {
-      if (activeAtStart.size === 0) {
-        resolve({ drained: true });
+    let settled = false;
+    let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+
+    const finish = (drained: boolean) => {
+      if (settled) {
         return;
       }
+      settled = true;
+      drainListeners.delete(listener);
+      if (timeoutHandle !== undefined) {
+        clearTimeout(timeoutHandle);
+      }
+      resolve({ drained });
+    };
 
+    const listener = () => {
       let hasPending = false;
       for (const state of lanes.values()) {
         for (const taskId of state.activeTaskIds) {
@@ -308,17 +331,12 @@ export function waitForActiveTasks(timeoutMs: number): Promise<{ drained: boolea
           break;
         }
       }
-
       if (!hasPending) {
-        resolve({ drained: true });
-        return;
+        finish(true);
       }
-      if (Date.now() >= deadline) {
-        resolve({ drained: false });
-        return;
-      }
-      setTimeout(check, POLL_INTERVAL_MS);
     };
-    check();
+
+    drainListeners.add(listener);
+    timeoutHandle = setTimeout(() => finish(false), timeoutMs);
   });
 }

@@ -46,36 +46,50 @@ export async function startGatewaySidecars(params: {
   logChannels: { info: (msg: string) => void; error: (msg: string) => void };
   logBrowser: { error: (msg: string) => void };
 }) {
-  try {
-    const stateDir = resolveStateDir(process.env);
-    const sessionDirs = await resolveAgentSessionDirs(stateDir);
-    for (const sessionsDir of sessionDirs) {
-      await cleanStaleLockFiles({
-        sessionsDir,
-        staleMs: SESSION_LOCK_STALE_MS,
-        removeStale: true,
-        log: { warn: (message) => params.log.warn(message) },
-      });
-    }
-  } catch (err) {
-    params.log.warn(`session lock cleanup failed on startup: ${String(err)}`);
-  }
+  const [browserControl] = await Promise.all([
+    (async (): Promise<Awaited<ReturnType<typeof startBrowserControlServerIfEnabled>>> => {
+      try {
+        return await startBrowserControlServerIfEnabled();
+      } catch (err) {
+        params.logBrowser.error(`server failed to start: ${String(err)}`);
+        return null;
+      }
+    })(),
+    (async () => {
+      try {
+        const stateDir = resolveStateDir(process.env);
+        const sessionDirs = await resolveAgentSessionDirs(stateDir);
+        for (const sessionsDir of sessionDirs) {
+          await cleanStaleLockFiles({
+            sessionsDir,
+            staleMs: SESSION_LOCK_STALE_MS,
+            removeStale: true,
+            log: { warn: (message) => params.log.warn(message) },
+          });
+        }
+      } catch (err) {
+        params.log.warn(`session lock cleanup failed on startup: ${String(err)}`);
+      }
+    })(),
+    (async () => {
+      await startGmailWatcherWithLogs({ cfg: params.cfg, log: params.logHooks });
+    })(),
+    (async () => {
+      try {
+        clearInternalHooks();
+        const loadedCount = await loadInternalHooks(params.cfg, params.defaultWorkspaceDir);
+        if (loadedCount > 0) {
+          params.logHooks.info(
+            `loaded ${loadedCount} internal hook handler${loadedCount > 1 ? "s" : ""}`,
+          );
+        }
+      } catch (err) {
+        params.logHooks.error(`failed to load hooks: ${String(err)}`);
+      }
+    })(),
+  ]);
 
-  // Start IronCliw browser control server (unless disabled via config).
-  let browserControl: Awaited<ReturnType<typeof startBrowserControlServerIfEnabled>> = null;
-  try {
-    browserControl = await startBrowserControlServerIfEnabled();
-  } catch (err) {
-    params.logBrowser.error(`server failed to start: ${String(err)}`);
-  }
-
-  // Start Gmail watcher if configured (hooks.gmail.account).
-  await startGmailWatcherWithLogs({
-    cfg: params.cfg,
-    log: params.logHooks,
-  });
-
-  // Validate hooks.gmail.model if configured.
+  // Validate hooks.gmail.model if configured (needs gmail watcher to have started).
   if (params.cfg.hooks?.gmail?.model) {
     const hooksModelRef = resolveHooksGmailModel({
       cfg: params.cfg,
@@ -106,20 +120,6 @@ export async function startGatewaySidecars(params: {
         );
       }
     }
-  }
-
-  // Load internal hook handlers from configuration and directory discovery.
-  try {
-    // Clear any previously registered hooks to ensure fresh loading
-    clearInternalHooks();
-    const loadedCount = await loadInternalHooks(params.cfg, params.defaultWorkspaceDir);
-    if (loadedCount > 0) {
-      params.logHooks.info(
-        `loaded ${loadedCount} internal hook handler${loadedCount > 1 ? "s" : ""}`,
-      );
-    }
-  } catch (err) {
-    params.logHooks.error(`failed to load hooks: ${String(err)}`);
   }
 
   // Launch configured channels so gateway replies via the surface the message came from.
