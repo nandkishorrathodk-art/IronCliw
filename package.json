@@ -3,15 +3,15 @@
   "version": "2026.0.4",
   "description": "Multi-channel AI gateway with extensible messaging integrations",
   "keywords": [],
-  "homepage": "https://github.com/ironcliw/ironcliw#readme",
+  "homepage": "https://github.com/nandkishorrathodk-art/IronCliw#readme",
   "bugs": {
-    "url": "https://github.com/ironcliw/ironcliw/issues"
+    "url": "https://github.com/nandkishorrathodk-art/IronCliw/issues"
   },
   "license": "MIT",
-  "author": "",
+  "author": "Nandkishor Rathod",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ironcliw/ironcliw.git"
+    "url": "git+https://github.com/nandkishorrathodk-art/IronCliw.git"
   },
   "bin": {
     "ironcliw": "ironcliw.mjs"
