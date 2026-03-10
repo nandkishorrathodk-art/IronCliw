@@ -46,12 +46,24 @@ It can speak and listen on macOS/iOS/Android, and can render a live Canvas you c
 
 **Runtime: Node ≥22**
 
-```bash
-npm install -g ironcliw@latest
-# or: pnpm add -g ironcliw@latest
+**Linux / macOS:**
 
+```bash
+npm install -g github:nandkishorrathodk-art/IronCliw
 ironcliw onboard --install-daemon
 ```
+
+**Windows (recommended — avoids native build issues):**
+
+```powershell
+pnpm add -g github:nandkishorrathodk-art/IronCliw
+ironcliw onboard --install-daemon
+```
+
+> **Windows + npm fallback:** If you must use npm, add `--ignore-scripts` to skip native build steps:
+> ```powershell
+> npm install -g --ignore-scripts github:nandkishorrathodk-art/IronCliw
+> ```
 
 The wizard installs the Gateway daemon (launchd/systemd/Windows Task Scheduler) so it stays running.
 
