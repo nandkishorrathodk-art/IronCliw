@@ -303,8 +303,18 @@ export class GatewayBrowserClient {
         } else {
           this.pendingConnectError = undefined;
         }
-        if (canFallbackToShared && deviceIdentity) {
-          clearDeviceAuthToken({ deviceId: deviceIdentity.deviceId, role });
+        if (deviceIdentity) {
+          const errCode =
+            err instanceof GatewayRequestError
+              ? resolveGatewayErrorDetailCode({ details: err.details })
+              : null;
+          if (
+            canFallbackToShared ||
+            errCode === ConnectErrorDetailCodes.AUTH_TOKEN_MISMATCH ||
+            errCode === ConnectErrorDetailCodes.AUTH_DEVICE_TOKEN_MISMATCH
+          ) {
+            clearDeviceAuthToken({ deviceId: deviceIdentity.deviceId, role });
+          }
         }
         this.ws?.close(CONNECT_FAILED_CLOSE_CODE, "connect failed");
       });

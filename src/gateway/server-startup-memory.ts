@@ -3,10 +3,12 @@ import path from "node:path";
 import { listAgentIds, resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveMemorySearchConfig } from "../agents/memory-search.js";
 import type { IronCliwConfig } from "../config/config.js";
+import { resolveStateDir } from "../config/paths.js";
 import { resolveMemoryBackendConfig } from "../memory/backend-config.js";
 import { getMemorySearchManager } from "../memory/index.js";
 
 const MEMORY_STUB = "# Memory\n\nAgent long-term memory lives here.\n";
+const MODEL_DEFAULTS_STUB = "{}\n";
 
 export async function ensureWorkspaceMemoryFiles(params: {
   cfg: IronCliwConfig;
@@ -30,6 +32,25 @@ export async function ensureWorkspaceMemoryFiles(params: {
     } catch (err) {
       params.log.warn(`[workspace] failed to ensure memory files for agent "${agentId}": ${String(err)}`);
     }
+  }
+}
+
+export async function ensureConfigFiles(params: {
+  log: { info?: (msg: string) => void; warn: (msg: string) => void };
+}): Promise<void> {
+  try {
+    const stateDir = resolveStateDir(process.env);
+    const configDir = path.join(stateDir, "config");
+    await fs.mkdir(configDir, { recursive: true });
+    const modelDefaultsFile = path.join(configDir, "model-defaults.json");
+    try {
+      await fs.access(modelDefaultsFile);
+    } catch {
+      await fs.writeFile(modelDefaultsFile, MODEL_DEFAULTS_STUB, { encoding: "utf-8", flag: "wx" });
+      params.log.info?.(`[config] created ${modelDefaultsFile}`);
+    }
+  } catch (err) {
+    params.log.warn(`[config] failed to ensure config files: ${String(err)}`);
   }
 }
 

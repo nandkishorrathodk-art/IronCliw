@@ -148,6 +148,13 @@ export function expandPolicyWithPluginGroups(
   };
 }
 
+/**
+ * Known core tools that are conditionally available (require another tool to be
+ * enabled first). They are valid allowlist entries and should not trigger the
+ * "unknown entries" warning, but they are not unconditionally present in coreTools.
+ */
+const CONDITIONAL_CORE_TOOLS = new Set(["apply_patch"]);
+
 export function stripPluginOnlyAllowlist(
   policy: ToolPolicyLike | undefined,
   groups: PluginToolGroups,
@@ -172,7 +179,9 @@ export function stripPluginOnlyAllowlist(
     const isPluginEntry =
       entry === "group:plugins" || pluginIds.has(entry) || pluginTools.has(entry);
     const expanded = expandToolGroups([entry]);
-    const isCoreEntry = expanded.some((tool) => coreTools.has(tool));
+    const isCoreEntry =
+      expanded.some((tool) => coreTools.has(tool)) ||
+      CONDITIONAL_CORE_TOOLS.has(normalizeToolName(entry) ?? entry);
     if (isCoreEntry) {
       hasCoreEntry = true;
     }
