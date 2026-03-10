@@ -15,7 +15,6 @@ import {
 import { normalizeSecretInputString } from "../config/types.secrets.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";
-import { theme } from "../terminal/theme.js";
 import { resolveUserPath } from "../utils.js";
 import { resolveOnboardingSecretInputString } from "./onboarding.secret-input.js";
 import type { QuickstartGatewayDefaults, WizardFlow } from "./onboarding.types.js";
@@ -53,10 +52,10 @@ async function requireRiskAcknowledgement(params: {
       "- Use the strongest available model for any bot with tools or untrusted inboxes.",
       "",
       "Run regularly:",
-      "IronCliw security audit --deep",
-      "IronCliw security audit --fix",
+      "ironcliw security audit --deep",
+      "ironcliw security audit --fix",
       "",
-      "Must read: https://docs.IronCliw.ai/gateway/security",
+      "Must read: https://docs.ironcliw.ai/gateway/security",
     ].join("\n"),
     "Security",
   );
@@ -78,12 +77,11 @@ export async function runOnboardingWizard(
 ) {
   const onboardHelpers = await import("../commands/onboard-helpers.js");
   onboardHelpers.printWizardHeader(runtime);
-  await prompter.intro(theme.cyber(" IRONCLIW INITIALIZATION SEQUENCE "));
+  await prompter.intro("IronCliw onboarding");
   await requireRiskAcknowledgement({ opts, prompter });
 
-  runtime.log(theme.muted("  >> Checking system environment..."));
   const snapshot = await readConfigFileSnapshot();
-  let baseConfig: IronCliwConfig = snapshot.valid ? snapshot.config : {};
+  let baseConfig: IronCliwConfig = snapshot.valid ? (snapshot.exists ? snapshot.config : {}) : {};
 
   if (snapshot.exists && !snapshot.valid) {
     await prompter.note(onboardHelpers.summarizeExistingConfig(baseConfig), "Invalid config");
@@ -92,20 +90,19 @@ export async function runOnboardingWizard(
         [
           ...snapshot.issues.map((iss) => `- ${iss.path}: ${iss.message}`),
           "",
-          "Docs: https://docs.IronCliw.ai/gateway/configuration",
+          "Docs: https://docs.ironcliw.ai/gateway/configuration",
         ].join("\n"),
         "Config issues",
       );
     }
     await prompter.outro(
-      `Config invalid. Run \`${formatCliCommand("IronCliw doctor")}\` to repair it, then re-run onboarding.`,
+      `Config invalid. Run \`${formatCliCommand("ironcliw doctor")}\` to repair it, then re-run onboarding.`,
     );
     runtime.exit(1);
     return;
   }
 
-  runtime.log(theme.cyber(" OPERATION MODE "));
-  const quickstartHint = `Configure details later via ${formatCliCommand("IronCliw configure")}.`;
+  const quickstartHint = `Configure details later via ${formatCliCommand("ironcliw configure")}.`;
   const manualHint = "Configure port, network, Tailscale, and auth options.";
   const explicitFlowRaw = opts.flow?.trim();
   const normalizedExplicitFlow = explicitFlowRaw === "manual" ? "advanced" : explicitFlowRaw;
@@ -125,10 +122,10 @@ export async function runOnboardingWizard(
   let flow: WizardFlow =
     explicitFlow ??
     (await prompter.select({
-      message: "Select deployment protocol",
+      message: "Onboarding mode",
       options: [
-        { value: "quickstart", label: "QuickStart (Standard)", hint: quickstartHint },
-        { value: "advanced", label: "Advanced (Manual)", hint: manualHint },
+        { value: "quickstart", label: "QuickStart", hint: quickstartHint },
+        { value: "advanced", label: "Manual", hint: manualHint },
       ],
       initialValue: "quickstart",
     }));
@@ -142,18 +139,17 @@ export async function runOnboardingWizard(
   }
 
   if (snapshot.exists) {
-    runtime.log(theme.cyber(" LEGACY DATA DETECTED "));
     await prompter.note(
       onboardHelpers.summarizeExistingConfig(baseConfig),
-      "Current Configuration",
+      "Existing config detected",
     );
 
     const action = await prompter.select({
-      message: "How should I handle existing data?",
+      message: "Config handling",
       options: [
-        { value: "keep", label: "Inherit existing values" },
-        { value: "modify", label: "Patch/Update values" },
-        { value: "reset", label: "Factory Reset" },
+        { value: "keep", label: "Use existing values" },
+        { value: "modify", label: "Update values" },
+        { value: "reset", label: "Reset" },
       ],
     });
 
@@ -161,16 +157,16 @@ export async function runOnboardingWizard(
       const workspaceDefault =
         baseConfig.agents?.defaults?.workspace ?? onboardHelpers.DEFAULT_WORKSPACE;
       const resetScope = (await prompter.select({
-        message: "Select reset depth",
+        message: "Reset scope",
         options: [
-          { value: "config", label: "Config parameters only" },
+          { value: "config", label: "Config only" },
           {
             value: "config+creds+sessions",
-            label: "Config + credentials + chat history",
+            label: "Config + creds + sessions",
           },
           {
             value: "full",
-            label: "Full wipe (config + history + workspace files)",
+            label: "Full reset (config + creds + sessions + workspace)",
           },
         ],
       })) as ResetScope;
@@ -178,8 +174,6 @@ export async function runOnboardingWizard(
       baseConfig = {};
     }
   }
-
-  runtime.log(theme.cyber(" CORE INFRASTRUCTURE "));
 
   const quickstartGateway: QuickstartGatewayDefaults = (() => {
     const hasExisting =
@@ -287,9 +281,28 @@ export async function runOnboardingWizard(
 
   const localPort = resolveGatewayPort(baseConfig);
   const localUrl = `ws://127.0.0.1:${localPort}`;
+  let localGatewayToken = process.env.IRONCLIW_GATEWAY_TOKEN ?? process.env.CLAWDBOT_GATEWAY_TOKEN;
+  try {
+    const resolvedGatewayToken = await resolveOnboardingSecretInputString({
+      config: baseConfig,
+      value: baseConfig.gateway?.auth?.token,
+      path: "gateway.auth.token",
+      env: process.env,
+    });
+    if (resolvedGatewayToken) {
+      localGatewayToken = resolvedGatewayToken;
+    }
+  } catch (error) {
+    await prompter.note(
+      [
+        "Could not resolve gateway.auth.token SecretRef for onboarding probe.",
+        error instanceof Error ? error.message : String(error),
+      ].join("\n"),
+      "Gateway auth",
+    );
+  }
   let localGatewayPassword =
-    process.env.IronCliw_GATEWAY_PASSWORD ??
-    normalizeSecretInputString(baseConfig.gateway?.auth?.password);
+    process.env.IRONCLIW_GATEWAY_PASSWORD ?? process.env.CLAWDBOT_GATEWAY_PASSWORD;
   try {
     const resolvedGatewayPassword = await resolveOnboardingSecretInputString({
       config: baseConfig,
@@ -312,14 +325,34 @@ export async function runOnboardingWizard(
 
   const localProbe = await onboardHelpers.probeGatewayReachable({
     url: localUrl,
-    token: baseConfig.gateway?.auth?.token ?? process.env.IronCliw_GATEWAY_TOKEN,
+    token: localGatewayToken,
     password: localGatewayPassword,
   });
   const remoteUrl = baseConfig.gateway?.remote?.url?.trim() ?? "";
+  let remoteGatewayToken = normalizeSecretInputString(baseConfig.gateway?.remote?.token);
+  try {
+    const resolvedRemoteGatewayToken = await resolveOnboardingSecretInputString({
+      config: baseConfig,
+      value: baseConfig.gateway?.remote?.token,
+      path: "gateway.remote.token",
+      env: process.env,
+    });
+    if (resolvedRemoteGatewayToken) {
+      remoteGatewayToken = resolvedRemoteGatewayToken;
+    }
+  } catch (error) {
+    await prompter.note(
+      [
+        "Could not resolve gateway.remote.token SecretRef for onboarding probe.",
+        error instanceof Error ? error.message : String(error),
+      ].join("\n"),
+      "Gateway auth",
+    );
+  }
   const remoteProbe = remoteUrl
     ? await onboardHelpers.probeGatewayReachable({
         url: remoteUrl,
-        token: normalizeSecretInputString(baseConfig.gateway?.remote?.token),
+        token: remoteGatewayToken,
       })
     : null;
 
@@ -383,7 +416,6 @@ export async function runOnboardingWizard(
     await import("../commands/auth-choice.js");
   const { applyPrimaryModel, promptDefaultModel } = await import("../commands/model-picker.js");
 
-  runtime.log(theme.cyber(" BRAIN & INTELLIGENCE "));
   const authStore = ensureAuthProfileStore(undefined, {
     allowKeychainPrompt: false,
   });
@@ -438,7 +470,6 @@ export async function runOnboardingWizard(
 
   await warnIfModelConfigLooksOff(nextConfig, prompter);
 
-  runtime.log(theme.cyber(" NETWORK INTERFACE "));
   const { configureGatewayForOnboarding } = await import("./onboarding.gateway-config.js");
   const gateway = await configureGatewayForOnboarding({
     flow,
@@ -453,7 +484,6 @@ export async function runOnboardingWizard(
   nextConfig = gateway.nextConfig;
   const settings = gateway.settings;
 
-  runtime.log(theme.cyber(" COMMUNICATION CHANNELS "));
   if (opts.skipChannels ?? opts.skipProviders) {
     await prompter.note("Skipping channel setup.", "Channels");
   } else {
@@ -482,7 +512,16 @@ export async function runOnboardingWizard(
     skipBootstrap: Boolean(nextConfig.agents?.defaults?.skipBootstrap),
   });
 
-  runtime.log(theme.cyber(" SKILLS & PLUGINS "));
+  if (opts.skipSearch) {
+    await prompter.note("Skipping search setup.", "Search");
+  } else {
+    const { setupSearch } = await import("../commands/onboard-search.js");
+    nextConfig = await setupSearch(nextConfig, runtime, prompter, {
+      quickstartDefaults: flow === "quickstart",
+      secretInputMode: opts.secretInputMode,
+    });
+  }
+
   if (opts.skipSkills) {
     await prompter.note("Skipping skills setup.", "Skills");
   } else {
@@ -494,16 +533,11 @@ export async function runOnboardingWizard(
   const { setupInternalHooks } = await import("../commands/onboard-hooks.js");
   nextConfig = await setupInternalHooks(nextConfig, runtime, prompter);
 
-  // Setup security tools (Burp Suite)
-  const { setupSecurityTools } = await import("../commands/onboard-security.js");
-  await setupSecurityTools(runtime, prompter);
-
-  runtime.log(theme.cyber(" FINALIZING PROTOCOLS "));
   nextConfig = onboardHelpers.applyWizardMetadata(nextConfig, { command: "onboard", mode });
   await writeConfigFile(nextConfig);
 
   const { finalizeOnboardingWizard } = await import("./onboarding.finalize.js");
-  await finalizeOnboardingWizard({
+  const { launchedTui } = await finalizeOnboardingWizard({
     flow,
     opts,
     baseConfig,
@@ -513,4 +547,7 @@ export async function runOnboardingWizard(
     prompter,
     runtime,
   });
+  if (launchedTui) {
+    return;
+  }
 }

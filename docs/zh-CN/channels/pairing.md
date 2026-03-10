@@ -38,15 +38,15 @@ x-i18n:
 ### 批准发送者
 
 ```bash
-IronCliw pairing list telegram
-IronCliw pairing approve telegram <CODE>
+ironcliw pairing list telegram
+ironcliw pairing approve telegram <CODE>
 ```
 
 支持的渠道：`telegram`、`whatsapp`、`signal`、`imessage`、`discord`、`slack`。
 
 ### 状态存储位置
 
-存储在 `~/.IronCliw/credentials/` 下：
+存储在 `~/.ironcliw/credentials/` 下：
 
 - 待处理请求：`<channel>-pairing.json`
 - 已批准允许列表存储：`<channel>-allowFrom.json`
@@ -60,21 +60,21 @@ IronCliw pairing approve telegram <CODE>
 ### 批准节点设备
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
-IronCliw devices reject <requestId>
+ironcliw devices list
+ironcliw devices approve <requestId>
+ironcliw devices reject <requestId>
 ```
 
 ### 状态存储位置
 
-存储在 `~/.IronCliw/devices/` 下：
+存储在 `~/.ironcliw/devices/` 下：
 
 - `pending.json`（短期；待处理请求会过期）
 - `paired.json`（已配对设备 + 令牌）
 
 ### 说明
 
-- 旧版 `node.pair.*` API（CLI：`IronCliw nodes pending/approve`）是一个单独的 Gateway 网关拥有的配对存储。WS 节点仍然需要设备配对。
+- 旧版 `node.pair.*` API（CLI：`ironcliw nodes pending/approve`）是一个单独的 Gateway 网关拥有的配对存储。WS 节点仍然需要设备配对。
 
 ## 相关文档
 

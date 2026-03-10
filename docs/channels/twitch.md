@@ -16,13 +16,13 @@ Twitch ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-IronCliw plugins install @IronCliw/twitch
+ironcliw plugins install @ironcliw/twitch
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-IronCliw plugins install ./extensions/twitch
+ironcliw plugins install ./extensions/twitch
 ```
 
 Details: [Plugins](/tools/plugin)
@@ -36,7 +36,7 @@ Details: [Plugins](/tools/plugin)
    - Copy the **Client ID** and **Access Token**
 3. Find your Twitch user ID: [https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/](https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/)
 4. Configure the token:
-   - Env: `IronCliw_TWITCH_ACCESS_TOKEN=...` (default account only)
+   - Env: `IRONCLIW_TWITCH_ACCESS_TOKEN=...` (default account only)
    - Or config: `channels.twitch.accessToken`
    - If both are set, config takes precedence (env fallback is default-account only).
 5. Start the gateway.
@@ -50,8 +50,8 @@ Minimal config:
   channels: {
     twitch: {
       enabled: true,
-      username: "IronCliw", // Bot's Twitch account
-      accessToken: "oauth:abc123...", // OAuth Access Token (or use IronCliw_TWITCH_ACCESS_TOKEN env var)
+      username: "ironcliw", // Bot's Twitch account
+      accessToken: "oauth:abc123...", // OAuth Access Token (or use IRONCLIW_TWITCH_ACCESS_TOKEN env var)
       clientId: "xyz789...", // Client ID from Token Generator
       channel: "vevisk", // Which Twitch channel's chat to join (required)
       allowFrom: ["123456789"], // (recommended) Your Twitch user ID only - get it from https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/
@@ -84,7 +84,7 @@ No manual app registration needed. Tokens expire after several hours.
 **Env var (default account only):**
 
 ```bash
-IronCliw_TWITCH_ACCESS_TOKEN=oauth:abc123...
+IRONCLIW_TWITCH_ACCESS_TOKEN=oauth:abc123...
 ```
 
 **Or config:**
@@ -94,7 +94,7 @@ IronCliw_TWITCH_ACCESS_TOKEN=oauth:abc123...
   channels: {
     twitch: {
       enabled: true,
-      username: "IronCliw",
+      username: "ironcliw",
       accessToken: "oauth:abc123...",
       clientId: "xyz789...",
       channel: "vevisk",
@@ -156,13 +156,13 @@ Example (one bot account in two channels):
     twitch: {
       accounts: {
         channel1: {
-          username: "IronCliw",
+          username: "ironcliw",
           accessToken: "oauth:abc123...",
           clientId: "xyz789...",
           channel: "vevisk",
         },
         channel2: {
-          username: "IronCliw",
+          username: "ironcliw",
           accessToken: "oauth:def456...",
           clientId: "uvw012...",
           channel: "secondchannel",
@@ -251,8 +251,8 @@ By default, `requireMention` is `true`. To disable and respond to all messages:
 First, run diagnostic commands:
 
 ```bash
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 ### Bot doesn't respond to messages
@@ -317,7 +317,7 @@ Full example:
   channels: {
     twitch: {
       enabled: true,
-      username: "IronCliw",
+      username: "ironcliw",
       accessToken: "oauth:abc123...",
       clientId: "xyz789...",
       channel: "vevisk",

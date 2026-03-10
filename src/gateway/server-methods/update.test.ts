@@ -32,8 +32,8 @@ vi.mock("../../config/sessions.js", () => ({
   },
 }));
 
-vi.mock("../../infra/IronCliw-root.js", () => ({
-  resolveIronCliwPackageRoot: async () => "/tmp/IronCliw",
+vi.mock("../../infra/ironcliw-root.js", () => ({
+  resolveIronCliwPackageRoot: async () => "/tmp/ironcliw",
 }));
 
 vi.mock("../../infra/restart-sentinel.js", async (importOriginal) => {

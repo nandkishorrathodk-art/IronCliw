@@ -12,8 +12,8 @@ This guide migrates a IronCliw Gateway from one machine to another **without red
 
 The migration is simple conceptually:
 
-- Copy the **state directory** (`$IronCliw_STATE_DIR`, default: `~/.IronCliw/`) — this includes config, auth, sessions, and channel state.
-- Copy your **workspace** (`~/.IronCliw/workspace/` by default) — this includes your agent files (memory, prompts, etc.).
+- Copy the **state directory** (`$IRONCLIW_STATE_DIR`, default: `~/.ironcliw/`) — this includes config, auth, sessions, and channel state.
+- Copy your **workspace** (`~/.ironcliw/workspace/` by default) — this includes your agent files (memory, prompts, etc.).
 
 But there are common footguns around **profiles**, **permissions**, and **partial copies**.
 
@@ -23,26 +23,26 @@ But there are common footguns around **profiles**, **permissions**, and **partia
 
 Most installs use the default:
 
-- **State dir:** `~/.IronCliw/`
+- **State dir:** `~/.ironcliw/`
 
 But it may be different if you use:
 
-- `--profile <name>` (often becomes `~/.IronCliw-<profile>/`)
-- `IronCliw_STATE_DIR=/some/path`
+- `--profile <name>` (often becomes `~/.ironcliw-<profile>/`)
+- `IRONCLIW_STATE_DIR=/some/path`
 
 If you’re not sure, run on the **old** machine:
 
 ```bash
-IronCliw status
+ironcliw status
 ```
 
-Look for mentions of `IronCliw_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
+Look for mentions of `IRONCLIW_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
 
 ### 2) Identify your workspace
 
 Common defaults:
 
-- `~/.IronCliw/workspace/` (recommended workspace)
+- `~/.ironcliw/workspace/` (recommended workspace)
 - a custom folder you created
 
 Your workspace is where files like `MEMORY.md`, `USER.md`, and `memory/*.md` live.
@@ -51,7 +51,7 @@ Your workspace is where files like `MEMORY.md`, `USER.md`, and `memory/*.md` liv
 
 If you copy **both** the state dir and workspace, you keep:
 
-- Gateway configuration (`IronCliw.json`)
+- Gateway configuration (`ironcliw.json`)
 - Auth profiles / API keys / OAuth tokens
 - Session history + agent state
 - Channel state (e.g. WhatsApp login/session)
@@ -63,7 +63,7 @@ If you copy **only** the workspace (e.g., via Git), you do **not** preserve:
 - credentials
 - channel logins
 
-Those live under `$IronCliw_STATE_DIR`.
+Those live under `$IRONCLIW_STATE_DIR`.
 
 ## Migration steps (recommended)
 
@@ -72,7 +72,7 @@ Those live under `$IronCliw_STATE_DIR`.
 On the **old** machine, stop the gateway first so files aren’t changing mid-copy:
 
 ```bash
-IronCliw gateway stop
+ironcliw gateway stop
 ```
 
 (Optional but recommended) archive the state dir and workspace:
@@ -80,12 +80,12 @@ IronCliw gateway stop
 ```bash
 # Adjust paths if you use a profile or custom locations
 cd ~
-tar -czf IronCliw-state.tgz .IronCliw
+tar -czf ironcliw-state.tgz .ironcliw
 
-tar -czf IronCliw-workspace.tgz .IronCliw/workspace
+tar -czf ironcliw-workspace.tgz .ironcliw/workspace
 ```
 
-If you have multiple profiles/state dirs (e.g. `~/.IronCliw-main`, `~/.IronCliw-work`), archive each.
+If you have multiple profiles/state dirs (e.g. `~/.ironcliw-main`, `~/.ironcliw-work`), archive each.
 
 ### Step 1 — Install IronCliw on the new machine
 
@@ -93,14 +93,14 @@ On the **new** machine, install the CLI (and Node if needed):
 
 - See: [Install](/install)
 
-At this stage, it’s OK if onboarding creates a fresh `~/.IronCliw/` — you will overwrite it in the next step.
+At this stage, it’s OK if onboarding creates a fresh `~/.ironcliw/` — you will overwrite it in the next step.
 
 ### Step 2 — Copy the state dir + workspace to the new machine
 
 Copy **both**:
 
-- `$IronCliw_STATE_DIR` (default `~/.IronCliw/`)
-- your workspace (default `~/.IronCliw/workspace/`)
+- `$IRONCLIW_STATE_DIR` (default `~/.ironcliw/`)
+- your workspace (default `~/.ironcliw/workspace/`)
 
 Common approaches:
 
@@ -110,7 +110,7 @@ Common approaches:
 
 After copying, ensure:
 
-- Hidden directories were included (e.g. `.IronCliw/`)
+- Hidden directories were included (e.g. `.ironcliw/`)
 - File ownership is correct for the user running the gateway
 
 ### Step 3 — Run Doctor (migrations + service repair)
@@ -118,7 +118,7 @@ After copying, ensure:
 On the **new** machine:
 
 ```bash
-IronCliw doctor
+ironcliw doctor
 ```
 
 Doctor is the “safe boring” command. It repairs services, applies config migrations, and warns about mismatches.
@@ -126,15 +126,15 @@ Doctor is the “safe boring” command. It repairs services, applies config mig
 Then:
 
 ```bash
-IronCliw gateway restart
-IronCliw status
+ironcliw gateway restart
+ironcliw status
 ```
 
 ## Common footguns (and how to avoid them)
 
 ### Footgun: profile / state-dir mismatch
 
-If you ran the old gateway with a profile (or `IronCliw_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
+If you ran the old gateway with a profile (or `IRONCLIW_STATE_DIR`), and the new gateway uses a different one, you’ll see symptoms like:
 
 - config changes not taking effect
 - channels missing / logged out
@@ -143,17 +143,17 @@ If you ran the old gateway with a profile (or `IronCliw_STATE_DIR`), and the new
 Fix: run the gateway/service using the **same** profile/state dir you migrated, then rerun:
 
 ```bash
-IronCliw doctor
+ironcliw doctor
 ```
 
-### Footgun: copying only `IronCliw.json`
+### Footgun: copying only `ironcliw.json`
 
-`IronCliw.json` is not enough. Many providers store state under:
+`ironcliw.json` is not enough. Many providers store state under:
 
-- `$IronCliw_STATE_DIR/credentials/`
-- `$IronCliw_STATE_DIR/agents/<agentId>/...`
+- `$IRONCLIW_STATE_DIR/credentials/`
+- `$IRONCLIW_STATE_DIR/agents/<agentId>/...`
 
-Always migrate the entire `$IronCliw_STATE_DIR` folder.
+Always migrate the entire `$IRONCLIW_STATE_DIR` folder.
 
 ### Footgun: permissions / ownership
 
@@ -170,7 +170,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 ### Footgun: secrets in backups
 
-`$IronCliw_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
+`$IRONCLIW_STATE_DIR` contains secrets (API keys, OAuth tokens, WhatsApp creds). Treat backups like production secrets:
 
 - store encrypted
 - avoid sharing over insecure channels
@@ -180,7 +180,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 On the new machine, confirm:
 
-- `IronCliw status` shows the gateway running
+- `ironcliw status` shows the gateway running
 - Your channels are still connected (e.g. WhatsApp doesn’t require re-pair)
 - The dashboard opens and shows existing sessions
 - Your workspace files (memory, configs) are present
@@ -189,4 +189,4 @@ On the new machine, confirm:
 
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
-- [Where does IronCliw store its data?](/help/faq#where-does-IronCliw-store-its-data)
+- [Where does IronCliw store its data?](/help/faq#where-does-ironcliw-store-its-data)

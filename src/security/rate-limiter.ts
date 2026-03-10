@@ -17,13 +17,13 @@ export class RateLimiter {
       refillRateMs: 60000,
       refillAmount: 100,
       bucketTtlMs: 600000,
-      ...config
+      ...config,
     };
   }
 
   public consume(clientId: string = "default", cost = 1): boolean {
     this.refill(clientId);
-    
+
     const bucket = this.buckets.get(clientId)!;
     if (bucket.tokens >= cost) {
       bucket.tokens -= cost;
@@ -85,7 +85,7 @@ export class RateLimiter {
       const timePassed = now - bucket.lastRefill;
       if (timePassed > this.config.refillRateMs) {
         const refillPeriods = Math.floor(timePassed / this.config.refillRateMs);
-        const newTokens = bucket.tokens + (refillPeriods * this.config.refillAmount);
+        const newTokens = bucket.tokens + refillPeriods * this.config.refillAmount;
         bucket.tokens = Math.min(newTokens, this.config.maxTokens);
         bucket.lastRefill += refillPeriods * this.config.refillRateMs;
       }

@@ -72,7 +72,7 @@ struct QRScannerView: UIViewControllerRepresentable {
                     return
                 }
 
-                // Fall back to deep link URL format (IronCliw://gateway?...).
+                // Fall back to deep link URL format (ironcliw://gateway?...).
                 if let url = URL(string: payload),
                    let route = DeepLinkParser.parse(url),
                    case let .gateway(link) = route

@@ -1,20 +1,22 @@
+# syntax=docker/dockerfile:1.7
+
 FROM node:22-bookworm-slim@sha256:3cfe526ec8dd62013b8843e8e5d4877e297b886e5aace4a59fec25dc20736e45
 
-RUN apt-get update \
+RUN --mount=type=cache,id=ironcliw-cleanup-smoke-apt-cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,id=ironcliw-cleanup-smoke-apt-lists,target=/var/lib/apt,sharing=locked \
+  apt-get update \
   && apt-get install -y --no-install-recommends \
     bash \
     ca-certificates \
-    git \
-  && rm -rf /var/lib/apt/lists/*
+    git
 
 WORKDIR /repo
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN corepack enable \
+RUN --mount=type=cache,id=ironcliw-pnpm-store,target=/root/.local/share/pnpm/store,sharing=locked \
+  corepack enable \
   && pnpm install --frozen-lockfile
 
 COPY . .
-COPY scripts/docker/cleanup-smoke/run.sh /usr/local/bin/IronCliw-cleanup-smoke
-RUN chmod +x /usr/local/bin/IronCliw-cleanup-smoke
+COPY --chmod=755 scripts/docker/cleanup-smoke/run.sh /usr/local/bin/ironcliw-cleanup-smoke
 
-ENTRYPOINT ["/usr/local/bin/IronCliw-cleanup-smoke"]
-
+ENTRYPOINT ["/usr/local/bin/ironcliw-cleanup-smoke"]

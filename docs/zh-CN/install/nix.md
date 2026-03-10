@@ -16,30 +16,30 @@ x-i18n:
 
 # Nix 安装
 
-使用 Nix 运行 IronCliw 的推荐方式是通过 **[nix-IronCliw](https://github.com/IronCliw/nix-IronCliw)** — 一个开箱即用的 Home Manager 模块。
+使用 Nix 运行 IronCliw 的推荐方式是通过 **[nix-ironcliw](https://github.com/ironcliw/nix-ironcliw)** — 一个开箱即用的 Home Manager 模块。
 
 ## 快速开始
 
 将此粘贴给你的 AI 智能体（Claude、Cursor 等）：
 
 ```text
-I want to set up nix-IronCliw on my Mac.
-Repository: github:IronCliw/nix-IronCliw
+I want to set up nix-ironcliw on my Mac.
+Repository: github:ironcliw/nix-ironcliw
 
 What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
-2. Create a local flake at ~/code/IronCliw-local using templates/agent-first/flake.nix
+2. Create a local flake at ~/code/ironcliw-local using templates/agent-first/flake.nix
 3. Help me create a Telegram bot (@BotFather) and get my chat ID (@userinfobot)
 4. Set up secrets (bot token, Anthropic key) - plain files at ~/.secrets/ is fine
 5. Fill in the template placeholders and run home-manager switch
 6. Verify: launchd running, bot responds to messages
 
-Reference the nix-IronCliw README for module options.
+Reference the nix-ironcliw README for module options.
 ```
 
-> **📦 完整指南：[github.com/IronCliw/nix-IronCliw](https://github.com/IronCliw/nix-IronCliw)**
+> **📦 完整指南：[github.com/ironcliw/nix-ironcliw](https://github.com/ironcliw/nix-ironcliw)**
 >
-> nix-IronCliw 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
+> nix-ironcliw 仓库是 Nix 安装的权威来源。本页只是一个快速概述。
 
 ## 你将获得
 
@@ -52,27 +52,27 @@ Reference the nix-IronCliw README for module options.
 
 ## Nix 模式运行时行为
 
-当设置 `IronCliw_NIX_MODE=1` 时（nix-IronCliw 会自动设置）：
+当设置 `IRONCLIW_NIX_MODE=1` 时（nix-ironcliw 会自动设置）：
 
 IronCliw 支持 **Nix 模式**，使配置确定性并禁用自动安装流程。
 通过导出以下环境变量启用：
 
 ```bash
-IronCliw_NIX_MODE=1
+IRONCLIW_NIX_MODE=1
 ```
 
 在 macOS 上，GUI 应用不会自动继承 shell 环境变量。你也可以通过 defaults 启用 Nix 模式：
 
 ```bash
-defaults write bot.molt.mac IronCliw.nixMode -bool true
+defaults write bot.molt.mac ironcliw.nixMode -bool true
 ```
 
 ### 配置 + 状态路径
 
-IronCliw 从 `IronCliw_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `IronCliw_STATE_DIR` 中。
+IronCliw 从 `IRONCLIW_CONFIG_PATH` 读取 JSON5 配置，并将可变数据存储在 `IRONCLIW_STATE_DIR` 中。
 
-- `IronCliw_STATE_DIR`（默认：`~/.IronCliw`）
-- `IronCliw_CONFIG_PATH`（默认：`$IronCliw_STATE_DIR/IronCliw.json`）
+- `IRONCLIW_STATE_DIR`（默认：`~/.ironcliw`）
+- `IRONCLIW_CONFIG_PATH`（默认：`$IRONCLIW_STATE_DIR/ironcliw.json`）
 
 在 Nix 下运行时，将这些显式设置为 Nix 管理的位置，以便运行时状态和配置不会进入不可变存储。
 
@@ -90,10 +90,10 @@ macOS 打包流程期望在以下位置有一个稳定的 Info.plist 模板：
 apps/macos/Sources/IronCliw/Resources/Info.plist
 ```
 
-[`scripts/package-mac-app.sh`](https://github.com/IronCliw/IronCliw/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
+[`scripts/package-mac-app.sh`](https://github.com/ironcliw/ironcliw/blob/main/scripts/package-mac-app.sh) 将此模板复制到应用包中并修补动态字段（bundle ID、版本/构建号、Git SHA、Sparkle 密钥）。这使 plist 对于 SwiftPM 打包和 Nix 构建保持确定性（它们不依赖完整的 Xcode 工具链）。
 
 ## 相关内容
 
-- [nix-IronCliw](https://github.com/IronCliw/nix-IronCliw) — 完整设置指南
+- [nix-ironcliw](https://github.com/ironcliw/nix-ironcliw) — 完整设置指南
 - [向导](/start/wizard) — 非 Nix CLI 设置
 - [Docker](/install/docker) — 容器化设置

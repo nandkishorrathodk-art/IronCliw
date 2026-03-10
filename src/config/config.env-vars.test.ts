@@ -3,7 +3,11 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { loadDotEnv } from "../infra/dotenv.js";
 import { resolveConfigEnvVars } from "./env-substitution.js";
-import { applyConfigEnvVars, collectConfigRuntimeEnvVars } from "./env-vars.js";
+import {
+  applyConfigEnvVars,
+  collectConfigRuntimeEnvVars,
+  createConfigRuntimeEnv,
+} from "./env-vars.js";
 import { withEnvOverride, withTempHome } from "./test-helpers.js";
 import type { IronCliwConfig } from "./types.js";
 
@@ -26,6 +30,16 @@ describe("config env vars", () => {
     await withEnvOverride({ GROQ_API_KEY: undefined }, async () => {
       applyConfigEnvVars({ env: { vars: { GROQ_API_KEY: "gsk-config" } } } as IronCliwConfig);
       expect(process.env.GROQ_API_KEY).toBe("gsk-config");
+    });
+  });
+
+  it("can build a merged runtime env without mutating process.env", async () => {
+    await withEnvOverride({ OPENROUTER_API_KEY: undefined }, async () => {
+      const merged = createConfigRuntimeEnv({
+        env: { vars: { OPENROUTER_API_KEY: "config-key" } },
+      } as IronCliwConfig);
+      expect(merged.OPENROUTER_API_KEY).toBe("config-key");
+      expect(process.env.OPENROUTER_API_KEY).toBeUndefined();
     });
   });
 
@@ -85,12 +99,12 @@ describe("config env vars", () => {
     });
   });
 
-  it("loads ${VAR} substitutions from ~/.IronCliw/.env on repeated runtime loads", async () => {
+  it("loads ${VAR} substitutions from ~/.ironcliw/.env on repeated runtime loads", async () => {
     await withTempHome(async (_home) => {
       await withEnvOverride({ BRAVE_API_KEY: undefined }, async () => {
-        const stateDir = process.env.IronCliw_STATE_DIR?.trim();
+        const stateDir = process.env.IRONCLIW_STATE_DIR?.trim();
         if (!stateDir) {
-          throw new Error("Expected IronCliw_STATE_DIR to be set by withTempHome");
+          throw new Error("Expected IRONCLIW_STATE_DIR to be set by withTempHome");
         }
         await fs.mkdir(stateDir, { recursive: true });
         await fs.writeFile(path.join(stateDir, ".env"), "BRAVE_API_KEY=from-dotenv\n", "utf-8");

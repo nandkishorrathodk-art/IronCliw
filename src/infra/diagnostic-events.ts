@@ -176,16 +176,16 @@ type DiagnosticEventsGlobalState = {
 
 function getDiagnosticEventsState(): DiagnosticEventsGlobalState {
   const globalStore = globalThis as typeof globalThis & {
-    __IronCliwDiagnosticEventsState?: DiagnosticEventsGlobalState;
+    __ironcliwDiagnosticEventsState?: DiagnosticEventsGlobalState;
   };
-  if (!globalStore.__IronCliwDiagnosticEventsState) {
-    globalStore.__IronCliwDiagnosticEventsState = {
+  if (!globalStore.__ironcliwDiagnosticEventsState) {
+    globalStore.__ironcliwDiagnosticEventsState = {
       seq: 0,
       listeners: new Set<(evt: DiagnosticEventPayload) => void>(),
       dispatchDepth: 0,
     };
   }
-  return globalStore.__IronCliwDiagnosticEventsState;
+  return globalStore.__ironcliwDiagnosticEventsState;
 }
 
 export function isDiagnosticsEnabled(config?: IronCliwConfig): boolean {

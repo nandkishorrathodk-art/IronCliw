@@ -30,7 +30,7 @@ function buildRegistry(params: { acpxRoot: string; helperRoot: string }): Plugin
         origin: "workspace",
         rootDir: params.acpxRoot,
         source: params.acpxRoot,
-        manifestPath: path.join(params.acpxRoot, "IronCliw.plugin.json"),
+        manifestPath: path.join(params.acpxRoot, "ironcliw.plugin.json"),
       },
       {
         id: "helper",
@@ -41,7 +41,7 @@ function buildRegistry(params: { acpxRoot: string; helperRoot: string }): Plugin
         origin: "workspace",
         rootDir: params.helperRoot,
         source: params.helperRoot,
-        manifestPath: path.join(params.helperRoot, "IronCliw.plugin.json"),
+        manifestPath: path.join(params.helperRoot, "ironcliw.plugin.json"),
       },
     ],
   };
@@ -63,16 +63,16 @@ function createSinglePluginRegistry(params: {
         origin: "workspace",
         rootDir: params.pluginRoot,
         source: params.pluginRoot,
-        manifestPath: path.join(params.pluginRoot, "IronCliw.plugin.json"),
+        manifestPath: path.join(params.pluginRoot, "ironcliw.plugin.json"),
       },
     ],
   };
 }
 
 async function setupAcpxAndHelperRegistry() {
-  const workspaceDir = await tempDirs.make("IronCliw-");
-  const acpxRoot = await tempDirs.make("IronCliw-acpx-plugin-");
-  const helperRoot = await tempDirs.make("IronCliw-helper-plugin-");
+  const workspaceDir = await tempDirs.make("ironcliw-");
+  const acpxRoot = await tempDirs.make("ironcliw-acpx-plugin-");
+  const helperRoot = await tempDirs.make("ironcliw-helper-plugin-");
   await fs.mkdir(path.join(acpxRoot, "skills"), { recursive: true });
   await fs.mkdir(path.join(helperRoot, "skills"), { recursive: true });
   hoisted.loadPluginManifestRegistry.mockReturnValue(buildRegistry({ acpxRoot, helperRoot }));
@@ -80,9 +80,9 @@ async function setupAcpxAndHelperRegistry() {
 }
 
 async function setupPluginOutsideSkills() {
-  const workspaceDir = await tempDirs.make("IronCliw-");
-  const pluginRoot = await tempDirs.make("IronCliw-plugin-");
-  const outsideDir = await tempDirs.make("IronCliw-outside-");
+  const workspaceDir = await tempDirs.make("ironcliw-");
+  const pluginRoot = await tempDirs.make("ironcliw-plugin-");
+  const outsideDir = await tempDirs.make("ironcliw-outside-");
   const outsideSkills = path.join(outsideDir, "skills");
   return { workspaceDir, pluginRoot, outsideSkills };
 }

@@ -10,12 +10,12 @@ Automatically saves session context to memory when you issue `/new` or `/reset`.
 
 **Events**: `command:new`, `command:reset`
 **What it does**: Creates a dated memory file with LLM-generated slug based on conversation content.
-**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.IronCliw/workspace`)
+**Output**: `<workspace>/memory/YYYY-MM-DD-slug.md` (defaults to `~/.ironcliw/workspace`)
 
 **Enable**:
 
 ```bash
-IronCliw hooks enable session-memory
+ironcliw hooks enable session-memory
 ```
 
 ### 📎 bootstrap-extra-files
@@ -29,7 +29,7 @@ Injects extra bootstrap files (for example monorepo `AGENTS.md`/`TOOLS.md`) duri
 **Enable**:
 
 ```bash
-IronCliw hooks enable bootstrap-extra-files
+ironcliw hooks enable bootstrap-extra-files
 ```
 
 ### 📝 command-logger
@@ -38,12 +38,12 @@ Logs all command events to a centralized audit file.
 
 **Events**: `command` (all commands)
 **What it does**: Appends JSONL entries to command log file.
-**Output**: `~/.IronCliw/logs/commands.log`
+**Output**: `~/.ironcliw/logs/commands.log`
 
 **Enable**:
 
 ```bash
-IronCliw hooks enable command-logger
+ironcliw hooks enable command-logger
 ```
 
 ### 🚀 boot-md
@@ -57,7 +57,7 @@ Runs `BOOT.md` whenever the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-IronCliw hooks enable boot-md
+ironcliw hooks enable boot-md
 ```
 
 ## Hook Structure
@@ -81,9 +81,9 @@ session-memory/
 ---
 name: my-hook
 description: "Short description"
-homepage: https://docs.IronCliw.ai/automation/hooks#my-hook
+homepage: https://docs.ironcliw.ai/automation/hooks#my-hook
 metadata:
-  { "IronCliw": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "ironcliw": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 # Hook Title
 
@@ -107,7 +107,7 @@ Documentation goes here...
 To create your own hooks, place them in:
 
 - **Workspace hooks**: `<workspace>/hooks/` (highest precedence)
-- **Managed hooks**: `~/.IronCliw/hooks/` (shared across workspaces)
+- **Managed hooks**: `~/.ironcliw/hooks/` (shared across workspaces)
 
 Custom hooks follow the same structure as bundled hooks.
 
@@ -116,31 +116,31 @@ Custom hooks follow the same structure as bundled hooks.
 List all hooks:
 
 ```bash
-IronCliw hooks list
+ironcliw hooks list
 ```
 
 Show hook details:
 
 ```bash
-IronCliw hooks info session-memory
+ironcliw hooks info session-memory
 ```
 
 Check hook status:
 
 ```bash
-IronCliw hooks check
+ironcliw hooks check
 ```
 
 Enable/disable:
 
 ```bash
-IronCliw hooks enable session-memory
-IronCliw hooks disable command-logger
+ironcliw hooks enable session-memory
+ironcliw hooks disable command-logger
 ```
 
 ## Configuration
 
-Hooks can be configured in `~/.IronCliw/IronCliw.json`:
+Hooks can be configured in `~/.ironcliw/ironcliw.json`:
 
 ```json
 {
@@ -213,11 +213,11 @@ export default myHandler;
 Test your hooks by:
 
 1. Place hook in workspace hooks directory
-2. Restart gateway: `pkill -9 -f 'IronCliw.*gateway' && pnpm IronCliw gateway`
-3. Enable the hook: `IronCliw hooks enable my-hook`
+2. Restart gateway: `pkill -9 -f 'ironcliw.*gateway' && pnpm ironcliw gateway`
+3. Enable the hook: `ironcliw hooks enable my-hook`
 4. Trigger the event (e.g., send `/new` command)
 5. Check gateway logs for hook execution
 
 ## Documentation
 
-Full documentation: https://docs.IronCliw.ai/automation/hooks
+Full documentation: https://docs.ironcliw.ai/automation/hooks

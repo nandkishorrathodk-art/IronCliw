@@ -8,7 +8,7 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 APP_ROOT="$ROOT_DIR/dist/IronCliw.app"
 BUILD_ROOT="$ROOT_DIR/apps/macos/.build"
 PRODUCT="IronCliw"
-BUNDLE_ID="${BUNDLE_ID:-ai.IronCliw.mac.debug}"
+BUNDLE_ID="${BUNDLE_ID:-ai.ironcliw.mac.debug}"
 PKG_VERSION="$(cd "$ROOT_DIR" && node -p "require('./package.json').version" 2>/dev/null || echo "0.0.0")"
 BUILD_TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 GIT_COMMIT=$(cd "$ROOT_DIR" && git rev-parse --short HEAD 2>/dev/null || echo "unknown")
@@ -16,14 +16,21 @@ GIT_BUILD_NUMBER=$(cd "$ROOT_DIR" && git rev-list --count HEAD 2>/dev/null || ec
 APP_VERSION="${APP_VERSION:-$PKG_VERSION}"
 APP_BUILD="${APP_BUILD:-}"
 BUILD_CONFIG="${BUILD_CONFIG:-debug}"
-BUILD_ARCHS_VALUE="${BUILD_ARCHS:-$(uname -m)}"
+if [[ -n "${BUILD_ARCHS:-}" ]]; then
+  BUILD_ARCHS_VALUE="${BUILD_ARCHS}"
+elif [[ "$BUILD_CONFIG" == "release" ]]; then
+  # Release packaging should be universal unless explicitly overridden.
+  BUILD_ARCHS_VALUE="all"
+else
+  BUILD_ARCHS_VALUE="$(uname -m)"
+fi
 if [[ "${BUILD_ARCHS_VALUE}" == "all" ]]; then
   BUILD_ARCHS_VALUE="arm64 x86_64"
 fi
 IFS=' ' read -r -a BUILD_ARCHS <<< "$BUILD_ARCHS_VALUE"
 PRIMARY_ARCH="${BUILD_ARCHS[0]}"
 SPARKLE_PUBLIC_ED_KEY="${SPARKLE_PUBLIC_ED_KEY:-AGCY8w5vHirVfGGDGc8Szc5iuOqupZSh9pMj/Qs67XI=}"
-SPARKLE_FEED_URL="${SPARKLE_FEED_URL:-https://raw.githubusercontent.com/IronCliw/IronCliw/main/appcast.xml}"
+SPARKLE_FEED_URL="${SPARKLE_FEED_URL:-https://raw.githubusercontent.com/ironcliw/ironcliw/main/appcast.xml}"
 AUTO_CHECKS=true
 if [[ "$BUNDLE_ID" == *.debug ]]; then
   SPARKLE_FEED_URL=""
@@ -236,12 +243,12 @@ else
 fi
 
 echo "📦 Copying IronCliwKit resources"
-IronCliwKIT_BUNDLE="$(build_path_for_arch "$PRIMARY_ARCH")/$BUILD_CONFIG/IronCliwKit_IronCliwKit.bundle"
-if [ -d "$IronCliwKIT_BUNDLE" ]; then
+IRONCLIWKIT_BUNDLE="$(build_path_for_arch "$PRIMARY_ARCH")/$BUILD_CONFIG/IronCliwKit_IronCliwKit.bundle"
+if [ -d "$IRONCLIWKIT_BUNDLE" ]; then
   rm -rf "$APP_ROOT/Contents/Resources/IronCliwKit_IronCliwKit.bundle"
-  cp -R "$IronCliwKIT_BUNDLE" "$APP_ROOT/Contents/Resources/IronCliwKit_IronCliwKit.bundle"
+  cp -R "$IRONCLIWKIT_BUNDLE" "$APP_ROOT/Contents/Resources/IronCliwKit_IronCliwKit.bundle"
 else
-  echo "WARN: IronCliwKit resource bundle not found at $IronCliwKIT_BUNDLE (continuing)" >&2
+  echo "WARN: IronCliwKit resource bundle not found at $IRONCLIWKIT_BUNDLE (continuing)" >&2
 fi
 
 echo "📦 Copying Textual resources"
@@ -278,4 +285,3 @@ echo "🔏 Signing bundle (auto-selects signing identity if SIGN_IDENTITY is uns
 "$ROOT_DIR/scripts/codesign-mac-app.sh" "$APP_ROOT"
 
 echo "✅ Bundle ready at $APP_ROOT"
-

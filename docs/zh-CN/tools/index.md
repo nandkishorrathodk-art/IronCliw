@@ -1,8 +1,8 @@
 ---
 read_when:
   - 添加或修改智能体工具
-  - 停用或更改 `IronCliw-*` Skills
-summary: IronCliw 的智能体工具接口（browser、canvas、nodes、message、cron），替代旧版 `IronCliw-*` Skills
+  - 停用或更改 `ironcliw-*` Skills
+summary: IronCliw 的智能体工具接口（browser、canvas、nodes、message、cron），替代旧版 `ironcliw-*` Skills
 title: 工具
 x-i18n:
   generated_at: "2026-02-03T10:12:41Z"
@@ -16,12 +16,12 @@ x-i18n:
 # 工具（IronCliw）
 
 IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具**。
-这些工具取代了旧的 `IronCliw-*` Skills：工具是类型化的，无需调用 shell，
+这些工具取代了旧的 `ironcliw-*` Skills：工具是类型化的，无需调用 shell，
 智能体应该直接依赖它们。
 
 ## 禁用工具
 
-你可以通过 `IronCliw.json` 中的 `tools.allow` / `tools.deny` 全局允许/拒绝工具
+你可以通过 `ironcliw.json` 中的 `tools.allow` / `tools.deny` 全局允许/拒绝工具
 （deny 优先）。这会阻止不允许的工具被发送到模型提供商。
 
 ```json5
@@ -158,7 +158,7 @@ IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具*
 - `group:automation`：`cron`、`gateway`
 - `group:messaging`：`message`
 - `group:nodes`：`nodes`
-- `group:IronCliw`：所有内置 IronCliw 工具（不包括提供商插件）
+- `group:ironcliw`：所有内置 IronCliw 工具（不包括提供商插件）
 
 示例（仅允许文件工具 + browser）：
 
@@ -213,7 +213,7 @@ IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具*
 - 如果不允许 `process`，`exec` 会同步运行并忽略 `yieldMs`/`background`。
 - `elevated` 受 `tools.elevated` 加上任何 `agents.list[].tools.elevated` 覆盖的门控（两者都必须允许），是 `host=gateway` + `security=full` 的别名。
 - `elevated` 仅在智能体被沙箱隔离时改变行为（否则是空操作）。
-- `host=node` 可以针对 macOS 配套应用或无头节点主机（`IronCliw node run`）。
+- `host=node` 可以针对 macOS 配套应用或无头节点主机（`ironcliw node run`）。
 - Gateway 网关/节点审批和允许列表：[执行审批](/tools/exec-approvals)。
 
 ### `process`
@@ -241,7 +241,7 @@ IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具*
 
 注意：
 
-- 需要 Brave API 密钥（推荐：`IronCliw configure --section web`，或设置 `BRAVE_API_KEY`）。
+- 需要 Brave API 密钥（推荐：`ironcliw configure --section web`，或设置 `BRAVE_API_KEY`）。
 - 通过 `tools.web.search.enabled` 启用。
 - 响应被缓存（默认 15 分钟）。
 - 参见 [Web 工具](/tools/web) 了解设置。
@@ -318,7 +318,7 @@ IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具*
 - 底层使用 Gateway 网关 `node.invoke`。
 - 如果未提供 `node`，工具会选择默认值（单个连接的节点或本地 mac 节点）。
 - A2UI 仅限 v0.8（无 `createSurface`）；CLI 会拒绝 v0.9 JSONL 并显示行错误。
-- 快速冒烟测试：`IronCliw nodes canvas a2ui push --node <id> --text "Hello from A2UI"`。
+- 快速冒烟测试：`ironcliw nodes canvas a2ui push --node <id> --text "Hello from A2UI"`。
 
 ### `nodes`
 
@@ -420,7 +420,7 @@ IronCliw 为 browser、canvas、nodes 和 cron 暴露**一流的智能体工具*
 
 核心操作：
 
-- `restart`（授权 + 发送 `SIGUSR1` 进行进程内重启；`IronCliw gateway` 就地重启）
+- `restart`（授权 + 发送 `SIGUSR1` 进行进程内重启；`ironcliw gateway` 就地重启）
 - `config.get` / `config.schema`
 - `config.apply`（验证 + 写入配置 + 重启 + 唤醒）
 - `config.patch`（合并部分更新 + 重启 + 唤醒）

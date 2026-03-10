@@ -5,11 +5,11 @@ import { fileURLToPath } from "node:url";
 import { detectMime } from "../media/mime.js";
 import { resolveFileWithinRoot } from "./file-resolver.js";
 
-export const A2UI_PATH = "/__IronCliw__/a2ui";
+export const A2UI_PATH = "/__ironcliw__/a2ui";
 
-export const CANVAS_HOST_PATH = "/__IronCliw__/canvas";
+export const CANVAS_HOST_PATH = "/__ironcliw__/canvas";
 
-export const CANVAS_WS_PATH = "/__IronCliw__/ws";
+export const CANVAS_WS_PATH = "/__ironcliw__/ws";
 
 let cachedA2uiRootReal: string | null | undefined;
 let resolvingA2uiRoot: Promise<string | null> | null = null;
@@ -84,9 +84,9 @@ export function injectCanvasLiveReload(html: string): string {
 (() => {
   // Cross-platform action bridge helper.
   // Works on:
-  // - iOS: window.webkit.messageHandlers.IronCliwCanvasA2UIAction.postMessage(...)
-  // - Android: window.IronCliwCanvasA2UIAction.postMessage(...)
-  const handlerNames = ["IronCliwCanvasA2UIAction"];
+  // - iOS: window.webkit.messageHandlers.ironcliwCanvasA2UIAction.postMessage(...)
+  // - Android: window.ironcliwCanvasA2UIAction.postMessage(...)
+  const handlerNames = ["ironcliwCanvasA2UIAction"];
   function postToNode(payload) {
     try {
       const raw = typeof payload === "string" ? payload : JSON.stringify(payload);
@@ -116,8 +116,8 @@ export function injectCanvasLiveReload(html: string): string {
   globalThis.IronCliw = globalThis.IronCliw ?? {};
   globalThis.IronCliw.postMessage = postToNode;
   globalThis.IronCliw.sendUserAction = sendUserAction;
-  globalThis.IronCliwPostMessage = postToNode;
-  globalThis.IronCliwSendUserAction = sendUserAction;
+  globalThis.ironcliwPostMessage = postToNode;
+  globalThis.ironcliwSendUserAction = sendUserAction;
 
   try {
     const cap = new URLSearchParams(location.search).get("oc_cap");

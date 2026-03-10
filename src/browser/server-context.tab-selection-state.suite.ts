@@ -17,7 +17,7 @@ afterEach(() => {
 
 function seedRunningProfileState(
   state: ReturnType<typeof makeState>,
-  profileName = "IronCliw",
+  profileName = "ironcliw",
 ): void {
   (state.profiles as Map<string, unknown>).set(profileName, {
     profile: { name: profileName },
@@ -75,11 +75,11 @@ async function openManagedTabWithRunningProfile(params: {
   url?: string;
 }) {
   global.fetch = withFetchPreconnect(params.fetchMock);
-  const state = makeState("IronCliw");
+  const state = makeState("ironcliw");
   seedRunningProfileState(state);
   const ctx = createBrowserRouteContext({ getState: () => state });
-  const IronCliw = ctx.forProfile("IronCliw");
-  return await IronCliw.openTab(params.url ?? "http://127.0.0.1:3009");
+  const ironcliw = ctx.forProfile("ironcliw");
+  return await ironcliw.openTab(params.url ?? "http://127.0.0.1:3009");
 }
 
 describe("browser server-context tab selection state", () => {
@@ -108,13 +108,13 @@ describe("browser server-context tab selection state", () => {
     });
 
     global.fetch = withFetchPreconnect(fetchMock);
-    const state = makeState("IronCliw");
+    const state = makeState("ironcliw");
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const IronCliw = ctx.forProfile("IronCliw");
+    const ironcliw = ctx.forProfile("ironcliw");
 
-    const opened = await IronCliw.openTab("http://127.0.0.1:8080");
+    const opened = await ironcliw.openTab("http://127.0.0.1:8080");
     expect(opened.targetId).toBe("CREATED");
-    expect(state.profiles.get("IronCliw")?.lastTargetId).toBe("CREATED");
+    expect(state.profiles.get("ironcliw")?.lastTargetId).toBe("CREATED");
     expect(createTargetViaCdp).toHaveBeenCalledWith({
       cdpUrl: "http://127.0.0.1:18800",
       url: "http://127.0.0.1:8080",
@@ -174,12 +174,12 @@ describe("browser server-context tab selection state", () => {
     });
 
     global.fetch = withFetchPreconnect(fetchMock);
-    const state = makeState("IronCliw");
+    const state = makeState("ironcliw");
     seedRunningProfileState(state);
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const IronCliw = ctx.forProfile("IronCliw");
+    const ironcliw = ctx.forProfile("ironcliw");
 
-    const opened = await IronCliw.openTab("http://127.0.0.1:3009");
+    const opened = await ironcliw.openTab("http://127.0.0.1:3009");
     expect(opened.targetId).toBe("NEW");
   });
 
@@ -194,12 +194,12 @@ describe("browser server-context tab selection state", () => {
     });
 
     global.fetch = withFetchPreconnect(fetchMock);
-    const state = makeState("IronCliw");
+    const state = makeState("ironcliw");
     state.resolved.attachOnly = true;
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const IronCliw = ctx.forProfile("IronCliw");
+    const ironcliw = ctx.forProfile("ironcliw");
 
-    const opened = await IronCliw.openTab("http://127.0.0.1:3009");
+    const opened = await ironcliw.openTab("http://127.0.0.1:3009");
     expect(opened.targetId).toBe("NEW");
     expect(fetchMock).not.toHaveBeenCalledWith(
       expect.stringContaining("/json/close/"),
@@ -236,11 +236,11 @@ describe("browser server-context tab selection state", () => {
     });
 
     global.fetch = withFetchPreconnect(fetchMock);
-    const state = makeState("IronCliw");
+    const state = makeState("ironcliw");
     const ctx = createBrowserRouteContext({ getState: () => state });
-    const IronCliw = ctx.forProfile("IronCliw");
+    const ironcliw = ctx.forProfile("ironcliw");
 
-    await expect(IronCliw.openTab("file:///etc/passwd")).rejects.toBeInstanceOf(
+    await expect(ironcliw.openTab("file:///etc/passwd")).rejects.toBeInstanceOf(
       InvalidBrowserNavigationUrlError,
     );
     expect(fetchMock).not.toHaveBeenCalled();

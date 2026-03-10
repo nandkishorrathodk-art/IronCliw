@@ -30,7 +30,10 @@ function stubChannelPlugin(params: {
   id: "discord" | "slack" | "telegram";
   label: string;
   resolveAccount: (cfg: IronCliwConfig, accountId: string | null | undefined) => unknown;
+  inspectAccount?: (cfg: IronCliwConfig, accountId: string | null | undefined) => unknown;
   listAccountIds?: (cfg: IronCliwConfig) => string[];
+  isConfigured?: (account: unknown, cfg: IronCliwConfig) => boolean;
+  isEnabled?: (account: unknown, cfg: IronCliwConfig) => boolean;
 }): ChannelPlugin {
   return {
     id: params.id,
@@ -54,9 +57,10 @@ function stubChannelPlugin(params: {
           );
           return enabled ? ["default"] : [];
         }),
+      inspectAccount: params.inspectAccount,
       resolveAccount: (cfg, accountId) => params.resolveAccount(cfg, accountId),
-      isEnabled: () => true,
-      isConfigured: () => true,
+      isEnabled: (account, cfg) => params.isEnabled?.(account, cfg) ?? true,
+      isConfigured: (account, cfg) => params.isConfigured?.(account, cfg) ?? true,
     },
   };
 }
@@ -166,7 +170,7 @@ describe("security audit", () => {
     const tmp = await makeTmpDir(label);
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true, mode: 0o700 });
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     if (!isWindows) {
       await fs.chmod(configPath, 0o600);
@@ -178,7 +182,7 @@ describe("security audit", () => {
     const credentialsDir = path.join(sharedChannelSecurityStateDir, "credentials");
     await fs.rm(credentialsDir, { recursive: true, force: true }).catch(() => undefined);
     await fs.mkdir(credentialsDir, { recursive: true, mode: 0o700 });
-    await withEnvAsync({ IronCliw_STATE_DIR: sharedChannelSecurityStateDir }, () =>
+    await withEnvAsync({ IRONCLIW_STATE_DIR: sharedChannelSecurityStateDir }, () =>
       fn(sharedChannelSecurityStateDir),
     );
   };
@@ -194,7 +198,7 @@ describe("security audit", () => {
       path.join(pluginDir, "package.json"),
       JSON.stringify({
         name: "evil-plugin",
-        IronCliw: { extensions: [".hidden/index.js"] },
+        ironcliw: { extensions: [".hidden/index.js"] },
       }),
     );
     await fs.writeFile(
@@ -224,7 +228,7 @@ description: test skill
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-security-audit-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-security-audit-"));
     channelSecurityRoot = path.join(fixtureRoot, "channel-security");
     await fs.mkdir(channelSecurityRoot, { recursive: true, mode: 0o700 });
     sharedChannelSecurityStateDir = path.join(channelSecurityRoot, "state-shared");
@@ -272,10 +276,10 @@ description: test skill
 
   it("flags non-loopback bind without auth as critical", async () => {
     // Clear env tokens so resolveGatewayAuth defaults to mode=none
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    const prevPassword = process.env.IronCliw_GATEWAY_PASSWORD;
-    delete process.env.IronCliw_GATEWAY_TOKEN;
-    delete process.env.IronCliw_GATEWAY_PASSWORD;
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    const prevPassword = process.env.IRONCLIW_GATEWAY_PASSWORD;
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_PASSWORD;
 
     try {
       const cfg: IronCliwConfig = {
@@ -291,14 +295,14 @@ description: test skill
     } finally {
       // Restore env
       if (prevToken === undefined) {
-        delete process.env.IronCliw_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
       }
       if (prevPassword === undefined) {
-        delete process.env.IronCliw_GATEWAY_PASSWORD;
+        delete process.env.IRONCLIW_GATEWAY_PASSWORD;
       } else {
-        process.env.IronCliw_GATEWAY_PASSWORD = prevPassword;
+        process.env.IRONCLIW_GATEWAY_PASSWORD = prevPassword;
       }
     }
   });
@@ -311,7 +315,7 @@ description: test skill
           password: {
             source: "env",
             provider: "default",
-            id: "IronCliw_GATEWAY_PASSWORD",
+            id: "IRONCLIW_GATEWAY_PASSWORD",
           },
         },
       },
@@ -542,7 +546,7 @@ description: test skill
     const riskyGlobalTrustedDirs =
       process.platform === "win32"
         ? [String.raw`C:\Users\ci-user\bin`, String.raw`C:\Users\ci-user\.local\bin`]
-        : ["/usr/local/bin", "/tmp/IronCliw-safe-bins"];
+        : ["/usr/local/bin", "/tmp/ironcliw-safe-bins"];
     const cfg: IronCliwConfig = {
       tools: {
         exec: {
@@ -642,7 +646,7 @@ description: test skill
     const tmp = await makeTmpDir("win");
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
 
     const user = "DESKTOP-TEST\\Tester";
@@ -680,7 +684,7 @@ description: test skill
     const tmp = await makeTmpDir("win-open");
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true });
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
 
     const user = "DESKTOP-TEST\\Tester";
@@ -723,19 +727,19 @@ description: test skill
     const execDockerRawFn = (async (args: string[]) => {
       if (args[0] === "ps") {
         return {
-          stdout: Buffer.from("IronCliw-sbx-browser-old\nIronCliw-sbx-browser-missing-hash\n"),
+          stdout: Buffer.from("ironcliw-sbx-browser-old\nironcliw-sbx-browser-missing-hash\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-old") {
+      if (args[0] === "inspect" && args.at(-1) === "ironcliw-sbx-browser-old") {
         return {
           stdout: Buffer.from("abc123\tepoch-v0\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-missing-hash") {
+      if (args[0] === "inspect" && args.at(-1) === "ironcliw-sbx-browser-missing-hash") {
         return {
           stdout: Buffer.from("<no value>\t<no value>\n"),
           stderr: Buffer.alloc(0),
@@ -763,7 +767,7 @@ description: test skill
     const staleEpoch = res.findings.find(
       (f) => f.checkId === "sandbox.browser_container.hash_epoch_stale",
     );
-    expect(staleEpoch?.detail).toContain("IronCliw-sbx-browser-old");
+    expect(staleEpoch?.detail).toContain("ironcliw-sbx-browser-old");
   });
 
   it("skips sandbox browser hash label checks when docker inspect is unavailable", async () => {
@@ -794,19 +798,19 @@ description: test skill
     const execDockerRawFn = (async (args: string[]) => {
       if (args[0] === "ps") {
         return {
-          stdout: Buffer.from("IronCliw-sbx-browser-exposed\n"),
+          stdout: Buffer.from("ironcliw-sbx-browser-exposed\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "inspect" && args.at(-1) === "IronCliw-sbx-browser-exposed") {
+      if (args[0] === "inspect" && args.at(-1) === "ironcliw-sbx-browser-exposed") {
         return {
           stdout: Buffer.from("hash123\t2026-02-21-novnc-auth-default\n"),
           stderr: Buffer.alloc(0),
           code: 0,
         };
       }
-      if (args[0] === "port" && args.at(-1) === "IronCliw-sbx-browser-exposed") {
+      if (args[0] === "port" && args.at(-1) === "ironcliw-sbx-browser-exposed") {
         return {
           stdout: Buffer.from("6080/tcp -> 0.0.0.0:49101\n9222/tcp -> 127.0.0.1:49100\n"),
           stderr: Buffer.alloc(0),
@@ -843,11 +847,11 @@ description: test skill
     const stateDir = path.join(tmp, "state");
     await fs.mkdir(stateDir, { recursive: true, mode: 0o700 });
 
-    const targetConfigPath = path.join(tmp, "managed-IronCliw.json");
+    const targetConfigPath = path.join(tmp, "managed-ironcliw.json");
     await fs.writeFile(targetConfigPath, "{}\n", "utf-8");
     await fs.chmod(targetConfigPath, 0o444);
 
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.symlink(targetConfigPath, configPath);
 
     const res = await runSecurityAudit({
@@ -884,7 +888,7 @@ description: test skill
     await fs.writeFile(outsideSkillPath, "# outside\n", "utf-8");
     await fs.symlink(outsideSkillPath, path.join(workspaceDir, "skills", "leak", "SKILL.md"));
 
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     await fs.chmod(configPath, 0o600);
 
@@ -914,7 +918,7 @@ description: test skill
       "utf-8",
     );
 
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, "{}\n", "utf-8");
     if (!isWindows) {
       await fs.chmod(configPath, 0o600);
@@ -1326,7 +1330,7 @@ description: test skill
           password: {
             source: "env",
             provider: "default",
-            id: "IronCliw_GATEWAY_PASSWORD",
+            id: "IRONCLIW_GATEWAY_PASSWORD",
           },
         },
       },
@@ -1486,7 +1490,7 @@ description: test skill
       channels: {
         feishu: {
           appId: "cli_test",
-          appSecret: "secret_test",
+          appSecret: "secret_test", // pragma: allowlist secret
         },
       },
     };
@@ -1518,7 +1522,7 @@ description: test skill
       channels: {
         feishu: {
           appId: "cli_test",
-          appSecret: "secret_test",
+          appSecret: "secret_test", // pragma: allowlist secret
           tools: { doc: false },
         },
       },
@@ -1837,6 +1841,247 @@ description: test skill
     });
   });
 
+  it("keeps channel security findings when SecretRef credentials are configured but unavailable", async () => {
+    await withChannelSecurityStateDir(async () => {
+      const sourceConfig: IronCliwConfig = {
+        channels: {
+          discord: {
+            enabled: true,
+            token: { source: "env", provider: "default", id: "DISCORD_BOT_TOKEN" },
+            groupPolicy: "allowlist",
+            guilds: {
+              "123": {
+                channels: {
+                  general: { allow: true },
+                },
+              },
+            },
+          },
+        },
+      };
+      const resolvedConfig: IronCliwConfig = {
+        channels: {
+          discord: {
+            enabled: true,
+            groupPolicy: "allowlist",
+            guilds: {
+              "123": {
+                channels: {
+                  general: { allow: true },
+                },
+              },
+            },
+          },
+        },
+      };
+
+      const inspectableDiscordPlugin = stubChannelPlugin({
+        id: "discord",
+        label: "Discord",
+        inspectAccount: (cfg) => {
+          const channel = cfg.channels?.discord ?? {};
+          const token = channel.token;
+          return {
+            accountId: "default",
+            enabled: true,
+            configured:
+              Boolean(token) &&
+              typeof token === "object" &&
+              !Array.isArray(token) &&
+              "source" in token,
+            token: "",
+            tokenSource:
+              Boolean(token) &&
+              typeof token === "object" &&
+              !Array.isArray(token) &&
+              "source" in token
+                ? "config"
+                : "none",
+            tokenStatus:
+              Boolean(token) &&
+              typeof token === "object" &&
+              !Array.isArray(token) &&
+              "source" in token
+                ? "configured_unavailable"
+                : "missing",
+            config: channel,
+          };
+        },
+        resolveAccount: (cfg) => ({ config: cfg.channels?.discord ?? {} }),
+        isConfigured: (account) => Boolean((account as { configured?: boolean }).configured),
+      });
+
+      const res = await runSecurityAudit({
+        config: resolvedConfig,
+        sourceConfig,
+        includeFilesystem: false,
+        includeChannelSecurity: true,
+        plugins: [inspectableDiscordPlugin],
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.discord.commands.native.no_allowlists",
+            severity: "warn",
+          }),
+        ]),
+      );
+    });
+  });
+
+  it("keeps Slack HTTP slash-command findings when resolved inspection only exposes signingSecret status", async () => {
+    await withChannelSecurityStateDir(async () => {
+      const sourceConfig: IronCliwConfig = {
+        channels: {
+          slack: {
+            enabled: true,
+            mode: "http",
+            groupPolicy: "open",
+            slashCommand: { enabled: true },
+          },
+        },
+      };
+      const resolvedConfig: IronCliwConfig = {
+        channels: {
+          slack: {
+            enabled: true,
+            mode: "http",
+            groupPolicy: "open",
+            slashCommand: { enabled: true },
+          },
+        },
+      };
+
+      const inspectableSlackPlugin = stubChannelPlugin({
+        id: "slack",
+        label: "Slack",
+        inspectAccount: (cfg) => {
+          const channel = cfg.channels?.slack ?? {};
+          if (cfg === sourceConfig) {
+            return {
+              accountId: "default",
+              enabled: false,
+              configured: true,
+              mode: "http",
+              botTokenSource: "config",
+              botTokenStatus: "configured_unavailable",
+              signingSecretSource: "config", // pragma: allowlist secret
+              signingSecretStatus: "configured_unavailable", // pragma: allowlist secret
+              config: channel,
+            };
+          }
+          return {
+            accountId: "default",
+            enabled: true,
+            configured: true,
+            mode: "http",
+            botTokenSource: "config",
+            botTokenStatus: "available",
+            signingSecretSource: "config", // pragma: allowlist secret
+            signingSecretStatus: "available", // pragma: allowlist secret
+            config: channel,
+          };
+        },
+        resolveAccount: (cfg) => ({ config: cfg.channels?.slack ?? {} }),
+        isConfigured: (account) => Boolean((account as { configured?: boolean }).configured),
+      });
+
+      const res = await runSecurityAudit({
+        config: resolvedConfig,
+        sourceConfig,
+        includeFilesystem: false,
+        includeChannelSecurity: true,
+        plugins: [inspectableSlackPlugin],
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.slack.commands.slash.no_allowlists",
+            severity: "warn",
+          }),
+        ]),
+      );
+    });
+  });
+
+  it("keeps source-configured Slack HTTP findings when resolved inspection is unconfigured", async () => {
+    await withChannelSecurityStateDir(async () => {
+      const sourceConfig: IronCliwConfig = {
+        channels: {
+          slack: {
+            enabled: true,
+            mode: "http",
+            groupPolicy: "open",
+            slashCommand: { enabled: true },
+          },
+        },
+      };
+      const resolvedConfig: IronCliwConfig = {
+        channels: {
+          slack: {
+            enabled: true,
+            mode: "http",
+            groupPolicy: "open",
+            slashCommand: { enabled: true },
+          },
+        },
+      };
+
+      const inspectableSlackPlugin = stubChannelPlugin({
+        id: "slack",
+        label: "Slack",
+        inspectAccount: (cfg) => {
+          const channel = cfg.channels?.slack ?? {};
+          if (cfg === sourceConfig) {
+            return {
+              accountId: "default",
+              enabled: true,
+              configured: true,
+              mode: "http",
+              botTokenSource: "config",
+              botTokenStatus: "configured_unavailable",
+              signingSecretSource: "config", // pragma: allowlist secret
+              signingSecretStatus: "configured_unavailable", // pragma: allowlist secret
+              config: channel,
+            };
+          }
+          return {
+            accountId: "default",
+            enabled: true,
+            configured: false,
+            mode: "http",
+            botTokenSource: "config",
+            botTokenStatus: "available",
+            signingSecretSource: "config", // pragma: allowlist secret
+            signingSecretStatus: "missing", // pragma: allowlist secret
+            config: channel,
+          };
+        },
+        resolveAccount: (cfg) => ({ config: cfg.channels?.slack ?? {} }),
+        isConfigured: (account) => Boolean((account as { configured?: boolean }).configured),
+      });
+
+      const res = await runSecurityAudit({
+        config: resolvedConfig,
+        sourceConfig,
+        includeFilesystem: false,
+        includeChannelSecurity: true,
+        plugins: [inspectableSlackPlugin],
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.slack.commands.slash.no_allowlists",
+            severity: "warn",
+          }),
+        ]),
+      );
+    });
+  });
+
   it("does not flag Discord slash commands when dm.allowFrom includes a Discord snowflake id", async () => {
     await withChannelSecurityStateDir(async () => {
       const cfg: IronCliwConfig = {
@@ -1918,7 +2163,7 @@ description: test skill
         "channels.discord.guilds.123.channels.general.users:security-team",
       );
       expect(finding?.detail).toContain(
-        "~/.IronCliw/credentials/discord-allowFrom.json:team.owner",
+        "~/.ironcliw/credentials/discord-allowFrom.json:team.owner",
       );
       expect(finding?.detail).not.toContain("<@123456789012345678>");
     });
@@ -1995,6 +2240,51 @@ description: test skill
           }),
         ]),
       );
+    });
+  });
+
+  it("does not treat prototype properties as explicit Discord account config paths", async () => {
+    await withChannelSecurityStateDir(async () => {
+      const cfg: IronCliwConfig = {
+        channels: {
+          discord: {
+            enabled: true,
+            token: "t",
+            dangerouslyAllowNameMatching: true,
+            allowFrom: ["Alice#1234"],
+            accounts: {},
+          },
+        },
+      };
+
+      const pluginWithProtoDefaultAccount: ChannelPlugin = {
+        ...discordPlugin,
+        config: {
+          ...discordPlugin.config,
+          listAccountIds: () => [],
+          defaultAccountId: () => "toString",
+        },
+      };
+
+      const res = await runSecurityAudit({
+        config: cfg,
+        includeFilesystem: false,
+        includeChannelSecurity: true,
+        plugins: [pluginWithProtoDefaultAccount],
+      });
+
+      const dangerousMatchingFinding = res.findings.find(
+        (entry) => entry.checkId === "channels.discord.allowFrom.dangerous_name_matching_enabled",
+      );
+      expect(dangerousMatchingFinding).toBeDefined();
+      expect(dangerousMatchingFinding?.title).not.toContain("(account: toString)");
+
+      const nameBasedFinding = res.findings.find(
+        (entry) => entry.checkId === "channels.discord.allowFrom.name_based_entries",
+      );
+      expect(nameBasedFinding).toBeDefined();
+      expect(nameBasedFinding?.detail).toContain("channels.discord.allowFrom:Alice#1234");
+      expect(nameBasedFinding?.detail).not.toContain("channels.discord.accounts.toString");
     });
   });
 
@@ -2338,8 +2628,8 @@ description: test skill
   });
 
   it("flags hooks token reuse of the gateway env token as critical", async () => {
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "shared-gateway-token-1234567890";
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "shared-gateway-token-1234567890";
     const cfg: IronCliwConfig = {
       hooks: { enabled: true, token: "shared-gateway-token-1234567890" },
     };
@@ -2349,9 +2639,9 @@ description: test skill
       expectFinding(res, "hooks.token_reuse_gateway_token", "critical");
     } finally {
       if (prevToken === undefined) {
-        delete process.env.IronCliw_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
       }
     }
   });
@@ -2490,8 +2780,8 @@ description: test skill
     const cfg: IronCliwConfig = {};
 
     const res = await audit(cfg, {
-      stateDir: "/Users/test/Dropbox/.IronCliw",
-      configPath: "/Users/test/Dropbox/.IronCliw/IronCliw.json",
+      stateDir: "/Users/test/Dropbox/.ironcliw",
+      configPath: "/Users/test/Dropbox/.ironcliw/ironcliw.json",
     });
 
     expectFinding(res, "fs.synced_dir", "warn");
@@ -2512,7 +2802,7 @@ description: test skill
       await fs.chmod(includePath, 0o644);
     }
 
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     await fs.writeFile(configPath, `{ "$include": "./extra.json5" }\n`, "utf-8");
     await fs.chmod(configPath, 0o600);
 
@@ -2576,7 +2866,7 @@ description: test skill
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "IronCliw.json"),
+        configPath: path.join(stateDir, "ironcliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2615,7 +2905,7 @@ description: test skill
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@IronCliw/voice-call",
+            spec: "@ironcliw/voice-call",
           },
         },
       },
@@ -2624,7 +2914,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@IronCliw/test-hooks",
+              spec: "@ironcliw/test-hooks",
             },
           },
         },
@@ -2636,7 +2926,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir: sharedInstallMetadataStateDir,
-      configPath: path.join(sharedInstallMetadataStateDir, "IronCliw.json"),
+      configPath: path.join(sharedInstallMetadataStateDir, "ironcliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2652,7 +2942,7 @@ description: test skill
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@IronCliw/voice-call@1.2.3",
+            spec: "@ironcliw/voice-call@1.2.3",
             integrity: "sha512-plugin",
           },
         },
@@ -2662,7 +2952,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@IronCliw/test-hooks@1.2.3",
+              spec: "@ironcliw/test-hooks@1.2.3",
               integrity: "sha512-hook",
             },
           },
@@ -2675,7 +2965,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir: sharedInstallMetadataStateDir,
-      configPath: path.join(sharedInstallMetadataStateDir, "IronCliw.json"),
+      configPath: path.join(sharedInstallMetadataStateDir, "ironcliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2694,12 +2984,12 @@ description: test skill
     await fs.mkdir(hookDir, { recursive: true });
     await fs.writeFile(
       path.join(pluginDir, "package.json"),
-      JSON.stringify({ name: "@IronCliw/voice-call", version: "9.9.9" }),
+      JSON.stringify({ name: "@ironcliw/voice-call", version: "9.9.9" }),
       "utf-8",
     );
     await fs.writeFile(
       path.join(hookDir, "package.json"),
-      JSON.stringify({ name: "@IronCliw/test-hooks", version: "8.8.8" }),
+      JSON.stringify({ name: "@ironcliw/test-hooks", version: "8.8.8" }),
       "utf-8",
     );
 
@@ -2708,7 +2998,7 @@ description: test skill
         installs: {
           "voice-call": {
             source: "npm",
-            spec: "@IronCliw/voice-call@1.2.3",
+            spec: "@ironcliw/voice-call@1.2.3",
             integrity: "sha512-plugin",
             resolvedVersion: "1.2.3",
           },
@@ -2719,7 +3009,7 @@ description: test skill
           installs: {
             "test-hooks": {
               source: "npm",
-              spec: "@IronCliw/test-hooks@1.2.3",
+              spec: "@ironcliw/test-hooks@1.2.3",
               integrity: "sha512-hook",
               resolvedVersion: "1.2.3",
             },
@@ -2733,7 +3023,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "IronCliw.json"),
+      configPath: path.join(stateDir, "ironcliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2752,7 +3042,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "IronCliw.json"),
+      configPath: path.join(stateDir, "ironcliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2778,7 +3068,7 @@ description: test skill
       includeFilesystem: true,
       includeChannelSecurity: false,
       stateDir,
-      configPath: path.join(stateDir, "IronCliw.json"),
+      configPath: path.join(stateDir, "ironcliw.json"),
       execDockerRawFn: execDockerRawUnavailable,
     });
 
@@ -2803,7 +3093,7 @@ description: test skill
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "IronCliw.json"),
+        configPath: path.join(stateDir, "ironcliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2847,7 +3137,7 @@ description: test skill
         includeFilesystem: true,
         includeChannelSecurity: false,
         stateDir,
-        configPath: path.join(stateDir, "IronCliw.json"),
+        configPath: path.join(stateDir, "ironcliw.json"),
         execDockerRawFn: execDockerRawUnavailable,
       });
 
@@ -2915,7 +3205,7 @@ description: test skill
       path.join(pluginDir, "package.json"),
       JSON.stringify({
         name: "escape-plugin",
-        IronCliw: { extensions: ["../outside.js"] },
+        ironcliw: { extensions: ["../outside.js"] },
       }),
     );
     await fs.writeFile(path.join(pluginDir, "index.js"), "export {};");
@@ -2937,7 +3227,7 @@ description: test skill
         path.join(pluginDir, "package.json"),
         JSON.stringify({
           name: "scanfail-plugin",
-          IronCliw: { extensions: ["index.js"] },
+          ironcliw: { extensions: ["index.js"] },
         }),
       );
       await fs.writeFile(path.join(pluginDir, "index.js"), "export {};");
@@ -3087,10 +3377,10 @@ description: test skill
     const makeProbeEnv = (env?: { token?: string; password?: string }) => {
       const probeEnv: NodeJS.ProcessEnv = {};
       if (env?.token !== undefined) {
-        probeEnv.IronCliw_GATEWAY_TOKEN = env.token;
+        probeEnv.IRONCLIW_GATEWAY_TOKEN = env.token;
       }
       if (env?.password !== undefined) {
-        probeEnv.IronCliw_GATEWAY_PASSWORD = env.password;
+        probeEnv.IRONCLIW_GATEWAY_PASSWORD = env.password;
       }
       return probeEnv;
     };
@@ -3210,6 +3500,36 @@ description: test skill
           expect(getAuth()?.password, testCase.name).toBe(testCase.expectedPassword);
         }),
       );
+    });
+
+    it("adds warning finding when probe auth SecretRef is unavailable", async () => {
+      const cfg: IronCliwConfig = {
+        gateway: {
+          mode: "local",
+          auth: {
+            mode: "token",
+            token: { source: "env", provider: "default", id: "MISSING_GATEWAY_TOKEN" },
+          },
+        },
+        secrets: {
+          providers: {
+            default: { source: "env" },
+          },
+        },
+      };
+
+      const res = await audit(cfg, {
+        deep: true,
+        deepTimeoutMs: 50,
+        probeGatewayFn: async (opts) => successfulProbeResult(opts.url),
+        env: {},
+      });
+
+      const warning = res.findings.find(
+        (finding) => finding.checkId === "gateway.probe_auth_secretref_unavailable",
+      );
+      expect(warning?.severity).toBe("warn");
+      expect(warning?.detail).toContain("gateway.auth.token");
     });
   });
 });

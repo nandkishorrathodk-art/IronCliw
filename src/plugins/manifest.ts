@@ -1,11 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
+import { MANIFEST_KEY } from "../compat/legacy-names.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { isRecord } from "../utils.js";
 import type { PluginConfigUiHint, PluginKind } from "./types.js";
 
-export const PLUGIN_MANIFEST_FILENAME = "IronCliw.plugin.json";
+export const PLUGIN_MANIFEST_FILENAME = "ironcliw.plugin.json";
 export const PLUGIN_MANIFEST_FILENAMES = [PLUGIN_MANIFEST_FILENAME] as const;
 
 export type PluginManifest = {
@@ -118,7 +118,7 @@ export function loadPluginManifest(
   };
 }
 
-// package.json "IronCliw" metadata (used for onboarding/catalog)
+// package.json "ironcliw" metadata (used for onboarding/catalog)
 export type PluginPackageChannel = {
   id?: string;
   label?: string;
@@ -178,14 +178,7 @@ export function getPackageManifestMetadata(
   if (!manifest) {
     return undefined;
   }
-  const keys = [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS];
-  for (const key of keys) {
-    const section = manifest[key as ManifestKey];
-    if (section && typeof section === "object") {
-      return section;
-    }
-  }
-  return undefined;
+  return manifest[MANIFEST_KEY];
 }
 
 export function resolvePackageExtensionEntries(

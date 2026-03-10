@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-IronCliw cron status
-IronCliw cron list
-IronCliw system heartbeat last
+ironcliw cron status
+ironcliw cron list
+ironcliw system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-IronCliw cron status
-IronCliw cron list
-IronCliw cron runs --id <jobId> --limit 20
-IronCliw logs --follow
+ironcliw cron status
+ironcliw cron list
+ironcliw cron runs --id <jobId> --limit 20
+ironcliw logs --follow
 ```
 
 Good output looks like:
@@ -53,10 +53,10 @@ Common signatures:
 ## Cron fired but no delivery
 
 ```bash
-IronCliw cron runs --id <jobId> --limit 20
-IronCliw cron list
-IronCliw channels status --probe
-IronCliw logs --follow
+ironcliw cron runs --id <jobId> --limit 20
+ironcliw cron list
+ironcliw channels status --probe
+ironcliw logs --follow
 ```
 
 Good output looks like:
@@ -74,10 +74,10 @@ Common signatures:
 ## Heartbeat suppressed or skipped
 
 ```bash
-IronCliw system heartbeat last
-IronCliw logs --follow
-IronCliw config get agents.defaults.heartbeat
-IronCliw channels status --probe
+ironcliw system heartbeat last
+ironcliw logs --follow
+ironcliw config get agents.defaults.heartbeat
+ironcliw channels status --probe
 ```
 
 Good output looks like:
@@ -95,11 +95,11 @@ Common signatures:
 ## Timezone and activeHours gotchas
 
 ```bash
-IronCliw config get agents.defaults.heartbeat.activeHours
-IronCliw config get agents.defaults.heartbeat.activeHours.timezone
-IronCliw config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-IronCliw cron list
-IronCliw logs --follow
+ironcliw config get agents.defaults.heartbeat.activeHours
+ironcliw config get agents.defaults.heartbeat.activeHours.timezone
+ironcliw config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+ironcliw cron list
+ironcliw logs --follow
 ```
 
 Quick rules:

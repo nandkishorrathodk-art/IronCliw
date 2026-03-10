@@ -38,7 +38,7 @@ function handleNonVersionRequest(req: IncomingMessage, res: ServerResponse): boo
 async function probeRelay(baseUrl: string, relayAuthToken: string): Promise<boolean> {
   return await probeAuthenticatedIronCliwRelay({
     baseUrl,
-    relayAuthHeader: "x-IronCliw-relay-token",
+    relayAuthHeader: "x-ironcliw-relay-token",
     relayAuthToken,
   });
 }
@@ -48,48 +48,48 @@ describe("extension-relay-auth", () => {
   let prevGatewayToken: string | undefined;
 
   beforeEach(() => {
-    prevGatewayToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = TEST_GATEWAY_TOKEN;
+    prevGatewayToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = TEST_GATEWAY_TOKEN;
   });
 
   afterEach(() => {
     if (prevGatewayToken === undefined) {
-      delete process.env.IronCliw_GATEWAY_TOKEN;
+      delete process.env.IRONCLIW_GATEWAY_TOKEN;
     } else {
-      process.env.IronCliw_GATEWAY_TOKEN = prevGatewayToken;
+      process.env.IRONCLIW_GATEWAY_TOKEN = prevGatewayToken;
     }
   });
 
-  it("derives deterministic relay tokens per port", () => {
-    const tokenA1 = resolveRelayAuthTokenForPort(18790);
-    const tokenA2 = resolveRelayAuthTokenForPort(18790);
-    const tokenB = resolveRelayAuthTokenForPort(18791);
+  it("derives deterministic relay tokens per port", async () => {
+    const tokenA1 = await resolveRelayAuthTokenForPort(18790);
+    const tokenA2 = await resolveRelayAuthTokenForPort(18790);
+    const tokenB = await resolveRelayAuthTokenForPort(18791);
     expect(tokenA1).toBe(tokenA2);
     expect(tokenA1).not.toBe(tokenB);
     expect(tokenA1).not.toBe(TEST_GATEWAY_TOKEN);
   });
 
-  it("accepts both relay-scoped and raw gateway tokens for compatibility", () => {
-    const tokens = resolveRelayAcceptedTokensForPort(18790);
+  it("accepts both relay-scoped and raw gateway tokens for compatibility", async () => {
+    const tokens = await resolveRelayAcceptedTokensForPort(18790);
     expect(tokens).toContain(TEST_GATEWAY_TOKEN);
     expect(tokens[0]).not.toBe(TEST_GATEWAY_TOKEN);
-    expect(tokens[0]).toBe(resolveRelayAuthTokenForPort(18790));
+    expect(tokens[0]).toBe(await resolveRelayAuthTokenForPort(18790));
   });
 
-  it("accepts authenticated IronCliw relay probe responses", async () => {
+  it("accepts authenticated ironcliw relay probe responses", async () => {
     let seenToken: string | undefined;
     await withRelayServer(
       (req, res) => {
         if (handleNonVersionRequest(req, res)) {
           return;
         }
-        const header = req.headers["x-IronCliw-relay-token"];
+        const header = req.headers["x-ironcliw-relay-token"];
         seenToken = Array.isArray(header) ? header[0] : header;
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ Browser: "IronCliw/extension-relay" }));
       },
       async ({ port }) => {
-        const token = resolveRelayAuthTokenForPort(port);
+        const token = await resolveRelayAuthTokenForPort(port);
         const ok = await probeRelay(`http://127.0.0.1:${port}`, token);
         expect(ok).toBe(true);
         expect(seenToken).toBe(token);

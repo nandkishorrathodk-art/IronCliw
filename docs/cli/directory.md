@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw directory` (self, peers, groups)"
+summary: "CLI reference for `ironcliw directory` (self, peers, groups)"
 read_when:
   - You want to look up contacts/groups/self ids for a channel
   - You are developing a channel directory adapter
 title: "directory"
 ---
 
-# `IronCliw directory`
+# `ironcliw directory`
 
 Directory lookups for channels that support it (contacts/peers, groups, and “me”).
 
@@ -18,15 +18,15 @@ Directory lookups for channels that support it (contacts/peers, groups, and “m
 
 ## Notes
 
-- `directory` is meant to help you find IDs you can paste into other commands (especially `IronCliw message send --target ...`).
+- `directory` is meant to help you find IDs you can paste into other commands (especially `ironcliw message send --target ...`).
 - For many channels, results are config-backed (allowlists / configured groups) rather than a live provider directory.
 - Default output is `id` (and sometimes `name`) separated by a tab; use `--json` for scripting.
 
 ## Using results with `message send`
 
 ```bash
-IronCliw directory peers list --channel slack --query "U0"
-IronCliw message send --channel slack --target user:U012ABCDEF --message "hello"
+ironcliw directory peers list --channel slack --query "U0"
+ironcliw message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID formats (by channel)
@@ -43,21 +43,21 @@ IronCliw message send --channel slack --target user:U012ABCDEF --message "hello"
 ## Self (“me”)
 
 ```bash
-IronCliw directory self --channel zalouser
+ironcliw directory self --channel zalouser
 ```
 
 ## Peers (contacts/users)
 
 ```bash
-IronCliw directory peers list --channel zalouser
-IronCliw directory peers list --channel zalouser --query "name"
-IronCliw directory peers list --channel zalouser --limit 50
+ironcliw directory peers list --channel zalouser
+ironcliw directory peers list --channel zalouser --query "name"
+ironcliw directory peers list --channel zalouser --limit 50
 ```
 
 ## Groups
 
 ```bash
-IronCliw directory groups list --channel zalouser
-IronCliw directory groups list --channel zalouser --query "work"
-IronCliw directory groups members --channel zalouser --group-id <id>
+ironcliw directory groups list --channel zalouser
+ironcliw directory groups list --channel zalouser --query "work"
+ironcliw directory groups members --channel zalouser --group-id <id>
 ```

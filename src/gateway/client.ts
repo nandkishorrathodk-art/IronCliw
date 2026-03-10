@@ -21,6 +21,7 @@ import {
   type GatewayClientMode,
   type GatewayClientName,
 } from "../utils/message-channel.js";
+import { VERSION } from "../version.js";
 import { buildDeviceAuthPayloadV3 } from "./device-auth.js";
 import { isSecureWebSocketUrl } from "./net.js";
 import {
@@ -114,7 +115,7 @@ export class GatewayClient {
       return;
     }
 
-    const allowPrivateWs = process.env.IronCliw_ALLOW_INSECURE_PRIVATE_WS === "1";
+    const allowPrivateWs = process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS === "1";
     // Security check: block ALL plaintext ws:// to non-loopback addresses (CWE-319, CVSS 9.8)
     // This protects both credentials AND chat/conversation data from MITM attacks.
     // Device tokens may be loaded later in sendConnect(), so we block regardless of hasCredentials.
@@ -133,8 +134,8 @@ export class GatewayClient {
           "(ssh -N -L 18789:127.0.0.1:18789 user@gateway-host), or use Tailscale Serve/Funnel. " +
           (allowPrivateWs
             ? ""
-            : "Break-glass (trusted private networks only): set IronCliw_ALLOW_INSECURE_PRIVATE_WS=1. ") +
-          "Run `IronCliw doctor --fix` for guidance.",
+            : "Break-glass (trusted private networks only): set IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1. ") +
+          "Run `ironcliw doctor --fix` for guidance.",
       );
       this.opts.onConnectError?.(error);
       return;
@@ -253,9 +254,12 @@ export class GatewayClient {
       ? loadDeviceAuthToken({ deviceId: this.opts.deviceIdentity.deviceId, role })?.token
       : null;
     // Keep shared gateway credentials explicit. Persisted per-device tokens only
-    // participate when no explicit shared token is provided.
+    // participate when no explicit shared token/password is provided.
     const resolvedDeviceToken =
-      explicitDeviceToken ?? (!explicitGatewayToken ? (storedToken ?? undefined) : undefined);
+      explicitDeviceToken ??
+      (!(explicitGatewayToken || this.opts.password?.trim())
+        ? (storedToken ?? undefined)
+        : undefined);
     // Legacy compatibility: keep `auth.token` populated for device-token auth when
     // no explicit shared token is present.
     const authToken = explicitGatewayToken ?? resolvedDeviceToken;
@@ -302,7 +306,7 @@ export class GatewayClient {
       client: {
         id: this.opts.clientName ?? GATEWAY_CLIENT_NAMES.GATEWAY_CLIENT,
         displayName: this.opts.clientDisplayName,
-        version: this.opts.clientVersion ?? "dev",
+        version: this.opts.clientVersion ?? VERSION,
         platform,
         deviceFamily: this.opts.deviceFamily,
         mode: this.opts.mode ?? GATEWAY_CLIENT_MODES.BACKEND,

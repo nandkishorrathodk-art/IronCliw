@@ -36,7 +36,7 @@ const DYNAMIC_ARCHIVE_TEMPLATE_PRESETS = [
     packageJson: {
       name: "@evil/..",
       version: "0.0.1",
-      IronCliw: { extensions: ["./dist/index.js"] },
+      ironcliw: { extensions: ["./dist/index.js"] },
     } as Record<string, unknown>,
   },
   {
@@ -45,14 +45,14 @@ const DYNAMIC_ARCHIVE_TEMPLATE_PRESETS = [
     packageJson: {
       name: "@evil/.",
       version: "0.0.1",
-      IronCliw: { extensions: ["./dist/index.js"] },
+      ironcliw: { extensions: ["./dist/index.js"] },
     } as Record<string, unknown>,
   },
   {
     outName: "bad.tgz",
     withDistIndex: false,
     packageJson: {
-      name: "@IronCliw/nope",
+      name: "@ironcliw/nope",
       version: "0.0.1",
     } as Record<string, unknown>,
   },
@@ -62,7 +62,7 @@ function ensureSuiteTempRoot() {
   if (suiteTempRoot) {
     return suiteTempRoot;
   }
-  suiteTempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-plugin-install-"));
+  suiteTempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-plugin-install-"));
   return suiteTempRoot;
 }
 
@@ -221,7 +221,7 @@ function setupManifestInstallFixture(params: { manifestId: string }) {
   fs.mkdirSync(stateDir, { recursive: true });
   fs.cpSync(manifestInstallTemplateDir, pluginDir, { recursive: true });
   fs.writeFileSync(
-    path.join(pluginDir, "IronCliw.plugin.json"),
+    path.join(pluginDir, "ironcliw.plugin.json"),
     JSON.stringify({
       id: params.manifestId,
       configSchema: { type: "object", properties: {} },
@@ -239,7 +239,7 @@ async function expectArchiveInstallReservedSegmentRejection(params: {
     packageJson: {
       name: params.packageName,
       version: "0.0.1",
-      IronCliw: { extensions: ["./dist/index.js"] },
+      ironcliw: { extensions: ["./dist/index.js"] },
     },
     outName: params.outName,
     withDistIndex: true,
@@ -342,9 +342,9 @@ beforeAll(async () => {
   fs.writeFileSync(
     path.join(installPluginFromDirTemplateDir, "package.json"),
     JSON.stringify({
-      name: "@IronCliw/test-plugin",
+      name: "@ironcliw/test-plugin",
       version: "0.0.1",
-      IronCliw: { extensions: ["./dist/index.js"] },
+      ironcliw: { extensions: ["./dist/index.js"] },
       dependencies: { "left-pad": "1.3.0" },
     }),
     "utf-8",
@@ -360,9 +360,9 @@ beforeAll(async () => {
   fs.writeFileSync(
     path.join(manifestInstallTemplateDir, "package.json"),
     JSON.stringify({
-      name: "@IronCliw/cognee-IronCliw",
+      name: "@ironcliw/cognee-ironcliw",
       version: "0.0.1",
-      IronCliw: { extensions: ["./dist/index.js"] },
+      ironcliw: { extensions: ["./dist/index.js"] },
     }),
     "utf-8",
   );
@@ -372,7 +372,7 @@ beforeAll(async () => {
     "utf-8",
   );
   fs.writeFileSync(
-    path.join(manifestInstallTemplateDir, "IronCliw.plugin.json"),
+    path.join(manifestInstallTemplateDir, "ironcliw.plugin.json"),
     JSON.stringify({
       id: "manifest-template",
       configSchema: { type: "object", properties: {} },
@@ -394,7 +394,7 @@ beforeEach(() => {
 });
 
 describe("installPluginFromArchive", () => {
-  it("installs into ~/.IronCliw/extensions and uses unscoped id", async () => {
+  it("installs into ~/.ironcliw/extensions and uses unscoped id", async () => {
     const { stateDir, archivePath, extensionsDir } = await setupVoiceCallArchiveInstall({
       outName: "plugin.tgz",
       version: "0.0.1",
@@ -495,31 +495,31 @@ describe("installPluginFromArchive", () => {
     });
   });
 
-  it("rejects packages without IronCliw.extensions", async () => {
+  it("rejects packages without ironcliw.extensions", async () => {
     const result = await installArchivePackageAndReturnResult({
-      packageJson: { name: "@IronCliw/nope", version: "0.0.1" },
+      packageJson: { name: "@ironcliw/nope", version: "0.0.1" },
       outName: "bad.tgz",
     });
     expect(result.ok).toBe(false);
     if (result.ok) {
       return;
     }
-    expect(result.error).toContain("IronCliw.extensions");
-    expect(result.code).toBe(PLUGIN_INSTALL_ERROR_CODE.MISSING_IronCliw_EXTENSIONS);
+    expect(result.error).toContain("ironcliw.extensions");
+    expect(result.code).toBe(PLUGIN_INSTALL_ERROR_CODE.MISSING_IRONCLIW_EXTENSIONS);
   });
 
-  it("rejects legacy plugin package shape when IronCliw.extensions is missing", async () => {
+  it("rejects legacy plugin package shape when ironcliw.extensions is missing", async () => {
     const { pluginDir, extensionsDir } = setupPluginInstallDirs();
     fs.writeFileSync(
       path.join(pluginDir, "package.json"),
       JSON.stringify({
-        name: "@IronCliw/legacy-entry-fallback",
+        name: "@ironcliw/legacy-entry-fallback",
         version: "0.0.1",
       }),
       "utf-8",
     );
     fs.writeFileSync(
-      path.join(pluginDir, "IronCliw.plugin.json"),
+      path.join(pluginDir, "ironcliw.plugin.json"),
       JSON.stringify({
         id: "legacy-entry-fallback",
         configSchema: { type: "object", properties: {} },
@@ -535,12 +535,12 @@ describe("installPluginFromArchive", () => {
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
-      expect(result.error).toContain("package.json missing IronCliw.extensions");
+      expect(result.error).toContain("package.json missing ironcliw.extensions");
       expect(result.error).toContain("update the plugin package");
-      expect(result.code).toBe(PLUGIN_INSTALL_ERROR_CODE.MISSING_IronCliw_EXTENSIONS);
+      expect(result.code).toBe(PLUGIN_INSTALL_ERROR_CODE.MISSING_IRONCLIW_EXTENSIONS);
       return;
     }
-    expect.unreachable("expected install to fail without IronCliw.extensions");
+    expect.unreachable("expected install to fail without ironcliw.extensions");
   });
 
   it("warns when plugin contains dangerous code patterns", async () => {
@@ -551,7 +551,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "dangerous-plugin",
         version: "1.0.0",
-        IronCliw: { extensions: ["index.js"] },
+        ironcliw: { extensions: ["index.js"] },
       }),
     );
     fs.writeFileSync(
@@ -574,7 +574,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "hidden-entry-plugin",
         version: "1.0.0",
-        IronCliw: { extensions: [".hidden/index.js"] },
+        ironcliw: { extensions: [".hidden/index.js"] },
       }),
     );
     fs.writeFileSync(
@@ -601,7 +601,7 @@ describe("installPluginFromArchive", () => {
       JSON.stringify({
         name: "scan-fail-plugin",
         version: "1.0.0",
-        IronCliw: { extensions: ["index.js"] },
+        ironcliw: { extensions: ["index.js"] },
       }),
     );
     fs.writeFileSync(path.join(pluginDir, "index.js"), "export {};");
@@ -644,7 +644,7 @@ describe("installPluginFromDir", () => {
   it("strips workspace devDependencies before npm install", async () => {
     const { pluginDir, extensionsDir } = setupInstallPluginFromDirFixture({
       devDependencies: {
-        IronCliw: "workspace:*",
+        ironcliw: "workspace:*",
         vitest: "^3.0.0",
       },
     });
@@ -673,11 +673,11 @@ describe("installPluginFromDir", () => {
     ) as {
       devDependencies?: Record<string, string>;
     };
-    expect(manifest.devDependencies?.IronCliw).toBeUndefined();
+    expect(manifest.devDependencies?.ironcliw).toBeUndefined();
     expect(manifest.devDependencies?.vitest).toBe("^3.0.0");
   });
 
-  it("uses IronCliw.plugin.json id as install key when it differs from package name", async () => {
+  it("uses ironcliw.plugin.json id as install key when it differs from package name", async () => {
     const { pluginDir, extensionsDir } = setupManifestInstallFixture({
       manifestId: "memory-cognee",
     });
@@ -693,7 +693,7 @@ describe("installPluginFromDir", () => {
     expect(
       infoMessages.some((msg) =>
         msg.includes(
-          'Plugin manifest id "memory-cognee" differs from npm package name "cognee-IronCliw"',
+          'Plugin manifest id "memory-cognee" differs from npm package name "cognee-ironcliw"',
         ),
       ),
     ).toBe(true);
@@ -766,8 +766,8 @@ describe("installPluginFromNpmSpec", () => {
           code: 0,
           stdout: JSON.stringify([
             {
-              id: "@IronCliw/voice-call@0.0.1",
-              name: "@IronCliw/voice-call",
+              id: "@ironcliw/voice-call@0.0.1",
+              name: "@ironcliw/voice-call",
               version: "0.0.1",
               filename: packedName,
               integrity: "sha512-plugin-test",
@@ -784,7 +784,7 @@ describe("installPluginFromNpmSpec", () => {
     });
 
     const result = await installPluginFromNpmSpec({
-      spec: "@IronCliw/voice-call@0.0.1",
+      spec: "@ironcliw/voice-call@0.0.1",
       extensionsDir,
       logger: { info: () => {}, warn: () => {} },
     });
@@ -792,12 +792,12 @@ describe("installPluginFromNpmSpec", () => {
     if (!result.ok) {
       return;
     }
-    expect(result.npmResolution?.resolvedSpec).toBe("@IronCliw/voice-call@0.0.1");
+    expect(result.npmResolution?.resolvedSpec).toBe("@ironcliw/voice-call@0.0.1");
     expect(result.npmResolution?.integrity).toBe("sha512-plugin-test");
 
     expectSingleNpmPackIgnoreScriptsCall({
       calls: run.mock.calls,
-      expectedSpec: "@IronCliw/voice-call@0.0.1",
+      expectedSpec: "@ironcliw/voice-call@0.0.1",
     });
 
     expect(packTmpDir).not.toBe("");
@@ -816,8 +816,8 @@ describe("installPluginFromNpmSpec", () => {
   it("aborts when integrity drift callback rejects the fetched artifact", async () => {
     const run = vi.mocked(runCommandWithTimeout);
     mockNpmPackMetadataResult(run, {
-      id: "@IronCliw/voice-call@0.0.1",
-      name: "@IronCliw/voice-call",
+      id: "@ironcliw/voice-call@0.0.1",
+      name: "@ironcliw/voice-call",
       version: "0.0.1",
       filename: "voice-call-0.0.1.tgz",
       integrity: "sha512-new",
@@ -826,7 +826,7 @@ describe("installPluginFromNpmSpec", () => {
 
     const onIntegrityDrift = vi.fn(async () => false);
     const result = await installPluginFromNpmSpec({
-      spec: "@IronCliw/voice-call@0.0.1",
+      spec: "@ironcliw/voice-call@0.0.1",
       expectedIntegrity: "sha512-old",
       onIntegrityDrift,
     });
@@ -850,12 +850,86 @@ describe("installPluginFromNpmSpec", () => {
     });
 
     const result = await installPluginFromNpmSpec({
-      spec: "@IronCliw/not-found",
+      spec: "@ironcliw/not-found",
       logger: { info: () => {}, warn: () => {} },
     });
     expect(result.ok).toBe(false);
     if (!result.ok) {
       expect(result.code).toBe(PLUGIN_INSTALL_ERROR_CODE.NPM_PACKAGE_NOT_FOUND);
     }
+  });
+
+  it("rejects bare npm specs that resolve to prerelease versions", async () => {
+    const run = vi.mocked(runCommandWithTimeout);
+    mockNpmPackMetadataResult(run, {
+      id: "@ironcliw/voice-call@0.0.2-beta.1",
+      name: "@ironcliw/voice-call",
+      version: "0.0.2-beta.1",
+      filename: "voice-call-0.0.2-beta.1.tgz",
+      integrity: "sha512-beta",
+      shasum: "betashasum",
+    });
+
+    const result = await installPluginFromNpmSpec({
+      spec: "@ironcliw/voice-call",
+      logger: { info: () => {}, warn: () => {} },
+    });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.error).toContain("prerelease version 0.0.2-beta.1");
+      expect(result.error).toContain('"@ironcliw/voice-call@beta"');
+    }
+  });
+
+  it("allows explicit prerelease npm tags", async () => {
+    const run = vi.mocked(runCommandWithTimeout);
+    let packTmpDir = "";
+    const packedName = "voice-call-0.0.2-beta.1.tgz";
+    const voiceCallArchiveBuffer = VOICE_CALL_ARCHIVE_V1_BUFFER;
+    run.mockImplementation(async (argv, opts) => {
+      if (argv[0] === "npm" && argv[1] === "pack") {
+        packTmpDir = String(typeof opts === "number" ? "" : (opts.cwd ?? ""));
+        fs.writeFileSync(path.join(packTmpDir, packedName), voiceCallArchiveBuffer);
+        return {
+          code: 0,
+          stdout: JSON.stringify([
+            {
+              id: "@ironcliw/voice-call@0.0.2-beta.1",
+              name: "@ironcliw/voice-call",
+              version: "0.0.2-beta.1",
+              filename: packedName,
+              integrity: "sha512-beta",
+              shasum: "betashasum",
+            },
+          ]),
+          stderr: "",
+          signal: null,
+          killed: false,
+          termination: "exit",
+        };
+      }
+      throw new Error(`unexpected command: ${argv.join(" ")}`);
+    });
+
+    const { extensionsDir } = await setupVoiceCallArchiveInstall({
+      outName: "voice-call-0.0.2-beta.1.tgz",
+      version: "0.0.1",
+    });
+    const result = await installPluginFromNpmSpec({
+      spec: "@ironcliw/voice-call@beta",
+      extensionsDir,
+      logger: { info: () => {}, warn: () => {} },
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+    expect(result.npmResolution?.version).toBe("0.0.2-beta.1");
+    expect(result.npmResolution?.resolvedSpec).toBe("@ironcliw/voice-call@0.0.2-beta.1");
+    expectSingleNpmPackIgnoreScriptsCall({
+      calls: run.mock.calls,
+      expectedSpec: "@ironcliw/voice-call@beta",
+    });
+    expect(packTmpDir).not.toBe("");
   });
 });

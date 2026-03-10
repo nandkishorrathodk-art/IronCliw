@@ -26,11 +26,11 @@ Anthropic 构建了 **Claude** 模型系列，并通过 API 提供访问。
 ### CLI 设置
 
 ```bash
-IronCliw onboard
+ironcliw onboard
 # 选择：Anthropic API key
 
 # 或非交互式
-IronCliw onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
+ironcliw onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
 ```
 
 ### 配置片段
@@ -101,20 +101,20 @@ claude setup-token
 将令牌粘贴到 IronCliw（向导：**Anthropic token (paste setup-token)**），或在 Gateway 网关主机上运行：
 
 ```bash
-IronCliw models auth setup-token --provider anthropic
+ironcliw models auth setup-token --provider anthropic
 ```
 
 如果你在不同的机器上生成了令牌，请粘贴它：
 
 ```bash
-IronCliw models auth paste-token --provider anthropic
+ironcliw models auth paste-token --provider anthropic
 ```
 
 ### CLI 设置
 
 ```bash
 # 在新手引导期间粘贴 setup-token
-IronCliw onboard --auth-choice setup-token
+ironcliw onboard --auth-choice setup-token
 ```
 
 ### 配置片段
@@ -127,7 +127,7 @@ IronCliw onboard --auth-choice setup-token
 
 ## 注意事项
 
-- 使用 `claude setup-token` 生成 setup-token 并粘贴，或在 Gateway 网关主机上运行 `IronCliw models auth setup-token`。
+- 使用 `claude setup-token` 生成 setup-token 并粘贴，或在 Gateway 网关主机上运行 `ironcliw models auth setup-token`。
 - 如果你在 Claude 订阅上看到"OAuth token refresh failed …"，请使用 setup-token 重新认证。参见 [/gateway/troubleshooting#oauth-token-refresh-failed-anthropic-claude-subscription](/gateway/troubleshooting#oauth-token-refresh-failed-anthropic-claude-subscription)。
 - 认证详情 + 重用规则在 [/concepts/oauth](/concepts/oauth)。
 
@@ -138,22 +138,22 @@ IronCliw onboard --auth-choice setup-token
 - Claude 订阅认证可能过期或被撤销。重新运行 `claude setup-token`
   并将其粘贴到 **Gateway 网关主机**。
 - 如果 Claude CLI 登录在不同的机器上，在 Gateway 网关主机上使用
-  `IronCliw models auth paste-token --provider anthropic`。
+  `ironcliw models auth paste-token --provider anthropic`。
 
 **No API key found for provider "anthropic"**
 
 - 认证是**按智能体**的。新智能体不会继承主智能体的密钥。
 - 为该智能体重新运行新手引导，或在 Gateway 网关主机上粘贴 setup-token / API 密钥，
-  然后使用 `IronCliw models status` 验证。
+  然后使用 `ironcliw models status` 验证。
 
 **No credentials found for profile `anthropic:default`**
 
-- 运行 `IronCliw models status` 查看哪个认证配置文件处于活动状态。
+- 运行 `ironcliw models status` 查看哪个认证配置文件处于活动状态。
 - 重新运行新手引导，或为该配置文件粘贴 setup-token / API 密钥。
 
 **No available auth profile (all in cooldown/unavailable)**
 
-- 检查 `IronCliw models status --json` 中的 `auth.unusableProfiles`。
+- 检查 `ironcliw models status --json` 中的 `auth.unusableProfiles`。
 - 添加另一个 Anthropic 配置文件或等待冷却期结束。
 
 更多信息：[/gateway/troubleshooting](/gateway/troubleshooting) 和 [/help/faq](/help/faq)。

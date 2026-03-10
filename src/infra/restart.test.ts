@@ -38,15 +38,15 @@ afterEach(() => {
 });
 
 describe.runIf(process.platform !== "win32")("findGatewayPidsOnPortSync", () => {
-  it("parses lsof output and filters non-IronCliw/current processes", () => {
+  it("parses lsof output and filters non-ironcliw/current processes", () => {
     spawnSyncMock.mockReturnValue({
       error: undefined,
       status: 0,
       stdout: [
         `p${process.pid}`,
-        "cIronCliw",
+        "cironcliw",
         "p4100",
-        "cIronCliw-gateway",
+        "cironcliw-gateway",
         "p4200",
         "cnode",
         "p4300",
@@ -81,7 +81,7 @@ describe.runIf(process.platform !== "win32")("cleanStaleGatewayProcessesSync", (
     spawnSyncMock.mockReturnValue({
       error: undefined,
       status: 0,
-      stdout: ["p6001", "cIronCliw", "p6002", "cIronCliw-gateway"].join("\n"),
+      stdout: ["p6001", "cironcliw", "p6002", "cironcliw-gateway"].join("\n"),
     });
     const killSpy = vi.spyOn(process, "kill").mockImplementation(() => true);
 
@@ -93,6 +93,27 @@ describe.runIf(process.platform !== "win32")("cleanStaleGatewayProcessesSync", (
     expect(killSpy).toHaveBeenCalledWith(6002, "SIGTERM");
     expect(killSpy).toHaveBeenCalledWith(6001, "SIGKILL");
     expect(killSpy).toHaveBeenCalledWith(6002, "SIGKILL");
+  });
+
+  it("uses explicit port override when provided", () => {
+    spawnSyncMock.mockReturnValue({
+      error: undefined,
+      status: 0,
+      stdout: ["p7001", "cironcliw"].join("\n"),
+    });
+    const killSpy = vi.spyOn(process, "kill").mockImplementation(() => true);
+
+    const killed = cleanStaleGatewayProcessesSync(19999);
+
+    expect(killed).toEqual([7001]);
+    expect(resolveGatewayPortMock).not.toHaveBeenCalled();
+    expect(spawnSyncMock).toHaveBeenCalledWith(
+      "/usr/sbin/lsof",
+      ["-nP", "-iTCP:19999", "-sTCP:LISTEN", "-Fpc"],
+      expect.objectContaining({ encoding: "utf8", timeout: 2000 }),
+    );
+    expect(killSpy).toHaveBeenCalledWith(7001, "SIGTERM");
+    expect(killSpy).toHaveBeenCalledWith(7001, "SIGKILL");
   });
 
   it("returns empty when no stale listeners are found", () => {

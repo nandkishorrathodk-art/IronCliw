@@ -7,11 +7,11 @@ import Testing
     @Test func stableIDForServiceDecodesAndNormalizesName() {
         let endpoint = NWEndpoint.service(
             name: "IronCliw\\032Gateway   \\032  Node\n",
-            type: "_IronCliw-gw._tcp",
+            type: "_ironcliw-gw._tcp",
             domain: "local.",
             interface: nil)
 
-        #expect(GatewayEndpointID.stableID(endpoint) == "_IronCliw-gw._tcp|local.|IronCliw Gateway Node")
+        #expect(GatewayEndpointID.stableID(endpoint) == "_ironcliw-gw._tcp|local.|IronCliw Gateway Node")
     }
 
     @Test func stableIDForNonServiceUsesEndpointDescription() {
@@ -22,7 +22,7 @@ import Testing
     @Test func prettyDescriptionDecodesBonjourEscapes() {
         let endpoint = NWEndpoint.service(
             name: "IronCliw\\032Gateway",
-            type: "_IronCliw-gw._tcp",
+            type: "_ironcliw-gw._tcp",
             domain: "local.",
             interface: nil)
 

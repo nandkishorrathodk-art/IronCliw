@@ -194,10 +194,10 @@ async function noteChannelPrimer(
   await prompter.note(
     [
       "DM security: default is pairing; unknown DMs get a pairing code.",
-      `Approve with: ${formatCliCommand("IronCliw pairing approve <channel> <code>")}`,
+      `Approve with: ${formatCliCommand("ironcliw pairing approve <channel> <code>")}`,
       'Public DMs require dmPolicy="open" + allowFrom=["*"].',
       "Multi-user DMs: run: " +
-        formatCliCommand('IronCliw config set session.dmScope "per-channel-peer"') +
+        formatCliCommand('ironcliw config set session.dmScope "per-channel-peer"') +
         ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
       `Docs: ${formatDocsLink("/channels/pairing", "channels/pairing")}`,
       "",
@@ -249,11 +249,11 @@ async function maybeConfigureDmPolicies(params: {
     await prompter.note(
       [
         "Default: pairing (unknown DMs get a pairing code).",
-        `Approve: ${formatCliCommand(`IronCliw pairing approve ${policy.channel} <code>`)}`,
+        `Approve: ${formatCliCommand(`ironcliw pairing approve ${policy.channel} <code>`)}`,
         `Allowlist DMs: ${policy.policyKey}="allowlist" + ${policy.allowFromKey} entries.`,
         `Public DMs: ${policy.policyKey}="open" + ${policy.allowFromKey} includes "*".`,
         "Multi-user DMs: run: " +
-          formatCliCommand('IronCliw config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('ironcliw config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
         `Docs: ${formatDocsLink("/channels/pairing", "channels/pairing")}`,
       ].join("\n"),
@@ -476,8 +476,8 @@ export async function setupChannels(
       if (adapter) {
         await prompter.note(
           `${channel} plugin not available (continuing with onboarding). If the channel still doesn't work after setup, run \`${formatCliCommand(
-            "IronCliw plugins list",
-          )}\` and \`${formatCliCommand("IronCliw plugins enable " + channel)}\`, then restart the gateway.`,
+            "ironcliw plugins list",
+          )}\` and \`${formatCliCommand("ironcliw plugins enable " + channel)}\`, then restart the gateway.`,
           "Channel setup",
         );
         await refreshStatus(channel);
@@ -686,7 +686,7 @@ export async function setupChannels(
         {
           value: "__skip__",
           label: "Skip for now",
-          hint: `You can add channels later via \`${formatCliCommand("IronCliw channels add")}\``,
+          hint: `You can add channels later via \`${formatCliCommand("ironcliw channels add")}\``,
         },
       ],
       initialValue: quickstartDefault,

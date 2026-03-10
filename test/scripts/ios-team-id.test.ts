@@ -96,7 +96,7 @@ function runScript(
   const binDir = path.join(homeDir, "bin");
   const env = {
     HOME: homeDir,
-    PATH: `${binDir}:${sharedBinDir}:${BASE_PATH}`,
+    PATH: `${binDir}${path.delimiter}${sharedBinDir}${path.delimiter}${BASE_PATH}`,
     LANG: BASE_LANG,
     ...extraEnv,
   };
@@ -124,7 +124,7 @@ function runScript(
 
 describe("scripts/ios-team-id.sh", () => {
   beforeAll(async () => {
-    fixtureRoot = await mkdtemp(path.join(os.tmpdir(), "IronCliw-ios-team-id-"));
+    fixtureRoot = await mkdtemp(path.join(os.tmpdir(), "ironcliw-ios-team-id-"));
     sharedBinDir = path.join(fixtureRoot, "shared-bin");
     await mkdir(sharedBinDir, { recursive: true });
     sharedHomeDir = path.join(fixtureRoot, "home");

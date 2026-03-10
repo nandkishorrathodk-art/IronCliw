@@ -170,7 +170,7 @@ export async function loadInternalHooks(
       fs.closeSync(opened.fd);
 
       // Legacy handlers are always workspace-relative, so use mtime-based cache busting
-      const importUrl = buildImportUrl(safeModulePath, "IronCliw-workspace");
+      const importUrl = buildImportUrl(safeModulePath, "ironcliw-workspace");
       const mod = (await import(importUrl)) as Record<string, unknown>;
 
       // Get the handler function

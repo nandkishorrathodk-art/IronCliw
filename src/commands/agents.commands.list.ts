@@ -1,5 +1,6 @@
 import { formatCliCommand } from "../cli/command-format.js";
-import type { AgentBinding } from "../config/types.js";
+import { listRouteBindings } from "../config/bindings.js";
+import type { AgentRouteBinding } from "../config/types.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";
@@ -81,8 +82,8 @@ export async function agentsListCommand(
   }
 
   const summaries = buildAgentSummaries(cfg);
-  const bindingMap = new Map<string, AgentBinding[]>();
-  for (const binding of cfg.bindings ?? []) {
+  const bindingMap = new Map<string, AgentRouteBinding[]>();
+  for (const binding of listRouteBindings(cfg)) {
     const agentId = normalizeAgentId(binding.agentId);
     const list = bindingMap.get(agentId) ?? [];
     list.push(binding);
@@ -128,7 +129,7 @@ export async function agentsListCommand(
   const lines = ["Agents:", ...summaries.map(formatSummary)];
   lines.push("Routing rules map channel/account/peer to an agent. Use --bindings for full rules.");
   lines.push(
-    `Channel status reflects local config/creds. For live health: ${formatCliCommand("IronCliw channels status --probe")}.`,
+    `Channel status reflects local config/creds. For live health: ${formatCliCommand("ironcliw channels status --probe")}.`,
   );
   runtime.log(lines.join("\n"));
 }

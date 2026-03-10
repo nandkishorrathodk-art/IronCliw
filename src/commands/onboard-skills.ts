@@ -192,9 +192,9 @@ export async function setupSkills(
         runtime.log(result.stdout.trim());
       }
       runtime.log(
-        `Tip: run \`${formatCliCommand("IronCliw doctor")}\` to review skills + requirements.`,
+        `Tip: run \`${formatCliCommand("ironcliw doctor")}\` to review skills + requirements.`,
       );
-      runtime.log("Docs: https://docs.IronCliw.ai/skills");
+      runtime.log("Docs: https://docs.ironcliw.ai/skills");
     }
   }
 

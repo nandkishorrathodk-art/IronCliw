@@ -23,7 +23,7 @@ describe("media store outside-workspace mapping", () => {
   let home = "";
 
   beforeAll(async () => {
-    tempHome = await createTempHomeEnv("IronCliw-media-store-test-home-");
+    tempHome = await createTempHomeEnv("ironcliw-media-store-test-home-");
     home = tempHome.home;
   });
 

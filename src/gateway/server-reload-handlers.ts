@@ -107,17 +107,17 @@ export function createGatewayReloadHandlers(params: {
         cfg: nextConfig,
         log: params.logHooks,
         onSkipped: () =>
-          params.logHooks.info("skipping gmail watcher restart (IronCliw_SKIP_GMAIL_WATCHER=1)"),
+          params.logHooks.info("skipping gmail watcher restart (IRONCLIW_SKIP_GMAIL_WATCHER=1)"),
       });
     }
 
     if (plan.restartChannels.size > 0) {
       if (
-        isTruthyEnvValue(process.env.IronCliw_SKIP_CHANNELS) ||
-        isTruthyEnvValue(process.env.IronCliw_SKIP_PROVIDERS)
+        isTruthyEnvValue(process.env.IRONCLIW_SKIP_CHANNELS) ||
+        isTruthyEnvValue(process.env.IRONCLIW_SKIP_PROVIDERS)
       ) {
         params.logChannels.info(
-          "skipping channel reload (IronCliw_SKIP_CHANNELS=1 or IronCliw_SKIP_PROVIDERS=1)",
+          "skipping channel reload (IRONCLIW_SKIP_CHANNELS=1 or IRONCLIW_SKIP_PROVIDERS=1)",
         );
       } else {
         const restartChannel = async (name: ChannelKind) => {
@@ -134,6 +134,7 @@ export function createGatewayReloadHandlers(params: {
     setCommandLaneConcurrency(CommandLane.Cron, nextConfig.cron?.maxConcurrentRuns ?? 1);
     setCommandLaneConcurrency(CommandLane.Main, resolveAgentMaxConcurrent(nextConfig));
     setCommandLaneConcurrency(CommandLane.Subagent, resolveSubagentMaxConcurrent(nextConfig));
+    setCommandLaneConcurrency(CommandLane.Nested, resolveSubagentMaxConcurrent(nextConfig));
 
     if (plan.hotReasons.length > 0) {
       params.logReload.info(`config hot reload applied (${plan.hotReasons.join(", ")})`);

@@ -18,7 +18,7 @@ function envWith(overrides: Record<string, string | undefined>): NodeJS.ProcessE
 
 function loadConfigForHome(home: string) {
   return createConfigIO({
-    env: envWith({ IronCliw_HOME: home }),
+    env: envWith({ IRONCLIW_HOME: home }),
     homedir: () => home,
   }).loadConfig();
 }
@@ -35,84 +35,84 @@ async function withLoadedConfigForHome(
 
 describe("Nix integration (U3, U5, U9)", () => {
   describe("U3: isNixMode env var detection", () => {
-    it("isNixMode is false when IronCliw_NIX_MODE is not set", () => {
-      expect(resolveIsNixMode(envWith({ IronCliw_NIX_MODE: undefined }))).toBe(false);
+    it("isNixMode is false when IRONCLIW_NIX_MODE is not set", () => {
+      expect(resolveIsNixMode(envWith({ IRONCLIW_NIX_MODE: undefined }))).toBe(false);
     });
 
-    it("isNixMode is false when IronCliw_NIX_MODE is empty", () => {
-      expect(resolveIsNixMode(envWith({ IronCliw_NIX_MODE: "" }))).toBe(false);
+    it("isNixMode is false when IRONCLIW_NIX_MODE is empty", () => {
+      expect(resolveIsNixMode(envWith({ IRONCLIW_NIX_MODE: "" }))).toBe(false);
     });
 
-    it("isNixMode is false when IronCliw_NIX_MODE is not '1'", () => {
-      expect(resolveIsNixMode(envWith({ IronCliw_NIX_MODE: "true" }))).toBe(false);
+    it("isNixMode is false when IRONCLIW_NIX_MODE is not '1'", () => {
+      expect(resolveIsNixMode(envWith({ IRONCLIW_NIX_MODE: "true" }))).toBe(false);
     });
 
-    it("isNixMode is true when IronCliw_NIX_MODE=1", () => {
-      expect(resolveIsNixMode(envWith({ IronCliw_NIX_MODE: "1" }))).toBe(true);
+    it("isNixMode is true when IRONCLIW_NIX_MODE=1", () => {
+      expect(resolveIsNixMode(envWith({ IRONCLIW_NIX_MODE: "1" }))).toBe(true);
     });
   });
 
   describe("U5: CONFIG_PATH and STATE_DIR env var overrides", () => {
-    it("STATE_DIR defaults to ~/.IronCliw when env not set", () => {
-      expect(resolveStateDir(envWith({ IronCliw_STATE_DIR: undefined }))).toMatch(/\.IronCliw$/);
+    it("STATE_DIR defaults to ~/.ironcliw when env not set", () => {
+      expect(resolveStateDir(envWith({ IRONCLIW_STATE_DIR: undefined }))).toMatch(/\.ironcliw$/);
     });
 
-    it("STATE_DIR respects IronCliw_STATE_DIR override", () => {
-      expect(resolveStateDir(envWith({ IronCliw_STATE_DIR: "/custom/state/dir" }))).toBe(
+    it("STATE_DIR respects IRONCLIW_STATE_DIR override", () => {
+      expect(resolveStateDir(envWith({ IRONCLIW_STATE_DIR: "/custom/state/dir" }))).toBe(
         path.resolve("/custom/state/dir"),
       );
     });
 
-    it("STATE_DIR respects IronCliw_HOME when state override is unset", () => {
+    it("STATE_DIR respects IRONCLIW_HOME when state override is unset", () => {
       const customHome = path.join(path.sep, "custom", "home");
       expect(
-        resolveStateDir(envWith({ IronCliw_HOME: customHome, IronCliw_STATE_DIR: undefined })),
-      ).toBe(path.join(path.resolve(customHome), ".IronCliw"));
+        resolveStateDir(envWith({ IRONCLIW_HOME: customHome, IRONCLIW_STATE_DIR: undefined })),
+      ).toBe(path.join(path.resolve(customHome), ".ironcliw"));
     });
 
-    it("CONFIG_PATH defaults to IronCliw_HOME/.IronCliw/IronCliw.json", () => {
+    it("CONFIG_PATH defaults to IRONCLIW_HOME/.ironcliw/ironcliw.json", () => {
       const customHome = path.join(path.sep, "custom", "home");
       expect(
         resolveConfigPathCandidate(
           envWith({
-            IronCliw_HOME: customHome,
-            IronCliw_CONFIG_PATH: undefined,
-            IronCliw_STATE_DIR: undefined,
+            IRONCLIW_HOME: customHome,
+            IRONCLIW_CONFIG_PATH: undefined,
+            IRONCLIW_STATE_DIR: undefined,
           }),
         ),
-      ).toBe(path.join(path.resolve(customHome), ".IronCliw", "IronCliw.json"));
+      ).toBe(path.join(path.resolve(customHome), ".ironcliw", "ironcliw.json"));
     });
 
-    it("CONFIG_PATH defaults to ~/.IronCliw/IronCliw.json when env not set", () => {
+    it("CONFIG_PATH defaults to ~/.ironcliw/ironcliw.json when env not set", () => {
       expect(
         resolveConfigPathCandidate(
-          envWith({ IronCliw_CONFIG_PATH: undefined, IronCliw_STATE_DIR: undefined }),
+          envWith({ IRONCLIW_CONFIG_PATH: undefined, IRONCLIW_STATE_DIR: undefined }),
         ),
-      ).toMatch(/\.IronCliw[\\/]IronCliw\.json$/);
+      ).toMatch(/\.ironcliw[\\/]ironcliw\.json$/);
     });
 
-    it("CONFIG_PATH respects IronCliw_CONFIG_PATH override", () => {
+    it("CONFIG_PATH respects IRONCLIW_CONFIG_PATH override", () => {
       expect(
         resolveConfigPathCandidate(
-          envWith({ IronCliw_CONFIG_PATH: "/nix/store/abc/IronCliw.json" }),
+          envWith({ IRONCLIW_CONFIG_PATH: "/nix/store/abc/ironcliw.json" }),
         ),
-      ).toBe(path.resolve("/nix/store/abc/IronCliw.json"));
+      ).toBe(path.resolve("/nix/store/abc/ironcliw.json"));
     });
 
-    it("CONFIG_PATH expands ~ in IronCliw_CONFIG_PATH override", async () => {
+    it("CONFIG_PATH expands ~ in IRONCLIW_CONFIG_PATH override", async () => {
       await withTempHome(async (home) => {
         expect(
           resolveConfigPathCandidate(
-            envWith({ IronCliw_HOME: home, IronCliw_CONFIG_PATH: "~/.IronCliw/custom.json" }),
+            envWith({ IRONCLIW_HOME: home, IRONCLIW_CONFIG_PATH: "~/.ironcliw/custom.json" }),
             () => home,
           ),
-        ).toBe(path.join(home, ".IronCliw", "custom.json"));
+        ).toBe(path.join(home, ".ironcliw", "custom.json"));
       });
     });
 
     it("CONFIG_PATH uses STATE_DIR when only state dir is overridden", () => {
-      expect(resolveConfigPathCandidate(envWith({ IronCliw_STATE_DIR: "/custom/state" }))).toBe(
-        path.join(path.resolve("/custom/state"), "IronCliw.json"),
+      expect(resolveConfigPathCandidate(envWith({ IRONCLIW_STATE_DIR: "/custom/state" }))).toBe(
+        path.join(path.resolve("/custom/state"), "ironcliw.json"),
       );
     });
   });
@@ -120,7 +120,7 @@ describe("Nix integration (U3, U5, U9)", () => {
   describe("U5b: tilde expansion for config paths", () => {
     it("expands ~ in common path-ish config fields", async () => {
       await withTempHome(async (home) => {
-        const configDir = path.join(home, ".IronCliw");
+        const configDir = path.join(home, ".ironcliw");
         await fs.mkdir(configDir, { recursive: true });
         const pluginDir = path.join(home, "plugins", "demo-plugin");
         await fs.mkdir(pluginDir, { recursive: true });
@@ -130,7 +130,7 @@ describe("Nix integration (U3, U5, U9)", () => {
           "utf-8",
         );
         await fs.writeFile(
-          path.join(pluginDir, "IronCliw.plugin.json"),
+          path.join(pluginDir, "ironcliw.plugin.json"),
           JSON.stringify(
             {
               id: "demo-plugin",
@@ -142,7 +142,7 @@ describe("Nix integration (U3, U5, U9)", () => {
           "utf-8",
         );
         await fs.writeFile(
-          path.join(configDir, "IronCliw.json"),
+          path.join(configDir, "ironcliw.json"),
           JSON.stringify(
             {
               plugins: {
@@ -156,7 +156,7 @@ describe("Nix integration (U3, U5, U9)", () => {
                   {
                     id: "main",
                     workspace: "~/ws-agent",
-                    agentDir: "~/.IronCliw/agents/main",
+                    agentDir: "~/.ironcliw/agents/main",
                     sandbox: { workspaceRoot: "~/sandbox-root" },
                   },
                 ],
@@ -165,7 +165,7 @@ describe("Nix integration (U3, U5, U9)", () => {
                 whatsapp: {
                   accounts: {
                     personal: {
-                      authDir: "~/.IronCliw/credentials/wa-personal",
+                      authDir: "~/.ironcliw/credentials/wa-personal",
                     },
                   },
                 },
@@ -183,11 +183,11 @@ describe("Nix integration (U3, U5, U9)", () => {
         expect(cfg.agents?.defaults?.workspace).toBe(path.join(home, "ws-default"));
         expect(cfg.agents?.list?.[0]?.workspace).toBe(path.join(home, "ws-agent"));
         expect(cfg.agents?.list?.[0]?.agentDir).toBe(
-          path.join(home, ".IronCliw", "agents", "main"),
+          path.join(home, ".ironcliw", "agents", "main"),
         );
         expect(cfg.agents?.list?.[0]?.sandbox?.workspaceRoot).toBe(path.join(home, "sandbox-root"));
         expect(cfg.channels?.whatsapp?.accounts?.personal?.authDir).toBe(
-          path.join(home, ".IronCliw", "credentials", "wa-personal"),
+          path.join(home, ".ironcliw", "credentials", "wa-personal"),
         );
       });
     });
@@ -195,16 +195,16 @@ describe("Nix integration (U3, U5, U9)", () => {
 
   describe("U6: gateway port resolution", () => {
     it("uses default when env and config are unset", () => {
-      expect(resolveGatewayPort({}, envWith({ IronCliw_GATEWAY_PORT: undefined }))).toBe(
+      expect(resolveGatewayPort({}, envWith({ IRONCLIW_GATEWAY_PORT: undefined }))).toBe(
         DEFAULT_GATEWAY_PORT,
       );
     });
 
-    it("prefers IronCliw_GATEWAY_PORT over config", () => {
+    it("prefers IRONCLIW_GATEWAY_PORT over config", () => {
       expect(
         resolveGatewayPort(
           { gateway: { port: 19002 } },
-          envWith({ IronCliw_GATEWAY_PORT: "19001" }),
+          envWith({ IRONCLIW_GATEWAY_PORT: "19001" }),
         ),
       ).toBe(19001);
     });
@@ -213,7 +213,7 @@ describe("Nix integration (U3, U5, U9)", () => {
       expect(
         resolveGatewayPort(
           { gateway: { port: 19003 } },
-          envWith({ IronCliw_GATEWAY_PORT: "nope" }),
+          envWith({ IRONCLIW_GATEWAY_PORT: "nope" }),
         ),
       ).toBe(19003);
     });

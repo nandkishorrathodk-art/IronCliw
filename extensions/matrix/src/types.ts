@@ -1,4 +1,4 @@
-import type { DmPolicy, GroupPolicy, SecretInput } from "IronCliw/plugin-sdk/matrix";
+import type { DmPolicy, GroupPolicy, SecretInput } from "ironcliw/plugin-sdk/matrix";
 export type { DmPolicy, GroupPolicy };
 
 export type ReplyToMode = "off" | "first" | "all";

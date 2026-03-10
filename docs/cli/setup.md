@@ -1,14 +1,14 @@
 ---
-summary: "CLI reference for `IronCliw setup` (initialize config + workspace)"
+summary: "CLI reference for `ironcliw setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `IronCliw setup`
+# `ironcliw setup`
 
-Initialize `~/.IronCliw/IronCliw.json` and the agent workspace.
+Initialize `~/.ironcliw/ironcliw.json` and the agent workspace.
 
 Related:
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-IronCliw setup
-IronCliw setup --workspace ~/.IronCliw/workspace
+ironcliw setup
+ironcliw setup --workspace ~/.ironcliw/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-IronCliw setup --wizard
+ironcliw setup --wizard
 ```

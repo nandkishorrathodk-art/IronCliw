@@ -9,7 +9,7 @@ const gatewayClientCalls: Array<{
   url?: string;
   token?: string;
   password?: string;
-  onHelloOk?: () => void;
+  onHelloOk?: (hello: { features?: { methods?: string[] } }) => void;
   onClose?: (code: number, reason: string) => void;
 }> = [];
 const ensureWorkspaceAndSessionsMock = vi.fn(async (..._args: unknown[]) => {});
@@ -20,13 +20,13 @@ vi.mock("../gateway/client.js", () => ({
       url?: string;
       token?: string;
       password?: string;
-      onHelloOk?: () => void;
+      onHelloOk?: (hello: { features?: { methods?: string[] } }) => void;
     };
     constructor(params: {
       url?: string;
       token?: string;
       password?: string;
-      onHelloOk?: () => void;
+      onHelloOk?: (hello: { features?: { methods?: string[] } }) => void;
     }) {
       this.params = params;
       gatewayClientCalls.push(params);
@@ -35,7 +35,7 @@ vi.mock("../gateway/client.js", () => ({
       return { ok: true };
     }
     start() {
-      queueMicrotask(() => this.params.onHelloOk?.());
+      queueMicrotask(() => this.params.onHelloOk?.({ features: { methods: ["health"] } }));
     }
     stop() {}
   },
@@ -69,8 +69,8 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       throw new Error("temp home not initialized");
     }
     const stateDir = await fs.mkdtemp(path.join(tempHome, prefix));
-    process.env.IronCliw_STATE_DIR = stateDir;
-    delete process.env.IronCliw_CONFIG_PATH;
+    process.env.IRONCLIW_STATE_DIR = stateDir;
+    delete process.env.IRONCLIW_CONFIG_PATH;
     return stateDir;
   };
   const withStateDir = async (
@@ -87,25 +87,25 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
   beforeAll(async () => {
     envSnapshot = captureEnv([
       "HOME",
-      "IronCliw_STATE_DIR",
-      "IronCliw_CONFIG_PATH",
-      "IronCliw_SKIP_CHANNELS",
-      "IronCliw_SKIP_GMAIL_WATCHER",
-      "IronCliw_SKIP_CRON",
-      "IronCliw_SKIP_CANVAS_HOST",
-      "IronCliw_SKIP_BROWSER_CONTROL_SERVER",
-      "IronCliw_GATEWAY_TOKEN",
-      "IronCliw_GATEWAY_PASSWORD",
+      "IRONCLIW_STATE_DIR",
+      "IRONCLIW_CONFIG_PATH",
+      "IRONCLIW_SKIP_CHANNELS",
+      "IRONCLIW_SKIP_GMAIL_WATCHER",
+      "IRONCLIW_SKIP_CRON",
+      "IRONCLIW_SKIP_CANVAS_HOST",
+      "IRONCLIW_SKIP_BROWSER_CONTROL_SERVER",
+      "IRONCLIW_GATEWAY_TOKEN",
+      "IRONCLIW_GATEWAY_PASSWORD",
     ]);
-    process.env.IronCliw_SKIP_CHANNELS = "1";
-    process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-    process.env.IronCliw_SKIP_CRON = "1";
-    process.env.IronCliw_SKIP_CANVAS_HOST = "1";
-    process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER = "1";
-    delete process.env.IronCliw_GATEWAY_TOKEN;
-    delete process.env.IronCliw_GATEWAY_PASSWORD;
+    process.env.IRONCLIW_SKIP_CHANNELS = "1";
+    process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+    process.env.IRONCLIW_SKIP_CRON = "1";
+    process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
+    process.env.IRONCLIW_SKIP_BROWSER_CONTROL_SERVER = "1";
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_PASSWORD;
 
-    tempHome = await makeTempWorkspace("IronCliw-onboard-");
+    tempHome = await makeTempWorkspace("ironcliw-onboard-");
     process.env.HOME = tempHome;
   });
 
@@ -119,7 +119,7 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
   it("writes gateway token auth into config", async () => {
     await withStateDir("state-noninteractive-", async (stateDir) => {
       const token = "tok_test_123";
-      const workspace = path.join(stateDir, "IronCliw");
+      const workspace = path.join(stateDir, "ironcliw");
 
       await runNonInteractiveOnboarding(
         {
@@ -145,18 +145,18 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       }>(configPath);
 
       expect(cfg?.agents?.defaults?.workspace).toBe(workspace);
-      expect(cfg?.tools?.profile).toBe("messaging");
+      expect(cfg?.tools?.profile).toBe("coding");
       expect(cfg?.gateway?.auth?.mode).toBe("token");
       expect(cfg?.gateway?.auth?.token).toBe(token);
     });
   }, 60_000);
 
-  it("uses IronCliw_GATEWAY_TOKEN when --gateway-token is omitted", async () => {
+  it("uses IRONCLIW_GATEWAY_TOKEN when --gateway-token is omitted", async () => {
     await withStateDir("state-env-token-", async (stateDir) => {
       const envToken = "tok_env_fallback_123";
-      const workspace = path.join(stateDir, "IronCliw");
-      const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-      process.env.IronCliw_GATEWAY_TOKEN = envToken;
+      const workspace = path.join(stateDir, "ironcliw");
+      const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+      process.env.IRONCLIW_GATEWAY_TOKEN = envToken;
 
       try {
         await runNonInteractiveOnboarding(
@@ -183,9 +183,87 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
         expect(cfg?.gateway?.auth?.token).toBe(envToken);
       } finally {
         if (prevToken === undefined) {
-          delete process.env.IronCliw_GATEWAY_TOKEN;
+          delete process.env.IRONCLIW_GATEWAY_TOKEN;
         } else {
-          process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+          process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
+        }
+      }
+    });
+  }, 60_000);
+
+  it("writes gateway token SecretRef from --gateway-token-ref-env", async () => {
+    await withStateDir("state-env-token-ref-", async (stateDir) => {
+      const envToken = "tok_env_ref_123";
+      const workspace = path.join(stateDir, "ironcliw");
+      const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+      process.env.IRONCLIW_GATEWAY_TOKEN = envToken;
+
+      try {
+        await runNonInteractiveOnboarding(
+          {
+            nonInteractive: true,
+            mode: "local",
+            workspace,
+            authChoice: "skip",
+            skipSkills: true,
+            skipHealth: true,
+            installDaemon: false,
+            gatewayBind: "loopback",
+            gatewayAuth: "token",
+            gatewayTokenRefEnv: "IRONCLIW_GATEWAY_TOKEN",
+          },
+          runtime,
+        );
+
+        const configPath = resolveStateConfigPath(process.env, stateDir);
+        const cfg = await readJsonFile<{
+          gateway?: { auth?: { mode?: string; token?: unknown } };
+        }>(configPath);
+
+        expect(cfg?.gateway?.auth?.mode).toBe("token");
+        expect(cfg?.gateway?.auth?.token).toEqual({
+          source: "env",
+          provider: "default",
+          id: "IRONCLIW_GATEWAY_TOKEN",
+        });
+      } finally {
+        if (prevToken === undefined) {
+          delete process.env.IRONCLIW_GATEWAY_TOKEN;
+        } else {
+          process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
+        }
+      }
+    });
+  }, 60_000);
+
+  it("fails when --gateway-token-ref-env points to a missing env var", async () => {
+    await withStateDir("state-env-token-ref-missing-", async (stateDir) => {
+      const workspace = path.join(stateDir, "ironcliw");
+      const previous = process.env.MISSING_GATEWAY_TOKEN_ENV;
+      delete process.env.MISSING_GATEWAY_TOKEN_ENV;
+      try {
+        await expect(
+          runNonInteractiveOnboarding(
+            {
+              nonInteractive: true,
+              mode: "local",
+              workspace,
+              authChoice: "skip",
+              skipSkills: true,
+              skipHealth: true,
+              installDaemon: false,
+              gatewayBind: "loopback",
+              gatewayAuth: "token",
+              gatewayTokenRefEnv: "MISSING_GATEWAY_TOKEN_ENV",
+            },
+            runtime,
+          ),
+        ).rejects.toThrow(/MISSING_GATEWAY_TOKEN_ENV/);
+      } finally {
+        if (previous === undefined) {
+          delete process.env.MISSING_GATEWAY_TOKEN_ENV;
+        } else {
+          process.env.MISSING_GATEWAY_TOKEN_ENV = previous;
         }
       }
     });
@@ -230,11 +308,11 @@ describe("onboard (non-interactive): gateway and remote auth", () => {
       return;
     }
     await withStateDir("state-lan-", async (stateDir) => {
-      process.env.IronCliw_STATE_DIR = stateDir;
-      process.env.IronCliw_CONFIG_PATH = path.join(stateDir, "IronCliw.json");
+      process.env.IRONCLIW_STATE_DIR = stateDir;
+      process.env.IRONCLIW_CONFIG_PATH = path.join(stateDir, "ironcliw.json");
 
       const port = getPseudoPort(40_000);
-      const workspace = path.join(stateDir, "IronCliw");
+      const workspace = path.join(stateDir, "ironcliw");
 
       await runNonInteractiveOnboarding(
         {

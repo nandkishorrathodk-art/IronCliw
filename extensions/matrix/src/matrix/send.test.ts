@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/matrix";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/matrix";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { setMatrixRuntime } from "../runtime.js";
 

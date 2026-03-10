@@ -28,10 +28,10 @@ function ensureChangelogEntry(changelogPath: string, version: string): boolean {
 
 function stripWorkspaceIronCliwDevDependency(pkg: PackageJson): boolean {
   const devDeps = pkg.devDependencies;
-  if (!devDeps || devDeps.IronCliw !== "workspace:*") {
+  if (!devDeps || devDeps.ironcliw !== "workspace:*") {
     return false;
   }
-  delete devDeps.IronCliw;
+  delete devDeps.ironcliw;
   if (Object.keys(devDeps).length === 0) {
     delete pkg.devDependencies;
   }

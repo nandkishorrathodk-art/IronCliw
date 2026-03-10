@@ -9,7 +9,7 @@ import type { CallManagerContext } from "./context.js";
 import { processEvent } from "./events.js";
 
 function createContext(overrides: Partial<CallManagerContext> = {}): CallManagerContext {
-  const storePath = path.join(os.tmpdir(), `IronCliw-voice-call-events-test-${Date.now()}`);
+  const storePath = path.join(os.tmpdir(), `ironcliw-voice-call-events-test-${Date.now()}`);
   fs.mkdirSync(storePath, { recursive: true });
   return {
     activeCalls: new Map(),

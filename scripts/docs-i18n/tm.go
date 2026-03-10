@@ -130,4 +130,3 @@ func (tm *TranslationMemory) Save() error {
 	}
 	return os.Rename(tmpPath, tm.path)
 }
-

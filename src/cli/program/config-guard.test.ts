@@ -18,7 +18,7 @@ function makeSnapshot() {
     valid: true,
     issues: [],
     legacyIssues: [],
-    path: "/tmp/IronCliw.json",
+    path: "/tmp/ironcliw.json",
   };
 }
 

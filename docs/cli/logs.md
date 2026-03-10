@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw logs` (tail gateway logs via RPC)"
+summary: "CLI reference for `ironcliw logs` (tail gateway logs via RPC)"
 read_when:
   - You need to tail Gateway logs remotely (without SSH)
   - You want JSON log lines for tooling
 title: "logs"
 ---
 
-# `IronCliw logs`
+# `ironcliw logs`
 
 Tail Gateway file logs over RPC (works in remote mode).
 
@@ -17,12 +17,12 @@ Related:
 ## Examples
 
 ```bash
-IronCliw logs
-IronCliw logs --follow
-IronCliw logs --json
-IronCliw logs --limit 500
-IronCliw logs --local-time
-IronCliw logs --follow --local-time
+ironcliw logs
+ironcliw logs --follow
+ironcliw logs --json
+ironcliw logs --limit 500
+ironcliw logs --local-time
+ironcliw logs --follow --local-time
 ```
 
 Use `--local-time` to render timestamps in your local timezone.

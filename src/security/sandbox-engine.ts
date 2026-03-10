@@ -3,7 +3,14 @@ export type SandboxAction = "allow" | "deny" | "require_approval";
 export class SandboxEngine {
   // Safe commands that don't require deep inspection
   private readonly whitelist = new Set([
-    "echo", "dir", "ls", "pwd", "whoami", "date", "get-content", "cat"
+    "echo",
+    "dir",
+    "ls",
+    "pwd",
+    "whoami",
+    "date",
+    "get-content",
+    "cat",
   ]);
 
   // Commands that inherently change system state or interact with desktop
@@ -16,8 +23,8 @@ export class SandboxEngine {
     /net\s+user/i,
     /format\s+/i,
     /mouse_event/i, // Desktop automation check
-    /SendKeys/i,    // Desktop automation check
-    /CopyFromScreen/i // Screen capture check
+    /SendKeys/i, // Desktop automation check
+    /CopyFromScreen/i, // Screen capture check
   ];
 
   public validateCommand(command: string): SandboxAction {

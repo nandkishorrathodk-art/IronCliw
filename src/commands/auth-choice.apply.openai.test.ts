@@ -10,14 +10,14 @@ import {
 
 describe("applyAuthChoiceOpenAI", () => {
   const lifecycle = createAuthTestLifecycle([
-    "IronCliw_STATE_DIR",
-    "IronCliw_AGENT_DIR",
+    "IRONCLIW_STATE_DIR",
+    "IRONCLIW_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "OPENAI_API_KEY",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("IronCliw-openai-");
+    const env = await setupAuthTestEnv("ironcliw-openai-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }
@@ -28,7 +28,7 @@ describe("applyAuthChoiceOpenAI", () => {
 
   it("writes env-backed OpenAI key as plaintext by default", async () => {
     const agentDir = await setupTempState();
-    process.env.OPENAI_API_KEY = "sk-openai-env";
+    process.env.OPENAI_API_KEY = "sk-openai-env"; // pragma: allowlist secret
 
     const confirm = vi.fn(async () => true);
     const text = vi.fn(async () => "unused");
@@ -62,7 +62,7 @@ describe("applyAuthChoiceOpenAI", () => {
 
   it("writes env-backed OpenAI key as keyRef when secret-input-mode=ref", async () => {
     const agentDir = await setupTempState();
-    process.env.OPENAI_API_KEY = "sk-openai-env";
+    process.env.OPENAI_API_KEY = "sk-openai-env"; // pragma: allowlist secret
 
     const confirm = vi.fn(async () => true);
     const text = vi.fn(async () => "unused");

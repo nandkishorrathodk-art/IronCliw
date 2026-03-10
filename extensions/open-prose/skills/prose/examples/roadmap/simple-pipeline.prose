@@ -15,4 +15,3 @@ session research: researcher
 
 -> session article: writer
   prompt: "Write a blog post about quantum computing"
-

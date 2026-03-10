@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/feishu";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/feishu";
 import { describe, expect, it } from "vitest";
 import { feishuOnboardingAdapter } from "./onboarding.js";
 

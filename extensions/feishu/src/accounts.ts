@@ -1,5 +1,5 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
-import type { ClawdbotConfig } from "IronCliw/plugin-sdk/feishu";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
+import type { ClawdbotConfig } from "ironcliw/plugin-sdk/feishu";
 import { normalizeResolvedSecretInputString, normalizeSecretInputString } from "./secret-input.js";
 import type {
   FeishuConfig,

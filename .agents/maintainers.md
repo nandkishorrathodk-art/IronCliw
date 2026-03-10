@@ -1,1 +1,1 @@
-Maintainer skills now live in [`IronCliw/maintainers`](https://github.com/IronCliw/maintainers/).
+Maintainer skills now live in [`ironcliw/maintainers`](https://github.com/ironcliw/maintainers/).

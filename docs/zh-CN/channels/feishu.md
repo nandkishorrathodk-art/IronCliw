@@ -12,18 +12,14 @@ title: 飞书
 
 ---
 
-## 需要插件
+## 内置插件
 
-安装 Feishu 插件：
+当前版本的 IronCliw 已内置 Feishu 插件，因此通常不需要单独安装。
 
-```bash
-IronCliw plugins install @IronCliw/feishu
-```
-
-本地 checkout（在 git 仓库内运行）：
+如果你使用的是较旧版本，或是没有内置 Feishu 的自定义安装，可手动安装：
 
 ```bash
-IronCliw plugins install ./extensions/feishu
+ironcliw plugins install @ironcliw/feishu
 ```
 
 ---
@@ -37,7 +33,7 @@ IronCliw plugins install ./extensions/feishu
 如果您刚安装完 IronCliw，可以直接运行向导，根据提示添加飞书：
 
 ```bash
-IronCliw onboard
+ironcliw onboard
 ```
 
 向导会引导您完成：
@@ -48,24 +44,24 @@ IronCliw onboard
 
 ✅ **完成配置后**，您可以使用以下命令检查网关状态：
 
-- `IronCliw gateway status` - 查看网关运行状态
-- `IronCliw logs --follow` - 查看实时日志
+- `ironcliw gateway status` - 查看网关运行状态
+- `ironcliw logs --follow` - 查看实时日志
 
 ### 方式二：通过命令行添加
 
 如果您已经完成了初始安装，可以用以下命令添加飞书渠道：
 
 ```bash
-IronCliw channels add
+ironcliw channels add
 ```
 
 然后根据交互式提示选择 Feishu，输入 App ID 和 App Secret 即可。
 
 ✅ **完成配置后**，您可以使用以下命令管理网关：
 
-- `IronCliw gateway status` - 查看网关运行状态
-- `IronCliw gateway restart` - 重启网关以应用新配置
-- `IronCliw logs --follow` - 查看实时日志
+- `ironcliw gateway status` - 查看网关运行状态
+- `ironcliw gateway restart` - 重启网关以应用新配置
+- `ironcliw logs --follow` - 查看实时日志
 
 ---
 
@@ -147,8 +143,8 @@ Lark（国际版）请使用 https://open.larksuite.com/app，并在配置中设
 
 ⚠️ **重要提醒**：在配置事件订阅前，请务必确保已完成以下步骤：
 
-1. 运行 `IronCliw channels add` 添加了 Feishu 渠道
-2. 网关处于启动状态（可通过 `IronCliw gateway status` 检查状态）
+1. 运行 `ironcliw channels add` 添加了 Feishu 渠道
+2. 网关处于启动状态（可通过 `ironcliw gateway status` 检查状态）
 
 在 **事件订阅** 页面：
 
@@ -174,14 +170,14 @@ Lark（国际版）请使用 https://open.larksuite.com/app，并在配置中设
 运行以下命令，根据提示粘贴 App ID 和 App Secret：
 
 ```bash
-IronCliw channels add
+ironcliw channels add
 ```
 
 选择 **Feishu**，然后输入您在第一步获取的凭证即可。
 
 ### 通过配置文件配置
 
-编辑 `~/.IronCliw/IronCliw.json`：
+编辑 `~/.ironcliw/ironcliw.json`：
 
 ```json5
 {
@@ -276,7 +272,7 @@ export FEISHU_APP_SECRET="xxx"
 ### 1. 启动网关
 
 ```bash
-IronCliw gateway
+ironcliw gateway
 ```
 
 ### 2. 发送测试消息
@@ -288,7 +284,7 @@ IronCliw gateway
 默认情况下，机器人会回复一个 **配对码**。您需要批准此代码：
 
 ```bash
-IronCliw pairing approve feishu <配对码>
+ironcliw pairing approve feishu <配对码>
 ```
 
 批准后即可正常对话。
@@ -311,8 +307,8 @@ IronCliw pairing approve feishu <配对码>
 - **默认**：`dmPolicy: "pairing"`，陌生用户会收到配对码
 - **批准配对**：
   ```bash
-  IronCliw pairing list feishu      # 查看待审批列表
-  IronCliw pairing approve feishu <CODE>  # 批准
+  ironcliw pairing list feishu      # 查看待审批列表
+  ironcliw pairing approve feishu <CODE>  # 批准
   ```
 - **白名单模式**：通过 `channels.feishu.allowFrom` 配置允许的用户 Open ID
 
@@ -408,7 +404,7 @@ IronCliw pairing approve feishu <配对码>
 **方法一**（推荐）：
 
 1. 启动网关并在群组中 @机器人发消息
-2. 运行 `IronCliw logs --follow` 查看日志中的 `chat_id`
+2. 运行 `ironcliw logs --follow` 查看日志中的 `chat_id`
 
 **方法二**：
 使用飞书 API 调试工具获取机器人所在群组列表。
@@ -420,13 +416,13 @@ IronCliw pairing approve feishu <配对码>
 **方法一**（推荐）：
 
 1. 启动网关并给机器人发消息
-2. 运行 `IronCliw logs --follow` 查看日志中的 `open_id`
+2. 运行 `ironcliw logs --follow` 查看日志中的 `open_id`
 
 **方法二**：
 查看配对请求列表，其中包含用户的 Open ID：
 
 ```bash
-IronCliw pairing list feishu
+ironcliw pairing list feishu
 ```
 
 ---
@@ -447,11 +443,11 @@ IronCliw pairing list feishu
 
 | 命令                       | 说明              |
 | -------------------------- | ----------------- |
-| `IronCliw gateway status`  | 查看网关运行状态  |
-| `IronCliw gateway install` | 安装/启动网关服务 |
-| `IronCliw gateway stop`    | 停止网关服务      |
-| `IronCliw gateway restart` | 重启网关服务      |
-| `IronCliw logs --follow`   | 实时查看日志输出  |
+| `ironcliw gateway status`  | 查看网关运行状态  |
+| `ironcliw gateway install` | 安装/启动网关服务 |
+| `ironcliw gateway stop`    | 停止网关服务      |
+| `ironcliw gateway restart` | 重启网关服务      |
+| `ironcliw logs --follow`   | 实时查看日志输出  |
 
 ---
 
@@ -462,7 +458,7 @@ IronCliw pairing list feishu
 1. 检查机器人是否已添加到群组
 2. 检查是否 @了机器人（默认需要 @提及）
 3. 检查 `groupPolicy` 是否为 `"disabled"`
-4. 查看日志：`IronCliw logs --follow`
+4. 查看日志：`ironcliw logs --follow`
 
 ### 机器人收不到消息
 
@@ -470,8 +466,8 @@ IronCliw pairing list feishu
 2. 检查事件订阅是否配置正确（`im.message.receive_v1`）
 3. 检查是否选择了 **长连接** 模式
 4. 检查应用权限是否完整
-5. 检查网关是否正在运行：`IronCliw gateway status`
-6. 查看实时日志：`IronCliw logs --follow`
+5. 检查网关是否正在运行：`ironcliw gateway status`
+6. 查看实时日志：`ironcliw logs --follow`
 
 ### App Secret 泄露怎么办
 
@@ -585,12 +581,12 @@ IronCliw pairing list feishu
       {
         id: "clawd-fan",
         workspace: "/home/user/clawd-fan",
-        agentDir: "/home/user/.IronCliw/agents/clawd-fan/agent",
+        agentDir: "/home/user/.ironcliw/agents/clawd-fan/agent",
       },
       {
         id: "clawd-xi",
         workspace: "/home/user/clawd-xi",
-        agentDir: "/home/user/.IronCliw/agents/clawd-xi/agent",
+        agentDir: "/home/user/.ironcliw/agents/clawd-xi/agent",
       },
     ],
   },

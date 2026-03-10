@@ -22,12 +22,14 @@ export class SecretVault {
     if (!masterSecret) {
       throw new Error("SecretVault requires a non-empty master secret.");
     }
-    this.masterKey = crypto.hkdfSync(
-      "sha256",
-      Buffer.from(masterSecret, "utf-8"),
-      Buffer.alloc(32),
-      Buffer.from("IronCliw-SecretVault-v1"),
-      32,
+    this.masterKey = Buffer.from(
+      crypto.hkdfSync(
+        "sha256",
+        Buffer.from(masterSecret, "utf-8"),
+        Buffer.alloc(32),
+        Buffer.from("IronCliw-SecretVault-v1"),
+        32,
+      ),
     );
     this.vaultPath = vaultPath;
   }
@@ -46,13 +48,19 @@ export class SecretVault {
   }
 
   public async retrieve(key: string): Promise<string | null> {
-    if (this.cache.has(key)) {return this.cache.get(key)!;}
+    if (this.cache.has(key)) {
+      return this.cache.get(key)!;
+    }
 
     const raw = await this._readRaw(key);
-    if (!raw) {return null;}
+    if (!raw) {
+      return null;
+    }
 
     const parts = raw.split(":");
-    if (parts.length < 3) {return null;}
+    if (parts.length < 3) {
+      return null;
+    }
     const [ivHex, authTagHex, ...rest] = parts;
     const ciphertext = rest.join(":");
 
@@ -80,7 +88,9 @@ export class SecretVault {
   public async delete(key: string): Promise<boolean> {
     this.cache.delete(key);
     const vault = await this._loadVaultFile();
-    if (!(key in vault)) {return false;}
+    if (!(key in vault)) {
+      return false;
+    }
     delete vault[key];
     await this._saveVaultFile(vault);
     return true;
@@ -115,7 +125,17 @@ export class SecretVault {
   }
 
   private async _saveVaultFile(vault: Record<string, string>): Promise<void> {
-    await fs.mkdir(path.dirname(this.vaultPath), { recursive: true });
-    await fs.writeFile(this.vaultPath, JSON.stringify(vault, null, 2), "utf-8");
+    const dir = path.dirname(this.vaultPath);
+    await fs.mkdir(dir, { recursive: true });
+    const tmp = `${this.vaultPath}.${process.hrtime.bigint()}.tmp`;
+    try {
+      await fs.writeFile(tmp, JSON.stringify(vault, null, 2), "utf-8");
+      await fs.rename(tmp, this.vaultPath);
+    } catch (err) {
+      try {
+        await fs.unlink(tmp);
+      } catch {}
+      throw err;
+    }
   }
 }

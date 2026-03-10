@@ -1,6 +1,6 @@
-import type { DmPolicy, GroupPolicy } from "IronCliw/plugin-sdk/bluebubbles";
+import type { DmPolicy, GroupPolicy } from "ironcliw/plugin-sdk/bluebubbles";
 
-export type { DmPolicy, GroupPolicy } from "IronCliw/plugin-sdk/bluebubbles";
+export type { DmPolicy, GroupPolicy } from "ironcliw/plugin-sdk/bluebubbles";
 
 export type BlueBubblesGroupConfig = {
   /** If true, only respond in this group when mentioned. */

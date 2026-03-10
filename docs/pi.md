@@ -112,7 +112,7 @@ src/agents/
 ├── sandbox.ts                     # Sandbox context resolution
 ├── sandbox/                       # Sandbox subsystem
 ├── channel-tools.ts               # Channel-specific tool injection
-├── IronCliw-tools.ts              # IronCliw-specific tools
+├── ironcliw-tools.ts              # IronCliw-specific tools
 ├── bash-tools.ts                  # exec/process tools
 ├── apply-patch.ts                 # apply_patch tool (OpenAI)
 ├── tools/                         # Individual tool implementations
@@ -146,7 +146,7 @@ const result = await runEmbeddedPiAgent({
   sessionKey: "main:whatsapp:+1234567890",
   sessionFile: "/path/to/session.jsonl",
   workspaceDir: "/path/to/workspace",
-  config: IronCliwConfig,
+  config: ironcliwConfig,
   prompt: "Hello, how are you?",
   provider: "anthropic",
   model: "claude-sonnet-4-20250514",
@@ -524,7 +524,7 @@ This provides the interactive terminal experience similar to pi's native mode.
 | Invocation      | `pi` command / RPC      | SDK via `createAgentSession()`                                                                 |
 | Tools           | Default coding tools    | Custom IronCliw tool suite                                                                     |
 | System prompt   | AGENTS.md + prompts     | Dynamic per-channel/context                                                                    |
-| Session storage | `~/.pi/agent/sessions/` | `~/.IronCliw/agents/<agentId>/sessions/` (or `$IronCliw_STATE_DIR/agents/<agentId>/sessions/`) |
+| Session storage | `~/.pi/agent/sessions/` | `~/.ironcliw/agents/<agentId>/sessions/` (or `$IRONCLIW_STATE_DIR/agents/<agentId>/sessions/`) |
 | Auth            | Single credential       | Multi-profile with rotation                                                                    |
 | Extensions      | Loaded from disk        | Programmatic + disk paths                                                                      |
 | Event handling  | TUI rendering           | Callback-based (onBlockReply, etc.)                                                            |
@@ -557,6 +557,6 @@ Pi integration coverage spans these suites:
 
 Live/opt-in:
 
-- `src/agents/pi-embedded-runner-extraparams.live.test.ts` (enable `IronCliw_LIVE_TEST=1`)
+- `src/agents/pi-embedded-runner-extraparams.live.test.ts` (enable `IRONCLIW_LIVE_TEST=1`)
 
 For current run commands, see [Pi Development Workflow](/pi-dev).

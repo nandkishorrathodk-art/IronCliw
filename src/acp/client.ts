@@ -348,8 +348,16 @@ function buildServerArgs(opts: AcpClientOptions): string[] {
 
 export function resolveAcpClientSpawnEnv(
   baseEnv: NodeJS.ProcessEnv = process.env,
+  options?: { stripKeys?: ReadonlySet<string> },
 ): NodeJS.ProcessEnv {
-  return { ...baseEnv, IronCliw_SHELL: "acp-client" };
+  const env: NodeJS.ProcessEnv = { ...baseEnv };
+  if (options?.stripKeys) {
+    for (const key of options.stripKeys) {
+      delete env[key];
+    }
+  }
+  env.IRONCLIW_SHELL = "acp-client";
+  return env;
 }
 
 type AcpSpawnRuntime = {
@@ -373,7 +381,7 @@ export function resolveAcpClientSpawnInvocation(
     platform: runtime.platform,
     env: runtime.env,
     execPath: runtime.execPath,
-    packageName: "IronCliw",
+    packageName: "ironcliw",
     allowShellFallback: true,
   });
   const resolved = materializeWindowsSpawnProgram(program, params.serverArgs);
@@ -448,9 +456,12 @@ export async function createAcpClient(opts: AcpClientOptions = {}): Promise<AcpC
   const serverArgs = buildServerArgs(opts);
 
   const entryPath = resolveSelfEntryPath();
-  const serverCommand = opts.serverCommand ?? (entryPath ? process.execPath : "IronCliw");
+  const serverCommand = opts.serverCommand ?? (entryPath ? process.execPath : "ironcliw");
   const effectiveArgs = opts.serverCommand || !entryPath ? serverArgs : [entryPath, ...serverArgs];
-  const spawnEnv = resolveAcpClientSpawnEnv();
+  const { getActiveSkillEnvKeys } = await import("../agents/skills/env-overrides.runtime.js");
+  const spawnEnv = resolveAcpClientSpawnEnv(process.env, {
+    stripKeys: getActiveSkillEnvKeys(),
+  });
   const spawnInvocation = resolveAcpClientSpawnInvocation(
     { serverCommand, serverArgs: effectiveArgs },
     {
@@ -497,7 +508,7 @@ export async function createAcpClient(opts: AcpClientOptions = {}): Promise<AcpC
       fs: { readTextFile: true, writeTextFile: true },
       terminal: true,
     },
-    clientInfo: { name: "IronCliw-acp-client", version: "1.0.0" },
+    clientInfo: { name: "ironcliw-acp-client", version: "1.0.0" },
   });
 
   log("creating session");

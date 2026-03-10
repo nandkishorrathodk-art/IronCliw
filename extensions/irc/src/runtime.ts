@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/irc";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/irc";
 
-let runtime: PluginRuntime | null = null;
-
-export function setIrcRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getIrcRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("IRC runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setIrcRuntime, getRuntime: getIrcRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("IRC runtime not initialized");
+export { getIrcRuntime, setIrcRuntime };

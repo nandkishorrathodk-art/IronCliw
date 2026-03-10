@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { PassThrough } from "node:stream";
-import type { IronCliwPluginApi, IronCliwPluginToolContext } from "IronCliw/plugin-sdk/lobster";
+import type { IronCliwPluginApi, IronCliwPluginToolContext } from "ironcliw/plugin-sdk/lobster";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createWindowsCmdShimFixture,
@@ -46,6 +46,7 @@ function fakeApi(overrides: Partial<IronCliwPluginApi> = {}): IronCliwPluginApi 
     registerHook() {},
     registerHttpRoute() {},
     registerCommand() {},
+    registerContextEngine() {},
     on() {},
     resolvePath: (p) => p,
     ...overrides,
@@ -73,7 +74,7 @@ describe("lobster plugin tool", () => {
   beforeAll(async () => {
     ({ createLobsterTool } = await import("./lobster-tool.js"));
 
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-lobster-plugin-"));
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-lobster-plugin-"));
   });
 
   afterEach(() => {

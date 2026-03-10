@@ -23,16 +23,16 @@ describe("normalizeCompatibilityConfigValues", () => {
   };
 
   beforeEach(() => {
-    previousOauthDir = process.env.IronCliw_OAUTH_DIR;
-    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-oauth-"));
-    process.env.IronCliw_OAUTH_DIR = tempOauthDir;
+    previousOauthDir = process.env.IRONCLIW_OAUTH_DIR;
+    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-oauth-"));
+    process.env.IRONCLIW_OAUTH_DIR = tempOauthDir;
   });
 
   afterEach(() => {
     if (previousOauthDir === undefined) {
-      delete process.env.IronCliw_OAUTH_DIR;
+      delete process.env.IRONCLIW_OAUTH_DIR;
     } else {
-      process.env.IronCliw_OAUTH_DIR = previousOauthDir;
+      process.env.IRONCLIW_OAUTH_DIR = previousOauthDir;
     }
     if (tempOauthDir) {
       fs.rmSync(tempOauthDir, { recursive: true, force: true });
@@ -87,7 +87,7 @@ describe("normalizeCompatibilityConfigValues", () => {
   });
 
   it("copies legacy ack reaction when authDir override exists", () => {
-    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-wa-auth-"));
+    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-wa-auth-"));
     try {
       writeCreds(customDir);
 

@@ -18,4 +18,3 @@ session "Implement a fix for the most likely root cause. Explain your changes."
 
 # Verify fix
 session "Run the test suite to verify the fix works and doesn't break anything else."
-

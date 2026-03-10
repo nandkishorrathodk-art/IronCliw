@@ -22,6 +22,7 @@
 export interface CacheEntry<T = unknown> {
   value: T;
   createdAt: number;
+  lastAccessedAt: number;
   hitCount: number;
   key: string;
 }
@@ -52,6 +53,7 @@ export class SmartContextCache {
   private readonly ttlMs: number;
   private readonly maxEntries: number;
   private readonly debug: boolean;
+  private readonly pruneTimer: NodeJS.Timeout;
 
   private hits = 0;
   private misses = 0;
@@ -61,6 +63,12 @@ export class SmartContextCache {
     this.ttlMs = opts.ttlMs ?? 60_000;
     this.maxEntries = opts.maxEntries ?? 256;
     this.debug = opts.debug ?? false;
+    this.pruneTimer = setInterval(() => this.pruneExpired(), this.ttlMs).unref();
+  }
+
+  public destroy(): void {
+    clearInterval(this.pruneTimer);
+    this.store.clear();
   }
 
   /**
@@ -77,8 +85,10 @@ export class SmartContextCache {
     const existing = this.store.get(key);
     const effectiveTtl = ttlMs ?? this.ttlMs;
 
-    if (existing && Date.now() - existing.createdAt < effectiveTtl) {
+    const now = Date.now();
+    if (existing && now - existing.createdAt < effectiveTtl) {
       existing.hitCount++;
+      existing.lastAccessedAt = now;
       this.hits++;
       if (this.debug) {
         console.log(`[SmartCache] HIT  "${key}" (hits: ${existing.hitCount})`);
@@ -93,7 +103,6 @@ export class SmartContextCache {
 
     const value = await fn();
 
-    // Evict LRU entry if at capacity
     if (this.store.size >= this.maxEntries) {
       this.evictLRU();
     }
@@ -102,6 +111,7 @@ export class SmartContextCache {
       key,
       value,
       createdAt: Date.now(),
+      lastAccessedAt: Date.now(),
       hitCount: 0,
     });
 
@@ -111,12 +121,16 @@ export class SmartContextCache {
   /** Synchronously get a cached value. Returns undefined on miss/expired. */
   get<T>(key: string): T | undefined {
     const entry = this.store.get(key);
-    if (!entry) {return undefined;}
-    if (Date.now() - entry.createdAt >= this.ttlMs) {
+    if (!entry) {
+      return undefined;
+    }
+    const now = Date.now();
+    if (now - entry.createdAt >= this.ttlMs) {
       this.store.delete(key);
       return undefined;
     }
     entry.hitCount++;
+    entry.lastAccessedAt = now;
     this.hits++;
     return entry.value as T;
   }
@@ -126,10 +140,12 @@ export class SmartContextCache {
     if (this.store.size >= this.maxEntries) {
       this.evictLRU();
     }
+    const now = Date.now();
     this.store.set(key, {
       key,
       value,
-      createdAt: ttlMs != null ? Date.now() - (this.ttlMs - ttlMs) : Date.now(),
+      createdAt: ttlMs != null ? now - (this.ttlMs - ttlMs) : now,
+      lastAccessedAt: now,
       hitCount: 0,
     });
   }
@@ -182,12 +198,11 @@ export class SmartContextCache {
   }
 
   private evictLRU(): void {
-    // Evict the least-recently-used (oldest) entry
     let oldestKey: string | null = null;
     let oldestTime = Infinity;
     for (const [key, entry] of this.store) {
-      if (entry.createdAt < oldestTime) {
-        oldestTime = entry.createdAt;
+      if (entry.lastAccessedAt < oldestTime) {
+        oldestTime = entry.lastAccessedAt;
         oldestKey = key;
       }
     }

@@ -15,9 +15,9 @@ Zen is currently in beta.
 ## CLI setup
 
 ```bash
-IronCliw onboard --auth-choice opencode-zen
+ironcliw onboard --auth-choice opencode-zen
 # or non-interactive
-IronCliw onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
+ironcliw onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet

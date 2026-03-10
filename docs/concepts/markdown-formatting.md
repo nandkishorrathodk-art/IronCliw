@@ -41,7 +41,7 @@ stay consistent across channels.
 Input Markdown:
 
 ```markdown
-Hello **world** — see [docs](https://docs.IronCliw.ai).
+Hello **world** — see [docs](https://docs.ironcliw.ai).
 ```
 
 IR (schematic):
@@ -50,7 +50,7 @@ IR (schematic):
 {
   "text": "Hello world — see docs.",
   "styles": [{ "start": 6, "end": 11, "style": "bold" }],
-  "links": [{ "start": 19, "end": 23, "href": "https://docs.IronCliw.ai" }]
+  "links": [{ "start": 19, "end": 23, "href": "https://docs.ironcliw.ai" }]
 }
 ```
 

@@ -45,13 +45,13 @@ function getOpenAIKey(): string | undefined {
   return process.env.OPENAI_API_KEY?.trim() || undefined;
 }
 
-/** Write buffer to a temp WAV and return the path. Caller is responsible for cleanup. */
-function writeTempWav(buffer: Buffer): string {
+/** Write buffer to a temp WAV and return the dir + file path. Caller must rmSync(dir). */
+function writeTempWav(buffer: Buffer): { dir: string; filePath: string } {
   const dir = join(tmpdir(), `IronCliw-voice-${Date.now()}`);
   mkdirSync(dir, { recursive: true });
-  const path = join(dir, "input.wav");
-  writeFileSync(path, buffer);
-  return path;
+  const filePath = join(dir, "input.wav");
+  writeFileSync(filePath, buffer);
+  return { dir, filePath };
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -83,7 +83,7 @@ async function transcribeWithDeepgram(
         Authorization: `Token ${apiKey}`,
         "Content-Type": "audio/wav",
       },
-      body: buffer,
+      body: new Uint8Array(buffer),
       signal: controller.signal,
     });
 
@@ -129,14 +129,12 @@ async function transcribeWithWhisper(
   const timeoutMs = opts.timeoutMs ?? 60_000;
   const t0 = Date.now();
 
-  const tmpPath = writeTempWav(buffer);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    // Build multipart form data
     const { Blob } = await import("node:buffer");
-    const wavBlob = new Blob([buffer], { type: "audio/wav" });
+    const wavBlob = new Blob([new Uint8Array(buffer)], { type: "audio/wav" });
 
     const formData = new FormData();
     formData.append("file", wavBlob as Blob, "audio.wav");
@@ -168,11 +166,6 @@ async function transcribeWithWhisper(
     };
   } finally {
     clearTimeout(timer);
-    try {
-      rmSync(tmpPath, { recursive: true, force: true });
-    } catch {
-      // ignore cleanup errors
-    }
   }
 }
 
@@ -184,7 +177,7 @@ async function transcribeWithWindowsSAPI(
   buffer: Buffer,
   opts: TranscribeOptions,
 ): Promise<TranscribeResult> {
-  const tmpPath = writeTempWav(buffer);
+  const { dir: tmpDir, filePath: tmpPath } = writeTempWav(buffer);
   const t0 = Date.now();
 
   // PowerShell script that uses Windows Speech Recognition COM API
@@ -220,7 +213,7 @@ try {
 
     ps.on("close", (code) => {
       try {
-        rmSync(tmpPath, { recursive: true, force: true });
+        rmSync(tmpDir, { recursive: true, force: true });
       } catch {
         // ignore
       }
@@ -251,7 +244,9 @@ try {
 let _cachedProvider: VoiceInputProvider | null = null;
 
 function detectBestProvider(): VoiceInputProvider {
-  if (_cachedProvider) {return _cachedProvider;}
+  if (_cachedProvider) {
+    return _cachedProvider;
+  }
 
   if (getDeepgramKey()) {
     _cachedProvider = "deepgram";
@@ -263,7 +258,7 @@ function detectBestProvider(): VoiceInputProvider {
   }
   if (process.platform === "win32") {
     try {
-      execSync("powershell.exe -Command \"[System.Speech.Recognition.SpeechRecognitionEngine]\"", {
+      execSync('powershell.exe -Command "[System.Speech.Recognition.SpeechRecognitionEngine]"', {
         timeout: 3000,
         stdio: "pipe",
       });

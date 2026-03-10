@@ -241,4 +241,3 @@ output result = {
   opportunities_implemented: implementations,
   prs_created: prs
 }
-

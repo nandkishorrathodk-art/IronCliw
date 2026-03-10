@@ -5,12 +5,12 @@ import type {
   ChannelPlugin,
   ChannelSetupInput,
   IronCliwConfig,
-} from "IronCliw/plugin-sdk/tlon";
+} from "ironcliw/plugin-sdk/tlon";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "IronCliw/plugin-sdk/tlon";
+} from "ironcliw/plugin-sdk/tlon";
 import { buildTlonAccountFields } from "./account-fields.js";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
@@ -497,7 +497,7 @@ export const tlonPlugin: ChannelPlugin = {
         lastError: runtime?.lastError ?? null,
         probe,
       };
-      return snapshot as import("IronCliw/plugin-sdk/tlon").ChannelAccountSnapshot;
+      return snapshot as import("ironcliw/plugin-sdk/tlon").ChannelAccountSnapshot;
     },
   },
   gateway: {
@@ -507,7 +507,7 @@ export const tlonPlugin: ChannelPlugin = {
         accountId: account.accountId,
         ship: account.ship,
         url: account.url,
-      } as import("IronCliw/plugin-sdk/tlon").ChannelAccountSnapshot);
+      } as import("ironcliw/plugin-sdk/tlon").ChannelAccountSnapshot);
       ctx.log?.info(`[${account.accountId}] starting Tlon provider for ${account.ship ?? "tlon"}`);
       return monitorTlonProvider({
         runtime: ctx.runtime,

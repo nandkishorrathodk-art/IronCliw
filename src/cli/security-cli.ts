@@ -35,11 +35,11 @@ export function registerSecurityCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw security audit", "Run a local security audit."],
-          ["IronCliw security audit --deep", "Include best-effort live Gateway probe checks."],
-          ["IronCliw security audit --fix", "Apply safe remediations and file-permission fixes."],
-          ["IronCliw security audit --json", "Output machine-readable JSON."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/security", "docs.IronCliw.ai/cli/security")}\n`,
+          ["ironcliw security audit", "Run a local security audit."],
+          ["ironcliw security audit --deep", "Include best-effort live Gateway probe checks."],
+          ["ironcliw security audit --fix", "Apply safe remediations and file-permission fixes."],
+          ["ironcliw security audit --json", "Output machine-readable JSON."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/security", "docs.ironcliw.ai/cli/security")}\n`,
     );
 
   security
@@ -73,10 +73,10 @@ export function registerSecurityCli(program: Command) {
       const lines: string[] = [];
       lines.push(heading("IronCliw security audit"));
       lines.push(muted(`Summary: ${formatSummary(report.summary)}`));
-      lines.push(muted(`Run deeper: ${formatCliCommand("IronCliw security audit --deep")}`));
+      lines.push(muted(`Run deeper: ${formatCliCommand("ironcliw security audit --deep")}`));
 
       if (opts.fix) {
-        lines.push(muted(`Fix: ${formatCliCommand("IronCliw security audit --fix")}`));
+        lines.push(muted(`Fix: ${formatCliCommand("ironcliw security audit --fix")}`));
         if (!fixResult) {
           lines.push(muted("Fixes: failed to apply (unexpected error)"));
         } else if (

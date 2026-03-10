@@ -2,7 +2,7 @@ import {
   applyWindowsSpawnProgramPolicy,
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
-} from "IronCliw/plugin-sdk/lobster";
+} from "ironcliw/plugin-sdk/lobster";
 
 type SpawnTarget = {
   command: string;

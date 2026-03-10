@@ -1,4 +1,4 @@
-import type { LineChannelData, IronCliwPluginApi, ReplyPayload } from "IronCliw/plugin-sdk/line";
+import type { LineChannelData, IronCliwPluginApi, ReplyPayload } from "ironcliw/plugin-sdk/line";
 import {
   createActionCard,
   createImageCard,
@@ -7,7 +7,7 @@ import {
   createReceiptCard,
   type CardAction,
   type ListItem,
-} from "IronCliw/plugin-sdk/line";
+} from "ironcliw/plugin-sdk/line";
 
 const CARD_USAGE = `Usage: /card <type> "title" "body" [options]
 

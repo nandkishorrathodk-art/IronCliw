@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 import { buildRandomTempFilePath, withTempDownloadPath } from "./temp-path.js";
 
 describe("buildRandomTempFilePath", () => {

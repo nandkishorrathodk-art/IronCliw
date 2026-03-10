@@ -15,4 +15,3 @@ session "Based on your exploration, write a brief architecture document explaini
 
 # Identify patterns
 session "What design patterns and conventions does this codebase use? Document any patterns future contributors should follow."
-

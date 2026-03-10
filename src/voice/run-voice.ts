@@ -18,9 +18,9 @@
  */
 
 import process from "node:process";
-import { createVoicePipeline } from "./voice-pipeline.js";
 import { getAvailableSTTProvider } from "./voice-input.js";
 import { getAvailableTTSProvider, RECOMMENDED_VOICES } from "./voice-output.js";
+import { createVoicePipeline } from "./voice-pipeline.js";
 
 /* ─────────────────────────────────────────────────────────────
    Banner
@@ -82,7 +82,7 @@ function printProviderInfo(): void {
     for (const v of RECOMMENDED_VOICES.elevenlabs) {
       console.log(`   • ${v.name}`);
     }
-    console.log(`   Set IRONCLIW_VOICE_ID=<voice-id> to choose a voice.\n`);
+    console.log(`   Set IronCliw_VOICE_ID=<voice-id> to choose a voice.\n`);
   }
 }
 

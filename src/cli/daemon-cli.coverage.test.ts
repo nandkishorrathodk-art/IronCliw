@@ -14,6 +14,7 @@ const serviceRestart = vi.fn().mockResolvedValue(undefined);
 const serviceIsLoaded = vi.fn().mockResolvedValue(false);
 const serviceReadCommand = vi.fn().mockResolvedValue(null);
 const serviceReadRuntime = vi.fn().mockResolvedValue({ status: "running" });
+const resolveGatewayProbeAuthWithSecretInputs = vi.fn(async (_opts?: unknown) => ({}));
 const findExtraGatewayServices = vi.fn(async (_env: unknown, _opts?: unknown) => []);
 const inspectPortUsage = vi.fn(async (port: number) => ({
   port,
@@ -26,8 +27,8 @@ const buildGatewayInstallPlan = vi.fn(
     programArguments: ["/bin/node", "cli", "gateway", "--port", String(params.port)],
     workingDirectory: process.cwd(),
     environment: {
-      IronCliw_GATEWAY_PORT: String(params.port),
-      ...(params.token ? { IronCliw_GATEWAY_TOKEN: params.token } : {}),
+      IRONCLIW_GATEWAY_PORT: String(params.port),
+      ...(params.token ? { IRONCLIW_GATEWAY_TOKEN: params.token } : {}),
     },
   }),
 );
@@ -36,6 +37,11 @@ const { runtimeLogs, defaultRuntime, resetRuntimeCapture } = createCliRuntimeCap
 
 vi.mock("../gateway/call.js", () => ({
   callGateway: (opts: unknown) => callGateway(opts),
+}));
+
+vi.mock("../gateway/probe-auth.js", () => ({
+  resolveGatewayProbeAuthWithSecretInputs: (opts: unknown) =>
+    resolveGatewayProbeAuthWithSecretInputs(opts),
 }));
 
 vi.mock("../daemon/program-args.js", () => ({
@@ -113,16 +119,17 @@ describe("daemon-cli coverage", () => {
   beforeEach(() => {
     daemonProgram = createDaemonProgram();
     envSnapshot = captureEnv([
-      "IronCliw_STATE_DIR",
-      "IronCliw_CONFIG_PATH",
-      "IronCliw_GATEWAY_PORT",
-      "IronCliw_PROFILE",
+      "IRONCLIW_STATE_DIR",
+      "IRONCLIW_CONFIG_PATH",
+      "IRONCLIW_GATEWAY_PORT",
+      "IRONCLIW_PROFILE",
     ]);
-    process.env.IronCliw_STATE_DIR = "/tmp/IronCliw-cli-state";
-    process.env.IronCliw_CONFIG_PATH = "/tmp/IronCliw-cli-state/IronCliw.json";
-    delete process.env.IronCliw_GATEWAY_PORT;
-    delete process.env.IronCliw_PROFILE;
+    process.env.IRONCLIW_STATE_DIR = "/tmp/ironcliw-cli-state";
+    process.env.IRONCLIW_CONFIG_PATH = "/tmp/ironcliw-cli-state/ironcliw.json";
+    delete process.env.IRONCLIW_GATEWAY_PORT;
+    delete process.env.IRONCLIW_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
+    resolveGatewayProbeAuthWithSecretInputs.mockClear();
     buildGatewayInstallPlan.mockClear();
   });
 
@@ -150,12 +157,12 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        IronCliw_PROFILE: "dev",
-        IronCliw_STATE_DIR: "/tmp/IronCliw-daemon-state",
-        IronCliw_CONFIG_PATH: "/tmp/IronCliw-daemon-state/IronCliw.json",
-        IronCliw_GATEWAY_PORT: "19001",
+        IRONCLIW_PROFILE: "dev",
+        IRONCLIW_STATE_DIR: "/tmp/ironcliw-daemon-state",
+        IRONCLIW_CONFIG_PATH: "/tmp/ironcliw-daemon-state/ironcliw.json",
+        IRONCLIW_GATEWAY_PORT: "19001",
       },
-      sourcePath: "/tmp/ai.IronCliw.gateway.plist",
+      sourcePath: "/tmp/ai.ironcliw.gateway.plist",
     });
 
     await runDaemonCommand(["daemon", "status", "--json"]);

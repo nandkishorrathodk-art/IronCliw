@@ -25,10 +25,10 @@ describe("config identity defaults", () => {
   });
 
   const writeAndLoadConfig = async (home: string, config: Record<string, unknown>) => {
-    const configDir = path.join(home, ".IronCliw");
+    const configDir = path.join(home, ".ironcliw");
     await fs.mkdir(configDir, { recursive: true });
     await fs.writeFile(
-      path.join(configDir, "IronCliw.json"),
+      path.join(configDir, "ironcliw.json"),
       JSON.stringify(config, null, 2),
       "utf-8",
     );
@@ -36,7 +36,7 @@ describe("config identity defaults", () => {
   };
 
   it("does not derive mention defaults and only sets ackReactionScope when identity is present", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, configWithDefaultIdentity({}));
 
       expect(cfg.messages?.responsePrefix).toBeUndefined();
@@ -47,7 +47,7 @@ describe("config identity defaults", () => {
   });
 
   it("keeps ackReaction unset and does not synthesize agent/session defaults when identity is missing", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, { messages: {} });
 
       expect(cfg.messages?.ackReaction).toBeUndefined();
@@ -62,7 +62,7 @@ describe("config identity defaults", () => {
   });
 
   it("does not override explicit values", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, {
         agents: {
           list: [
@@ -73,7 +73,7 @@ describe("config identity defaults", () => {
                 theme: "iron grip",
                 emoji: "🦾",
               },
-              groupChat: { mentionPatterns: ["@IronCliw"] },
+              groupChat: { mentionPatterns: ["@ironcliw"] },
             },
           ],
         },
@@ -83,16 +83,16 @@ describe("config identity defaults", () => {
       });
 
       expect(cfg.messages?.responsePrefix).toBe("✅");
-      expect(cfg.agents?.list?.[0]?.groupChat?.mentionPatterns).toEqual(["@IronCliw"]);
+      expect(cfg.agents?.list?.[0]?.groupChat?.mentionPatterns).toEqual(["@ironcliw"]);
     });
   });
 
   it("supports provider textChunkLimit config", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, {
         messages: {
-          messagePrefix: "[IronCliw]",
-          responsePrefix: "🦾",
+          messagePrefix: "[ironcliw]",
+          responsePrefix: "🦞",
         },
         channels: {
           whatsapp: { allowFrom: ["+15555550123"], textChunkLimit: 4444 },
@@ -120,7 +120,7 @@ describe("config identity defaults", () => {
   });
 
   it("accepts blank model provider apiKey values", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, {
         models: {
           mode: "merge",
@@ -154,8 +154,37 @@ describe("config identity defaults", () => {
     });
   });
 
+  it("accepts SecretRef values in model provider headers", async () => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
+      const cfg = await writeAndLoadConfig(home, {
+        models: {
+          providers: {
+            openai: {
+              baseUrl: "https://api.openai.com/v1",
+              api: "openai-completions",
+              headers: {
+                Authorization: {
+                  source: "env",
+                  provider: "default",
+                  id: "OPENAI_HEADER_TOKEN",
+                },
+              },
+              models: [],
+            },
+          },
+        },
+      });
+
+      expect(cfg.models?.providers?.openai?.headers?.Authorization).toEqual({
+        source: "env",
+        provider: "default",
+        id: "OPENAI_HEADER_TOKEN",
+      });
+    });
+  });
+
   it("respects empty responsePrefix to disable identity defaults", async () => {
-    await withTempHome("IronCliw-config-identity-", async (home) => {
+    await withTempHome("ironcliw-config-identity-", async (home) => {
       const cfg = await writeAndLoadConfig(home, configWithDefaultIdentity({ responsePrefix: "" }));
 
       expect(cfg.messages?.responsePrefix).toBe("");

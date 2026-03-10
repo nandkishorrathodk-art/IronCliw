@@ -1,4 +1,4 @@
-import type { LookupFn, SsrFPolicy } from "IronCliw/plugin-sdk/tlon";
+import type { LookupFn, SsrFPolicy } from "ironcliw/plugin-sdk/tlon";
 import { UrbitAuthError } from "./errors.js";
 import { urbitFetch } from "./fetch.js";
 

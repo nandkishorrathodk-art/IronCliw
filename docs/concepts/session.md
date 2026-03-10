@@ -30,7 +30,7 @@ Use `session.dmScope` to control how **direct messages** are grouped:
 **The fix:** Set `dmScope` to isolate sessions per user:
 
 ```json5
-// ~/.IronCliw/IronCliw.json
+// ~/.ironcliw/ironcliw.json
 {
   session: {
     // Secure DM mode: isolate DM context per channel + sender.
@@ -52,7 +52,7 @@ Notes:
 - Local CLI onboarding writes `session.dmScope: "per-channel-peer"` by default when unset (existing explicit values are preserved).
 - For multi-account inboxes on the same channel, prefer `per-account-channel-peer`.
 - If the same person contacts you on multiple channels, use `session.identityLinks` to collapse their DM sessions into one canonical identity.
-- You can verify your DM settings with `IronCliw security audit` (see [security](/cli/security)).
+- You can verify your DM settings with `ironcliw security audit` (see [security](/cli/security)).
 
 ## Gateway is the source of truth
 
@@ -64,8 +64,8 @@ All session state is **owned by the gateway** (the “master” IronCliw). UI cl
 ## Where state lives
 
 - On the **gateway host**:
-  - Store file: `~/.IronCliw/agents/<agentId>/sessions/sessions.json` (per agent).
-- Transcripts: `~/.IronCliw/agents/<agentId>/sessions/<SessionId>.jsonl` (Telegram topic sessions use `.../<SessionId>-topic-<threadId>.jsonl`).
+  - Store file: `~/.ironcliw/agents/<agentId>/sessions/sessions.json` (per agent).
+- Transcripts: `~/.ironcliw/agents/<agentId>/sessions/<SessionId>.jsonl` (Telegram topic sessions use `.../<SessionId>-topic-<threadId>.jsonl`).
 - The store is a map `sessionKey -> { sessionId, updatedAt, ... }`. Deleting entries is safe; they are recreated on demand.
 - Group entries may include `displayName`, `channel`, `subject`, `room`, and `space` to label sessions in UIs.
 - Session entries include `origin` metadata (label + routing hints) so UIs can explain where a session came from.
@@ -87,7 +87,7 @@ IronCliw applies session-store maintenance to keep `sessions.json` and transcrip
 
 ### How it works
 
-Maintenance runs during session-store writes, and you can trigger it on demand with `IronCliw sessions cleanup`.
+Maintenance runs during session-store writes, and you can trigger it on demand with `ironcliw sessions cleanup`.
 
 - `mode: "warn"`: reports what would be evicted but does not mutate entries/transcripts.
 - `mode: "enforce"`: applies cleanup in this order:
@@ -106,7 +106,7 @@ What increases cost most:
 
 - very high `session.maintenance.maxEntries` values
 - long `pruneAfter` windows that keep stale entries around
-- many transcript/archive artifacts in `~/.IronCliw/agents/<agentId>/sessions/`
+- many transcript/archive artifacts in `~/.ironcliw/agents/<agentId>/sessions/`
 - enabling disk budgets (`maxDiskBytes`) without reasonable pruning/cap limits
 
 What to do:
@@ -115,7 +115,7 @@ What to do:
 - set both time and count limits (`pruneAfter` + `maxEntries`), not just one
 - set `maxDiskBytes` + `highWaterBytes` for hard upper bounds in large deployments
 - keep `highWaterBytes` meaningfully below `maxDiskBytes` (default is 80%)
-- run `IronCliw sessions cleanup --dry-run --json` after config changes to verify projected impact before enforcing
+- run `ironcliw sessions cleanup --dry-run --json` after config changes to verify projected impact before enforcing
 - for frequent active sessions, pass `--active-key` when running manual cleanup
 
 ### Customize examples
@@ -170,8 +170,8 @@ Tune for larger installs (example):
 Preview or force maintenance from CLI:
 
 ```bash
-IronCliw sessions cleanup --dry-run
-IronCliw sessions cleanup --enforce
+ironcliw sessions cleanup --dry-run
+ironcliw sessions cleanup --enforce
 ```
 
 ## Session pruning
@@ -246,7 +246,7 @@ Runtime override (owner only):
 ## Configuration (optional rename example)
 
 ```json5
-// ~/.IronCliw/IronCliw.json
+// ~/.ironcliw/ironcliw.json
 {
   session: {
     scope: "per-sender", // keep group keys separate
@@ -270,7 +270,7 @@ Runtime override (owner only):
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.IronCliw/agents/{agentId}/sessions/sessions.json",
+    store: "~/.ironcliw/agents/{agentId}/sessions/sessions.json",
     mainKey: "main",
   },
 }
@@ -278,12 +278,12 @@ Runtime override (owner only):
 
 ## Inspecting
 
-- `IronCliw status` — shows store path and recent sessions.
-- `IronCliw sessions --json` — dumps every entry (filter with `--active <minutes>`).
-- `IronCliw gateway call sessions.list --params '{}'` — fetch sessions from the running gateway (use `--url`/`--token` for remote gateway access).
+- `ironcliw status` — shows store path and recent sessions.
+- `ironcliw sessions --json` — dumps every entry (filter with `--active <minutes>`).
+- `ironcliw gateway call sessions.list --params '{}'` — fetch sessions from the running gateway (use `--url`/`--token` for remote gateway access).
 - Send `/status` as a standalone message in chat to see whether the agent is reachable, how much of the session context is used, current thinking/verbose toggles, and when your WhatsApp web creds were last refreshed (helps spot relink needs).
 - Send `/context list` or `/context detail` to see what’s in the system prompt and injected workspace files (and the biggest context contributors).
-- Send `/stop` (or standalone abort phrases like `stop`, `stop action`, `stop run`, `stop IronCliw`) to abort the current run, clear queued followups for that session, and stop any sub-agent runs spawned from it (the reply includes the stopped count).
+- Send `/stop` (or standalone abort phrases like `stop`, `stop action`, `stop run`, `stop ironcliw`) to abort the current run, clear queued followups for that session, and stop any sub-agent runs spawned from it (the reply includes the stopped count).
 - Send `/compact` (optional instructions) as a standalone message to summarize older context and free up window space. See [/concepts/compaction](/concepts/compaction).
 - JSONL transcripts can be opened directly to review full turns.
 

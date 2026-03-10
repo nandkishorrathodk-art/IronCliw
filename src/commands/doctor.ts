@@ -12,10 +12,12 @@ import { formatCliCommand } from "../cli/command-format.js";
 import type { IronCliwConfig } from "../config/config.js";
 import { CONFIG_PATH, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
 import { logConfigUpdated } from "../config/logging.js";
+import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveGatewayService } from "../daemon/service.js";
+import { hasAmbiguousGatewayAuthModeConfig } from "../gateway/auth-mode-policy.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { buildGatewayConnectionDetails } from "../gateway/call.js";
-import { resolveIronCliwPackageRoot } from "../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRoot } from "../infra/ironcliw-root.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";
 import { note } from "../terminal/note.js";
@@ -109,13 +111,24 @@ export async function doctorCommand(
   if (!cfg.gateway?.mode) {
     const lines = [
       "gateway.mode is unset; gateway start will be blocked.",
-      `Fix: run ${formatCliCommand("IronCliw configure")} and set Gateway mode (local/remote).`,
-      `Or set directly: ${formatCliCommand("IronCliw config set gateway.mode local")}`,
+      `Fix: run ${formatCliCommand("ironcliw configure")} and set Gateway mode (local/remote).`,
+      `Or set directly: ${formatCliCommand("ironcliw config set gateway.mode local")}`,
     ];
     if (!fs.existsSync(configPath)) {
-      lines.push(`Missing config: run ${formatCliCommand("IronCliw setup")} first.`);
+      lines.push(`Missing config: run ${formatCliCommand("ironcliw setup")} first.`);
     }
     note(lines.join("\n"), "Gateway");
+  }
+  if (resolveMode(cfg) === "local" && hasAmbiguousGatewayAuthModeConfig(cfg)) {
+    note(
+      [
+        "gateway.auth.token and gateway.auth.password are both configured while gateway.auth.mode is unset.",
+        "Set an explicit mode to avoid ambiguous auth selection and startup/runtime failures.",
+        `Set token mode: ${formatCliCommand("ironcliw config set gateway.auth.mode token")}`,
+        `Set password mode: ${formatCliCommand("ironcliw config set gateway.auth.mode password")}`,
+      ].join("\n"),
+      "Gateway auth",
+    );
   }
 
   cfg = await maybeRepairAnthropicOAuthProfileId(cfg, prompter);
@@ -130,39 +143,54 @@ export async function doctorCommand(
     note(gatewayDetails.remoteFallbackNote, "Gateway");
   }
   if (resolveMode(cfg) === "local" && sourceConfigValid) {
+    const gatewayTokenRef = resolveSecretInputRef({
+      value: cfg.gateway?.auth?.token,
+      defaults: cfg.secrets?.defaults,
+    }).ref;
     const auth = resolveGatewayAuth({
       authConfig: cfg.gateway?.auth,
       tailscaleMode: cfg.gateway?.tailscale?.mode ?? "off",
     });
     const needsToken = auth.mode !== "password" && (auth.mode !== "token" || !auth.token);
     if (needsToken) {
-      note(
-        "Gateway auth is off or missing a token. Token auth is now the recommended default (including loopback).",
-        "Gateway auth",
-      );
-      const shouldSetToken =
-        options.generateGatewayToken === true
-          ? true
-          : options.nonInteractive === true
-            ? false
-            : await prompter.confirmRepair({
-                message: "Generate and configure a gateway token now?",
-                initialValue: true,
-              });
-      if (shouldSetToken) {
-        const nextToken = randomToken();
-        cfg = {
-          ...cfg,
-          gateway: {
-            ...cfg.gateway,
-            auth: {
-              ...cfg.gateway?.auth,
-              mode: "token",
-              token: nextToken,
+      if (gatewayTokenRef) {
+        note(
+          [
+            "Gateway token is managed via SecretRef and is currently unavailable.",
+            "Doctor will not overwrite gateway.auth.token with a plaintext value.",
+            "Resolve/rotate the external secret source, then rerun doctor.",
+          ].join("\n"),
+          "Gateway auth",
+        );
+      } else {
+        note(
+          "Gateway auth is off or missing a token. Token auth is now the recommended default (including loopback).",
+          "Gateway auth",
+        );
+        const shouldSetToken =
+          options.generateGatewayToken === true
+            ? true
+            : options.nonInteractive === true
+              ? false
+              : await prompter.confirmRepair({
+                  message: "Generate and configure a gateway token now?",
+                  initialValue: true,
+                });
+        if (shouldSetToken) {
+          const nextToken = randomToken();
+          cfg = {
+            ...cfg,
+            gateway: {
+              ...cfg.gateway,
+              auth: {
+                ...cfg.gateway?.auth,
+                mode: "token",
+                token: nextToken,
+              },
             },
-          },
-        };
-        note("Gateway token configured.", "Gateway auth");
+          };
+          note("Gateway token configured.", "Gateway auth");
+        }
       }
     }
   }
@@ -311,7 +339,7 @@ export async function doctorCommand(
       runtime.log(`Backup: ${shortenHomePath(backupPath)}`);
     }
   } else if (!prompter.shouldRepair) {
-    runtime.log(`Run "${formatCliCommand("IronCliw doctor --fix")}" to apply changes.`);
+    runtime.log(`Run "${formatCliCommand("ironcliw doctor --fix")}" to apply changes.`);
   }
 
   if (options.workspaceSuggestions !== false) {

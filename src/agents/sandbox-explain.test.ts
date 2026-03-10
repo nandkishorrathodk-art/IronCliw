@@ -14,7 +14,7 @@ describe("sandbox explain helpers", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             tools: { sandbox: { tools: { allow: ["write"] } } },
           },
         ],
@@ -42,7 +42,7 @@ describe("sandbox explain helpers", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             tools: {
               sandbox: { tools: { allow: ["group:memory", "group:fs"] } },
             },

@@ -10,9 +10,9 @@ import { createAcpConnection, createAcpGateway } from "./translator.test-helpers
 describe("acp prompt cwd prefix", () => {
   async function runPromptWithCwd(cwd: string) {
     const pinnedHome = os.homedir();
-    const previousIronCliwHome = process.env.IronCliw_HOME;
+    const previousIronCliwHome = process.env.IRONCLIW_HOME;
     const previousHome = process.env.HOME;
-    delete process.env.IronCliw_HOME;
+    delete process.env.IRONCLIW_HOME;
     process.env.HOME = pinnedHome;
 
     const sessionStore = createInMemorySessionStore();
@@ -48,9 +48,9 @@ describe("acp prompt cwd prefix", () => {
       return requestSpy;
     } finally {
       if (previousIronCliwHome === undefined) {
-        delete process.env.IronCliw_HOME;
+        delete process.env.IRONCLIW_HOME;
       } else {
-        process.env.IronCliw_HOME = previousIronCliwHome;
+        process.env.IRONCLIW_HOME = previousIronCliwHome;
       }
       if (previousHome === undefined) {
         delete process.env.HOME;
@@ -61,22 +61,135 @@ describe("acp prompt cwd prefix", () => {
   }
 
   it("redacts home directory in prompt prefix", async () => {
-    const requestSpy = await runPromptWithCwd(path.join(os.homedir(), "IronCliw-test"));
+    const requestSpy = await runPromptWithCwd(path.join(os.homedir(), "ironcliw-test"));
     expect(requestSpy).toHaveBeenCalledWith(
       "chat.send",
       expect.objectContaining({
-        message: expect.stringMatching(/\[Working directory: ~[\\/]IronCliw-test\]/),
+        message: expect.stringMatching(/\[Working directory: ~[\\/]ironcliw-test\]/),
       }),
       { expectFinal: true },
     );
   });
 
   it("keeps backslash separators when cwd uses them", async () => {
-    const requestSpy = await runPromptWithCwd(`${os.homedir()}\\IronCliw-test`);
+    const requestSpy = await runPromptWithCwd(`${os.homedir()}\\ironcliw-test`);
     expect(requestSpy).toHaveBeenCalledWith(
       "chat.send",
       expect.objectContaining({
-        message: expect.stringContaining("[Working directory: ~\\IronCliw-test]"),
+        message: expect.stringContaining("[Working directory: ~\\ironcliw-test]"),
+      }),
+      { expectFinal: true },
+    );
+  });
+
+  it("injects system provenance metadata when enabled", async () => {
+    const sessionStore = createInMemorySessionStore();
+    sessionStore.createSession({
+      sessionId: "session-1",
+      sessionKey: "agent:main:main",
+      cwd: path.join(os.homedir(), "ironcliw-test"),
+    });
+
+    const requestSpy = vi.fn(async (method: string) => {
+      if (method === "chat.send") {
+        throw new Error("stop-after-send");
+      }
+      return {};
+    });
+    const agent = new AcpGatewayAgent(
+      createAcpConnection(),
+      createAcpGateway(requestSpy as unknown as GatewayClient["request"]),
+      {
+        sessionStore,
+        provenanceMode: "meta",
+      },
+    );
+
+    await expect(
+      agent.prompt({
+        sessionId: "session-1",
+        prompt: [{ type: "text", text: "hello" }],
+        _meta: {},
+      } as unknown as PromptRequest),
+    ).rejects.toThrow("stop-after-send");
+
+    expect(requestSpy).toHaveBeenCalledWith(
+      "chat.send",
+      expect.objectContaining({
+        systemInputProvenance: {
+          kind: "external_user",
+          originSessionId: "session-1",
+          sourceChannel: "acp",
+          sourceTool: "ironcliw_acp",
+        },
+        systemProvenanceReceipt: undefined,
+      }),
+      { expectFinal: true },
+    );
+  });
+
+  it("injects a system provenance receipt when requested", async () => {
+    const sessionStore = createInMemorySessionStore();
+    sessionStore.createSession({
+      sessionId: "session-1",
+      sessionKey: "agent:main:main",
+      cwd: path.join(os.homedir(), "ironcliw-test"),
+    });
+
+    const requestSpy = vi.fn(async (method: string) => {
+      if (method === "chat.send") {
+        throw new Error("stop-after-send");
+      }
+      return {};
+    });
+    const agent = new AcpGatewayAgent(
+      createAcpConnection(),
+      createAcpGateway(requestSpy as unknown as GatewayClient["request"]),
+      {
+        sessionStore,
+        provenanceMode: "meta+receipt",
+      },
+    );
+
+    await expect(
+      agent.prompt({
+        sessionId: "session-1",
+        prompt: [{ type: "text", text: "hello" }],
+        _meta: {},
+      } as unknown as PromptRequest),
+    ).rejects.toThrow("stop-after-send");
+
+    expect(requestSpy).toHaveBeenCalledWith(
+      "chat.send",
+      expect.objectContaining({
+        systemInputProvenance: {
+          kind: "external_user",
+          originSessionId: "session-1",
+          sourceChannel: "acp",
+          sourceTool: "ironcliw_acp",
+        },
+        systemProvenanceReceipt: expect.stringContaining("[Source Receipt]"),
+      }),
+      { expectFinal: true },
+    );
+    expect(requestSpy).toHaveBeenCalledWith(
+      "chat.send",
+      expect.objectContaining({
+        systemProvenanceReceipt: expect.stringContaining("bridge=ironcliw-acp"),
+      }),
+      { expectFinal: true },
+    );
+    expect(requestSpy).toHaveBeenCalledWith(
+      "chat.send",
+      expect.objectContaining({
+        systemProvenanceReceipt: expect.stringContaining("originSessionId=session-1"),
+      }),
+      { expectFinal: true },
+    );
+    expect(requestSpy).toHaveBeenCalledWith(
+      "chat.send",
+      expect.objectContaining({
+        systemProvenanceReceipt: expect.stringContaining("targetSession=agent:main:main"),
       }),
       { expectFinal: true },
     );

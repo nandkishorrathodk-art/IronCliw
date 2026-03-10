@@ -32,14 +32,14 @@ x-i18n:
 
 ```bash
 # Clone the repo
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 
 # Create a new Fly app (pick your own name)
-fly apps create my-IronCliw
+fly apps create my-ironcliw
 
 # Create a persistent volume (1GB is usually enough)
-fly volumes create IronCliw_data --size 1 --region iad
+fly volumes create ironcliw_data --size 1 --region iad
 ```
 
 **提示：** 选择离你近的区域。常见选项：`lhr`（伦敦）、`iad`（弗吉尼亚）、`sjc`（圣何塞）。
@@ -51,7 +51,7 @@ fly volumes create IronCliw_data --size 1 --region iad
 **安全注意事项：** 默认配置暴露公共 URL。对于没有公共 IP 的加固部署，参见[私有部署](#私有部署加固)或使用 `fly.private.toml`。
 
 ```toml
-app = "my-IronCliw"  # Your app name
+app = "my-ironcliw"  # Your app name
 primary_region = "iad"
 
 [build]
@@ -59,8 +59,8 @@ primary_region = "iad"
 
 [env]
   NODE_ENV = "production"
-  IronCliw_PREFER_PNPM = "1"
-  IronCliw_STATE_DIR = "/data"
+  IRONCLIW_PREFER_PNPM = "1"
+  IRONCLIW_STATE_DIR = "/data"
   NODE_OPTIONS = "--max-old-space-size=1536"
 
 [processes]
@@ -79,7 +79,7 @@ primary_region = "iad"
   memory = "2048mb"
 
 [mounts]
-  source = "IronCliw_data"
+  source = "ironcliw_data"
   destination = "/data"
 ```
 
@@ -89,15 +89,15 @@ primary_region = "iad"
 | ------------------------------ | ------------------------------------------------------------------------- |
 | `--bind lan`                   | 绑定到 `0.0.0.0` 以便 Fly 的代理可以访问 Gateway 网关                     |
 | `--allow-unconfigured`         | 无需配置文件启动（你稍后会创建一个）                                      |
-| `internal_port = 3000`         | 必须与 `--port 3000`（或 `IronCliw_GATEWAY_PORT`）匹配以进行 Fly 健康检查 |
+| `internal_port = 3000`         | 必须与 `--port 3000`（或 `IRONCLIW_GATEWAY_PORT`）匹配以进行 Fly 健康检查 |
 | `memory = "2048mb"`            | 512MB 太小；推荐 2GB                                                      |
-| `IronCliw_STATE_DIR = "/data"` | 在卷上持久化状态                                                          |
+| `IRONCLIW_STATE_DIR = "/data"` | 在卷上持久化状态                                                          |
 
 ## 3）设置密钥
 
 ```bash
 # Required: Gateway token (for non-loopback binding)
-fly secrets set IronCliw_GATEWAY_TOKEN=$(openssl rand -hex 32)
+fly secrets set IRONCLIW_GATEWAY_TOKEN=$(openssl rand -hex 32)
 
 # Model provider API keys
 fly secrets set ANTHROPIC_API_KEY=sk-ant-...
@@ -112,9 +112,9 @@ fly secrets set DISCORD_BOT_TOKEN=MTQ...
 
 **注意事项：**
 
-- 非 loopback 绑定（`--bind lan`）出于安全需要 `IronCliw_GATEWAY_TOKEN`。
+- 非 loopback 绑定（`--bind lan`）出于安全需要 `IRONCLIW_GATEWAY_TOKEN`。
 - 像对待密码一样对待这些 token。
-- **优先使用环境变量而不是配置文件**来存储所有 API 密钥和 token。这可以避免密钥出现在 `IronCliw.json` 中，防止意外暴露或记录。
+- **优先使用环境变量而不是配置文件**来存储所有 API 密钥和 token。这可以避免密钥出现在 `ironcliw.json` 中，防止意外暴露或记录。
 
 ## 4）部署
 
@@ -150,7 +150,7 @@ fly ssh console
 
 ```bash
 mkdir -p /data
-cat > /data/IronCliw.json << 'EOF'
+cat > /data/ironcliw.json << 'EOF'
 {
   "agents": {
     "defaults": {
@@ -202,7 +202,7 @@ cat > /data/IronCliw.json << 'EOF'
 EOF
 ```
 
-**注意：** 使用 `IronCliw_STATE_DIR=/data` 时，配置路径是 `/data/IronCliw.json`。
+**注意：** 使用 `IRONCLIW_STATE_DIR=/data` 时，配置路径是 `/data/ironcliw.json`。
 
 **注意：** Discord token 可以来自：
 
@@ -228,9 +228,9 @@ fly machine restart <machine-id>
 fly open
 ```
 
-或访问 `https://my-IronCliw.fly.dev/`
+或访问 `https://my-ironcliw.fly.dev/`
 
-粘贴你的 Gateway 网关 token（来自 `IronCliw_GATEWAY_TOKEN` 的那个）进行认证。
+粘贴你的 Gateway 网关 token（来自 `IRONCLIW_GATEWAY_TOKEN` 的那个）进行认证。
 
 ### 日志
 
@@ -257,7 +257,7 @@ Gateway 网关绑定到 `127.0.0.1` 而不是 `0.0.0.0`。
 
 Fly 无法在配置的端口上访问 Gateway 网关。
 
-**修复：** 确保 `internal_port` 与 Gateway 网关端口匹配（设置 `--port 3000` 或 `IronCliw_GATEWAY_PORT=3000`）。
+**修复：** 确保 `internal_port` 与 Gateway 网关端口匹配（设置 `--port 3000` 或 `IRONCLIW_GATEWAY_PORT=3000`）。
 
 ### OOM / 内存问题
 
@@ -295,12 +295,12 @@ fly machine restart <machine-id>
 
 ### 配置未被读取
 
-如果使用 `--allow-unconfigured`，Gateway 网关会创建最小配置。你在 `/data/IronCliw.json` 的自定义配置应该在重启时被读取。
+如果使用 `--allow-unconfigured`，Gateway 网关会创建最小配置。你在 `/data/ironcliw.json` 的自定义配置应该在重启时被读取。
 
 验证配置是否存在：
 
 ```bash
-fly ssh console --command "cat /data/IronCliw.json"
+fly ssh console --command "cat /data/ironcliw.json"
 ```
 
 ### 通过 SSH 写入配置
@@ -309,24 +309,24 @@ fly ssh console --command "cat /data/IronCliw.json"
 
 ```bash
 # Use echo + tee (pipe from local to remote)
-echo '{"your":"config"}' | fly ssh console -C "tee /data/IronCliw.json"
+echo '{"your":"config"}' | fly ssh console -C "tee /data/ironcliw.json"
 
 # Or use sftp
 fly sftp shell
-> put /local/path/config.json /data/IronCliw.json
+> put /local/path/config.json /data/ironcliw.json
 ```
 
 **注意：** 如果文件已存在，`fly sftp` 可能会失败。先删除：
 
 ```bash
-fly ssh console --command "rm /data/IronCliw.json"
+fly ssh console --command "rm /data/ironcliw.json"
 ```
 
 ### 状态未持久化
 
 如果重启后丢失凭证或会话，状态目录正在写入容器文件系统。
 
-**修复：** 确保 `fly.toml` 中设置了 `IronCliw_STATE_DIR=/data` 并重新部署。
+**修复：** 确保 `fly.toml` 中设置了 `IRONCLIW_STATE_DIR=/data` 并重新部署。
 
 ## 更新
 
@@ -385,18 +385,18 @@ fly deploy -c fly.private.toml
 
 ```bash
 # List current IPs
-fly ips list -a my-IronCliw
+fly ips list -a my-ironcliw
 
 # Release public IPs
-fly ips release <public-ipv4> -a my-IronCliw
-fly ips release <public-ipv6> -a my-IronCliw
+fly ips release <public-ipv4> -a my-ironcliw
+fly ips release <public-ipv6> -a my-ironcliw
 
 # Switch to private config so future deploys don't re-allocate public IPs
 # (remove [http_service] or deploy with the private template)
 fly deploy -c fly.private.toml
 
 # Allocate private-only IPv6
-fly ips allocate-v6 --private -a my-IronCliw
+fly ips allocate-v6 --private -a my-ironcliw
 ```
 
 此后，`fly ips list` 应该只显示 `private` 类型的 IP：
@@ -414,7 +414,7 @@ v6       fdaa:x:x:x:x::x      private          global
 
 ```bash
 # Forward local port 3000 to the app
-fly proxy 3000:3000 -a my-IronCliw
+fly proxy 3000:3000 -a my-ironcliw
 
 # Then open http://localhost:3000 in browser
 ```
@@ -432,7 +432,7 @@ fly wireguard create
 **选项 3：仅 SSH**
 
 ```bash
-fly ssh console -a my-IronCliw
+fly ssh console -a my-ironcliw
 ```
 
 ### 私有部署的 Webhooks

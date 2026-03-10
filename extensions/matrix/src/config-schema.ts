@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "IronCliw/plugin-sdk/matrix";
+import { MarkdownConfigSchema, ToolPolicySchema } from "ironcliw/plugin-sdk/matrix";
 import { z } from "zod";
 import { buildSecretInputSchema } from "./secret-input.js";
 

@@ -34,4 +34,3 @@ do:
   session "Aggregate results"
 
   do cleanup
-

@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你需要多个隔离的智能体（工作区 + 路由 + 认证）
-summary: "`IronCliw agents` 的 CLI 参考（列出/添加/删除/设置身份）"
+summary: "`ironcliw agents` 的 CLI 参考（列出/添加/删除/设置身份）"
 title: agents
 x-i18n:
   generated_at: "2026-02-01T19:58:38Z"
@@ -12,7 +12,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `IronCliw agents`
+# `ironcliw agents`
 
 管理隔离的智能体（工作区 + 认证 + 路由）。
 
@@ -24,18 +24,18 @@ x-i18n:
 ## 示例
 
 ```bash
-IronCliw agents list
-IronCliw agents add work --workspace ~/.IronCliw/workspace-work
-IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
-IronCliw agents set-identity --agent main --avatar avatars/IronCliw.png
-IronCliw agents delete work
+ironcliw agents list
+ironcliw agents add work --workspace ~/.ironcliw/workspace-work
+ironcliw agents set-identity --workspace ~/.ironcliw/workspace --from-identity
+ironcliw agents set-identity --agent main --avatar avatars/ironcliw.png
+ironcliw agents delete work
 ```
 
 ## 身份文件
 
 每个智能体工作区可以在工作区根目录包含一个 `IDENTITY.md`：
 
-- 示例路径：`~/.IronCliw/workspace/IDENTITY.md`
+- 示例路径：`~/.ironcliw/workspace/IDENTITY.md`
 - `set-identity --from-identity` 从工作区根目录读取（或从显式指定的 `--identity-file` 读取）
 
 头像路径相对于工作区根目录解析。
@@ -52,13 +52,13 @@ IronCliw agents delete work
 从 `IDENTITY.md` 加载：
 
 ```bash
-IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
+ironcliw agents set-identity --workspace ~/.ironcliw/workspace --from-identity
 ```
 
 显式覆盖字段：
 
 ```bash
-IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾" --avatar avatars/IronCliw.png
+ironcliw agents set-identity --agent main --name "IronCliw" --emoji "🦞" --avatar avatars/ironcliw.png
 ```
 
 配置示例：
@@ -71,9 +71,9 @@ IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾" --ava
         id: "main",
         identity: {
           name: "IronCliw",
-          theme: "iron grip",
-          emoji: "🦾",
-          avatar: "avatars/IronCliw.png",
+          theme: "space lobster",
+          emoji: "🦞",
+          avatar: "avatars/ironcliw.png",
         },
       },
     ],

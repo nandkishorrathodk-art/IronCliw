@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { DEFAULT_GATEWAY_PORT } from "../../config/paths.js";
+import { quoteCmdScriptArg } from "../../daemon/cmd-argv.js";
 import {
   resolveGatewayLaunchAgentLabel,
   resolveGatewaySystemdServiceName,
@@ -25,27 +26,27 @@ function isBatchSafe(value: string): boolean {
 }
 
 function resolveSystemdUnit(env: NodeJS.ProcessEnv): string {
-  const override = env.IronCliw_SYSTEMD_UNIT?.trim();
+  const override = env.IRONCLIW_SYSTEMD_UNIT?.trim();
   if (override) {
     return override.endsWith(".service") ? override : `${override}.service`;
   }
-  return `${resolveGatewaySystemdServiceName(env.IronCliw_PROFILE)}.service`;
+  return `${resolveGatewaySystemdServiceName(env.IRONCLIW_PROFILE)}.service`;
 }
 
 function resolveLaunchdLabel(env: NodeJS.ProcessEnv): string {
-  const override = env.IronCliw_LAUNCHD_LABEL?.trim();
+  const override = env.IRONCLIW_LAUNCHD_LABEL?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayLaunchAgentLabel(env.IronCliw_PROFILE);
+  return resolveGatewayLaunchAgentLabel(env.IRONCLIW_PROFILE);
 }
 
 function resolveWindowsTaskName(env: NodeJS.ProcessEnv): string {
-  const override = env.IronCliw_WINDOWS_TASK_NAME?.trim();
+  const override = env.IRONCLIW_WINDOWS_TASK_NAME?.trim();
   if (override) {
     return override;
   }
-  return resolveGatewayWindowsTaskName(env.IronCliw_PROFILE);
+  return resolveGatewayWindowsTaskName(env.IRONCLIW_PROFILE);
 }
 
 /**
@@ -69,7 +70,7 @@ export async function prepareRestartScript(
     if (platform === "linux") {
       const unitName = resolveSystemdUnit(env);
       const escaped = shellEscape(unitName);
-      filename = `IronCliw-restart-${timestamp}.sh`;
+      filename = `ironcliw-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
@@ -88,14 +89,16 @@ rm -f "$0"
       const home = env.HOME?.trim() || process.env.HOME || os.homedir();
       const plistPath = path.join(home, "Library", "LaunchAgents", `${label}.plist`);
       const escapedPlistPath = shellEscape(plistPath);
-      filename = `IronCliw-restart-${timestamp}.sh`;
+      filename = `ironcliw-restart-${timestamp}.sh`;
       scriptContent = `#!/bin/sh
 # Standalone restart script — survives parent process termination.
 # Wait briefly to ensure file locks are released after update.
 sleep 1
 # Try kickstart first (works when the service is still registered).
-# If it fails (e.g. after bootout), re-register via bootstrap then kickstart.
+# If it fails (e.g. after bootout), clear any persisted disabled state,
+# then re-register via bootstrap and kickstart.
 if ! launchctl kickstart -k 'gui/${uid}/${escaped}' 2>/dev/null; then
+  launchctl enable 'gui/${uid}/${escaped}' 2>/dev/null
   launchctl bootstrap 'gui/${uid}' '${escapedPlistPath}' 2>/dev/null
   launchctl kickstart -k 'gui/${uid}/${escaped}' 2>/dev/null || true
 fi
@@ -109,7 +112,7 @@ rm -f "$0"
       }
       const port =
         Number.isFinite(gatewayPort) && gatewayPort > 0 ? gatewayPort : DEFAULT_GATEWAY_PORT;
-      filename = `IronCliw-restart-${timestamp}.bat`;
+      filename = `ironcliw-restart-${timestamp}.bat`;
       scriptContent = `@echo off
 REM Standalone restart script — survives parent process termination.
 REM Wait briefly to ensure file locks are released after update.
@@ -161,7 +164,7 @@ del "%~f0"
 export async function runRestartScript(scriptPath: string): Promise<void> {
   const isWindows = process.platform === "win32";
   const file = isWindows ? "cmd.exe" : "/bin/sh";
-  const args = isWindows ? ["/c", scriptPath] : [scriptPath];
+  const args = isWindows ? ["/d", "/s", "/c", quoteCmdScriptArg(scriptPath)] : [scriptPath];
 
   const child = spawn(file, args, {
     detached: true,

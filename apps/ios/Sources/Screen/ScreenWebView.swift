@@ -125,7 +125,7 @@ final class ScreenWebViewCoordinator: NSObject {
 
 // MARK: - Navigation Delegate
 
-/// Handles navigation policy to intercept IronCliw:// deep links from canvas
+/// Handles navigation policy to intercept ironcliw:// deep links from canvas
 @MainActor
 private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
     weak var controller: ScreenController?
@@ -140,8 +140,8 @@ private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
             return
         }
 
-        // Intercept IronCliw:// deep links.
-        if url.scheme?.lowercased() == "IronCliw" {
+        // Intercept ironcliw:// deep links.
+        if url.scheme?.lowercased() == "ironcliw" {
             decisionHandler(.cancel)
             self.controller?.onDeepLink?(url)
             return
@@ -169,7 +169,7 @@ private final class ScreenNavigationDelegate: NSObject, WKNavigationDelegate {
 }
 
 private final class CanvasA2UIActionMessageHandler: NSObject, WKScriptMessageHandler {
-    static let messageName = "IronCliwCanvasA2UIAction"
+    static let messageName = "ironcliwCanvasA2UIAction"
     static let handlerNames = [messageName]
 
     weak var controller: ScreenController?

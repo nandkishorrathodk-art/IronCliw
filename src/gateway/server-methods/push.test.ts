@@ -69,7 +69,7 @@ describe("push.test handler", () => {
     vi.mocked(loadApnsRegistration).mockResolvedValue({
       nodeId: "ios-node-1",
       token: "abcd",
-      topic: "ai.IronCliw.ios",
+      topic: "ai.ironcliw.ios",
       environment: "sandbox",
       updatedAtMs: 1,
     });
@@ -78,7 +78,7 @@ describe("push.test handler", () => {
       value: {
         teamId: "TEAM123",
         keyId: "KEY123",
-        privateKey: "-----BEGIN PRIVATE KEY-----\nabc\n-----END PRIVATE KEY-----",
+        privateKey: "-----BEGIN PRIVATE KEY-----\nabc\n-----END PRIVATE KEY-----", // pragma: allowlist secret
       },
     });
     vi.mocked(normalizeApnsEnvironment).mockReturnValue(null);
@@ -86,7 +86,7 @@ describe("push.test handler", () => {
       ok: true,
       status: 200,
       tokenSuffix: "1234abcd",
-      topic: "ai.IronCliw.ios",
+      topic: "ai.ironcliw.ios",
       environment: "sandbox",
     });
 

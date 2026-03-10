@@ -34,12 +34,12 @@ Android connects directly to the Gateway WebSocket (default `ws://<host>:18789`)
   - Same LAN with mDNS/NSD, **or**
   - Same Tailscale tailnet using Wide-Area Bonjour / unicast DNS-SD (see below), **or**
   - Manual gateway host/port (fallback)
-- You can run the CLI (`IronCliw`) on the gateway machine (or via SSH).
+- You can run the CLI (`ironcliw`) on the gateway machine (or via SSH).
 
 ### 1) Start the Gateway
 
 ```bash
-IronCliw gateway --port 18789 --verbose
+ironcliw gateway --port 18789 --verbose
 ```
 
 Confirm in logs you see something like:
@@ -48,7 +48,7 @@ Confirm in logs you see something like:
 
 For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to the tailnet IP:
 
-- Set `gateway.bind: "tailnet"` in `~/.IronCliw/IronCliw.json` on the gateway host.
+- Set `gateway.bind: "tailnet"` in `~/.ironcliw/ironcliw.json` on the gateway host.
 - Restart the Gateway / macOS menubar app.
 
 ### 2) Verify discovery (optional)
@@ -56,7 +56,7 @@ For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to
 From the gateway machine:
 
 ```bash
-dns-sd -B _IronCliw-gw._tcp local.
+dns-sd -B _ironcliw-gw._tcp local.
 ```
 
 More debugging notes: [Bonjour](/gateway/bonjour).
@@ -65,7 +65,7 @@ More debugging notes: [Bonjour](/gateway/bonjour).
 
 Android NSD/mDNS discovery won’t cross networks. If your Android node and the gateway are on different networks but connected via Tailscale, use Wide-Area Bonjour / unicast DNS-SD instead:
 
-1. Set up a DNS-SD zone (example `IronCliw.internal.`) on the gateway host and publish `_IronCliw-gw._tcp` records.
+1. Set up a DNS-SD zone (example `ironcliw.internal.`) on the gateway host and publish `_ironcliw-gw._tcp` records.
 2. Configure Tailscale split DNS for your chosen domain pointing at that DNS server.
 
 Details and example CoreDNS config: [Bonjour](/gateway/bonjour).
@@ -89,9 +89,9 @@ After the first successful pairing, Android auto-reconnects on launch:
 On the gateway machine:
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
-IronCliw devices reject <requestId>
+ironcliw devices list
+ironcliw devices approve <requestId>
+ironcliw devices reject <requestId>
 ```
 
 Pairing details: [Pairing](/channels/pairing).
@@ -101,13 +101,13 @@ Pairing details: [Pairing](/channels/pairing).
 - Via nodes status:
 
   ```bash
-  IronCliw nodes status
+  ironcliw nodes status
   ```
 
 - Via Gateway:
 
   ```bash
-  IronCliw gateway call node.list --params "{}"
+  ironcliw gateway call node.list --params "{}"
   ```
 
 ### 6) Chat + history
@@ -118,7 +118,7 @@ The Android Chat tab supports session selection (default `main`, plus other exis
 - Send: `chat.send`
 - Push updates (best-effort): `chat.subscribe` → `event:"chat"`
 
-### 7) Canvas + screen + camera
+### 7) Canvas + camera
 
 #### Gateway Canvas Host (recommended for web content)
 
@@ -126,18 +126,18 @@ If you want the node to show real HTML/CSS/JS that the agent can edit on disk, p
 
 Note: nodes load canvas from the Gateway HTTP server (same port as `gateway.port`, default `18789`).
 
-1. Create `~/.IronCliw/workspace/canvas/index.html` on the gateway host.
+1. Create `~/.ironcliw/workspace/canvas/index.html` on the gateway host.
 
 2. Navigate the node to it (LAN):
 
 ```bash
-IronCliw nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18789/__IronCliw__/canvas/"}'
+ironcliw nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18789/__ironcliw__/canvas/"}'
 ```
 
-Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18789/__IronCliw__/canvas/`.
+Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18789/__ironcliw__/canvas/`.
 
 This server injects a live-reload client into HTML and reloads on file changes.
-The A2UI host lives at `http://<gateway-host>:18789/__IronCliw__/a2ui/`.
+The A2UI host lives at `http://<gateway-host>:18789/__ironcliw__/a2ui/`.
 
 Canvas commands (foreground only):
 
@@ -151,13 +151,9 @@ Camera commands (foreground only; permission-gated):
 
 See [Camera node](/nodes/camera) for parameters and CLI helpers.
 
-Screen commands:
-
-- `screen.record` (mp4; foreground only)
-
 ### 8) Voice + expanded Android command surface
 
-- Voice: Android uses a single mic on/off flow in the Voice tab with transcript capture and TTS playback (ElevenLabs when configured, system TTS fallback).
+- Voice: Android uses a single mic on/off flow in the Voice tab with transcript capture and TTS playback (ElevenLabs when configured, system TTS fallback). Voice stops when the app leaves the foreground.
 - Voice wake/talk-mode toggles are currently removed from Android UX/runtime.
 - Additional Android command families (availability depends on device + permissions):
   - `device.status`, `device.info`, `device.permissions`, `device.health`
@@ -166,4 +162,3 @@ Screen commands:
   - `contacts.search`, `contacts.add`
   - `calendar.events`, `calendar.add`
   - `motion.activity`, `motion.pedometer`
-  - `app.update`

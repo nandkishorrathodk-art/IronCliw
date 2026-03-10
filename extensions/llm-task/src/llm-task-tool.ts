@@ -2,12 +2,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { Type } from "@sinclair/typebox";
 import Ajv from "ajv";
-import { resolvePreferredIronCliwTmpDir } from "IronCliw/plugin-sdk/llm-task";
+import { resolvePreferredIronCliwTmpDir } from "ironcliw/plugin-sdk/llm-task";
 // NOTE: This extension is intended to be bundled with IronCliw.
 // When running from source (tests/dev), IronCliw internals live under src/.
 // When running from a built install, internals live under dist/ (no src/ tree).
 // So we resolve internal imports dynamically with src-first, dist-fallback.
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/llm-task";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/llm-task";
 
 type RunEmbeddedPiAgentFn = (params: Record<string, unknown>) => Promise<unknown>;
 
@@ -25,11 +25,15 @@ async function loadRunEmbeddedPiAgent(): Promise<RunEmbeddedPiAgentFn> {
   }
 
   // Bundled install (built)
-  const mod = await import("../../../src/agents/pi-embedded-runner.js");
-  if (typeof mod.runEmbeddedPiAgent !== "function") {
+  // NOTE: there is no src/ tree in a packaged install. Prefer a stable internal entrypoint.
+  const distExtensionApi = "../../../dist/extensionAPI.js";
+  const mod = (await import(distExtensionApi)) as { runEmbeddedPiAgent?: unknown };
+  // oxlint-disable-next-line typescript/no-explicit-any
+  const fn = (mod as any).runEmbeddedPiAgent;
+  if (typeof fn !== "function") {
     throw new Error("Internal error: runEmbeddedPiAgent not available");
   }
-  return mod.runEmbeddedPiAgent as RunEmbeddedPiAgentFn;
+  return fn as RunEmbeddedPiAgentFn;
 }
 
 function stripCodeFences(s: string): string {
@@ -71,7 +75,7 @@ export function createLlmTaskTool(api: IronCliwPluginApi) {
     name: "llm-task",
     label: "LLM Task",
     description:
-      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via IronCliw.invoke.",
+      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via ironcliw.invoke.",
     parameters: Type.Object({
       prompt: Type.String({ description: "Task instruction for the LLM." }),
       input: Type.Optional(Type.Unknown({ description: "Optional input payload for the task." })),
@@ -181,7 +185,7 @@ export function createLlmTaskTool(api: IronCliwPluginApi) {
       let tmpDir: string | null = null;
       try {
         tmpDir = await fs.mkdtemp(
-          path.join(resolvePreferredIronCliwTmpDir(), "IronCliw-llm-task-"),
+          path.join(resolvePreferredIronCliwTmpDir(), "ironcliw-llm-task-"),
         );
         const sessionId = `llm-task-${Date.now()}`;
         const sessionFile = path.join(tmpDir, "session.json");

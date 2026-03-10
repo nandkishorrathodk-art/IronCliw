@@ -453,4 +453,3 @@ else:
       - Comparison to previous scan (if history available)
     """
     context: { final_report, history_check, mode }
-

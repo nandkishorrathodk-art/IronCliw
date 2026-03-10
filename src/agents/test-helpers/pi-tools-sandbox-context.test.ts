@@ -12,10 +12,10 @@ describe("createPiToolsSandboxContext", () => {
     expect(sandbox.workspaceDir).toBe("/tmp/sandbox");
     expect(sandbox.agentWorkspaceDir).toBe("/tmp/sandbox");
     expect(sandbox.workspaceAccess).toBe("rw");
-    expect(sandbox.containerName).toBe("IronCliw-sbx-test");
+    expect(sandbox.containerName).toBe("ironcliw-sbx-test");
     expect(sandbox.containerWorkdir).toBe("/workspace");
-    expect(sandbox.docker.image).toBe("IronCliw-sandbox:bookworm-slim");
-    expect(sandbox.docker.containerPrefix).toBe("IronCliw-sbx-");
+    expect(sandbox.docker.image).toBe("ironcliw-sandbox:bookworm-slim");
+    expect(sandbox.docker.containerPrefix).toBe("ironcliw-sbx-");
     expect(sandbox.tools).toEqual({ allow: [], deny: [] });
     expect(sandbox.browserAllowHostControl).toBe(false);
   });

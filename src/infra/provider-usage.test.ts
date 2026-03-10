@@ -237,7 +237,7 @@ describe("provider usage loading", () => {
     await withTempHome(
       async (tempHome) => {
         const agentDir = path.join(
-          process.env.IronCliw_STATE_DIR ?? path.join(tempHome, ".IronCliw"),
+          process.env.IRONCLIW_STATE_DIR ?? path.join(tempHome, ".ironcliw"),
           "agents",
           "main",
           "agent",
@@ -295,9 +295,9 @@ describe("provider usage loading", () => {
       },
       {
         env: {
-          IronCliw_STATE_DIR: (home) => path.join(home, ".IronCliw"),
+          IRONCLIW_STATE_DIR: (home) => path.join(home, ".ironcliw"),
         },
-        prefix: "IronCliw-provider-usage-",
+        prefix: "ironcliw-provider-usage-",
       },
     );
   });

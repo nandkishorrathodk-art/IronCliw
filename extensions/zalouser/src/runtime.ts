@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/zalouser";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/zalouser";
 
-let runtime: PluginRuntime | null = null;
-
-export function setZalouserRuntime(next: PluginRuntime): void {
-  runtime = next;
-}
-
-export function getZalouserRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Zalouser runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setZalouserRuntime, getRuntime: getZalouserRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Zalouser runtime not initialized");
+export { getZalouserRuntime, setZalouserRuntime };

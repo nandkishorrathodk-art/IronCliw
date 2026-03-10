@@ -1,4 +1,4 @@
-import type { IronCliwConfig, IronCliwPluginApi } from "IronCliw/plugin-sdk/thread-ownership";
+import type { IronCliwConfig, IronCliwPluginApi } from "ironcliw/plugin-sdk/thread-ownership";
 
 type ThreadOwnershipConfig = {
   forwarderUrl?: string;

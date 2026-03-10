@@ -1,4 +1,4 @@
-import type { PluginRuntime, RuntimeEnv } from "IronCliw/plugin-sdk/nextcloud-talk";
+import type { PluginRuntime, RuntimeEnv } from "ironcliw/plugin-sdk/nextcloud-talk";
 import { describe, expect, it, vi } from "vitest";
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 import { handleNextcloudTalkInbound } from "./inbound.js";
@@ -8,7 +8,7 @@ import type { CoreConfig, NextcloudTalkInboundMessage } from "./types.js";
 describe("nextcloud-talk inbound authz", () => {
   it("does not treat DM pairing-store entries as group allowlist entries", async () => {
     const readAllowFromStore = vi.fn(async () => ["attacker"]);
-    const buildMentionRegexes = vi.fn(() => [/@IronCliw/i]);
+    const buildMentionRegexes = vi.fn(() => [/@ironcliw/i]);
 
     setNextcloudTalkRuntime({
       channel: {
@@ -45,7 +45,7 @@ describe("nextcloud-talk inbound authz", () => {
       enabled: true,
       baseUrl: "",
       secret: "",
-      secretSource: "none",
+      secretSource: "none", // pragma: allowlist secret
       config: {
         dmPolicy: "pairing",
         allowFrom: [],

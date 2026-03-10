@@ -16,22 +16,22 @@ over WebSocket. It keeps ACP sessions mapped to Gateway session keys.
 ## Usage
 
 ```bash
-IronCliw acp
+ironcliw acp
 
 # Remote Gateway
-IronCliw acp --url wss://gateway-host:18789 --token <token>
+ironcliw acp --url wss://gateway-host:18789 --token <token>
 
 # Remote Gateway (token from file)
-IronCliw acp --url wss://gateway-host:18789 --token-file ~/.IronCliw/gateway.token
+ironcliw acp --url wss://gateway-host:18789 --token-file ~/.ironcliw/gateway.token
 
 # Attach to an existing session key
-IronCliw acp --session agent:main:main
+ironcliw acp --session agent:main:main
 
 # Attach by label (must already exist)
-IronCliw acp --session-label "support inbox"
+ironcliw acp --session-label "support inbox"
 
 # Reset the session key before the first prompt
-IronCliw acp --session agent:main:main --reset-session
+ironcliw acp --session agent:main:main --reset-session
 ```
 
 ## ACP client (debug)
@@ -40,13 +40,13 @@ Use the built-in ACP client to sanity-check the bridge without an IDE.
 It spawns the ACP bridge and lets you type prompts interactively.
 
 ```bash
-IronCliw acp client
+ironcliw acp client
 
 # Point the spawned bridge at a remote Gateway
-IronCliw acp client --server-args --url wss://gateway-host:18789 --token-file ~/.IronCliw/gateway.token
+ironcliw acp client --server-args --url wss://gateway-host:18789 --token-file ~/.ironcliw/gateway.token
 
-# Override the server command (default: IronCliw)
-IronCliw acp client --server "node" --server-args IronCliw.mjs acp --url ws://127.0.0.1:19001
+# Override the server command (default: ironcliw)
+ironcliw acp client --server "node" --server-args ironcliw.mjs acp --url ws://127.0.0.1:19001
 ```
 
 Permission model (client debug mode):
@@ -63,21 +63,21 @@ it to drive a IronCliw Gateway session.
 
 1. Ensure the Gateway is running (local or remote).
 2. Configure the Gateway target (config or flags).
-3. Point your IDE to run `IronCliw acp` over stdio.
+3. Point your IDE to run `ironcliw acp` over stdio.
 
 Example config (persisted):
 
 ```bash
-IronCliw config set gateway.remote.url wss://gateway-host:18789
-IronCliw config set gateway.remote.token <token>
+ironcliw config set gateway.remote.url wss://gateway-host:18789
+ironcliw config set gateway.remote.token <token>
 ```
 
 Example direct run (no config write):
 
 ```bash
-IronCliw acp --url wss://gateway-host:18789 --token <token>
+ironcliw acp --url wss://gateway-host:18789 --token <token>
 # preferred for local process safety
-IronCliw acp --url wss://gateway-host:18789 --token-file ~/.IronCliw/gateway.token
+ironcliw acp --url wss://gateway-host:18789 --token-file ~/.ironcliw/gateway.token
 ```
 
 ## Selecting agents
@@ -87,14 +87,60 @@ ACP does not pick agents directly. It routes by the Gateway session key.
 Use agent-scoped session keys to target a specific agent:
 
 ```bash
-IronCliw acp --session agent:main:main
-IronCliw acp --session agent:design:main
-IronCliw acp --session agent:qa:bug-123
+ironcliw acp --session agent:main:main
+ironcliw acp --session agent:design:main
+ironcliw acp --session agent:qa:bug-123
 ```
 
 Each ACP session maps to a single Gateway session key. One agent can have many
 sessions; ACP defaults to an isolated `acp:<uuid>` session unless you override
 the key or label.
+
+## Use from `acpx` (Codex, Claude, other ACP clients)
+
+If you want a coding agent such as Codex or Claude Code to talk to your
+IronCliw bot over ACP, use `acpx` with its built-in `ironcliw` target.
+
+Typical flow:
+
+1. Run the Gateway and make sure the ACP bridge can reach it.
+2. Point `acpx ironcliw` at `ironcliw acp`.
+3. Target the IronCliw session key you want the coding agent to use.
+
+Examples:
+
+```bash
+# One-shot request into your default IronCliw ACP session
+acpx ironcliw exec "Summarize the active IronCliw session state."
+
+# Persistent named session for follow-up turns
+acpx ironcliw sessions ensure --name codex-bridge
+acpx ironcliw -s codex-bridge --cwd /path/to/repo \
+  "Ask my IronCliw work agent for recent context relevant to this repo."
+```
+
+If you want `acpx ironcliw` to target a specific Gateway and session key every
+time, override the `ironcliw` agent command in `~/.acpx/config.json`:
+
+```json
+{
+  "agents": {
+    "ironcliw": {
+      "command": "env IRONCLIW_HIDE_BANNER=1 IRONCLIW_SUPPRESS_NOTES=1 ironcliw acp --url ws://127.0.0.1:18789 --token-file ~/.ironcliw/gateway.token --session agent:main:main"
+    }
+  }
+}
+```
+
+For a repo-local IronCliw checkout, use the direct CLI entrypoint instead of the
+dev runner so the ACP stream stays clean. For example:
+
+```bash
+env IRONCLIW_HIDE_BANNER=1 IRONCLIW_SUPPRESS_NOTES=1 node ironcliw.mjs acp ...
+```
+
+This is the easiest way to let Codex, Claude Code, or another ACP-aware client
+pull contextual information from an IronCliw agent without scraping a terminal.
 
 ## Zed editor setup
 
@@ -105,7 +151,7 @@ Add a custom ACP agent in `~/.config/zed/settings.json` (or use Zed’s Settings
   "agent_servers": {
     "IronCliw ACP": {
       "type": "custom",
-      "command": "IronCliw",
+      "command": "ironcliw",
       "args": ["acp"],
       "env": {}
     }
@@ -120,7 +166,7 @@ To target a specific Gateway or agent:
   "agent_servers": {
     "IronCliw ACP": {
       "type": "custom",
-      "command": "IronCliw",
+      "command": "ironcliw",
       "args": [
         "acp",
         "--url",
@@ -178,14 +224,18 @@ Learn more about session keys at [/concepts/session](/concepts/session).
 Security note:
 
 - `--token` and `--password` can be visible in local process listings on some systems.
-- Prefer `--token-file`/`--password-file` or environment variables (`IronCliw_GATEWAY_TOKEN`, `IronCliw_GATEWAY_PASSWORD`).
-- ACP runtime backend child processes receive `IronCliw_SHELL=acp`, which can be used for context-specific shell/profile rules.
-- `IronCliw acp client` sets `IronCliw_SHELL=acp-client` on the spawned bridge process.
+- Prefer `--token-file`/`--password-file` or environment variables (`IRONCLIW_GATEWAY_TOKEN`, `IRONCLIW_GATEWAY_PASSWORD`).
+- Gateway auth resolution follows the shared contract used by other Gateway clients:
+  - local mode: env (`IRONCLIW_GATEWAY_*`) -> `gateway.auth.*` -> `gateway.remote.*` fallback when `gateway.auth.*` is unset
+  - remote mode: `gateway.remote.*` with env/config fallback per remote precedence rules
+  - `--url` is override-safe and does not reuse implicit config/env credentials; pass explicit `--token`/`--password` (or file variants)
+- ACP runtime backend child processes receive `IRONCLIW_SHELL=acp`, which can be used for context-specific shell/profile rules.
+- `ironcliw acp client` sets `IRONCLIW_SHELL=acp-client` on the spawned bridge process.
 
 ### `acp client` options
 
 - `--cwd <dir>`: working directory for the ACP session.
-- `--server <command>`: ACP server command (default: `IronCliw`).
+- `--server <command>`: ACP server command (default: `ironcliw`).
 - `--server-args <args...>`: extra arguments passed to the ACP server.
 - `--server-verbose`: enable verbose logging on the ACP server.
 - `--verbose, -v`: verbose client logging.

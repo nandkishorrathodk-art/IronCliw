@@ -81,7 +81,7 @@
         backface-visibility: hidden;
         opacity: 0.45;
         pointer-events: none;
-        animation: IronCliw-grid-drift 140s ease-in-out infinite alternate;
+        animation: ironcliw-grid-drift 140s ease-in-out infinite alternate;
       }
       :root[data-platform="android"] body::before {
         opacity: 0.8;
@@ -101,7 +101,7 @@
         backface-visibility: hidden;
         transform: translate3d(0, 0, 0);
         pointer-events: none;
-        animation: IronCliw-glow-drift 110s ease-in-out infinite alternate;
+        animation: ironcliw-glow-drift 110s ease-in-out infinite alternate;
       }
       :root[data-platform="android"] body::after {
         opacity: 0.85;
@@ -116,7 +116,7 @@
           opacity: 0.7;
         }
       }
-      @keyframes IronCliw-grid-drift {
+      @keyframes ironcliw-grid-drift {
         0% {
           transform: translate3d(-12px, 8px, 0) rotate(-7deg);
           opacity: 0.4;
@@ -130,7 +130,7 @@
           opacity: 0.42;
         }
       }
-      @keyframes IronCliw-glow-drift {
+      @keyframes ironcliw-glow-drift {
         0% {
           transform: translate3d(-18px, 12px, 0) scale(1.02);
           opacity: 0.4;
@@ -153,14 +153,14 @@
         touch-action: none;
         z-index: 1;
       }
-      :root[data-platform="android"] #IronCliw-canvas {
+      :root[data-platform="android"] #ironcliw-canvas {
         background:
           radial-gradient(1100px 800px at 20% 15%, rgba(42, 113, 255, 0.78), rgba(0, 0, 0, 0) 58%),
           radial-gradient(900px 650px at 82% 28%, rgba(255, 0, 138, 0.66), rgba(0, 0, 0, 0) 62%),
           radial-gradient(1000px 900px at 60% 88%, rgba(0, 209, 255, 0.58), rgba(0, 0, 0, 0) 62%),
           #141c33;
       }
-      #IronCliw-status {
+      #ironcliw-status {
         position: fixed;
         inset: 0;
         display: none;
@@ -172,7 +172,7 @@
         pointer-events: none;
         z-index: 3;
       }
-      #IronCliw-status .card {
+      #ironcliw-status .card {
         width: min(560px, 88vw);
         text-align: left;
         padding: 14px 16px 12px;
@@ -185,7 +185,7 @@
         -webkit-backdrop-filter: blur(18px) saturate(140%);
         backdrop-filter: blur(18px) saturate(140%);
       }
-      #IronCliw-status .title {
+      #ironcliw-status .title {
         font:
           600 12px/1.2 -apple-system,
           BlinkMacSystemFont,
@@ -196,7 +196,7 @@
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.7);
       }
-      #IronCliw-status .subtitle {
+      #ironcliw-status .subtitle {
         margin-top: 8px;
         font:
           500 13px/1.45 -apple-system,
@@ -208,39 +208,39 @@
         white-space: pre-wrap;
         overflow-wrap: anywhere;
       }
-      IronCliw-a2ui-host {
+      ironcliw-a2ui-host {
         display: block;
         height: 100%;
         position: fixed;
         inset: 0;
         z-index: 4;
-        --IronCliw-a2ui-inset-top: 28px;
-        --IronCliw-a2ui-inset-right: 0px;
-        --IronCliw-a2ui-inset-bottom: 0px;
-        --IronCliw-a2ui-inset-left: 0px;
-        --IronCliw-a2ui-scroll-pad-bottom: 0px;
-        --IronCliw-a2ui-status-top: calc(50% - 18px);
-        --IronCliw-a2ui-empty-top: 18px;
+        --ironcliw-a2ui-inset-top: 28px;
+        --ironcliw-a2ui-inset-right: 0px;
+        --ironcliw-a2ui-inset-bottom: 0px;
+        --ironcliw-a2ui-inset-left: 0px;
+        --ironcliw-a2ui-scroll-pad-bottom: 0px;
+        --ironcliw-a2ui-status-top: calc(50% - 18px);
+        --ironcliw-a2ui-empty-top: 18px;
       }
     </style>
   </head>
   <body>
-    <canvas id="IronCliw-canvas"></canvas>
-    <div id="IronCliw-status" role="status" aria-live="polite">
+    <canvas id="ironcliw-canvas"></canvas>
+    <div id="ironcliw-status" role="status" aria-live="polite">
       <section class="card">
-        <div class="title" id="IronCliw-status-title">Ready</div>
-        <div class="subtitle" id="IronCliw-status-subtitle">Waiting for agent</div>
+        <div class="title" id="ironcliw-status-title">Ready</div>
+        <div class="subtitle" id="ironcliw-status-subtitle">Waiting for agent</div>
       </section>
     </div>
-    <IronCliw-a2ui-host></IronCliw-a2ui-host>
+    <ironcliw-a2ui-host></ironcliw-a2ui-host>
     <script src="a2ui.bundle.js"></script>
     <script>
       (() => {
-        const canvas = document.getElementById("IronCliw-canvas");
+        const canvas = document.getElementById("ironcliw-canvas");
         const ctx = canvas.getContext("2d");
-        const statusEl = document.getElementById("IronCliw-status");
-        const titleEl = document.getElementById("IronCliw-status-title");
-        const subtitleEl = document.getElementById("IronCliw-status-subtitle");
+        const statusEl = document.getElementById("ironcliw-status");
+        const titleEl = document.getElementById("ironcliw-status-title");
+        const subtitleEl = document.getElementById("ironcliw-status-subtitle");
         const debugStatusEnabledByQuery = (() => {
           try {
             const params = new URLSearchParams(window.location.search);
@@ -278,7 +278,7 @@
           statusEl.style.display = "none";
         }
 
-        window.__IronCliw = {
+        window.__ironcliw = {
           canvas,
           ctx,
           setDebugStatusEnabled,

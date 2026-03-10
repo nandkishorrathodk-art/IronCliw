@@ -2,9 +2,9 @@ import Foundation
 import os
 
 enum GatewaySettingsStore {
-    private static let gatewayService = "ai.IronCliw.gateway"
-    private static let nodeService = "ai.IronCliw.node"
-    private static let talkService = "ai.IronCliw.talk"
+    private static let gatewayService = "ai.ironcliw.gateway"
+    private static let nodeService = "ai.ironcliw.node"
+    private static let talkService = "ai.ironcliw.talk"
 
     private static let instanceIdDefaultsKey = "node.instanceId"
     private static let preferredGatewayStableIDDefaultsKey = "gateway.preferredStableID"
@@ -26,7 +26,7 @@ enum GatewaySettingsStore {
     private static let preferredGatewayStableIDAccount = "preferredStableID"
     private static let lastDiscoveredGatewayStableIDAccount = "lastDiscoveredStableID"
     private static let lastGatewayConnectionAccount = "lastConnection"
-    private static let talkProviderApiKeyAccountPrefix = "provider.apiKey."
+    private static let talkProviderApiKeyAccountPrefix = "provider.apiKey." // pragma: allowlist secret
 
     static func bootstrapPersistence() {
         self.ensureStableInstanceID()
@@ -406,21 +406,21 @@ enum GatewaySettingsStore {
 }
 
 enum GatewayDiagnostics {
-    private static let logger = Logger(subsystem: "ai.IronCliw.ios", category: "GatewayDiag")
-    private static let queue = DispatchQueue(label: "ai.IronCliw.gateway.diagnostics")
+    private static let logger = Logger(subsystem: "ai.ironcliw.ios", category: "GatewayDiag")
+    private static let queue = DispatchQueue(label: "ai.ironcliw.gateway.diagnostics")
     private static let maxLogBytes: Int64 = 512 * 1024
     private static let keepLogBytes: Int64 = 256 * 1024
     private static let logSizeCheckEveryWrites = 50
     private static let logWritesSinceCheck = OSAllocatedUnfairLock(initialState: 0)
-    private static let isoFormatter: ISO8601DateFormatter = {
-        let f = ISO8601DateFormatter()
-        f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return f
-    }()
+    private static func isoTimestamp() -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.string(from: Date())
+    }
 
     private static var fileURL: URL? {
         FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
-            .appendingPathComponent("IronCliw-gateway.log")
+            .appendingPathComponent("ironcliw-gateway.log")
     }
 
     private static func truncateLogIfNeeded(url: URL) {
@@ -476,7 +476,7 @@ enum GatewayDiagnostics {
         guard let url = fileURL else { return }
         queue.async {
             self.truncateLogIfNeeded(url: url)
-            let timestamp = self.isoFormatter.string(from: Date())
+            let timestamp = self.isoTimestamp()
             let line = "[\(timestamp)] gateway diagnostics started\n"
             if let data = line.data(using: .utf8) {
                 self.appendToLog(url: url, data: data)
@@ -486,7 +486,7 @@ enum GatewayDiagnostics {
     }
 
     static func log(_ message: String) {
-        let timestamp = self.isoFormatter.string(from: Date())
+        let timestamp = self.isoTimestamp()
         let line = "[\(timestamp)] \(message)"
         logger.info("\(line, privacy: .public)")
 

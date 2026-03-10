@@ -56,7 +56,7 @@ struct SettingsTab: View {
     @State private var activeFeatureHelp: FeatureHelp?
     @State private var suppressCredentialPersist: Bool = false
 
-    private let gatewayLogger = Logger(subsystem: "ai.IronCliw.ios", category: "GatewaySettings")
+    private let gatewayLogger = Logger(subsystem: "ai.ironcliw.ios", category: "GatewaySettings")
 
     var body: some View {
         NavigationStack {
@@ -387,7 +387,7 @@ struct SettingsTab: View {
                             .truncationMode(.middle)
                         LabeledContent("Device", value: DeviceInfoHelper.deviceFamily())
                         LabeledContent("Platform", value: DeviceInfoHelper.platformStringForDisplay())
-                        LabeledContent("IronCliw", value: DeviceInfoHelper.openClawVersionString())
+                        LabeledContent("IronCliw", value: DeviceInfoHelper.ironCliwVersionString())
                     }
                 }
             }

@@ -141,7 +141,7 @@ export function wrapNoteMessage(
 }
 
 export function note(message: string, title?: string) {
-  if (isSuppressedByEnv(process.env.IronCliw_SUPPRESS_NOTES)) {
+  if (isSuppressedByEnv(process.env.IRONCLIW_SUPPRESS_NOTES)) {
     return;
   }
   clackNote(wrapNoteMessage(message), stylePromptTitle(title));

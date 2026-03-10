@@ -6,12 +6,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "bundled",
-        source: "/opt/homebrew/lib/node_modules/IronCliw/extensions/bluebubbles/index.ts",
+        source: "/opt/homebrew/lib/node_modules/ironcliw/extensions/bluebubbles/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/IronCliw/extensions",
-        global: "/Users/x/.IronCliw/extensions",
-        workspace: "/Users/x/ws/.IronCliw/extensions",
+        stock: "/opt/homebrew/lib/node_modules/ironcliw/extensions",
+        global: "/Users/x/.ironcliw/extensions",
+        workspace: "/Users/x/ws/.ironcliw/extensions",
       },
     );
     expect(out.value).toBe("stock:bluebubbles/index.ts");
@@ -22,12 +22,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "workspace",
-        source: "/Users/x/ws/.IronCliw/extensions/matrix/index.ts",
+        source: "/Users/x/ws/.ironcliw/extensions/matrix/index.ts",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/IronCliw/extensions",
-        global: "/Users/x/.IronCliw/extensions",
-        workspace: "/Users/x/ws/.IronCliw/extensions",
+        stock: "/opt/homebrew/lib/node_modules/ironcliw/extensions",
+        global: "/Users/x/.ironcliw/extensions",
+        workspace: "/Users/x/ws/.ironcliw/extensions",
       },
     );
     expect(out.value).toBe("workspace:matrix/index.ts");
@@ -38,12 +38,12 @@ describe("formatPluginSourceForTable", () => {
     const out = formatPluginSourceForTable(
       {
         origin: "global",
-        source: "/Users/x/.IronCliw/extensions/zalo/index.js",
+        source: "/Users/x/.ironcliw/extensions/zalo/index.js",
       },
       {
-        stock: "/opt/homebrew/lib/node_modules/IronCliw/extensions",
-        global: "/Users/x/.IronCliw/extensions",
-        workspace: "/Users/x/ws/.IronCliw/extensions",
+        stock: "/opt/homebrew/lib/node_modules/ironcliw/extensions",
+        global: "/Users/x/.ironcliw/extensions",
+        workspace: "/Users/x/ws/.ironcliw/extensions",
       },
     );
     expect(out.value).toBe("global:zalo/index.js");

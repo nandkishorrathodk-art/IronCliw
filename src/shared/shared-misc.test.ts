@@ -66,9 +66,9 @@ describe("shared/frontmatter", () => {
     expect(parseFrontmatterBool(undefined, true)).toBe(true);
   });
 
-  test("resolveIronCliwManifestBlock parses JSON5 metadata and picks IronCliw block", () => {
+  test("resolveIronCliwManifestBlock parses JSON5 metadata and picks ironcliw block", () => {
     const frontmatter = {
-      metadata: "{ IronCliw: { foo: 1, bar: 'baz' } }",
+      metadata: "{ ironcliw: { foo: 1, bar: 'baz' } }",
     };
     expect(resolveIronCliwManifestBlock({ frontmatter })).toEqual({ foo: 1, bar: "baz" });
   });

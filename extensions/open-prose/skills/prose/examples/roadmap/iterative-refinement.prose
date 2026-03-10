@@ -18,4 +18,3 @@ loop until **approved**:
   draft = session: writer
     prompt: "Improve the draft based on feedback"
     context: { draft, feedback }
-

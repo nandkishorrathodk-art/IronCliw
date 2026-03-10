@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 
 import module from "node:module";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const MIN_NODE_MAJOR = 22;
 const MIN_NODE_MINOR = 12;
@@ -28,11 +24,11 @@ const ensureSupportedNodeVersion = () => {
   }
 
   process.stderr.write(
-    `IronCliw: Node.js v${MIN_NODE_VERSION}+ is required (current: v${process.versions.node}).\n` +
+    `ironcliw: Node.js v${MIN_NODE_VERSION}+ is required (current: v${process.versions.node}).\n` +
       "If you use nvm, run:\n" +
-      "  nvm install 22\n" +
-      "  nvm use 22\n" +
-      "  nvm alias default 22\n",
+      `  nvm install ${MIN_NODE_MAJOR}\n` +
+      `  nvm use ${MIN_NODE_MAJOR}\n` +
+      `  nvm alias default ${MIN_NODE_MAJOR}\n`,
   );
   process.exit(1);
 };
@@ -52,10 +48,10 @@ const isModuleNotFoundError = (err) =>
   err && typeof err === "object" && "code" in err && err.code === "ERR_MODULE_NOT_FOUND";
 
 const installProcessWarningFilter = async () => {
+  // Keep bootstrap warnings consistent with the TypeScript runtime.
   for (const specifier of ["./dist/warning-filter.js", "./dist/warning-filter.mjs"]) {
     try {
-      const fullPath = path.join(__dirname, specifier);
-      const mod = await import(`file://${fullPath}`);
+      const mod = await import(specifier);
       if (typeof mod.installProcessWarningFilter === "function") {
         mod.installProcessWarningFilter();
         return;
@@ -73,24 +69,21 @@ await installProcessWarningFilter();
 
 const tryImport = async (specifier) => {
   try {
-    const fullPath = path.resolve(__dirname, specifier);
-    await import(`file://${fullPath}`);
+    await import(specifier);
     return true;
   } catch (err) {
+    // Only swallow missing-module errors; rethrow real runtime errors.
     if (isModuleNotFoundError(err)) {
       return false;
     }
-    // Log the actual error instead of swallowing it silently
-    console.error("Failed to load IronCliw:", err);
-    process.exit(1);
+    throw err;
   }
 };
 
-if (await tryImport("./dist/index.js")) {
+if (await tryImport("./dist/entry.js")) {
   // OK
-} else if (await tryImport("./dist/index.mjs")) {
+} else if (await tryImport("./dist/entry.mjs")) {
   // OK
 } else {
-  console.error("IronCliw: missing dist/index.js (build output). Please run 'pnpm build' first.");
-  process.exit(1);
+  throw new Error("ironcliw: missing dist/entry.(m)js (build output).");
 }

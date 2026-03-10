@@ -24,8 +24,8 @@ export async function removeChannelConfigWizard(
     if (configured.length === 0) {
       note(
         [
-          "No channel config found in IronCliw.json.",
-          `Tip: \`${formatCliCommand("IronCliw channels status")}\` shows what is configured and enabled.`,
+          "No channel config found in ironcliw.json.",
+          `Tip: \`${formatCliCommand("ironcliw channels status")}\` shows what is configured and enabled.`,
         ].join("\n"),
         "Remove channel",
       );

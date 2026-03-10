@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/line";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/line";
 
-let runtime: PluginRuntime | null = null;
-
-export function setLineRuntime(r: PluginRuntime): void {
-  runtime = r;
-}
-
-export function getLineRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("LINE runtime not initialized - plugin not registered");
-  }
-  return runtime;
-}
+const { setRuntime: setLineRuntime, getRuntime: getLineRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("LINE runtime not initialized - plugin not registered");
+export { getLineRuntime, setLineRuntime };

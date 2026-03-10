@@ -2,7 +2,7 @@ import type {
   AnyAgentTool,
   IronCliwPluginApi,
   IronCliwPluginToolFactory,
-} from "IronCliw/plugin-sdk/lobster";
+} from "ironcliw/plugin-sdk/lobster";
 import { createLobsterTool } from "./src/lobster-tool.js";
 
 export default function register(api: IronCliwPluginApi) {

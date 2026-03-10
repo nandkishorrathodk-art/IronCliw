@@ -6,8 +6,8 @@ describe("buildPairingReply", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["IronCliw_PROFILE"]);
-    process.env.IronCliw_PROFILE = "isolated";
+    envSnapshot = captureEnv(["IRONCLIW_PROFILE"]);
+    process.env.IRONCLIW_PROFILE = "isolated";
   });
 
   afterEach(() => {
@@ -52,9 +52,9 @@ describe("buildPairingReply", () => {
       const text = buildPairingReply(testCase);
       expect(text).toContain(testCase.idLine);
       expect(text).toContain(`Pairing code: ${testCase.code}`);
-      // CLI commands should respect IronCliw_PROFILE when set (most tests run with isolated profile)
+      // CLI commands should respect IRONCLIW_PROFILE when set (most tests run with isolated profile)
       const commandRe = new RegExp(
-        `(?:IronCliw|IronCliw) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
+        `(?:ironcliw|ironcliw) --profile isolated pairing approve ${testCase.channel} ${testCase.code}`,
       );
       expect(text).toMatch(commandRe);
     });

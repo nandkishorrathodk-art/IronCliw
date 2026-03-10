@@ -1,6 +1,11 @@
+import {
+  hasConfiguredUnavailableCredentialStatus,
+  hasResolvedCredentialValue,
+} from "../channels/account-snapshot-fields.js";
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import type { listChannelPlugins } from "../channels/plugins/index.js";
 import type { ChannelId } from "../channels/plugins/types.js";
+import { inspectReadOnlyChannelAccount } from "../channels/read-only-account-inspect.js";
 import {
   isNumericTelegramUserId,
   normalizeTelegramAllowFromEntry,
@@ -108,14 +113,77 @@ function hasExplicitProviderAccountConfig(
   if (!accounts || typeof accounts !== "object") {
     return false;
   }
-  return accountId in accounts;
+  return Object.hasOwn(accounts, accountId);
 }
 
 export async function collectChannelSecurityFindings(params: {
   cfg: IronCliwConfig;
+  sourceConfig?: IronCliwConfig;
   plugins: ReturnType<typeof listChannelPlugins>;
 }): Promise<SecurityAuditFinding[]> {
   const findings: SecurityAuditFinding[] = [];
+  const sourceConfig = params.sourceConfig ?? params.cfg;
+
+  const inspectChannelAccount = (
+    plugin: (typeof params.plugins)[number],
+    cfg: IronCliwConfig,
+    accountId: string,
+  ) =>
+    plugin.config.inspectAccount?.(cfg, accountId) ??
+    inspectReadOnlyChannelAccount({
+      channelId: plugin.id,
+      cfg,
+      accountId,
+    });
+
+  const asAccountRecord = (value: unknown): Record<string, unknown> | null =>
+    value && typeof value === "object" && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : null;
+
+  const resolveChannelAuditAccount = async (
+    plugin: (typeof params.plugins)[number],
+    accountId: string,
+  ) => {
+    const sourceInspectedAccount = inspectChannelAccount(plugin, sourceConfig, accountId);
+    const resolvedInspectedAccount = inspectChannelAccount(plugin, params.cfg, accountId);
+    const sourceInspection = sourceInspectedAccount as {
+      enabled?: boolean;
+      configured?: boolean;
+    } | null;
+    const resolvedInspection = resolvedInspectedAccount as {
+      enabled?: boolean;
+      configured?: boolean;
+    } | null;
+    const resolvedAccount =
+      resolvedInspectedAccount ?? plugin.config.resolveAccount(params.cfg, accountId);
+    const useSourceUnavailableAccount = Boolean(
+      sourceInspectedAccount &&
+      hasConfiguredUnavailableCredentialStatus(sourceInspectedAccount) &&
+      (!hasResolvedCredentialValue(resolvedAccount) ||
+        (sourceInspection?.configured === true && resolvedInspection?.configured === false)),
+    );
+    const account = useSourceUnavailableAccount ? sourceInspectedAccount : resolvedAccount;
+    const selectedInspection = useSourceUnavailableAccount ? sourceInspection : resolvedInspection;
+    const accountRecord = asAccountRecord(account);
+    const enabled =
+      typeof selectedInspection?.enabled === "boolean"
+        ? selectedInspection.enabled
+        : typeof accountRecord?.enabled === "boolean"
+          ? accountRecord.enabled
+          : plugin.config.isEnabled
+            ? plugin.config.isEnabled(account, params.cfg)
+            : true;
+    const configured =
+      typeof selectedInspection?.configured === "boolean"
+        ? selectedInspection.configured
+        : typeof accountRecord?.configured === "boolean"
+          ? accountRecord.configured
+          : plugin.config.isConfigured
+            ? await plugin.config.isConfigured(account, params.cfg)
+            : true;
+    return { account, enabled, configured };
+  };
 
   const coerceNativeSetting = (value: unknown): boolean | "auto" | undefined => {
     if (value === true) {
@@ -187,7 +255,7 @@ export async function collectChannelSecurityFindings(params: {
           "Multiple DM senders currently share the main session, which can leak context across users.",
         remediation:
           "Run: " +
-          formatCliCommand('IronCliw config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('ironcliw config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate DM sessions per sender.',
       });
     }
@@ -197,28 +265,24 @@ export async function collectChannelSecurityFindings(params: {
     if (!plugin.security) {
       continue;
     }
-    const accountIds = plugin.config.listAccountIds(params.cfg);
+    const accountIds = plugin.config.listAccountIds(sourceConfig);
     const defaultAccountId = resolveChannelDefaultAccountId({
       plugin,
-      cfg: params.cfg,
+      cfg: sourceConfig,
       accountIds,
     });
     const orderedAccountIds = Array.from(new Set([defaultAccountId, ...accountIds]));
 
     for (const accountId of orderedAccountIds) {
       const hasExplicitAccountPath = hasExplicitProviderAccountConfig(
-        params.cfg,
+        sourceConfig,
         plugin.id,
         accountId,
       );
-      const account = plugin.config.resolveAccount(params.cfg, accountId);
-      const enabled = plugin.config.isEnabled ? plugin.config.isEnabled(account, params.cfg) : true;
+      const { account, enabled, configured } = await resolveChannelAuditAccount(plugin, accountId);
       if (!enabled) {
         continue;
       }
-      const configured = plugin.config.isConfigured
-        ? await plugin.config.isConfigured(account, params.cfg)
-        : true;
       if (!configured) {
         continue;
       }
@@ -267,7 +331,7 @@ export async function collectChannelSecurityFindings(params: {
         addDiscordNameBasedEntries({
           target: discordNameBasedAllowEntries,
           values: storeAllowFrom,
-          source: "~/.IronCliw/credentials/discord-allowFrom.json",
+          source: "~/.ironcliw/credentials/discord-allowFrom.json",
         });
         const discordGuildEntries =
           (discordCfg.guilds as Record<string, unknown> | undefined) ?? {};

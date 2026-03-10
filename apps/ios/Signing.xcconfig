@@ -2,14 +2,17 @@
 // Auto-selected local team overrides live in .local-signing.xcconfig (git-ignored).
 // Manual local overrides can go in LocalSigning.xcconfig (git-ignored).
 
-IronCliw_CODE_SIGN_STYLE = Manual
-IronCliw_DEVELOPMENT_TEAM = Y5PE65HELJ
+IRONCLIW_CODE_SIGN_STYLE = Manual
+IRONCLIW_DEVELOPMENT_TEAM = Y5PE65HELJ
 
-IronCliw_APP_BUNDLE_ID = ai.IronCliw.ios
-IronCliw_SHARE_BUNDLE_ID = ai.IronCliw.ios.share
+IRONCLIW_APP_BUNDLE_ID = ai.ironcliw.client
+IRONCLIW_SHARE_BUNDLE_ID = ai.ironcliw.client.share
+IRONCLIW_WATCH_APP_BUNDLE_ID = ai.ironcliw.client.watchkitapp
+IRONCLIW_WATCH_EXTENSION_BUNDLE_ID = ai.ironcliw.client.watchkitapp.extension
+IRONCLIW_ACTIVITY_WIDGET_BUNDLE_ID = ai.ironcliw.client.activitywidget
 
-IronCliw_APP_PROFILE = ai.IronCliw.ios Development
-IronCliw_SHARE_PROFILE = ai.IronCliw.ios.share Development
+IRONCLIW_APP_PROFILE = ai.ironcliw.client Development
+IRONCLIW_SHARE_PROFILE = ai.ironcliw.client.share Development
 
 // Keep local includes after defaults: xcconfig is evaluated top-to-bottom,
 // so later assignments in local files override the defaults above.

@@ -172,7 +172,7 @@ describe("runHeartbeatOnce ack handling", () => {
         lastTo: WHATSAPP_GROUP,
       });
 
-      replySpy.mockResolvedValue({ text: "HEARTBEAT_OK 🦾" });
+      replySpy.mockResolvedValue({ text: "HEARTBEAT_OK 🦞" });
       const sendWhatsApp = createMessageSendSpy();
 
       await runHeartbeatOnce({
@@ -219,8 +219,8 @@ describe("runHeartbeatOnce ack handling", () => {
     },
     {
       title: "strips responsePrefix before HEARTBEAT_OK detection and suppresses short ack text",
-      replyText: "[IronCliw] HEARTBEAT_OK all good",
-      messages: { responsePrefix: "[IronCliw]" },
+      replyText: "[ironcliw] HEARTBEAT_OK all good",
+      messages: { responsePrefix: "[ironcliw]" },
       expectedCalls: 0,
     },
     {

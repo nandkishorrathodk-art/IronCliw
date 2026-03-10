@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "IronCliw/plugin-sdk/mattermost";
+import type { RuntimeEnv } from "ironcliw/plugin-sdk/mattermost";
 import { describe, expect, it, vi } from "vitest";
 import {
   createMattermostConnectOnce,

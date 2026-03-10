@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/discord";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/discord";
 
-let runtime: PluginRuntime | null = null;
-
-export function setDiscordRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getDiscordRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Discord runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setDiscordRuntime, getRuntime: getDiscordRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Discord runtime not initialized");
+export { getDiscordRuntime, setDiscordRuntime };

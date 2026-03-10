@@ -25,7 +25,7 @@ const LEGACY_STATE_DIRS: string[] = [];
 
 function resolveDefaultDbPath(): string {
   const home = homedir();
-  const preferred = join(home, ".IronCliw", "memory", "lancedb");
+  const preferred = join(home, ".ironcliw", "memory", "lancedb");
   try {
     if (fs.existsSync(preferred)) {
       return preferred;
@@ -159,7 +159,7 @@ export const memoryConfigSchema = {
     },
     dbPath: {
       label: "Database Path",
-      placeholder: "~/.IronCliw/memory/lancedb",
+      placeholder: "~/.ironcliw/memory/lancedb",
       advanced: true,
     },
     autoCapture: {

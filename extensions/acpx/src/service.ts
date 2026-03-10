@@ -3,8 +3,8 @@ import type {
   IronCliwPluginService,
   IronCliwPluginServiceContext,
   PluginLogger,
-} from "IronCliw/plugin-sdk/acpx";
-import { registerAcpRuntimeBackend, unregisterAcpRuntimeBackend } from "IronCliw/plugin-sdk/acpx";
+} from "ironcliw/plugin-sdk/acpx";
+import { registerAcpRuntimeBackend, unregisterAcpRuntimeBackend } from "ironcliw/plugin-sdk/acpx";
 import { resolveAcpxPluginConfig, type ResolvedAcpxPluginConfig } from "./config.js";
 import { ensureAcpx } from "./ensure.js";
 import { ACPX_BACKEND_ID, AcpxRuntime } from "./runtime.js";
@@ -59,8 +59,9 @@ export function createAcpxRuntimeService(
       });
       const expectedVersionLabel = pluginConfig.expectedVersion ?? "any";
       const installLabel = pluginConfig.allowPluginLocalInstall ? "enabled" : "disabled";
+      const mcpServerCount = Object.keys(pluginConfig.mcpServers).length;
       ctx.logger.info(
-        `acpx runtime backend registered (command: ${pluginConfig.command}, expectedVersion: ${expectedVersionLabel}, pluginLocalInstall: ${installLabel})`,
+        `acpx runtime backend registered (command: ${pluginConfig.command}, expectedVersion: ${expectedVersionLabel}, pluginLocalInstall: ${installLabel}${mcpServerCount > 0 ? `, mcpServers: ${mcpServerCount}` : ""})`,
       );
 
       lifecycleRevision += 1;

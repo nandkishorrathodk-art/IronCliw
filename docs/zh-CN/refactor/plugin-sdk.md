@@ -41,7 +41,7 @@ x-i18n:
 
 交付方式：
 
-- 以 `IronCliw/plugin-sdk` 发布（或从核心以 `IronCliw/plugin-sdk` 导出）。
+- 以 `ironcliw/plugin-sdk` 发布（或从核心以 `ironcliw/plugin-sdk` 导出）。
 - 使用语义化版本控制，提供明确的稳定性保证。
 
 ### 2）插件运行时（执行层，注入式）
@@ -161,7 +161,7 @@ export type PluginRuntime = {
 
 ### 阶段 0：基础搭建
 
-- 引入 `IronCliw/plugin-sdk`。
+- 引入 `ironcliw/plugin-sdk`。
 - 在 `IronCliwPluginApi` 中添加带有上述接口的 `api.runtime`。
 - 在过渡期内保留现有导入方式（添加弃用警告）。
 
@@ -196,7 +196,7 @@ export type PluginRuntime = {
 
 - SDK：语义化版本控制，已发布，变更有文档记录。
 - 运行时：按核心版本进行版本控制。添加 `api.runtime.version`。
-- 插件声明所需的运行时版本范围（例如 `IronCliwRuntime: ">=2026.2.0"`）。
+- 插件声明所需的运行时版本范围（例如 `ironcliwRuntime: ">=2026.2.0"`）。
 
 ## 测试策略
 

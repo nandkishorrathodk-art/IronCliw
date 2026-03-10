@@ -19,7 +19,7 @@ x-i18n:
 
 ## 太长不看
 
-- **个性化设置存放在仓库之外：** `~/.IronCliw/workspace`（工作区）+ `~/.IronCliw/IronCliw.json`（配置）。
+- **个性化设置存放在仓库之外：** `~/.ironcliw/workspace`（工作区）+ `~/.ironcliw/ironcliw.json`（配置）。
 - **稳定工作流：** 安装 macOS 应用；让它运行内置的 Gateway 网关。
 - **前沿工作流：** 通过 `pnpm gateway:watch` 自己运行 Gateway 网关，然后让 macOS 应用以本地模式连接。
 
@@ -33,22 +33,22 @@ x-i18n:
 
 如果你想要"100% 为我定制"*并且*易于更新，将你的自定义内容保存在：
 
-- **配置：** `~/.IronCliw/IronCliw.json`（JSON/JSON5 格式）
-- **工作区：** `~/.IronCliw/workspace`（Skills、提示、记忆；将其设为私有 git 仓库）
+- **配置：** `~/.ironcliw/ironcliw.json`（JSON/JSON5 格式）
+- **工作区：** `~/.ironcliw/workspace`（Skills、提示、记忆；将其设为私有 git 仓库）
 
 引导一次：
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
 在此仓库内部，使用本地 CLI 入口：
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
-如果你还没有全局安装，通过 `pnpm IronCliw setup` 运行它。
+如果你还没有全局安装，通过 `pnpm ironcliw setup` 运行它。
 
 ## 稳定工作流（macOS 应用优先）
 
@@ -58,18 +58,18 @@ IronCliw setup
 4. 链接表面（示例：WhatsApp）：
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 5. 完整性检查：
 
 ```bash
-IronCliw health
+ironcliw health
 ```
 
 如果你的构建版本中没有新手引导：
 
-- 运行 `IronCliw setup`，然后 `IronCliw channels login`，然后手动启动 Gateway 网关（`IronCliw gateway`）。
+- 运行 `ironcliw setup`，然后 `ironcliw channels login`，然后手动启动 Gateway 网关（`ironcliw gateway`）。
 
 ## 前沿工作流（在终端中运行 Gateway 网关）
 
@@ -105,33 +105,33 @@ pnpm gateway:watch
 - 或通过 CLI：
 
 ```bash
-IronCliw health
+ironcliw health
 ```
 
 ### 常见陷阱
 
 - **端口错误：** Gateway 网关 WS 默认为 `ws://127.0.0.1:18789`；保持应用 + CLI 在同一端口上。
 - **状态存储位置：**
-  - 凭证：`~/.IronCliw/credentials/`
-  - 会话：`~/.IronCliw/agents/<agentId>/sessions/`
-  - 日志：`/tmp/IronCliw/`
+  - 凭证：`~/.ironcliw/credentials/`
+  - 会话：`~/.ironcliw/agents/<agentId>/sessions/`
+  - 日志：`/tmp/ironcliw/`
 
 ## 凭证存储映射
 
 在调试认证或决定备份什么时使用此映射：
 
-- **WhatsApp**：`~/.IronCliw/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**：`~/.ironcliw/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**：配置/环境变量或 `channels.telegram.tokenFile`
 - **Discord bot token**：配置/环境变量（尚不支持令牌文件）
 - **Slack tokens**：配置/环境变量（`channels.slack.*`）
-- **配对允许列表**：`~/.IronCliw/credentials/<channel>-allowFrom.json`
-- **模型认证配置文件**：`~/.IronCliw/agents/<agentId>/agent/auth-profiles.json`
-- **旧版 OAuth 导入**：`~/.IronCliw/credentials/oauth.json`
+- **配对允许列表**：`~/.ironcliw/credentials/<channel>-allowFrom.json`
+- **模型认证配置文件**：`~/.ironcliw/agents/<agentId>/agent/auth-profiles.json`
+- **旧版 OAuth 导入**：`~/.ironcliw/credentials/oauth.json`
   更多详情：[安全](/gateway/security#credential-storage-map)。
 
 ## 更新（不破坏你的设置）
 
-- 将 `~/.IronCliw/workspace` 和 `~/.IronCliw/` 保持为"你的东西"；不要将个人提示/配置放入 `IronCliw` 仓库。
+- 将 `~/.ironcliw/workspace` 和 `~/.ironcliw/` 保持为"你的东西"；不要将个人提示/配置放入 `ironcliw` 仓库。
 - 更新源码：`git pull` + `pnpm install`（当锁文件更改时）+ 继续使用 `pnpm gateway:watch`。
 
 ## Linux（systemd 用户服务）
@@ -149,5 +149,5 @@ sudo loginctl enable-linger $USER
 - [Gateway 网关运行手册](/gateway)（标志、监督、端口）
 - [Gateway 网关配置](/gateway/configuration)（配置模式 + 示例）
 - [Discord](/channels/discord) 和 [Telegram](/channels/telegram)（回复标签 + replyToMode 设置）
-- [IronCliw 助手设置](/start/IronCliw)
+- [IronCliw 助手设置](/start/ironcliw)
 - [macOS 应用](/platforms/macos)（Gateway 网关生命周期）

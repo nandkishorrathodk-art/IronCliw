@@ -1,9 +1,8 @@
 import type { Command } from "commander";
 import { proScanPlugin } from "../../plugins/proscan/index.js";
-import { scopeManager } from "../../security/scope-manager.js";
 import { generateReport } from "../../plugins/proscan/reporter.js";
 import { ProScanner, formatFindingForDisplay } from "../../plugins/proscan/scanner.js";
-
+import { scopeManager } from "../../security/scope-manager.js";
 
 export function registerProScanCommand(program: Command) {
   const scan = program
@@ -162,7 +161,10 @@ export function registerProScanCommand(program: Command) {
     .option("--add <domain>", "Add domain to authorized scope")
     .option("--remove <domain>", "Remove domain from scope")
     .option("--list", "List all authorized domains")
-    .option("--add-program <targets>", "Add multiple comma-separated targets (for a bug bounty program)")
+    .option(
+      "--add-program <targets>",
+      "Add multiple comma-separated targets (for a bug bounty program)",
+    )
     .action(async (options) => {
       await scopeManager.load();
 
@@ -234,7 +236,9 @@ export function registerProScanCommand(program: Command) {
           },
           {
             name: "X-Frame-Options",
-            ok: !!headers["x-frame-options"] || headers["content-security-policy"]?.includes("frame-ancestors"),
+            ok:
+              !!headers["x-frame-options"] ||
+              headers["content-security-policy"]?.includes("frame-ancestors"),
             severity: "medium",
           },
           {

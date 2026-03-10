@@ -34,7 +34,7 @@ pnpm test -- \
 To include the live provider exercise:
 
 ```bash
-IronCliw_LIVE_TEST=1 pnpm test -- src/agents/pi-embedded-runner-extraparams.live.test.ts
+IRONCLIW_LIVE_TEST=1 pnpm test -- src/agents/pi-embedded-runner-extraparams.live.test.ts
 ```
 
 This covers the main Pi unit suites:
@@ -53,7 +53,7 @@ Recommended flow:
 - Run the gateway in dev mode:
   - `pnpm gateway:dev`
 - Trigger the agent directly:
-  - `pnpm IronCliw agent --message "Hello" --thinking low`
+  - `pnpm ironcliw agent --message "Hello" --thinking low`
 - Use the TUI for interactive debugging:
   - `pnpm tui`
 
@@ -61,11 +61,11 @@ For tool call behavior, prompt for a `read` or `exec` action so you can see tool
 
 ## Clean Slate Reset
 
-State lives under the IronCliw state directory. Default is `~/.IronCliw`. If `IronCliw_STATE_DIR` is set, use that directory instead.
+State lives under the IronCliw state directory. Default is `~/.ironcliw`. If `IRONCLIW_STATE_DIR` is set, use that directory instead.
 
 To reset everything:
 
-- `IronCliw.json` for config
+- `ironcliw.json` for config
 - `credentials/` for auth profiles and tokens
 - `agents/<agentId>/sessions/` for agent session history
 - `agents/<agentId>/sessions.json` for the session index
@@ -76,5 +76,5 @@ If you only want to reset sessions, delete `agents/<agentId>/sessions/` and `age
 
 ## References
 
-- [https://docs.IronCliw.ai/testing](https://docs.IronCliw.ai/testing)
-- [https://docs.IronCliw.ai/start/getting-started](https://docs.IronCliw.ai/start/getting-started)
+- [https://docs.ironcliw.ai/testing](https://docs.ironcliw.ai/testing)
+- [https://docs.ironcliw.ai/start/getting-started](https://docs.ironcliw.ai/start/getting-started)

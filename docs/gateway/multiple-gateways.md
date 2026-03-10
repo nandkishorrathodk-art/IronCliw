@@ -12,8 +12,8 @@ Most setups should use one Gateway because a single Gateway can handle multiple 
 
 ## Isolation checklist (required)
 
-- `IronCliw_CONFIG_PATH` — per-instance config file
-- `IronCliw_STATE_DIR` — per-instance sessions, creds, caches
+- `IRONCLIW_CONFIG_PATH` — per-instance config file
+- `IRONCLIW_STATE_DIR` — per-instance sessions, creds, caches
 - `agents.defaults.workspace` — per-instance workspace root
 - `gateway.port` (or `--port`) — unique per instance
 - Derived ports (browser/canvas) must not overlap
@@ -22,23 +22,23 @@ If these are shared, you will hit config races and port conflicts.
 
 ## Recommended: profiles (`--profile`)
 
-Profiles auto-scope `IronCliw_STATE_DIR` + `IronCliw_CONFIG_PATH` and suffix service names.
+Profiles auto-scope `IRONCLIW_STATE_DIR` + `IRONCLIW_CONFIG_PATH` and suffix service names.
 
 ```bash
 # main
-IronCliw --profile main setup
-IronCliw --profile main gateway --port 18789
+ironcliw --profile main setup
+ironcliw --profile main gateway --port 18789
 
 # rescue
-IronCliw --profile rescue setup
-IronCliw --profile rescue gateway --port 19001
+ironcliw --profile rescue setup
+ironcliw --profile rescue gateway --port 19001
 ```
 
 Per-profile services:
 
 ```bash
-IronCliw --profile main gateway install
-IronCliw --profile rescue gateway install
+ironcliw --profile main gateway install
+ironcliw --profile rescue gateway install
 ```
 
 ## Rescue-bot guide
@@ -59,11 +59,11 @@ Port spacing: leave at least 20 ports between base ports so the derived browser/
 ```bash
 # Main bot (existing or fresh, without --profile param)
 # Runs on port 18789 + Chrome CDC/Canvas/... Ports
-IronCliw onboard
-IronCliw gateway install
+ironcliw onboard
+ironcliw gateway install
 
 # Rescue bot (isolated profile + ports)
-IronCliw --profile rescue onboard
+ironcliw --profile rescue onboard
 # Notes:
 # - workspace name will be postfixed with -rescue per default
 # - Port should be at least 18789 + 20 Ports,
@@ -71,12 +71,12 @@ IronCliw --profile rescue onboard
 # - rest of the onboarding is the same as normal
 
 # To install the service (if not happened automatically during onboarding)
-IronCliw --profile rescue gateway install
+ironcliw --profile rescue gateway install
 ```
 
 ## Port mapping (derived)
 
-Base port = `gateway.port` (or `IronCliw_GATEWAY_PORT` / `--port`).
+Base port = `gateway.port` (or `IRONCLIW_GATEWAY_PORT` / `--port`).
 
 - browser control service port = base + 2 (loopback only)
 - canvas host is served on the Gateway HTTP server (same port as `gateway.port`)
@@ -94,19 +94,19 @@ If you override any of these in config or env, you must keep them unique per ins
 ## Manual env example
 
 ```bash
-IronCliw_CONFIG_PATH=~/.IronCliw/main.json \
-IronCliw_STATE_DIR=~/.IronCliw-main \
-IronCliw gateway --port 18789
+IRONCLIW_CONFIG_PATH=~/.ironcliw/main.json \
+IRONCLIW_STATE_DIR=~/.ironcliw-main \
+ironcliw gateway --port 18789
 
-IronCliw_CONFIG_PATH=~/.IronCliw/rescue.json \
-IronCliw_STATE_DIR=~/.IronCliw-rescue \
-IronCliw gateway --port 19001
+IRONCLIW_CONFIG_PATH=~/.ironcliw/rescue.json \
+IRONCLIW_STATE_DIR=~/.ironcliw-rescue \
+ironcliw gateway --port 19001
 ```
 
 ## Quick checks
 
 ```bash
-IronCliw --profile main status
-IronCliw --profile rescue status
-IronCliw --profile rescue browser status
+ironcliw --profile main status
+ironcliw --profile rescue status
+ironcliw --profile rescue browser status
 ```

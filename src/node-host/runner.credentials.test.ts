@@ -3,8 +3,45 @@ import type { IronCliwConfig } from "../config/config.js";
 import { withEnvAsync } from "../test-utils/env.js";
 import { resolveNodeHostGatewayCredentials } from "./runner.js";
 
+function createRemoteGatewayTokenRefConfig(tokenId: string): IronCliwConfig {
+  return {
+    secrets: {
+      providers: {
+        default: { source: "env" },
+      },
+    },
+    gateway: {
+      mode: "remote",
+      remote: {
+        token: { source: "env", provider: "default", id: tokenId },
+      },
+    },
+  } as IronCliwConfig;
+}
+
 describe("resolveNodeHostGatewayCredentials", () => {
-  it("resolves remote token SecretRef values", async () => {
+  it("does not inherit gateway.remote token in local mode", async () => {
+    const config = {
+      gateway: {
+        mode: "local",
+        remote: { token: "remote-only-token" },
+      },
+    } as IronCliwConfig;
+
+    await withEnvAsync(
+      {
+        IRONCLIW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_PASSWORD: undefined,
+      },
+      async () => {
+        const credentials = await resolveNodeHostGatewayCredentials({ config });
+        expect(credentials.token).toBeUndefined();
+        expect(credentials.password).toBeUndefined();
+      },
+    );
+  });
+
+  it("ignores unresolved gateway.remote token refs in local mode", async () => {
     const config = {
       secrets: {
         providers: {
@@ -12,16 +49,33 @@ describe("resolveNodeHostGatewayCredentials", () => {
         },
       },
       gateway: {
-        mode: "remote",
+        mode: "local",
         remote: {
-          token: { source: "env", provider: "default", id: "REMOTE_GATEWAY_TOKEN" },
+          token: { source: "env", provider: "default", id: "MISSING_REMOTE_GATEWAY_TOKEN" },
         },
       },
     } as IronCliwConfig;
 
     await withEnvAsync(
       {
-        IronCliw_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_PASSWORD: undefined,
+        MISSING_REMOTE_GATEWAY_TOKEN: undefined,
+      },
+      async () => {
+        const credentials = await resolveNodeHostGatewayCredentials({ config });
+        expect(credentials.token).toBeUndefined();
+        expect(credentials.password).toBeUndefined();
+      },
+    );
+  });
+
+  it("resolves remote token SecretRef values", async () => {
+    const config = createRemoteGatewayTokenRefConfig("REMOTE_GATEWAY_TOKEN");
+
+    await withEnvAsync(
+      {
+        IRONCLIW_GATEWAY_TOKEN: undefined,
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
       },
       async () => {
@@ -31,24 +85,12 @@ describe("resolveNodeHostGatewayCredentials", () => {
     );
   });
 
-  it("prefers IronCliw_GATEWAY_TOKEN over configured refs", async () => {
-    const config = {
-      secrets: {
-        providers: {
-          default: { source: "env" },
-        },
-      },
-      gateway: {
-        mode: "remote",
-        remote: {
-          token: { source: "env", provider: "default", id: "REMOTE_GATEWAY_TOKEN" },
-        },
-      },
-    } as IronCliwConfig;
+  it("prefers IRONCLIW_GATEWAY_TOKEN over configured refs", async () => {
+    const config = createRemoteGatewayTokenRefConfig("REMOTE_GATEWAY_TOKEN");
 
     await withEnvAsync(
       {
-        IronCliw_GATEWAY_TOKEN: "token-from-env",
+        IRONCLIW_GATEWAY_TOKEN: "token-from-env",
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
       },
       async () => {
@@ -59,23 +101,11 @@ describe("resolveNodeHostGatewayCredentials", () => {
   });
 
   it("throws when a configured remote token ref cannot resolve", async () => {
-    const config = {
-      secrets: {
-        providers: {
-          default: { source: "env" },
-        },
-      },
-      gateway: {
-        mode: "remote",
-        remote: {
-          token: { source: "env", provider: "default", id: "MISSING_REMOTE_GATEWAY_TOKEN" },
-        },
-      },
-    } as IronCliwConfig;
+    const config = createRemoteGatewayTokenRefConfig("MISSING_REMOTE_GATEWAY_TOKEN");
 
     await withEnvAsync(
       {
-        IronCliw_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
         MISSING_REMOTE_GATEWAY_TOKEN: undefined,
       },
       async () => {
@@ -104,8 +134,8 @@ describe("resolveNodeHostGatewayCredentials", () => {
 
     await withEnvAsync(
       {
-        IronCliw_GATEWAY_TOKEN: undefined,
-        IronCliw_GATEWAY_PASSWORD: undefined,
+        IRONCLIW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_PASSWORD: undefined,
         REMOTE_GATEWAY_TOKEN: "token-from-ref",
         MISSING_REMOTE_GATEWAY_PASSWORD: undefined,
       },

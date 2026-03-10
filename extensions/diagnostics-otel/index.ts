@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/diagnostics-otel";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/diagnostics-otel";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/diagnostics-otel";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/diagnostics-otel";
 import { createDiagnosticsOtelService } from "./src/service.js";
 
 const plugin = {

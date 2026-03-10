@@ -46,8 +46,12 @@ export interface VoiceOutputConfig {
    ───────────────────────────────────────────────────────────── */
 
 function detectTTSProvider(): TTSProvider {
-  if (process.env.ELEVENLABS_API_KEY?.trim()) {return "elevenlabs";}
-  if (process.env.OPENAI_API_KEY?.trim()) {return "openai-tts";}
+  if (process.env.ELEVENLABS_API_KEY?.trim()) {
+    return "elevenlabs";
+  }
+  if (process.env.OPENAI_API_KEY?.trim()) {
+    return "openai-tts";
+  }
   return "edge-tts"; // always available, no key needed
 }
 
@@ -137,7 +141,7 @@ async function synthesizeWithEdgeTTS(text: string, config: VoiceOutputConfig): P
   const voice = config.edgeVoice ?? "en-US-JennyNeural";
   const rate = config.speed != null ? `${Math.round((config.speed - 1) * 100)}%` : "+0%";
 
-  const dir = join(tmpdir(), `ironcliw-edge-${Date.now()}`);
+  const dir = join(tmpdir(), `ironcliw-edge-${Date.now()}-${process.hrtime.bigint()}`);
   mkdirSync(dir, { recursive: true });
   const outPath = join(dir, "output.mp3");
 
@@ -159,8 +163,11 @@ async function synthesizeWithEdgeTTS(text: string, config: VoiceOutputConfig): P
    Windows audio playback (zero external dependency)
    ───────────────────────────────────────────────────────────── */
 
-async function playAudioOnWindows(audioBuffer: Buffer, format: "mp3" | "wav" = "mp3"): Promise<void> {
-  const dir = join(tmpdir(), `ironcliw-play-${Date.now()}`);
+async function playAudioOnWindows(
+  audioBuffer: Buffer,
+  format: "mp3" | "wav" = "mp3",
+): Promise<void> {
+  const dir = join(tmpdir(), `ironcliw-play-${Date.now()}-${process.hrtime.bigint()}`);
   mkdirSync(dir, { recursive: true });
   const audioPath = join(dir, `output.${format}`);
   writeFileSync(audioPath, audioBuffer);
@@ -179,7 +186,13 @@ async function playAudioOnWindows(audioBuffer: Buffer, format: "mp3" | "wav" = "
           $player = New-Object System.Windows.Media.MediaPlayer
           $player.Open([System.Uri]::new('${audioPath.replace(/\\/g, "\\\\")}'))
           $player.Play()
-          Start-Sleep -Seconds ([Math]::Ceiling($player.NaturalDuration.TimeSpan.TotalSeconds + 1))
+          $waited = 0
+          while (-not $player.NaturalDuration.HasTimeSpan -and $waited -lt 5000) {
+            Start-Sleep -Milliseconds 100
+            $waited += 100
+          }
+          $totalSecs = if ($player.NaturalDuration.HasTimeSpan) { $player.NaturalDuration.TimeSpan.TotalSeconds } else { 10 }
+          Start-Sleep -Seconds ([Math]::Ceiling($totalSecs + 1))
           $player.Close()
           `;
 
@@ -198,6 +211,11 @@ async function playAudioOnWindows(audioBuffer: Buffer, format: "mp3" | "wav" = "
       resolve();
     });
     ps.on("error", (err) => {
+      try {
+        rmSync(dir, { recursive: true, force: true });
+      } catch {
+        // ignore
+      }
       reject(new Error(`Audio playback failed: ${err.message}`));
     });
   });
@@ -208,7 +226,9 @@ async function playAudioOnWindows(audioBuffer: Buffer, format: "mp3" | "wav" = "
    ───────────────────────────────────────────────────────────── */
 
 function splitTextIntoChunks(text: string, maxChars: number): string[] {
-  if (text.length <= maxChars) {return [text];}
+  if (text.length <= maxChars) {
+    return [text];
+  }
 
   const chunks: string[] = [];
   const sentenceEnds = /(?<=[.!?])\s+/g;
@@ -232,7 +252,9 @@ function splitTextIntoChunks(text: string, maxChars: number): string[] {
       current += (current ? " " : "") + sentence;
     }
   }
-  if (current.trim()) {chunks.push(current.trim());}
+  if (current.trim()) {
+    chunks.push(current.trim());
+  }
   return chunks;
 }
 
@@ -255,7 +277,10 @@ export interface SpeakResult {
  * await speakText("Task complete! Found 3 vulnerabilities.", {});
  * await speakText("Hello, I am IronCliw.", { provider: 'elevenlabs', speed: 1.1 });
  */
-export async function speakText(text: string, config: VoiceOutputConfig = {}): Promise<SpeakResult> {
+export async function speakText(
+  text: string,
+  config: VoiceOutputConfig = {},
+): Promise<SpeakResult> {
   if (!text.trim()) {
     return { provider: "edge-tts", durationMs: 0, bytesGenerated: 0, chunks: 0 };
   }

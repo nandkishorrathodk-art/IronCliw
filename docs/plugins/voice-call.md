@@ -23,7 +23,7 @@ Quick mental model:
 - Install plugin
 - Restart Gateway
 - Configure under `plugins.entries.voice-call.config`
-- Use `IronCliw voicecall ...` or the `voice_call` tool
+- Use `ironcliw voicecall ...` or the `voice_call` tool
 
 ## Where it runs (local vs remote)
 
@@ -36,7 +36,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-IronCliw plugins install @IronCliw/voice-call
+ironcliw plugins install @ironcliw/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -44,7 +44,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-IronCliw plugins install ./extensions/voice-call
+ironcliw plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 
@@ -305,13 +305,13 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-IronCliw voicecall call --to "+15555550123" --message "Hello from IronCliw"
-IronCliw voicecall continue --call-id <id> --message "Any questions?"
-IronCliw voicecall speak --call-id <id> --message "One moment"
-IronCliw voicecall end --call-id <id>
-IronCliw voicecall status --call-id <id>
-IronCliw voicecall tail
-IronCliw voicecall expose --mode funnel
+ironcliw voicecall call --to "+15555550123" --message "Hello from IronCliw"
+ironcliw voicecall continue --call-id <id> --message "Any questions?"
+ironcliw voicecall speak --call-id <id> --message "One moment"
+ironcliw voicecall end --call-id <id>
+ironcliw voicecall status --call-id <id>
+ironcliw voicecall tail
+ironcliw voicecall expose --mode funnel
 ```
 
 ## Agent tool

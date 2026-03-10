@@ -6,8 +6,8 @@ import { withStateDirEnv } from "../test-helpers/state-dir-env.js";
 import { createCanvasHostHandler } from "./server.js";
 
 describe("canvas host state dir defaults", () => {
-  it("uses IronCliw_STATE_DIR for the default canvas root", async () => {
-    await withStateDirEnv("IronCliw-canvas-state-", async ({ stateDir }) => {
+  it("uses IRONCLIW_STATE_DIR for the default canvas root", async () => {
+    await withStateDirEnv("ironcliw-canvas-state-", async ({ stateDir }) => {
       const handler = await createCanvasHostHandler({
         runtime: defaultRuntime,
         allowInTests: true,

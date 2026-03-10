@@ -31,8 +31,7 @@ MiniMax highlights these improvements in M2.5:
 
 - **Speed:** `MiniMax-M2.5-highspeed` is the official fast tier in MiniMax docs.
 - **Cost:** MiniMax pricing lists the same input cost and a higher output cost for highspeed.
-- **Compatibility:** IronCliw still accepts legacy `MiniMax-M2.5-Lightning` configs, but prefer
-  `MiniMax-M2.5-highspeed` for new setup.
+- **Current model IDs:** use `MiniMax-M2.5` or `MiniMax-M2.5-highspeed`.
 
 ## Choose a setup
 
@@ -43,9 +42,9 @@ MiniMax highlights these improvements in M2.5:
 Enable the bundled OAuth plugin and authenticate:
 
 ```bash
-IronCliw plugins enable minimax-portal-auth  # skip if already loaded.
-IronCliw gateway restart  # restart if gateway is already running
-IronCliw onboard --auth-choice minimax-portal
+ironcliw plugins enable minimax-portal-auth  # skip if already loaded.
+ironcliw gateway restart  # restart if gateway is already running
+ironcliw onboard --auth-choice minimax-portal
 ```
 
 You will be prompted to select an endpoint:
@@ -53,7 +52,7 @@ You will be prompted to select an endpoint:
 - **Global** - International users (`api.minimax.io`)
 - **CN** - Users in China (`api.minimaxi.com`)
 
-See [MiniMax OAuth plugin README](https://github.com/IronCliw/IronCliw/tree/main/extensions/minimax-portal-auth) for details.
+See [MiniMax OAuth plugin README](https://github.com/ironcliw/ironcliw/tree/main/extensions/minimax-portal-auth) for details.
 
 ### MiniMax M2.5 (API key)
 
@@ -61,7 +60,7 @@ See [MiniMax OAuth plugin README](https://github.com/IronCliw/IronCliw/tree/main
 
 Configure via CLI:
 
-- Run `IronCliw configure`
+- Run `ironcliw configure`
 - Select **Model/auth**
 - Choose **MiniMax M2.5**
 
@@ -131,7 +130,7 @@ Example below uses Opus as a concrete primary; swap to your preferred latest-gen
 We have seen strong results with MiniMax M2.5 on powerful hardware (e.g. a
 desktop/server) using LM Studio's local server.
 
-Configure manually via `IronCliw.json`:
+Configure manually via `ironcliw.json`:
 
 ```json5
 {
@@ -165,11 +164,11 @@ Configure manually via `IronCliw.json`:
 }
 ```
 
-## Configure via `IronCliw configure`
+## Configure via `ironcliw configure`
 
 Use the interactive config wizard to set MiniMax without editing JSON:
 
-1. Run `IronCliw configure`.
+1. Run `ironcliw configure`.
 2. Select **Model/auth**.
 3. Choose **MiniMax M2.5**.
 4. Pick your default model when prompted.
@@ -191,7 +190,7 @@ Use the interactive config wizard to set MiniMax without editing JSON:
 - Update pricing values in `models.json` if you need exact cost tracking.
 - Referral link for MiniMax Coding Plan (10% off): [https://platform.minimax.io/subscribe/coding-plan?code=DbXJTRClnb&source=link](https://platform.minimax.io/subscribe/coding-plan?code=DbXJTRClnb&source=link)
 - See [/concepts/model-providers](/concepts/model-providers) for provider rules.
-- Use `IronCliw models list` and `IronCliw models set minimax/MiniMax-M2.5` to switch.
+- Use `ironcliw models list` and `ironcliw models set minimax/MiniMax-M2.5` to switch.
 
 ## Troubleshooting
 
@@ -202,7 +201,7 @@ and no MiniMax auth profile/env key found). A fix for this detection is in
 **2026.1.12** (unreleased at the time of writing). Fix by:
 
 - Upgrading to **2026.1.12** (or run from source `main`), then restarting the gateway.
-- Running `IronCliw configure` and selecting **MiniMax M2.5**, or
+- Running `ironcliw configure` and selecting **MiniMax M2.5**, or
 - Adding the `models.providers.minimax` block manually, or
 - Setting `MINIMAX_API_KEY` (or a MiniMax auth profile) so the provider can be injected.
 
@@ -210,10 +209,9 @@ Make sure the model id is **case‑sensitive**:
 
 - `minimax/MiniMax-M2.5`
 - `minimax/MiniMax-M2.5-highspeed`
-- `minimax/MiniMax-M2.5-Lightning` (legacy)
 
 Then recheck with:
 
 ```bash
-IronCliw models list
+ironcliw models list
 ```

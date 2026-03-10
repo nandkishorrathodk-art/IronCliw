@@ -10,7 +10,6 @@ export function createWizardPrompter(overrides?: Partial<WizardPrompter>): Wizar
     select,
     multiselect: vi.fn(async () => []),
     text: vi.fn(async () => ""),
-    password: vi.fn(async () => ""),
     confirm: vi.fn(async () => false),
     progress: vi.fn(() => ({ update: vi.fn(), stop: vi.fn() })),
     ...overrides,

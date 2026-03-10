@@ -38,10 +38,10 @@ describe("diffs viewer URL helpers", () => {
     expect(
       buildViewerUrl({
         config: {},
-        baseUrl: "https://example.com/IronCliw",
+        baseUrl: "https://example.com/ironcliw",
         viewerPath: "/plugins/diffs/view/id/token",
       }),
-    ).toBe("https://example.com/IronCliw/plugins/diffs/view/id/token");
+    ).toBe("https://example.com/ironcliw/plugins/diffs/view/id/token");
   });
 
   it("rejects base URLs with query/hash", () => {

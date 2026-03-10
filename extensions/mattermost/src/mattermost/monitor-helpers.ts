@@ -2,8 +2,8 @@ import {
   formatInboundFromLabel as formatInboundFromLabelShared,
   resolveThreadSessionKeys as resolveThreadSessionKeysShared,
   type IronCliwConfig,
-} from "IronCliw/plugin-sdk/mattermost";
-export { createDedupeCache, rawDataToString } from "IronCliw/plugin-sdk/mattermost";
+} from "ironcliw/plugin-sdk/mattermost";
+export { createDedupeCache, rawDataToString } from "ironcliw/plugin-sdk/mattermost";
 
 export type ResponsePrefixContext = {
   model?: string;

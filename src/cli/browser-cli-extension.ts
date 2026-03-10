@@ -103,7 +103,7 @@ export function registerBrowserExtensionCommands(
             `- “Load unpacked” → select: ${displayPath}`,
             `- Pin “IronCliw Browser Relay”, then click it on the tab (badge shows ON)`,
             "",
-            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.IronCliw.ai/tools/chrome-extension")}`,
+            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.ironcliw.ai/tools/chrome-extension")}`,
           ].join("\n"),
         ),
       );
@@ -119,8 +119,8 @@ export function registerBrowserExtensionCommands(
         defaultRuntime.error(
           danger(
             [
-              `Chrome extension is not installed. Run: "${formatCliCommand("IronCliw browser extension install")}"`,
-              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.IronCliw.ai/tools/chrome-extension")}`,
+              `Chrome extension is not installed. Run: "${formatCliCommand("ironcliw browser extension install")}"`,
+              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.ironcliw.ai/tools/chrome-extension")}`,
             ].join("\n"),
           ),
         );

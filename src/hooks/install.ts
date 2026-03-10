@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
+import { MANIFEST_KEY } from "../compat/legacy-names.js";
 import { fileExists, readJsonFile, resolveArchiveKind } from "../infra/archive.js";
 import { resolveExistingInstallPath, withExtractedArchiveRoot } from "../infra/install-flow.js";
 import { installFromValidatedNpmSpecArchive } from "../infra/install-from-npm-spec.js";
@@ -35,7 +35,7 @@ type HookPackageManifest = {
   name?: string;
   version?: string;
   dependencies?: Record<string, string>;
-} & Record<string, unknown>;
+} & Partial<Record<typeof MANIFEST_KEY, { hooks?: string[] }>>;
 
 export type InstallHooksResult =
   | {
@@ -113,19 +113,13 @@ export function resolveHookInstallDir(hookId: string, hooksDir?: string): string
 }
 
 async function ensureIronCliwHooks(manifest: HookPackageManifest) {
-  let hooks: unknown;
-  for (const key of [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS]) {
-    if (manifest[key] && typeof manifest[key] === "object") {
-      hooks = manifest[key].hooks;
-      if (hooks !== undefined) {break;}
-    }
-  }
+  const hooks = manifest[MANIFEST_KEY]?.hooks;
   if (!Array.isArray(hooks)) {
-    throw new Error("package.json missing IronCliw.hooks");
+    throw new Error("package.json missing ironcliw.hooks");
   }
   const list = hooks.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
   if (list.length === 0) {
-    throw new Error("package.json IronCliw.hooks is empty");
+    throw new Error("package.json ironcliw.hooks is empty");
   }
   return list;
 }
@@ -271,7 +265,7 @@ async function installHookPackageFromDir(
     if (!isPathInside(params.packageDir, hookDir)) {
       return {
         ok: false,
-        error: `IronCliw.hooks entry escapes package directory: ${entry}`,
+        error: `ironcliw.hooks entry escapes package directory: ${entry}`,
       };
     }
     await validateHookDir(hookDir);
@@ -282,7 +276,7 @@ async function installHookPackageFromDir(
     ) {
       return {
         ok: false,
-        error: `IronCliw.hooks entry resolves outside package directory: ${entry}`,
+        error: `ironcliw.hooks entry resolves outside package directory: ${entry}`,
       };
     }
     const hookName = await resolveHookNameFromDir(hookDir);
@@ -391,7 +385,7 @@ export async function installHooksFromArchive(
 
   return await withExtractedArchiveRoot({
     archivePath,
-    tempDirPrefix: "IronCliw-hook-",
+    tempDirPrefix: "ironcliw-hook-",
     timeoutMs,
     logger,
     onExtracted: async (rootDir) =>
@@ -426,7 +420,7 @@ export async function installHooksFromNpmSpec(params: {
 
   logger.info?.(`Downloading ${spec.trim()}…`);
   return await installFromValidatedNpmSpecArchive({
-    tempDirPrefix: "IronCliw-hook-pack-",
+    tempDirPrefix: "ironcliw-hook-pack-",
     spec,
     timeoutMs,
     expectedIntegrity: params.expectedIntegrity,

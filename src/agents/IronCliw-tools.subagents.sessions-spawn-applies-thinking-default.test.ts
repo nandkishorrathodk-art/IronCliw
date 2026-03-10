@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import "./test-helpers/fast-core-tools.js";
-import * as harness from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
+import * as harness from "./ironcliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const MAIN_SESSION_KEY = "agent:test:main";

@@ -34,7 +34,7 @@ Security trust model:
 
 - By default, IronCliw is a personal agent: one trusted operator boundary.
 - Shared/multi-user setups require lock-down (split trust boundaries, keep tool access minimal, and follow [Security](/gateway/security)).
-- Local onboarding now defaults new configs to `tools.profile: "messaging"` so broad runtime/filesystem tools are opt-in.
+- Local onboarding now defaults new configs to `tools.profile: "coding"` so fresh local setups keep filesystem/runtime tools without forcing the unrestricted `full` profile.
 - If hooks/webhooks or other untrusted content feeds are enabled, use a strong modern model tier and keep strict tool policy/sandboxing.
 
 </Step>
@@ -79,7 +79,7 @@ Onboarding requests TCC permissions needed for:
 </Step>
 <Step title="CLI">
   <Info>This step is optional</Info>
-  The app can install the global `IronCliw` CLI via npm/pnpm so terminal
+  The app can install the global `ironcliw` CLI via npm/pnpm so terminal
   workflows and launchd tasks work out of the box.
 </Step>
 <Step title="Onboarding Chat (dedicated session)">

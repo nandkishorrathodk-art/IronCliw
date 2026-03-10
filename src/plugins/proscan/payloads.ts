@@ -182,22 +182,9 @@ export const VULN_SIGNATURES: Record<string, RegExp[]> = {
     /onload=alert\(['"]XSS['"]\)/i,
   ],
   ssti: [/49/, /Error executing template/i, /Jinja2.*?error/i],
-  pathTraversal: [
-    /root:.*?:0:0:/,
-    /\[boot loader\]/i,
-    /daemon:.*?:1:1:/,
-  ],
-  commandInjection: [
-    /uid=\d+\(.*?\)/,
-    /root@/,
-    /sh:\s+\d+:/,
-  ],
-  ssrf: [
-    /ami-id/i,
-    /instance-id/i,
-    /local-ipv4/i,
-    /computeMetadata/i,
-  ],
+  pathTraversal: [/root:.*?:0:0:/, /\[boot loader\]/i, /daemon:.*?:1:1:/],
+  commandInjection: [/uid=\d+\(.*?\)/, /root@/, /sh:\s+\d+:/],
+  ssrf: [/ami-id/i, /instance-id/i, /local-ipv4/i, /computeMetadata/i],
 };
 
 export const SENSITIVE_DATA_PATTERNS: Record<string, RegExp> = {
@@ -209,7 +196,7 @@ export const SENSITIVE_DATA_PATTERNS: Record<string, RegExp> = {
   "Google API": /AIza[0-9A-Za-z\-_]{35}/,
   "Stripe Key": /sk_live_[0-9a-zA-Z]{24}/,
   "Password in URL": /[?&](?:password|passwd|pwd)=[^&]+/i,
-  "Email": /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,
+  Email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,
   "IP Internal": /\b(10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)\b/,
   "Stack Trace": /at\s+\w+\.\w+\s*\(\w+\.java:\d+\)|at\s+\w+\s+\(.*?:\d+:\d+\)/,
   "MongoDB URI": /mongodb(?:\+srv)?:\/\/[^"'\s]+/i,

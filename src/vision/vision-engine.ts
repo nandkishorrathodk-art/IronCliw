@@ -1,6 +1,6 @@
+import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { spawn } from "node:child_process";
 
 export interface VisionAnalysisResult {
   text: string[];
@@ -44,7 +44,13 @@ export class VisionEngine {
     const imageBuffer = await fs.readFile(imagePath).catch(() => {
       throw new Error(`Screenshot not found at path: ${imagePath}`);
     });
-    return this.analyzeImageBuffer(imageBuffer, path.extname(imagePath).slice(1) || "png");
+    const ext = path.extname(imagePath).toLowerCase().slice(1);
+    const format = (["png", "jpg", "jpeg", "webp"] as const).includes(
+      ext as "png" | "jpg" | "jpeg" | "webp",
+    )
+      ? (ext as "png" | "jpg" | "jpeg" | "webp")
+      : "png";
+    return this.analyzeImageBuffer(imageBuffer, format);
   }
 
   /**
@@ -121,11 +127,29 @@ Get-Process | Where-Object { $_.MainWindowTitle -ne "" } | Select-Object -Expand
 
     return new Promise((resolve) => {
       const ps = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", psScript], {
-        timeout: 5000,
         stdio: "pipe",
       });
 
       let output = "";
+      let settled = false;
+      let watchdog: ReturnType<typeof setTimeout> | undefined;
+
+      const done = (titles: string[]) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        clearTimeout(watchdog);
+        resolve(titles);
+      };
+
+      watchdog = setTimeout(() => {
+        try {
+          ps.kill();
+        } catch {}
+        done([]);
+      }, 5000);
+
       ps.stdout.on("data", (chunk: Buffer) => {
         output += chunk.toString();
       });
@@ -135,10 +159,10 @@ Get-Process | Where-Object { $_.MainWindowTitle -ne "" } | Select-Object -Expand
           .split(/\r?\n/)
           .map((line) => line.trim())
           .filter(Boolean);
-        resolve(titles);
+        done(titles);
       });
 
-      ps.on("error", () => resolve([]));
+      ps.on("error", () => done([]));
     });
   }
 

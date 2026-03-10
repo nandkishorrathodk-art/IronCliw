@@ -1,9 +1,9 @@
-import { ProScanner, type ProFinding, type ScanTarget, type ScanOptions } from "./scanner.js";
-import { generateReport, printFindingSummary } from "./reporter.js";
-import { createSubsystemLogger } from "../../logging/subsystem.js";
-import { scopeManager } from "../../security/scope-manager.js";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { createSubsystemLogger } from "../../logging/subsystem.js";
+import { scopeManager } from "../../security/scope-manager.js";
+import { generateReport, printFindingSummary } from "./reporter.js";
+import { ProScanner, type ProFinding, type ScanTarget, type ScanOptions } from "./scanner.js";
 
 const log = createSubsystemLogger("proscan");
 
@@ -112,25 +112,24 @@ export class ProScanPlugin {
 
     if (criticals.length > 0) {
       console.log(`\n  🔴 Submit ${criticals.length} CRITICAL finding(s) IMMEDIATELY:`);
-      criticals.forEach((f) =>
-        console.log(`     → ${f.title.slice(0, 70)}`),
-      );
+      criticals.forEach((f) => console.log(`     → ${f.title.slice(0, 70)}`));
     }
     if (highs.length > 0) {
       console.log(`\n  🟠 Submit ${highs.length} HIGH finding(s):`);
-      highs.forEach((f) =>
-        console.log(`     → ${f.title.slice(0, 70)}`),
-      );
+      highs.forEach((f) => console.log(`     → ${f.title.slice(0, 70)}`));
     }
     console.log(`\n  📄 Full report ready at: ${reportPath}`);
     console.log("═".repeat(72) + "\n");
   }
 
-  async reportFromFile(findingsPath: string, opts: {
-    programName?: string;
-    platform?: "bugcrowd" | "hackerone" | "intigriti" | "generic";
-    outputPath?: string;
-  } = {}): Promise<string> {
+  async reportFromFile(
+    findingsPath: string,
+    opts: {
+      programName?: string;
+      platform?: "bugcrowd" | "hackerone" | "intigriti" | "generic";
+      outputPath?: string;
+    } = {},
+  ): Promise<string> {
     const raw = await fs.readFile(findingsPath, "utf-8");
     const findings: ProFinding[] = JSON.parse(raw);
     return await generateReport(findings, opts);

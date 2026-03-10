@@ -136,7 +136,7 @@ x-i18n:
 - `includeReasoning`：启用时，也会发送单独的 `Reasoning:` 消息（如果可用）（与 `/reasoning on` 格式相同）。
 - `session`：心跳运行的可选会话键。
   - `main`（默认）：智能体主会话。
-  - 显式会话键（从 `IronCliw sessions --json` 或 [sessions CLI](/cli/sessions) 复制）。
+  - 显式会话键（从 `ironcliw sessions --json` 或 [sessions CLI](/cli/sessions) 复制）。
   - 会话键格式：参见[会话](/concepts/session)和[群组](/channels/groups)。
 - `target`：
   - `last`（默认）：发送到最后使用的外部渠道。
@@ -252,7 +252,7 @@ channels:
 你可以排队一个系统事件并触发即时心跳：
 
 ```bash
-IronCliw system event --text "Check for urgent follow-ups" --mode now
+ironcliw system event --text "Check for urgent follow-ups" --mode now
 ```
 
 如果多个智能体配置了 `heartbeat`，手动唤醒会立即运行每个智能体的心跳。

@@ -6,9 +6,9 @@ IDENTITY="${SIGN_IDENTITY:-}"
 TIMESTAMP_MODE="${CODESIGN_TIMESTAMP:-auto}"
 DISABLE_LIBRARY_VALIDATION="${DISABLE_LIBRARY_VALIDATION:-0}"
 SKIP_TEAM_ID_CHECK="${SKIP_TEAM_ID_CHECK:-0}"
-ENT_TMP_BASE=$(mktemp -t IronCliw-entitlements-base.XXXXXX)
-ENT_TMP_APP_BASE=$(mktemp -t IronCliw-entitlements-app-base.XXXXXX)
-ENT_TMP_RUNTIME=$(mktemp -t IronCliw-entitlements-runtime.XXXXXX)
+ENT_TMP_BASE=$(mktemp -t ironcliw-entitlements-base.XXXXXX)
+ENT_TMP_APP_BASE=$(mktemp -t ironcliw-entitlements-app-base.XXXXXX)
+ENT_TMP_RUNTIME=$(mktemp -t ironcliw-entitlements-runtime.XXXXXX)
 
 if [[ "${APP_BUNDLE}" == "--help" || "${APP_BUNDLE}" == "-h" ]]; then
   cat <<'HELP'
@@ -287,4 +287,3 @@ verify_team_ids
 
 rm -f "$ENT_TMP_BASE" "$ENT_TMP_APP_BASE" "$ENT_TMP_RUNTIME"
 echo "Codesign complete for $APP_BUNDLE"
-

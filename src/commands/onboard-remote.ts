@@ -43,12 +43,12 @@ function validateGatewayWebSocketUrl(value: string): string | undefined {
   }
   if (
     !isSecureWebSocketUrl(trimmed, {
-      allowPrivateWs: process.env.IronCliw_ALLOW_INSECURE_PRIVATE_WS === "1",
+      allowPrivateWs: process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS === "1",
     })
   ) {
     return (
       "Use wss:// for remote hosts, or ws://127.0.0.1/localhost via SSH tunnel. " +
-      "Break-glass: IronCliw_ALLOW_INSECURE_PRIVATE_WS=1 for trusted private networks."
+      "Break-glass: IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1 for trusted private networks."
     );
   }
   return undefined;
@@ -74,7 +74,7 @@ export async function promptRemoteGatewayConfig(
     await prompter.note(
       [
         "Bonjour discovery requires dns-sd (macOS) or avahi-browse (Linux).",
-        "Docs: https://docs.IronCliw.ai/gateway/discovery",
+        "Docs: https://docs.ironcliw.ai/gateway/discovery",
       ].join("\n"),
       "Discovery",
     );
@@ -138,7 +138,7 @@ export async function promptRemoteGatewayConfig(
             `ssh -N -L 18789:127.0.0.1:18789 <user>@${host}${
               selectedBeacon.sshPort ? ` -p ${selectedBeacon.sshPort}` : ""
             }`,
-            "Docs: https://docs.IronCliw.ai/gateway/remote",
+            "Docs: https://docs.ironcliw.ai/gateway/remote",
           ].join("\n"),
           "SSH tunnel",
         );
@@ -179,10 +179,10 @@ export async function promptRemoteGatewayConfig(
         provider: "gateway-remote-token",
         config: cfg,
         prompter,
-        preferredEnvVar: "IronCliw_GATEWAY_TOKEN",
+        preferredEnvVar: "IRONCLIW_GATEWAY_TOKEN",
         copy: {
           sourceMessage: "Where is this gateway token stored?",
-          envVarPlaceholder: "IronCliw_GATEWAY_TOKEN",
+          envVarPlaceholder: "IRONCLIW_GATEWAY_TOKEN",
         },
       });
       token = resolved.ref;
@@ -211,10 +211,10 @@ export async function promptRemoteGatewayConfig(
         provider: "gateway-remote-password",
         config: cfg,
         prompter,
-        preferredEnvVar: "IronCliw_GATEWAY_PASSWORD",
+        preferredEnvVar: "IRONCLIW_GATEWAY_PASSWORD",
         copy: {
           sourceMessage: "Where is this gateway password stored?",
-          envVarPlaceholder: "IronCliw_GATEWAY_PASSWORD",
+          envVarPlaceholder: "IRONCLIW_GATEWAY_PASSWORD",
         },
       });
       password = resolved.ref;

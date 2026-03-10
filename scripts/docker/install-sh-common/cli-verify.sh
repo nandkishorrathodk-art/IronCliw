@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=./version-parse.sh
+source "$SCRIPT_DIR/version-parse.sh"
+
 verify_installed_cli() {
   local package_name="$1"
   local expected_version="$2"
@@ -32,6 +36,8 @@ verify_installed_cli() {
     installed_version="$(node "$entry_path" --version 2>/dev/null | head -n 1 | tr -d '\r')"
   fi
 
+  installed_version="$(extract_ironcliw_semver "$installed_version")"
+
   echo "cli=$cli_name installed=$installed_version expected=$expected_version"
   if [[ "$installed_version" != "$expected_version" ]]; then
     echo "ERROR: expected ${cli_name}@${expected_version}, got ${cli_name}@${installed_version}" >&2
@@ -45,4 +51,3 @@ verify_installed_cli() {
     node "$entry_path" --help >/dev/null
   fi
 }
-

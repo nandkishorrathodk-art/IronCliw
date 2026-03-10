@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/twitch",
-  "version": "2026.3.2",
+  "name": "@ironcliw/twitch",
+  "version": "2026.3.9",
   "description": "IronCliw Twitch channel plugin",
   "type": "module",
   "dependencies": {
@@ -9,7 +9,7 @@
     "@twurple/chat": "^8.0.3",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

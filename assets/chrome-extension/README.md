@@ -9,8 +9,8 @@ Purpose: attach IronCliw to an existing Chrome tab so the Gateway can automate i
 3. Install the extension to a stable path:
 
    ```bash
-   IronCliw browser extension install
-   IronCliw browser extension path
+   ironcliw browser extension install
+   ironcliw browser extension path
    ```
 
 4. Chrome → `chrome://extensions` → enable “Developer mode”.
@@ -20,4 +20,4 @@ Purpose: attach IronCliw to an existing Chrome tab so the Gateway can automate i
 ## Options
 
 - `Relay port`: defaults to `18792`.
-- `Gateway token`: required. Set this to `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`).
+- `Gateway token`: required. Set this to `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`).

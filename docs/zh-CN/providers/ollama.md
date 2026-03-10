@@ -38,7 +38,7 @@ ollama pull deepseek-r1:32b
 export OLLAMA_API_KEY="ollama-local"
 
 # 或在配置文件中设置
-IronCliw config set models.providers.ollama.apiKey "ollama-local"
+ironcliw config set models.providers.ollama.apiKey "ollama-local"
 ```
 
 4. 使用 Ollama 模型：
@@ -70,7 +70,7 @@ IronCliw config set models.providers.ollama.apiKey "ollama-local"
 
 ```bash
 ollama list
-IronCliw models list
+ironcliw models list
 ```
 
 要添加新模型，只需通过 Ollama 拉取：

@@ -13,7 +13,7 @@ model as `provider/model`.
 
 ## Quick start (two steps)
 
-1. Authenticate with the provider (usually via `IronCliw onboard`).
+1. Authenticate with the provider (usually via `ironcliw onboard`).
 2. Set the default model:
 
 ```json5

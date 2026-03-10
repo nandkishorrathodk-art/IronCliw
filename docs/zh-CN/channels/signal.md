@@ -114,8 +114,8 @@ x-i18n:
 - 默认：`channels.signal.dmPolicy = "pairing"`。
 - 未知发送者会收到配对码；消息在批准前会被忽略（配对码 1 小时后过期）。
 - 通过以下方式批准：
-  - `IronCliw pairing list signal`
-  - `IronCliw pairing approve signal <CODE>`
+  - `ironcliw pairing list signal`
+  - `ironcliw pairing approve signal <CODE>`
 - 配对是 Signal 私信的默认令牌交换方式。详情：[配对](/channels/pairing)
 - 仅有 UUID 的发送者（来自 `sourceUuid`）在 `channels.signal.allowFrom` 中存储为 `uuid:<id>`。
 

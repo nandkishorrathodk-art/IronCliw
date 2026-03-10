@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
+import { MANIFEST_KEY } from "../compat/legacy-names.js";
 import type { IronCliwConfig } from "../config/config.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -24,7 +24,7 @@ import type {
 
 type HookPackageManifest = {
   name?: string;
-} & Record<string, unknown>;
+} & Partial<Record<typeof MANIFEST_KEY, { hooks?: string[] }>>;
 const log = createSubsystemLogger("hooks/workspace");
 
 function filterHookEntries(
@@ -53,13 +53,7 @@ function readHookPackageManifest(dir: string): HookPackageManifest | null {
 }
 
 function resolvePackageHooks(manifest: HookPackageManifest): string[] {
-  let raw: unknown;
-  for (const key of [MANIFEST_KEY, ...LEGACY_MANIFEST_KEYS]) {
-    if (manifest[key] && typeof manifest[key] === "object") {
-      raw = manifest[key].hooks;
-      if (raw !== undefined) {break;}
-    }
-  }
+  const raw = manifest[MANIFEST_KEY]?.hooks;
   if (!Array.isArray(raw)) {
     return [];
   }
@@ -252,23 +246,23 @@ function loadHookEntries(
   const bundledHooks = bundledHooksDir
     ? loadHooksFromDir({
         dir: bundledHooksDir,
-        source: "IronCliw-bundled",
+        source: "ironcliw-bundled",
       })
     : [];
   const extraHooks = extraDirs.flatMap((dir) => {
     const resolved = resolveUserPath(dir);
     return loadHooksFromDir({
       dir: resolved,
-      source: "IronCliw-workspace", // Extra dirs treated as workspace
+      source: "ironcliw-workspace", // Extra dirs treated as workspace
     });
   });
   const managedHooks = loadHooksFromDir({
     dir: managedHooksDir,
-    source: "IronCliw-managed",
+    source: "ironcliw-managed",
   });
   const workspaceHooks = loadHooksFromDir({
     dir: workspaceHooksDir,
-    source: "IronCliw-workspace",
+    source: "ironcliw-workspace",
   });
 
   const merged = new Map<string, Hook>();

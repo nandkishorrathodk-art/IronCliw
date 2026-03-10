@@ -21,4 +21,3 @@ let workflow = session "Step 1" -> session "Step 2" -> session "Step 3"
 
 session "Final step"
   context: workflow
-

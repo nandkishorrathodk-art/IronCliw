@@ -1,6 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveIronCliwPackageRoot } from "../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRoot } from "../infra/ironcliw-root.js";
 import { pathExists } from "../utils.js";
 
 const FALLBACK_TEMPLATE_DIR = path.resolve(

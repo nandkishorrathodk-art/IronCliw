@@ -55,7 +55,7 @@ Think of the suites as “increasing realism” (and increasing flakiness/cost):
 - Pool note:
   - IronCliw uses Vitest `vmForks` on Node 22/23 for faster unit shards.
   - On Node 24+, IronCliw automatically falls back to regular `forks` to avoid Node VM linking errors (`ERR_VM_MODULE_LINK_FAILURE` / `module is already linked`).
-  - Override manually with `IronCliw_TEST_VM_FORKS=0` (force `forks`) or `IronCliw_TEST_VM_FORKS=1` (force `vmForks`).
+  - Override manually with `IRONCLIW_TEST_VM_FORKS=0` (force `forks`) or `IRONCLIW_TEST_VM_FORKS=1` (force `vmForks`).
 
 ### E2E (gateway smoke)
 
@@ -67,8 +67,8 @@ Think of the suites as “increasing realism” (and increasing flakiness/cost):
   - Uses adaptive workers (CI: 2-4, local: 4-8).
   - Runs in silent mode by default to reduce console I/O overhead.
 - Useful overrides:
-  - `IronCliw_E2E_WORKERS=<n>` to force worker count (capped at 16).
-  - `IronCliw_E2E_VERBOSE=1` to re-enable verbose console output.
+  - `IRONCLIW_E2E_WORKERS=<n>` to force worker count (capped at 16).
+  - `IRONCLIW_E2E_VERBOSE=1` to re-enable verbose console output.
 - Scope:
   - Multi-instance gateway end-to-end behavior
   - WebSocket/HTTP surfaces, node pairing, and heavier networking
@@ -82,7 +82,7 @@ Think of the suites as “increasing realism” (and increasing flakiness/cost):
 - Command: `pnpm test:live`
 - Config: `vitest.live.config.ts`
 - Files: `src/**/*.live.test.ts`
-- Default: **enabled** by `pnpm test:live` (sets `IronCliw_LIVE_TEST=1`)
+- Default: **enabled** by `pnpm test:live` (sets `IRONCLIW_LIVE_TEST=1`)
 - Scope:
   - “Does this provider/model actually work _today_ with real creds?”
   - Catch provider format changes, tool-calling quirks, auth issues, and rate limit behavior
@@ -91,7 +91,7 @@ Think of the suites as “increasing realism” (and increasing flakiness/cost):
   - Costs money / uses rate limits
   - Prefer running narrowed subsets instead of “everything”
   - Live runs will source `~/.profile` to pick up missing API keys
-- API key rotation (provider-specific): set `*_API_KEYS` with comma/semicolon format or `*_API_KEY_1`, `*_API_KEY_2` (for example `OPENAI_API_KEYS`, `ANTHROPIC_API_KEYS`, `GEMINI_API_KEYS`) or per-live override via `IronCliw_LIVE_*_KEY`; tests retry on rate limit responses.
+- API key rotation (provider-specific): set `*_API_KEYS` with comma/semicolon format or `*_API_KEY_1`, `*_API_KEY_2` (for example `OPENAI_API_KEYS`, `ANTHROPIC_API_KEYS`, `GEMINI_API_KEYS`) or per-live override via `IRONCLIW_LIVE_*_KEY`; tests retry on rate limit responses.
 
 ## Which suite should I run?
 
@@ -114,8 +114,8 @@ Use this decision table:
   - App kept in foreground.
   - Permissions/capture consent granted for capabilities you expect to pass.
 - Optional target overrides:
-  - `IronCliw_ANDROID_NODE_ID` or `IronCliw_ANDROID_NODE_NAME`.
-  - `IronCliw_ANDROID_GATEWAY_URL` / `IronCliw_ANDROID_GATEWAY_TOKEN` / `IronCliw_ANDROID_GATEWAY_PASSWORD`.
+  - `IRONCLIW_ANDROID_NODE_ID` or `IRONCLIW_ANDROID_NODE_NAME`.
+  - `IRONCLIW_ANDROID_GATEWAY_URL` / `IRONCLIW_ANDROID_GATEWAY_TOKEN` / `IRONCLIW_ANDROID_GATEWAY_PASSWORD`.
 - Full Android setup details: [Android App](/platforms/android)
 
 ## Live: model smoke (profile keys)
@@ -133,22 +133,22 @@ Live tests are split into two layers so we can isolate failures:
   - Use `getApiKeyForModel` to select models you have creds for
   - Run a small completion per model (and targeted regressions where needed)
 - How to enable:
-  - `pnpm test:live` (or `IronCliw_LIVE_TEST=1` if invoking Vitest directly)
-- Set `IronCliw_LIVE_MODELS=modern` (or `all`, alias for modern) to actually run this suite; otherwise it skips to keep `pnpm test:live` focused on gateway smoke
+  - `pnpm test:live` (or `IRONCLIW_LIVE_TEST=1` if invoking Vitest directly)
+- Set `IRONCLIW_LIVE_MODELS=modern` (or `all`, alias for modern) to actually run this suite; otherwise it skips to keep `pnpm test:live` focused on gateway smoke
 - How to select models:
-  - `IronCliw_LIVE_MODELS=modern` to run the modern allowlist (Opus/Sonnet/Haiku 4.5, GPT-5.x + Codex, Gemini 3, GLM 4.7, MiniMax M2.5, Grok 4)
-  - `IronCliw_LIVE_MODELS=all` is an alias for the modern allowlist
-  - or `IronCliw_LIVE_MODELS="openai/gpt-5.2,anthropic/claude-opus-4-6,..."` (comma allowlist)
+  - `IRONCLIW_LIVE_MODELS=modern` to run the modern allowlist (Opus/Sonnet/Haiku 4.5, GPT-5.x + Codex, Gemini 3, GLM 4.7, MiniMax M2.5, Grok 4)
+  - `IRONCLIW_LIVE_MODELS=all` is an alias for the modern allowlist
+  - or `IRONCLIW_LIVE_MODELS="openai/gpt-5.2,anthropic/claude-opus-4-6,..."` (comma allowlist)
 - How to select providers:
-  - `IronCliw_LIVE_PROVIDERS="google,google-antigravity,google-gemini-cli"` (comma allowlist)
+  - `IRONCLIW_LIVE_PROVIDERS="google,google-antigravity,google-gemini-cli"` (comma allowlist)
 - Where keys come from:
   - By default: profile store and env fallbacks
-  - Set `IronCliw_LIVE_REQUIRE_PROFILE_KEYS=1` to enforce **profile store** only
+  - Set `IRONCLIW_LIVE_REQUIRE_PROFILE_KEYS=1` to enforce **profile store** only
 - Why this exists:
   - Separates “provider API is broken / key is invalid” from “gateway agent pipeline is broken”
   - Contains small, isolated regressions (example: OpenAI Responses/Codex Responses reasoning replay + tool-call flows)
 
-### Layer 2: Gateway + dev agent smoke (what “@IronCliw” actually does)
+### Layer 2: Gateway + dev agent smoke (what “@ironcliw” actually does)
 
 - Test: `src/gateway/gateway-models.profiles.live.test.ts`
 - Goal:
@@ -165,13 +165,13 @@ Live tests are split into two layers so we can isolate failures:
   - image probe: the test attaches a generated PNG (cat + randomized code) and expects the model to return `cat <CODE>`.
   - Implementation reference: `src/gateway/gateway-models.profiles.live.test.ts` and `src/gateway/live-image-probe.ts`.
 - How to enable:
-  - `pnpm test:live` (or `IronCliw_LIVE_TEST=1` if invoking Vitest directly)
+  - `pnpm test:live` (or `IRONCLIW_LIVE_TEST=1` if invoking Vitest directly)
 - How to select models:
   - Default: modern allowlist (Opus/Sonnet/Haiku 4.5, GPT-5.x + Codex, Gemini 3, GLM 4.7, MiniMax M2.5, Grok 4)
-  - `IronCliw_LIVE_GATEWAY_MODELS=all` is an alias for the modern allowlist
-  - Or set `IronCliw_LIVE_GATEWAY_MODELS="provider/model"` (or comma list) to narrow
+  - `IRONCLIW_LIVE_GATEWAY_MODELS=all` is an alias for the modern allowlist
+  - Or set `IRONCLIW_LIVE_GATEWAY_MODELS="provider/model"` (or comma list) to narrow
 - How to select providers (avoid “OpenRouter everything”):
-  - `IronCliw_LIVE_GATEWAY_PROVIDERS="google,google-antigravity,google-gemini-cli,openai,anthropic,zai,minimax"` (comma allowlist)
+  - `IRONCLIW_LIVE_GATEWAY_PROVIDERS="google,google-antigravity,google-gemini-cli,openai,anthropic,zai,minimax"` (comma allowlist)
 - Tool + image probes are always on in this live test:
   - `read` probe + `exec+read` probe (tool stress)
   - image probe runs when the model advertises image input support
@@ -185,8 +185,8 @@ Live tests are split into two layers so we can isolate failures:
 Tip: to see what you can test on your machine (and the exact `provider/model` ids), run:
 
 ```bash
-IronCliw models list
-IronCliw models list --json
+ironcliw models list
+ironcliw models list --json
 ```
 
 ## Live: Anthropic setup-token smoke
@@ -194,19 +194,19 @@ IronCliw models list --json
 - Test: `src/agents/anthropic.setup-token.live.test.ts`
 - Goal: verify Claude Code CLI setup-token (or a pasted setup-token profile) can complete an Anthropic prompt.
 - Enable:
-  - `pnpm test:live` (or `IronCliw_LIVE_TEST=1` if invoking Vitest directly)
-  - `IronCliw_LIVE_SETUP_TOKEN=1`
+  - `pnpm test:live` (or `IRONCLIW_LIVE_TEST=1` if invoking Vitest directly)
+  - `IRONCLIW_LIVE_SETUP_TOKEN=1`
 - Token sources (pick one):
-  - Profile: `IronCliw_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-token-test`
-  - Raw token: `IronCliw_LIVE_SETUP_TOKEN_VALUE=sk-ant-oat01-...`
+  - Profile: `IRONCLIW_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-token-test`
+  - Raw token: `IRONCLIW_LIVE_SETUP_TOKEN_VALUE=sk-ant-oat01-...`
 - Model override (optional):
-  - `IronCliw_LIVE_SETUP_TOKEN_MODEL=anthropic/claude-opus-4-6`
+  - `IRONCLIW_LIVE_SETUP_TOKEN_MODEL=anthropic/claude-opus-4-6`
 
 Setup example:
 
 ```bash
-IronCliw models auth paste-token --provider anthropic --profile-id anthropic:setup-token-test
-IronCliw_LIVE_SETUP_TOKEN=1 IronCliw_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-token-test pnpm test:live src/agents/anthropic.setup-token.live.test.ts
+ironcliw models auth paste-token --provider anthropic --profile-id anthropic:setup-token-test
+IRONCLIW_LIVE_SETUP_TOKEN=1 IRONCLIW_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-token-test pnpm test:live src/agents/anthropic.setup-token.live.test.ts
 ```
 
 ## Live: CLI backend smoke (Claude Code CLI or other local CLIs)
@@ -214,29 +214,29 @@ IronCliw_LIVE_SETUP_TOKEN=1 IronCliw_LIVE_SETUP_TOKEN_PROFILE=anthropic:setup-to
 - Test: `src/gateway/gateway-cli-backend.live.test.ts`
 - Goal: validate the Gateway + agent pipeline using a local CLI backend, without touching your default config.
 - Enable:
-  - `pnpm test:live` (or `IronCliw_LIVE_TEST=1` if invoking Vitest directly)
-  - `IronCliw_LIVE_CLI_BACKEND=1`
+  - `pnpm test:live` (or `IRONCLIW_LIVE_TEST=1` if invoking Vitest directly)
+  - `IRONCLIW_LIVE_CLI_BACKEND=1`
 - Defaults:
   - Model: `claude-cli/claude-sonnet-4-6`
   - Command: `claude`
   - Args: `["-p","--output-format","json","--permission-mode","bypassPermissions"]`
 - Overrides (optional):
-  - `IronCliw_LIVE_CLI_BACKEND_MODEL="claude-cli/claude-opus-4-6"`
-  - `IronCliw_LIVE_CLI_BACKEND_MODEL="codex-cli/gpt-5.3-codex"`
-  - `IronCliw_LIVE_CLI_BACKEND_COMMAND="/full/path/to/claude"`
-  - `IronCliw_LIVE_CLI_BACKEND_ARGS='["-p","--output-format","json","--permission-mode","bypassPermissions"]'`
-  - `IronCliw_LIVE_CLI_BACKEND_CLEAR_ENV='["ANTHROPIC_API_KEY","ANTHROPIC_API_KEY_OLD"]'`
-  - `IronCliw_LIVE_CLI_BACKEND_IMAGE_PROBE=1` to send a real image attachment (paths are injected into the prompt).
-  - `IronCliw_LIVE_CLI_BACKEND_IMAGE_ARG="--image"` to pass image file paths as CLI args instead of prompt injection.
-  - `IronCliw_LIVE_CLI_BACKEND_IMAGE_MODE="repeat"` (or `"list"`) to control how image args are passed when `IMAGE_ARG` is set.
-  - `IronCliw_LIVE_CLI_BACKEND_RESUME_PROBE=1` to send a second turn and validate resume flow.
-- `IronCliw_LIVE_CLI_BACKEND_DISABLE_MCP_CONFIG=0` to keep Claude Code CLI MCP config enabled (default disables MCP config with a temporary empty file).
+  - `IRONCLIW_LIVE_CLI_BACKEND_MODEL="claude-cli/claude-opus-4-6"`
+  - `IRONCLIW_LIVE_CLI_BACKEND_MODEL="codex-cli/gpt-5.4"`
+  - `IRONCLIW_LIVE_CLI_BACKEND_COMMAND="/full/path/to/claude"`
+  - `IRONCLIW_LIVE_CLI_BACKEND_ARGS='["-p","--output-format","json","--permission-mode","bypassPermissions"]'`
+  - `IRONCLIW_LIVE_CLI_BACKEND_CLEAR_ENV='["ANTHROPIC_API_KEY","ANTHROPIC_API_KEY_OLD"]'`
+  - `IRONCLIW_LIVE_CLI_BACKEND_IMAGE_PROBE=1` to send a real image attachment (paths are injected into the prompt).
+  - `IRONCLIW_LIVE_CLI_BACKEND_IMAGE_ARG="--image"` to pass image file paths as CLI args instead of prompt injection.
+  - `IRONCLIW_LIVE_CLI_BACKEND_IMAGE_MODE="repeat"` (or `"list"`) to control how image args are passed when `IMAGE_ARG` is set.
+  - `IRONCLIW_LIVE_CLI_BACKEND_RESUME_PROBE=1` to send a second turn and validate resume flow.
+- `IRONCLIW_LIVE_CLI_BACKEND_DISABLE_MCP_CONFIG=0` to keep Claude Code CLI MCP config enabled (default disables MCP config with a temporary empty file).
 
 Example:
 
 ```bash
-IronCliw_LIVE_CLI_BACKEND=1 \
-  IronCliw_LIVE_CLI_BACKEND_MODEL="claude-cli/claude-sonnet-4-6" \
+IRONCLIW_LIVE_CLI_BACKEND=1 \
+  IRONCLIW_LIVE_CLI_BACKEND_MODEL="claude-cli/claude-sonnet-4-6" \
   pnpm test:live src/gateway/gateway-cli-backend.live.test.ts
 ```
 
@@ -245,17 +245,17 @@ IronCliw_LIVE_CLI_BACKEND=1 \
 Narrow, explicit allowlists are fastest and least flaky:
 
 - Single model, direct (no gateway):
-  - `IronCliw_LIVE_MODELS="openai/gpt-5.2" pnpm test:live src/agents/models.profiles.live.test.ts`
+  - `IRONCLIW_LIVE_MODELS="openai/gpt-5.2" pnpm test:live src/agents/models.profiles.live.test.ts`
 
 - Single model, gateway smoke:
-  - `IronCliw_LIVE_GATEWAY_MODELS="openai/gpt-5.2" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
+  - `IRONCLIW_LIVE_GATEWAY_MODELS="openai/gpt-5.2" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
 
 - Tool calling across several providers:
-  - `IronCliw_LIVE_GATEWAY_MODELS="openai/gpt-5.2,anthropic/claude-opus-4-6,google/gemini-3-flash-preview,zai/glm-4.7,minimax/minimax-m2.5" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
+  - `IRONCLIW_LIVE_GATEWAY_MODELS="openai/gpt-5.2,anthropic/claude-opus-4-6,google/gemini-3-flash-preview,zai/glm-4.7,minimax/minimax-m2.5" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
 
 - Google focus (Gemini API key + Antigravity):
-  - Gemini (API key): `IronCliw_LIVE_GATEWAY_MODELS="google/gemini-3-flash-preview" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
-  - Antigravity (OAuth): `IronCliw_LIVE_GATEWAY_MODELS="google-antigravity/claude-opus-4-6-thinking,google-antigravity/gemini-3-pro-high" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
+  - Gemini (API key): `IRONCLIW_LIVE_GATEWAY_MODELS="google/gemini-3-flash-preview" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
+  - Antigravity (OAuth): `IRONCLIW_LIVE_GATEWAY_MODELS="google-antigravity/claude-opus-4-6-thinking,google-antigravity/gemini-3-pro-high" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
 
 Notes:
 
@@ -275,15 +275,15 @@ There is no fixed “CI model list” (live is opt-in), but these are the **reco
 This is the “common models” run we expect to keep working:
 
 - OpenAI (non-Codex): `openai/gpt-5.2` (optional: `openai/gpt-5.1`)
-- OpenAI Codex: `openai-codex/gpt-5.3-codex` (optional: `openai-codex/gpt-5.3-codex-codex`)
+- OpenAI Codex: `openai-codex/gpt-5.4`
 - Anthropic: `anthropic/claude-opus-4-6` (or `anthropic/claude-sonnet-4-5`)
-- Google (Gemini API): `google/gemini-3-pro-preview` and `google/gemini-3-flash-preview` (avoid older Gemini 2.x models)
+- Google (Gemini API): `google/gemini-3.1-pro-preview` and `google/gemini-3-flash-preview` (avoid older Gemini 2.x models)
 - Google (Antigravity): `google-antigravity/claude-opus-4-6-thinking` and `google-antigravity/gemini-3-flash`
 - Z.AI (GLM): `zai/glm-4.7`
 - MiniMax: `minimax/minimax-m2.5`
 
 Run gateway smoke with tools + image:
-`IronCliw_LIVE_GATEWAY_MODELS="openai/gpt-5.2,openai-codex/gpt-5.3-codex,anthropic/claude-opus-4-6,google/gemini-3-pro-preview,google/gemini-3-flash-preview,google-antigravity/claude-opus-4-6-thinking,google-antigravity/gemini-3-flash,zai/glm-4.7,minimax/minimax-m2.5" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
+`IRONCLIW_LIVE_GATEWAY_MODELS="openai/gpt-5.2,openai-codex/gpt-5.4,anthropic/claude-opus-4-6,google/gemini-3.1-pro-preview,google/gemini-3-flash-preview,google-antigravity/claude-opus-4-6-thinking,google-antigravity/gemini-3-flash,zai/glm-4.7,minimax/minimax-m2.5" pnpm test:live src/gateway/gateway-models.profiles.live.test.ts`
 
 ### Baseline: tool calling (Read + optional Exec)
 
@@ -291,7 +291,7 @@ Pick at least one per provider family:
 
 - OpenAI: `openai/gpt-5.2` (or `openai/gpt-5-mini`)
 - Anthropic: `anthropic/claude-opus-4-6` (or `anthropic/claude-sonnet-4-5`)
-- Google: `google/gemini-3-flash-preview` (or `google/gemini-3-pro-preview`)
+- Google: `google/gemini-3-flash-preview` (or `google/gemini-3.1-pro-preview`)
 - Z.AI (GLM): `zai/glm-4.7`
 - MiniMax: `minimax/minimax-m2.5`
 
@@ -304,13 +304,13 @@ Optional additional coverage (nice to have):
 
 ### Vision: image send (attachment → multimodal message)
 
-Include at least one image-capable model in `IronCliw_LIVE_GATEWAY_MODELS` (Claude/Gemini/OpenAI vision-capable variants, etc.) to exercise the image probe.
+Include at least one image-capable model in `IRONCLIW_LIVE_GATEWAY_MODELS` (Claude/Gemini/OpenAI vision-capable variants, etc.) to exercise the image probe.
 
 ### Aggregators / alternate gateways
 
 If you have keys enabled, we also support testing via:
 
-- OpenRouter: `openrouter/...` (hundreds of models; use `IronCliw models scan` to find tool+image capable candidates)
+- OpenRouter: `openrouter/...` (hundreds of models; use `ironcliw models scan` to find tool+image capable candidates)
 - OpenCode Zen: `opencode/...` (auth via `OPENCODE_API_KEY` / `OPENCODE_ZEN_API_KEY`)
 
 More providers you can include in the live matrix (if you have creds/config):
@@ -325,10 +325,10 @@ Tip: don’t try to hardcode “all models” in docs. The authoritative list is
 Live tests discover credentials the same way the CLI does. Practical implications:
 
 - If the CLI works, live tests should find the same keys.
-- If a live test says “no creds”, debug the same way you’d debug `IronCliw models list` / model selection.
+- If a live test says “no creds”, debug the same way you’d debug `ironcliw models list` / model selection.
 
-- Profile store: `~/.IronCliw/credentials/` (preferred; what “profile keys” means in the tests)
-- Config: `~/.IronCliw/IronCliw.json` (or `IronCliw_CONFIG_PATH`)
+- Profile store: `~/.ironcliw/credentials/` (preferred; what “profile keys” means in the tests)
+- Config: `~/.ironcliw/ironcliw.json` (or `IRONCLIW_CONFIG_PATH`)
 
 If you want to rely on env keys (e.g. exported in your `~/.profile`), run local tests after `source ~/.profile`, or use the Docker runners below (they can mount `~/.profile` into the container).
 
@@ -353,6 +353,10 @@ These run `pnpm test:live` inside the repo Docker image, mounting your local con
 - Gateway networking (two containers, WS auth + health): `pnpm test:docker:gateway-network` (script: `scripts/e2e/gateway-network-docker.sh`)
 - Plugins (custom extension load + registry smoke): `pnpm test:docker:plugins` (script: `scripts/e2e/plugins-docker.sh`)
 
+The live-model Docker runners also bind-mount the current checkout read-only and
+stage it into a temporary workdir inside the container. This keeps the runtime
+image slim while still running Vitest against your exact local source/config.
+
 Manual ACP plain-language thread smoke (not CI):
 
 - `bun scripts/dev/discord-acp-plain-language-smoke.ts --channel <discord-channel-id> ...`
@@ -360,11 +364,11 @@ Manual ACP plain-language thread smoke (not CI):
 
 Useful env vars:
 
-- `IronCliw_CONFIG_DIR=...` (default: `~/.IronCliw`) mounted to `/home/node/.IronCliw`
-- `IronCliw_WORKSPACE_DIR=...` (default: `~/.IronCliw/workspace`) mounted to `/home/node/.IronCliw/workspace`
-- `IronCliw_PROFILE_FILE=...` (default: `~/.profile`) mounted to `/home/node/.profile` and sourced before running tests
-- `IronCliw_LIVE_GATEWAY_MODELS=...` / `IronCliw_LIVE_MODELS=...` to narrow the run
-- `IronCliw_LIVE_REQUIRE_PROFILE_KEYS=1` to ensure creds come from the profile store (not env)
+- `IRONCLIW_CONFIG_DIR=...` (default: `~/.ironcliw`) mounted to `/home/node/.ironcliw`
+- `IRONCLIW_WORKSPACE_DIR=...` (default: `~/.ironcliw/workspace`) mounted to `/home/node/.ironcliw/workspace`
+- `IRONCLIW_PROFILE_FILE=...` (default: `~/.profile`) mounted to `/home/node/.profile` and sourced before running tests
+- `IRONCLIW_LIVE_GATEWAY_MODELS=...` / `IRONCLIW_LIVE_MODELS=...` to narrow the run
+- `IRONCLIW_LIVE_REQUIRE_PROFILE_KEYS=1` to ensure creds come from the profile store (not env)
 
 ## Docs sanity
 

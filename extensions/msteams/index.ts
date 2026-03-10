@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/msteams";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/msteams";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/msteams";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/msteams";
 import { msteamsPlugin } from "./src/channel.js";
 import { setMSTeamsRuntime } from "./src/runtime.js";
 

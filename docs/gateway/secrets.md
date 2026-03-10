@@ -46,11 +46,13 @@ Examples of inactive surfaces:
     In local mode without those remote surfaces:
   - `gateway.remote.token` is active when token auth can win and no env/auth token is configured.
   - `gateway.remote.password` is active only when password auth can win and no env/auth password is configured.
+- `gateway.auth.token` SecretRef is inactive for startup auth resolution when `IRONCLIW_GATEWAY_TOKEN` (or `CLAWDBOT_GATEWAY_TOKEN`) is set, because env token input wins for that runtime.
 
 ## Gateway auth surface diagnostics
 
-When a SecretRef is configured on `gateway.auth.password`, `gateway.remote.token`, or
-`gateway.remote.password`, gateway startup/reload logs the surface state explicitly:
+When a SecretRef is configured on `gateway.auth.token`, `gateway.auth.password`,
+`gateway.remote.token`, or `gateway.remote.password`, gateway startup/reload logs the
+surface state explicitly:
 
 - `active`: the SecretRef is part of the effective auth surface and must resolve.
 - `inactive`: the SecretRef is ignored for this runtime because another auth surface wins, or
@@ -65,6 +67,7 @@ When onboarding runs in interactive mode and you choose SecretRef storage, IronC
 
 - Env refs: validates env var name and confirms a non-empty value is visible during onboarding.
 - Provider refs (`file` or `exec`): validates provider selection, resolves `id`, and checks resolved value type.
+- Quickstart reuse path: when `gateway.auth.token` is already a SecretRef, onboarding resolves it before probe/dashboard bootstrap (for `env`, `file`, and `exec` refs) using the same fail-fast gate.
 
 If validation fails, onboarding shows the error and lets you retry.
 
@@ -121,12 +124,12 @@ Define providers under `secrets.providers`:
       default: { source: "env" },
       filemain: {
         source: "file",
-        path: "~/.IronCliw/secrets.json",
+        path: "~/.ironcliw/secrets.json",
         mode: "json", // or "singleValue"
       },
       vault: {
         source: "exec",
-        command: "/usr/local/bin/IronCliw-vault-resolver",
+        command: "/usr/local/bin/ironcliw-vault-resolver",
         args: ["--profile", "prod"],
         passEnv: ["PATH", "VAULT_ADDR"],
         jsonOnly: true,
@@ -176,8 +179,8 @@ Request payload (stdin):
 
 Response payload (stdout):
 
-```json
-{ "protocolVersion": 1, "values": { "providers/openai/apiKey": "sk-..." } }
+```jsonc
+{ "protocolVersion": 1, "values": { "providers/openai/apiKey": "<openai-api-key>" } } // pragma: allowlist secret
 ```
 
 Optional per-id errors:
@@ -232,7 +235,7 @@ Optional per-id errors:
         command: "/opt/homebrew/bin/vault",
         allowSymlinkCommand: true, // required for Homebrew symlinked binaries
         trustedDirs: ["/opt/homebrew"],
-        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/IronCliw"],
+        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/ironcliw"],
         passEnv: ["VAULT_ADDR", "VAULT_TOKEN"],
         jsonOnly: false,
       },
@@ -296,7 +299,7 @@ Runtime-minted or rotating credentials and OAuth refresh material are intentiona
 Warning and audit signals:
 
 - `SECRETS_REF_OVERRIDES_PLAINTEXT` (runtime warning)
-- `REF_SHADOWED` (audit finding when `auth-profiles.json` credentials take precedence over `IronCliw.json` refs)
+- `REF_SHADOWED` (audit finding when `auth-profiles.json` credentials take precedence over `ironcliw.json` refs)
 
 Google Chat compatibility behavior:
 
@@ -336,11 +339,23 @@ Behavior:
 
 ## Command-path resolution
 
-Credential-sensitive command paths that opt in (for example `IronCliw memory` remote-memory paths and `IronCliw qr --remote`) can resolve supported SecretRefs via gateway snapshot RPC.
+Command paths can opt into supported SecretRef resolution via gateway snapshot RPC.
 
-- When gateway is running, those command paths read from the active snapshot.
-- If a configured SecretRef is required and gateway is unavailable, command resolution fails fast with actionable diagnostics.
-- Snapshot refresh after backend secret rotation is handled by `IronCliw secrets reload`.
+There are two broad behaviors:
+
+- Strict command paths (for example `ironcliw memory` remote-memory paths and `ironcliw qr --remote`) read from the active snapshot and fail fast when a required SecretRef is unavailable.
+- Read-only command paths (for example `ironcliw status`, `ironcliw status --all`, `ironcliw channels status`, `ironcliw channels resolve`, and read-only doctor/config repair flows) also prefer the active snapshot, but degrade instead of aborting when a targeted SecretRef is unavailable in that command path.
+
+Read-only behavior:
+
+- When the gateway is running, these commands read from the active snapshot first.
+- If gateway resolution is incomplete or the gateway is unavailable, they attempt targeted local fallback for the specific command surface.
+- If a targeted SecretRef is still unavailable, the command continues with degraded read-only output and explicit diagnostics such as “configured but unavailable in this command path”.
+- This degraded behavior is command-local only. It does not weaken runtime startup, reload, or send/auth paths.
+
+Other notes:
+
+- Snapshot refresh after backend secret rotation is handled by `ironcliw secrets reload`.
 - Gateway RPC method used by these command paths: `secrets.resolve`.
 
 ## Audit and configure workflow
@@ -348,26 +363,31 @@ Credential-sensitive command paths that opt in (for example `IronCliw memory` re
 Default operator flow:
 
 ```bash
-IronCliw secrets audit --check
-IronCliw secrets configure
-IronCliw secrets audit --check
+ironcliw secrets audit --check
+ironcliw secrets configure
+ironcliw secrets audit --check
 ```
 
 ### `secrets audit`
 
 Findings include:
 
-- plaintext values at rest (`IronCliw.json`, `auth-profiles.json`, `.env`)
+- plaintext values at rest (`ironcliw.json`, `auth-profiles.json`, `.env`, and generated `agents/*/agent/models.json`)
+- plaintext sensitive provider header residues in generated `models.json` entries
 - unresolved refs
-- precedence shadowing (`auth-profiles.json` taking priority over `IronCliw.json` refs)
+- precedence shadowing (`auth-profiles.json` taking priority over `ironcliw.json` refs)
 - legacy residues (`auth.json`, OAuth reminders)
+
+Header residue note:
+
+- Sensitive provider header detection is name-heuristic based (common auth/credential header names and fragments such as `authorization`, `x-api-key`, `token`, `secret`, `password`, and `credential`).
 
 ### `secrets configure`
 
 Interactive helper that:
 
 - configures `secrets.providers` first (`env`/`file`/`exec`, add/edit/remove)
-- lets you select supported secret-bearing fields in `IronCliw.json` plus `auth-profiles.json` for one agent scope
+- lets you select supported secret-bearing fields in `ironcliw.json` plus `auth-profiles.json` for one agent scope
 - can create a new `auth-profiles.json` mapping directly in the target picker
 - captures SecretRef details (`source`, `provider`, `id`)
 - runs preflight resolution
@@ -375,9 +395,9 @@ Interactive helper that:
 
 Helpful modes:
 
-- `IronCliw secrets configure --providers-only`
-- `IronCliw secrets configure --skip-provider-setup`
-- `IronCliw secrets configure --agent <id>`
+- `ironcliw secrets configure --providers-only`
+- `ironcliw secrets configure --skip-provider-setup`
+- `ironcliw secrets configure --agent <id>`
 
 `configure` apply defaults:
 
@@ -390,8 +410,8 @@ Helpful modes:
 Apply a saved plan:
 
 ```bash
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json --dry-run
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json --dry-run
 ```
 
 For strict target/path contract details and exact rejection rules, see:

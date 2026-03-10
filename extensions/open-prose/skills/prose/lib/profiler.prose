@@ -458,4 +458,3 @@ output report = session "Format profiler report"
     Format as clean markdown with tables.
   """
   context: analysis
-

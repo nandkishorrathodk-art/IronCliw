@@ -7,11 +7,21 @@
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px dashed rgba(0, 229, 255, 0.25);
-  background: rgba(0, 229, 255, 0.03);
-  color: var(--muted);
+  background: rgba(0, 229, 255, 0.04);
+  color: var(--accent-muted);
   font-size: 12px;
-  font-style: italic;
-  line-height: 1.5;
+  line-height: 1.4;
+  animation: thinking-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes thinking-pulse {
+  0%,
+  100% {
+    border-color: rgba(0, 229, 255, 0.25);
+  }
+  50% {
+    border-color: rgba(0, 229, 255, 0.5);
+  }
 }
 
 :root[data-theme="light"] .chat-thinking {
@@ -58,36 +68,38 @@
 }
 
 .chat-text :where(:not(pre) > code) {
-  background: rgba(0, 229, 255, 0.08);
-  border: 1px solid rgba(0, 229, 255, 0.15);
+  background: rgba(0, 229, 255, 0.07);
+  border: 1px solid rgba(0, 229, 255, 0.18);
   color: var(--accent);
-  padding: 0.15em 0.5em;
+  padding: 0.15em 0.4em;
   border-radius: 4px;
   overflow-wrap: normal;
   word-break: keep-all;
-  font-size: 0.88em;
 }
 
 .chat-text :where(pre) {
-  background: rgba(6, 8, 14, 0.9);
-  border: 1px solid rgba(0, 229, 255, 0.1);
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   padding: 12px 14px;
   overflow-x: auto;
-  box-shadow: inset 0 1px 0 rgba(0, 229, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .chat-text :where(pre code) {
   background: none;
+  border: none;
+  color: var(--text);
   padding: 0;
 }
 
 .chat-text :where(blockquote) {
-  border-left: 2px solid rgba(0, 229, 255, 0.4);
-  padding: 8px 12px;
+  border-left: 3px solid var(--border-strong);
+  padding-left: 12px;
   margin-left: 0;
   color: var(--muted);
-  background: rgba(0, 229, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px 12px;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 

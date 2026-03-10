@@ -74,7 +74,7 @@ SLACK_BOT_TOKEN=xoxb-...
       <Step title="Start gateway">
 
 ```bash
-IronCliw gateway
+ironcliw gateway
 ```
 
       </Step>
@@ -158,7 +158,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
     - Named accounts inherit `channels.slack.allowFrom` when their own `allowFrom` is unset.
     - Named accounts do not inherit `channels.slack.accounts.default.allowFrom`.
 
-    Pairing in DMs uses `IronCliw pairing approve slack <code>`.
+    Pairing in DMs uses `ironcliw pairing approve slack <code>`.
 
   </Tab>
 
@@ -221,7 +221,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
 Default slash command settings:
 
 - `enabled: false`
-- `name: "IronCliw"`
+- `name: "ironcliw"`
 - `sessionPrefix: "slack:slash"`
 - `ephemeral: true`
 
@@ -321,7 +321,21 @@ Resolution order:
 Notes:
 
 - Slack expects shortcodes (for example `"eyes"`).
-- Use `""` to disable the reaction for a channel or account.
+- Use `""` to disable the reaction for the Slack account or globally.
+
+## Typing reaction fallback
+
+`typingReaction` adds a temporary reaction to the inbound Slack message while IronCliw is processing a reply, then removes it when the run finishes. This is a useful fallback when Slack native assistant typing is unavailable, especially in DMs.
+
+Resolution order:
+
+- `channels.slack.accounts.<accountId>.typingReaction`
+- `channels.slack.typingReaction`
+
+Notes:
+
+- Slack expects shortcodes (for example `"hourglass_flowing_sand"`).
+- The reaction is best-effort and cleanup is attempted automatically after the reply or failure path completes.
 
 ## Manifest and scope checklist
 
@@ -345,7 +359,7 @@ Notes:
     },
     "slash_commands": [
       {
-        "command": "/IronCliw",
+        "command": "/ironcliw",
         "description": "Send a message to IronCliw",
         "should_escape": false
       }
@@ -430,9 +444,9 @@ Notes:
     Useful commands:
 
 ```bash
-IronCliw channels status --probe
-IronCliw logs --follow
-IronCliw doctor
+ironcliw channels status --probe
+ironcliw logs --follow
+ironcliw doctor
 ```
 
   </Accordion>
@@ -445,7 +459,7 @@ IronCliw doctor
     - pairing approvals / allowlist entries
 
 ```bash
-IronCliw pairing list slack
+ironcliw pairing list slack
 ```
 
   </Accordion>

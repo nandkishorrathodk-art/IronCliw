@@ -7,19 +7,19 @@ OAuth provider plugin for **MiniMax** (OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-IronCliw plugins enable minimax-portal-auth
+ironcliw plugins enable minimax-portal-auth
 ```
 
 Restart the Gateway after enabling.
 
 ```bash
-IronCliw gateway restart
+ironcliw gateway restart
 ```
 
 ## Authenticate
 
 ```bash
-IronCliw models auth login --provider minimax-portal --set-default
+ironcliw models auth login --provider minimax-portal --set-default
 ```
 
 You will be prompted to select an endpoint:

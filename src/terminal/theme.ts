@@ -1,5 +1,5 @@
 import chalk, { Chalk } from "chalk";
-import { IRONCLIW_PALETTE } from "./palette.js";
+import { IRON_PALETTE } from "./palette.js";
 
 const hasForceColor =
   typeof process.env.FORCE_COLOR === "string" &&
@@ -11,18 +11,18 @@ const baseChalk = process.env.NO_COLOR && !hasForceColor ? new Chalk({ level: 0 
 const hex = (value: string) => baseChalk.hex(value);
 
 export const theme = {
-  accent: hex(IRONCLIW_PALETTE.accent),
-  accentBright: hex(IRONCLIW_PALETTE.accentBright),
-  accentDim: hex(IRONCLIW_PALETTE.accentDim),
-  info: hex(IRONCLIW_PALETTE.info),
-  success: hex(IRONCLIW_PALETTE.success),
-  warn: hex(IRONCLIW_PALETTE.warn),
-  error: hex(IRONCLIW_PALETTE.error),
-  muted: hex(IRONCLIW_PALETTE.muted),
-  heading: baseChalk.bold.hex(IRONCLIW_PALETTE.accent),
-  cyber: baseChalk.bold.bgHex(IRONCLIW_PALETTE.accent).black,
-  command: hex(IRONCLIW_PALETTE.accentBright),
-  option: hex(IRONCLIW_PALETTE.warn),
+  accent: hex(IRON_PALETTE.accent),
+  accentBright: hex(IRON_PALETTE.accentBright),
+  accentDim: hex(IRON_PALETTE.accentDim),
+  info: hex(IRON_PALETTE.info),
+  success: hex(IRON_PALETTE.success),
+  warn: hex(IRON_PALETTE.warn),
+  error: hex(IRON_PALETTE.error),
+  muted: hex(IRON_PALETTE.muted),
+  heading: baseChalk.bold.hex(IRON_PALETTE.accent),
+  cyber: baseChalk.bold.hex(IRON_PALETTE.accentBright),
+  command: hex(IRON_PALETTE.accentBright),
+  option: hex(IRON_PALETTE.warn),
 } as const;
 
 export const isRich = () => Boolean(baseChalk.level > 0);

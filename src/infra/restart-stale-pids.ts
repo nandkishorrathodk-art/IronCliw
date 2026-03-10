@@ -51,7 +51,7 @@ function sleepSync(ms: number): void {
 }
 
 /**
- * Parse IronCliw gateway PIDs from lsof -Fpc stdout.
+ * Parse ironcliw gateway PIDs from lsof -Fpc stdout.
  * Pure function — no I/O. Excludes the current process.
  */
 function parsePidsFromLsofOutput(stdout: string): number[] {
@@ -60,7 +60,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
   let currentCmd: string | undefined;
   for (const line of stdout.split(/\r?\n/).filter(Boolean)) {
     if (line.startsWith("p")) {
-      if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("IronCliw")) {
+      if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("ironcliw")) {
         pids.push(currentPid);
       }
       const parsed = Number.parseInt(line.slice(1), 10);
@@ -70,7 +70,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
       currentCmd = line.slice(1);
     }
   }
-  if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("IronCliw")) {
+  if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("ironcliw")) {
     pids.push(currentPid);
   }
   // Deduplicate: dual-stack listeners (IPv4 + IPv6) cause lsof to emit the
@@ -80,7 +80,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
 
 /**
  * Find PIDs of gateway processes listening on the given port using synchronous lsof.
- * Returns only PIDs that belong to IronCliw gateway processes (not the current process).
+ * Returns only PIDs that belong to ironcliw gateway processes (not the current process).
  */
 export function findGatewayPidsOnPortSync(
   port: number,
@@ -253,9 +253,12 @@ function waitForPortFreeSync(port: number): void {
  *
  * Called before service restart commands to prevent port conflicts.
  */
-export function cleanStaleGatewayProcessesSync(): number[] {
+export function cleanStaleGatewayProcessesSync(portOverride?: number): number[] {
   try {
-    const port = resolveGatewayPort(undefined, process.env);
+    const port =
+      typeof portOverride === "number" && Number.isFinite(portOverride) && portOverride > 0
+        ? Math.floor(portOverride)
+        : resolveGatewayPort(undefined, process.env);
     const stalePids = findGatewayPidsOnPortSync(port);
     if (stalePids.length === 0) {
       return [];

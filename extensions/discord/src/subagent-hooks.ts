@@ -1,10 +1,10 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/discord";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/discord";
 import {
   autoBindSpawnedDiscordSubagent,
   listThreadBindingsBySessionKey,
   resolveDiscordAccount,
   unbindThreadBindingsBySessionKey,
-} from "IronCliw/plugin-sdk/discord";
+} from "ironcliw/plugin-sdk/discord";
 
 function summarizeError(err: unknown): string {
   if (err instanceof Error) {

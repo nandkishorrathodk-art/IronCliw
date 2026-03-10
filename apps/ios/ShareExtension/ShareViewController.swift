@@ -17,7 +17,7 @@ final class ShareViewController: UIViewController {
         var attachments: [ShareAttachment]
     }
 
-    private let logger = Logger(subsystem: "ai.IronCliw.ios", category: "ShareExtension")
+    private let logger = Logger(subsystem: "ai.ironcliw.ios", category: "ShareExtension")
     private var statusLabel: UILabel?
     private let draftTextView = UITextView()
     private let sendButton = UIButton(type: .system)
@@ -190,7 +190,7 @@ final class ShareViewController: UIViewController {
                 url: url,
                 token: config.token,
                 password: config.password,
-                connectOptions: makeOptions("IronCliw-ios"),
+                connectOptions: makeOptions("ironcliw-ios"),
                 sessionBox: nil,
                 onConnected: {},
                 onDisconnected: { _ in },

@@ -21,16 +21,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/IronCliw/IronCliw-YYYY-MM-DD.log`
+`/tmp/ironcliw/ironcliw-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.IronCliw/IronCliw.json`:
+You can override this in `~/.ironcliw/ironcliw.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/IronCliw.log"
+    "file": "/path/to/ironcliw.log"
   }
 }
 ```
@@ -42,7 +42,7 @@ You can override this in `~/.IronCliw/IronCliw.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-IronCliw logs --follow
+ironcliw logs --follow
 ```
 
 Output modes:
@@ -63,7 +63,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-IronCliw doctor
+ironcliw doctor
 ```
 
 ### Control UI (web)
@@ -76,7 +76,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-IronCliw channels logs --channel whatsapp
+ironcliw channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -98,13 +98,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.IronCliw/IronCliw.json`.
+All logging configuration lives under `logging` in `~/.ironcliw/ironcliw.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/IronCliw/IronCliw-YYYY-MM-DD.log",
+    "file": "/tmp/ironcliw/ironcliw-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -118,7 +118,7 @@ All logging configuration lives under `logging` in `~/.IronCliw/IronCliw.json`.
 - `logging.level`: **file logs** (JSONL) level.
 - `logging.consoleLevel`: **console** verbosity level.
 
-You can override both via the **`IronCliw_LOG_LEVEL`** environment variable (e.g. `IronCliw_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `IronCliw.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `IronCliw --log-level debug gateway run`), which overrides the environment variable for that command.
+You can override both via the **`IRONCLIW_LOG_LEVEL`** environment variable (e.g. `IRONCLIW_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `ironcliw.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `ironcliw --log-level debug gateway run`), which overrides the environment variable for that command.
 
 `--verbose` only affects console output; it does not change file log levels.
 
@@ -212,7 +212,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
+IRONCLIW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -242,7 +242,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "IronCliw-gateway",
+      "serviceName": "ironcliw-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -255,7 +255,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 
 Notes:
 
-- You can also enable the plugin with `IronCliw plugins enable diagnostics-otel`.
+- You can also enable the plugin with `ironcliw plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -269,60 +269,60 @@ Notes:
 
 Model usage:
 
-- `IronCliw.tokens` (counter, attrs: `IronCliw.token`, `IronCliw.channel`,
-  `IronCliw.provider`, `IronCliw.model`)
-- `IronCliw.cost.usd` (counter, attrs: `IronCliw.channel`, `IronCliw.provider`,
-  `IronCliw.model`)
-- `IronCliw.run.duration_ms` (histogram, attrs: `IronCliw.channel`,
-  `IronCliw.provider`, `IronCliw.model`)
-- `IronCliw.context.tokens` (histogram, attrs: `IronCliw.context`,
-  `IronCliw.channel`, `IronCliw.provider`, `IronCliw.model`)
+- `ironcliw.tokens` (counter, attrs: `ironcliw.token`, `ironcliw.channel`,
+  `ironcliw.provider`, `ironcliw.model`)
+- `ironcliw.cost.usd` (counter, attrs: `ironcliw.channel`, `ironcliw.provider`,
+  `ironcliw.model`)
+- `ironcliw.run.duration_ms` (histogram, attrs: `ironcliw.channel`,
+  `ironcliw.provider`, `ironcliw.model`)
+- `ironcliw.context.tokens` (histogram, attrs: `ironcliw.context`,
+  `ironcliw.channel`, `ironcliw.provider`, `ironcliw.model`)
 
 Message flow:
 
-- `IronCliw.webhook.received` (counter, attrs: `IronCliw.channel`,
-  `IronCliw.webhook`)
-- `IronCliw.webhook.error` (counter, attrs: `IronCliw.channel`,
-  `IronCliw.webhook`)
-- `IronCliw.webhook.duration_ms` (histogram, attrs: `IronCliw.channel`,
-  `IronCliw.webhook`)
-- `IronCliw.message.queued` (counter, attrs: `IronCliw.channel`,
-  `IronCliw.source`)
-- `IronCliw.message.processed` (counter, attrs: `IronCliw.channel`,
-  `IronCliw.outcome`)
-- `IronCliw.message.duration_ms` (histogram, attrs: `IronCliw.channel`,
-  `IronCliw.outcome`)
+- `ironcliw.webhook.received` (counter, attrs: `ironcliw.channel`,
+  `ironcliw.webhook`)
+- `ironcliw.webhook.error` (counter, attrs: `ironcliw.channel`,
+  `ironcliw.webhook`)
+- `ironcliw.webhook.duration_ms` (histogram, attrs: `ironcliw.channel`,
+  `ironcliw.webhook`)
+- `ironcliw.message.queued` (counter, attrs: `ironcliw.channel`,
+  `ironcliw.source`)
+- `ironcliw.message.processed` (counter, attrs: `ironcliw.channel`,
+  `ironcliw.outcome`)
+- `ironcliw.message.duration_ms` (histogram, attrs: `ironcliw.channel`,
+  `ironcliw.outcome`)
 
 Queues + sessions:
 
-- `IronCliw.queue.lane.enqueue` (counter, attrs: `IronCliw.lane`)
-- `IronCliw.queue.lane.dequeue` (counter, attrs: `IronCliw.lane`)
-- `IronCliw.queue.depth` (histogram, attrs: `IronCliw.lane` or
-  `IronCliw.channel=heartbeat`)
-- `IronCliw.queue.wait_ms` (histogram, attrs: `IronCliw.lane`)
-- `IronCliw.session.state` (counter, attrs: `IronCliw.state`, `IronCliw.reason`)
-- `IronCliw.session.stuck` (counter, attrs: `IronCliw.state`)
-- `IronCliw.session.stuck_age_ms` (histogram, attrs: `IronCliw.state`)
-- `IronCliw.run.attempt` (counter, attrs: `IronCliw.attempt`)
+- `ironcliw.queue.lane.enqueue` (counter, attrs: `ironcliw.lane`)
+- `ironcliw.queue.lane.dequeue` (counter, attrs: `ironcliw.lane`)
+- `ironcliw.queue.depth` (histogram, attrs: `ironcliw.lane` or
+  `ironcliw.channel=heartbeat`)
+- `ironcliw.queue.wait_ms` (histogram, attrs: `ironcliw.lane`)
+- `ironcliw.session.state` (counter, attrs: `ironcliw.state`, `ironcliw.reason`)
+- `ironcliw.session.stuck` (counter, attrs: `ironcliw.state`)
+- `ironcliw.session.stuck_age_ms` (histogram, attrs: `ironcliw.state`)
+- `ironcliw.run.attempt` (counter, attrs: `ironcliw.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `IronCliw.model.usage`
-  - `IronCliw.channel`, `IronCliw.provider`, `IronCliw.model`
-  - `IronCliw.sessionKey`, `IronCliw.sessionId`
-  - `IronCliw.tokens.*` (input/output/cache_read/cache_write/total)
-- `IronCliw.webhook.processed`
-  - `IronCliw.channel`, `IronCliw.webhook`, `IronCliw.chatId`
-- `IronCliw.webhook.error`
-  - `IronCliw.channel`, `IronCliw.webhook`, `IronCliw.chatId`,
-    `IronCliw.error`
-- `IronCliw.message.processed`
-  - `IronCliw.channel`, `IronCliw.outcome`, `IronCliw.chatId`,
-    `IronCliw.messageId`, `IronCliw.sessionKey`, `IronCliw.sessionId`,
-    `IronCliw.reason`
-- `IronCliw.session.stuck`
-  - `IronCliw.state`, `IronCliw.ageMs`, `IronCliw.queueDepth`,
-    `IronCliw.sessionKey`, `IronCliw.sessionId`
+- `ironcliw.model.usage`
+  - `ironcliw.channel`, `ironcliw.provider`, `ironcliw.model`
+  - `ironcliw.sessionKey`, `ironcliw.sessionId`
+  - `ironcliw.tokens.*` (input/output/cache_read/cache_write/total)
+- `ironcliw.webhook.processed`
+  - `ironcliw.channel`, `ironcliw.webhook`, `ironcliw.chatId`
+- `ironcliw.webhook.error`
+  - `ironcliw.channel`, `ironcliw.webhook`, `ironcliw.chatId`,
+    `ironcliw.error`
+- `ironcliw.message.processed`
+  - `ironcliw.channel`, `ironcliw.outcome`, `ironcliw.chatId`,
+    `ironcliw.messageId`, `ironcliw.sessionKey`, `ironcliw.sessionId`,
+    `ironcliw.reason`
+- `ironcliw.session.stuck`
+  - `ironcliw.state`, `ironcliw.ageMs`, `ironcliw.queueDepth`,
+    `ironcliw.sessionKey`, `ironcliw.sessionId`
 
 ### Sampling + flushing
 
@@ -346,7 +346,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `IronCliw doctor` first.
+- **Gateway not reachable?** Run `ironcliw doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

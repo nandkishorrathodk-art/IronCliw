@@ -18,10 +18,18 @@ export const desktopHandlers: GatewayRequestHandlers = {
   },
 
   "desktop.control": async ({ params, respond }) => {
-    const { appName, actions } = params as { appName: string, actions: unknown[] };
+    const { appName, actions } = params as { appName: string; actions: unknown[] };
     try {
       await desktopPlugin.init();
-      await desktopPlugin.controlApp(appName, actions as Array<{ action: "click" | "type" | "combo", x?: number, y?: number, text?: string }>);
+      await desktopPlugin.controlApp(
+        appName,
+        actions as Array<{
+          action: "click" | "type" | "combo";
+          x?: number;
+          y?: number;
+          text?: string;
+        }>,
+      );
       respond(true, { success: true });
     } catch (err: unknown) {
       respond(false, undefined, errorShape(ErrorCodes.UNAVAILABLE, (err as Error).message));
@@ -64,5 +72,5 @@ export const desktopHandlers: GatewayRequestHandlers = {
     } catch (err: unknown) {
       respond(false, undefined, errorShape(ErrorCodes.UNAVAILABLE, (err as Error).message));
     }
-  }
+  },
 };

@@ -7,7 +7,7 @@ import { resolveIronCliwAgentDir } from "./agent-paths.js";
 
 describe("resolveIronCliwAgentDir", () => {
   const withTempStateDir = async (run: (stateDir: string) => void) => {
-    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-agent-"));
+    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-agent-"));
     try {
       run(stateDir);
     } finally {
@@ -19,8 +19,8 @@ describe("resolveIronCliwAgentDir", () => {
     await withTempStateDir((stateDir) => {
       withEnv(
         {
-          IronCliw_STATE_DIR: stateDir,
-          IronCliw_AGENT_DIR: undefined,
+          IRONCLIW_STATE_DIR: stateDir,
+          IRONCLIW_AGENT_DIR: undefined,
           PI_CODING_AGENT_DIR: undefined,
         },
         () => {
@@ -31,13 +31,13 @@ describe("resolveIronCliwAgentDir", () => {
     });
   });
 
-  it("honors IronCliw_AGENT_DIR overrides", async () => {
+  it("honors IRONCLIW_AGENT_DIR overrides", async () => {
     await withTempStateDir((stateDir) => {
       const override = path.join(stateDir, "agent");
       withEnv(
         {
-          IronCliw_STATE_DIR: undefined,
-          IronCliw_AGENT_DIR: override,
+          IRONCLIW_STATE_DIR: undefined,
+          IRONCLIW_AGENT_DIR: override,
           PI_CODING_AGENT_DIR: undefined,
         },
         () => {
@@ -48,13 +48,13 @@ describe("resolveIronCliwAgentDir", () => {
     });
   });
 
-  it("honors PI_CODING_AGENT_DIR when IronCliw_AGENT_DIR is unset", async () => {
+  it("honors PI_CODING_AGENT_DIR when IRONCLIW_AGENT_DIR is unset", async () => {
     await withTempStateDir((stateDir) => {
       const override = path.join(stateDir, "pi-agent");
       withEnv(
         {
-          IronCliw_STATE_DIR: undefined,
-          IronCliw_AGENT_DIR: undefined,
+          IRONCLIW_STATE_DIR: undefined,
+          IRONCLIW_AGENT_DIR: undefined,
           PI_CODING_AGENT_DIR: override,
         },
         () => {
@@ -65,14 +65,14 @@ describe("resolveIronCliwAgentDir", () => {
     });
   });
 
-  it("prefers IronCliw_AGENT_DIR over PI_CODING_AGENT_DIR when both are set", async () => {
+  it("prefers IRONCLIW_AGENT_DIR over PI_CODING_AGENT_DIR when both are set", async () => {
     await withTempStateDir((stateDir) => {
       const primaryOverride = path.join(stateDir, "primary-agent");
       const fallbackOverride = path.join(stateDir, "fallback-agent");
       withEnv(
         {
-          IronCliw_STATE_DIR: undefined,
-          IronCliw_AGENT_DIR: primaryOverride,
+          IRONCLIW_STATE_DIR: undefined,
+          IRONCLIW_AGENT_DIR: primaryOverride,
           PI_CODING_AGENT_DIR: fallbackOverride,
         },
         () => {

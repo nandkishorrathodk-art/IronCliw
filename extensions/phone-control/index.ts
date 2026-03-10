@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { IronCliwPluginApi, IronCliwPluginService } from "IronCliw/plugin-sdk/phone-control";
+import type { IronCliwPluginApi, IronCliwPluginService } from "ironcliw/plugin-sdk/phone-control";
 
 type ArmGroup = "camera" | "screen" | "writes" | "all";
 

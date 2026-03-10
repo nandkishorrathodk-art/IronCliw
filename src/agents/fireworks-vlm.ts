@@ -64,7 +64,7 @@ export async function fireworksUnderstandImage(params: {
     );
   }
 
-  const json = (await res.json().catch(() => null));
+  const json = await res.json().catch(() => null);
   if (!isRecord(json) || !Array.isArray(json.choices) || json.choices.length === 0) {
     throw new Error("Fireworks VLM response was not in expected OpenAI format.");
   }

@@ -1,6 +1,6 @@
 name: IronCliw
 options:
-  bundleIdPrefix: ai.IronCliw
+  bundleIdPrefix: ai.ironcliw
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "16.0"
@@ -25,6 +25,15 @@ schemes:
     test:
       targets:
         - IronCliwTests
+        - IronCliwLogicTests
+  IronCliwLogicTests:
+    shared: true
+    build:
+      targets:
+        IronCliwLogicTests: all
+    test:
+      targets:
+        - IronCliwLogicTests
 
 targets:
   IronCliw:
@@ -79,10 +88,10 @@ targets:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_ENTITLEMENTS: Sources/IronCliw.entitlements
-        CODE_SIGN_STYLE: "$(IronCliw_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(IronCliw_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(IronCliw_APP_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(IronCliw_APP_PROFILE)"
+        CODE_SIGN_STYLE: "$(IRONCLIW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(IRONCLIW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(IRONCLIW_APP_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(IRONCLIW_APP_PROFILE)"
         TARGETED_DEVICE_FAMILY: "1"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
@@ -95,11 +104,11 @@ targets:
         CFBundleDisplayName: IronCliw
         CFBundleIconName: AppIcon
         CFBundleURLTypes:
-          - CFBundleURLName: ai.IronCliw.ios
+          - CFBundleURLName: ai.ironcliw.ios
             CFBundleURLSchemes:
-              - IronCliw
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
+              - ironcliw
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
@@ -107,18 +116,21 @@ targets:
           - audio
           - remote-notification
         BGTaskSchedulerPermittedIdentifiers:
-          - ai.IronCliw.ios.bgrefresh
+          - ai.ironcliw.ios.bgrefresh
         NSLocalNetworkUsageDescription: IronCliw discovers and connects to your IronCliw gateway on the local network.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoadsInWebContent: true
         NSBonjourServices:
-          - _IronCliw-gw._tcp
+          - _ironcliw-gw._tcp
         NSCameraUsageDescription: IronCliw can capture photos or short video clips when requested via the gateway.
         NSLocationWhenInUseUsageDescription: IronCliw uses your location when you allow location sharing.
         NSLocationAlwaysAndWhenInUseUsageDescription: IronCliw can share your location in the background when you enable Always.
         NSMicrophoneUsageDescription: IronCliw needs microphone access for voice wake.
+        NSMotionUsageDescription: IronCliw may use motion data to support device-aware interactions and automations.
+        NSPhotoLibraryUsageDescription: IronCliw needs photo library access when you choose existing photos to share with your assistant.
         NSSpeechRecognitionUsageDescription: IronCliw uses on-device speech recognition for voice wake.
         NSSupportsLiveActivities: true
+        ITSAppUsesNonExemptEncryption: false
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown
@@ -144,20 +156,20 @@ targets:
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(IronCliw_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(IronCliw_DEVELOPMENT_TEAM)"
+        CODE_SIGN_STYLE: "$(IRONCLIW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(IRONCLIW_DEVELOPMENT_TEAM)"
         ENABLE_APPINTENTS_METADATA: NO
         ENABLE_APP_INTENTS_METADATA_GENERATION: NO
-        PRODUCT_BUNDLE_IDENTIFIER: "$(IronCliw_SHARE_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(IronCliw_SHARE_PROFILE)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(IRONCLIW_SHARE_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(IRONCLIW_SHARE_PROFILE)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
     info:
       path: ShareExtension/Info.plist
       properties:
         CFBundleDisplayName: IronCliw Share
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.share-services
           NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).ShareViewController"
@@ -183,9 +195,9 @@ targets:
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(IronCliw_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(IronCliw_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(IronCliw_ACTIVITY_WIDGET_BUNDLE_ID)"
+        CODE_SIGN_STYLE: "$(IRONCLIW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(IRONCLIW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(IRONCLIW_ACTIVITY_WIDGET_BUNDLE_ID)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         SUPPORTS_LIVE_ACTIVITIES: YES
@@ -193,8 +205,8 @@ targets:
       path: ActivityWidget/Info.plist
       properties:
         CFBundleDisplayName: IronCliw Activity
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
         NSSupportsLiveActivities: true
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
@@ -214,14 +226,14 @@ targets:
       base:
         ENABLE_APPINTENTS_METADATA: NO
         ENABLE_APP_INTENTS_METADATA_GENERATION: NO
-        PRODUCT_BUNDLE_IDENTIFIER: "$(IronCliw_WATCH_APP_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(IRONCLIW_WATCH_APP_BUNDLE_ID)"
     info:
       path: WatchApp/Info.plist
       properties:
         CFBundleDisplayName: IronCliw
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
-        WKCompanionAppBundleIdentifier: "$(IronCliw_APP_BUNDLE_ID)"
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
+        WKCompanionAppBundleIdentifier: "$(IRONCLIW_APP_BUNDLE_ID)"
         WKWatchKitApp: true
 
   IronCliwWatchExtension:
@@ -239,16 +251,16 @@ targets:
       Release: Config/Signing.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "$(IronCliw_WATCH_EXTENSION_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(IRONCLIW_WATCH_EXTENSION_BUNDLE_ID)"
     info:
       path: WatchExtension/Info.plist
       properties:
         CFBundleDisplayName: IronCliw
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
         NSExtension:
           NSExtensionAttributes:
-            WKAppBundleIdentifier: "$(IronCliw_WATCH_APP_BUNDLE_ID)"
+            WKAppBundleIdentifier: "$(IRONCLIW_WATCH_APP_BUNDLE_ID)"
           NSExtensionPointIdentifier: com.apple.watchkit
 
   IronCliwTests:
@@ -259,6 +271,8 @@ targets:
       Release: Signing.xcconfig
     sources:
       - path: Tests
+        excludes:
+          - Logic
     dependencies:
       - target: IronCliw
       - package: Swabble
@@ -267,9 +281,9 @@ targets:
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(IronCliw_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(IronCliw_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: ai.IronCliw.ios.tests
+        CODE_SIGN_STYLE: "$(IRONCLIW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(IRONCLIW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: ai.ironcliw.ios.tests
         ENABLE_APP_INTENTS_METADATA_GENERATION: NO
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
@@ -279,5 +293,31 @@ targets:
       path: Tests/Info.plist
       properties:
         CFBundleDisplayName: IronCliwTests
-        CFBundleShortVersionString: "2026.3.2"
-        CFBundleVersion: "20260301"
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"
+
+  IronCliwLogicTests:
+    type: bundle.unit-test
+    platform: iOS
+    configFiles:
+      Debug: Signing.xcconfig
+      Release: Signing.xcconfig
+    sources:
+      - path: Tests/Logic
+    dependencies:
+      - package: IronCliwKit
+    settings:
+      base:
+        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_STYLE: "$(IRONCLIW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(IRONCLIW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: ai.ironcliw.ios.logic-tests
+        ENABLE_APP_INTENTS_METADATA_GENERATION: NO
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+    info:
+      path: Tests/Info.plist
+      properties:
+        CFBundleDisplayName: IronCliwLogicTests
+        CFBundleShortVersionString: "2026.3.9"
+        CFBundleVersion: "20260308"

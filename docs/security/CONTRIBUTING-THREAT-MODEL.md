@@ -6,7 +6,7 @@ Thanks for helping make IronCliw more secure. This threat model is a living docu
 
 ### Add a Threat
 
-Spotted an attack vector or risk we haven't covered? Open an issue on [IronCliw/trust](https://github.com/IronCliw/trust/issues) and describe it in your own words. You don't need to know any frameworks or fill in every field - just describe the scenario.
+Spotted an attack vector or risk we haven't covered? Open an issue on [ironcliw/trust](https://github.com/ironcliw/trust/issues) and describe it in your own words. You don't need to know any frameworks or fill in every field - just describe the scenario.
 
 **Helpful to include (but not required):**
 
@@ -17,7 +17,7 @@ Spotted an attack vector or risk we haven't covered? Open an issue on [IronCliw/
 
 We'll handle the ATLAS mapping, threat IDs, and risk assessment during review. If you want to include those details, great - but it's not expected.
 
-> **This is for adding to the threat model, not reporting live vulnerabilities.** If you've found an exploitable vulnerability, see our [Trust page](https://trust.IronCliw.ai) for responsible disclosure instructions.
+> **This is for adding to the threat model, not reporting live vulnerabilities.** If you've found an exploitable vulnerability, see our [Trust page](https://trust.ironcliw.ai) for responsible disclosure instructions.
 
 ### Suggest a Mitigation
 
@@ -81,8 +81,8 @@ If you're unsure about the risk level, just describe the impact and we'll assess
 
 ## Contact
 
-- **Security vulnerabilities:** See our [Trust page](https://trust.IronCliw.ai) for reporting instructions
-- **Threat model questions:** Open an issue on [IronCliw/trust](https://github.com/IronCliw/trust/issues)
+- **Security vulnerabilities:** See our [Trust page](https://trust.ironcliw.ai) for reporting instructions
+- **Threat model questions:** Open an issue on [ironcliw/trust](https://github.com/ironcliw/trust/issues)
 - **General chat:** Discord #security channel
 
 ## Recognition

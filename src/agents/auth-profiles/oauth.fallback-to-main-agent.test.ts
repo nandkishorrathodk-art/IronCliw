@@ -9,8 +9,8 @@ import type { AuthProfileStore } from "./types.js";
 
 describe("resolveApiKeyForProfile fallback to main agent", () => {
   const envSnapshot = captureEnv([
-    "IronCliw_STATE_DIR",
-    "IronCliw_AGENT_DIR",
+    "IRONCLIW_STATE_DIR",
+    "IRONCLIW_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
   ]);
   let tmpDir: string;
@@ -25,8 +25,8 @@ describe("resolveApiKeyForProfile fallback to main agent", () => {
     await fs.mkdir(secondaryAgentDir, { recursive: true });
 
     // Set environment variables so resolveIronCliwAgentDir() returns mainAgentDir
-    process.env.IronCliw_STATE_DIR = tmpDir;
-    process.env.IronCliw_AGENT_DIR = mainAgentDir;
+    process.env.IRONCLIW_STATE_DIR = tmpDir;
+    process.env.IRONCLIW_AGENT_DIR = mainAgentDir;
     process.env.PI_CODING_AGENT_DIR = mainAgentDir;
   });
 

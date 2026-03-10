@@ -5,7 +5,7 @@ import { createCronStoreHarness } from "./service.test-harness.js";
 import { loadCronStore, resolveCronStorePath, saveCronStore } from "./store.js";
 import type { CronStoreFile } from "./types.js";
 
-const { makeStorePath } = createCronStoreHarness({ prefix: "IronCliw-cron-store-" });
+const { makeStorePath } = createCronStoreHarness({ prefix: "ironcliw-cron-store-" });
 
 function makeStore(jobId: string, enabled: boolean): CronStoreFile {
   const now = Date.now();
@@ -33,12 +33,12 @@ describe("resolveCronStorePath", () => {
     vi.unstubAllEnvs();
   });
 
-  it("uses IronCliw_HOME for tilde expansion", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  it("uses IRONCLIW_HOME for tilde expansion", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
     const result = resolveCronStorePath("~/cron/jobs.json");
-    expect(result).toBe(path.resolve("/srv/IronCliw-home", "cron", "jobs.json"));
+    expect(result).toBe(path.resolve("/srv/ironcliw-home", "cron", "jobs.json"));
   });
 });
 
@@ -79,6 +79,39 @@ describe("cron store", () => {
     expect(JSON.parse(currentRaw)).toEqual(second);
     expect(JSON.parse(backupRaw)).toEqual(first);
   });
+
+  it.skipIf(process.platform === "win32")(
+    "writes store and backup files with secure permissions",
+    async () => {
+      const store = await makeStorePath();
+      const first = makeStore("job-1", true);
+      const second = makeStore("job-2", false);
+
+      await saveCronStore(store.storePath, first);
+      await saveCronStore(store.storePath, second);
+
+      const storeMode = (await fs.stat(store.storePath)).mode & 0o777;
+      const backupMode = (await fs.stat(`${store.storePath}.bak`)).mode & 0o777;
+
+      expect(storeMode).toBe(0o600);
+      expect(backupMode).toBe(0o600);
+    },
+  );
+
+  it.skipIf(process.platform === "win32")(
+    "hardens an existing cron store directory to owner-only permissions",
+    async () => {
+      const store = await makeStorePath();
+      const storeDir = path.dirname(store.storePath);
+      await fs.mkdir(storeDir, { recursive: true, mode: 0o755 });
+      await fs.chmod(storeDir, 0o755);
+
+      await saveCronStore(store.storePath, makeStore("job-1", true));
+
+      const storeDirMode = (await fs.stat(storeDir)).mode & 0o777;
+      expect(storeDirMode).toBe(0o700);
+    },
+  );
 });
 
 describe("saveCronStore", () => {

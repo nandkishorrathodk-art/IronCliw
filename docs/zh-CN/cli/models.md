@@ -2,7 +2,7 @@
 read_when:
   - 你想更改默认模型或查看提供商认证状态
   - 你想扫描可用的模型/提供商并调试认证配置
-summary: "`IronCliw models` 的 CLI 参考（status/list/set/scan、别名、回退、认证）"
+summary: "`ironcliw models` 的 CLI 参考（status/list/set/scan、别名、回退、认证）"
 title: models
 x-i18n:
   generated_at: "2026-02-01T20:21:16Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `IronCliw models`
+# `ironcliw models`
 
 模型发现、扫描和配置（默认模型、回退、认证配置）。
 
@@ -25,18 +25,18 @@ x-i18n:
 ## 常用命令
 
 ```bash
-IronCliw models status
-IronCliw models list
-IronCliw models set <model-or-alias>
-IronCliw models scan
+ironcliw models status
+ironcliw models list
+ironcliw models set <model-or-alias>
+ironcliw models scan
 ```
 
-`IronCliw models status` 显示已解析的默认模型/回退配置以及认证概览。
+`ironcliw models status` 显示已解析的默认模型/回退配置以及认证概览。
 当提供商使用快照可用时，OAuth/令牌状态部分会包含提供商使用头信息。
 添加 `--probe` 可对每个已配置的提供商配置运行实时认证探测。
 探测会发送真实请求（可能消耗令牌并触发速率限制）。
 使用 `--agent <id>` 可检查已配置智能体的模型/认证状态。省略时，
-命令会使用 `IronCliw_AGENT_DIR`/`PI_CODING_AGENT_DIR`（如已设置），否则使用
+命令会使用 `IRONCLIW_AGENT_DIR`/`PI_CODING_AGENT_DIR`（如已设置），否则使用
 已配置的默认智能体。
 
 注意事项：
@@ -58,26 +58,26 @@ IronCliw models scan
 - `--probe-timeout <ms>`
 - `--probe-concurrency <n>`
 - `--probe-max-tokens <n>`
-- `--agent <id>`（已配置的智能体 ID；覆盖 `IronCliw_AGENT_DIR`/`PI_CODING_AGENT_DIR`）
+- `--agent <id>`（已配置的智能体 ID；覆盖 `IRONCLIW_AGENT_DIR`/`PI_CODING_AGENT_DIR`）
 
 ## 别名 + 回退
 
 ```bash
-IronCliw models aliases list
-IronCliw models fallbacks list
+ironcliw models aliases list
+ironcliw models fallbacks list
 ```
 
 ## 认证配置
 
 ```bash
-IronCliw models auth add
-IronCliw models auth login --provider <id>
-IronCliw models auth setup-token
-IronCliw models auth paste-token
+ironcliw models auth add
+ironcliw models auth login --provider <id>
+ironcliw models auth setup-token
+ironcliw models auth paste-token
 ```
 
 `models auth login` 运行提供商插件的认证流程（OAuth/API 密钥）。使用
-`IronCliw plugins list` 查看已安装的提供商。
+`ironcliw plugins list` 查看已安装的提供商。
 
 注意事项：
 

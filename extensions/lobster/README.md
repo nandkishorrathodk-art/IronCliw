@@ -30,9 +30,9 @@ Enable it in an agent allowlist:
 }
 ```
 
-## Using `IronCliw.invoke` (Lobster → IronCliw tools)
+## Using `ironcliw.invoke` (Lobster → IronCliw tools)
 
-Some Lobster pipelines may include a `IronCliw.invoke` step to call back into IronCliw tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
+Some Lobster pipelines may include a `ironcliw.invoke` step to call back into IronCliw tools/plugins (for example: `gog` for Google Workspace, `gh` for GitHub, `message.send`, etc.).
 
 For this to work, the IronCliw Gateway must expose the tool bridge endpoint and the target tool must be allowed by policy:
 
@@ -42,7 +42,7 @@ For this to work, the IronCliw Gateway must expose the tool bridge endpoint and 
 
 ### Allowlisting recommended
 
-To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `IronCliw.invoke`.
+To avoid letting workflows call arbitrary tools, set a tight allowlist on the agent that will be used by `ironcliw.invoke`.
 
 Example (allow only a small set of tools):
 

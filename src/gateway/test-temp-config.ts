@@ -7,28 +7,28 @@ export async function withTempConfig(params: {
   run: () => Promise<void>;
   prefix?: string;
 }): Promise<void> {
-  const prevConfigPath = process.env.IronCliw_CONFIG_PATH;
-  const prevDisableCache = process.env.IronCliw_DISABLE_CONFIG_CACHE;
+  const prevConfigPath = process.env.IRONCLIW_CONFIG_PATH;
+  const prevDisableCache = process.env.IRONCLIW_DISABLE_CONFIG_CACHE;
 
-  const dir = await mkdtemp(path.join(os.tmpdir(), params.prefix ?? "IronCliw-test-config-"));
-  const configPath = path.join(dir, "IronCliw.json");
+  const dir = await mkdtemp(path.join(os.tmpdir(), params.prefix ?? "ironcliw-test-config-"));
+  const configPath = path.join(dir, "ironcliw.json");
 
-  process.env.IronCliw_CONFIG_PATH = configPath;
-  process.env.IronCliw_DISABLE_CONFIG_CACHE = "1";
+  process.env.IRONCLIW_CONFIG_PATH = configPath;
+  process.env.IRONCLIW_DISABLE_CONFIG_CACHE = "1";
 
   try {
     await writeFile(configPath, JSON.stringify(params.cfg, null, 2), "utf-8");
     await params.run();
   } finally {
     if (prevConfigPath === undefined) {
-      delete process.env.IronCliw_CONFIG_PATH;
+      delete process.env.IRONCLIW_CONFIG_PATH;
     } else {
-      process.env.IronCliw_CONFIG_PATH = prevConfigPath;
+      process.env.IRONCLIW_CONFIG_PATH = prevConfigPath;
     }
     if (prevDisableCache === undefined) {
-      delete process.env.IronCliw_DISABLE_CONFIG_CACHE;
+      delete process.env.IRONCLIW_DISABLE_CONFIG_CACHE;
     } else {
-      process.env.IronCliw_DISABLE_CONFIG_CACHE = prevDisableCache;
+      process.env.IRONCLIW_DISABLE_CONFIG_CACHE = prevDisableCache;
     }
     await rm(dir, { recursive: true, force: true });
   }

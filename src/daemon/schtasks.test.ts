@@ -44,15 +44,18 @@ describe("scheduled task runtime derivation", () => {
     ).toEqual({ status: "running" });
   });
 
-  it("treats Running without last result as running", () => {
+  it("treats Running without numeric result as unknown", () => {
     expect(
       deriveScheduledTaskRuntimeStatus({
         status: "Running",
       }),
-    ).toEqual({ status: "running" });
+    ).toEqual({
+      status: "unknown",
+      detail: "Task status is locale-dependent and no numeric Last Run Result was available.",
+    });
   });
 
-  it("downgrades stale Running status when last result is not a running code", () => {
+  it("treats non-running result codes as stopped", () => {
     expect(
       deriveScheduledTaskRuntimeStatus({
         status: "Running",
@@ -60,7 +63,48 @@ describe("scheduled task runtime derivation", () => {
       }),
     ).toEqual({
       status: "stopped",
-      detail: "Task reports Running but Last Run Result=0x0; treating as stale runtime state.",
+      detail: "Task Last Run Result=0x0; treating as not running.",
+    });
+  });
+
+  it("detects running via result code when status is localized (German)", () => {
+    expect(
+      deriveScheduledTaskRuntimeStatus({
+        status: "Wird ausgeführt",
+        lastRunResult: "0x41301",
+      }),
+    ).toEqual({ status: "running" });
+  });
+
+  it("detects running via result code when status is localized (French)", () => {
+    expect(
+      deriveScheduledTaskRuntimeStatus({
+        status: "En cours",
+        lastRunResult: "267009",
+      }),
+    ).toEqual({ status: "running" });
+  });
+
+  it("treats localized status as stopped when result code is not a running code", () => {
+    expect(
+      deriveScheduledTaskRuntimeStatus({
+        status: "Wird ausgeführt",
+        lastRunResult: "0x0",
+      }),
+    ).toEqual({
+      status: "stopped",
+      detail: "Task Last Run Result=0x0; treating as not running.",
+    });
+  });
+
+  it("treats localized status without result code as unknown", () => {
+    expect(
+      deriveScheduledTaskRuntimeStatus({
+        status: "Wird ausgeführt",
+      }),
+    ).toEqual({
+      status: "unknown",
+      detail: "Task status is locale-dependent and no numeric Last Run Result was available.",
     });
   });
 });
@@ -68,28 +112,28 @@ describe("scheduled task runtime derivation", () => {
 describe("resolveTaskScriptPath", () => {
   it.each([
     {
-      name: "uses default path when IronCliw_PROFILE is unset",
+      name: "uses default path when IRONCLIW_PROFILE is unset",
       env: { USERPROFILE: "C:\\Users\\test" },
-      expected: path.join("C:\\Users\\test", ".IronCliw", "gateway.cmd"),
+      expected: path.join("C:\\Users\\test", ".ironcliw", "gateway.cmd"),
     },
     {
-      name: "uses profile-specific path when IronCliw_PROFILE is set to a custom value",
-      env: { USERPROFILE: "C:\\Users\\test", IronCliw_PROFILE: "jbphoenix" },
-      expected: path.join("C:\\Users\\test", ".IronCliw-jbphoenix", "gateway.cmd"),
+      name: "uses profile-specific path when IRONCLIW_PROFILE is set to a custom value",
+      env: { USERPROFILE: "C:\\Users\\test", IRONCLIW_PROFILE: "jbphoenix" },
+      expected: path.join("C:\\Users\\test", ".ironcliw-jbphoenix", "gateway.cmd"),
     },
     {
-      name: "prefers IronCliw_STATE_DIR over profile-derived defaults",
+      name: "prefers IRONCLIW_STATE_DIR over profile-derived defaults",
       env: {
         USERPROFILE: "C:\\Users\\test",
-        IronCliw_PROFILE: "rescue",
-        IronCliw_STATE_DIR: "C:\\State\\IronCliw",
+        IRONCLIW_PROFILE: "rescue",
+        IRONCLIW_STATE_DIR: "C:\\State\\ironcliw",
       },
-      expected: path.join("C:\\State\\IronCliw", "gateway.cmd"),
+      expected: path.join("C:\\State\\ironcliw", "gateway.cmd"),
     },
     {
       name: "falls back to HOME when USERPROFILE is not set",
-      env: { HOME: "/home/test", IronCliw_PROFILE: "default" },
-      expected: path.join("/home/test", ".IronCliw", "gateway.cmd"),
+      env: { HOME: "/home/test", IRONCLIW_PROFILE: "default" },
+      expected: path.join("/home/test", ".ironcliw", "gateway.cmd"),
     },
   ])("$name", ({ env, expected }) => {
     expect(resolveTaskScriptPath(env)).toBe(expected);
@@ -106,12 +150,12 @@ describe("readScheduledTaskCommand", () => {
     },
     run: (env: Record<string, string | undefined>) => Promise<void>,
   ) {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-schtasks-test-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-schtasks-test-"));
     try {
       const extraEnv = typeof options.env === "function" ? options.env(tmpDir) : options.env;
       const env = {
         USERPROFILE: tmpDir,
-        IronCliw_PROFILE: "default",
+        IRONCLIW_PROFILE: "default",
         ...extraEnv,
       };
       if (options.scriptLines) {
@@ -163,9 +207,9 @@ describe("readScheduledTaskCommand", () => {
         scriptLines: [
           "@echo off",
           "rem IronCliw Gateway",
-          "cd /d C:\\Projects\\IronCliw",
+          "cd /d C:\\Projects\\ironcliw",
           "set NODE_ENV=production",
-          "set IronCliw_PORT=18789",
+          "set IRONCLIW_PORT=18789",
           "node gateway.js --verbose",
         ],
       },
@@ -173,10 +217,10 @@ describe("readScheduledTaskCommand", () => {
         const result = await readScheduledTaskCommand(env);
         expect(result).toEqual({
           programArguments: ["node", "gateway.js", "--verbose"],
-          workingDirectory: "C:\\Projects\\IronCliw",
+          workingDirectory: "C:\\Projects\\ironcliw",
           environment: {
             NODE_ENV: "production",
-            IronCliw_PORT: "18789",
+            IRONCLIW_PORT: "18789",
           },
         });
       },
@@ -188,7 +232,7 @@ describe("readScheduledTaskCommand", () => {
       {
         scriptLines: [
           "@echo off",
-          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\IronCliw\\dist\\index.js gateway --port 18789',
+          '"C:\\Program Files\\nodejs\\node.exe" C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\ironcliw\\dist\\index.js gateway --port 18789',
         ],
       },
       async (env) => {
@@ -196,7 +240,7 @@ describe("readScheduledTaskCommand", () => {
         expect(result).toEqual({
           programArguments: [
             "C:\\Program Files\\nodejs\\node.exe",
-            "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\IronCliw\\dist\\index.js",
+            "C:\\Users\\test\\AppData\\Roaming\\npm\\node_modules\\ironcliw\\dist\\index.js",
             "gateway",
             "--port",
             "18789",
@@ -229,10 +273,10 @@ describe("readScheduledTaskCommand", () => {
     );
   });
 
-  it("reads script from IronCliw_STATE_DIR override", async () => {
+  it("reads script from IRONCLIW_STATE_DIR override", async () => {
     await withScheduledTaskScript(
       {
-        env: (tmpDir) => ({ IronCliw_STATE_DIR: path.join(tmpDir, "custom-state") }),
+        env: (tmpDir) => ({ IRONCLIW_STATE_DIR: path.join(tmpDir, "custom-state") }),
         scriptLines: ["@echo off", "node gateway.js --from-state-dir"],
       },
       async (env) => {

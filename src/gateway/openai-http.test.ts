@@ -65,7 +65,7 @@ async function expectChatCompletionsDisabled(
   const server = await start(port);
   try {
     const res = await postChatCompletions(port, {
-      model: "IronCliw",
+      model: "ironcliw",
       messages: [{ role: "user", content: "hi" }],
     });
     expect(res.status).toBe(404);
@@ -133,13 +133,27 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
             sessionKey?: string;
             message?: string;
             extraSystemPrompt?: string;
+            images?: Array<{ type: string; data: string; mimeType: string }>;
           }
         | undefined;
     const getFirstAgentMessage = () => getFirstAgentCall()?.message ?? "";
+    const expectInvalidRequestNoDispatch = async (messages: unknown[]) => {
+      agentCommand.mockClear();
+      const res = await postChatCompletions(port, {
+        model: "ironcliw",
+        messages,
+      });
+      expect(res.status).toBe(400);
+      const json = (await res.json()) as Record<string, unknown>;
+      expect((json.error as Record<string, unknown> | undefined)?.type).toBe(
+        "invalid_request_error",
+      );
+      expect(agentCommand).toHaveBeenCalledTimes(0);
+    };
     const postSyncUserMessage = async (message: string) => {
       const res = await postChatCompletions(port, {
         stream: false,
-        model: "IronCliw",
+        model: "ironcliw",
         messages: [{ role: "user", content: message }],
       });
       expect(res.status).toBe(200);
@@ -168,8 +182,8 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
       {
         await expectAgentSessionKeyMatch({
-          body: { model: "IronCliw", messages: [{ role: "user", content: "hi" }] },
-          headers: { "x-IronCliw-agent-id": "beta" },
+          body: { model: "ironcliw", messages: [{ role: "user", content: "hi" }] },
+          headers: { "x-ironcliw-agent-id": "beta" },
           matcher: /^agent:beta:/,
         });
       }
@@ -177,7 +191,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         await expectAgentSessionKeyMatch({
           body: {
-            model: "IronCliw:beta",
+            model: "ironcliw:beta",
             messages: [{ role: "user", content: "hi" }],
           },
           matcher: /^agent:beta:/,
@@ -187,10 +201,10 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         await expectAgentSessionKeyMatch({
           body: {
-            model: "IronCliw:beta",
+            model: "ironcliw:beta",
             messages: [{ role: "user", content: "hi" }],
           },
-          headers: { "x-IronCliw-agent-id": "alpha" },
+          headers: { "x-ironcliw-agent-id": "alpha" },
           matcher: /^agent:alpha:/,
         });
       }
@@ -199,10 +213,10 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
         mockAgentOnce([{ text: "hello" }]);
         const res = await postChatCompletions(
           port,
-          { model: "IronCliw", messages: [{ role: "user", content: "hi" }] },
+          { model: "ironcliw", messages: [{ role: "user", content: "hi" }] },
           {
-            "x-IronCliw-agent-id": "beta",
-            "x-IronCliw-session-key": "agent:beta:openai:custom",
+            "x-ironcliw-agent-id": "beta",
+            "x-ironcliw-session-key": "agent:beta:openai:custom",
           },
         );
         expect(res.status).toBe(200);
@@ -218,7 +232,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
         mockAgentOnce([{ text: "hello" }]);
         const res = await postChatCompletions(port, {
           user: "alice",
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         });
         expect(res.status).toBe(200);
@@ -233,7 +247,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         mockAgentOnce([{ text: "hello" }]);
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [
             {
               role: "user",
@@ -252,9 +266,196 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       }
 
       {
+        const imageData = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA";
+        mockAgentOnce([{ text: "looks good" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "describe this" },
+                {
+                  type: "image_url",
+                  image_url: { url: `data:image/png;base64,${imageData}` },
+                },
+              ],
+            },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.message).toBe("describe this");
+        expect(firstCall?.images).toEqual([
+          { type: "image", data: imageData, mimeType: "image/png" },
+        ]);
+        await res.text();
+      }
+
+      {
+        const imageData = "QUJDRA==";
+        mockAgentOnce([{ text: "supports data-uri params" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "with metadata params" },
+                {
+                  type: "image_url",
+                  image_url: { url: `data:image/png;charset=utf-8;base64,${imageData}` },
+                },
+              ],
+            },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.images).toEqual([
+          { type: "image", data: imageData, mimeType: "image/png" },
+        ]);
+        await res.text();
+      }
+
+      {
+        await expectInvalidRequestNoDispatch([
+          {
+            role: "user",
+            content: [
+              {
+                type: "image_url",
+                image_url: { url: "https://example.com/image.png" },
+              },
+            ],
+          },
+        ]);
+      }
+
+      {
+        mockAgentOnce([{ text: "I can see the image" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "image_url",
+                  image_url: { url: "data:image/jpeg;base64,QUJDRA==" },
+                },
+              ],
+            },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.message).toContain("User sent image(s) with no text.");
+        expect(firstCall?.images).toEqual([
+          { type: "image", data: "QUJDRA==", mimeType: "image/jpeg" },
+        ]);
+        await res.text();
+      }
+
+      {
+        mockAgentOnce([{ text: "follow up answer" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "image_url", image_url: { url: "data:image/png;base64,QUJDRA==" } },
+              ],
+            },
+            { role: "assistant", content: "I can see it." },
+            { role: "user", content: "What color was it?" },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.images).toBeUndefined();
+        expect(firstCall?.message ?? "").not.toContain("User sent image(s) with no text.");
+        await res.text();
+      }
+
+      {
+        mockAgentOnce([{ text: "latest image only" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "first" },
+                { type: "image_url", image_url: { url: "data:image/png;base64,QUFBQQ==" } },
+              ],
+            },
+            { role: "assistant", content: "noted" },
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "second" },
+                { type: "image_url", image_url: { url: "data:image/png;base64,QkJCQg==" } },
+              ],
+            },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.images).toEqual([
+          { type: "image", data: "QkJCQg==", mimeType: "image/png" },
+        ]);
+        await res.text();
+      }
+
+      {
+        const largeMessage = "x".repeat(1_200_000);
+        mockAgentOnce([{ text: "accepted" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [{ role: "user", content: largeMessage }],
+        });
+        expect(res.status).toBe(200);
+        await res.text();
+      }
+
+      {
+        await expectInvalidRequestNoDispatch([
+          {
+            role: "user",
+            content: [
+              {
+                type: "image_url",
+                image_url: { url: "data:application/pdf;base64,QUJDRA==" },
+              },
+            ],
+          },
+        ]);
+      }
+
+      {
+        const manyImageParts = Array.from({ length: 9 }).map(() => ({
+          type: "image_url",
+          image_url: { url: "data:image/png;base64,QUJDRA==" },
+        }));
+        await expectInvalidRequestNoDispatch([
+          {
+            role: "user",
+            content: manyImageParts,
+          },
+        ]);
+      }
+
+      {
         mockAgentOnce([{ text: "I am Claude" }]);
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: "Hello, who are you?" },
@@ -275,7 +476,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         mockAgentOnce([{ text: "hello" }]);
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: "Hello" },
@@ -293,7 +494,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         mockAgentOnce([{ text: "hello" }]);
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [
             { role: "developer", content: "You are a helpful assistant." },
             { role: "user", content: "Hello" },
@@ -309,7 +510,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
       {
         mockAgentOnce([{ text: "ok" }]);
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: "What's the weather?" },
@@ -324,6 +525,35 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
           history: ["User: What's the weather?", "Assistant: Checking the weather."],
           current: ["Tool: Sunny, 70F."],
         });
+        await res.text();
+      }
+
+      {
+        mockAgentOnce([{ text: "tool follow-up ok" }]);
+        const res = await postChatCompletions(port, {
+          model: "ironcliw",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "look at this" },
+                { type: "image_url", image_url: { url: "https://example.com/image.png" } },
+              ],
+            },
+            { role: "assistant", content: "Checking the image." },
+            { role: "tool", content: "Vision tool says it is blue." },
+          ],
+        });
+        expect(res.status).toBe(200);
+
+        const firstCall = getFirstAgentCall();
+        expect(firstCall?.images).toBeUndefined();
+        const message = getFirstAgentMessage();
+        expectMessageContext(message, {
+          history: ["User: look at this", "Assistant: Checking the image."],
+          current: ["Tool: Vision tool says it is blue."],
+        });
+        expect(message).not.toContain("User sent image(s) with no text.");
         await res.text();
       }
 
@@ -349,7 +579,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
       {
         const res = await postChatCompletions(port, {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "system", content: "yo" }],
         });
         expect(res.status).toBe(400);
@@ -377,7 +607,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
           authorization: "Bearer wrong",
         };
         const body = {
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         };
 
@@ -421,7 +651,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
         const res = await postChatCompletions(port, {
           stream: true,
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         });
         expect(res.status).toBe(200);
@@ -455,7 +685,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
         const repeatedRes = await postChatCompletions(port, {
           stream: true,
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         });
         expect(repeatedRes.status).toBe(200);
@@ -480,7 +710,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
         const fallbackRes = await postChatCompletions(port, {
           stream: true,
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         });
         expect(fallbackRes.status).toBe(200);
@@ -495,7 +725,7 @@ describe("OpenAI-compatible HTTP API (e2e)", () => {
 
         const errorRes = await postChatCompletions(port, {
           stream: true,
-          model: "IronCliw",
+          model: "ironcliw",
           messages: [{ role: "user", content: "hi" }],
         });
         expect(errorRes.status).toBe(200);

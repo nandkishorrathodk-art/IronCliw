@@ -51,7 +51,7 @@ describe("readFirstUserMessageFromTranscript", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -183,7 +183,7 @@ describe("readLastMessagePreviewFromTranscript", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -354,7 +354,7 @@ describe("shared transcript read behaviors", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -415,7 +415,7 @@ describe("readSessionTitleFieldsFromTranscript cache", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -467,7 +467,7 @@ describe("readSessionMessages", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-fs-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -495,13 +495,13 @@ describe("readSessionMessages", () => {
     const marker = out[1] as {
       role: string;
       content?: Array<{ text?: string }>;
-      __IronCliw?: { kind?: string; id?: string };
+      __ironcliw?: { kind?: string; id?: string };
       timestamp?: number;
     };
     expect(marker.role).toBe("system");
     expect(marker.content?.[0]?.text).toBe("Compaction");
-    expect(marker.__IronCliw?.kind).toBe("compaction");
-    expect(marker.__IronCliw?.id).toBe("comp-1");
+    expect(marker.__ironcliw?.kind).toBe("compaction");
+    expect(marker.__ironcliw?.id).toBe("comp-1");
     expect(typeof marker.timestamp).toBe("number");
   });
 
@@ -559,7 +559,7 @@ describe("readSessionPreviewItemsFromTranscript", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-session-preview-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-session-preview-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
@@ -653,14 +653,14 @@ describe("resolveSessionTranscriptCandidates", () => {
     vi.unstubAllEnvs();
   });
 
-  test("fallback candidate uses IronCliw_HOME instead of os.homedir()", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  test("fallback candidate uses IRONCLIW_HOME instead of os.homedir()", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
     const candidates = resolveSessionTranscriptCandidates("sess-1", undefined);
     const fallback = candidates[candidates.length - 1];
     expect(fallback).toBe(
-      path.join(path.resolve("/srv/IronCliw-home"), ".IronCliw", "sessions", "sess-1.jsonl"),
+      path.join(path.resolve("/srv/ironcliw-home"), ".ironcliw", "sessions", "sess-1.jsonl"),
     );
   });
 });
@@ -669,8 +669,8 @@ describe("resolveSessionTranscriptCandidates safety", () => {
   test("keeps cross-agent absolute sessionFile for standard and custom store roots", () => {
     const cases = [
       {
-        storePath: "/tmp/IronCliw/agents/main/sessions/sessions.json",
-        sessionFile: "/tmp/IronCliw/agents/ops/sessions/sess-safe.jsonl",
+        storePath: "/tmp/ironcliw/agents/main/sessions/sessions.json",
+        sessionFile: "/tmp/ironcliw/agents/ops/sessions/sess-safe.jsonl",
       },
       {
         storePath: "/srv/custom/agents/main/sessions/sessions.json",
@@ -693,14 +693,14 @@ describe("resolveSessionTranscriptCandidates safety", () => {
   test("drops unsafe session IDs instead of producing traversal paths", () => {
     const candidates = resolveSessionTranscriptCandidates(
       "../etc/passwd",
-      "/tmp/IronCliw/agents/main/sessions/sessions.json",
+      "/tmp/ironcliw/agents/main/sessions/sessions.json",
     );
 
     expect(candidates).toEqual([]);
   });
 
   test("drops unsafe sessionFile candidates and keeps safe fallbacks", () => {
-    const storePath = "/tmp/IronCliw/agents/main/sessions/sessions.json";
+    const storePath = "/tmp/ironcliw/agents/main/sessions/sessions.json";
     const candidates = resolveSessionTranscriptCandidates(
       "sess-safe",
       storePath,
@@ -718,13 +718,13 @@ describe("archiveSessionTranscripts", () => {
   let tmpDir: string;
   let storePath: string;
 
-  registerTempSessionStore("IronCliw-archive-test-", (nextTmpDir, nextStorePath) => {
+  registerTempSessionStore("ironcliw-archive-test-", (nextTmpDir, nextStorePath) => {
     tmpDir = nextTmpDir;
     storePath = nextStorePath;
   });
 
   beforeAll(() => {
-    vi.stubEnv("IronCliw_HOME", tmpDir);
+    vi.stubEnv("IRONCLIW_HOME", tmpDir);
   });
 
   afterAll(() => {

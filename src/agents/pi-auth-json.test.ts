@@ -8,7 +8,7 @@ import { ensurePiAuthJsonFromAuthProfiles } from "./pi-auth-json.js";
 type AuthProfileStore = Parameters<typeof saveAuthProfileStore>[0];
 
 async function createAgentDir() {
-  return fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-agent-"));
+  return fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-agent-"));
 }
 
 function writeProfiles(agentDir: string, profiles: AuthProfileStore["profiles"]) {

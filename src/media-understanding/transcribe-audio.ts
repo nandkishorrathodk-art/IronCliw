@@ -4,7 +4,7 @@ import { runAudioTranscription } from "./audio-transcription-runner.js";
 /**
  * Transcribe an audio file using the configured media-understanding provider.
  *
- * Reads provider/model/apiKey from `tools.media.audio` in the IronCliw config,
+ * Reads provider/model/apiKey from `tools.media.audio` in the ironcliw config,
  * falling back through configured models until one succeeds.
  *
  * This is the runtime-exposed entry point for external plugins (e.g. marmot)

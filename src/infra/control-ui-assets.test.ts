@@ -68,7 +68,7 @@ vi.mock("node:fs", async (importOriginal) => {
   return { ...wrapped, default: wrapped };
 });
 
-vi.mock("./IronCliw-root.js", () => ({
+vi.mock("./ironcliw-root.js", () => ({
   resolveIronCliwPackageRoot: vi.fn(async () => null),
   resolveIronCliwPackageRootSync: vi.fn(() => null),
 }));
@@ -76,9 +76,10 @@ vi.mock("./IronCliw-root.js", () => ({
 let resolveControlUiRepoRoot: typeof import("./control-ui-assets.js").resolveControlUiRepoRoot;
 let resolveControlUiDistIndexPath: typeof import("./control-ui-assets.js").resolveControlUiDistIndexPath;
 let resolveControlUiDistIndexHealth: typeof import("./control-ui-assets.js").resolveControlUiDistIndexHealth;
+let isPackageProvenControlUiRootSync: typeof import("./control-ui-assets.js").isPackageProvenControlUiRootSync;
 let resolveControlUiRootOverrideSync: typeof import("./control-ui-assets.js").resolveControlUiRootOverrideSync;
 let resolveControlUiRootSync: typeof import("./control-ui-assets.js").resolveControlUiRootSync;
-let IronCliwRoot: typeof import("./IronCliw-root.js");
+let ironcliwRoot: typeof import("./ironcliw-root.js");
 
 describe("control UI assets helpers (fs-mocked)", () => {
   beforeAll(async () => {
@@ -86,10 +87,11 @@ describe("control UI assets helpers (fs-mocked)", () => {
       resolveControlUiRepoRoot,
       resolveControlUiDistIndexPath,
       resolveControlUiDistIndexHealth,
+      isPackageProvenControlUiRootSync,
       resolveControlUiRootOverrideSync,
       resolveControlUiRootSync,
     } = await import("./control-ui-assets.js"));
-    IronCliwRoot = await import("./IronCliw-root.js");
+    ironcliwRoot = await import("./ironcliw-root.js");
   });
 
   beforeEach(() => {
@@ -123,29 +125,41 @@ describe("control UI assets helpers (fs-mocked)", () => {
     );
   });
 
+  it("resolves dist control-ui index path for symlinked argv1 via realpath", async () => {
+    const pkgRoot = abs("fixtures/bun-global/ironcliw");
+    const wrapperArgv1 = abs("fixtures/bin/ironcliw");
+    const realEntrypoint = path.join(pkgRoot, "dist", "index.js");
+
+    state.realpaths.set(wrapperArgv1, realEntrypoint);
+
+    await expect(resolveControlUiDistIndexPath(wrapperArgv1)).resolves.toBe(
+      path.join(pkgRoot, "dist", "control-ui", "index.html"),
+    );
+  });
+
   it("uses resolveIronCliwPackageRoot when available", async () => {
-    const pkgRoot = abs("fixtures/IronCliw");
+    const pkgRoot = abs("fixtures/ironcliw");
     (
-      IronCliwRoot.resolveIronCliwPackageRoot as unknown as ReturnType<typeof vi.fn>
+      ironcliwRoot.resolveIronCliwPackageRoot as unknown as ReturnType<typeof vi.fn>
     ).mockResolvedValueOnce(pkgRoot);
 
-    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/IronCliw"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(abs("fixtures/bin/ironcliw"))).resolves.toBe(
       path.join(pkgRoot, "dist", "control-ui", "index.html"),
     );
   });
 
   it("falls back to package.json name matching when root resolution fails", async () => {
     const root = abs("fixtures/fallback");
-    setFile(path.join(root, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    setFile(path.join(root, "package.json"), JSON.stringify({ name: "ironcliw" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
-    await expect(resolveControlUiDistIndexPath(path.join(root, "IronCliw.mjs"))).resolves.toBe(
+    await expect(resolveControlUiDistIndexPath(path.join(root, "ironcliw.mjs"))).resolves.toBe(
       path.join(root, "dist", "control-ui", "index.html"),
     );
   });
 
   it("returns null when fallback package name does not match", async () => {
-    const root = abs("fixtures/not-IronCliw");
+    const root = abs("fixtures/not-ironcliw");
     setFile(path.join(root, "package.json"), JSON.stringify({ name: "malicious-pkg" }));
     setFile(path.join(root, "dist", "control-ui", "index.html"), "<html></html>\n");
 
@@ -182,9 +196,9 @@ describe("control UI assets helpers (fs-mocked)", () => {
   });
 
   it("resolves control-ui root for dist bundle argv1 and moduleUrl candidates", async () => {
-    const pkgRoot = abs("fixtures/IronCliw-bundle");
+    const pkgRoot = abs("fixtures/ironcliw-bundle");
     (
-      IronCliwRoot.resolveIronCliwPackageRootSync as unknown as ReturnType<typeof vi.fn>
+      ironcliwRoot.resolveIronCliwPackageRootSync as unknown as ReturnType<typeof vi.fn>
     ).mockReturnValueOnce(pkgRoot);
 
     const uiDir = path.join(pkgRoot, "dist", "control-ui");
@@ -198,5 +212,49 @@ describe("control UI assets helpers (fs-mocked)", () => {
     // moduleUrl candidate: <moduleDir>/control-ui
     const moduleUrl = pathToFileURL(path.join(pkgRoot, "dist", "bundle.js")).toString();
     expect(resolveControlUiRootSync({ moduleUrl })).toBe(uiDir);
+  });
+
+  it("resolves control-ui root for symlinked argv1 via realpath", () => {
+    const pkgRoot = abs("fixtures/bun-global/ironcliw");
+    const wrapperArgv1 = abs("fixtures/bin/ironcliw");
+    const realEntrypoint = path.join(pkgRoot, "dist", "index.js");
+    const uiDir = path.join(pkgRoot, "dist", "control-ui");
+
+    state.realpaths.set(wrapperArgv1, realEntrypoint);
+    setFile(path.join(uiDir, "index.html"), "<html></html>\n");
+
+    expect(resolveControlUiRootSync({ argv1: wrapperArgv1 })).toBe(uiDir);
+  });
+
+  it("detects package-proven control-ui roots", () => {
+    const pkgRoot = abs("fixtures/ironcliw-package-root");
+    const uiDir = path.join(pkgRoot, "dist", "control-ui");
+    setDir(uiDir);
+    setFile(path.join(uiDir, "index.html"), "<html></html>\n");
+    (
+      ironcliwRoot.resolveIronCliwPackageRootSync as unknown as ReturnType<typeof vi.fn>
+    ).mockReturnValueOnce(pkgRoot);
+
+    expect(
+      isPackageProvenControlUiRootSync(uiDir, {
+        cwd: abs("fixtures/cwd"),
+      }),
+    ).toBe(true);
+  });
+
+  it("does not treat fallback roots as package-proven", () => {
+    const pkgRoot = abs("fixtures/ironcliw-package-root");
+    const fallbackRoot = abs("fixtures/fallback-root/dist/control-ui");
+    setDir(fallbackRoot);
+    setFile(path.join(fallbackRoot, "index.html"), "<html></html>\n");
+    (
+      ironcliwRoot.resolveIronCliwPackageRootSync as unknown as ReturnType<typeof vi.fn>
+    ).mockReturnValueOnce(pkgRoot);
+
+    expect(
+      isPackageProvenControlUiRootSync(fallbackRoot, {
+        cwd: abs("fixtures/fallback-root"),
+      }),
+    ).toBe(false);
   });
 });

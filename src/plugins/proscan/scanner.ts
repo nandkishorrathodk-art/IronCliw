@@ -1,7 +1,7 @@
 import { EventEmitter } from "node:events";
 import type { Browser, BrowserContext, Page } from "playwright-core";
-import { PAYLOADS, VULN_SIGNATURES, SENSITIVE_DATA_PATTERNS } from "./payloads.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
+import { PAYLOADS, VULN_SIGNATURES, SENSITIVE_DATA_PATTERNS } from "./payloads.js";
 
 const log = createSubsystemLogger("proscan/scanner");
 
@@ -80,7 +80,12 @@ export class ProScanner extends EventEmitter {
   private totalPhases = 4;
   private currentPhase = 0;
 
-  private makeDedupeKey(f: { category: string; url: string; parameter?: string; payload?: string }): string {
+  private makeDedupeKey(f: {
+    category: string;
+    url: string;
+    parameter?: string;
+    payload?: string;
+  }): string {
     return `${f.category}:${f.url}:${f.parameter ?? ""}:${f.payload?.slice(0, 30) ?? ""}`;
   }
 
@@ -199,13 +204,12 @@ export class ProScanner extends EventEmitter {
     this.currentPhase = phase;
     const pct = Math.round((phase / this.totalPhases) * 100);
     this.emit("progress", { phase, name, percent: pct });
-    console.log(`\n  [${"█".repeat(Math.round(pct / 5))}${"░".repeat(20 - Math.round(pct / 5))}] ${pct}% — Phase ${phase}/${this.totalPhases}: ${name}`);
+    console.log(
+      `\n  [${"█".repeat(Math.round(pct / 5))}${"░".repeat(20 - Math.round(pct / 5))}] ${pct}% — Phase ${phase}/${this.totalPhases}: ${name}`,
+    );
   }
 
-  private async loginToApp(
-    page: Page,
-    creds: NonNullable<ScanTarget["credentials"]>,
-  ) {
+  private async loginToApp(page: Page, creds: NonNullable<ScanTarget["credentials"]>) {
     const loginUrl = creds.loginUrl || "";
     if (loginUrl) {
       await page.goto(loginUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
@@ -257,18 +261,12 @@ export class ProScanner extends EventEmitter {
     log.info(`[Auth] Logged in as ${creds.username}`);
   }
 
-  private async crawlPhase(
-    page: Page,
-    target: ScanTarget,
-    onFinding: (f: ProFinding) => void,
-  ) {
+  private async crawlPhase(page: Page, target: ScanTarget, onFinding: (f: ProFinding) => void) {
     const maxPages = target.maxPages ?? 30;
     const depth = target.depth ?? 3;
     const baseHost = new URL(target.url).hostname;
 
-    const toVisit: Array<{ url: string; depth: number }> = [
-      { url: target.url, depth: 0 },
-    ];
+    const toVisit: Array<{ url: string; depth: number }> = [{ url: target.url, depth: 0 }];
 
     while (toVisit.length > 0 && this.discoveredUrls.size < maxPages) {
       const { url, depth: d } = toVisit.shift()!;
@@ -298,8 +296,7 @@ export class ProScanner extends EventEmitter {
             ) {
               toVisit.push({ url: link, depth: d + 1 });
             }
-          } catch {
-          }
+          } catch {}
         }
 
         const jsEndpoints = await this.extractJsEndpoints(page, baseHost);
@@ -360,9 +357,10 @@ export class ProScanner extends EventEmitter {
           .filter((s) => s.startsWith("http")),
       );
 
-      log.info(`  → Found ${endpoints.length} API endpoints in JS, ${scriptUrls.length} external scripts`);
-    } catch {
-    }
+      log.info(
+        `  → Found ${endpoints.length} API endpoints in JS, ${scriptUrls.length} external scripts`,
+      );
+    } catch {}
 
     return [...new Set(endpoints)];
   }
@@ -385,10 +383,7 @@ export class ProScanner extends EventEmitter {
     }
   }
 
-  private checkSecurityHeaders(
-    url: string,
-    requests: CapturedRequest[],
-  ): ProFinding | null {
+  private checkSecurityHeaders(url: string, requests: CapturedRequest[]): ProFinding | null {
     const req = requests.find((r) => r.url === url && r.response);
     if (!req?.response) {
       return null;
@@ -400,7 +395,10 @@ export class ProScanner extends EventEmitter {
     if (!headers["content-security-policy"]) {
       missing.push("Content-Security-Policy");
     }
-    if (!headers["x-frame-options"] && !headers["content-security-policy"]?.includes("frame-ancestors")) {
+    if (
+      !headers["x-frame-options"] &&
+      !headers["content-security-policy"]?.includes("frame-ancestors")
+    ) {
       missing.push("X-Frame-Options");
     }
     if (!headers["x-content-type-options"]) {
@@ -439,7 +437,8 @@ export class ProScanner extends EventEmitter {
               id: makeFindingId(),
               timestamp: new Date(),
               title: `Sensitive Data Exposure: ${dataType}`,
-              severity: dataType.includes("Key") || dataType.includes("Private") ? "high" : "medium",
+              severity:
+                dataType.includes("Key") || dataType.includes("Private") ? "high" : "medium",
               category: "Information Disclosure",
               url: req.url,
               evidence: `${dataType} pattern found in response body`,
@@ -455,16 +454,13 @@ export class ProScanner extends EventEmitter {
       let urlObj: URL | null = null;
       try {
         urlObj = new URL(req.url);
-      } catch {
-      }
+      } catch {}
 
       if (urlObj) {
         const sensitiveParams = ["id", "uid", "user_id", "userId", "account", "order", "invoice"];
         for (const param of sensitiveParams) {
           if (urlObj.searchParams.has(param)) {
-            const existing = this.findings.find(
-              (f) => f.category === "IDOR" && f.url === req.url,
-            );
+            const existing = this.findings.find((f) => f.category === "IDOR" && f.url === req.url);
             if (!existing) {
               this.emitFinding(
                 {
@@ -487,9 +483,7 @@ export class ProScanner extends EventEmitter {
       }
 
       if (urlObj?.pathname.match(/\/\d{3,}(\/|$|\?)/)) {
-        const existing = this.findings.find(
-          (f) => f.category === "IDOR" && f.url === req.url,
-        );
+        const existing = this.findings.find((f) => f.category === "IDOR" && f.url === req.url);
         if (!existing) {
           this.emitFinding(
             {
@@ -588,13 +582,20 @@ export class ProScanner extends EventEmitter {
     }
   }
 
-  private async testOpenRedirect(
-    page: Page,
-    url: string,
-    onFinding: (f: ProFinding) => void,
-  ) {
+  private async testOpenRedirect(page: Page, url: string, onFinding: (f: ProFinding) => void) {
     const urlObj = new URL(url);
-    const redirectParams = ["redirect", "url", "next", "return", "returnTo", "redirect_uri", "goto", "dest", "destination", "redir"];
+    const redirectParams = [
+      "redirect",
+      "url",
+      "next",
+      "return",
+      "returnTo",
+      "redirect_uri",
+      "goto",
+      "dest",
+      "destination",
+      "redir",
+    ];
     const testPayload = "https://evil.ironcliw-test.example.com";
 
     for (const param of redirectParams) {
@@ -610,7 +611,9 @@ export class ProScanner extends EventEmitter {
 
         if (
           finalUrl.includes("evil.ironcliw-test") ||
-          (status >= 300 && status < 400 && resp?.headers()["location"]?.includes("evil.ironcliw-test"))
+          (status >= 300 &&
+            status < 400 &&
+            resp?.headers()["location"]?.includes("evil.ironcliw-test"))
         ) {
           this.emitFinding(
             {
@@ -629,8 +632,7 @@ export class ProScanner extends EventEmitter {
             onFinding,
           );
         }
-      } catch {
-      }
+      } catch {}
     }
   }
 
@@ -647,9 +649,27 @@ export class ProScanner extends EventEmitter {
       severity: Severity;
       cvss: number;
     }> = [
-      { payloads: PAYLOADS.xss.slice(0, 5), category: "XSS", name: "Cross-Site Scripting", severity: "high", cvss: 6.1 },
-      { payloads: PAYLOADS.sqli.slice(0, 5), category: "SQLi", name: "SQL Injection", severity: "critical", cvss: 9.8 },
-      { payloads: PAYLOADS.ssti.slice(0, 3), category: "SSTI", name: "Server-Side Template Injection", severity: "critical", cvss: 9.8 },
+      {
+        payloads: PAYLOADS.xss.slice(0, 5),
+        category: "XSS",
+        name: "Cross-Site Scripting",
+        severity: "high",
+        cvss: 6.1,
+      },
+      {
+        payloads: PAYLOADS.sqli.slice(0, 5),
+        category: "SQLi",
+        name: "SQL Injection",
+        severity: "critical",
+        cvss: 9.8,
+      },
+      {
+        payloads: PAYLOADS.ssti.slice(0, 3),
+        category: "SSTI",
+        name: "Server-Side Template Injection",
+        severity: "critical",
+        cvss: 9.8,
+      },
     ];
 
     for (const vuln of vulnTypes) {
@@ -657,35 +677,34 @@ export class ProScanner extends EventEmitter {
         try {
           await page.goto(url, { waitUntil: "domcontentloaded", timeout: 10000 });
 
-          const inputs = await page.locator(
-            'input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea',
-          ).all();
+          const inputs = await page
+            .locator(
+              'input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea',
+            )
+            .all();
 
           for (const input of inputs) {
             try {
               await input.fill(payload, { timeout: 3000 });
-            } catch {
-            }
+            } catch {}
           }
 
-          const submitBtn = page
-            .locator('button[type="submit"], input[type="submit"]')
-            .first();
+          const submitBtn = page.locator('button[type="submit"], input[type="submit"]').first();
           let responseBody = "";
 
           const responseHandler = (resp: import("playwright-core").Response) => {
-            resp.text().then((t) => {
-              responseBody += t.slice(0, 5000);
-            }).catch(() => {});
+            resp
+              .text()
+              .then((t) => {
+                responseBody += t.slice(0, 5000);
+              })
+              .catch(() => {});
           };
           page.on("response", responseHandler);
 
           try {
             if ((await submitBtn.count()) > 0) {
-              await Promise.race([
-                submitBtn.click(),
-                page.waitForTimeout(3000),
-              ]);
+              await Promise.race([submitBtn.click(), page.waitForTimeout(3000)]);
             }
 
             await page.waitForTimeout(2000);
@@ -737,24 +756,18 @@ export class ProScanner extends EventEmitter {
                   );
                   await dialog.dismiss();
                 }
-              } catch {
-              }
+              } catch {}
             }
           } catch {
           } finally {
             page.off("response", responseHandler);
           }
-        } catch {
-        }
+        } catch {}
       }
     }
   }
 
-  private async testUrlParams(
-    page: Page,
-    url: string,
-    onFinding: (f: ProFinding) => void,
-  ) {
+  private async testUrlParams(page: Page, url: string, onFinding: (f: ProFinding) => void) {
     const urlObj = new URL(url);
     if (urlObj.searchParams.size === 0) {
       return;
@@ -778,7 +791,7 @@ export class ProScanner extends EventEmitter {
             timeout: 10000,
           });
 
-          const body = await (resp?.text().catch(() => "")) ?? "";
+          const body = (await resp?.text().catch(() => "")) ?? "";
           const pageContent = await page.content().catch(() => "");
 
           for (const [vulnType, signatures] of Object.entries(VULN_SIGNATURES)) {
@@ -789,7 +802,9 @@ export class ProScanner extends EventEmitter {
                     id: makeFindingId(),
                     timestamp: new Date(),
                     title: `${vulnType.toUpperCase()} in URL Parameter '${param}'`,
-                    severity: ["sqli", "commandInjection", "ssti"].includes(vulnType) ? "critical" : "high",
+                    severity: ["sqli", "commandInjection", "ssti"].includes(vulnType)
+                      ? "critical"
+                      : "high",
                     category: vulnType.toUpperCase(),
                     url: testUrl.toString(),
                     parameter: param,
@@ -803,26 +818,23 @@ export class ProScanner extends EventEmitter {
               }
             }
           }
-        } catch {
-        }
+        } catch {}
       }
     }
   }
 
   private async apiPhase(onFinding: (f: ProFinding) => void) {
-    const apiEndpoints = [...this.discoveredEndpoints].filter((ep) =>
-      ep.includes("/api/"),
-    );
+    const apiEndpoints = [...this.discoveredEndpoints].filter((ep) => ep.includes("/api/"));
 
     for (const endpoint of apiEndpoints.slice(0, 20)) {
       try {
-        const authBypassHeaders = [
+        const authBypassHeaders: Record<string, string>[] = [
           { "X-Forwarded-For": "127.0.0.1" },
           { "X-Real-IP": "127.0.0.1" },
           { "X-Original-URL": "/" },
           { "X-Rewrite-URL": "/" },
-          { "Authorization": "null" },
-          { "Authorization": "Bearer undefined" },
+          { Authorization: "null" },
+          { Authorization: "Bearer undefined" },
           { "X-API-Key": "admin" },
           { "X-Admin": "1" },
         ];
@@ -853,8 +865,7 @@ export class ProScanner extends EventEmitter {
                 );
               }
             }
-          } catch {
-          }
+          } catch {}
         }
 
         const idorPatterns = endpoint.match(/\/(\d+)(\/|$|\?)/g);
@@ -893,12 +904,10 @@ export class ProScanner extends EventEmitter {
                   );
                 }
               }
-            } catch {
-            }
+            } catch {}
           }
         }
-      } catch {
-      }
+      } catch {}
     }
   }
 

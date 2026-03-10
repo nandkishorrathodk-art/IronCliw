@@ -26,18 +26,18 @@ For Anthropic specifically, API key auth is the safe path and is recommended
 over subscription setup-token auth.
 
 1. Create an API key in your provider console.
-2. Put it on the **gateway host** (the machine running `IronCliw gateway`).
+2. Put it on the **gateway host** (the machine running `ironcliw gateway`).
 
 ```bash
 export <PROVIDER>_API_KEY="..."
-IronCliw models status
+ironcliw models status
 ```
 
 3. If the Gateway runs under systemd/launchd, prefer putting the key in
-   `~/.IronCliw/.env` so the daemon can read it:
+   `~/.ironcliw/.env` so the daemon can read it:
 
 ```bash
-cat >> ~/.IronCliw/.env <<'EOF'
+cat >> ~/.ironcliw/.env <<'EOF'
 <PROVIDER>_API_KEY=...
 EOF
 ```
@@ -45,15 +45,15 @@ EOF
 Then restart the daemon (or restart your Gateway process) and re-check:
 
 ```bash
-IronCliw models status
-IronCliw doctor
+ironcliw models status
+ironcliw doctor
 ```
 
 If you’d rather not manage env vars yourself, the onboarding wizard can store
-API keys for daemon use: `IronCliw onboard`.
+API keys for daemon use: `ironcliw onboard`.
 
 See [Help](/help) for details on env inheritance (`env.shellEnv`,
-`~/.IronCliw/.env`, systemd/launchd).
+`~/.ironcliw/.env`, systemd/launchd).
 
 ## Anthropic: setup-token (subscription auth)
 
@@ -67,13 +67,13 @@ claude setup-token
 Then paste it into IronCliw:
 
 ```bash
-IronCliw models auth setup-token --provider anthropic
+ironcliw models auth setup-token --provider anthropic
 ```
 
 If the token was created on another machine, paste it manually:
 
 ```bash
-IronCliw models auth paste-token --provider anthropic
+ironcliw models auth paste-token --provider anthropic
 ```
 
 If you see an Anthropic error like:
@@ -93,8 +93,8 @@ the policy risk is acceptable, and verify Anthropic's current terms yourself.
 Manual token entry (any provider; writes `auth-profiles.json` + updates config):
 
 ```bash
-IronCliw models auth paste-token --provider anthropic
-IronCliw models auth paste-token --provider openrouter
+ironcliw models auth paste-token --provider anthropic
+ironcliw models auth paste-token --provider openrouter
 ```
 
 Auth profile refs are also supported for static credentials:
@@ -105,7 +105,7 @@ Auth profile refs are also supported for static credentials:
 Automation-friendly check (exit `1` when expired/missing, `2` when expiring):
 
 ```bash
-IronCliw models status --check
+ironcliw models status --check
 ```
 
 Optional ops scripts (systemd/Termux) are documented here:
@@ -116,8 +116,8 @@ Optional ops scripts (systemd/Termux) are documented here:
 ## Checking model auth status
 
 ```bash
-IronCliw models status
-IronCliw doctor
+ironcliw models status
+ironcliw doctor
 ```
 
 ## API key rotation behavior (gateway)
@@ -126,7 +126,7 @@ Some providers support retrying a request with alternative keys when an API call
 hits a provider rate limit.
 
 - Priority order:
-  - `IronCliw_LIVE_<PROVIDER>_KEY` (single override)
+  - `IRONCLIW_LIVE_<PROVIDER>_KEY` (single override)
   - `<PROVIDER>_API_KEYS`
   - `<PROVIDER>_API_KEY`
   - `<PROVIDER>_API_KEY_*`
@@ -150,9 +150,9 @@ Use `/model` (or `/model list`) for a compact picker; use `/model status` for th
 Set an explicit auth profile order override for an agent (stored in that agent’s `auth-profiles.json`):
 
 ```bash
-IronCliw models auth order get --provider anthropic
-IronCliw models auth order set --provider anthropic anthropic:default
-IronCliw models auth order clear --provider anthropic
+ironcliw models auth order get --provider anthropic
+ironcliw models auth order set --provider anthropic anthropic:default
+ironcliw models auth order clear --provider anthropic
 ```
 
 Use `--agent <id>` to target a specific agent; omit it to use the configured default agent.
@@ -165,12 +165,12 @@ If the Anthropic token profile is missing, run `claude setup-token` on the
 **gateway host**, then re-check:
 
 ```bash
-IronCliw models status
+ironcliw models status
 ```
 
 ### Token expiring/expired
 
-Run `IronCliw models status` to confirm which profile is expiring. If the profile
+Run `ironcliw models status` to confirm which profile is expiring. If the profile
 is missing, rerun `claude setup-token` and paste the token again.
 
 ## Requirements

@@ -14,30 +14,30 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["IronCliw sandbox list", "List all sandbox containers."],
-    ["IronCliw sandbox list --browser", "List only browser containers."],
-    ["IronCliw sandbox recreate --all", "Recreate all containers."],
-    ["IronCliw sandbox recreate --session main", "Recreate a specific session."],
-    ["IronCliw sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["IronCliw sandbox explain", "Explain effective sandbox config."],
+    ["ironcliw sandbox list", "List all sandbox containers."],
+    ["ironcliw sandbox list --browser", "List only browser containers."],
+    ["ironcliw sandbox recreate --all", "Recreate all containers."],
+    ["ironcliw sandbox recreate --session main", "Recreate a specific session."],
+    ["ironcliw sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["ironcliw sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["IronCliw sandbox list", "List all sandbox containers."],
-    ["IronCliw sandbox list --browser", "List only browser containers."],
-    ["IronCliw sandbox list --json", "JSON output."],
+    ["ironcliw sandbox list", "List all sandbox containers."],
+    ["ironcliw sandbox list --browser", "List only browser containers."],
+    ["ironcliw sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["IronCliw sandbox recreate --all", "Recreate all containers."],
-    ["IronCliw sandbox recreate --session main", "Recreate a specific session."],
-    ["IronCliw sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["IronCliw sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["IronCliw sandbox recreate --all --force", "Skip confirmation."],
+    ["ironcliw sandbox recreate --all", "Recreate all containers."],
+    ["ironcliw sandbox recreate --session main", "Recreate a specific session."],
+    ["ironcliw sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+    ["ironcliw sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["ironcliw sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["IronCliw sandbox explain", "Show effective sandbox config."],
-    ["IronCliw sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["IronCliw sandbox explain --agent work", "Explain an agent sandbox."],
-    ["IronCliw sandbox explain --json", "JSON output."],
+    ["ironcliw sandbox explain", "Show effective sandbox config."],
+    ["ironcliw sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["ironcliw sandbox explain --agent work", "Explain an agent sandbox."],
+    ["ironcliw sandbox explain --json", "JSON output."],
   ],
 } as const;
 
@@ -67,7 +67,7 @@ export function registerSandboxCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.IronCliw.ai/cli/sandbox")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sandbox", "docs.ironcliw.ai/cli/sandbox")}\n`,
     )
     .action(() => {
       sandbox.help({ error: true });

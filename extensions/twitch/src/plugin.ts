@@ -5,8 +5,8 @@
  * This is the primary entry point for the Twitch channel integration.
  */
 
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
-import { buildChannelConfigSchema } from "IronCliw/plugin-sdk/twitch";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/twitch";
+import { buildChannelConfigSchema } from "ironcliw/plugin-sdk/twitch";
 import { twitchMessageActions } from "./actions.js";
 import { removeClientManager } from "./client-manager-registry.js";
 import { TwitchConfigSchema } from "./config-schema.js";

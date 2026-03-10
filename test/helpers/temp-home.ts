@@ -9,7 +9,7 @@ type EnvSnapshot = {
   userProfile: string | undefined;
   homeDrive: string | undefined;
   homePath: string | undefined;
-  IronCliwHome: string | undefined;
+  ironcliwHome: string | undefined;
   stateDir: string | undefined;
 };
 
@@ -26,8 +26,8 @@ function snapshotEnv(): EnvSnapshot {
     userProfile: process.env.USERPROFILE,
     homeDrive: process.env.HOMEDRIVE,
     homePath: process.env.HOMEPATH,
-    IronCliwHome: process.env.IronCliw_HOME,
-    stateDir: process.env.IronCliw_STATE_DIR,
+    ironcliwHome: process.env.IRONCLIW_HOME,
+    stateDir: process.env.IRONCLIW_STATE_DIR,
   };
 }
 
@@ -43,8 +43,8 @@ function restoreEnv(snapshot: EnvSnapshot) {
   restoreKey("USERPROFILE", snapshot.userProfile);
   restoreKey("HOMEDRIVE", snapshot.homeDrive);
   restoreKey("HOMEPATH", snapshot.homePath);
-  restoreKey("IronCliw_HOME", snapshot.IronCliwHome);
-  restoreKey("IronCliw_STATE_DIR", snapshot.stateDir);
+  restoreKey("IRONCLIW_HOME", snapshot.ironcliwHome);
+  restoreKey("IRONCLIW_STATE_DIR", snapshot.stateDir);
 }
 
 function snapshotExtraEnv(keys: string[]): Record<string, string | undefined> {
@@ -68,9 +68,9 @@ function restoreExtraEnv(snapshot: Record<string, string | undefined>) {
 function setTempHome(base: string) {
   process.env.HOME = base;
   process.env.USERPROFILE = base;
-  // Ensure tests using HOME isolation aren't affected by leaked IronCliw_HOME.
-  delete process.env.IronCliw_HOME;
-  process.env.IronCliw_STATE_DIR = path.join(base, ".IronCliw");
+  // Ensure tests using HOME isolation aren't affected by leaked IRONCLIW_HOME.
+  delete process.env.IRONCLIW_HOME;
+  process.env.IRONCLIW_STATE_DIR = path.join(base, ".ironcliw");
 
   if (process.platform !== "win32") {
     return;
@@ -102,7 +102,7 @@ export async function withTempHome<T>(
   fn: (home: string) => Promise<T>,
   opts: { env?: Record<string, EnvValue>; prefix?: string } = {},
 ): Promise<T> {
-  const prefix = opts.prefix ?? "IronCliw-test-home-";
+  const prefix = opts.prefix ?? "ironcliw-test-home-";
   const base = await allocateTempHomeBase(prefix);
   const snapshot = snapshotEnv();
   const envKeys = Object.keys(opts.env ?? {});
@@ -114,7 +114,7 @@ export async function withTempHome<T>(
   const envSnapshot = snapshotExtraEnv(envKeys);
 
   setTempHome(base);
-  await fs.mkdir(path.join(base, ".IronCliw", "agents", "main", "sessions"), { recursive: true });
+  await fs.mkdir(path.join(base, ".ironcliw", "agents", "main", "sessions"), { recursive: true });
   if (opts.env) {
     for (const [key, raw] of Object.entries(opts.env)) {
       const value = typeof raw === "function" ? raw(base) : raw;

@@ -40,7 +40,7 @@ async function withHeartbeatFixture(
       };
       return run({ tmpDir, storePath, seedSession });
     },
-    { prefix: "IronCliw-hb-model-" },
+    { prefix: "ironcliw-hb-model-" },
   );
 }
 

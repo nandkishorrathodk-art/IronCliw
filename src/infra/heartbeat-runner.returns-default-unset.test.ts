@@ -100,7 +100,7 @@ beforeAll(async () => {
   ]);
   setActivePluginRegistry(testRegistry);
 
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-heartbeat-suite-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-heartbeat-suite-"));
 });
 
 beforeEach(() => {
@@ -959,7 +959,7 @@ describe("runHeartbeatOnce", () => {
   });
 
   it("loads the default agent session from templated stores", async () => {
-    const tmpDir = await createCaseDir("IronCliw-hb");
+    const tmpDir = await createCaseDir("ironcliw-hb");
     const storeTemplate = path.join(tmpDir, "agents", "{agentId}", "sessions.json");
     const replySpy = vi.spyOn(replyModule, "getReplyFromConfig");
     try {
@@ -1019,7 +1019,7 @@ describe("runHeartbeatOnce", () => {
     queueCronEvent?: boolean;
     replyText?: string;
   }) {
-    const tmpDir = await createCaseDir("IronCliw-hb");
+    const tmpDir = await createCaseDir("ironcliw-hb");
     const storePath = path.join(tmpDir, "sessions.json");
     const workspaceDir = path.join(tmpDir, "workspace");
     await fs.mkdir(workspaceDir, { recursive: true });
@@ -1080,8 +1080,27 @@ describe("runHeartbeatOnce", () => {
       reason: params.reason,
       deps: createHeartbeatDeps(sendWhatsApp),
     });
-    return { res, replySpy, sendWhatsApp };
+    return { res, replySpy, sendWhatsApp, workspaceDir };
   }
+
+  it("adds explicit workspace HEARTBEAT.md path guidance to heartbeat prompts", async () => {
+    const { res, replySpy, sendWhatsApp, workspaceDir } = await runHeartbeatFileScenario({
+      fileState: "actionable",
+      reason: "interval",
+      replyText: "Checked logs and PRs",
+    });
+    try {
+      expect(res.status).toBe("ran");
+      expect(sendWhatsApp).toHaveBeenCalledTimes(1);
+      expect(replySpy).toHaveBeenCalledTimes(1);
+      const calledCtx = replySpy.mock.calls[0]?.[0] as { Body?: string };
+      const expectedPath = path.join(workspaceDir, "HEARTBEAT.md").replace(/\\/g, "/");
+      expect(calledCtx.Body).toContain(`use workspace file ${expectedPath} (exact case)`);
+      expect(calledCtx.Body).toContain("Do not read docs/heartbeat.md.");
+    } finally {
+      replySpy.mockRestore();
+    }
+  });
 
   it("applies HEARTBEAT.md gating rules across file states and triggers", async () => {
     const cases: Array<{

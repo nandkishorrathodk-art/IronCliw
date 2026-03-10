@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw node` (headless node host)"
+summary: "CLI reference for `ironcliw node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `IronCliw node`
+# `ironcliw node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-IronCliw node run --host <gateway-host> --port 18789
+ironcliw node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -58,12 +58,22 @@ Options:
 - `--node-id <id>`: Override node id (clears pairing token)
 - `--display-name <name>`: Override the node display name
 
+## Gateway auth for node host
+
+`ironcliw node run` and `ironcliw node install` resolve gateway auth from config/env (no `--token`/`--password` flags on node commands):
+
+- `IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD` are checked first.
+- Then local config fallback: `gateway.auth.token` / `gateway.auth.password`.
+- In local mode, `gateway.remote.token` / `gateway.remote.password` are also eligible as fallback when `gateway.auth.*` is unset.
+- In `gateway.mode=remote`, remote client fields (`gateway.remote.token` / `gateway.remote.password`) are also eligible per remote precedence rules.
+- Legacy `CLAWDBOT_GATEWAY_*` env vars are ignored for node host auth resolution.
+
 ## Service (background)
 
 Install a headless node host as a user service.
 
 ```bash
-IronCliw node install --host <gateway-host> --port 18789
+ironcliw node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -80,13 +90,13 @@ Options:
 Manage the service:
 
 ```bash
-IronCliw node status
-IronCliw node stop
-IronCliw node restart
-IronCliw node uninstall
+ironcliw node status
+ironcliw node stop
+ironcliw node restart
+ironcliw node uninstall
 ```
 
-Use `IronCliw node run` for a foreground node host (no service).
+Use `ironcliw node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -96,17 +106,17 @@ The first connection creates a pending device pairing request (`role: node`) on 
 Approve it via:
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
+ironcliw devices list
+ironcliw devices approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
-`~/.IronCliw/node.json`.
+`~/.ironcliw/node.json`.
 
 ## Exec approvals
 
 `system.run` is gated by local exec approvals:
 
-- `~/.IronCliw/exec-approvals.json`
+- `~/.ironcliw/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `IronCliw approvals --node <id|name|ip>` (edit from the Gateway)
+- `ironcliw approvals --node <id|name|ip>` (edit from the Gateway)

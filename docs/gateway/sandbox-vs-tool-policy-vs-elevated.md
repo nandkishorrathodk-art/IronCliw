@@ -18,10 +18,10 @@ IronCliw has three related (but different) controls:
 Use the inspector to see what IronCliw is _actually_ doing:
 
 ```bash
-IronCliw sandbox explain
-IronCliw sandbox explain --session agent:main:main
-IronCliw sandbox explain --agent work
-IronCliw sandbox explain --json
+ironcliw sandbox explain
+ironcliw sandbox explain --session agent:main:main
+ironcliw sandbox explain --agent work
+ironcliw sandbox explain --json
 ```
 
 It prints:
@@ -93,7 +93,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:IronCliw`: all built-in IronCliw tools (excludes provider plugins)
+- `group:ironcliw`: all built-in IronCliw tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 

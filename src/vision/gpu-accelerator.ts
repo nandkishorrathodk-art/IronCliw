@@ -80,7 +80,9 @@ export class GpuAccelerator {
    * Each task result contains status and error if it failed individually.
    */
   public async processBatch(tasks: VisionTask[]): Promise<BatchTaskResult[]> {
-    if (tasks.length === 0) {return [];}
+    if (tasks.length === 0) {
+      return [];
+    }
 
     const results: BatchTaskResult[] = [];
 

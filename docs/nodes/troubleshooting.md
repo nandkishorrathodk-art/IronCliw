@@ -13,19 +13,19 @@ Use this page when a node is visible in status but node tools fail.
 ## Command ladder
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 Then run node specific checks:
 
 ```bash
-IronCliw nodes status
-IronCliw nodes describe --node <idOrNameOrIp>
-IronCliw approvals get --node <idOrNameOrIp>
+ironcliw nodes status
+ironcliw nodes describe --node <idOrNameOrIp>
+ironcliw approvals get --node <idOrNameOrIp>
 ```
 
 Healthy signals:
@@ -41,9 +41,9 @@ Healthy signals:
 Quick check and fix:
 
 ```bash
-IronCliw nodes describe --node <idOrNameOrIp>
-IronCliw nodes canvas snapshot --node <idOrNameOrIp>
-IronCliw logs --follow
+ironcliw nodes describe --node <idOrNameOrIp>
+ironcliw nodes canvas snapshot --node <idOrNameOrIp>
+ironcliw logs --follow
 ```
 
 If you see `NODE_BACKGROUND_UNAVAILABLE`, bring the node app to the foreground and retry.
@@ -67,10 +67,10 @@ These are different gates:
 Quick checks:
 
 ```bash
-IronCliw devices list
-IronCliw nodes status
-IronCliw approvals get --node <idOrNameOrIp>
-IronCliw approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
+ironcliw devices list
+ironcliw nodes status
+ironcliw approvals get --node <idOrNameOrIp>
+ironcliw approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
 ```
 
 If pairing is missing, approve the node device first.
@@ -92,10 +92,10 @@ If pairing is fine but `system.run` fails, fix exec approvals/allowlist.
 ## Fast recovery loop
 
 ```bash
-IronCliw nodes status
-IronCliw nodes describe --node <idOrNameOrIp>
-IronCliw approvals get --node <idOrNameOrIp>
-IronCliw logs --follow
+ironcliw nodes status
+ironcliw nodes describe --node <idOrNameOrIp>
+ironcliw approvals get --node <idOrNameOrIp>
+ironcliw logs --follow
 ```
 
 If still stuck:

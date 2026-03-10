@@ -7,13 +7,13 @@ afterEach(() => {
 });
 
 describe("DEFAULT_AGENT_WORKSPACE_DIR", () => {
-  it("uses IronCliw_HOME when resolving the default workspace dir", () => {
-    const home = path.join(path.sep, "srv", "IronCliw-home");
-    vi.stubEnv("IronCliw_HOME", home);
+  it("uses IRONCLIW_HOME when resolving the default workspace dir", () => {
+    const home = path.join(path.sep, "srv", "ironcliw-home");
+    vi.stubEnv("IRONCLIW_HOME", home);
     vi.stubEnv("HOME", path.join(path.sep, "home", "other"));
 
     expect(resolveDefaultAgentWorkspaceDir()).toBe(
-      path.join(path.resolve(home), ".IronCliw", "workspace"),
+      path.join(path.resolve(home), ".ironcliw", "workspace"),
     );
   });
 });

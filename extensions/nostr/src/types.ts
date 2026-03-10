@@ -2,8 +2,8 @@ import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   normalizeOptionalAccountId,
-} from "IronCliw/plugin-sdk/account-id";
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/nostr";
+} from "ironcliw/plugin-sdk/account-id";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/nostr";
 import type { NostrProfile } from "./config-schema.js";
 import { getPublicKeyFromPrivate } from "./nostr-bus.js";
 import { DEFAULT_RELAYS } from "./nostr-bus.js";

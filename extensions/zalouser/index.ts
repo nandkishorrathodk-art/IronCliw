@@ -1,5 +1,5 @@
-import type { AnyAgentTool, IronCliwPluginApi } from "IronCliw/plugin-sdk/zalouser";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/zalouser";
+import type { AnyAgentTool, IronCliwPluginApi } from "ironcliw/plugin-sdk/zalouser";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/zalouser";
 import { zalouserDock, zalouserPlugin } from "./src/channel.js";
 import { setZalouserRuntime } from "./src/runtime.js";
 import { ZalouserToolSchema, executeZalouserTool } from "./src/tool.js";

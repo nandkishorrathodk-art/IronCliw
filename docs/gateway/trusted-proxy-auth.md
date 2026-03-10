@@ -160,8 +160,8 @@ Pomerium config snippet:
 
 ```yaml
 routes:
-  - from: https://IronCliw.example.com
-    to: http://IronCliw-gateway:18789
+  - from: https://ironcliw.example.com
+    to: http://ironcliw-gateway:18789
     policy:
       - allow:
           or:
@@ -192,11 +192,11 @@ Caddy with the `caddy-security` plugin can authenticate users and pass identity 
 Caddyfile snippet:
 
 ```
-IronCliw.example.com {
+ironcliw.example.com {
     authenticate with oauth2_provider
     authorize with policy1
 
-    reverse_proxy IronCliw:18789 {
+    reverse_proxy ironcliw:18789 {
         header_up X-Forwarded-User {http.auth.user.email}
     }
 }
@@ -228,7 +228,7 @@ location / {
     auth_request /oauth2/auth;
     auth_request_set $user $upstream_http_x_auth_request_email;
 
-    proxy_pass http://IronCliw:18789;
+    proxy_pass http://ironcliw:18789;
     proxy_set_header X-Auth-Request-Email $user;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -265,7 +265,7 @@ Before enabling trusted-proxy auth, verify:
 
 ## Security Audit
 
-`IronCliw security audit` will flag trusted-proxy auth with a **critical** severity finding. This is intentional — it's a reminder that you're delegating security to your proxy setup.
+`ironcliw security audit` will flag trusted-proxy auth with a **critical** severity finding. This is intentional — it's a reminder that you're delegating security to your proxy setup.
 
 The audit checks for:
 
@@ -319,7 +319,7 @@ If you're moving from token auth to trusted-proxy:
 3. Update IronCliw config with trusted-proxy auth
 4. Restart the Gateway
 5. Test WebSocket connections from the Control UI
-6. Run `IronCliw security audit` and review findings
+6. Run `ironcliw security audit` and review findings
 
 ## Related
 

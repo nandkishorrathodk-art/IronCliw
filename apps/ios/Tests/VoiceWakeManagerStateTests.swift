@@ -35,7 +35,7 @@ import Testing
 
     @Test @MainActor func handleRecognitionCallbackDispatchesCommand() async {
         let manager = VoiceWakeManager()
-        manager.triggerWords = ["IronCliw"]
+        manager.triggerWords = ["ironcliw"]
         manager.isEnabled = true
 
         actor CaptureBox {
@@ -47,11 +47,11 @@ import Testing
             await capture.set(cmd)
         }
 
-        let transcript = "IronCliw hello"
-        let triggerRange = transcript.range(of: "IronCliw")!
+        let transcript = "ironcliw hello"
+        let triggerRange = transcript.range(of: "ironcliw")!
         let helloRange = transcript.range(of: "hello")!
         let segments = [
-            WakeWordSegment(text: "IronCliw", start: 0.0, duration: 0.2, range: triggerRange),
+            WakeWordSegment(text: "ironcliw", start: 0.0, duration: 0.2, range: triggerRange),
             WakeWordSegment(text: "hello", start: 0.8, duration: 0.2, range: helloRange),
         ]
 

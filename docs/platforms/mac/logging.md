@@ -26,12 +26,12 @@ Notes:
 
 Unified logging redacts most payloads unless a subsystem opts into `privacy -off`. Per Peter's write-up on macOS [logging privacy shenanigans](https://steipete.me/posts/2025/logging-privacy-shenanigans) (2025) this is controlled by a plist in `/Library/Preferences/Logging/Subsystems/` keyed by the subsystem name. Only new log entries pick up the flag, so enable it before reproducing an issue.
 
-## Enable for IronCliw (`ai.IronCliw`)
+## Enable for IronCliw (`ai.ironcliw`)
 
 - Write the plist to a temp file first, then install it atomically as root:
 
 ```bash
-cat <<'EOF' >/tmp/ai.IronCliw.plist
+cat <<'EOF' >/tmp/ai.ironcliw.plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -44,14 +44,14 @@ cat <<'EOF' >/tmp/ai.IronCliw.plist
 </dict>
 </plist>
 EOF
-sudo install -m 644 -o root -g wheel /tmp/ai.IronCliw.plist /Library/Preferences/Logging/Subsystems/ai.IronCliw.plist
+sudo install -m 644 -o root -g wheel /tmp/ai.ironcliw.plist /Library/Preferences/Logging/Subsystems/ai.ironcliw.plist
 ```
 
 - No reboot is required; logd notices the file quickly, but only new log lines will include private payloads.
-- View the richer output with the existing helper, e.g. `./scripts/ironlog.sh --category WebChat --last 5m`.
+- View the richer output with the existing helper, e.g. `./scripts/clawlog.sh --category WebChat --last 5m`.
 
 ## Disable after debugging
 
-- Remove the override: `sudo rm /Library/Preferences/Logging/Subsystems/ai.IronCliw.plist`.
+- Remove the override: `sudo rm /Library/Preferences/Logging/Subsystems/ai.ironcliw.plist`.
 - Optionally run `sudo log config --reload` to force logd to drop the override immediately.
 - Remember this surface can include phone numbers and message bodies; keep the plist in place only while you actively need the extra detail.

@@ -1,4 +1,4 @@
-# @IronCliw/zalouser
+# @ironcliw/zalouser
 
 IronCliw extension for Zalo Personal Account messaging via native `zca-js` integration.
 
@@ -24,13 +24,13 @@ No external `zca`, `openzca`, or `zca-cli` binary is required.
 ### Option A: npm
 
 ```bash
-IronCliw plugins install @IronCliw/zalouser
+ironcliw plugins install @ironcliw/zalouser
 ```
 
 ### Option B: local source checkout
 
 ```bash
-IronCliw plugins install ./extensions/zalouser
+ironcliw plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -41,7 +41,7 @@ Restart the Gateway after install.
 ### Login (QR)
 
 ```bash
-IronCliw channels login --channel zalouser
+ironcliw channels login --channel zalouser
 ```
 
 Scan the QR code with the Zalo app on your phone.
@@ -58,7 +58,7 @@ channels:
 ### Send a message
 
 ```bash
-IronCliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
+ironcliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
 ```
 
 ## Configuration
@@ -91,15 +91,15 @@ channels:
 ## Useful commands
 
 ```bash
-IronCliw channels login --channel zalouser
-IronCliw channels login --channel zalouser --account work
-IronCliw channels status --probe
-IronCliw channels logout --channel zalouser
+ironcliw channels login --channel zalouser
+ironcliw channels login --channel zalouser --account work
+ironcliw channels status --probe
+ironcliw channels logout --channel zalouser
 
-IronCliw directory self --channel zalouser
-IronCliw directory peers list --channel zalouser --query "name"
-IronCliw directory groups list --channel zalouser --query "work"
-IronCliw directory groups members --channel zalouser --group-id <id>
+ironcliw directory self --channel zalouser
+ironcliw directory peers list --channel zalouser --query "name"
+ironcliw directory groups list --channel zalouser --query "work"
+ironcliw directory groups members --channel zalouser --group-id <id>
 ```
 
 ## Agent tool
@@ -110,8 +110,8 @@ Available actions: `send`, `image`, `link`, `friends`, `groups`, `me`, `status`
 
 ## Troubleshooting
 
-- Login not persisted: `IronCliw channels logout --channel zalouser && IronCliw channels login --channel zalouser`
-- Probe status: `IronCliw channels status --probe`
+- Login not persisted: `ironcliw channels logout --channel zalouser && ironcliw channels login --channel zalouser`
+- Probe status: `ironcliw channels status --probe`
 - Name resolution issues (allowlist/groups): use numeric IDs or exact Zalo names
 
 ## Credits

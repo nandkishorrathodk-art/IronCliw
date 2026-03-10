@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/imessage";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/imessage";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/imessage";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/imessage";
 import { imessagePlugin } from "./src/channel.js";
 import { setIMessageRuntime } from "./src/runtime.js";
 

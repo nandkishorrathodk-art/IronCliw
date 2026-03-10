@@ -6,12 +6,13 @@ import { formatCliCommand } from "../cli/command-format.js";
 import type { IronCliwConfig } from "../config/config.js";
 import { resolveMemoryBackendConfig } from "../memory/backend-config.js";
 import { DEFAULT_LOCAL_MODEL } from "../memory/embeddings.js";
+import { hasConfiguredMemorySecretInput } from "../memory/secret-input.js";
 import { note } from "../terminal/note.js";
 import { resolveUserPath } from "../utils.js";
 
 /**
  * Check whether memory search has a usable embedding provider.
- * Runs as part of `IronCliw doctor` — config-only, no network calls.
+ * Runs as part of `ironcliw doctor` — config-only, no network calls.
  */
 export async function noteMemorySearchHealth(
   cfg: IronCliwConfig,
@@ -26,7 +27,7 @@ export async function noteMemorySearchHealth(
   const agentId = resolveDefaultAgentId(cfg);
   const agentDir = resolveAgentDir(cfg, agentId);
   const resolved = resolveMemorySearchConfig(cfg, agentId);
-  const hasRemoteApiKey = Boolean(resolved?.remote?.apiKey?.trim());
+  const hasRemoteApiKey = hasConfiguredMemorySecretInput(resolved?.remote?.apiKey);
 
   if (!resolved) {
     note("Memory search is explicitly disabled (enabled: false).", "Memory search");
@@ -55,7 +56,7 @@ export async function noteMemorySearchHealth(
               "but the gateway reports local embeddings are not ready.",
               detail ? `Gateway probe: ${detail}` : null,
               "",
-              `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+              `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
             ]
               .filter(Boolean)
               .join("\n"),
@@ -70,9 +71,9 @@ export async function noteMemorySearchHealth(
           "",
           "Fix (pick one):",
           `- Install node-llama-cpp and set a local model path in config`,
-          `- Switch to a remote provider: ${formatCliCommand("IronCliw config set agents.defaults.memorySearch.provider openai")}`,
+          `- Switch to a remote provider: ${formatCliCommand("ironcliw config set agents.defaults.memorySearch.provider openai")}`,
           "",
-          `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+          `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
         ].join("\n"),
         "Memory search",
       );
@@ -87,7 +88,7 @@ export async function noteMemorySearchHealth(
         [
           `Memory search provider is set to "${resolved.provider}" but the API key was not found in the CLI environment.`,
           "The running gateway reports memory embeddings are ready for the default agent.",
-          `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+          `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
         ].join("\n"),
         "Memory search",
       );
@@ -103,10 +104,10 @@ export async function noteMemorySearchHealth(
         "",
         "Fix (pick one):",
         `- Set ${envVar} in your environment`,
-        `- Configure credentials: ${formatCliCommand("IronCliw configure --section model")}`,
-        `- To disable: ${formatCliCommand("IronCliw config set agents.defaults.memorySearch.enabled false")}`,
+        `- Configure credentials: ${formatCliCommand("ironcliw configure --section model")}`,
+        `- To disable: ${formatCliCommand("ironcliw config set agents.defaults.memorySearch.enabled false")}`,
         "",
-        `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+        `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
       ].join("\n"),
       "Memory search",
     );
@@ -128,7 +129,7 @@ export async function noteMemorySearchHealth(
       [
         'Memory search provider is set to "auto" but the API key was not found in the CLI environment.',
         "The running gateway reports memory embeddings are ready for the default agent.",
-        `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+        `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
       ].join("\n"),
       "Memory search",
     );
@@ -144,11 +145,11 @@ export async function noteMemorySearchHealth(
       "",
       "Fix (pick one):",
       "- Set OPENAI_API_KEY, GEMINI_API_KEY, VOYAGE_API_KEY, or MISTRAL_API_KEY in your environment",
-      `- Configure credentials: ${formatCliCommand("IronCliw configure --section model")}`,
+      `- Configure credentials: ${formatCliCommand("ironcliw configure --section model")}`,
       `- For local embeddings: configure agents.defaults.memorySearch.provider and local model path`,
-      `- To disable: ${formatCliCommand("IronCliw config set agents.defaults.memorySearch.enabled false")}`,
+      `- To disable: ${formatCliCommand("ironcliw config set agents.defaults.memorySearch.enabled false")}`,
       "",
-      `Verify: ${formatCliCommand("IronCliw memory status --deep")}`,
+      `Verify: ${formatCliCommand("ironcliw memory status --deep")}`,
     ].join("\n"),
     "Memory search",
   );

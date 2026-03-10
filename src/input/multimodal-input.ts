@@ -7,7 +7,6 @@ export interface MultimodalInputEvent {
 }
 
 export class MultimodalInputHandler {
-  
   public handleInput(event: MultimodalInputEvent): string {
     switch (event.modality) {
       case "text":

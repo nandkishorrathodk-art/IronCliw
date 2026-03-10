@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { NON_ENV_SECRETREF_MARKER } from "../agents/model-auth-markers.js";
 import { resolveProviderAuths } from "./provider-usage.auth.js";
 
 describe("resolveProviderAuths key normalization", () => {
@@ -9,7 +10,7 @@ describe("resolveProviderAuths key normalization", () => {
   let suiteCase = 0;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-provider-auth-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-provider-auth-suite-"));
   });
 
   afterAll(async () => {
@@ -24,15 +25,15 @@ describe("resolveProviderAuths key normalization", () => {
   ): Promise<T> {
     const base = path.join(suiteRoot, `case-${++suiteCase}`);
     await fs.mkdir(base, { recursive: true });
-    await fs.mkdir(path.join(base, ".IronCliw", "agents", "main", "sessions"), { recursive: true });
+    await fs.mkdir(path.join(base, ".ironcliw", "agents", "main", "sessions"), { recursive: true });
 
     const keysToRestore = new Set<string>([
       "HOME",
       "USERPROFILE",
       "HOMEDRIVE",
       "HOMEPATH",
-      "IronCliw_HOME",
-      "IronCliw_STATE_DIR",
+      "IRONCLIW_HOME",
+      "IRONCLIW_STATE_DIR",
       ...Object.keys(env),
     ]);
     const snapshot: Record<string, string | undefined> = {};
@@ -42,8 +43,8 @@ describe("resolveProviderAuths key normalization", () => {
 
     process.env.HOME = base;
     process.env.USERPROFILE = base;
-    delete process.env.IronCliw_HOME;
-    process.env.IronCliw_STATE_DIR = path.join(base, ".IronCliw");
+    delete process.env.IRONCLIW_HOME;
+    process.env.IRONCLIW_STATE_DIR = path.join(base, ".ironcliw");
     for (const [key, value] of Object.entries(env)) {
       if (value === undefined) {
         delete process.env[key];
@@ -65,7 +66,7 @@ describe("resolveProviderAuths key normalization", () => {
   }
 
   async function writeAuthProfiles(home: string, profiles: Record<string, unknown>) {
-    const agentDir = path.join(home, ".IronCliw", "agents", "main", "agent");
+    const agentDir = path.join(home, ".ironcliw", "agents", "main", "agent");
     await fs.mkdir(agentDir, { recursive: true });
     await fs.writeFile(
       path.join(agentDir, "auth-profiles.json"),
@@ -75,17 +76,17 @@ describe("resolveProviderAuths key normalization", () => {
   }
 
   async function writeConfig(home: string, config: Record<string, unknown>) {
-    const stateDir = path.join(home, ".IronCliw");
+    const stateDir = path.join(home, ".ironcliw");
     await fs.mkdir(stateDir, { recursive: true });
     await fs.writeFile(
-      path.join(stateDir, "IronCliw.json"),
+      path.join(stateDir, "ironcliw.json"),
       `${JSON.stringify(config, null, 2)}\n`,
       "utf8",
     );
   }
 
   async function writeProfileOrder(home: string, provider: string, profileIds: string[]) {
-    const agentDir = path.join(home, ".IronCliw", "agents", "main", "agent");
+    const agentDir = path.join(home, ".ironcliw", "agents", "main", "agent");
     const parsed = JSON.parse(
       await fs.readFile(path.join(agentDir, "auth-profiles.json"), "utf8"),
     ) as Record<string, unknown>;
@@ -105,6 +106,44 @@ describe("resolveProviderAuths key normalization", () => {
     const legacyDir = path.join(home, ".pi", "agent");
     await fs.mkdir(legacyDir, { recursive: true });
     await fs.writeFile(path.join(legacyDir, "auth.json"), raw, "utf8");
+  }
+
+  function createTestModelDefinition() {
+    return {
+      id: "test-model",
+      name: "Test Model",
+      reasoning: false,
+      input: ["text"],
+      cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+      contextWindow: 1024,
+      maxTokens: 256,
+    };
+  }
+
+  async function resolveMinimaxAuthFromConfiguredKey(apiKey: string) {
+    return await withSuiteHome(
+      async (home) => {
+        await writeConfig(home, {
+          models: {
+            providers: {
+              minimax: {
+                baseUrl: "https://api.minimaxi.com",
+                models: [createTestModelDefinition()],
+                apiKey,
+              },
+            },
+          },
+        });
+
+        return await resolveProviderAuths({
+          providers: ["minimax"],
+        });
+      },
+      {
+        MINIMAX_API_KEY: undefined,
+        MINIMAX_CODE_PLAN_KEY: undefined,
+      },
+    );
   }
 
   it("strips embedded CR/LF from env keys", async () => {
@@ -248,17 +287,17 @@ describe("resolveProviderAuths key normalization", () => {
               zai: {
                 baseUrl: "https://api.z.ai",
                 models: [modelDef],
-                apiKey: "cfg-zai-key",
+                apiKey: "cfg-zai-key", // pragma: allowlist secret
               },
               minimax: {
                 baseUrl: "https://api.minimaxi.com",
                 models: [modelDef],
-                apiKey: "cfg-minimax-key",
+                apiKey: "cfg-minimax-key", // pragma: allowlist secret
               },
               xiaomi: {
                 baseUrl: "https://api.xiaomi.example",
                 models: [modelDef],
-                apiKey: "cfg-xiaomi-key",
+                apiKey: "cfg-xiaomi-key", // pragma: allowlist secret
               },
             },
           },
@@ -402,5 +441,15 @@ describe("resolveProviderAuths key normalization", () => {
       });
       expect(auths).toEqual([{ provider: "anthropic", token: "token-1" }]);
     }, {});
+  });
+
+  it("ignores marker-backed config keys for provider usage auth resolution", async () => {
+    const auths = await resolveMinimaxAuthFromConfiguredKey(NON_ENV_SECRETREF_MARKER);
+    expect(auths).toEqual([]);
+  });
+
+  it("keeps all-caps plaintext config keys eligible for provider usage auth resolution", async () => {
+    const auths = await resolveMinimaxAuthFromConfiguredKey("ALLCAPS_SAMPLE");
+    expect(auths).toEqual([{ provider: "minimax", token: "ALLCAPS_SAMPLE" }]);
   });
 });

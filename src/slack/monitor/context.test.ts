@@ -36,7 +36,7 @@ function createTestContext() {
     threadInheritParent: false,
     slashCommand: {
       enabled: true,
-      name: "IronCliw",
+      name: "ironcliw",
       ephemeral: true,
       sessionPrefix: "slack:slash",
     },

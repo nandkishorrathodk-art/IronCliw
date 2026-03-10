@@ -22,10 +22,10 @@ describe("installScheduledTask", () => {
   async function withUserProfileDir(
     run: (tmpDir: string, env: Record<string, string>) => Promise<void>,
   ) {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-schtasks-install-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-schtasks-install-"));
     const env = {
       USERPROFILE: tmpDir,
-      IronCliw_PROFILE: "default",
+      IRONCLIW_PROFILE: "default",
     };
     try {
       await run(tmpDir, env);
@@ -131,6 +131,24 @@ describe("installScheduledTask", () => {
           environment: {},
         }),
       ).rejects.toThrow(/Task description cannot contain CR or LF/);
+    });
+  });
+
+  it("does not persist a frozen PATH snapshot into the generated task script", async () => {
+    await withUserProfileDir(async (_tmpDir, env) => {
+      const { scriptPath } = await installScheduledTask({
+        env,
+        stdout: new PassThrough(),
+        programArguments: ["node", "gateway.js"],
+        environment: {
+          PATH: "C:\\Windows\\System32;C:\\Program Files\\Docker\\Docker\\resources\\bin",
+          IRONCLIW_GATEWAY_PORT: "18789",
+        },
+      });
+
+      const script = await fs.readFile(scriptPath, "utf8");
+      expect(script).not.toContain('set "PATH=');
+      expect(script).toContain('set "IRONCLIW_GATEWAY_PORT=18789"');
     });
   });
 });

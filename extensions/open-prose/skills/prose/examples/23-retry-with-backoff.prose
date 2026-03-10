@@ -61,4 +61,3 @@ for item in items:
   catch:
     session "Log failed batch for manual review"
       context: item
-

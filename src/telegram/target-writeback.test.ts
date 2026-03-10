@@ -65,7 +65,7 @@ describe("maybePersistResolvedTelegramTarget", () => {
           },
         },
       },
-      writeOptions: { expectedConfigPath: "/tmp/IronCliw.json" },
+      writeOptions: { expectedConfigPath: "/tmp/ironcliw.json" },
     });
     loadCronStore.mockResolvedValue({
       version: 1,
@@ -97,7 +97,7 @@ describe("maybePersistResolvedTelegramTarget", () => {
           },
         },
       }),
-      expect.objectContaining({ expectedConfigPath: "/tmp/IronCliw.json" }),
+      expect.objectContaining({ expectedConfigPath: "/tmp/ironcliw.json" }),
     );
     expect(saveCronStore).toHaveBeenCalledTimes(1);
     expect(saveCronStore).toHaveBeenCalledWith(

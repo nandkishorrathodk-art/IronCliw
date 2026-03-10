@@ -35,4 +35,3 @@ parallel:
 session: reviewer
   prompt: "Synthesize the security, performance, and style reviews into a final PR comment. Provide a clear 'Approve', 'Request Changes', or 'Comment' recommendation."
   context: { security, perf, style, overview }
-

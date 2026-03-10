@@ -1,0 +1,288 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ironcliw
+  labels:
+    app.kubernetes.io/name: ironcliw
+    app.kubernetes.io/version: "2026.0.3"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ironcliw-config
+  namespace: ironcliw
+data:
+  NODE_ENV: "production"
+  IRONCLI_WORKSPACE: "/app/workspace"
+  IRONCLI_LOGS: "/app/logs"
+  IRONCLI_CONFIG: "/app/config"
+  IRONCLI_ENABLE_GPU: "false"
+  IRONCLI_ENABLE_METRICS: "true"
+  IRONCLI_SANDBOX_MODE: "strict"
+  IRONCLI_DEFAULT_MODEL: "fireworks/kimi-k2p5"
+  IRONCLI_FALLBACK_MODELS: "openai/gpt-4o,anthropic/claude-3-5-sonnet,google/gemini-pro"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ironcliw-secrets
+  namespace: ironcliw
+type: Opaque
+stringData:
+  MONGODB_URI: "mongodb://mongo:27017/ironcliw"
+  REDIS_URL: "redis://redis:6379"
+  OPENAI_API_KEY: ""
+  ANTHROPIC_API_KEY: ""
+  FIREWORKS_API_KEY: ""
+  ELEVENLABS_API_KEY: ""
+  DEEPGRAM_API_KEY: ""
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ironcliw-core
+  namespace: ironcliw
+  labels:
+    app: ironcliw-core
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ironcliw-core
+  template:
+    metadata:
+      labels:
+        app: ironcliw-core
+    spec:
+      serviceAccountName: ironcliw
+      containers:
+        - name: ironcliw
+          image: ironcliw/core:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: api
+            - containerPort: 8080
+              name: dashboard
+            - containerPort: 9090
+              name: gateway
+          envFrom:
+            - configMapRef:
+                name: ironcliw-config
+            - secretRef:
+                name: ironcliw-secrets
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: workspace
+              mountPath: /app/workspace
+            - name: logs
+              mountPath: /app/logs
+            - name: config
+              mountPath: /app/config
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: ironcliw-workspace-pvc
+        - name: logs
+          persistentVolumeClaim:
+            claimName: ironcliw-logs-pvc
+        - name: config
+          persistentVolumeClaim:
+            claimName: ironcliw-config-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ironcliw-service
+  namespace: ironcliw
+spec:
+  selector:
+    app: ironcliw-core
+  ports:
+    - name: api
+      port: 3000
+      targetPort: 3000
+    - name: dashboard
+      port: 8080
+      targetPort: 8080
+    - name: gateway
+      port: 9090
+      targetPort: 9090
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ironcliw-ingress
+  namespace: ironcliw
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+spec:
+  tls:
+    - hosts:
+        - ironcliw.yourdomain.com
+        - api.ironcliw.yourdomain.com
+      secretName: ironcliw-tls
+  rules:
+    - host: ironcliw.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ironcliw-service
+                port:
+                  number: 8080
+    - host: api.ironcliw.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ironcliw-service
+                port:
+                  number: 3000
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ironcliw-workspace-pvc
+  namespace: ironcliw
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ironcliw-logs-pvc
+  namespace: ironcliw
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ironcliw-config-pvc
+  namespace: ironcliw
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ironcliw
+  namespace: ironcliw
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ironcliw-role
+  namespace: ironcliw
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "patch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ironcliw-rolebinding
+  namespace: ironcliw
+subjects:
+  - kind: ServiceAccount
+    name: ironcliw
+    namespace: ironcliw
+roleRef:
+  kind: Role
+  name: ironcliw-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ironcliw-hpa
+  namespace: ironcliw
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ironcliw-core
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+---
+# Pod Disruption Budget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ironcliw-pdb
+  namespace: ironcliw
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ironcliw-core

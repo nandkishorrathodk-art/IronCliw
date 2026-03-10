@@ -1,4 +1,4 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/acpx";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/acpx";
 import { createAcpxPluginConfigSchema } from "./src/config.js";
 import { createAcpxRuntimeService } from "./src/service.js";
 

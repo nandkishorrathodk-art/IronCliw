@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "IronCliw/plugin-sdk/feishu";
+import type { BaseProbeResult } from "ironcliw/plugin-sdk/feishu";
 import type {
   FeishuConfigSchema,
   FeishuGroupSchema,

@@ -86,7 +86,7 @@ describe("profile CRUD endpoints", () => {
     const createDuplicate = await realFetch(`${base}/profiles/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "IronCliw" }),
+      body: JSON.stringify({ name: "ironcliw" }),
     });
     expect(createDuplicate.status).toBe(409);
     const createDuplicateBody = (await createDuplicate.json()) as { error: string };
@@ -110,11 +110,24 @@ describe("profile CRUD endpoints", () => {
     const createBadRemote = await realFetch(`${base}/profiles/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "badremote", cdpUrl: "ws://bad" }),
+      body: JSON.stringify({ name: "badremote", cdpUrl: "ftp://bad" }),
     });
     expect(createBadRemote.status).toBe(400);
     const createBadRemoteBody = (await createBadRemote.json()) as { error: string };
     expect(createBadRemoteBody.error).toContain("cdpUrl");
+
+    const createBadExtension = await realFetch(`${base}/profiles/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "badextension",
+        driver: "extension",
+        cdpUrl: "http://10.0.0.42:9222",
+      }),
+    });
+    expect(createBadExtension.status).toBe(400);
+    const createBadExtensionBody = (await createBadExtension.json()) as { error: string };
+    expect(createBadExtensionBody.error).toContain("loopback cdpUrl host");
 
     const deleteMissing = await realFetch(`${base}/profiles/nonexistent`, {
       method: "DELETE",
@@ -123,7 +136,7 @@ describe("profile CRUD endpoints", () => {
     const deleteMissingBody = (await deleteMissing.json()) as { error: string };
     expect(deleteMissingBody.error).toContain("not found");
 
-    const deleteDefault = await realFetch(`${base}/profiles/IronCliw`, {
+    const deleteDefault = await realFetch(`${base}/profiles/ironcliw`, {
       method: "DELETE",
     });
     expect(deleteDefault.status).toBe(400);

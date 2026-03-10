@@ -6,8 +6,8 @@
 termux-toast "Syncing IronCliw auth..."
 
 # Run sync on l36 server
-SERVER="${IronCliw_SERVER:-${CLAWDBOT_SERVER:-l36}}"
-RESULT=$(ssh "$SERVER" '/home/admin/IronCliw/scripts/sync-claude-code-auth.sh' 2>&1)
+SERVER="${IRONCLIW_SERVER:-${CLAWDBOT_SERVER:-l36}}"
+RESULT=$(ssh "$SERVER" '/home/admin/ironcliw/scripts/sync-claude-code-auth.sh' 2>&1)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 0 ]; then
@@ -17,10 +17,9 @@ if [ $EXIT_CODE -eq 0 ]; then
     termux-vibrate -d 100
     termux-toast "IronCliw synced! Expires:${EXPIRY}"
 
-    # Optional: restart IronCliw service
-    ssh "$SERVER" 'systemctl --user restart IronCliw' 2>/dev/null
+    # Optional: restart ironcliw service
+    ssh "$SERVER" 'systemctl --user restart ironcliw' 2>/dev/null
 else
     termux-vibrate -d 300
     termux-toast "Sync failed: ${RESULT}"
 fi
-

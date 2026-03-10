@@ -1,18 +1,18 @@
 # IronCliw gateway — Podman Quadlet (rootless)
-# Installed by setup-podman.sh into IronCliw's ~/.config/containers/systemd/
-# {{IronCliw_HOME}} is replaced at install time.
+# Installed by setup-podman.sh into ironcliw's ~/.config/containers/systemd/
+# {{IRONCLIW_HOME}} is replaced at install time.
 
 [Unit]
 Description=IronCliw gateway (rootless Podman)
 
 [Container]
-Image=IronCliw:local
-ContainerName=IronCliw
+Image=ironcliw:local
+ContainerName=ironcliw
 UserNS=keep-id
 # Keep container UID/GID aligned with the invoking user so mounted config is readable.
 User=%U:%G
-Volume={{IronCliw_HOME}}/.IronCliw:/home/node/.IronCliw
-EnvironmentFile={{IronCliw_HOME}}/.IronCliw/.env
+Volume={{IRONCLIW_HOME}}/.ironcliw:/home/node/.ironcliw:Z
+EnvironmentFile={{IRONCLIW_HOME}}/.ironcliw/.env
 Environment=HOME=/home/node
 Environment=TERM=xterm-256color
 PublishPort=18789:18789
@@ -26,4 +26,3 @@ Restart=on-failure
 
 [Install]
 WantedBy=default.target
-

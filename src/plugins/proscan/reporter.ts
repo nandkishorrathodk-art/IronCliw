@@ -61,12 +61,11 @@ const CATEGORY_TEMPLATES: Record<string, Partial<BugReport>> = {
   SSTI: {
     summary:
       "A Server-Side Template Injection (SSTI) vulnerability allows an attacker to inject template expressions that are evaluated server-side, often leading to Remote Code Execution (RCE).",
-    impact: "Remote Code Execution (RCE) on the web server — complete server takeover, data exfiltration, pivot to internal network.",
+    impact:
+      "Remote Code Execution (RCE) on the web server — complete server takeover, data exfiltration, pivot to internal network.",
     remediation:
       "Never pass user-controlled data directly into template engines. Use sandboxed template evaluation. Whitelist allowed template operations. Validate and sanitize all inputs before templating.",
-    references: [
-      "https://portswigger.net/web-security/server-side-template-injection",
-    ],
+    references: ["https://portswigger.net/web-security/server-side-template-injection"],
     cwe: "CWE-1336",
   },
   IDOR: {
@@ -148,7 +147,8 @@ function getTemplate(finding: ProFinding): Partial<BugReport> {
   return {
     summary: `A ${finding.category} vulnerability was identified at the target application.`,
     impact: "This vulnerability may allow unauthorized access or data exposure.",
-    remediation: "Review and remediate the identified vulnerability following security best practices.",
+    remediation:
+      "Review and remediate the identified vulnerability following security best practices.",
     references: ["https://owasp.org/www-project-top-ten/"],
   };
 }
@@ -263,8 +263,12 @@ function renderHackeroneFormat(report: BugReport, _opts: ReportOptions): string 
     "## Remediation:",
     report.remediation,
     "",
-    report.references.length > 0 ? "## References:\n" + report.references.map((r) => `- ${r}`).join("\n") : "",
-  ].filter(Boolean).join("\n");
+    report.references.length > 0
+      ? "## References:\n" + report.references.map((r) => `- ${r}`).join("\n")
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 export async function generateReport(
@@ -348,7 +352,11 @@ export function printFindingSummary(findings: ProFinding[]): void {
   console.log("═".repeat(72));
 
   const counts: Record<Severity, number> = {
-    critical: 0, high: 0, medium: 0, low: 0, info: 0,
+    critical: 0,
+    high: 0,
+    medium: 0,
+    low: 0,
+    info: 0,
   };
   for (const f of findings) {
     counts[f.severity]++;

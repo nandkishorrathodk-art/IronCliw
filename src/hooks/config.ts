@@ -68,7 +68,7 @@ export function shouldIncludeHook(params: {
   const { entry, config, eligibility } = params;
   const hookKey = resolveHookKey(entry.hook.name, entry);
   const hookConfig = resolveHookConfig(config, hookKey);
-  const pluginManaged = entry.hook.source === "IronCliw-plugin";
+  const pluginManaged = entry.hook.source === "ironcliw-plugin";
 
   // Check if explicitly disabled
   if (!pluginManaged && hookConfig?.enabled === false) {

@@ -15,12 +15,12 @@ An **agent** is a fully scoped brain with its own:
 
 - **Workspace** (files, AGENTS.md/SOUL.md/USER.md, local notes, persona rules).
 - **State directory** (`agentDir`) for auth profiles, model registry, and per-agent config.
-- **Session store** (chat history + routing state) under `~/.IronCliw/agents/<agentId>/sessions`.
+- **Session store** (chat history + routing state) under `~/.ironcliw/agents/<agentId>/sessions`.
 
 Auth profiles are **per-agent**. Each agent reads from its own:
 
 ```text
-~/.IronCliw/agents/<agentId>/agent/auth-profiles.json
+~/.ironcliw/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Main agent credentials are **not** shared automatically. Never reuse `agentDir`
@@ -28,7 +28,7 @@ across agents (it causes auth/session collisions). If you want to share creds,
 copy `auth-profiles.json` into the other agent's `agentDir`.
 
 Skills are per-agent via each workspace’s `skills/` folder, with shared skills
-available from `~/.IronCliw/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
+available from `~/.ironcliw/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
 
 The Gateway can host **one agent** (default) or **many agents** side-by-side.
 
@@ -39,11 +39,11 @@ reach other host locations unless sandboxing is enabled. See
 
 ## Paths (quick map)
 
-- Config: `~/.IronCliw/IronCliw.json` (or `IronCliw_CONFIG_PATH`)
-- State dir: `~/.IronCliw` (or `IronCliw_STATE_DIR`)
-- Workspace: `~/.IronCliw/workspace` (or `~/.IronCliw/workspace-<agentId>`)
-- Agent dir: `~/.IronCliw/agents/<agentId>/agent` (or `agents.list[].agentDir`)
-- Sessions: `~/.IronCliw/agents/<agentId>/sessions`
+- Config: `~/.ironcliw/ironcliw.json` (or `IRONCLIW_CONFIG_PATH`)
+- State dir: `~/.ironcliw` (or `IRONCLIW_STATE_DIR`)
+- Workspace: `~/.ironcliw/workspace` (or `~/.ironcliw/workspace-<agentId>`)
+- Agent dir: `~/.ironcliw/agents/<agentId>/agent` (or `agents.list[].agentDir`)
+- Sessions: `~/.ironcliw/agents/<agentId>/sessions`
 
 ### Single-agent mode (default)
 
@@ -51,15 +51,15 @@ If you do nothing, IronCliw runs a single agent:
 
 - `agentId` defaults to **`main`**.
 - Sessions are keyed as `agent:main:<mainKey>`.
-- Workspace defaults to `~/.IronCliw/workspace` (or `~/.IronCliw/workspace-<profile>` when `IronCliw_PROFILE` is set).
-- State defaults to `~/.IronCliw/agents/main/agent`.
+- Workspace defaults to `~/.ironcliw/workspace` (or `~/.ironcliw/workspace-<profile>` when `IRONCLIW_PROFILE` is set).
+- State defaults to `~/.ironcliw/agents/main/agent`.
 
 ## Agent helper
 
 Use the agent wizard to add a new isolated agent:
 
 ```bash
-IronCliw agents add work
+ironcliw agents add work
 ```
 
 Then add `bindings` (or let the wizard do it) to route inbound messages.
@@ -67,7 +67,7 @@ Then add `bindings` (or let the wizard do it) to route inbound messages.
 Verify with:
 
 ```bash
-IronCliw agents list --bindings
+ironcliw agents list --bindings
 ```
 
 ## Quick start
@@ -78,11 +78,11 @@ IronCliw agents list --bindings
 Use the wizard or create workspaces manually:
 
 ```bash
-IronCliw agents add coding
-IronCliw agents add social
+ironcliw agents add coding
+ironcliw agents add social
 ```
 
-Each agent gets its own workspace with `SOUL.md`, `AGENTS.md`, and optional `USER.md`, plus a dedicated `agentDir` and session store under `~/.IronCliw/agents/<agentId>`.
+Each agent gets its own workspace with `SOUL.md`, `AGENTS.md`, and optional `USER.md`, plus a dedicated `agentDir` and session store under `~/.ironcliw/agents/<agentId>`.
 
   </Step>
 
@@ -95,7 +95,7 @@ Create one account per agent on your preferred channels:
 - WhatsApp: link each phone number per account.
 
 ```bash
-IronCliw channels login --channel whatsapp --account work
+ironcliw channels login --channel whatsapp --account work
 ```
 
 See channel guides: [Discord](/channels/discord), [Telegram](/channels/telegram), [WhatsApp](/channels/whatsapp).
@@ -111,9 +111,9 @@ Add agents under `agents.list`, channel accounts under `channels.<channel>.accou
   <Step title="Restart and verify">
 
 ```bash
-IronCliw gateway restart
-IronCliw agents list --bindings
-IronCliw channels status --probe
+ironcliw gateway restart
+ironcliw agents list --bindings
+ironcliw channels status --probe
 ```
 
   </Step>
@@ -141,8 +141,8 @@ Example:
 {
   agents: {
     list: [
-      { id: "alex", workspace: "~/.IronCliw/workspace-alex" },
-      { id: "mia", workspace: "~/.IronCliw/workspace-mia" },
+      { id: "alex", workspace: "~/.ironcliw/workspace-alex" },
+      { id: "mia", workspace: "~/.ironcliw/workspace-mia" },
     ],
   },
   bindings: [
@@ -224,8 +224,8 @@ Each Discord bot account maps to a unique `accountId`. Bind each account to an a
 {
   agents: {
     list: [
-      { id: "main", workspace: "~/.IronCliw/workspace-main" },
-      { id: "coding", workspace: "~/.IronCliw/workspace-coding" },
+      { id: "main", workspace: "~/.ironcliw/workspace-main" },
+      { id: "coding", workspace: "~/.ironcliw/workspace-coding" },
     ],
   },
   bindings: [
@@ -273,8 +273,8 @@ Notes:
 {
   agents: {
     list: [
-      { id: "main", workspace: "~/.IronCliw/workspace-main" },
-      { id: "alerts", workspace: "~/.IronCliw/workspace-alerts" },
+      { id: "main", workspace: "~/.ironcliw/workspace-main" },
+      { id: "alerts", workspace: "~/.ironcliw/workspace-alerts" },
     ],
   },
   bindings: [
@@ -309,11 +309,11 @@ Notes:
 Link each account before starting the gateway:
 
 ```bash
-IronCliw channels login --channel whatsapp --account personal
-IronCliw channels login --channel whatsapp --account biz
+ironcliw channels login --channel whatsapp --account personal
+ironcliw channels login --channel whatsapp --account biz
 ```
 
-`~/.IronCliw/IronCliw.json` (JSON5):
+`~/.ironcliw/ironcliw.json` (JSON5):
 
 ```js
 {
@@ -323,14 +323,14 @@ IronCliw channels login --channel whatsapp --account biz
         id: "home",
         default: true,
         name: "Home",
-        workspace: "~/.IronCliw/workspace-home",
-        agentDir: "~/.IronCliw/agents/home/agent",
+        workspace: "~/.ironcliw/workspace-home",
+        agentDir: "~/.ironcliw/agents/home/agent",
       },
       {
         id: "work",
         name: "Work",
-        workspace: "~/.IronCliw/workspace-work",
-        agentDir: "~/.IronCliw/agents/work/agent",
+        workspace: "~/.ironcliw/workspace-work",
+        agentDir: "~/.ironcliw/agents/work/agent",
       },
     ],
   },
@@ -363,12 +363,12 @@ IronCliw channels login --channel whatsapp --account biz
     whatsapp: {
       accounts: {
         personal: {
-          // Optional override. Default: ~/.IronCliw/credentials/whatsapp/personal
-          // authDir: "~/.IronCliw/credentials/whatsapp/personal",
+          // Optional override. Default: ~/.ironcliw/credentials/whatsapp/personal
+          // authDir: "~/.ironcliw/credentials/whatsapp/personal",
         },
         biz: {
-          // Optional override. Default: ~/.IronCliw/credentials/whatsapp/biz
-          // authDir: "~/.IronCliw/credentials/whatsapp/biz",
+          // Optional override. Default: ~/.ironcliw/credentials/whatsapp/biz
+          // authDir: "~/.ironcliw/credentials/whatsapp/biz",
         },
       },
     },
@@ -387,13 +387,13 @@ Split by channel: route WhatsApp to a fast everyday agent and Telegram to an Opu
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.IronCliw/workspace-chat",
+        workspace: "~/.ironcliw/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.IronCliw/workspace-opus",
+        workspace: "~/.ironcliw/workspace-opus",
         model: "anthropic/claude-opus-4-6",
       },
     ],
@@ -421,13 +421,13 @@ Keep WhatsApp on the fast agent, but route one DM to Opus:
       {
         id: "chat",
         name: "Everyday",
-        workspace: "~/.IronCliw/workspace-chat",
+        workspace: "~/.ironcliw/workspace-chat",
         model: "anthropic/claude-sonnet-4-5",
       },
       {
         id: "opus",
         name: "Deep Work",
-        workspace: "~/.IronCliw/workspace-opus",
+        workspace: "~/.ironcliw/workspace-opus",
         model: "anthropic/claude-opus-4-6",
       },
     ],
@@ -456,7 +456,7 @@ and a tighter tool policy:
       {
         id: "family",
         name: "Family",
-        workspace: "~/.IronCliw/workspace-family",
+        workspace: "~/.ironcliw/workspace-family",
         identity: { name: "Family Bot" },
         groupChat: {
           mentionPatterns: ["@family", "@familybot", "@Family Bot"],
@@ -509,7 +509,7 @@ Starting with v2026.1.6, each agent can have its own sandbox and tool restrictio
     list: [
       {
         id: "personal",
-        workspace: "~/.IronCliw/workspace-personal",
+        workspace: "~/.ironcliw/workspace-personal",
         sandbox: {
           mode: "off",  // No sandbox for personal agent
         },
@@ -517,7 +517,7 @@ Starting with v2026.1.6, each agent can have its own sandbox and tool restrictio
       },
       {
         id: "family",
-        workspace: "~/.IronCliw/workspace-family",
+        workspace: "~/.ironcliw/workspace-family",
         sandbox: {
           mode: "all",     // Always sandboxed
           scope: "agent",  // One container per agent

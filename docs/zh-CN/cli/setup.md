@@ -2,7 +2,7 @@
 read_when:
   - 你在不使用完整新手引导向导的情况下进行首次设置
   - 你想设置默认工作区路径
-summary: "`IronCliw setup` 的 CLI 参考（初始化配置 + 工作区）"
+summary: "`ironcliw setup` 的 CLI 参考（初始化配置 + 工作区）"
 title: setup
 x-i18n:
   generated_at: "2026-02-01T20:21:26Z"
@@ -13,9 +13,9 @@ x-i18n:
   workflow: 14
 ---
 
-# `IronCliw setup`
+# `ironcliw setup`
 
-初始化 `~/.IronCliw/IronCliw.json` 和智能体工作区。
+初始化 `~/.ironcliw/ironcliw.json` 和智能体工作区。
 
 相关内容：
 
@@ -25,12 +25,12 @@ x-i18n:
 ## 示例
 
 ```bash
-IronCliw setup
-IronCliw setup --workspace ~/.IronCliw/workspace
+ironcliw setup
+ironcliw setup --workspace ~/.ironcliw/workspace
 ```
 
 通过 setup 运行向导：
 
 ```bash
-IronCliw setup --wizard
+ironcliw setup --wizard
 ```

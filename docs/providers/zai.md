@@ -15,9 +15,9 @@ with a Z.AI API key.
 ## CLI setup
 
 ```bash
-IronCliw onboard --auth-choice zai-api-key
+ironcliw onboard --auth-choice zai-api-key
 # or non-interactive
-IronCliw onboard --zai-api-key "$ZAI_API_KEY"
+ironcliw onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## Config snippet

@@ -15,25 +15,25 @@ IronCliw can run agents in isolated Docker containers for security. The `sandbox
 
 ## Commands
 
-### `IronCliw sandbox explain`
+### `ironcliw sandbox explain`
 
 Inspect the **effective** sandbox mode/scope/workspace access, sandbox tool policy, and elevated gates (with fix-it config key paths).
 
 ```bash
-IronCliw sandbox explain
-IronCliw sandbox explain --session agent:main:main
-IronCliw sandbox explain --agent work
-IronCliw sandbox explain --json
+ironcliw sandbox explain
+ironcliw sandbox explain --session agent:main:main
+ironcliw sandbox explain --agent work
+ironcliw sandbox explain --json
 ```
 
-### `IronCliw sandbox list`
+### `ironcliw sandbox list`
 
 List all sandbox containers with their status and configuration.
 
 ```bash
-IronCliw sandbox list
-IronCliw sandbox list --browser  # List only browser containers
-IronCliw sandbox list --json     # JSON output
+ironcliw sandbox list
+ironcliw sandbox list --browser  # List only browser containers
+ironcliw sandbox list --json     # JSON output
 ```
 
 **Output includes:**
@@ -44,16 +44,16 @@ IronCliw sandbox list --json     # JSON output
 - Idle time (time since last use)
 - Associated session/agent
 
-### `IronCliw sandbox recreate`
+### `ironcliw sandbox recreate`
 
 Remove sandbox containers to force recreation with updated images/config.
 
 ```bash
-IronCliw sandbox recreate --all                # Recreate all containers
-IronCliw sandbox recreate --session main       # Specific session
-IronCliw sandbox recreate --agent mybot        # Specific agent
-IronCliw sandbox recreate --browser            # Only browser containers
-IronCliw sandbox recreate --all --force        # Skip confirmation
+ironcliw sandbox recreate --all                # Recreate all containers
+ironcliw sandbox recreate --session main       # Specific session
+ironcliw sandbox recreate --agent mybot        # Specific agent
+ironcliw sandbox recreate --browser            # Only browser containers
+ironcliw sandbox recreate --all --force        # Skip confirmation
 ```
 
 **Options:**
@@ -72,14 +72,14 @@ IronCliw sandbox recreate --all --force        # Skip confirmation
 
 ```bash
 # Pull new image
-docker pull IronCliw-sandbox:latest
-docker tag IronCliw-sandbox:latest IronCliw-sandbox:bookworm-slim
+docker pull ironcliw-sandbox:latest
+docker tag ironcliw-sandbox:latest ironcliw-sandbox:bookworm-slim
 
 # Update config to use new image
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-IronCliw sandbox recreate --all
+ironcliw sandbox recreate --all
 ```
 
 ### After changing sandbox configuration
@@ -88,22 +88,22 @@ IronCliw sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-IronCliw sandbox recreate --all
+ironcliw sandbox recreate --all
 ```
 
 ### After changing setupCommand
 
 ```bash
-IronCliw sandbox recreate --all
+ironcliw sandbox recreate --all
 # or just one agent:
-IronCliw sandbox recreate --agent family
+ironcliw sandbox recreate --agent family
 ```
 
 ### For a specific agent only
 
 ```bash
 # Update only one agent's containers
-IronCliw sandbox recreate --agent alfred
+ironcliw sandbox recreate --agent alfred
 ```
 
 ## Why is this needed?
@@ -114,14 +114,14 @@ IronCliw sandbox recreate --agent alfred
 - Containers are only pruned after 24h of inactivity
 - Regularly-used agents keep old containers running indefinitely
 
-**Solution:** Use `IronCliw sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
+**Solution:** Use `ironcliw sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
 
-Tip: prefer `IronCliw sandbox recreate` over manual `docker rm`. It uses the
+Tip: prefer `ironcliw sandbox recreate` over manual `docker rm`. It uses the
 Gateway’s container naming and avoids mismatches when scope/session keys change.
 
 ## Configuration
 
-Sandbox settings live in `~/.IronCliw/IronCliw.json` under `agents.defaults.sandbox` (per-agent overrides go in `agents.list[].sandbox`):
+Sandbox settings live in `~/.ironcliw/ironcliw.json` under `agents.defaults.sandbox` (per-agent overrides go in `agents.list[].sandbox`):
 
 ```jsonc
 {
@@ -131,8 +131,8 @@ Sandbox settings live in `~/.IronCliw/IronCliw.json` under `agents.defaults.sand
         "mode": "all", // off, non-main, all
         "scope": "agent", // session, agent, shared
         "docker": {
-          "image": "IronCliw-sandbox:bookworm-slim",
-          "containerPrefix": "IronCliw-sbx-",
+          "image": "ironcliw-sandbox:bookworm-slim",
+          "containerPrefix": "ironcliw-sbx-",
           // ... more Docker options
         },
         "prune": {

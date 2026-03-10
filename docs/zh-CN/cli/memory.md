@@ -2,7 +2,7 @@
 read_when:
   - 你想要索引或搜索语义记忆
   - 你正在调试记忆可用性或索引问题
-summary: "`IronCliw memory`（status/index/search）的 CLI 参考"
+summary: "`ironcliw memory`（status/index/search）的 CLI 参考"
 title: memory
 x-i18n:
   generated_at: "2026-02-01T20:21:11Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `IronCliw memory`
+# `ironcliw memory`
 
 管理语义记忆的索引和搜索。
 由活跃的记忆插件提供（默认：`memory-core`；设置 `plugins.slots.memory = "none"` 可禁用）。
@@ -26,15 +26,15 @@ x-i18n:
 ## 示例
 
 ```bash
-IronCliw memory status
-IronCliw memory status --deep
-IronCliw memory status --deep --index
-IronCliw memory status --deep --index --verbose
-IronCliw memory index
-IronCliw memory index --verbose
-IronCliw memory search "release checklist"
-IronCliw memory status --agent main
-IronCliw memory index --agent main --verbose
+ironcliw memory status
+ironcliw memory status --deep
+ironcliw memory status --deep --index
+ironcliw memory status --deep --index --verbose
+ironcliw memory index
+ironcliw memory index --verbose
+ironcliw memory search "release checklist"
+ironcliw memory status --agent main
+ironcliw memory index --agent main --verbose
 ```
 
 ## 选项

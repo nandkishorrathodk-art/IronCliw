@@ -93,7 +93,7 @@ Connect (first message):
     "minProtocol": 2,
     "maxProtocol": 2,
     "client": {
-      "id": "IronCliw-macos",
+      "id": "ironcliw-macos",
       "displayName": "macos",
       "version": "1.0.0",
       "platform": "macos 15.1",
@@ -282,7 +282,7 @@ Unknown frame types are preserved as raw payloads for forward compatibility.
 Generated JSON Schema is in the repo at `dist/protocol.schema.json`. The
 published raw file is typically available at:
 
-- [https://raw.githubusercontent.com/IronCliw/IronCliw/main/dist/protocol.schema.json](https://raw.githubusercontent.com/IronCliw/IronCliw/main/dist/protocol.schema.json)
+- [https://raw.githubusercontent.com/ironcliw/ironcliw/main/dist/protocol.schema.json](https://raw.githubusercontent.com/ironcliw/ironcliw/main/dist/protocol.schema.json)
 
 ## When you change schemas
 

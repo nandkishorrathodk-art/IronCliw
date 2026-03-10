@@ -39,8 +39,8 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
       : { ...opts, authChoice: normalizedAuthChoice, flow };
   if (
     normalizedOpts.secretInputMode &&
-    normalizedOpts.secretInputMode !== "plaintext" &&
-    normalizedOpts.secretInputMode !== "ref"
+    normalizedOpts.secretInputMode !== "plaintext" && // pragma: allowlist secret
+    normalizedOpts.secretInputMode !== "ref" // pragma: allowlist secret
   ) {
     runtime.error('Invalid --secret-input-mode. Use "plaintext" or "ref".');
     runtime.exit(1);
@@ -57,8 +57,8 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
     runtime.error(
       [
         "Non-interactive onboarding requires explicit risk acknowledgement.",
-        "Read: https://docs.IronCliw.ai/security",
-        `Re-run with: ${formatCliCommand("IronCliw onboard --non-interactive --accept-risk ...")}`,
+        "Read: https://docs.ironcliw.ai/security",
+        `Re-run with: ${formatCliCommand("ironcliw onboard --non-interactive --accept-risk ...")}`,
       ].join("\n"),
     );
     runtime.exit(1);
@@ -80,7 +80,7 @@ export async function onboardCommand(opts: OnboardOptions, runtime: RuntimeEnv =
         "Windows detected — IronCliw runs great on WSL2!",
         "Native Windows might be trickier.",
         "Quick setup: wsl --install (one command, one reboot)",
-        "Guide: https://docs.IronCliw.ai/windows",
+        "Guide: https://docs.ironcliw.ai/windows",
       ].join("\n"),
     );
   }

@@ -16,8 +16,8 @@ Status: experimental. This integration automates a **personal Zalo account** via
 
 Zalo Personal ships as a plugin and is not bundled with the core install.
 
-- Install via CLI: `IronCliw plugins install @IronCliw/zalouser`
-- Or from a source checkout: `IronCliw plugins install ./extensions/zalouser`
+- Install via CLI: `ironcliw plugins install @ironcliw/zalouser`
+- Or from a source checkout: `ironcliw plugins install ./extensions/zalouser`
 - Details: [Plugins](/tools/plugin)
 
 No external `zca`/`openzca` CLI binary is required.
@@ -26,7 +26,7 @@ No external `zca`/`openzca` CLI binary is required.
 
 1. Install the plugin (see above).
 2. Login (QR, on the Gateway machine):
-   - `IronCliw channels login --channel zalouser`
+   - `ironcliw channels login --channel zalouser`
    - Scan the QR code with the Zalo mobile app.
 3. Enable the channel:
 
@@ -60,9 +60,9 @@ Channel id is `zalouser` to make it explicit this automates a **personal Zalo us
 Use the directory CLI to discover peers/groups and their IDs:
 
 ```bash
-IronCliw directory self --channel zalouser
-IronCliw directory peers list --channel zalouser --query "name"
-IronCliw directory groups list --channel zalouser --query "work"
+ironcliw directory self --channel zalouser
+ironcliw directory peers list --channel zalouser --query "name"
+ironcliw directory groups list --channel zalouser --query "work"
 ```
 
 ## Limits
@@ -78,18 +78,21 @@ IronCliw directory groups list --channel zalouser --query "work"
 
 Approve via:
 
-- `IronCliw pairing list zalouser`
-- `IronCliw pairing approve zalouser <code>`
+- `ironcliw pairing list zalouser`
+- `ironcliw pairing approve zalouser <code>`
 
 ## Group access (optional)
 
 - Default: `channels.zalouser.groupPolicy = "open"` (groups allowed). Use `channels.defaults.groupPolicy` to override the default when unset.
 - Restrict to an allowlist with:
   - `channels.zalouser.groupPolicy = "allowlist"`
-  - `channels.zalouser.groups` (keys are group IDs or names)
+  - `channels.zalouser.groups` (keys are group IDs or names; controls which groups are allowed)
+  - `channels.zalouser.groupAllowFrom` (controls which senders in allowed groups can trigger the bot)
 - Block all groups: `channels.zalouser.groupPolicy = "disabled"`.
 - The configure wizard can prompt for group allowlists.
 - On startup, IronCliw resolves group/user names in allowlists to IDs and logs the mapping; unresolved entries are kept as typed.
+- If `groupAllowFrom` is unset, runtime falls back to `allowFrom` for group sender checks.
+- Sender checks apply to both normal group messages and control commands (for example `/new`, `/reset`).
 
 Example:
 
@@ -98,6 +101,7 @@ Example:
   channels: {
     zalouser: {
       groupPolicy: "allowlist",
+      groupAllowFrom: ["1471383327500481391"],
       groups: {
         "123456789": { allow: true },
         "Work Chat": { allow: true },
@@ -112,6 +116,9 @@ Example:
 - `channels.zalouser.groups.<group>.requireMention` controls whether group replies require a mention.
 - Resolution order: exact group id/name -> normalized group slug -> `*` -> default (`true`).
 - This applies both to allowlisted groups and open group mode.
+- Authorized control commands (for example `/new`) can bypass mention gating.
+- When a group message is skipped because mention is required, IronCliw stores it as pending group history and includes it on the next processed group message.
+- Group history limit defaults to `messages.groupChat.historyLimit` (fallback `50`). You can override per account with `channels.zalouser.historyLimit`.
 
 Example:
 
@@ -159,12 +166,12 @@ Accounts map to `zalouser` profiles in IronCliw state. Example:
 
 **Login doesn't stick:**
 
-- `IronCliw channels status --probe`
-- Re-login: `IronCliw channels logout --channel zalouser && IronCliw channels login --channel zalouser`
+- `ironcliw channels status --probe`
+- Re-login: `ironcliw channels logout --channel zalouser && ironcliw channels login --channel zalouser`
 
 **Allowlist/group name didn't resolve:**
 
-- Use numeric IDs in `allowFrom`/`groups`, or exact friend/group names.
+- Use numeric IDs in `allowFrom`/`groupAllowFrom`/`groups`, or exact friend/group names.
 
 **Upgraded from old CLI-based setup:**
 

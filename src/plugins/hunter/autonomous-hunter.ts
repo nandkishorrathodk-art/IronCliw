@@ -1,7 +1,7 @@
 import { EventEmitter } from "node:events";
-import { ProScanner, type ProFinding } from "../proscan/scanner.js";
-import { generateReport } from "../proscan/reporter.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
+import { generateReport } from "../proscan/reporter.js";
+import { ProScanner, type ProFinding } from "../proscan/scanner.js";
 
 const log = createSubsystemLogger("hunter/autonomous");
 
@@ -90,7 +90,9 @@ export class AutonomousHunter extends EventEmitter {
 
     const recon = await this.recon(normalized);
     this.emit("recon", recon);
-    log.info(`[Hunter] Recon done — tech: [${recon.techStack.join(", ")}], endpoints: ${recon.endpoints.length}`);
+    log.info(
+      `[Hunter] Recon done — tech: [${recon.techStack.join(", ")}], endpoints: ${recon.endpoints.length}`,
+    );
 
     const strategy = this.buildStrategy(recon, target);
     this.emit("status", { phase: "scan", message: `Strategy: ${strategy.label}` });
@@ -151,11 +153,11 @@ export class AutonomousHunter extends EventEmitter {
       durationSeconds,
       recon,
       totalFindings: deduped.length,
-      criticalCount: deduped.filter(f => f.severity === "critical").length,
-      highCount: deduped.filter(f => f.severity === "high").length,
-      mediumCount: deduped.filter(f => f.severity === "medium").length,
-      lowCount: deduped.filter(f => f.severity === "low").length,
-      infoCount: deduped.filter(f => f.severity === "info").length,
+      criticalCount: deduped.filter((f) => f.severity === "critical").length,
+      highCount: deduped.filter((f) => f.severity === "high").length,
+      mediumCount: deduped.filter((f) => f.severity === "medium").length,
+      lowCount: deduped.filter((f) => f.severity === "low").length,
+      infoCount: deduped.filter((f) => f.severity === "info").length,
       findings: deduped,
       reportPath,
     };
@@ -191,7 +193,9 @@ export class AutonomousHunter extends EventEmitter {
       statusCode = resp.status;
       finalUrl = resp.url;
 
-      resp.headers.forEach((v, k) => { responseHeaders[k] = v; });
+      resp.headers.forEach((v, k) => {
+        responseHeaders[k] = v;
+      });
 
       const body = await resp.text();
 
@@ -200,16 +204,20 @@ export class AutonomousHunter extends EventEmitter {
 
       for (const sig of TECH_SIGNATURES) {
         if (sig.pattern.test(body)) {
-          if (!techStack.includes(sig.tech)) { techStack.push(sig.tech); }
+          if (!techStack.includes(sig.tech)) {
+            techStack.push(sig.tech);
+          }
         }
       }
 
       const serverHeader = responseHeaders["server"] ?? "";
-      if (serverHeader && !techStack.some(t => t.toLowerCase().includes("server"))) {
+      if (serverHeader && !techStack.some((t) => t.toLowerCase().includes("server"))) {
         techStack.push(`Server: ${serverHeader}`);
       }
       const poweredBy = responseHeaders["x-powered-by"] ?? "";
-      if (poweredBy) { techStack.push(`X-Powered-By: ${poweredBy}`); }
+      if (poweredBy) {
+        techStack.push(`X-Powered-By: ${poweredBy}`);
+      }
 
       const hrefPattern = /href=["']([^"'#]+)["']/gi;
       const srcPattern = /(?:action|src|data-url|data-href)=["']([^"'#]+)["']/gi;
@@ -218,18 +226,26 @@ export class AutonomousHunter extends EventEmitter {
         try {
           const href = match[1] ?? "";
           const abs = new URL(href, finalUrl).toString();
-          if (abs.startsWith(finalUrl.replace(/\/+$/, "")) || new URL(abs).hostname === new URL(finalUrl).hostname) {
-            if (!endpoints.includes(abs)) { endpoints.push(abs); }
+          if (
+            abs.startsWith(finalUrl.replace(/\/+$/, "")) ||
+            new URL(abs).hostname === new URL(finalUrl).hostname
+          ) {
+            if (!endpoints.includes(abs)) {
+              endpoints.push(abs);
+            }
           }
-        } catch { }
+        } catch {}
       }
 
       hasLogin = /login|signin|sign-in|auth|password/i.test(body + JSON.stringify(responseHeaders));
-      hasApi = /api\//i.test(body) || /application\/json/i.test(responseHeaders["content-type"] ?? "");
+      hasApi =
+        /api\//i.test(body) || /application\/json/i.test(responseHeaders["content-type"] ?? "");
 
       if (/graphql/i.test(body)) {
         endpoints.push(new URL("/graphql", finalUrl).toString());
-        if (!techStack.includes("GraphQL")) { techStack.push("GraphQL"); }
+        if (!techStack.includes("GraphQL")) {
+          techStack.push("GraphQL");
+        }
       }
       if (/swagger|openapi/i.test(body)) {
         endpoints.push(new URL("/api-docs", finalUrl).toString());
@@ -246,8 +262,10 @@ export class AutonomousHunter extends EventEmitter {
     for (const robotUrl of robots) {
       try {
         const abs = new URL(robotUrl, finalUrl).toString();
-        if (!endpoints.includes(abs)) { endpoints.push(abs); }
-      } catch { }
+        if (!endpoints.includes(abs)) {
+          endpoints.push(abs);
+        }
+      } catch {}
     }
 
     return {
@@ -271,14 +289,18 @@ export class AutonomousHunter extends EventEmitter {
       const resp = await fetch(new URL("/robots.txt", baseUrl).toString(), {
         signal: AbortSignal.timeout(5000),
       });
-      if (!resp.ok) { return []; }
+      if (!resp.ok) {
+        return [];
+      }
       const text = await resp.text();
       const paths: string[] = [];
       for (const line of text.split("\n")) {
         const trimmed = line.trim();
         if (trimmed.startsWith("Disallow:") || trimmed.startsWith("Allow:")) {
           const path = trimmed.split(":")[1]?.trim();
-          if (path && path !== "/" && path !== "*") { paths.push(path); }
+          if (path && path !== "/" && path !== "*") {
+            paths.push(path);
+          }
         }
       }
       return paths;
@@ -292,12 +314,16 @@ export class AutonomousHunter extends EventEmitter {
       const resp = await fetch(new URL("/sitemap.xml", baseUrl).toString(), {
         signal: AbortSignal.timeout(5000),
       });
-      if (!resp.ok) { return []; }
+      if (!resp.ok) {
+        return [];
+      }
       const text = await resp.text();
       const urls: string[] = [];
       const matches = text.matchAll(/<loc>([^<]+)<\/loc>/gi);
       for (const m of matches) {
-        if (m[1]) { urls.push(m[1].trim()); }
+        if (m[1]) {
+          urls.push(m[1].trim());
+        }
       }
       return urls;
     } catch {
@@ -309,7 +335,10 @@ export class AutonomousHunter extends EventEmitter {
    * Phase 2 — Build scan strategy based on recon.
    * Adjusts depth, concurrency, and timeout based on what we found.
    */
-  private buildStrategy(recon: ReconResult, _target: HuntTarget): {
+  private buildStrategy(
+    recon: ReconResult,
+    _target: HuntTarget,
+  ): {
     label: string;
     depth: number;
     maxPages: number;
@@ -318,8 +347,8 @@ export class AutonomousHunter extends EventEmitter {
     includeAPIs: boolean;
   } {
     const isLarge = recon.endpoints.length > 50;
-    const hasGraphQL = recon.techStack.some(t => t.includes("GraphQL"));
-    const hasWordPress = recon.techStack.some(t => t.includes("WordPress"));
+    const hasGraphQL = recon.techStack.some((t) => t.includes("GraphQL"));
+    const hasWordPress = recon.techStack.some((t) => t.includes("WordPress"));
 
     if (hasWordPress) {
       return {
@@ -377,9 +406,11 @@ export class AutonomousHunter extends EventEmitter {
 
   private deduplicate(findings: ProFinding[]): ProFinding[] {
     const seen = new Set<string>();
-    return findings.filter(f => {
+    return findings.filter((f) => {
       const key = `${f.category}:${f.url}:${f.parameter ?? ""}:${(f.payload ?? "").slice(0, 30)}`;
-      if (seen.has(key)) { return false; }
+      if (seen.has(key)) {
+        return false;
+      }
       seen.add(key);
       return true;
     });

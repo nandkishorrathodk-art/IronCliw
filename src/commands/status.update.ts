@@ -1,5 +1,5 @@
 import { formatCliCommand } from "../cli/command-format.js";
-import { resolveIronCliwPackageRoot } from "../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRoot } from "../infra/ironcliw-root.js";
 import {
   checkUpdateStatus,
   compareSemverStrings,
@@ -66,7 +66,7 @@ export function formatUpdateAvailableHint(update: UpdateCheckResult): string | n
     details.push(`npm ${availability.latestVersion}`);
   }
   const suffix = details.length > 0 ? ` (${details.join(" · ")})` : "";
-  return `Update available${suffix}. Run: ${formatCliCommand("IronCliw update")}`;
+  return `Update available${suffix}. Run: ${formatCliCommand("ironcliw update")}`;
 }
 
 export function formatUpdateOneLiner(update: UpdateCheckResult): string {

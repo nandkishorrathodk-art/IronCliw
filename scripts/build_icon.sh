@@ -57,4 +57,3 @@ mkdir -p "$(dirname "$DEST_ICNS")"
 cp "$OUT_ROOT/${BASENAME}.icns" "$DEST_ICNS"
 
 echo "Icon.icns generated at $DEST_ICNS"
-

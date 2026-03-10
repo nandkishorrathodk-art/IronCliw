@@ -9,12 +9,12 @@ describe("runCapability video provider wiring", () => {
     let seenBaseUrl: string | undefined;
     let seenHeaders: Record<string, string> | undefined;
 
-    await withVideoFixture("IronCliw-video-merge", async ({ ctx, media, cache }) => {
+    await withVideoFixture("ironcliw-video-merge", async ({ ctx, media, cache }) => {
       const cfg = {
         models: {
           providers: {
             moonshot: {
-              apiKey: "provider-key",
+              apiKey: "provider-key", // pragma: allowlist secret
               baseUrl: "https://provider.example/v1",
               headers: { "X-Provider": "1" },
               models: [],
@@ -80,12 +80,12 @@ describe("runCapability video provider wiring", () => {
         MOONSHOT_API_KEY: undefined,
       },
       async () => {
-        await withVideoFixture("IronCliw-video-auto-moonshot", async ({ ctx, media, cache }) => {
+        await withVideoFixture("ironcliw-video-auto-moonshot", async ({ ctx, media, cache }) => {
           const cfg = {
             models: {
               providers: {
                 moonshot: {
-                  apiKey: "moonshot-key",
+                  apiKey: "moonshot-key", // pragma: allowlist secret
                   models: [],
                 },
               },

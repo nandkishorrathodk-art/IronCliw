@@ -355,7 +355,7 @@ async function listSandboxBrowserContainers(
 ): Promise<string[] | null> {
   try {
     const result = await execDockerRawFn(
-      ["ps", "-a", "--filter", "label=IronCliw.sandboxBrowser=1", "--format", "{{.Names}}"],
+      ["ps", "-a", "--filter", "label=ironcliw.sandboxBrowser=1", "--format", "{{.Names}}"],
       { allowFailure: true },
     );
     if (result.code !== 0) {
@@ -380,7 +380,7 @@ async function readSandboxBrowserHashLabels(params: {
       [
         "inspect",
         "-f",
-        '{{ index .Config.Labels "IronCliw.configHash" }}\t{{ index .Config.Labels "IronCliw.browserConfigEpoch" }}',
+        '{{ index .Config.Labels "ironcliw.configHash" }}\t{{ index .Config.Labels "ironcliw.browserConfigEpoch" }}',
         params.containerName,
       ],
       { allowFailure: true },
@@ -490,7 +490,7 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
       detail:
         `Containers: ${missingHash.join(", ")}. ` +
         "These browser containers predate hash-based drift checks and may miss security remediations until recreated.",
-      remediation: `${formatCliCommand("IronCliw sandbox recreate --browser --all")} (add --force to skip prompt).`,
+      remediation: `${formatCliCommand("ironcliw sandbox recreate --browser --all")} (add --force to skip prompt).`,
     });
   }
 
@@ -501,8 +501,8 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
       title: "Sandbox browser container hash epoch is stale",
       detail:
         `Containers: ${staleEpoch.join(", ")}. ` +
-        `Expected IronCliw.browserConfigEpoch=${SANDBOX_BROWSER_SECURITY_HASH_EPOCH}.`,
-      remediation: `${formatCliCommand("IronCliw sandbox recreate --browser --all")} (add --force to skip prompt).`,
+        `Expected ironcliw.browserConfigEpoch=${SANDBOX_BROWSER_SECURITY_HASH_EPOCH}.`,
+      remediation: `${formatCliCommand("ironcliw sandbox recreate --browser --all")} (add --force to skip prompt).`,
     });
   }
 
@@ -515,7 +515,7 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
         `Containers: ${nonLoopbackPublished.join(", ")}. ` +
         "Sandbox browser observer/control ports should stay loopback-only to avoid unintended remote access.",
       remediation:
-        `${formatCliCommand("IronCliw sandbox recreate --browser --all")} (add --force to skip prompt), ` +
+        `${formatCliCommand("ironcliw sandbox recreate --browser --all")} (add --force to skip prompt), ` +
         "then verify published ports are bound to 127.0.0.1.",
     });
   }
@@ -651,7 +651,7 @@ export async function collectPluginsTrustFindings(params: {
           sandboxMode,
           agentId: context.agentId,
         });
-        const broadPolicy = isToolAllowedByPolicies("__IronCliw_plugin_probe__", policies);
+        const broadPolicy = isToolAllowedByPolicies("__ironcliw_plugin_probe__", policies);
         const explicitPluginAllow =
           !restrictiveProfile &&
           (hasExplicitPluginAllow({
@@ -749,7 +749,7 @@ export async function collectPluginsTrustFindings(params: {
         title: "Plugin install records drift from installed package versions",
         detail: `Detected plugin install metadata drift:\n${pluginVersionDrift.map((entry) => `- ${entry}`).join("\n")}`,
         remediation:
-          "Run `IronCliw plugins update --all` (or reinstall affected plugins) to refresh install metadata.",
+          "Run `ironcliw plugins update --all` (or reinstall affected plugins) to refresh install metadata.",
       });
     }
   }
@@ -812,7 +812,7 @@ export async function collectPluginsTrustFindings(params: {
         title: "Hook install records drift from installed package versions",
         detail: `Detected hook install metadata drift:\n${hookVersionDrift.map((entry) => `- ${entry}`).join("\n")}`,
         remediation:
-          "Run `IronCliw hooks update --all` (or reinstall affected hooks) to refresh install metadata.",
+          "Run `ironcliw hooks update --all` (or reinstall affected hooks) to refresh install metadata.",
       });
     }
   }
@@ -1150,7 +1150,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: "Plugin extensions directory scan failed",
         detail: `Static code scan could not list extensions directory: ${String(err)}`,
         remediation:
-          "Check file permissions and plugin layout, then rerun `IronCliw security audit --deep`.",
+          "Check file permissions and plugin layout, then rerun `ironcliw security audit --deep`.",
       });
     },
   });
@@ -1186,7 +1186,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: `Plugin "${pluginName}" has extension entry path traversal`,
         detail: `Found extension entries that escape the plugin directory:\n${escapedEntries.map((entry) => `  - ${entry}`).join("\n")}`,
         remediation:
-          "Update the plugin manifest so all IronCliw.extensions entries stay inside the plugin directory.",
+          "Update the plugin manifest so all ironcliw.extensions entries stay inside the plugin directory.",
       });
     }
 
@@ -1201,7 +1201,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: `Plugin "${pluginName}" code scan failed`,
         detail: `Static code scan could not complete: ${String(err)}`,
         remediation:
-          "Check file permissions and plugin layout, then rerun `IronCliw security audit --deep`.",
+          "Check file permissions and plugin layout, then rerun `ironcliw security audit --deep`.",
       });
       return null;
     });
@@ -1251,7 +1251,7 @@ export async function collectInstalledSkillsCodeSafetyFindings(params: {
   for (const workspaceDir of workspaceDirs) {
     const entries = loadWorkspaceSkillEntries(workspaceDir, { config: params.cfg });
     for (const entry of entries) {
-      if (entry.skill.source === "IronCliw-bundled") {
+      if (entry.skill.source === "ironcliw-bundled") {
         continue;
       }
 
@@ -1276,7 +1276,7 @@ export async function collectInstalledSkillsCodeSafetyFindings(params: {
           title: `Skill "${skillName}" code scan failed`,
           detail: `Static code scan could not complete for ${skillDir}: ${String(err)}`,
           remediation:
-            "Check file permissions and skill layout, then rerun `IronCliw security audit --deep`.",
+            "Check file permissions and skill layout, then rerun `ironcliw security audit --deep`.",
         });
         return null;
       });

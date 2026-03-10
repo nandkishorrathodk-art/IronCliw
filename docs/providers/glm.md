@@ -14,7 +14,7 @@ models are accessed via the `zai` provider and model IDs like `zai/glm-5`.
 ## CLI setup
 
 ```bash
-IronCliw onboard --auth-choice zai-api-key
+ironcliw onboard --auth-choice zai-api-key
 ```
 
 ## Config snippet

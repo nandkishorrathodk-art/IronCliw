@@ -11,6 +11,30 @@ export type ExecHost = "sandbox" | "gateway" | "node";
 export type ExecSecurity = "deny" | "allowlist" | "full";
 export type ExecAsk = "off" | "on-miss" | "always";
 
+export function normalizeExecHost(value?: string | null): ExecHost | null {
+  const normalized = value?.trim().toLowerCase();
+  if (normalized === "sandbox" || normalized === "gateway" || normalized === "node") {
+    return normalized;
+  }
+  return null;
+}
+
+export function normalizeExecSecurity(value?: string | null): ExecSecurity | null {
+  const normalized = value?.trim().toLowerCase();
+  if (normalized === "deny" || normalized === "allowlist" || normalized === "full") {
+    return normalized;
+  }
+  return null;
+}
+
+export function normalizeExecAsk(value?: string | null): ExecAsk | null {
+  const normalized = value?.trim().toLowerCase();
+  if (normalized === "off" || normalized === "on-miss" || normalized === "always") {
+    return normalized;
+  }
+  return null;
+}
+
 export type SystemRunApprovalBinding = {
   argv: string[];
   cwd: string | null;
@@ -19,12 +43,19 @@ export type SystemRunApprovalBinding = {
   envHash: string | null;
 };
 
+export type SystemRunApprovalFileOperand = {
+  argvIndex: number;
+  path: string;
+  sha256: string;
+};
+
 export type SystemRunApprovalPlan = {
   argv: string[];
   cwd: string | null;
   rawCommand: string | null;
   agentId: string | null;
   sessionKey: string | null;
+  mutableFileOperand?: SystemRunApprovalFileOperand | null;
 };
 
 export type ExecApprovalRequestPayload = {
@@ -117,8 +148,8 @@ const DEFAULT_SECURITY: ExecSecurity = "deny";
 const DEFAULT_ASK: ExecAsk = "on-miss";
 const DEFAULT_ASK_FALLBACK: ExecSecurity = "deny";
 const DEFAULT_AUTO_ALLOW_SKILLS = false;
-const DEFAULT_SOCKET = "~/.IronCliw/exec-approvals.sock";
-const DEFAULT_FILE = "~/.IronCliw/exec-approvals.json";
+const DEFAULT_SOCKET = "~/.ironcliw/exec-approvals.sock";
+const DEFAULT_FILE = "~/.ironcliw/exec-approvals.json";
 
 function hashExecApprovalsRaw(raw: string | null): string {
   return crypto

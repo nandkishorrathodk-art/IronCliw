@@ -4,7 +4,7 @@ import Testing
 
 @Suite struct VoiceWakePreferencesTests {
     @Test func sanitizeTriggerWordsTrimsAndDropsEmpty() {
-        #expect(VoiceWakePreferences.sanitizeTriggerWords([" IronCliw ", "", " \nclaude\t"]) == ["IronCliw", "claude"])
+        #expect(VoiceWakePreferences.sanitizeTriggerWords([" ironcliw ", "", " \nclaude\t"]) == ["ironcliw", "claude"])
     }
 
     @Test func sanitizeTriggerWordsFallsBackToDefaultsWhenEmpty() {
@@ -24,7 +24,7 @@ import Testing
     }
 
     @Test func displayStringUsesSanitizedWords() {
-        #expect(VoiceWakePreferences.displayString(for: ["", " "]) == "IronCliw, claude")
+        #expect(VoiceWakePreferences.displayString(for: ["", " "]) == "ironcliw, claude")
     }
 
     @Test func loadAndSaveTriggerWordsRoundTrip() {

@@ -43,18 +43,18 @@ Windows 原生配套应用也在计划中；推荐通过 WSL2 使用 Gateway 网
 - 安装指南：[入门指南](/start/getting-started)
 - Gateway 网关运行手册：[Gateway 网关](/gateway)
 - Gateway 网关配置：[配置](/gateway/configuration)
-- 服务状态：`IronCliw gateway status`
+- 服务状态：`ironcliw gateway status`
 
 ## Gateway 网关服务安装（CLI）
 
 使用以下任一方式（均支持）：
 
-- 向导（推荐）：`IronCliw onboard --install-daemon`
-- 直接安装：`IronCliw gateway install`
-- 配置流程：`IronCliw configure` → 选择 **Gateway service**
-- 修复/迁移：`IronCliw doctor`（提供安装或修复服务）
+- 向导（推荐）：`ironcliw onboard --install-daemon`
+- 直接安装：`ironcliw gateway install`
+- 配置流程：`ironcliw configure` → 选择 **Gateway service**
+- 修复/迁移：`ironcliw doctor`（提供安装或修复服务）
 
 服务目标取决于操作系统：
 
-- macOS：LaunchAgent（`bot.molt.gateway` 或 `bot.molt.<profile>`；旧版 `com.IronCliw.*`）
-- Linux/WSL2：systemd 用户服务（`IronCliw-gateway[-<profile>].service`）
+- macOS：LaunchAgent（`bot.molt.gateway` 或 `bot.molt.<profile>`；旧版 `com.ironcliw.*`）
+- Linux/WSL2：systemd 用户服务（`ironcliw-gateway[-<profile>].service`）

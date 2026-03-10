@@ -231,7 +231,7 @@ export const signalOnboardingAdapter: ChannelOnboardingAdapter = {
       [
         'Link device with: signal-cli link -n "IronCliw"',
         "Scan QR in Signal → Linked Devices",
-        `Then run: ${formatCliCommand("IronCliw gateway call channels.status --params '{\"probe\":true}'")}`,
+        `Then run: ${formatCliCommand("ironcliw gateway call channels.status --params '{\"probe\":true}'")}`,
         `Docs: ${formatDocsLink("/signal", "signal")}`,
       ].join("\n"),
       "Signal next steps",

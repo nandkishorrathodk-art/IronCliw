@@ -17,12 +17,12 @@ Examples below are aligned with the current config schema. For the exhaustive re
 
 ```json5
 {
-  agent: { workspace: "~/.IronCliw/workspace" },
+  agent: { workspace: "~/.ironcliw/workspace" },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
 
-Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
+Save to `~/.ironcliw/ironcliw.json` and you can DM the bot from that number.
 
 ### Recommended starter
 
@@ -31,10 +31,10 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
   identity: {
     name: "Clawd",
     theme: "helpful assistant",
-    emoji: "🦾",
+    emoji: "🦞",
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: { primary: "anthropic/claude-sonnet-4-5" },
   },
   channels: {
@@ -93,7 +93,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
   // Logging
   logging: {
     level: "info",
-    file: "/tmp/IronCliw/IronCliw.log",
+    file: "/tmp/ironcliw/ironcliw.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -101,7 +101,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
 
   // Message formatting
   messages: {
-    messagePrefix: "[IronCliw]",
+    messagePrefix: "[ironcliw]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -110,7 +110,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
   // Routing + queue
   routing: {
     groupChat: {
-      mentionPatterns: ["@IronCliw", "IronCliw"],
+      mentionPatterns: ["@ironcliw", "ironcliw"],
       historyLimit: 50,
     },
     queue: {
@@ -163,7 +163,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.IronCliw/agents/default/sessions/sessions.json",
+    store: "~/.ironcliw/agents/default/sessions/sessions.json",
     maintenance: {
       mode: "warn",
       pruneAfter: "30d",
@@ -205,7 +205,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["123456789012345678"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-IronCliw",
+          slug: "friends-of-ironcliw",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -225,7 +225,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "IronCliw",
+        name: "ironcliw",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -235,7 +235,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
   // Agent runtime
   agents: {
     defaults: {
-      workspace: "~/.IronCliw/workspace",
+      workspace: "~/.ironcliw/workspace",
       userTimezone: "America/Chicago",
       model: {
         primary: "anthropic/claude-sonnet-4-5",
@@ -289,9 +289,9 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.IronCliw/sandboxes",
+        workspaceRoot: "~/.ironcliw/sandboxes",
         docker: {
-          image: "IronCliw-sandbox:bookworm-slim",
+          image: "ironcliw-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -356,7 +356,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
   // Cron jobs
   cron: {
     enabled: true,
-    store: "~/.IronCliw/cron/cron.json",
+    store: "~/.ironcliw/cron/cron.json",
     maxConcurrentRuns: 2,
     sessionRetention: "24h",
     runLog: {
@@ -371,7 +371,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.IronCliw/hooks/transforms",
+    transformsDir: "~/.ironcliw/hooks/transforms",
     mappings: [
       {
         id: "gmail-hook",
@@ -394,7 +394,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
       },
     ],
     gmail: {
-      account: "IronCliw@gmail.com",
+      account: "ironcliw@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -413,7 +413,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/IronCliw" },
+    controlUi: { enabled: true, basePath: "/ironcliw" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -451,7 +451,7 @@ Save to `~/.IronCliw/IronCliw.json` and you can DM the bot from that number.
 
 ```json5
 {
-  agent: { workspace: "~/.IronCliw/workspace" },
+  agent: { workspace: "~/.ironcliw/workspace" },
   channels: {
     whatsapp: { allowFrom: ["+15555550123"] },
     telegram: {
@@ -518,7 +518,7 @@ Only enable direct mutable name/email/nick matching with each channel's `dangero
     },
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: {
       primary: "anthropic/claude-sonnet-4-5",
       fallbacks: ["anthropic/claude-opus-4-6"],
@@ -563,7 +563,7 @@ terms before depending on subscription auth.
     },
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: {
       primary: "anthropic/claude-opus-4-6",
       fallbacks: ["minimax/MiniMax-M2.5"],
@@ -581,7 +581,7 @@ terms before depending on subscription auth.
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-IronCliw",
+    workspace: "~/work-ironcliw",
     elevated: { enabled: false },
   },
   channels: {
@@ -602,7 +602,7 @@ terms before depending on subscription auth.
 ```json5
 {
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: { primary: "lmstudio/minimax-m2.5-gs32" },
   },
   models: {

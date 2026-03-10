@@ -128,7 +128,7 @@ const hasSourceMtimeChanged = (stampMtime, deps) => {
 };
 
 const shouldBuild = (deps) => {
-  if (deps.env.IronCliw_FORCE_BUILD === "1") {
+  if (deps.env.IRONCLIW_FORCE_BUILD === "1") {
     return true;
   }
   const stamp = readBuildStamp(deps);
@@ -170,14 +170,14 @@ const shouldBuild = (deps) => {
 };
 
 const logRunner = (message, deps) => {
-  if (deps.env.IronCliw_RUNNER_LOG === "0") {
+  if (deps.env.IRONCLIW_RUNNER_LOG === "0") {
     return;
   }
-  deps.stderr.write(`[IronCliw] ${message}\n`);
+  deps.stderr.write(`[ironcliw] ${message}\n`);
 };
 
 const runIronCliw = async (deps) => {
-  const nodeProcess = deps.spawn(deps.execPath, ["IronCliw.mjs", ...deps.args], {
+  const nodeProcess = deps.spawn(deps.execPath, ["ironcliw.mjs", ...deps.args], {
     cwd: deps.cwd,
     env: deps.env,
     stdio: "inherit",

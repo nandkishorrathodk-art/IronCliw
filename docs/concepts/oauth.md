@@ -22,7 +22,7 @@ IronCliw also supports **provider plugins** that ship their own OAuth or API‑k
 flows. Run them via:
 
 ```bash
-IronCliw models auth login --provider <id>
+ironcliw models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -42,15 +42,15 @@ To reduce that, IronCliw treats `auth-profiles.json` as a **token sink**:
 
 Secrets are stored **per-agent**:
 
-- Auth profiles (OAuth + API keys + optional value-level refs): `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json`
-- Legacy compatibility file: `~/.IronCliw/agents/<agentId>/agent/auth.json`
+- Auth profiles (OAuth + API keys + optional value-level refs): `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json`
+- Legacy compatibility file: `~/.ironcliw/agents/<agentId>/agent/auth.json`
   (static `api_key` entries are scrubbed when discovered)
 
 Legacy import-only file (still supported, but not the main store):
 
-- `~/.IronCliw/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
+- `~/.ironcliw/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
 
-All of the above also respect `$IronCliw_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
+All of the above also respect `$IRONCLIW_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
 
 For static secret refs and runtime snapshot activation behavior, see [Secrets Management](/gateway/secrets).
 
@@ -65,19 +65,19 @@ Decide for yourself whether to use subscription auth, and verify Anthropic's cur
 Run `claude setup-token` on any machine, then paste it into IronCliw:
 
 ```bash
-IronCliw models auth setup-token --provider anthropic
+ironcliw models auth setup-token --provider anthropic
 ```
 
 If you generated the token elsewhere, paste it manually:
 
 ```bash
-IronCliw models auth paste-token --provider anthropic
+ironcliw models auth paste-token --provider anthropic
 ```
 
 Verify:
 
 ```bash
-IronCliw models status
+ironcliw models status
 ```
 
 ## OAuth exchange (how login works)
@@ -92,7 +92,7 @@ Flow shape:
 2. paste the token into IronCliw
 3. store as a token auth profile (no refresh)
 
-The wizard path is `IronCliw onboard` → auth choice `setup-token` (Anthropic).
+The wizard path is `ironcliw onboard` → auth choice `setup-token` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
@@ -107,7 +107,7 @@ Flow shape (PKCE):
 5. exchange at `https://auth.openai.com/oauth/token`
 6. extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `IronCliw onboard` → auth choice `openai-codex`.
+Wizard path is `ironcliw onboard` → auth choice `openai-codex`.
 
 ## Refresh + expiry
 
@@ -129,8 +129,8 @@ Two patterns:
 If you want “personal” and “work” to never interact, use isolated agents (separate sessions + credentials + workspace):
 
 ```bash
-IronCliw agents add work
-IronCliw agents add personal
+ironcliw agents add work
+ironcliw agents add personal
 ```
 
 Then configure auth per-agent (wizard) and route chats to the right agent.
@@ -150,7 +150,7 @@ Example (session override):
 
 How to see what profile IDs exist:
 
-- `IronCliw channels list --json` (shows `auth[]`)
+- `ironcliw channels list --json` (shows `auth[]`)
 
 Related docs:
 

@@ -4,17 +4,17 @@ import { buildNpmResolutionInstallFields, recordPluginInstall } from "./installs
 describe("buildNpmResolutionInstallFields", () => {
   it("maps npm resolution metadata into install record fields", () => {
     const fields = buildNpmResolutionInstallFields({
-      name: "@IronCliw/demo",
+      name: "@ironcliw/demo",
       version: "1.2.3",
-      resolvedSpec: "@IronCliw/demo@1.2.3",
+      resolvedSpec: "@ironcliw/demo@1.2.3",
       integrity: "sha512-abc",
       shasum: "deadbeef",
       resolvedAt: "2026-02-22T00:00:00.000Z",
     });
     expect(fields).toEqual({
-      resolvedName: "@IronCliw/demo",
+      resolvedName: "@ironcliw/demo",
       resolvedVersion: "1.2.3",
-      resolvedSpec: "@IronCliw/demo@1.2.3",
+      resolvedSpec: "@ironcliw/demo@1.2.3",
       integrity: "sha512-abc",
       shasum: "deadbeef",
       resolvedAt: "2026-02-22T00:00:00.000Z",

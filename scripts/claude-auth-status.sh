@@ -5,7 +5,7 @@
 set -euo pipefail
 
 CLAUDE_CREDS="$HOME/.claude/.credentials.json"
-IronCliw_AUTH="$HOME/.IronCliw/agents/main/agent/auth-profiles.json"
+IRONCLIW_AUTH="$HOME/.ironcliw/agents/main/agent/auth-profiles.json"
 
 # Colors for terminal output
 RED='\033[0;31m'
@@ -17,7 +17,7 @@ NC='\033[0m' # No Color
 OUTPUT_MODE="${1:-full}"
 
 fetch_models_status_json() {
-    IronCliw models status --json 2>/dev/null || true
+    ironcliw models status --json 2>/dev/null || true
 }
 
 STATUS_JSON="$(fetch_models_status_json)"
@@ -103,7 +103,7 @@ check_claude_code_auth() {
     calc_status_from_expires "$expires_at"
 }
 
-check_IronCliw_auth() {
+check_ironcliw_auth() {
     if [ "$USE_JSON" -eq 1 ]; then
         local api_keys
         api_keys=$(json_anthropic_api_key_count)
@@ -122,7 +122,7 @@ check_IronCliw_auth() {
         return $?
     fi
 
-    if [ ! -f "$IronCliw_AUTH" ]; then
+    if [ ! -f "$IRONCLIW_AUTH" ]; then
         echo "MISSING"
         return 1
     fi
@@ -131,7 +131,7 @@ check_IronCliw_auth() {
     expires=$(jq -r '
         [.profiles | to_entries[] | select(.value.provider == "anthropic") | .value.expires]
         | max // 0
-    ' "$IronCliw_AUTH" 2>/dev/null || echo "0")
+    ' "$IRONCLIW_AUTH" 2>/dev/null || echo "0")
 
     calc_status_from_expires "$expires"
 }
@@ -139,26 +139,26 @@ check_IronCliw_auth() {
 # JSON output mode
 if [ "$OUTPUT_MODE" = "json" ]; then
     claude_status=$(check_claude_code_auth 2>/dev/null || true)
-    IronCliw_status=$(check_IronCliw_auth 2>/dev/null || true)
+    ironcliw_status=$(check_ironcliw_auth 2>/dev/null || true)
 
     claude_expires=0
-    IronCliw_expires=0
+    ironcliw_expires=0
     if [ "$USE_JSON" -eq 1 ]; then
         claude_expires=$(json_expires_for_claude_cli)
-        IronCliw_expires=$(json_expires_for_anthropic_any)
+        ironcliw_expires=$(json_expires_for_anthropic_any)
     else
         claude_expires=$(jq -r '.claudeAiOauth.expiresAt // 0' "$CLAUDE_CREDS" 2>/dev/null || echo "0")
-        IronCliw_expires=$(jq -r '.profiles["anthropic:default"].expires // 0' "$IronCliw_AUTH" 2>/dev/null || echo "0")
+        ironcliw_expires=$(jq -r '.profiles["anthropic:default"].expires // 0' "$IRONCLIW_AUTH" 2>/dev/null || echo "0")
     fi
 
     jq -n \
         --arg cs "$claude_status" \
         --arg ce "$claude_expires" \
-        --arg bs "$IronCliw_status" \
-        --arg be "$IronCliw_expires" \
+        --arg bs "$ironcliw_status" \
+        --arg be "$ironcliw_expires" \
         '{
             claude_code: {status: $cs, expires_at_ms: ($ce | tonumber)},
-            IronCliw: {status: $bs, expires_at_ms: ($be | tonumber)},
+            ironcliw: {status: $bs, expires_at_ms: ($be | tonumber)},
             needs_reauth: (($cs | startswith("EXPIRED") or startswith("EXPIRING") or startswith("MISSING")) or ($bs | startswith("EXPIRED") or startswith("EXPIRING") or startswith("MISSING")))
         }'
     exit 0
@@ -167,19 +167,19 @@ fi
 # Simple output mode (for scripts/widgets)
 if [ "$OUTPUT_MODE" = "simple" ]; then
     claude_status=$(check_claude_code_auth 2>/dev/null || true)
-    IronCliw_status=$(check_IronCliw_auth 2>/dev/null || true)
+    ironcliw_status=$(check_ironcliw_auth 2>/dev/null || true)
 
     if [[ "$claude_status" == EXPIRED* ]] || [[ "$claude_status" == MISSING* ]]; then
         echo "CLAUDE_EXPIRED"
         exit 1
-    elif [[ "$IronCliw_status" == EXPIRED* ]] || [[ "$IronCliw_status" == MISSING* ]]; then
-        echo "IronCliw_EXPIRED"
+    elif [[ "$ironcliw_status" == EXPIRED* ]] || [[ "$ironcliw_status" == MISSING* ]]; then
+        echo "IRONCLIW_EXPIRED"
         exit 1
     elif [[ "$claude_status" == EXPIRING* ]]; then
         echo "CLAUDE_EXPIRING"
         exit 2
-    elif [[ "$IronCliw_status" == EXPIRING* ]]; then
-        echo "IronCliw_EXPIRING"
+    elif [[ "$ironcliw_status" == EXPIRING* ]]; then
+        echo "IRONCLIW_EXPIRING"
         exit 2
     else
         echo "OK"
@@ -228,7 +228,7 @@ else
 fi
 
 echo ""
-echo "IronCliw Auth (~/.IronCliw/agents/main/agent/auth-profiles.json):"
+echo "IronCliw Auth (~/.ironcliw/agents/main/agent/auth-profiles.json):"
 if [ "$USE_JSON" -eq 1 ]; then
     best_profile=$(json_best_anthropic_profile)
     expires=$(json_expires_for_anthropic_any)
@@ -239,11 +239,11 @@ else
         | map(select(.value.provider == "anthropic"))
         | sort_by(.value.expires) | reverse
         | .[0].key // "none"
-    ' "$IronCliw_AUTH" 2>/dev/null || echo "none")
+    ' "$IRONCLIW_AUTH" 2>/dev/null || echo "none")
     expires=$(jq -r '
         [.profiles | to_entries[] | select(.value.provider == "anthropic") | .value.expires]
         | max // 0
-    ' "$IronCliw_AUTH" 2>/dev/null || echo "0")
+    ' "$IRONCLIW_AUTH" 2>/dev/null || echo "0")
     api_keys=0
 fi
 
@@ -253,7 +253,7 @@ if [ "$expires" -le 0 ] && [ "$api_keys" -gt 0 ]; then
     echo -e "  Status: ${GREEN}OK${NC} (API key)"
 elif [ "$expires" -le 0 ]; then
     echo -e "  Status: ${RED}NOT FOUND${NC}"
-    echo "  Note: Run 'IronCliw doctor --yes' to sync from Claude Code"
+    echo "  Note: Run 'ironcliw doctor --yes' to sync from Claude Code"
 else
     now_ms=$(( $(date +%s) * 1000 ))
     diff_ms=$((expires - now_ms))
@@ -262,7 +262,7 @@ else
 
     if [ "$diff_ms" -lt 0 ]; then
         echo -e "  Status: ${RED}EXPIRED${NC}"
-        echo "  Note: Run 'IronCliw doctor --yes' to sync from Claude Code"
+        echo "  Note: Run 'ironcliw doctor --yes' to sync from Claude Code"
     elif [ "$diff_ms" -lt 3600000 ]; then
         echo -e "  Status: ${YELLOW}EXPIRING SOON (${mins}m remaining)${NC}"
     else
@@ -273,9 +273,8 @@ fi
 
 echo ""
 echo "=== Service Status ==="
-if systemctl --user is-active IronCliw >/dev/null 2>&1; then
+if systemctl --user is-active ironcliw >/dev/null 2>&1; then
     echo -e "IronCliw service: ${GREEN}running${NC}"
 else
     echo -e "IronCliw service: ${RED}NOT running${NC}"
 fi
-

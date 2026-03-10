@@ -4,8 +4,8 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 type FakeFsEntry = { kind: "file"; content: string } | { kind: "dir" };
 
-const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__IronCliw_vitest__");
-const FIXTURE_BASE = path.join(VITEST_FS_BASE, "IronCliw-root");
+const VITEST_FS_BASE = path.join(path.parse(process.cwd()).root, "__ironcliw_vitest__");
+const FIXTURE_BASE = path.join(VITEST_FS_BASE, "ironcliw-root");
 
 const state = vi.hoisted(() => ({
   entries: new Map<string, FakeFsEntry>(),
@@ -90,12 +90,12 @@ vi.mock("node:fs/promises", async (importOriginal) => {
 });
 
 describe("resolveIronCliwPackageRoot", () => {
-  let resolveIronCliwPackageRoot: typeof import("./IronCliw-root.js").resolveIronCliwPackageRoot;
-  let resolveIronCliwPackageRootSync: typeof import("./IronCliw-root.js").resolveIronCliwPackageRootSync;
+  let resolveIronCliwPackageRoot: typeof import("./ironcliw-root.js").resolveIronCliwPackageRoot;
+  let resolveIronCliwPackageRootSync: typeof import("./ironcliw-root.js").resolveIronCliwPackageRootSync;
 
   beforeAll(async () => {
     ({ resolveIronCliwPackageRoot, resolveIronCliwPackageRootSync } =
-      await import("./IronCliw-root.js"));
+      await import("./ironcliw-root.js"));
   });
 
   beforeEach(() => {
@@ -106,51 +106,63 @@ describe("resolveIronCliwPackageRoot", () => {
 
   it("resolves package root from .bin argv1", async () => {
     const project = fx("bin-scenario");
-    const argv1 = path.join(project, "node_modules", ".bin", "IronCliw");
-    const pkgRoot = path.join(project, "node_modules", "IronCliw");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    const argv1 = path.join(project, "node_modules", ".bin", "ironcliw");
+    const pkgRoot = path.join(project, "node_modules", "ironcliw");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "ironcliw" }));
 
     expect(resolveIronCliwPackageRootSync({ argv1 })).toBe(pkgRoot);
   });
 
   it("resolves package root via symlinked argv1", async () => {
     const project = fx("symlink-scenario");
-    const bin = path.join(project, "bin", "IronCliw");
+    const bin = path.join(project, "bin", "ironcliw");
     const realPkg = path.join(project, "real-pkg");
-    state.realpaths.set(abs(bin), abs(path.join(realPkg, "IronCliw.mjs")));
-    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    state.realpaths.set(abs(bin), abs(path.join(realPkg, "ironcliw.mjs")));
+    setFile(path.join(realPkg, "package.json"), JSON.stringify({ name: "ironcliw" }));
 
     expect(resolveIronCliwPackageRootSync({ argv1: bin })).toBe(realPkg);
   });
 
   it("falls back when argv1 realpath throws", async () => {
     const project = fx("realpath-throw-scenario");
-    const argv1 = path.join(project, "node_modules", ".bin", "IronCliw");
-    const pkgRoot = path.join(project, "node_modules", "IronCliw");
+    const argv1 = path.join(project, "node_modules", ".bin", "ironcliw");
+    const pkgRoot = path.join(project, "node_modules", "ironcliw");
     state.realpathErrors.add(abs(argv1));
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "ironcliw" }));
 
     expect(resolveIronCliwPackageRootSync({ argv1 })).toBe(pkgRoot);
   });
 
   it("prefers moduleUrl candidates", async () => {
     const pkgRoot = fx("moduleurl");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "ironcliw" }));
     const moduleUrl = pathToFileURL(path.join(pkgRoot, "dist", "index.js")).toString();
 
     expect(resolveIronCliwPackageRootSync({ moduleUrl })).toBe(pkgRoot);
   });
 
-  it("returns null for non-IronCliw package roots", async () => {
-    const pkgRoot = fx("not-IronCliw");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-IronCliw" }));
+  it("ignores invalid moduleUrl values and falls back to cwd", async () => {
+    const pkgRoot = fx("invalid-moduleurl");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "ironcliw" }));
+
+    expect(resolveIronCliwPackageRootSync({ moduleUrl: "not-a-file-url", cwd: pkgRoot })).toBe(
+      pkgRoot,
+    );
+    await expect(
+      resolveIronCliwPackageRoot({ moduleUrl: "not-a-file-url", cwd: pkgRoot }),
+    ).resolves.toBe(pkgRoot);
+  });
+
+  it("returns null for non-ironcliw package roots", async () => {
+    const pkgRoot = fx("not-ironcliw");
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "not-ironcliw" }));
 
     expect(resolveIronCliwPackageRootSync({ cwd: pkgRoot })).toBeNull();
   });
 
   it("async resolver matches sync behavior", async () => {
     const pkgRoot = fx("async");
-    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "IronCliw" }));
+    setFile(path.join(pkgRoot, "package.json"), JSON.stringify({ name: "ironcliw" }));
 
     await expect(resolveIronCliwPackageRoot({ cwd: pkgRoot })).resolves.toBe(pkgRoot);
   });

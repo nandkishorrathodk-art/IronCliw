@@ -32,19 +32,19 @@ Native Windows companion apps are planned.
 Inside WSL2:
 
 ```
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
 Or:
 
 ```
-IronCliw gateway install
+ironcliw gateway install
 ```
 
 Or:
 
 ```
-IronCliw configure
+ironcliw configure
 ```
 
 Select **Gateway service** when prompted.
@@ -52,7 +52,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-IronCliw doctor
+ironcliw doctor
 ```
 
 ## Gateway auto-start before Windows login
@@ -73,7 +73,7 @@ sudo loginctl enable-linger "$(whoami)"
 Inside WSL:
 
 ```bash
-IronCliw gateway install
+ironcliw gateway install
 ```
 
 ### 3) Start WSL automatically at Windows boot
@@ -95,8 +95,8 @@ wsl --list --verbose
 After a reboot (before Windows sign-in), check from WSL:
 
 ```bash
-systemctl --user is-enabled IronCliw-gateway
-systemctl --user status IronCliw-gateway --no-pager
+systemctl --user is-enabled ironcliw-gateway
+systemctl --user status ironcliw-gateway --no-pager
 ```
 
 ## Advanced: expose WSL services over LAN (portproxy)
@@ -139,7 +139,7 @@ Notes:
 
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `IronCliw status --all` to confirm.
+  `ironcliw status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -187,12 +187,12 @@ systemctl --user status
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-IronCliw onboard
+ironcliw onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)

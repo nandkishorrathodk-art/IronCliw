@@ -50,12 +50,12 @@ describe("Session Store Cache", () => {
     clearSessionStoreCacheForTest();
 
     // Reset environment variable
-    delete process.env.IronCliw_SESSION_CACHE_TTL_MS;
+    delete process.env.IRONCLIW_SESSION_CACHE_TTL_MS;
   });
 
   afterEach(() => {
     clearSessionStoreCacheForTest();
-    delete process.env.IronCliw_SESSION_CACHE_TTL_MS;
+    delete process.env.IRONCLIW_SESSION_CACHE_TTL_MS;
   });
 
   it("should load session store from disk on first call", async () => {
@@ -158,8 +158,8 @@ describe("Session Store Cache", () => {
     expect(loaded2["session:1"].displayName).toBe("Updated Session 1");
   });
 
-  it("should respect IronCliw_SESSION_CACHE_TTL_MS=0 to disable cache", async () => {
-    process.env.IronCliw_SESSION_CACHE_TTL_MS = "0";
+  it("should respect IRONCLIW_SESSION_CACHE_TTL_MS=0 to disable cache", async () => {
+    process.env.IRONCLIW_SESSION_CACHE_TTL_MS = "0";
     clearSessionStoreCacheForTest();
 
     const testStore = createSingleSessionStore();

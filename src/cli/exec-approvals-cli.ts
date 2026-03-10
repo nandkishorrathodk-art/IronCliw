@@ -353,7 +353,7 @@ export function registerExecApprovalsCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/approvals", "docs.IronCliw.ai/cli/approvals")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/approvals", "docs.ironcliw.ai/cli/approvals")}\n`,
     );
 
   const getCmd = approvals
@@ -422,18 +422,18 @@ export function registerExecApprovalsCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatExample(
-          'IronCliw approvals allowlist add "~/Projects/**/bin/rg"',
+          'ironcliw approvals allowlist add "~/Projects/**/bin/rg"',
           "Allowlist a local binary pattern for the main agent.",
         )}\n${formatExample(
-          'IronCliw approvals allowlist add --agent main --node <id|name|ip> "/usr/bin/uptime"',
+          'ironcliw approvals allowlist add --agent main --node <id|name|ip> "/usr/bin/uptime"',
           "Allowlist on a specific node/agent.",
         )}\n${formatExample(
-          'IronCliw approvals allowlist add --agent "*" "/usr/bin/uname"',
+          'ironcliw approvals allowlist add --agent "*" "/usr/bin/uname"',
           "Allowlist for all agents (wildcard).",
         )}\n${formatExample(
-          'IronCliw approvals allowlist remove "~/Projects/**/bin/rg"',
+          'ironcliw approvals allowlist remove "~/Projects/**/bin/rg"',
           "Remove an allowlist pattern.",
-        )}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/approvals", "docs.IronCliw.ai/cli/approvals")}\n`,
+        )}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/approvals", "docs.ironcliw.ai/cli/approvals")}\n`,
     );
 
   registerAllowlistMutationCommand({

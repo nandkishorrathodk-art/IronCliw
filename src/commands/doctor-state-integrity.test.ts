@@ -13,17 +13,17 @@ vi.mock("../terminal/note.js", () => ({
 
 type EnvSnapshot = {
   HOME?: string;
-  IronCliw_HOME?: string;
-  IronCliw_STATE_DIR?: string;
-  IronCliw_OAUTH_DIR?: string;
+  IRONCLIW_HOME?: string;
+  IRONCLIW_STATE_DIR?: string;
+  IRONCLIW_OAUTH_DIR?: string;
 };
 
 function captureEnv(): EnvSnapshot {
   return {
     HOME: process.env.HOME,
-    IronCliw_HOME: process.env.IronCliw_HOME,
-    IronCliw_STATE_DIR: process.env.IronCliw_STATE_DIR,
-    IronCliw_OAUTH_DIR: process.env.IronCliw_OAUTH_DIR,
+    IRONCLIW_HOME: process.env.IRONCLIW_HOME,
+    IRONCLIW_STATE_DIR: process.env.IRONCLIW_STATE_DIR,
+    IRONCLIW_OAUTH_DIR: process.env.IRONCLIW_OAUTH_DIR,
   };
 }
 
@@ -85,12 +85,12 @@ describe("doctor state integrity oauth dir checks", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv();
-    tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-doctor-state-integrity-"));
+    tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-doctor-state-integrity-"));
     process.env.HOME = tempHome;
-    process.env.IronCliw_HOME = tempHome;
-    process.env.IronCliw_STATE_DIR = path.join(tempHome, ".IronCliw");
-    delete process.env.IronCliw_OAUTH_DIR;
-    fs.mkdirSync(process.env.IronCliw_STATE_DIR, { recursive: true, mode: 0o700 });
+    process.env.IRONCLIW_HOME = tempHome;
+    process.env.IRONCLIW_STATE_DIR = path.join(tempHome, ".ironcliw");
+    delete process.env.IRONCLIW_OAUTH_DIR;
+    fs.mkdirSync(process.env.IRONCLIW_STATE_DIR, { recursive: true, mode: 0o700 });
     vi.mocked(note).mockClear();
   });
 
@@ -131,8 +131,8 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(confirmSkipInNonInteractive).toHaveBeenCalledWith(OAUTH_PROMPT_MATCHER);
   });
 
-  it("prompts for oauth dir when IronCliw_OAUTH_DIR is explicitly configured", async () => {
-    process.env.IronCliw_OAUTH_DIR = path.join(tempHome, ".oauth");
+  it("prompts for oauth dir when IRONCLIW_OAUTH_DIR is explicitly configured", async () => {
+    process.env.IRONCLIW_OAUTH_DIR = path.join(tempHome, ".oauth");
     const cfg: IronCliwConfig = {};
     const confirmSkipInNonInteractive = await runStateIntegrity(cfg);
     expect(confirmSkipInNonInteractive).toHaveBeenCalledWith(OAUTH_PROMPT_MATCHER);
@@ -158,7 +158,7 @@ describe("doctor state integrity oauth dir checks", () => {
     expect(files.some((name) => name.startsWith("orphan-session.jsonl.deleted."))).toBe(true);
   });
 
-  it("prints IronCliw-only verification hints when recent sessions are missing transcripts", async () => {
+  it("prints ironcliw-only verification hints when recent sessions are missing transcripts", async () => {
     const cfg: IronCliwConfig = {};
     writeSessionStore(cfg, {
       "agent:main:main": {
@@ -168,10 +168,10 @@ describe("doctor state integrity oauth dir checks", () => {
     });
     const text = await runStateIntegrityText(cfg);
     expect(text).toContain("recent sessions are missing transcripts");
-    expect(text).toMatch(/IronCliw sessions --store ".*sessions\.json"/);
-    expect(text).toMatch(/IronCliw sessions cleanup --store ".*sessions\.json" --dry-run/);
+    expect(text).toMatch(/ironcliw sessions --store ".*sessions\.json"/);
+    expect(text).toMatch(/ironcliw sessions cleanup --store ".*sessions\.json" --dry-run/);
     expect(text).toMatch(
-      /IronCliw sessions cleanup --store ".*sessions\.json" --enforce --fix-missing/,
+      /ironcliw sessions cleanup --store ".*sessions\.json" --enforce --fix-missing/,
     );
     expect(text).not.toContain("--active");
     expect(text).not.toContain(" ls ");

@@ -4,7 +4,7 @@ description: iMessage/SMS CLI for listing chats, history, and sending messages v
 homepage: https://imsg.to
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "📨",
         "os": ["darwin"],

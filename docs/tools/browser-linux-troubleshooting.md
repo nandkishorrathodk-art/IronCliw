@@ -11,7 +11,7 @@ title: "Browser Troubleshooting"
 IronCliw's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"IronCliw\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"ironcliw\"."}
 ```
 
 ### Root Cause
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your IronCliw config (`~/.IronCliw/IronCliw.json`):
+Then update your IronCliw config (`~/.ironcliw/ironcliw.json`):
 
 ```json
 {
@@ -72,20 +72,20 @@ If you must use snap Chromium, configure IronCliw to attach to a manually-starte
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.IronCliw/browser/IronCliw/user-data \
+  --user-data-dir=$HOME/.ironcliw/browser/ironcliw/user-data \
   about:blank &
 ```
 
 3. Optionally create a systemd user service to auto-start Chrome:
 
 ```ini
-# ~/.config/systemd/user/IronCliw-browser.service
+# ~/.config/systemd/user/ironcliw-browser.service
 [Unit]
 Description=IronCliw Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.IronCliw/browser/IronCliw/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.ironcliw/browser/ironcliw/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -93,7 +93,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Enable with: `systemctl --user enable --now IronCliw-browser.service`
+Enable with: `systemctl --user enable --now ironcliw-browser.service`
 
 ### Verifying the Browser Works
 
@@ -128,12 +128,12 @@ browser extension to be attached to a live tab.
 
 Fix options:
 
-1. **Use the managed browser:** `IronCliw browser start --browser-profile IronCliw`
-   (or set `browser.defaultProfile: "IronCliw"`).
+1. **Use the managed browser:** `ironcliw browser start --browser-profile ironcliw`
+   (or set `browser.defaultProfile: "ironcliw"`).
 2. **Use the extension relay:** install the extension, open a tab, and click the
    IronCliw extension icon to attach it.
 
 Notes:
 
 - The `chrome` profile uses your **system default Chromium browser** when possible.
-- Local `IronCliw` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `ironcliw` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

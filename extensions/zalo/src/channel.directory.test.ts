@@ -1,4 +1,4 @@
-import type { IronCliwConfig, RuntimeEnv } from "IronCliw/plugin-sdk/zalo";
+import type { IronCliwConfig, RuntimeEnv } from "ironcliw/plugin-sdk/zalo";
 import { describe, expect, it } from "vitest";
 import { zaloPlugin } from "./channel.js";
 

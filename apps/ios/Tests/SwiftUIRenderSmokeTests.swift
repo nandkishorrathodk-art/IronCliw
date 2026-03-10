@@ -75,7 +75,7 @@ import UIKit
     }
 
     @Test @MainActor func voiceWakeToastBuildsAViewHierarchy() {
-        let root = VoiceWakeToast(command: "IronCliw: do something")
+        let root = VoiceWakeToast(command: "ironcliw: do something")
         _ = Self.host(root)
     }
 }

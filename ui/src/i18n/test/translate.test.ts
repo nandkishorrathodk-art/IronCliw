@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { i18n, t } from "../lib/translate.ts";
+import { i18n, t, resetI18n } from "../lib/translate.ts";
 
 describe("i18n", () => {
   beforeEach(async () => {
     localStorage.clear();
-    // Reset to English
+    // Reset to English and clear state
+    resetI18n();
     await i18n.setLocale("en");
   });
 
@@ -42,7 +43,7 @@ describe("i18n", () => {
   });
 
   it("loads saved non-English locale on startup", async () => {
-    localStorage.setItem("IronCliw.i18n.locale", "zh-CN");
+    localStorage.setItem("ironcliw.i18n.locale", "zh-CN");
     vi.resetModules();
     const fresh = await import("../lib/translate.ts");
 

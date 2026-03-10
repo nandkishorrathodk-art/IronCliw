@@ -23,4 +23,3 @@ session: researcher
 # Step 3: Write up the findings
 session: writer
   prompt: "Create a summary report of the research findings suitable for executives"
-

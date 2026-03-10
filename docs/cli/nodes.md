@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw nodes` (list/status/approve/invoke, camera/canvas/screen)"
+summary: "CLI reference for `ironcliw nodes` (list/status/approve/invoke, camera/canvas/screen)"
 read_when:
   - You’re managing paired nodes (cameras, screen, canvas)
   - You need to approve requests or invoke node commands
 title: "nodes"
 ---
 
-# `IronCliw nodes`
+# `ironcliw nodes`
 
 Manage paired nodes (devices) and invoke node capabilities.
 
@@ -23,14 +23,14 @@ Common options:
 ## Common commands
 
 ```bash
-IronCliw nodes list
-IronCliw nodes list --connected
-IronCliw nodes list --last-connected 24h
-IronCliw nodes pending
-IronCliw nodes approve <requestId>
-IronCliw nodes status
-IronCliw nodes status --connected
-IronCliw nodes status --last-connected 24h
+ironcliw nodes list
+ironcliw nodes list --connected
+ironcliw nodes list --last-connected 24h
+ironcliw nodes pending
+ironcliw nodes approve <requestId>
+ironcliw nodes status
+ironcliw nodes status --connected
+ironcliw nodes status --last-connected 24h
 ```
 
 `nodes list` prints pending/paired tables. Paired rows include the most recent connect age (Last Connect).
@@ -40,10 +40,10 @@ filter to nodes that connected within a duration (e.g. `24h`, `7d`).
 ## Invoke / run
 
 ```bash
-IronCliw nodes invoke --node <id|name|ip> --command <command> --params <json>
-IronCliw nodes run --node <id|name|ip> <command...>
-IronCliw nodes run --raw "git status"
-IronCliw nodes run --agent main --node <id|name|ip> --raw "git status"
+ironcliw nodes invoke --node <id|name|ip> --command <command> --params <json>
+ironcliw nodes run --node <id|name|ip> <command...>
+ironcliw nodes run --raw "git status"
+ironcliw nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 Invoke flags:

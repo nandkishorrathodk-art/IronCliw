@@ -76,7 +76,7 @@ export function resolveMessagePrefix(
     return "";
   }
 
-  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[IronCliw]";
+  return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[ironcliw]";
 }
 
 /** Helper to extract a channel config value by dynamic key. */

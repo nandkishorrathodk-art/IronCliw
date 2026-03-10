@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/twitch";
 import type { TwitchAccountConfig } from "./types.js";
 
 /**

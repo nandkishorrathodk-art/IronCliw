@@ -37,11 +37,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-IronCliw nodes pending
-IronCliw nodes approve <requestId>
-IronCliw nodes reject <requestId>
-IronCliw nodes status
-IronCliw nodes rename --node <id|name|ip> --name "Living Room iPad"
+ironcliw nodes pending
+ironcliw nodes approve <requestId>
+ironcliw nodes reject <requestId>
+ironcliw nodes status
+ironcliw nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.
@@ -80,12 +80,12 @@ If silent approval fails, it falls back to the normal “Approve/Reject” promp
 
 ## Storage (local, private)
 
-Pairing state is stored under the Gateway state directory (default `~/.IronCliw`):
+Pairing state is stored under the Gateway state directory (default `~/.ironcliw`):
 
-- `~/.IronCliw/nodes/paired.json`
-- `~/.IronCliw/nodes/pending.json`
+- `~/.ironcliw/nodes/paired.json`
+- `~/.ironcliw/nodes/pending.json`
 
-If you override `IronCliw_STATE_DIR`, the `nodes/` folder moves with it.
+If you override `IRONCLIW_STATE_DIR`, the `nodes/` folder moves with it.
 
 Security notes:
 

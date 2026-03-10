@@ -4,12 +4,12 @@ import type {
   WindowsSpawnProgram,
   WindowsSpawnProgramCandidate,
   WindowsSpawnResolution,
-} from "IronCliw/plugin-sdk/acpx";
+} from "ironcliw/plugin-sdk/acpx";
 import {
   applyWindowsSpawnProgramPolicy,
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
-} from "IronCliw/plugin-sdk/acpx";
+} from "ironcliw/plugin-sdk/acpx";
 
 export type SpawnExit = {
   code: number | null;
@@ -138,7 +138,7 @@ export function spawnWithResolvedCommand(
 
   return spawn(resolved.command, resolved.args, {
     cwd: params.cwd,
-    env: { ...process.env, IronCliw_SHELL: "acp" },
+    env: { ...process.env, IRONCLIW_SHELL: "acp" },
     stdio: ["pipe", "pipe", "pipe"],
     shell: resolved.shell,
     windowsHide: resolved.windowsHide,

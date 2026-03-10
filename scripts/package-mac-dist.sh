@@ -18,7 +18,7 @@ export BUILD_ARCHS="${BUILD_ARCHS:-all}"
 
 # Use release bundle ID (not .debug) so Sparkle auto-update works.
 # The .debug suffix in package-mac-app.sh blanks SUFeedURL intentionally for dev builds.
-export BUNDLE_ID="${BUNDLE_ID:-ai.IronCliw.mac}"
+export BUNDLE_ID="${BUNDLE_ID:-ai.ironcliw.mac}"
 
 "$ROOT_DIR/scripts/package-mac-app.sh"
 
@@ -91,4 +91,3 @@ if [[ "$SKIP_DSYM" != "1" ]]; then
     echo "WARN: dSYM not found; skipping zip (set SKIP_DSYM=1 to silence)" >&2
   fi
 fi
-

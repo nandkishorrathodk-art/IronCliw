@@ -5,8 +5,8 @@ import { withStateDirEnv } from "../test-helpers/state-dir-env.js";
 import { loadOrCreateDeviceIdentity } from "./device-identity.js";
 
 describe("device identity state dir defaults", () => {
-  it("writes the default identity file under IronCliw_STATE_DIR", async () => {
-    await withStateDirEnv("IronCliw-identity-state-", async ({ stateDir }) => {
+  it("writes the default identity file under IRONCLIW_STATE_DIR", async () => {
+    await withStateDirEnv("ironcliw-identity-state-", async ({ stateDir }) => {
       const identity = loadOrCreateDeviceIdentity();
       const identityPath = path.join(stateDir, "identity", "device.json");
       const raw = JSON.parse(await fs.readFile(identityPath, "utf8")) as { deviceId?: string };

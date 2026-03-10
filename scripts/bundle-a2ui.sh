@@ -93,4 +93,3 @@ else
 fi
 
 echo "$current_hash" > "$HASH_FILE"
-

@@ -9,7 +9,7 @@ x-i18n:
   model: claude-opus-4-5
   provider: pi
   source_hash: 2763668c053abe34ea72c40d1306d3d1143099c58b1e3ef91c2e5a20cb2769e0
-  source_path: start/IronCliw.md
+  source_path: start/ironcliw.md
   workflow: 15
 ---
 
@@ -38,15 +38,15 @@ IronCliw 是 **Pi** 智能体的 WhatsApp + Telegram + Discord + iMessage Gatewa
 - 助手的第二个手机号码（SIM/eSIM/预付费）
 
 ```bash
-npm install -g IronCliw@latest
-# 或：pnpm add -g IronCliw@latest
+npm install -g ironcliw@latest
+# 或：pnpm add -g ironcliw@latest
 ```
 
 从源代码（开发）：
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm ui:build # 首次运行时自动安装 UI 依赖
 pnpm build
@@ -67,7 +67,7 @@ pnpm link --global
                                        ▼
                               ┌─────────────────┐
                               │  你的 Mac       │
-                              │  (IronCliw)     │
+                              │  (ironcliw)     │
                               │    Pi 智能体    │
                               └─────────────────┘
 ```
@@ -79,16 +79,16 @@ pnpm link --global
 1. 配对 WhatsApp Web（显示二维码；用助手手机扫描）：
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 2. 启动 Gateway 网关（保持运行）：
 
 ```bash
-IronCliw gateway --port 18789
+ironcliw gateway --port 18789
 ```
 
-3. 在 `~/.IronCliw/IronCliw.json` 中放置最小配置：
+3. 在 `~/.ironcliw/ironcliw.json` 中放置最小配置：
 
 ```json5
 {
@@ -98,18 +98,18 @@ IronCliw gateway --port 18789
 
 现在从你允许列表中的手机向助手号码发消息。
 
-新手引导完成后，我们会自动打开带有 Gateway 网关令牌的仪表板并打印带令牌的链接。稍后重新打开：`IronCliw dashboard`。
+新手引导完成后，我们会自动打开带有 Gateway 网关令牌的仪表板并打印带令牌的链接。稍后重新打开：`ironcliw dashboard`。
 
 ## 给智能体一个工作区（AGENTS）
 
 IronCliw 从其工作区目录读取操作指令和"记忆"。
 
-默认情况下，IronCliw 使用 `~/.IronCliw/workspace` 作为智能体工作区，并会在设置/首次智能体运行时自动创建它（加上起始的 `AGENTS.md`、`SOUL.md`、`TOOLS.md`、`IDENTITY.md`、`USER.md`）。`BOOTSTRAP.md` 仅在工作区是全新的时候创建（删除后不应再出现）。
+默认情况下，IronCliw 使用 `~/.ironcliw/workspace` 作为智能体工作区，并会在设置/首次智能体运行时自动创建它（加上起始的 `AGENTS.md`、`SOUL.md`、`TOOLS.md`、`IDENTITY.md`、`USER.md`）。`BOOTSTRAP.md` 仅在工作区是全新的时候创建（删除后不应再出现）。
 
 提示：将此文件夹视为 IronCliw 的"记忆"，并将其设为 git 仓库（最好是私有的），这样你的 `AGENTS.md` + 记忆文件就有了备份。如果安装了 git，全新的工作区会自动初始化。
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
 完整工作区布局 + 备份指南：[智能体工作区](/concepts/agent-workspace)
@@ -120,7 +120,7 @@ IronCliw setup
 ```json5
 {
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
   },
 }
 ```
@@ -150,7 +150,7 @@ IronCliw 默认为良好的助手设置，但你通常需要调整：
   logging: { level: "info" },
   agent: {
     model: "anthropic/claude-opus-4-5",
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     thinkingDefault: "high",
     timeoutSeconds: 1800,
     // 从 0 开始；稍后启用。
@@ -166,7 +166,7 @@ IronCliw 默认为良好的助手设置，但你通常需要调整：
   },
   routing: {
     groupChat: {
-      mentionPatterns: ["@IronCliw", "IronCliw"],
+      mentionPatterns: ["@ironcliw", "ironcliw"],
     },
   },
   session: {
@@ -183,8 +183,8 @@ IronCliw 默认为良好的助手设置，但你通常需要调整：
 
 ## 会话和记忆
 
-- 会话文件：`~/.IronCliw/agents/<agentId>/sessions/{{SessionId}}.jsonl`
-- 会话元数据（token 使用量、最后路由等）：`~/.IronCliw/agents/<agentId>/sessions/sessions.json`（旧版：`~/.IronCliw/sessions/sessions.json`）
+- 会话文件：`~/.ironcliw/agents/<agentId>/sessions/{{SessionId}}.jsonl`
+- 会话元数据（token 使用量、最后路由等）：`~/.ironcliw/agents/<agentId>/sessions/sessions.json`（旧版：`~/.ironcliw/sessions/sessions.json`）
 - `/new` 或 `/reset` 为该聊天启动新会话（可通过 `resetTriggers` 配置）。如果单独发送，智能体会回复一个简短的问候来确认重置。
 - `/compact [instructions]` 压缩会话上下文并报告剩余的上下文预算。
 
@@ -227,13 +227,13 @@ IronCliw 会提取这些并将它们作为媒体与文本一起发送。
 ## 运维检查清单
 
 ```bash
-IronCliw status          # 本地状态（凭证、会话、排队事件）
-IronCliw status --all    # 完整诊断（只读，可粘贴）
-IronCliw status --deep   # 添加 Gateway 网关健康探测（Telegram + Discord）
-IronCliw health --json   # Gateway 网关健康快照（WS）
+ironcliw status          # 本地状态（凭证、会话、排队事件）
+ironcliw status --all    # 完整诊断（只读，可粘贴）
+ironcliw status --deep   # 添加 Gateway 网关健康探测（Telegram + Discord）
+ironcliw health --json   # Gateway 网关健康快照（WS）
 ```
 
-日志位于 `/tmp/IronCliw/`（默认：`IronCliw-YYYY-MM-DD.log`）。
+日志位于 `/tmp/ironcliw/`（默认：`ironcliw-YYYY-MM-DD.log`）。
 
 ## 下一步
 

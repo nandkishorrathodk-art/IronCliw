@@ -354,4 +354,3 @@ output evolution = {
   corpus_analyzed: corpus_path,
   focus_area: focus
 }
-

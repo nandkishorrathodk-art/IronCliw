@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026.3.9
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.8-beta.1
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.8
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.7
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.3
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
 ## 2026.3.2
 
 ### Changes
@@ -49,7 +79,7 @@
 
 ### Highlights
 
-- First public release of the @IronCliw/voice-call plugin.
+- First public release of the @ironcliw/voice-call plugin.
 
 ### Features
 
@@ -62,6 +92,6 @@
 - Speech: OpenAI TTS (model/voice/instructions) with Twilio `<Say>` fallback.
 - Tooling: `voice_call` tool actions for initiate/continue/speak/end/status.
 - Gateway RPC: `voicecall.initiate|continue|speak|end|status` (+ legacy `voicecall.start`).
-- CLI: `IronCliw voicecall` commands (call/start/continue/speak/end/status/tail/expose).
+- CLI: `ironcliw voicecall` commands (call/start/continue/speak/end/status/tail/expose).
 - Observability: JSONL call logs and `voicecall tail` for live inspection.
 - Response controls: `responseModel`, `responseSystemPrompt`, and `responseTimeoutMs` for auto‑responses.

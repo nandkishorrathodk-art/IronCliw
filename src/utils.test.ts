@@ -51,7 +51,7 @@ describe("withWhatsAppPrefix", () => {
 
 describe("ensureDir", () => {
   it("creates nested directory", async () => {
-    await withTempDirSync("IronCliw-test-", async (tmp) => {
+    await withTempDirSync("ironcliw-test-", async (tmp) => {
       const target = path.join(tmp, "nested", "dir");
       await ensureDir(target);
       expect(fs.existsSync(target)).toBe(true);
@@ -107,7 +107,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @lid from authDir mapping files", () => {
-    withTempDirSync("IronCliw-auth-", (authDir) => {
+    withTempDirSync("ironcliw-auth-", (authDir) => {
       const mappingPath = path.join(authDir, "lid-mapping-456_reverse.json");
       fs.writeFileSync(mappingPath, JSON.stringify("5559876"));
       expect(jidToE164("456@lid", { authDir })).toBe("+5559876");
@@ -115,7 +115,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @hosted.lid from authDir mapping files", () => {
-    withTempDirSync("IronCliw-auth-", (authDir) => {
+    withTempDirSync("ironcliw-auth-", (authDir) => {
       const mappingPath = path.join(authDir, "lid-mapping-789_reverse.json");
       fs.writeFileSync(mappingPath, JSON.stringify(4440001));
       expect(jidToE164("789@hosted.lid", { authDir })).toBe("+4440001");
@@ -127,8 +127,8 @@ describe("jidToE164", () => {
   });
 
   it("falls back through lidMappingDirs in order", () => {
-    withTempDirSync("IronCliw-lid-a-", (first) => {
-      withTempDirSync("IronCliw-lid-b-", (second) => {
+    withTempDirSync("ironcliw-lid-a-", (first) => {
+      withTempDirSync("ironcliw-lid-b-", (second) => {
         const mappingPath = path.join(second, "lid-mapping-321_reverse.json");
         fs.writeFileSync(mappingPath, JSON.stringify("123321"));
         expect(jidToE164("321@lid", { lidMappingDirs: [first, second] })).toBe("+123321");
@@ -138,10 +138,10 @@ describe("jidToE164", () => {
 });
 
 describe("resolveConfigDir", () => {
-  it("prefers ~/.IronCliw when legacy dir is missing", async () => {
-    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "IronCliw-config-dir-"));
+  it("prefers ~/.ironcliw when legacy dir is missing", async () => {
+    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "ironcliw-config-dir-"));
     try {
-      const newDir = path.join(root, ".IronCliw");
+      const newDir = path.join(root, ".ironcliw");
       await fs.promises.mkdir(newDir, { recursive: true });
       const resolved = resolveConfigDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -152,23 +152,23 @@ describe("resolveConfigDir", () => {
 });
 
 describe("resolveHomeDir", () => {
-  it("prefers IronCliw_HOME over HOME", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  it("prefers IRONCLIW_HOME over HOME", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveHomeDir()).toBe(path.resolve("/srv/IronCliw-home"));
+    expect(resolveHomeDir()).toBe(path.resolve("/srv/ironcliw-home"));
 
     vi.unstubAllEnvs();
   });
 });
 
 describe("shortenHomePath", () => {
-  it("uses $IronCliw_HOME prefix when IronCliw_HOME is set", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  it("uses $IRONCLIW_HOME prefix when IRONCLIW_HOME is set", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(shortenHomePath(`${path.resolve("/srv/IronCliw-home")}/.IronCliw/IronCliw.json`)).toBe(
-      "$IronCliw_HOME/.IronCliw/IronCliw.json",
+    expect(shortenHomePath(`${path.resolve("/srv/ironcliw-home")}/.ironcliw/ironcliw.json`)).toBe(
+      "$IRONCLIW_HOME/.ironcliw/ironcliw.json",
     );
 
     vi.unstubAllEnvs();
@@ -176,13 +176,13 @@ describe("shortenHomePath", () => {
 });
 
 describe("shortenHomeInString", () => {
-  it("uses $IronCliw_HOME replacement when IronCliw_HOME is set", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  it("uses $IRONCLIW_HOME replacement when IRONCLIW_HOME is set", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
     expect(
-      shortenHomeInString(`config: ${path.resolve("/srv/IronCliw-home")}/.IronCliw/IronCliw.json`),
-    ).toBe("config: $IronCliw_HOME/.IronCliw/IronCliw.json");
+      shortenHomeInString(`config: ${path.resolve("/srv/ironcliw-home")}/.ironcliw/ironcliw.json`),
+    ).toBe("config: $IRONCLIW_HOME/.ironcliw/ironcliw.json");
 
     vi.unstubAllEnvs();
   });
@@ -220,18 +220,18 @@ describe("resolveUserPath", () => {
   });
 
   it("expands ~/ to home dir", () => {
-    expect(resolveUserPath("~/IronCliw")).toBe(path.resolve(os.homedir(), "IronCliw"));
+    expect(resolveUserPath("~/ironcliw")).toBe(path.resolve(os.homedir(), "ironcliw"));
   });
 
   it("resolves relative paths", () => {
     expect(resolveUserPath("tmp/dir")).toBe(path.resolve("tmp/dir"));
   });
 
-  it("prefers IronCliw_HOME for tilde expansion", () => {
-    vi.stubEnv("IronCliw_HOME", "/srv/IronCliw-home");
+  it("prefers IRONCLIW_HOME for tilde expansion", () => {
+    vi.stubEnv("IRONCLIW_HOME", "/srv/ironcliw-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveUserPath("~/IronCliw")).toBe(path.resolve("/srv/IronCliw-home", "IronCliw"));
+    expect(resolveUserPath("~/ironcliw")).toBe(path.resolve("/srv/ironcliw-home", "ironcliw"));
 
     vi.unstubAllEnvs();
   });

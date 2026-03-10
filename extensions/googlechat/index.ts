@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/googlechat";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/googlechat";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/googlechat";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/googlechat";
 import { googlechatDock, googlechatPlugin } from "./src/channel.js";
 import { setGoogleChatRuntime } from "./src/runtime.js";
 

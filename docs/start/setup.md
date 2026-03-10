@@ -17,7 +17,7 @@ Last updated: 2026-01-01
 
 ## TL;DR
 
-- **Tailoring lives outside the repo:** `~/.IronCliw/workspace` (workspace) + `~/.IronCliw/IronCliw.json` (config).
+- **Tailoring lives outside the repo:** `~/.ironcliw/workspace` (workspace) + `~/.ironcliw/ironcliw.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
 - **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
 
@@ -31,29 +31,29 @@ Last updated: 2026-01-01
 
 If you want “100% tailored to me” _and_ easy updates, keep your customization in:
 
-- **Config:** `~/.IronCliw/IronCliw.json` (JSON/JSON5-ish)
-- **Workspace:** `~/.IronCliw/workspace` (skills, prompts, memories; make it a private git repo)
+- **Config:** `~/.ironcliw/ironcliw.json` (JSON/JSON5-ish)
+- **Workspace:** `~/.ironcliw/workspace` (skills, prompts, memories; make it a private git repo)
 
 Bootstrap once:
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm IronCliw setup`.
+If you don’t have a global install yet, run it via `pnpm ironcliw setup`.
 
 ## Run the Gateway from this repo
 
 After `pnpm build`, you can run the packaged CLI directly:
 
 ```bash
-node IronCliw.mjs gateway --port 18789 --verbose
+node ironcliw.mjs gateway --port 18789 --verbose
 ```
 
 ## Stable workflow (macOS app first)
@@ -64,18 +64,18 @@ node IronCliw.mjs gateway --port 18789 --verbose
 4. Link surfaces (example: WhatsApp):
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 5. Sanity check:
 
 ```bash
-IronCliw health
+ironcliw health
 ```
 
 If onboarding is not available in your build:
 
-- Run `IronCliw setup`, then `IronCliw channels login`, then start the Gateway manually (`IronCliw gateway`).
+- Run `ironcliw setup`, then `ironcliw channels login`, then start the Gateway manually (`ironcliw gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -111,36 +111,36 @@ In **IronCliw.app**:
 - Or via CLI:
 
 ```bash
-IronCliw health
+ironcliw health
 ```
 
 ### Common footguns
 
 - **Wrong port:** Gateway WS defaults to `ws://127.0.0.1:18789`; keep app + CLI on the same port.
 - **Where state lives:**
-  - Credentials: `~/.IronCliw/credentials/`
-  - Sessions: `~/.IronCliw/agents/<agentId>/sessions/`
-  - Logs: `/tmp/IronCliw/`
+  - Credentials: `~/.ironcliw/credentials/`
+  - Sessions: `~/.ironcliw/agents/<agentId>/sessions/`
+  - Logs: `/tmp/ironcliw/`
 
 ## Credential storage map
 
 Use this when debugging auth or deciding what to back up:
 
-- **WhatsApp**: `~/.IronCliw/credentials/whatsapp/<accountId>/creds.json`
+- **WhatsApp**: `~/.ironcliw/credentials/whatsapp/<accountId>/creds.json`
 - **Telegram bot token**: config/env or `channels.telegram.tokenFile`
 - **Discord bot token**: config/env or SecretRef (env/file/exec providers)
 - **Slack tokens**: config/env (`channels.slack.*`)
 - **Pairing allowlists**:
-  - `~/.IronCliw/credentials/<channel>-allowFrom.json` (default account)
-  - `~/.IronCliw/credentials/<channel>-<accountId>-allowFrom.json` (non-default accounts)
-- **Model auth profiles**: `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json`
-- **File-backed secrets payload (optional)**: `~/.IronCliw/secrets.json`
-- **Legacy OAuth import**: `~/.IronCliw/credentials/oauth.json`
+  - `~/.ironcliw/credentials/<channel>-allowFrom.json` (default account)
+  - `~/.ironcliw/credentials/<channel>-<accountId>-allowFrom.json` (non-default accounts)
+- **Model auth profiles**: `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json`
+- **File-backed secrets payload (optional)**: `~/.ironcliw/secrets.json`
+- **Legacy OAuth import**: `~/.ironcliw/credentials/oauth.json`
   More detail: [Security](/gateway/security#credential-storage-map).
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/.IronCliw/workspace` and `~/.IronCliw/` as “your stuff”; don’t put personal prompts/config into the `IronCliw` repo.
+- Keep `~/.ironcliw/workspace` and `~/.ironcliw/` as “your stuff”; don’t put personal prompts/config into the `ironcliw` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -161,5 +161,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [IronCliw assistant setup](/start/IronCliw)
+- [IronCliw assistant setup](/start/ironcliw)
 - [macOS app](/platforms/macos) (gateway lifecycle)

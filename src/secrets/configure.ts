@@ -210,14 +210,14 @@ async function promptOptionalPositiveInt(params: {
 }
 
 function configureCandidateKey(candidate: {
-  configFile: "IronCliw.json" | "auth-profiles.json";
+  configFile: "ironcliw.json" | "auth-profiles.json";
   path: string;
   agentId?: string;
 }): string {
   if (candidate.configFile === "auth-profiles.json") {
     return `auth-profiles:${String(candidate.agentId ?? "").trim()}:${candidate.path}`;
   }
-  return `IronCliw:${candidate.path}`;
+  return `ironcliw:${candidate.path}`;
 }
 
 function hasSourceChoice(
@@ -800,7 +800,7 @@ export async function runSecretsConfigureInteractive(
         value: configureCandidateKey(candidate),
         label: candidate.label,
         hint: [
-          candidate.configFile === "auth-profiles.json" ? "auth-profiles.json" : "IronCliw.json",
+          candidate.configFile === "auth-profiles.json" ? "auth-profiles.json" : "ironcliw.json",
           candidate.isDerived === true ? "derived" : undefined,
         ]
           .filter(Boolean)

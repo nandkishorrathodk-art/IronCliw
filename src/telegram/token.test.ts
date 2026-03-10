@@ -8,7 +8,7 @@ import { resolveTelegramToken } from "./token.js";
 import { readTelegramUpdateOffset, writeTelegramUpdateOffset } from "./update-offset-store.js";
 
 function withTempDir(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-telegram-token-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-telegram-token-"));
 }
 
 describe("resolveTelegramToken", () => {
@@ -144,7 +144,7 @@ describe("resolveTelegramToken", () => {
 
 describe("telegram update offset store", () => {
   it("persists and reloads the last update id", async () => {
-    await withStateDirEnv("IronCliw-telegram-", async () => {
+    await withStateDirEnv("ironcliw-telegram-", async () => {
       expect(await readTelegramUpdateOffset({ accountId: "primary" })).toBeNull();
 
       await writeTelegramUpdateOffset({

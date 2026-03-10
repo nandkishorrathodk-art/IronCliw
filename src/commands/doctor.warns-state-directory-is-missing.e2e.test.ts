@@ -17,9 +17,9 @@ describe("doctor command", () => {
   it("warns when the state directory is missing", async () => {
     mockDoctorConfigSnapshot();
 
-    const missingDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-missing-state-"));
+    const missingDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-missing-state-"));
     fs.rmSync(missingDir, { recursive: true, force: true });
-    process.env.IronCliw_STATE_DIR = missingDir;
+    process.env.IRONCLIW_STATE_DIR = missingDir;
     note.mockClear();
 
     await doctorCommand(createDoctorRuntime(), {
@@ -58,15 +58,15 @@ describe("doctor command", () => {
     expect(warned).toBe(true);
   });
 
-  it("skips gateway auth warning when IronCliw_GATEWAY_TOKEN is set", async () => {
+  it("skips gateway auth warning when IRONCLIW_GATEWAY_TOKEN is set", async () => {
     mockDoctorConfigSnapshot({
       config: {
         gateway: { mode: "local" },
       },
     });
 
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "env-token-1234567890";
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token-1234567890";
     note.mockClear();
 
     try {
@@ -76,9 +76,9 @@ describe("doctor command", () => {
       });
     } finally {
       if (prevToken === undefined) {
-        delete process.env.IronCliw_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
       }
     }
 
@@ -86,5 +86,34 @@ describe("doctor command", () => {
       String(message).includes("Gateway auth is off or missing a token"),
     );
     expect(warned).toBe(false);
+  });
+
+  it("warns when token and password are both configured and gateway.auth.mode is unset", async () => {
+    mockDoctorConfigSnapshot({
+      config: {
+        gateway: {
+          mode: "local",
+          auth: {
+            token: "token-value",
+            password: "password-value", // pragma: allowlist secret
+          },
+        },
+      },
+    });
+
+    note.mockClear();
+
+    await doctorCommand(createDoctorRuntime(), {
+      nonInteractive: true,
+      workspaceSuggestions: false,
+    });
+
+    const gatewayAuthNote = note.mock.calls.find((call) => call[1] === "Gateway auth");
+    expect(gatewayAuthNote).toBeTruthy();
+    expect(String(gatewayAuthNote?.[0])).toContain("gateway.auth.mode is unset");
+    expect(String(gatewayAuthNote?.[0])).toContain("ironcliw config set gateway.auth.mode token");
+    expect(String(gatewayAuthNote?.[0])).toContain(
+      "ironcliw config set gateway.auth.mode password",
+    );
   });
 });

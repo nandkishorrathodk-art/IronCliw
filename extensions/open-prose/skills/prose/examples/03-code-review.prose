@@ -15,4 +15,3 @@ session "Review the code for maintainability. Look for code duplication, unclear
 
 # Synthesize findings
 session "Create a unified code review report combining all the findings above. Prioritize issues by severity and provide actionable recommendations."
-

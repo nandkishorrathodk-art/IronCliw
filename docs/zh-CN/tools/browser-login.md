@@ -17,7 +17,7 @@ x-i18n:
 
 ## 手动登录（推荐）
 
-当网站需要登录时，请在**主机**浏览器配置文件（IronCliw 浏览器）中**手动登录**。
+当网站需要登录时，请在**主机**浏览器配置文件（ironcliw 浏览器）中**手动登录**。
 
 **不要**将你的凭证提供给模型。自动登录通常会触发反机器人防御并可能锁定账户。
 
@@ -25,7 +25,7 @@ x-i18n:
 
 ## 使用哪个 Chrome 配置文件？
 
-IronCliw 控制一个**专用的 Chrome 配置文件**（名为 `IronCliw`，橙色调 UI）。这与你的日常浏览器配置文件是分开的。
+IronCliw 控制一个**专用的 Chrome 配置文件**（名为 `ironcliw`，橙色调 UI）。这与你的日常浏览器配置文件是分开的。
 
 两种简单的访问方式：
 
@@ -33,11 +33,11 @@ IronCliw 控制一个**专用的 Chrome 配置文件**（名为 `IronCliw`，橙
 2. **通过 CLI 打开**：
 
 ```bash
-IronCliw browser start
-IronCliw browser open https://x.com
+ironcliw browser start
+ironcliw browser open https://x.com
 ```
 
-如果你有多个配置文件，传入 `--browser-profile <name>`（默认是 `IronCliw`）。
+如果你有多个配置文件，传入 `--browser-profile <name>`（默认是 `ironcliw`）。
 
 ## X/Twitter：推荐流程
 
@@ -69,7 +69,7 @@ IronCliw browser open https://x.com
 然后定位主机浏览器：
 
 ```bash
-IronCliw browser open https://x.com --browser-profile IronCliw --target host
+ironcliw browser open https://x.com --browser-profile ironcliw --target host
 ```
 
 或者为发布更新的智能体禁用沙箱隔离。

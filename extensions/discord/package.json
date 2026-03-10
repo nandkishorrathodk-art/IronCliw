@@ -1,9 +1,9 @@
 {
-  "name": "@IronCliw/discord",
-  "version": "2026.3.2",
+  "name": "@ironcliw/discord",
+  "version": "2026.3.9",
   "description": "IronCliw Discord channel plugin",
   "type": "module",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

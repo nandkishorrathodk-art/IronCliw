@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import type { NormalizedWebhookMessage } from "./monitor-normalize.js";
 import type { BlueBubblesCoreRuntime, WebhookTarget } from "./monitor-shared.js";
 

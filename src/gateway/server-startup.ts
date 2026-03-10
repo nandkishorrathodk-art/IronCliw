@@ -123,10 +123,10 @@ export async function startGatewaySidecars(params: {
   }
 
   // Launch configured channels so gateway replies via the surface the message came from.
-  // Tests can opt out via IronCliw_SKIP_CHANNELS (or legacy IronCliw_SKIP_PROVIDERS).
+  // Tests can opt out via IRONCLIW_SKIP_CHANNELS (or legacy IRONCLIW_SKIP_PROVIDERS).
   const skipChannels =
-    isTruthyEnvValue(process.env.IronCliw_SKIP_CHANNELS) ||
-    isTruthyEnvValue(process.env.IronCliw_SKIP_PROVIDERS);
+    isTruthyEnvValue(process.env.IRONCLIW_SKIP_CHANNELS) ||
+    isTruthyEnvValue(process.env.IRONCLIW_SKIP_PROVIDERS);
   if (!skipChannels) {
     try {
       await params.startChannels();
@@ -135,7 +135,7 @@ export async function startGatewaySidecars(params: {
     }
   } else {
     params.logChannels.info(
-      "skipping channel start (IronCliw_SKIP_CHANNELS=1 or IronCliw_SKIP_PROVIDERS=1)",
+      "skipping channel start (IRONCLIW_SKIP_CHANNELS=1 or IRONCLIW_SKIP_PROVIDERS=1)",
     );
   }
 

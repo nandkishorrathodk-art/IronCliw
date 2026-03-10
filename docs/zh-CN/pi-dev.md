@@ -50,7 +50,7 @@ scripts/pi/run-tests.sh --live
 - 以开发模式运行 Gateway 网关：
   - `pnpm gateway:dev`
 - 直接触发智能体：
-  - `pnpm IronCliw agent --message "Hello" --thinking low`
+  - `pnpm ironcliw agent --message "Hello" --thinking low`
 - 使用 TUI 进行交互式调试：
   - `pnpm tui`
 
@@ -58,11 +58,11 @@ scripts/pi/run-tests.sh --live
 
 ## 完全重置
 
-状态存储在 IronCliw 状态目录下。默认为 `~/.IronCliw`。如果设置了 `IronCliw_STATE_DIR`，则使用该目录。
+状态存储在 IronCliw 状态目录下。默认为 `~/.ironcliw`。如果设置了 `IRONCLIW_STATE_DIR`，则使用该目录。
 
 要重置所有内容：
 
-- `IronCliw.json` 用于配置
+- `ironcliw.json` 用于配置
 - `credentials/` 用于认证配置文件和 token
 - `agents/<agentId>/sessions/` 用于智能体会话历史
 - `agents/<agentId>/sessions.json` 用于会话索引
@@ -73,5 +73,5 @@ scripts/pi/run-tests.sh --live
 
 ## 参考资料
 
-- https://docs.IronCliw.ai/testing
-- https://docs.IronCliw.ai/start/getting-started
+- https://docs.ironcliw.ai/testing
+- https://docs.ironcliw.ai/start/getting-started

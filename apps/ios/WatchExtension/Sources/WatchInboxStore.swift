@@ -217,7 +217,7 @@ struct WatchNotifyMessage: Sendable {
         content.title = title
         content.body = body
         content.sound = .default
-        content.threadIdentifier = "IronCliw-watch"
+        content.threadIdentifier = "ironcliw-watch"
 
         let request = UNNotificationRequest(
             identifier: identifier,

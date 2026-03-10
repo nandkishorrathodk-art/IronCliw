@@ -1,10 +1,10 @@
 ---
 name: boot-md
 description: "Run BOOT.md on gateway startup"
-homepage: https://docs.IronCliw.ai/automation/hooks#boot-md
+homepage: https://docs.ironcliw.ai/automation/hooks#boot-md
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "🚀",
         "events": ["gateway:startup"],

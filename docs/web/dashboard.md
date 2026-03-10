@@ -24,23 +24,29 @@ Authentication is enforced at the WebSocket handshake via `connect.params.auth`
 (token or password). See `gateway.auth` in [Gateway configuration](/gateway/configuration).
 
 Security note: the Control UI is an **admin surface** (chat, config, exec approvals).
-Do not expose it publicly. The UI stores the token in `localStorage` after first load.
+Do not expose it publicly. The UI keeps dashboard URL tokens in memory for the current tab
+and strips them from the URL after load.
 Prefer localhost, Tailscale Serve, or an SSH tunnel.
 
 ## Fast path (recommended)
 
 - After onboarding, the CLI auto-opens the dashboard and prints a clean (non-tokenized) link.
-- Re-open anytime: `IronCliw dashboard` (copies link, opens browser if possible, shows SSH hint if headless).
-- If the UI prompts for auth, paste the token from `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`) into Control UI settings.
+- Re-open anytime: `ironcliw dashboard` (copies link, opens browser if possible, shows SSH hint if headless).
+- If the UI prompts for auth, paste the token from `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`) into Control UI settings.
 
 ## Token basics (local vs remote)
 
 - **Localhost**: open `http://127.0.0.1:18789/`.
-- **Token source**: `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`); the UI stores a copy in localStorage after you connect.
+- **Token source**: `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`); `ironcliw dashboard` can pass it via URL fragment for one-time bootstrap, but the Control UI does not persist gateway tokens in localStorage.
+- If `gateway.auth.token` is SecretRef-managed, `ironcliw dashboard` prints/copies/opens a non-tokenized URL by design. This avoids exposing externally managed tokens in shell logs, clipboard history, or browser-launch arguments.
+- If `gateway.auth.token` is configured as a SecretRef and is unresolved in your current shell, `ironcliw dashboard` still prints a non-tokenized URL plus actionable auth setup guidance.
 - **Not localhost**: use Tailscale Serve (tokenless for Control UI/WebSocket if `gateway.auth.allowTailscale: true`, assumes trusted gateway host; HTTP APIs still need token/password), tailnet bind with a token, or an SSH tunnel. See [Web surfaces](/web).
 
 ## If you see “unauthorized” / 1008
 
-- Ensure the gateway is reachable (local: `IronCliw status`; remote: SSH tunnel `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/`).
-- Retrieve the token from the gateway host: `IronCliw config get gateway.auth.token` (or generate one: `IronCliw doctor --generate-gateway-token`).
+- Ensure the gateway is reachable (local: `ironcliw status`; remote: SSH tunnel `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/`).
+- Retrieve or supply the token from the gateway host:
+  - Plaintext config: `ironcliw config get gateway.auth.token`
+  - SecretRef-managed config: resolve the external secret provider or export `IRONCLIW_GATEWAY_TOKEN` in this shell, then rerun `ironcliw dashboard`
+  - No token configured: `ironcliw doctor --generate-gateway-token`
 - In the dashboard settings, paste the token into the auth field, then connect.

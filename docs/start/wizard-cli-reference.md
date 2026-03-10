@@ -1,7 +1,7 @@
 ---
 summary: "Complete reference for CLI onboarding flow, auth/model setup, outputs, and internals"
 read_when:
-  - You need detailed behavior for IronCliw onboard
+  - You need detailed behavior for ironcliw onboard
   - You are debugging onboarding results or integrating onboarding clients
 title: "CLI Onboarding Reference"
 sidebarTitle: "CLI reference"
@@ -9,7 +9,7 @@ sidebarTitle: "CLI reference"
 
 # CLI Onboarding Reference
 
-This page is the full reference for `IronCliw onboard`.
+This page is the full reference for `ironcliw onboard`.
 For the short guide, see [Onboarding Wizard (CLI)](/start/wizard).
 
 ## What the wizard does
@@ -31,10 +31,10 @@ It does not install or modify anything on the remote host.
 
 <Steps>
   <Step title="Existing config detection">
-    - If `~/.IronCliw/IronCliw.json` exists, choose Keep, Modify, or Reset.
+    - If `~/.ironcliw/ironcliw.json` exists, choose Keep, Modify, or Reset.
     - Re-running the wizard does not wipe anything unless you explicitly choose Reset (or pass `--reset`).
     - CLI `--reset` defaults to `config+creds+sessions`; use `--reset-scope full` to also remove workspace.
-    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `IronCliw doctor` before continuing.
+    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `ironcliw doctor` before continuing.
     - Reset uses `trash` and offers scopes:
       - Config only
       - Config + credentials + sessions
@@ -44,13 +44,20 @@ It does not install or modify anything on the remote host.
     - Full option matrix is in [Auth and model options](#auth-and-model-options).
   </Step>
   <Step title="Workspace">
-    - Default `~/.IronCliw/workspace` (configurable).
+    - Default `~/.ironcliw/workspace` (configurable).
     - Seeds workspace files needed for first-run bootstrap ritual.
     - Workspace layout: [Agent workspace](/concepts/agent-workspace).
   </Step>
   <Step title="Gateway">
     - Prompts for port, bind, auth mode, and tailscale exposure.
     - Recommended: keep token auth enabled even for loopback so local WS clients must authenticate.
+    - In token mode, interactive onboarding offers:
+      - **Generate/store plaintext token** (default)
+      - **Use SecretRef** (opt-in)
+    - In password mode, interactive onboarding also supports plaintext or SecretRef storage.
+    - Non-interactive token SecretRef path: `--gateway-token-ref-env <ENV_VAR>`.
+      - Requires a non-empty env var in the onboarding process environment.
+      - Cannot be combined with `--gateway-token`.
     - Disable auth only if you fully trust every local process.
     - Non-loopback binds still require auth.
   </Step>
@@ -64,7 +71,7 @@ It does not install or modify anything on the remote host.
     - [BlueBubbles](/channels/bluebubbles): recommended for iMessage; server URL + password + webhook
     - [iMessage](/channels/imessage): legacy `imsg` CLI path + DB access
     - DM security: default is pairing. First DM sends a code; approve via
-      `IronCliw pairing approve <channel> <code>` or use allowlists.
+      `ironcliw pairing approve <channel> <code>` or use allowlists.
   </Step>
   <Step title="Daemon install">
     - macOS: LaunchAgent
@@ -75,8 +82,8 @@ It does not install or modify anything on the remote host.
     - Runtime selection: Node (recommended; required for WhatsApp and Telegram). Bun is not recommended.
   </Step>
   <Step title="Health check">
-    - Starts gateway (if needed) and runs `IronCliw health`.
-    - `IronCliw status --deep` adds gateway health probes to status output.
+    - Starts gateway (if needed) and runs `ironcliw health`.
+    - `ironcliw status --deep` adds gateway health probes to status output.
   </Step>
   <Step title="Skills">
     - Reads available skills and checks requirements.
@@ -136,7 +143,7 @@ What you set:
   <Accordion title="OpenAI Code subscription (OAuth)">
     Browser flow; paste `code#state`.
 
-    Sets `agents.defaults.model` to `openai-codex/gpt-5.3-codex` when model is unset or `openai/*`.
+    Sets `agents.defaults.model` to `openai-codex/gpt-5.4` when model is unset or `openai/*`.
 
   </Accordion>
   <Accordion title="OpenAI API key">
@@ -203,10 +210,10 @@ Model behavior:
 
 Credential and profile paths:
 
-- OAuth credentials: `~/.IronCliw/credentials/oauth.json`
-- Auth profiles (API keys + OAuth): `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json`
+- OAuth credentials: `~/.ironcliw/credentials/oauth.json`
+- Auth profiles (API keys + OAuth): `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json`
 
-API key storage mode:
+Credential storage mode:
 
 - Default onboarding behavior persists API keys as plaintext values in auth profiles.
 - `--secret-input-mode ref` enables reference mode instead of plaintext key storage.
@@ -222,21 +229,25 @@ API key storage mode:
   - Inline key flags (for example `--openai-api-key`) require that env var to be set; otherwise onboarding fails fast.
   - For custom providers, non-interactive `ref` mode stores `models.providers.<id>.apiKey` as `{ source: "env", provider: "default", id: "CUSTOM_API_KEY" }`.
   - In that custom-provider case, `--custom-api-key` requires `CUSTOM_API_KEY` to be set; otherwise onboarding fails fast.
+- Gateway auth credentials support plaintext and SecretRef choices in interactive onboarding:
+  - Token mode: **Generate/store plaintext token** (default) or **Use SecretRef**.
+  - Password mode: plaintext or SecretRef.
+- Non-interactive token SecretRef path: `--gateway-token-ref-env <ENV_VAR>`.
 - Existing plaintext setups continue to work unchanged.
 
 <Note>
 Headless and server tip: complete OAuth on a machine with a browser, then copy
-`~/.IronCliw/credentials/oauth.json` (or `$IronCliw_STATE_DIR/credentials/oauth.json`)
+`~/.ironcliw/credentials/oauth.json` (or `$IRONCLIW_STATE_DIR/credentials/oauth.json`)
 to the gateway host.
 </Note>
 
 ## Outputs and internals
 
-Typical fields in `~/.IronCliw/IronCliw.json`:
+Typical fields in `~/.ironcliw/ironcliw.json`:
 
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers` (if Minimax chosen)
-- `tools.profile` (local onboarding defaults to `"messaging"` when unset; existing explicit values are preserved)
+- `tools.profile` (local onboarding defaults to `"coding"` when unset; existing explicit values are preserved)
 - `gateway.*` (mode, bind, auth, tailscale)
 - `session.dmScope` (local onboarding defaults this to `per-channel-peer` when unset; existing explicit values are preserved)
 - `channels.telegram.botToken`, `channels.discord.token`, `channels.signal.*`, `channels.imessage.*`
@@ -248,10 +259,10 @@ Typical fields in `~/.IronCliw/IronCliw.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`IronCliw agents add` writes `agents.list[]` and optional `bindings`.
+`ironcliw agents add` writes `agents.list[]` and optional `bindings`.
 
-WhatsApp credentials go under `~/.IronCliw/credentials/whatsapp/<accountId>/`.
-Sessions are stored under `~/.IronCliw/agents/<agentId>/sessions/`.
+WhatsApp credentials go under `~/.ironcliw/credentials/whatsapp/<accountId>/`.
+Sessions are stored under `~/.ironcliw/agents/<agentId>/sessions/`.
 
 <Note>
 Some channels are delivered as plugins. When selected during onboarding, the wizard
@@ -270,7 +281,7 @@ Clients (macOS app and Control UI) can render steps without re-implementing onbo
 Signal setup behavior:
 
 - Downloads the appropriate release asset
-- Stores it under `~/.IronCliw/tools/signal-cli/<version>/`
+- Stores it under `~/.ironcliw/tools/signal-cli/<version>/`
 - Writes `channels.signal.cliPath` in config
 - JVM builds require Java 21
 - Native builds are used when available
@@ -280,4 +291,4 @@ Signal setup behavior:
 
 - Onboarding hub: [Onboarding Wizard (CLI)](/start/wizard)
 - Automation and scripts: [CLI Automation](/start/wizard-cli-automation)
-- Command reference: [`IronCliw onboard`](/cli/onboard)
+- Command reference: [`ironcliw onboard`](/cli/onboard)

@@ -30,7 +30,7 @@ See [Security](/gateway/security) and [VPS hosting](/vps).
 - Rent a small Linux server (Hetzner VPS)
 - Install Docker (isolated app runtime)
 - Start the IronCliw Gateway in Docker
-- Persist `~/.IronCliw` + `~/.IronCliw/workspace` on the host (survives restarts/rebuilds)
+- Persist `~/.ironcliw` + `~/.ironcliw/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -107,8 +107,8 @@ docker compose version
 ## 3) Clone the IronCliw repository
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -121,10 +121,10 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p /root/.IronCliw/workspace
+mkdir -p /root/.ironcliw/workspace
 
 # Set ownership to the container user (uid 1000):
-chown -R 1000:1000 /root/.IronCliw
+chown -R 1000:1000 /root/.ironcliw
 ```
 
 ---
@@ -134,16 +134,16 @@ chown -R 1000:1000 /root/.IronCliw
 Create `.env` in the repository root.
 
 ```bash
-IronCliw_IMAGE=IronCliw:latest
-IronCliw_GATEWAY_TOKEN=change-me-now
-IronCliw_GATEWAY_BIND=lan
-IronCliw_GATEWAY_PORT=18789
+IRONCLIW_IMAGE=ironcliw:latest
+IRONCLIW_GATEWAY_TOKEN=change-me-now
+IRONCLIW_GATEWAY_BIND=lan
+IRONCLIW_GATEWAY_PORT=18789
 
-IronCliw_CONFIG_DIR=/root/.IronCliw
-IronCliw_WORKSPACE_DIR=/root/.IronCliw/workspace
+IRONCLIW_CONFIG_DIR=/root/.ironcliw
+IRONCLIW_WORKSPACE_DIR=/root/.ironcliw/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.IronCliw
+XDG_CONFIG_HOME=/home/node/.ironcliw
 ```
 
 Generate strong secrets:
@@ -162,8 +162,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  IronCliw-gateway:
-    image: ${IronCliw_IMAGE}
+  ironcliw-gateway:
+    image: ${IRONCLIW_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -172,28 +172,28 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - IronCliw_GATEWAY_BIND=${IronCliw_GATEWAY_BIND}
-      - IronCliw_GATEWAY_PORT=${IronCliw_GATEWAY_PORT}
-      - IronCliw_GATEWAY_TOKEN=${IronCliw_GATEWAY_TOKEN}
+      - IRONCLIW_GATEWAY_BIND=${IRONCLIW_GATEWAY_BIND}
+      - IRONCLIW_GATEWAY_PORT=${IRONCLIW_GATEWAY_PORT}
+      - IRONCLIW_GATEWAY_TOKEN=${IRONCLIW_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${IronCliw_CONFIG_DIR}:/home/node/.IronCliw
-      - ${IronCliw_WORKSPACE_DIR}:/home/node/.IronCliw/workspace
+      - ${IRONCLIW_CONFIG_DIR}:/home/node/.ironcliw
+      - ${IRONCLIW_WORKSPACE_DIR}:/home/node/.ironcliw/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VPS; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${IronCliw_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${IRONCLIW_GATEWAY_PORT}:18789"
     command:
       [
         "node",
         "dist/index.js",
         "gateway",
         "--bind",
-        "${IronCliw_GATEWAY_BIND}",
+        "${IRONCLIW_GATEWAY_BIND}",
         "--port",
-        "${IronCliw_GATEWAY_PORT}",
+        "${IRONCLIW_GATEWAY_PORT}",
         "--allow-unconfigured",
       ]
 ```
@@ -269,15 +269,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d IronCliw-gateway
+docker compose up -d ironcliw-gateway
 ```
 
 Verify binaries:
 
 ```bash
-docker compose exec IronCliw-gateway which gog
-docker compose exec IronCliw-gateway which goplaces
-docker compose exec IronCliw-gateway which wacli
+docker compose exec ironcliw-gateway which gog
+docker compose exec ironcliw-gateway which goplaces
+docker compose exec ironcliw-gateway which wacli
 ```
 
 Expected output:
@@ -293,7 +293,7 @@ Expected output:
 ## 9) Verify Gateway
 
 ```bash
-docker compose logs -f IronCliw-gateway
+docker compose logs -f ironcliw-gateway
 ```
 
 Success:
@@ -323,12 +323,12 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component           | Location                          | Persistence mechanism  | Notes                            |
 | ------------------- | --------------------------------- | ---------------------- | -------------------------------- |
-| Gateway config      | `/home/node/.IronCliw/`           | Host volume mount      | Includes `IronCliw.json`, tokens |
-| Model auth profiles | `/home/node/.IronCliw/`           | Host volume mount      | OAuth tokens, API keys           |
-| Skill configs       | `/home/node/.IronCliw/skills/`    | Host volume mount      | Skill-level state                |
-| Agent workspace     | `/home/node/.IronCliw/workspace/` | Host volume mount      | Code and agent artifacts         |
-| WhatsApp session    | `/home/node/.IronCliw/`           | Host volume mount      | Preserves QR login               |
-| Gmail keyring       | `/home/node/.IronCliw/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
+| Gateway config      | `/home/node/.ironcliw/`           | Host volume mount      | Includes `ironcliw.json`, tokens |
+| Model auth profiles | `/home/node/.ironcliw/`           | Host volume mount      | OAuth tokens, API keys           |
+| Skill configs       | `/home/node/.ironcliw/skills/`    | Host volume mount      | Skill-level state                |
+| Agent workspace     | `/home/node/.ironcliw/workspace/` | Host volume mount      | Code and agent artifacts         |
+| WhatsApp session    | `/home/node/.ironcliw/`           | Host volume mount      | Preserves QR login               |
+| Gmail keyring       | `/home/node/.ironcliw/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
 | External binaries   | `/usr/local/bin/`                 | Docker image           | Must be baked at build time      |
 | Node runtime        | Container filesystem              | Docker image           | Rebuilt every image build        |
 | OS packages         | Container filesystem              | Docker image           | Do not install at runtime        |
@@ -348,8 +348,8 @@ For teams preferring infrastructure-as-code workflows, a community-maintained Te
 
 **Repositories:**
 
-- Infrastructure: [IronCliw-terraform-hetzner](https://github.com/andreesg/IronCliw-terraform-hetzner)
-- Docker config: [IronCliw-docker-config](https://github.com/andreesg/IronCliw-docker-config)
+- Infrastructure: [ironcliw-terraform-hetzner](https://github.com/andreesg/ironcliw-terraform-hetzner)
+- Docker config: [ironcliw-docker-config](https://github.com/andreesg/ironcliw-docker-config)
 
 This approach complements the Docker setup above with reproducible deployments, version-controlled infrastructure, and automated disaster recovery.
 

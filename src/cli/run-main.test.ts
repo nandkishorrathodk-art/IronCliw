@@ -42,14 +42,14 @@ describe("rewriteUpdateFlagArgv", () => {
 
 describe("shouldRegisterPrimarySubcommand", () => {
   it("skips eager primary registration for help/version invocations", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "IronCliw", "status", "--help"])).toBe(false);
-    expect(shouldRegisterPrimarySubcommand(["node", "IronCliw", "-V"])).toBe(false);
-    expect(shouldRegisterPrimarySubcommand(["node", "IronCliw", "-v"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "ironcliw", "status", "--help"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "ironcliw", "-V"])).toBe(false);
+    expect(shouldRegisterPrimarySubcommand(["node", "ironcliw", "-v"])).toBe(false);
   });
 
   it("keeps eager primary registration for regular command runs", () => {
-    expect(shouldRegisterPrimarySubcommand(["node", "IronCliw", "status"])).toBe(true);
-    expect(shouldRegisterPrimarySubcommand(["node", "IronCliw", "acp", "-v"])).toBe(true);
+    expect(shouldRegisterPrimarySubcommand(["node", "ironcliw", "status"])).toBe(true);
+    expect(shouldRegisterPrimarySubcommand(["node", "ironcliw", "acp", "-v"])).toBe(true);
   });
 });
 
@@ -57,7 +57,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for root help/version", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "IronCliw", "--help"],
+        argv: ["node", "ironcliw", "--help"],
         primary: null,
         hasBuiltinPrimary: false,
       }),
@@ -67,7 +67,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin subcommand help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "IronCliw", "config", "--help"],
+        argv: ["node", "ironcliw", "config", "--help"],
         primary: "config",
         hasBuiltinPrimary: true,
       }),
@@ -77,7 +77,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("skips plugin registration for builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "IronCliw", "sessions", "--json"],
+        argv: ["node", "ironcliw", "sessions", "--json"],
         primary: "sessions",
         hasBuiltinPrimary: true,
       }),
@@ -87,7 +87,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin help", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "IronCliw", "voicecall", "--help"],
+        argv: ["node", "ironcliw", "voicecall", "--help"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -97,7 +97,7 @@ describe("shouldSkipPluginCommandRegistration", () => {
   it("keeps plugin registration for non-builtin command runs", () => {
     expect(
       shouldSkipPluginCommandRegistration({
-        argv: ["node", "IronCliw", "voicecall", "status"],
+        argv: ["node", "ironcliw", "voicecall", "status"],
         primary: "voicecall",
         hasBuiltinPrimary: false,
       }),
@@ -107,22 +107,22 @@ describe("shouldSkipPluginCommandRegistration", () => {
 
 describe("shouldEnsureCliPath", () => {
   it("skips path bootstrap for help/version invocations", () => {
-    expect(shouldEnsureCliPath(["node", "IronCliw", "--help"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "-V"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "-v"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "--help"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "-V"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "-v"])).toBe(false);
   });
 
   it("skips path bootstrap for read-only fast paths", () => {
-    expect(shouldEnsureCliPath(["node", "IronCliw", "status"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "--log-level", "debug", "status"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "sessions", "--json"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "config", "get", "update"])).toBe(false);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "models", "status", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "status"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "--log-level", "debug", "status"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "sessions", "--json"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "config", "get", "update"])).toBe(false);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "models", "status", "--json"])).toBe(false);
   });
 
   it("keeps path bootstrap for mutating or unknown commands", () => {
-    expect(shouldEnsureCliPath(["node", "IronCliw", "message", "send"])).toBe(true);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "voicecall", "status"])).toBe(true);
-    expect(shouldEnsureCliPath(["node", "IronCliw", "acp", "-v"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "message", "send"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "voicecall", "status"])).toBe(true);
+    expect(shouldEnsureCliPath(["node", "ironcliw", "acp", "-v"])).toBe(true);
   });
 });

@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
 import { spawn } from "node:child_process";
+import fs from "node:fs/promises";
 import yaml from "yaml";
 
 export interface BatchStep {
@@ -41,7 +41,9 @@ export class BatchEngine {
    * Execute all steps in order.
    * Returns a per-step result array and an overall success boolean.
    */
-  public async executePlan(plan: BatchExecutionPlan): Promise<{ success: boolean; steps: StepResult[] }> {
+  public async executePlan(
+    plan: BatchExecutionPlan,
+  ): Promise<{ success: boolean; steps: StepResult[] }> {
     console.log(`[BatchEngine] Starting: ${plan.name}`);
     console.log(`[BatchEngine] ${plan.description}`);
 

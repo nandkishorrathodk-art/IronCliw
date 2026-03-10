@@ -24,12 +24,12 @@ Official site: [https://www.prose.md](https://www.prose.md)
 Bundled plugins are disabled by default. Enable OpenProse:
 
 ```bash
-IronCliw plugins enable open-prose
+ironcliw plugins enable open-prose
 ```
 
 Restart the Gateway after enabling the plugin.
 
-Dev/local checkout: `IronCliw plugins install ./extensions/open-prose`
+Dev/local checkout: `ironcliw plugins install ./extensions/open-prose`
 
 Related docs: [Plugins](/tools/plugin), [Plugin manifest](/plugins/manifest), [Skills](/tools/skills).
 

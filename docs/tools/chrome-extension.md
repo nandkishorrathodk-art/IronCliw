@@ -9,7 +9,7 @@ title: "Chrome Extension"
 
 # Chrome extension (browser relay)
 
-The IronCliw Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate IronCliw-managed Chrome profile.
+The IronCliw Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate ironcliw-managed Chrome profile.
 
 Attach/detach happens via a **single Chrome toolbar button**.
 
@@ -28,13 +28,13 @@ IronCliw then controls the attached tab through the normal `browser` tool surfac
 1. Install the extension to a stable local path:
 
 ```bash
-IronCliw browser extension install
+ironcliw browser extension install
 ```
 
 2. Print the installed extension directory path:
 
 ```bash
-IronCliw browser extension path
+ironcliw browser extension path
 ```
 
 3. Chrome → `chrome://extensions`
@@ -50,7 +50,7 @@ The extension ships inside the IronCliw release (npm package) as static files. T
 
 After upgrading IronCliw:
 
-- Re-run `IronCliw browser extension install` to refresh the installed files under your IronCliw state directory.
+- Re-run `ironcliw browser extension install` to refresh the installed files under your IronCliw state directory.
 - Chrome → `chrome://extensions` → click “Reload” on the extension.
 
 ## Use it (set gateway token once)
@@ -60,17 +60,17 @@ IronCliw ships with a built-in browser profile named `chrome` that targets the e
 Before first attach, open extension Options and set:
 
 - `Port` (default `18792`)
-- `Gateway token` (must match `gateway.auth.token` / `IronCliw_GATEWAY_TOKEN`)
+- `Gateway token` (must match `gateway.auth.token` / `IRONCLIW_GATEWAY_TOKEN`)
 
 Use it:
 
-- CLI: `IronCliw browser --browser-profile chrome tabs`
+- CLI: `ironcliw browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 If you want a different name or a different relay port, create your own profile:
 
 ```bash
-IronCliw browser create-profile \
+ironcliw browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -155,18 +155,19 @@ Options:
 
 Then ensure the tool isn’t denied by tool policy, and (if needed) call `browser` with `target="host"`.
 
-Debugging: `IronCliw sandbox explain`
+Debugging: `ironcliw sandbox explain`
 
 ## Remote access tips
 
 - Keep the Gateway and node host on the same tailnet; avoid exposing relay ports to LAN or public Internet.
 - Pair nodes intentionally; disable browser proxy routing if you don’t want remote control (`gateway.nodes.browser.mode="off"`).
+- Leave the relay on loopback unless you have a real cross-namespace need. For WSL2 or similar split-host setups, set `browser.relayBindHost` to an explicit bind address such as `0.0.0.0`, then keep access constrained with Gateway auth, node pairing, and a private network.
 
 ## How “extension path” works
 
-`IronCliw browser extension path` prints the **installed** on-disk directory containing the extension files.
+`ironcliw browser extension path` prints the **installed** on-disk directory containing the extension files.
 
-The CLI intentionally does **not** print a `node_modules` path. Always run `IronCliw browser extension install` first to copy the extension to a stable location under your IronCliw state directory.
+The CLI intentionally does **not** print a `node_modules` path. Always run `ironcliw browser extension install` first to copy the extension to a stable location under your IronCliw state directory.
 
 If you move or delete that install directory, Chrome will mark the extension as broken until you reload it from a valid path.
 
@@ -178,7 +179,7 @@ This is powerful and risky. Treat it like giving the model “hands on your brow
   - click/type/navigate in that tab
   - read page content
   - access whatever the tab’s logged-in session can access
-- **This is not isolated** like the dedicated IronCliw-managed profile.
+- **This is not isolated** like the dedicated ironcliw-managed profile.
   - If you attach to your daily-driver profile/tab, you’re granting access to that account state.
 
 Recommendations:

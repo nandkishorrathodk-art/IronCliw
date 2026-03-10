@@ -52,9 +52,9 @@ x-i18n:
 ## 快速路径（Lume，有经验的用户）
 
 1. 安装 Lume
-2. `lume create IronCliw --os macos --ipsw latest`
+2. `lume create ironcliw --os macos --ipsw latest`
 3. 完成设置助手，启用远程登录（SSH）
-4. `lume run IronCliw --no-display`
+4. `lume run ironcliw --no-display`
 5. SSH 进入，安装 IronCliw，配置渠道
 6. 完成
 
@@ -94,7 +94,7 @@ lume --version
 ## 2) 创建 macOS VM
 
 ```bash
-lume create IronCliw --os macos --ipsw latest
+lume create ironcliw --os macos --ipsw latest
 ```
 
 这会下载 macOS 并创建 VM。VNC 窗口会自动打开。
@@ -122,7 +122,7 @@ lume create IronCliw --os macos --ipsw latest
 ## 4) 获取 VM 的 IP 地址
 
 ```bash
-lume get IronCliw
+lume get ironcliw
 ```
 
 查找 IP 地址（通常是 `192.168.64.x`）。
@@ -144,8 +144,8 @@ ssh youruser@192.168.64.X
 在 VM 内：
 
 ```bash
-npm install -g IronCliw@latest
-IronCliw onboard --install-daemon
+npm install -g ironcliw@latest
+ironcliw onboard --install-daemon
 ```
 
 按照新手引导提示设置你的模型提供商（Anthropic、OpenAI 等）。
@@ -157,7 +157,7 @@ IronCliw onboard --install-daemon
 编辑配置文件：
 
 ```bash
-nano ~/.IronCliw/IronCliw.json
+nano ~/.ironcliw/ironcliw.json
 ```
 
 添加你的渠道：
@@ -179,7 +179,7 @@ nano ~/.IronCliw/IronCliw.json
 然后登录 WhatsApp（扫描二维码）：
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 ---
@@ -189,8 +189,8 @@ IronCliw channels login
 停止 VM 并在无显示器模式下重启：
 
 ```bash
-lume stop IronCliw
-lume run IronCliw --no-display
+lume stop ironcliw
+lume run ironcliw --no-display
 ```
 
 VM 在后台运行。IronCliw 的守护进程保持 Gateway 网关运行。
@@ -198,7 +198,7 @@ VM 在后台运行。IronCliw 的守护进程保持 Gateway 网关运行。
 检查状态：
 
 ```bash
-ssh youruser@192.168.64.X "IronCliw status"
+ssh youruser@192.168.64.X "ironcliw status"
 ```
 
 ---
@@ -239,16 +239,16 @@ ssh youruser@192.168.64.X "IronCliw status"
 在进一步自定义之前，快照你的干净状态：
 
 ```bash
-lume stop IronCliw
-lume clone IronCliw IronCliw-golden
+lume stop ironcliw
+lume clone ironcliw ironcliw-golden
 ```
 
 随时重置：
 
 ```bash
-lume stop IronCliw && lume delete IronCliw
-lume clone IronCliw-golden IronCliw
-lume run IronCliw --no-display
+lume stop ironcliw && lume delete ironcliw
+lume clone ironcliw-golden ironcliw
+lume run ironcliw --no-display
 ```
 
 ---
@@ -270,9 +270,9 @@ lume run IronCliw --no-display
 | 问题                    | 解决方案                                                         |
 | ----------------------- | ---------------------------------------------------------------- |
 | 无法 SSH 进入 VM        | 检查 VM 的系统设置中是否启用了"远程登录"                         |
-| VM IP 未显示            | 等待 VM 完全启动，再次运行 `lume get IronCliw`                   |
+| VM IP 未显示            | 等待 VM 完全启动，再次运行 `lume get ironcliw`                   |
 | 找不到 Lume 命令        | 将 `~/.local/bin` 添加到你的 PATH                                |
-| WhatsApp 二维码扫描失败 | 确保运行 `IronCliw channels login` 时你是登录到 VM（而不是主机） |
+| WhatsApp 二维码扫描失败 | 确保运行 `ironcliw channels login` 时你是登录到 VM（而不是主机） |
 
 ---
 

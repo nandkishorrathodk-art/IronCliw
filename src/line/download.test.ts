@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 
 const getMessageContentMock = vi.hoisted(() => vi.fn());
 

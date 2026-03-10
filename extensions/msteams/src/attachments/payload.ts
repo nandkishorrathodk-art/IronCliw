@@ -1,4 +1,4 @@
-import { buildMediaPayload } from "IronCliw/plugin-sdk/msteams";
+import { buildMediaPayload } from "ironcliw/plugin-sdk/msteams";
 
 export function buildMSTeamsMediaPayload(
   mediaList: Array<{ path: string; contentType?: string }>,

@@ -38,8 +38,8 @@ let ensureIronCliwCliOnPath: typeof import("./path-env.js").ensureIronCliwCliOnP
 describe("ensureIronCliwCliOnPath", () => {
   const envKeys = [
     "PATH",
-    "IronCliw_PATH_BOOTSTRAPPED",
-    "IronCliw_ALLOW_PROJECT_LOCAL_BIN",
+    "IRONCLIW_PATH_BOOTSTRAPPED",
+    "IRONCLIW_ALLOW_PROJECT_LOCAL_BIN",
     "MISE_DATA_DIR",
     "HOMEBREW_PREFIX",
     "HOMEBREW_BREW_FILE",
@@ -72,16 +72,16 @@ describe("ensureIronCliwCliOnPath", () => {
     }
   });
 
-  it("prepends the bundled app bin dir when a sibling IronCliw exists", () => {
-    const tmp = abs("/tmp/IronCliw-path/case-bundled");
+  it("prepends the bundled app bin dir when a sibling ironcliw exists", () => {
+    const tmp = abs("/tmp/ironcliw-path/case-bundled");
     const appBinDir = path.join(tmp, "AppBin");
-    const cliPath = path.join(appBinDir, "IronCliw");
+    const cliPath = path.join(appBinDir, "ironcliw");
     setDir(tmp);
     setDir(appBinDir);
     setExe(cliPath);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.IronCliw_PATH_BOOTSTRAPPED;
+    delete process.env.IRONCLIW_PATH_BOOTSTRAPPED;
 
     ensureIronCliwCliOnPath({
       execPath: cliPath,
@@ -96,7 +96,7 @@ describe("ensureIronCliwCliOnPath", () => {
 
   it("is idempotent", () => {
     process.env.PATH = "/bin";
-    process.env.IronCliw_PATH_BOOTSTRAPPED = "1";
+    process.env.IRONCLIW_PATH_BOOTSTRAPPED = "1";
     ensureIronCliwCliOnPath({
       execPath: "/tmp/does-not-matter",
       cwd: "/tmp",
@@ -107,9 +107,9 @@ describe("ensureIronCliwCliOnPath", () => {
   });
 
   it("prepends mise shims when available", () => {
-    const tmp = abs("/tmp/IronCliw-path/case-mise");
+    const tmp = abs("/tmp/ironcliw-path/case-mise");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "IronCliw");
+    const appCli = path.join(appBinDir, "ironcliw");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
@@ -121,7 +121,7 @@ describe("ensureIronCliwCliOnPath", () => {
 
     process.env.MISE_DATA_DIR = miseDataDir;
     process.env.PATH = "/usr/bin";
-    delete process.env.IronCliw_PATH_BOOTSTRAPPED;
+    delete process.env.IRONCLIW_PATH_BOOTSTRAPPED;
 
     ensureIronCliwCliOnPath({
       execPath: appCli,
@@ -139,21 +139,21 @@ describe("ensureIronCliwCliOnPath", () => {
   });
 
   it("only appends project-local node_modules/.bin when explicitly enabled", () => {
-    const tmp = abs("/tmp/IronCliw-path/case-project-local");
+    const tmp = abs("/tmp/ironcliw-path/case-project-local");
     const appBinDir = path.join(tmp, "AppBin");
-    const appCli = path.join(appBinDir, "IronCliw");
+    const appCli = path.join(appBinDir, "ironcliw");
     setDir(tmp);
     setDir(appBinDir);
     setExe(appCli);
 
     const localBinDir = path.join(tmp, "node_modules", ".bin");
-    const localCli = path.join(localBinDir, "IronCliw");
+    const localCli = path.join(localBinDir, "ironcliw");
     setDir(path.join(tmp, "node_modules"));
     setDir(localBinDir);
     setExe(localCli);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.IronCliw_PATH_BOOTSTRAPPED;
+    delete process.env.IRONCLIW_PATH_BOOTSTRAPPED;
 
     ensureIronCliwCliOnPath({
       execPath: appCli,
@@ -165,7 +165,7 @@ describe("ensureIronCliwCliOnPath", () => {
     expect(withoutOptIn.includes(localBinDir)).toBe(false);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.IronCliw_PATH_BOOTSTRAPPED;
+    delete process.env.IRONCLIW_PATH_BOOTSTRAPPED;
 
     ensureIronCliwCliOnPath({
       execPath: appCli,
@@ -182,7 +182,7 @@ describe("ensureIronCliwCliOnPath", () => {
   });
 
   it("prepends Linuxbrew dirs when present", () => {
-    const tmp = abs("/tmp/IronCliw-path/case-linuxbrew");
+    const tmp = abs("/tmp/ironcliw-path/case-linuxbrew");
     const execDir = path.join(tmp, "exec");
     setDir(tmp);
     setDir(execDir);
@@ -195,7 +195,7 @@ describe("ensureIronCliwCliOnPath", () => {
     setDir(linuxbrewSbin);
 
     process.env.PATH = "/usr/bin";
-    delete process.env.IronCliw_PATH_BOOTSTRAPPED;
+    delete process.env.IRONCLIW_PATH_BOOTSTRAPPED;
     delete process.env.HOMEBREW_PREFIX;
     delete process.env.HOMEBREW_BREW_FILE;
     delete process.env.XDG_BIN_HOME;

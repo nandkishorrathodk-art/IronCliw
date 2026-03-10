@@ -24,9 +24,9 @@ without changing the version number — dist-tags are the source of truth for np
 Git checkout:
 
 ```bash
-IronCliw update --channel stable
-IronCliw update --channel beta
-IronCliw update --channel dev
+ironcliw update --channel stable
+ironcliw update --channel beta
+ironcliw update --channel dev
 ```
 
 - `stable`/`beta` check out the latest matching tag (often the same tag).
@@ -35,9 +35,9 @@ IronCliw update --channel dev
 npm/pnpm global install:
 
 ```bash
-IronCliw update --channel stable
-IronCliw update --channel beta
-IronCliw update --channel dev
+ironcliw update --channel stable
+ironcliw update --channel beta
+ironcliw update --channel dev
 ```
 
 This updates via the corresponding npm dist-tag (`latest`, `beta`, `dev`).
@@ -45,7 +45,7 @@ This updates via the corresponding npm dist-tag (`latest`, `beta`, `dev`).
 When you **explicitly** switch channels with `--channel`, IronCliw also aligns
 the install method:
 
-- `dev` ensures a git checkout (default `~/IronCliw`, override with `IronCliw_GIT_DIR`),
+- `dev` ensures a git checkout (default `~/ironcliw`, override with `IRONCLIW_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` installs from npm using the matching dist-tag.
 
@@ -53,7 +53,7 @@ Tip: if you want stable + dev in parallel, keep two clones and point your gatewa
 
 ## Plugins and channels
 
-When you switch channels with `IronCliw update`, IronCliw also syncs plugin sources:
+When you switch channels with `ironcliw update`, IronCliw also syncs plugin sources:
 
 - `dev` prefers bundled plugins from the git checkout.
 - `stable` and `beta` restore npm-installed plugin packages.

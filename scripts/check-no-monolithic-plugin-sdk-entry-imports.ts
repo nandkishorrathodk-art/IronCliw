@@ -4,7 +4,7 @@ import { discoverIronCliwPlugins } from "../src/plugins/discovery.js";
 
 // Match exact monolithic-root specifier in any code path:
 // imports/exports, require/dynamic import, and test mocks (vi.mock/jest.mock).
-const ROOT_IMPORT_PATTERN = /["']IronCliw\/plugin-sdk["']/;
+const ROOT_IMPORT_PATTERN = /["']ironcliw\/plugin-sdk["']/;
 
 function hasMonolithicRootImport(content: string): boolean {
   return ROOT_IMPORT_PATTERN.test(content);
@@ -84,13 +84,13 @@ function main() {
   }
 
   if (offenders.length > 0) {
-    console.error("Bundled plugin source files must not import monolithic IronCliw/plugin-sdk.");
+    console.error("Bundled plugin source files must not import monolithic ironcliw/plugin-sdk.");
     for (const file of offenders.toSorted()) {
       const relative = path.relative(process.cwd(), file) || file;
       console.error(`- ${relative}`);
     }
     console.error(
-      "Use IronCliw/plugin-sdk/<channel> for channel plugins, /core for startup surfaces, or /compat for broader internals.",
+      "Use ironcliw/plugin-sdk/<channel> for channel plugins, /core for startup surfaces, or /compat for broader internals.",
     );
     process.exit(1);
   }

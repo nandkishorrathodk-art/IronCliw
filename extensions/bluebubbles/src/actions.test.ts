@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { bluebubblesMessageActions } from "./actions.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";

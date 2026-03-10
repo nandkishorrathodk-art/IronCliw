@@ -1,7 +1,7 @@
 # IronCliw Fly.io deployment configuration
 # See https://fly.io/docs/reference/configuration/
 
-app = "IronCliw"
+app = "ironcliw"
 primary_region = "iad" # change to your closest region
 
 [build]
@@ -10,8 +10,8 @@ dockerfile = "Dockerfile"
 [env]
 NODE_ENV = "production"
 # Fly uses x86, but keep this for consistency
-IronCliw_PREFER_PNPM = "1"
-IronCliw_STATE_DIR = "/data"
+IRONCLIW_PREFER_PNPM = "1"
+IRONCLIW_STATE_DIR = "/data"
 NODE_OPTIONS = "--max-old-space-size=1536"
 
 [processes]
@@ -30,5 +30,5 @@ size = "shared-cpu-2x"
 memory = "2048mb"
 
 [mounts]
-source = "IronCliw_data"
+source = "ironcliw_data"
 destination = "/data"

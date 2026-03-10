@@ -20,9 +20,9 @@ Z.AI 是 **GLM** 模型的 API 平台。它为 GLM 提供 REST API，并使用 A
 ## CLI 设置
 
 ```bash
-IronCliw onboard --auth-choice zai-api-key
+ironcliw onboard --auth-choice zai-api-key
 # 或非交互式
-IronCliw onboard --zai-api-key "$ZAI_API_KEY"
+ironcliw onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## 配置片段

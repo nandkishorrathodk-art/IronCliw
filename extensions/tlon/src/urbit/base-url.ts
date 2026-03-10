@@ -1,4 +1,4 @@
-import { isBlockedHostnameOrIp } from "IronCliw/plugin-sdk/tlon";
+import { isBlockedHostnameOrIp } from "ironcliw/plugin-sdk/tlon";
 
 export type UrbitBaseUrlValidation =
   | { ok: true; baseUrl: string; hostname: string }

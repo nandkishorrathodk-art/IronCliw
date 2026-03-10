@@ -1,5 +1,5 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
-import { fetchWithSsrFGuard } from "IronCliw/plugin-sdk/matrix";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
+import { fetchWithSsrFGuard } from "ironcliw/plugin-sdk/matrix";
 import { getMatrixRuntime } from "../../runtime.js";
 import {
   normalizeResolvedSecretInputString,

@@ -45,9 +45,9 @@ Once you have SSH access to a macOS VM, continue at step 6 below.
 ## Quick path (Lume, experienced users)
 
 1. Install Lume
-2. `lume create IronCliw --os macos --ipsw latest`
+2. `lume create ironcliw --os macos --ipsw latest`
 3. Complete Setup Assistant, enable Remote Login (SSH)
-4. `lume run IronCliw --no-display`
+4. `lume run ironcliw --no-display`
 5. SSH in, install IronCliw, configure channels
 6. Done
 
@@ -87,7 +87,7 @@ Docs: [Lume Installation](https://cua.ai/docs/lume/guide/getting-started/install
 ## 2) Create the macOS VM
 
 ```bash
-lume create IronCliw --os macos --ipsw latest
+lume create ironcliw --os macos --ipsw latest
 ```
 
 This downloads macOS and creates the VM. A VNC window opens automatically.
@@ -115,7 +115,7 @@ After setup completes, enable SSH:
 ## 4) Get the VM's IP address
 
 ```bash
-lume get IronCliw
+lume get ironcliw
 ```
 
 Look for the IP address (usually `192.168.64.x`).
@@ -137,8 +137,8 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 Inside the VM:
 
 ```bash
-npm install -g IronCliw@latest
-IronCliw onboard --install-daemon
+npm install -g ironcliw@latest
+ironcliw onboard --install-daemon
 ```
 
 Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, etc.).
@@ -150,7 +150,7 @@ Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, 
 Edit the config file:
 
 ```bash
-nano ~/.IronCliw/IronCliw.json
+nano ~/.ironcliw/ironcliw.json
 ```
 
 Add your channels:
@@ -172,7 +172,7 @@ Add your channels:
 Then login to WhatsApp (scan QR):
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 ---
@@ -182,8 +182,8 @@ IronCliw channels login
 Stop the VM and restart without display:
 
 ```bash
-lume stop IronCliw
-lume run IronCliw --no-display
+lume stop ironcliw
+lume run ironcliw --no-display
 ```
 
 The VM runs in the background. IronCliw's daemon keeps the gateway running.
@@ -191,7 +191,7 @@ The VM runs in the background. IronCliw's daemon keeps the gateway running.
 To check status:
 
 ```bash
-ssh youruser@192.168.64.X "IronCliw status"
+ssh youruser@192.168.64.X "ironcliw status"
 ```
 
 ---
@@ -232,16 +232,16 @@ Full setup details: [BlueBubbles channel](/channels/bluebubbles)
 Before customizing further, snapshot your clean state:
 
 ```bash
-lume stop IronCliw
-lume clone IronCliw IronCliw-golden
+lume stop ironcliw
+lume clone ironcliw ironcliw-golden
 ```
 
 Reset anytime:
 
 ```bash
-lume stop IronCliw && lume delete IronCliw
-lume clone IronCliw-golden IronCliw
-lume run IronCliw --no-display
+lume stop ironcliw && lume delete ironcliw
+lume clone ironcliw-golden ironcliw
+lume run ironcliw --no-display
 ```
 
 ---
@@ -263,9 +263,9 @@ For true always-on, consider a dedicated Mac mini or a small VPS. See [VPS hosti
 | Problem                  | Solution                                                                           |
 | ------------------------ | ---------------------------------------------------------------------------------- |
 | Can't SSH into VM        | Check "Remote Login" is enabled in VM's System Settings                            |
-| VM IP not showing        | Wait for VM to fully boot, run `lume get IronCliw` again                           |
+| VM IP not showing        | Wait for VM to fully boot, run `lume get ironcliw` again                           |
 | Lume command not found   | Add `~/.local/bin` to your PATH                                                    |
-| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `IronCliw channels login` |
+| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `ironcliw channels login` |
 
 ---
 

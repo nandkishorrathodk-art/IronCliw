@@ -102,14 +102,14 @@ function defaultIndexHTML() {
     !!(
       window.webkit &&
       window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IronCliwCanvasA2UIAction
+      window.webkit.messageHandlers.ironcliwCanvasA2UIAction
     );
   const hasAndroid = () =>
     !!(
-      (window.IronCliwCanvasA2UIAction &&
-        typeof window.IronCliwCanvasA2UIAction.postMessage === "function")
+      (window.ironcliwCanvasA2UIAction &&
+        typeof window.ironcliwCanvasA2UIAction.postMessage === "function")
     );
-  const hasHelper = () => typeof window.IronCliwSendUserAction === "function";
+  const hasHelper = () => typeof window.ironcliwSendUserAction === "function";
   statusEl.innerHTML =
     "Bridge: " +
     (hasHelper() ? "<span class='ok'>ready</span>" : "<span class='bad'>missing</span>") +
@@ -120,7 +120,7 @@ function defaultIndexHTML() {
     const d = ev && ev.detail || {};
     log("Action status: id=" + (d.id || "?") + " ok=" + String(!!d.ok) + (d.error ? (" error=" + d.error) : ""));
   };
-  window.addEventListener("IronCliw:a2ui-action-status", onStatus);
+  window.addEventListener("ironcliw:a2ui-action-status", onStatus);
 
   function send(name, sourceComponentId) {
     if (!hasHelper()) {
@@ -128,8 +128,8 @@ function defaultIndexHTML() {
       return;
     }
     const sendUserAction =
-      typeof window.IronCliwSendUserAction === "function"
-        ? window.IronCliwSendUserAction
+      typeof window.ironcliwSendUserAction === "function"
+        ? window.ironcliwSendUserAction
         : undefined;
     const ok = sendUserAction({
       name,
@@ -150,10 +150,10 @@ function defaultIndexHTML() {
 }
 
 function isDisabledByEnv() {
-  if (isTruthyEnvValue(process.env.IronCliw_SKIP_CANVAS_HOST)) {
+  if (isTruthyEnvValue(process.env.IRONCLIW_SKIP_CANVAS_HOST)) {
     return true;
   }
-  if (isTruthyEnvValue(process.env.IronCliw_SKIP_CANVAS_HOST)) {
+  if (isTruthyEnvValue(process.env.IRONCLIW_SKIP_CANVAS_HOST)) {
     return true;
   }
   if (process.env.NODE_ENV === "test") {

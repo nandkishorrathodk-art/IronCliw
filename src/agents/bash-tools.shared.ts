@@ -63,7 +63,7 @@ export function buildDockerExecArgs(params: {
   for (const [key, value] of Object.entries(params.env)) {
     // Skip PATH — passing a host PATH (e.g. Windows paths) via -e poisons
     // Docker's executable lookup, causing "sh: not found" on Windows hosts.
-    // PATH is handled separately via IronCliw_PREPEND_PATH below.
+    // PATH is handled separately via IRONCLIW_PREPEND_PATH below.
     if (key === "PATH") {
       continue;
     }
@@ -72,14 +72,14 @@ export function buildDockerExecArgs(params: {
   const hasCustomPath = typeof params.env.PATH === "string" && params.env.PATH.length > 0;
   if (hasCustomPath) {
     // Avoid interpolating PATH into the shell command; pass it via env instead.
-    args.push("-e", `IronCliw_PREPEND_PATH=${params.env.PATH}`);
+    args.push("-e", `IRONCLIW_PREPEND_PATH=${params.env.PATH}`);
   }
   // Login shell (-l) sources /etc/profile which resets PATH to a minimal set,
   // overriding both Docker ENV and -e PATH=... environment variables.
   // Prepend custom PATH after profile sourcing to ensure custom tools are accessible
   // while preserving system paths that /etc/profile may have added.
   const pathExport = hasCustomPath
-    ? 'export PATH="${IronCliw_PREPEND_PATH}:$PATH"; unset IronCliw_PREPEND_PATH; '
+    ? 'export PATH="${IRONCLIW_PREPEND_PATH}:$PATH"; unset IRONCLIW_PREPEND_PATH; '
     : "";
   // Use absolute path for sh to avoid dependency on PATH resolution during exec.
   args.push(params.containerName, "/bin/sh", "-lc", `${pathExport}${params.command}`);

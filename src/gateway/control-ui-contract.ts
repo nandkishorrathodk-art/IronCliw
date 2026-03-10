@@ -1,8 +1,9 @@
-export const CONTROL_UI_BOOTSTRAP_CONFIG_PATH = "/__IronCliw/control-ui-config.json";
+export const CONTROL_UI_BOOTSTRAP_CONFIG_PATH = "/__ironcliw/control-ui-config.json";
 
 export type ControlUiBootstrapConfig = {
   basePath: string;
   assistantName: string;
   assistantAvatar: string;
   assistantAgentId: string;
+  serverVersion?: string;
 };

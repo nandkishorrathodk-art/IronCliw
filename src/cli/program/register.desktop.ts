@@ -27,7 +27,7 @@ export function registerDesktopCommand(program: Command) {
         await desktopPlugin.init();
         const targets = await desktopPlugin.listAvailableTargets();
         console.log("\n--- ACTIVE WINDOWS ---");
-        targets.forEach(t => {
+        targets.forEach((t) => {
           const auth = t.isAuthorized ? "✅ [AUTH]" : "❌ [UNAUTH]";
           console.log(`${auth} ${t.processName} | Title: ${t.title}`);
         });
@@ -37,7 +37,7 @@ export function registerDesktopCommand(program: Command) {
     });
 
   const clipboard = desktop.command("clipboard").description("Manage host clipboard");
-  
+
   clipboard
     .command("get")
     .description("Get text from clipboard")
@@ -73,7 +73,7 @@ export function registerDesktopCommand(program: Command) {
         processes
           .toSorted((a, b) => b.memory - a.memory)
           .slice(0, 20)
-          .forEach(p => {
+          .forEach((p) => {
             console.log(`[${p.pid}] ${p.name.padEnd(25)} | Mem: ${p.memory}MB`);
           });
       } catch (err: unknown) {

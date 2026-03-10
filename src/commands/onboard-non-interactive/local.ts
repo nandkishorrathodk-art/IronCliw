@@ -92,7 +92,6 @@ export async function runNonInteractiveOnboardingLocal(params: {
       opts,
       runtime,
       port: gatewayResult.port,
-      gatewayToken: gatewayResult.gatewayToken,
     });
   }
 
@@ -133,7 +132,7 @@ export async function runNonInteractiveOnboardingLocal(params: {
 
   if (!opts.json) {
     runtime.log(
-      `Tip: run \`${formatCliCommand("IronCliw configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.IronCliw.ai/tools/web`,
+      `Tip: run \`${formatCliCommand("ironcliw configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.ironcliw.ai/tools/web`,
     );
   }
 }

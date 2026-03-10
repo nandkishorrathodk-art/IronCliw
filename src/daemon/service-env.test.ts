@@ -264,22 +264,22 @@ describe("buildServiceEnvironment", () => {
     const env = buildServiceEnvironment({
       env: { HOME: "/home/user" },
       port: 18789,
-      token: "secret",
     });
     expect(env.HOME).toBe("/home/user");
     if (process.platform === "win32") {
-      expect(env.PATH).toBe("");
+      expect(env).not.toHaveProperty("PATH");
     } else {
       expect(env.PATH).toContain("/usr/bin");
     }
-    expect(env.IronCliw_GATEWAY_PORT).toBe("18789");
-    expect(env.IronCliw_GATEWAY_TOKEN).toBe("secret");
-    expect(env.IronCliw_SERVICE_MARKER).toBe("IronCliw");
-    expect(env.IronCliw_SERVICE_KIND).toBe("gateway");
-    expect(typeof env.IronCliw_SERVICE_VERSION).toBe("string");
-    expect(env.IronCliw_SYSTEMD_UNIT).toBe("IronCliw-gateway.service");
+    expect(env.IRONCLIW_GATEWAY_PORT).toBe("18789");
+    expect(env.IRONCLIW_GATEWAY_TOKEN).toBeUndefined();
+    expect(env.IRONCLIW_SERVICE_MARKER).toBe("ironcliw");
+    expect(env.IRONCLIW_SERVICE_KIND).toBe("gateway");
+    expect(typeof env.IRONCLIW_SERVICE_VERSION).toBe("string");
+    expect(env.IRONCLIW_SYSTEMD_UNIT).toBe("ironcliw-gateway.service");
+    expect(env.IRONCLIW_WINDOWS_TASK_NAME).toBe("IronCliw Gateway");
     if (process.platform === "darwin") {
-      expect(env.IronCliw_LAUNCHD_LABEL).toBe("ai.IronCliw.gateway");
+      expect(env.IRONCLIW_LAUNCHD_LABEL).toBe("ai.ironcliw.gateway");
     }
   });
 
@@ -301,12 +301,13 @@ describe("buildServiceEnvironment", () => {
 
   it("uses profile-specific unit and label", () => {
     const env = buildServiceEnvironment({
-      env: { HOME: "/home/user", IronCliw_PROFILE: "work" },
+      env: { HOME: "/home/user", IRONCLIW_PROFILE: "work" },
       port: 18789,
     });
-    expect(env.IronCliw_SYSTEMD_UNIT).toBe("IronCliw-gateway-work.service");
+    expect(env.IRONCLIW_SYSTEMD_UNIT).toBe("ironcliw-gateway-work.service");
+    expect(env.IRONCLIW_WINDOWS_TASK_NAME).toBe("IronCliw Gateway (work)");
     if (process.platform === "darwin") {
-      expect(env.IronCliw_LAUNCHD_LABEL).toBe("ai.IronCliw.work");
+      expect(env.IRONCLIW_LAUNCHD_LABEL).toBe("ai.ironcliw.work");
     }
   });
 
@@ -329,6 +330,20 @@ describe("buildServiceEnvironment", () => {
     expect(env.http_proxy).toBe("http://proxy.local:7890");
     expect(env.all_proxy).toBe("socks5://proxy.local:1080");
   });
+
+  it("omits PATH on Windows so Scheduled Tasks can inherit the current shell path", () => {
+    const env = buildServiceEnvironment({
+      env: {
+        HOME: "C:\\Users\\alice",
+        PATH: "C:\\Windows\\System32;C:\\Tools\\rg",
+      },
+      port: 18789,
+      platform: "win32",
+    });
+
+    expect(env).not.toHaveProperty("PATH");
+    expect(env.IRONCLIW_WINDOWS_TASK_NAME).toBe("IronCliw Gateway");
+  });
 });
 
 describe("buildNodeServiceEnvironment", () => {
@@ -339,40 +354,40 @@ describe("buildNodeServiceEnvironment", () => {
     expect(env.HOME).toBe("/home/user");
   });
 
-  it("passes through IronCliw_GATEWAY_TOKEN for node services", () => {
+  it("passes through IRONCLIW_GATEWAY_TOKEN for node services", () => {
     const env = buildNodeServiceEnvironment({
-      env: { HOME: "/home/user", IronCliw_GATEWAY_TOKEN: " node-token " },
+      env: { HOME: "/home/user", IRONCLIW_GATEWAY_TOKEN: " node-token " },
     });
-    expect(env.IronCliw_GATEWAY_TOKEN).toBe("node-token");
+    expect(env.IRONCLIW_GATEWAY_TOKEN).toBe("node-token");
   });
 
-  it("maps legacy CLAWDBOT_GATEWAY_TOKEN to IronCliw_GATEWAY_TOKEN for node services", () => {
+  it("maps legacy CLAWDBOT_GATEWAY_TOKEN to IRONCLIW_GATEWAY_TOKEN for node services", () => {
     const env = buildNodeServiceEnvironment({
       env: { HOME: "/home/user", CLAWDBOT_GATEWAY_TOKEN: " legacy-token " },
     });
-    expect(env.IronCliw_GATEWAY_TOKEN).toBe("legacy-token");
+    expect(env.IRONCLIW_GATEWAY_TOKEN).toBe("legacy-token");
   });
 
-  it("prefers IronCliw_GATEWAY_TOKEN over legacy CLAWDBOT_GATEWAY_TOKEN", () => {
+  it("prefers IRONCLIW_GATEWAY_TOKEN over legacy CLAWDBOT_GATEWAY_TOKEN", () => {
     const env = buildNodeServiceEnvironment({
       env: {
         HOME: "/home/user",
-        IronCliw_GATEWAY_TOKEN: "IronCliw-token",
+        IRONCLIW_GATEWAY_TOKEN: "ironcliw-token",
         CLAWDBOT_GATEWAY_TOKEN: "legacy-token",
       },
     });
-    expect(env.IronCliw_GATEWAY_TOKEN).toBe("IronCliw-token");
+    expect(env.IRONCLIW_GATEWAY_TOKEN).toBe("ironcliw-token");
   });
 
-  it("omits IronCliw_GATEWAY_TOKEN when both token env vars are empty", () => {
+  it("omits IRONCLIW_GATEWAY_TOKEN when both token env vars are empty", () => {
     const env = buildNodeServiceEnvironment({
       env: {
         HOME: "/home/user",
-        IronCliw_GATEWAY_TOKEN: "   ",
+        IRONCLIW_GATEWAY_TOKEN: "   ",
         CLAWDBOT_GATEWAY_TOKEN: " ",
       },
     });
-    expect(env.IronCliw_GATEWAY_TOKEN).toBeUndefined();
+    expect(env.IRONCLIW_GATEWAY_TOKEN).toBeUndefined();
   });
 
   it("forwards proxy environment variables for node services", () => {
@@ -451,31 +466,31 @@ describe("shared Node TLS env defaults", () => {
 describe("resolveGatewayStateDir", () => {
   it("uses the default state dir when no overrides are set", () => {
     const env = { HOME: "/Users/test" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".IronCliw"));
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".ironcliw"));
   });
 
   it("appends the profile suffix when set", () => {
-    const env = { HOME: "/Users/test", IronCliw_PROFILE: "rescue" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".IronCliw-rescue"));
+    const env = { HOME: "/Users/test", IRONCLIW_PROFILE: "rescue" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".ironcliw-rescue"));
   });
 
   it("treats default profiles as the base state dir", () => {
-    const env = { HOME: "/Users/test", IronCliw_PROFILE: "Default" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".IronCliw"));
+    const env = { HOME: "/Users/test", IRONCLIW_PROFILE: "Default" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".ironcliw"));
   });
 
-  it("uses IronCliw_STATE_DIR when provided", () => {
-    const env = { HOME: "/Users/test", IronCliw_STATE_DIR: "/var/lib/IronCliw" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/IronCliw"));
+  it("uses IRONCLIW_STATE_DIR when provided", () => {
+    const env = { HOME: "/Users/test", IRONCLIW_STATE_DIR: "/var/lib/ironcliw" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/ironcliw"));
   });
 
-  it("expands ~ in IronCliw_STATE_DIR", () => {
-    const env = { HOME: "/Users/test", IronCliw_STATE_DIR: "~/IronCliw-state" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/IronCliw-state"));
+  it("expands ~ in IRONCLIW_STATE_DIR", () => {
+    const env = { HOME: "/Users/test", IRONCLIW_STATE_DIR: "~/ironcliw-state" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/ironcliw-state"));
   });
 
   it("preserves Windows absolute paths without HOME", () => {
-    const env = { IronCliw_STATE_DIR: "C:\\State\\IronCliw" };
-    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\IronCliw");
+    const env = { IRONCLIW_STATE_DIR: "C:\\State\\ironcliw" };
+    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\ironcliw");
   });
 });

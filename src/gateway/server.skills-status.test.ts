@@ -9,9 +9,9 @@ installGatewayTestHooks({ scope: "suite" });
 describe("gateway skills.status", () => {
   it("does not expose raw config values to operator.read clients", async () => {
     await withEnvAsync(
-      { IronCliw_BUNDLED_SKILLS_DIR: path.join(process.cwd(), "skills") },
+      { IRONCLIW_BUNDLED_SKILLS_DIR: path.join(process.cwd(), "skills") },
       async () => {
-        const secret = "discord-token-secret-abc";
+        const secret = "discord-token-secret-abc"; // pragma: allowlist secret
         const { writeConfigFile } = await import("../config/config.js");
         await writeConfigFile({
           session: { mainKey: "main-test" },

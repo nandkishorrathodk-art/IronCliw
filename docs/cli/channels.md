@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw channels` (accounts, status, login/logout, logs)"
+summary: "CLI reference for `ironcliw channels` (accounts, status, login/logout, logs)"
 read_when:
   - You want to add/remove channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost (plugin)/Signal/iMessage)
   - You want to check channel status or tail channel logs
 title: "channels"
 ---
 
-# `IronCliw channels`
+# `ironcliw channels`
 
 Manage chat channel accounts and their runtime status on the Gateway.
 
@@ -18,24 +18,24 @@ Related docs:
 ## Common commands
 
 ```bash
-IronCliw channels list
-IronCliw channels status
-IronCliw channels capabilities
-IronCliw channels capabilities --channel discord --target channel:123
-IronCliw channels resolve --channel slack "#general" "@jane"
-IronCliw channels logs --channel all
+ironcliw channels list
+ironcliw channels status
+ironcliw channels capabilities
+ironcliw channels capabilities --channel discord --target channel:123
+ironcliw channels resolve --channel slack "#general" "@jane"
+ironcliw channels logs --channel all
 ```
 
 ## Add / remove accounts
 
 ```bash
-IronCliw channels add --channel telegram --token <bot-token>
-IronCliw channels remove --channel telegram --delete
+ironcliw channels add --channel telegram --token <bot-token>
+ironcliw channels remove --channel telegram --delete
 ```
 
-Tip: `IronCliw channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
+Tip: `ironcliw channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
 
-When you run `IronCliw channels add` without flags, the interactive wizard can prompt:
+When you run `ironcliw channels add` without flags, the interactive wizard can prompt:
 
 - account ids per selected channel
 - optional display names for those accounts
@@ -43,7 +43,7 @@ When you run `IronCliw channels add` without flags, the interactive wizard can p
 
 If you confirm bind now, the wizard asks which agent should own each configured channel account and writes account-scoped routing bindings.
 
-You can also manage the same routing rules later with `IronCliw agents bindings`, `IronCliw agents bind`, and `IronCliw agents unbind` (see [agents](/cli/agents)).
+You can also manage the same routing rules later with `ironcliw agents bindings`, `ironcliw agents bind`, and `ironcliw agents unbind` (see [agents](/cli/agents)).
 
 When you add a non-default account to a channel that is still using single-account top-level settings (no `channels.<channel>.accounts` entries yet), IronCliw moves account-scoped single-account top-level values into `channels.<channel>.accounts.default`, then writes the new account. This preserves the original account behavior while moving to the multi-account shape.
 
@@ -53,28 +53,29 @@ Routing behavior stays consistent:
 - `channels add` does not auto-create or rewrite bindings in non-interactive mode.
 - Interactive setup can optionally add account-scoped bindings.
 
-If your config was already in a mixed state (named accounts present, missing `default`, and top-level single-account values still set), run `IronCliw doctor --fix` to move account-scoped values into `accounts.default`.
+If your config was already in a mixed state (named accounts present, missing `default`, and top-level single-account values still set), run `ironcliw doctor --fix` to move account-scoped values into `accounts.default`.
 
 ## Login / logout (interactive)
 
 ```bash
-IronCliw channels login --channel whatsapp
-IronCliw channels logout --channel whatsapp
+ironcliw channels login --channel whatsapp
+ironcliw channels logout --channel whatsapp
 ```
 
 ## Troubleshooting
 
-- Run `IronCliw status --deep` for a broad probe.
-- Use `IronCliw doctor` for guided fixes.
-- `IronCliw channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- Run `ironcliw status --deep` for a broad probe.
+- Use `ironcliw doctor` for guided fixes.
+- `ironcliw channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- `ironcliw channels status` falls back to config-only summaries when the gateway is unreachable. If a supported channel credential is configured via SecretRef but unavailable in the current command path, it reports that account as configured with degraded notes instead of showing it as not configured.
 
 ## Capabilities probe
 
 Fetch provider capability hints (intents/scopes where available) plus static feature support:
 
 ```bash
-IronCliw channels capabilities
-IronCliw channels capabilities --channel discord --target channel:123
+ironcliw channels capabilities
+ironcliw channels capabilities --channel discord --target channel:123
 ```
 
 Notes:
@@ -88,12 +89,13 @@ Notes:
 Resolve channel/user names to IDs using the provider directory:
 
 ```bash
-IronCliw channels resolve --channel slack "#general" "@jane"
-IronCliw channels resolve --channel discord "My Server/#support" "@someone"
-IronCliw channels resolve --channel matrix "Project Room"
+ironcliw channels resolve --channel slack "#general" "@jane"
+ironcliw channels resolve --channel discord "My Server/#support" "@someone"
+ironcliw channels resolve --channel matrix "Project Room"
 ```
 
 Notes:
 
 - Use `--kind user|group|auto` to force the target type.
 - Resolution prefers active matches when multiple entries share the same name.
+- `channels resolve` is read-only. If a selected account is configured via SecretRef but that credential is unavailable in the current command path, the command returns degraded unresolved results with notes instead of aborting the entire run.

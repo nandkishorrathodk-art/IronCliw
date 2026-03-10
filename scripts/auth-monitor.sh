@@ -3,18 +3,18 @@
 # Run via cron or systemd timer to get proactive notifications
 # before Claude Code auth expires.
 #
-# Suggested cron: */30 * * * * /home/admin/IronCliw/scripts/auth-monitor.sh
+# Suggested cron: */30 * * * * /home/admin/ironcliw/scripts/auth-monitor.sh
 #
 # Environment variables:
 #   NOTIFY_PHONE - Phone number to send IronCliw notification (e.g., +1234567890)
-#   NOTIFY_NTFY  - ntfy.sh topic for push notifications (e.g., IronCliw-alerts)
+#   NOTIFY_NTFY  - ntfy.sh topic for push notifications (e.g., ironcliw-alerts)
 #   WARN_HOURS   - Hours before expiry to warn (default: 2)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_CREDS="$HOME/.claude/.credentials.json"
-STATE_FILE="$HOME/.IronCliw/auth-monitor-state"
+STATE_FILE="$HOME/.ironcliw/auth-monitor-state"
 
 # Configuration
 WARN_HOURS="${WARN_HOURS:-2}"
@@ -43,10 +43,10 @@ send_notification() {
 
     # Send via IronCliw if phone configured and auth still valid
     if [ -n "$NOTIFY_PHONE" ]; then
-        # Check if we can still use IronCliw
+        # Check if we can still use ironcliw
         if "$SCRIPT_DIR/claude-auth-status.sh" simple 2>/dev/null | grep -q "OK\|EXPIRING"; then
             echo "Sending via IronCliw to $NOTIFY_PHONE..."
-            IronCliw send --to "$NOTIFY_PHONE" --message "$message" 2>/dev/null || true
+            ironcliw send --to "$NOTIFY_PHONE" --message "$message" 2>/dev/null || true
         fi
     fi
 
@@ -78,7 +78,7 @@ HOURS_LEFT=$((DIFF_MS / 3600000))
 MINS_LEFT=$(((DIFF_MS % 3600000) / 60000))
 
 if [ "$DIFF_MS" -lt 0 ]; then
-    send_notification "Claude Code auth EXPIRED! IronCliw is down. Run: ssh l36 '~/IronCliw/scripts/mobile-reauth.sh'" "urgent"
+    send_notification "Claude Code auth EXPIRED! IronCliw is down. Run: ssh l36 '~/ironcliw/scripts/mobile-reauth.sh'" "urgent"
     exit 1
 elif [ "$HOURS_LEFT" -lt "$WARN_HOURS" ]; then
     send_notification "Claude Code auth expires in ${HOURS_LEFT}h ${MINS_LEFT}m. Consider re-auth soon." "high"
@@ -87,4 +87,3 @@ else
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Auth OK: ${HOURS_LEFT}h ${MINS_LEFT}m remaining"
     exit 0
 fi
-

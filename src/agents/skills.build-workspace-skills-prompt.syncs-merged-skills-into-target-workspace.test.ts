@@ -26,7 +26,7 @@ async function createCaseDir(prefix: string): Promise<string> {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-skills-sync-suite-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-skills-sync-suite-"));
   syncSourceTemplateDir = await createCaseDir("source-template");
   await writeSkill({
     dir: path.join(syncSourceTemplateDir, ".extra", "demo-skill"),
@@ -95,6 +95,46 @@ describe("buildWorkspaceSkillsPrompt", () => {
     expect(prompt).not.toContain("Extra version");
     expect(prompt.replaceAll("\\", "/")).toContain("demo-skill/SKILL.md");
   });
+  it.runIf(process.platform !== "win32")(
+    "does not sync workspace skills that resolve outside the source workspace root",
+    async () => {
+      const sourceWorkspace = await createCaseDir("source");
+      const targetWorkspace = await createCaseDir("target");
+      const outsideRoot = await createCaseDir("outside");
+      const outsideSkillDir = path.join(outsideRoot, "escaped-skill");
+
+      await writeSkill({
+        dir: outsideSkillDir,
+        name: "escaped-skill",
+        description: "Outside source workspace",
+      });
+      await fs.mkdir(path.join(sourceWorkspace, "skills"), { recursive: true });
+      await fs.symlink(
+        outsideSkillDir,
+        path.join(sourceWorkspace, "skills", "escaped-skill"),
+        "dir",
+      );
+
+      await withEnv({ HOME: sourceWorkspace, PATH: "" }, () =>
+        syncSkillsToWorkspace({
+          sourceWorkspaceDir: sourceWorkspace,
+          targetWorkspaceDir: targetWorkspace,
+          bundledSkillsDir: path.join(sourceWorkspace, ".bundled"),
+          managedSkillsDir: path.join(sourceWorkspace, ".managed"),
+        }),
+      );
+
+      const prompt = buildPrompt(targetWorkspace, {
+        bundledSkillsDir: path.join(targetWorkspace, ".bundled"),
+        managedSkillsDir: path.join(targetWorkspace, ".managed"),
+      });
+
+      expect(prompt).not.toContain("escaped-skill");
+      expect(
+        await pathExists(path.join(targetWorkspace, "skills", "escaped-skill", "SKILL.md")),
+      ).toBe(false);
+    },
+  );
   it("keeps synced skills confined under target workspace when frontmatter name uses traversal", async () => {
     const sourceWorkspace = await createCaseDir("source");
     const targetWorkspace = await createCaseDir("target");
@@ -164,7 +204,7 @@ describe("buildWorkspaceSkillsPrompt", () => {
       name: "nano-banana-pro",
       description: "Generates images",
       metadata:
-        '{"IronCliw":{"requires":{"env":["GEMINI_API_KEY"]},"primaryEnv":"GEMINI_API_KEY"}}',
+        '{"ironcliw":{"requires":{"env":["GEMINI_API_KEY"]},"primaryEnv":"GEMINI_API_KEY"}}',
       body: "# Nano Banana\n",
     });
 
@@ -178,7 +218,7 @@ describe("buildWorkspaceSkillsPrompt", () => {
       const enabledPrompt = buildPrompt(workspaceDir, {
         managedSkillsDir: path.join(workspaceDir, ".managed"),
         config: {
-          skills: { entries: { "nano-banana-pro": { apiKey: "test-key" } } },
+          skills: { entries: { "nano-banana-pro": { apiKey: "test-key" } } }, // pragma: allowlist secret
         },
       });
       expect(enabledPrompt).toContain("nano-banana-pro");

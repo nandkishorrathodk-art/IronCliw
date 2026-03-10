@@ -6,7 +6,7 @@ import { saveAuthProfileStore } from "./auth-profiles.js";
 import { discoverAuthStorage } from "./pi-model-discovery.js";
 
 async function createAgentDir(): Promise<string> {
-  return await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-pi-auth-storage-"));
+  return await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-pi-auth-storage-"));
 }
 
 async function withAgentDir(run: (agentDir: string) => Promise<void>): Promise<void> {
@@ -128,8 +128,8 @@ describe("discoverAuthStorage", () => {
 
   it("preserves legacy auth.json when auth store is forced read-only", async () => {
     await withAgentDir(async (agentDir) => {
-      const previous = process.env.IronCliw_AUTH_STORE_READONLY;
-      process.env.IronCliw_AUTH_STORE_READONLY = "1";
+      const previous = process.env.IRONCLIW_AUTH_STORE_READONLY;
+      process.env.IRONCLIW_AUTH_STORE_READONLY = "1";
       try {
         writeRuntimeOpenRouterProfile(agentDir);
         await writeLegacyAuthJson(agentDir, {
@@ -142,9 +142,9 @@ describe("discoverAuthStorage", () => {
         expect(parsed.openrouter).toMatchObject({ type: "api_key", key: "legacy-static-key" });
       } finally {
         if (previous === undefined) {
-          delete process.env.IronCliw_AUTH_STORE_READONLY;
+          delete process.env.IRONCLIW_AUTH_STORE_READONLY;
         } else {
-          process.env.IronCliw_AUTH_STORE_READONLY = previous;
+          process.env.IRONCLIW_AUTH_STORE_READONLY = previous;
         }
       }
     });

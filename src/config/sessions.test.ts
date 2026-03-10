@@ -28,7 +28,7 @@ describe("sessions", () => {
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sessions-suite-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sessions-suite-"));
   });
 
   afterAll(async () => {
@@ -36,7 +36,7 @@ describe("sessions", () => {
   });
 
   const withStateDir = <T>(stateDir: string, fn: () => T): T =>
-    withEnv({ IronCliw_STATE_DIR: stateDir }, fn);
+    withEnv({ IRONCLIW_STATE_DIR: stateDir }, fn);
 
   async function createSessionStoreFixture(params: {
     prefix: string;
@@ -147,11 +147,11 @@ describe("sessions", () => {
       buildGroupDisplayName({
         provider: "discord",
         groupChannel: "#general",
-        space: "friends-of-IronCliw",
+        space: "friends-of-ironcliw",
         id: "123",
         key: "discord:group:123",
       }),
-    ).toBe("discord:friends-of-IronCliw#general");
+    ).toBe("discord:friends-of-ironcliw#general");
   });
 
   const resolveSessionKeyCases = [
@@ -539,9 +539,9 @@ describe("sessions", () => {
     expect(entry.lastProvider).toBeUndefined();
   });
 
-  it("derives session transcripts dir from IronCliw_STATE_DIR", () => {
+  it("derives session transcripts dir from IRONCLIW_STATE_DIR", () => {
     const dir = resolveSessionTranscriptsDir(
-      { IronCliw_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
+      { IRONCLIW_STATE_DIR: "/custom/state" } as NodeJS.ProcessEnv,
       () => "/home/ignored",
     );
     expect(dir).toBe(path.join(path.resolve("/custom/state"), "agents", "main", "sessions"));
@@ -584,7 +584,7 @@ describe("sessions", () => {
     );
   });
 
-  it("resolves cross-agent paths when IronCliw_STATE_DIR differs from stored paths", () => {
+  it("resolves cross-agent paths when IRONCLIW_STATE_DIR differs from stored paths", () => {
     withStateDir(path.resolve("/different/state"), () => {
       const originalBase = path.resolve("/original/state");
       const bot2Session = path.join(originalBase, "agents", "bot2", "sessions", "sess-1.jsonl");
@@ -632,7 +632,7 @@ describe("sessions", () => {
   });
 
   it("resolveSessionFilePathOptions keeps explicit agentId alongside absolute store path", () => {
-    const storePath = "/tmp/IronCliw/agents/main/sessions/sessions.json";
+    const storePath = "/tmp/ironcliw/agents/main/sessions/sessions.json";
     const resolved = resolveSessionFilePathOptions({
       agentId: "bot2",
       storePath,

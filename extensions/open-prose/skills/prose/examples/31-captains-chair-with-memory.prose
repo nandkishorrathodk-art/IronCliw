@@ -143,4 +143,3 @@ Extract:
 # Output both the result and the learnings
 output result = validated
 output learnings = session_learnings
-

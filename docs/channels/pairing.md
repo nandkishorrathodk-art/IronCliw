@@ -32,15 +32,15 @@ Pairing codes:
 ### Approve a sender
 
 ```bash
-IronCliw pairing list telegram
-IronCliw pairing approve telegram <CODE>
+ironcliw pairing list telegram
+ironcliw pairing approve telegram <CODE>
 ```
 
 Supported channels: `telegram`, `whatsapp`, `signal`, `imessage`, `discord`, `slack`, `feishu`.
 
 ### Where the state lives
 
-Stored under `~/.IronCliw/credentials/`:
+Stored under `~/.ironcliw/credentials/`:
 
 - Pending requests: `<channel>-pairing.json`
 - Approved allowlist store:
@@ -79,21 +79,21 @@ Treat the setup code like a password while it is valid.
 ### Approve a node device
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
-IronCliw devices reject <requestId>
+ironcliw devices list
+ironcliw devices approve <requestId>
+ironcliw devices reject <requestId>
 ```
 
 ### Node pairing state storage
 
-Stored under `~/.IronCliw/devices/`:
+Stored under `~/.ironcliw/devices/`:
 
 - `pending.json` (short-lived; pending requests expire)
 - `paired.json` (paired devices + tokens)
 
 ### Notes
 
-- The legacy `node.pair.*` API (CLI: `IronCliw nodes pending/approve`) is a
+- The legacy `node.pair.*` API (CLI: `ironcliw nodes pending/approve`) is a
   separate gateway-owned pairing store. WS nodes still require device pairing.
 
 ## Related docs

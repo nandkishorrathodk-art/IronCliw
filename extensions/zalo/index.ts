@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/zalo";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/zalo";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/zalo";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/zalo";
 import { zaloDock, zaloPlugin } from "./src/channel.js";
 import { setZaloRuntime } from "./src/runtime.js";
 

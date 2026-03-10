@@ -50,7 +50,7 @@ From repo root:
 
 This script:
 
-- builds the gateway image locally (or pulls a remote image if `IronCliw_IMAGE` is set)
+- builds the gateway image locally (or pulls a remote image if `IRONCLIW_IMAGE` is set)
 - runs the onboarding wizard
 - prints optional provider setup hints
 - starts the gateway via Docker Compose
@@ -58,28 +58,29 @@ This script:
 
 Optional env vars:
 
-- `IronCliw_IMAGE` — use a remote image instead of building locally (e.g. `ghcr.io/IronCliw/IronCliw:latest`)
-- `IronCliw_DOCKER_APT_PACKAGES` — install extra apt packages during build
-- `IronCliw_EXTRA_MOUNTS` — add extra host bind mounts
-- `IronCliw_HOME_VOLUME` — persist `/home/node` in a named volume
-- `IronCliw_SANDBOX` — opt in to Docker gateway sandbox bootstrap. Only explicit truthy values enable it: `1`, `true`, `yes`, `on`
-- `IronCliw_INSTALL_DOCKER_CLI` — build arg passthrough for local image builds (`1` installs Docker CLI in the image). `docker-setup.sh` sets this automatically when `IronCliw_SANDBOX=1` for local builds.
-- `IronCliw_DOCKER_SOCKET` — override Docker socket path (default: `DOCKER_HOST=unix://...` path, else `/var/run/docker.sock`)
-- `IronCliw_ALLOW_INSECURE_PRIVATE_WS=1` — break-glass: allow trusted private-network
+- `IRONCLIW_IMAGE` — use a remote image instead of building locally (e.g. `ghcr.io/ironcliw/ironcliw:latest`)
+- `IRONCLIW_DOCKER_APT_PACKAGES` — install extra apt packages during build
+- `IRONCLIW_EXTENSIONS` — pre-install extension dependencies at build time (space-separated extension names, e.g. `diagnostics-otel matrix`)
+- `IRONCLIW_EXTRA_MOUNTS` — add extra host bind mounts
+- `IRONCLIW_HOME_VOLUME` — persist `/home/node` in a named volume
+- `IRONCLIW_SANDBOX` — opt in to Docker gateway sandbox bootstrap. Only explicit truthy values enable it: `1`, `true`, `yes`, `on`
+- `IRONCLIW_INSTALL_DOCKER_CLI` — build arg passthrough for local image builds (`1` installs Docker CLI in the image). `docker-setup.sh` sets this automatically when `IRONCLIW_SANDBOX=1` for local builds.
+- `IRONCLIW_DOCKER_SOCKET` — override Docker socket path (default: `DOCKER_HOST=unix://...` path, else `/var/run/docker.sock`)
+- `IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1` — break-glass: allow trusted private-network
   `ws://` targets for CLI/onboarding client paths (default is loopback-only)
-- `IronCliw_BROWSER_DISABLE_GRAPHICS_FLAGS=0` — disable container browser hardening flags
+- `IRONCLIW_BROWSER_DISABLE_GRAPHICS_FLAGS=0` — disable container browser hardening flags
   `--disable-3d-apis`, `--disable-software-rasterizer`, `--disable-gpu` when you need
   WebGL/3D compatibility.
-- `IronCliw_BROWSER_DISABLE_EXTENSIONS=0` — keep extensions enabled when browser
+- `IRONCLIW_BROWSER_DISABLE_EXTENSIONS=0` — keep extensions enabled when browser
   flows require them (default keeps extensions disabled in sandbox browser).
-- `IronCliw_BROWSER_RENDERER_PROCESS_LIMIT=<N>` — set Chromium renderer process
+- `IRONCLIW_BROWSER_RENDERER_PROCESS_LIMIT=<N>` — set Chromium renderer process
   limit; set to `0` to skip the flag and use Chromium default behavior.
 
 After it finishes:
 
 - Open `http://127.0.0.1:18789/` in your browser.
 - Paste the token into the Control UI (Settings → token).
-- Need the URL again? Run `docker compose run --rm IronCliw-cli dashboard --no-open`.
+- Need the URL again? Run `docker compose run --rm ironcliw-cli dashboard --no-open`.
 
 ### Enable agent sandbox for Docker gateway (opt-in)
 
@@ -89,15 +90,15 @@ deployments.
 Enable with:
 
 ```bash
-export IronCliw_SANDBOX=1
+export IRONCLIW_SANDBOX=1
 ./docker-setup.sh
 ```
 
 Custom socket path (for example rootless Docker):
 
 ```bash
-export IronCliw_SANDBOX=1
-export IronCliw_DOCKER_SOCKET=/run/user/1000/docker.sock
+export IRONCLIW_SANDBOX=1
+export IRONCLIW_DOCKER_SOCKET=/run/user/1000/docker.sock
 ./docker-setup.sh
 ```
 
@@ -108,9 +109,9 @@ Notes:
   `agents.defaults.sandbox.mode` to `off` to avoid stale/broken sandbox config
   on reruns.
 - If `Dockerfile.sandbox` is missing, the script prints a warning and continues;
-  build `IronCliw-sandbox:bookworm-slim` with `scripts/sandbox-setup.sh` if
+  build `ironcliw-sandbox:bookworm-slim` with `scripts/sandbox-setup.sh` if
   needed.
-- For non-local `IronCliw_IMAGE` values, the image must already contain Docker
+- For non-local `IRONCLIW_IMAGE` values, the image must already contain Docker
   CLI support for sandbox execution.
 
 ### Automation/CI (non-interactive, no TTY noise)
@@ -118,8 +119,8 @@ Notes:
 For scripts and CI, disable Compose pseudo-TTY allocation with `-T`:
 
 ```bash
-docker compose run -T --rm IronCliw-cli gateway probe
-docker compose run -T --rm IronCliw-cli devices list --json
+docker compose run -T --rm ironcliw-cli gateway probe
+docker compose run -T --rm ironcliw-cli devices list --json
 ```
 
 If your automation exports no Claude session vars, leaving them unset now resolves to
@@ -128,20 +129,20 @@ warnings.
 
 ### Shared-network security note (CLI + gateway)
 
-`IronCliw-cli` uses `network_mode: "service:IronCliw-gateway"` so CLI commands can
+`ironcliw-cli` uses `network_mode: "service:ironcliw-gateway"` so CLI commands can
 reliably reach the gateway over `127.0.0.1` in Docker.
 
 Treat this as a shared trust boundary: loopback binding is not isolation between these two
 containers. If you need stronger separation, run commands from a separate container/host
-network path instead of the bundled `IronCliw-cli` service.
+network path instead of the bundled `ironcliw-cli` service.
 
 To reduce impact if the CLI process is compromised, the compose config drops
-`NET_RAW`/`NET_ADMIN` and enables `no-new-privileges` on `IronCliw-cli`.
+`NET_RAW`/`NET_ADMIN` and enables `no-new-privileges` on `ironcliw-cli`.
 
 It writes config/workspace on the host:
 
-- `~/.IronCliw/`
-- `~/.IronCliw/workspace`
+- `~/.ironcliw/`
+- `~/.ironcliw/workspace`
 
 Running on a VPS? See [Hetzner (Docker VPS)](/install/hetzner).
 
@@ -149,9 +150,9 @@ Running on a VPS? See [Hetzner (Docker VPS)](/install/hetzner).
 
 Official pre-built images are published at:
 
-- [GitHub Container Registry package](https://github.com/IronCliw/IronCliw/pkgs/container/IronCliw)
+- [GitHub Container Registry package](https://github.com/ironcliw/ironcliw/pkgs/container/ironcliw)
 
-Use image name `ghcr.io/IronCliw/IronCliw` (not similarly named Docker Hub
+Use image name `ghcr.io/ironcliw/ironcliw` (not similarly named Docker Hub
 images).
 
 Common tags:
@@ -166,13 +167,14 @@ The main Docker image currently uses:
 
 - `node:22-bookworm`
 
-The docker image now publishes OCI base-image annotations (sha256 is an example):
+The docker image now publishes OCI base-image annotations (sha256 is an example,
+and points at the pinned multi-arch manifest list for that tag):
 
 - `org.opencontainers.image.base.name=docker.io/library/node:22-bookworm`
-- `org.opencontainers.image.base.digest=sha256:cd7bcd2e7a1e6f72052feb023c7f6b722205d3fcab7bbcbd2d1bfdab10b1e935`
-- `org.opencontainers.image.source=https://github.com/IronCliw/IronCliw`
-- `org.opencontainers.image.url=https://IronCliw.ai`
-- `org.opencontainers.image.documentation=https://docs.IronCliw.ai/install/docker`
+- `org.opencontainers.image.base.digest=sha256:b501c082306a4f528bc4038cbf2fbb58095d583d0419a259b2114b5ac53d12e9`
+- `org.opencontainers.image.source=https://github.com/ironcliw/ironcliw`
+- `org.opencontainers.image.url=https://ironcliw.ai`
+- `org.opencontainers.image.documentation=https://docs.ironcliw.ai/install/docker`
 - `org.opencontainers.image.licenses=MIT`
 - `org.opencontainers.image.title=IronCliw`
 - `org.opencontainers.image.description=IronCliw gateway and CLI runtime container image`
@@ -186,19 +188,19 @@ Release context: this repository's tagged history already uses Bookworm in
 `v2026.2.22` and earlier 2026 tags (for example `v2026.2.21`, `v2026.2.9`).
 
 By default the setup script builds the image from source. To pull a pre-built
-image instead, set `IronCliw_IMAGE` before running the script:
+image instead, set `IRONCLIW_IMAGE` before running the script:
 
 ```bash
-export IronCliw_IMAGE="ghcr.io/IronCliw/IronCliw:latest"
+export IRONCLIW_IMAGE="ghcr.io/ironcliw/ironcliw:latest"
 ./docker-setup.sh
 ```
 
-The script detects that `IronCliw_IMAGE` is not the default `IronCliw:local` and
+The script detects that `IRONCLIW_IMAGE` is not the default `ironcliw:local` and
 runs `docker pull` instead of `docker build`. Everything else (onboarding,
 gateway start, token generation) works the same way.
 
 `docker-setup.sh` still runs from the repository root because it uses the local
-`docker-compose.yml` and helper files. `IronCliw_IMAGE` skips local image build
+`docker-compose.yml` and helper files. `IRONCLIW_IMAGE` skips local image build
 time; it does not replace the compose/setup workflow.
 
 ### Shell Helpers (optional)
@@ -206,7 +208,7 @@ time; it does not replace the compose/setup workflow.
 For easier day-to-day Docker management, install `ClawDock`:
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/IronCliw/IronCliw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/ironcliw/ironcliw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 **Add to your shell config (zsh):**
@@ -217,18 +219,18 @@ echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 
 Then use `clawdock-start`, `clawdock-stop`, `clawdock-dashboard`, etc. Run `clawdock-help` for all commands.
 
-See [`ClawDock` Helper README](https://github.com/IronCliw/IronCliw/blob/main/scripts/shell-helpers/README.md) for details.
+See [`ClawDock` Helper README](https://github.com/ironcliw/ironcliw/blob/main/scripts/shell-helpers/README.md) for details.
 
 ### Manual flow (compose)
 
 ```bash
-docker build -t IronCliw:local -f Dockerfile .
-docker compose run --rm IronCliw-cli onboard
-docker compose up -d IronCliw-gateway
+docker build -t ironcliw:local -f Dockerfile .
+docker compose run --rm ironcliw-cli onboard
+docker compose up -d ironcliw-gateway
 ```
 
 Note: run `docker compose ...` from the repo root. If you enabled
-`IronCliw_EXTRA_MOUNTS` or `IronCliw_HOME_VOLUME`, the setup script writes
+`IRONCLIW_EXTRA_MOUNTS` or `IRONCLIW_HOME_VOLUME`, the setup script writes
 `docker-compose.extra.yml`; include it when running Compose elsewhere:
 
 ```bash
@@ -241,9 +243,9 @@ If you see “unauthorized” or “disconnected (1008): pairing required”, fe
 fresh dashboard link and approve the browser device:
 
 ```bash
-docker compose run --rm IronCliw-cli dashboard --no-open
-docker compose run --rm IronCliw-cli devices list
-docker compose run --rm IronCliw-cli devices approve <requestId>
+docker compose run --rm ironcliw-cli dashboard --no-open
+docker compose run --rm ironcliw-cli devices list
+docker compose run --rm ironcliw-cli devices approve <requestId>
 ```
 
 More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
@@ -251,14 +253,14 @@ More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
 ### Extra mounts (optional)
 
 If you want to mount additional host directories into the containers, set
-`IronCliw_EXTRA_MOUNTS` before running `docker-setup.sh`. This accepts a
+`IRONCLIW_EXTRA_MOUNTS` before running `docker-setup.sh`. This accepts a
 comma-separated list of Docker bind mounts and applies them to both
-`IronCliw-gateway` and `IronCliw-cli` by generating `docker-compose.extra.yml`.
+`ironcliw-gateway` and `ironcliw-cli` by generating `docker-compose.extra.yml`.
 
 Example:
 
 ```bash
-export IronCliw_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export IRONCLIW_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
@@ -266,58 +268,83 @@ Notes:
 
 - Paths must be shared with Docker Desktop on macOS/Windows.
 - Each entry must be `source:target[:options]` with no spaces, tabs, or newlines.
-- If you edit `IronCliw_EXTRA_MOUNTS`, rerun `docker-setup.sh` to regenerate the
+- If you edit `IRONCLIW_EXTRA_MOUNTS`, rerun `docker-setup.sh` to regenerate the
   extra compose file.
 - `docker-compose.extra.yml` is generated. Don’t hand-edit it.
 
 ### Persist the entire container home (optional)
 
 If you want `/home/node` to persist across container recreation, set a named
-volume via `IronCliw_HOME_VOLUME`. This creates a Docker volume and mounts it at
+volume via `IRONCLIW_HOME_VOLUME`. This creates a Docker volume and mounts it at
 `/home/node`, while keeping the standard config/workspace bind mounts. Use a
 named volume here (not a bind path); for bind mounts, use
-`IronCliw_EXTRA_MOUNTS`.
+`IRONCLIW_EXTRA_MOUNTS`.
 
 Example:
 
 ```bash
-export IronCliw_HOME_VOLUME="IronCliw_home"
+export IRONCLIW_HOME_VOLUME="ironcliw_home"
 ./docker-setup.sh
 ```
 
 You can combine this with extra mounts:
 
 ```bash
-export IronCliw_HOME_VOLUME="IronCliw_home"
-export IronCliw_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
+export IRONCLIW_HOME_VOLUME="ironcliw_home"
+export IRONCLIW_EXTRA_MOUNTS="$HOME/.codex:/home/node/.codex:ro,$HOME/github:/home/node/github:rw"
 ./docker-setup.sh
 ```
 
 Notes:
 
 - Named volumes must match `^[A-Za-z0-9][A-Za-z0-9_.-]*$`.
-- If you change `IronCliw_HOME_VOLUME`, rerun `docker-setup.sh` to regenerate the
+- If you change `IRONCLIW_HOME_VOLUME`, rerun `docker-setup.sh` to regenerate the
   extra compose file.
 - The named volume persists until removed with `docker volume rm <name>`.
 
 ### Install extra apt packages (optional)
 
 If you need system packages inside the image (for example, build tools or media
-libraries), set `IronCliw_DOCKER_APT_PACKAGES` before running `docker-setup.sh`.
+libraries), set `IRONCLIW_DOCKER_APT_PACKAGES` before running `docker-setup.sh`.
 This installs the packages during the image build, so they persist even if the
 container is deleted.
 
 Example:
 
 ```bash
-export IronCliw_DOCKER_APT_PACKAGES="ffmpeg build-essential"
+export IRONCLIW_DOCKER_APT_PACKAGES="ffmpeg build-essential"
 ./docker-setup.sh
 ```
 
 Notes:
 
 - This accepts a space-separated list of apt package names.
-- If you change `IronCliw_DOCKER_APT_PACKAGES`, rerun `docker-setup.sh` to rebuild
+- If you change `IRONCLIW_DOCKER_APT_PACKAGES`, rerun `docker-setup.sh` to rebuild
+  the image.
+
+### Pre-install extension dependencies (optional)
+
+Extensions with their own `package.json` (e.g. `diagnostics-otel`, `matrix`,
+`msteams`) install their npm dependencies on first load. To bake those
+dependencies into the image instead, set `IRONCLIW_EXTENSIONS` before
+running `docker-setup.sh`:
+
+```bash
+export IRONCLIW_EXTENSIONS="diagnostics-otel matrix"
+./docker-setup.sh
+```
+
+Or when building directly:
+
+```bash
+docker build --build-arg IRONCLIW_EXTENSIONS="diagnostics-otel matrix" .
+```
+
+Notes:
+
+- This accepts a space-separated list of extension directory names (under `extensions/`).
+- Only extensions with a `package.json` are affected; lightweight plugins without one are ignored.
+- If you change `IRONCLIW_EXTENSIONS`, rerun `docker-setup.sh` to rebuild
   the image.
 
 ### Power-user / full-featured container (opt-in)
@@ -334,43 +361,43 @@ If you want a more full-featured container, use these opt-in knobs:
 1. **Persist `/home/node`** so browser downloads and tool caches survive:
 
 ```bash
-export IronCliw_HOME_VOLUME="IronCliw_home"
+export IRONCLIW_HOME_VOLUME="ironcliw_home"
 ./docker-setup.sh
 ```
 
 2. **Bake system deps into the image** (repeatable + persistent):
 
 ```bash
-export IronCliw_DOCKER_APT_PACKAGES="git curl jq"
+export IRONCLIW_DOCKER_APT_PACKAGES="git curl jq"
 ./docker-setup.sh
 ```
 
 3. **Install Playwright browsers without `npx`** (avoids npm override conflicts):
 
 ```bash
-docker compose run --rm IronCliw-cli \
+docker compose run --rm ironcliw-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
 If you need Playwright to install system deps, rebuild the image with
-`IronCliw_DOCKER_APT_PACKAGES` instead of using `--with-deps` at runtime.
+`IRONCLIW_DOCKER_APT_PACKAGES` instead of using `--with-deps` at runtime.
 
 4. **Persist Playwright browser downloads**:
 
 - Set `PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright` in
   `docker-compose.yml`.
-- Ensure `/home/node` persists via `IronCliw_HOME_VOLUME`, or mount
-  `/home/node/.cache/ms-playwright` via `IronCliw_EXTRA_MOUNTS`.
+- Ensure `/home/node` persists via `IRONCLIW_HOME_VOLUME`, or mount
+  `/home/node/.cache/ms-playwright` via `IRONCLIW_EXTRA_MOUNTS`.
 
 ### Permissions + EACCES
 
 The image runs as `node` (uid 1000). If you see permission errors on
-`/home/node/.IronCliw`, make sure your host bind mounts are owned by uid 1000.
+`/home/node/.ironcliw`, make sure your host bind mounts are owned by uid 1000.
 
 Example (Linux host):
 
 ```bash
-sudo chown -R 1000:1000 /path/to/IronCliw-config /path/to/IronCliw-workspace
+sudo chown -R 1000:1000 /path/to/ironcliw-config /path/to/ironcliw-workspace
 ```
 
 If you choose to run as root for convenience, you accept the security tradeoff.
@@ -415,19 +442,19 @@ Use the CLI container to configure channels, then restart the gateway if needed.
 WhatsApp (QR):
 
 ```bash
-docker compose run --rm IronCliw-cli channels login
+docker compose run --rm ironcliw-cli channels login
 ```
 
 Telegram (bot token):
 
 ```bash
-docker compose run --rm IronCliw-cli channels add --channel telegram --token "<token>"
+docker compose run --rm ironcliw-cli channels add --channel telegram --token "<token>"
 ```
 
 Discord (bot token):
 
 ```bash
-docker compose run --rm IronCliw-cli channels add --channel discord --token "<token>"
+docker compose run --rm ironcliw-cli channels add --channel discord --token "<token>"
 ```
 
 Docs: [WhatsApp](/channels/whatsapp), [Telegram](/channels/telegram), [Discord](/channels/discord)
@@ -450,6 +477,10 @@ curl -fsS http://127.0.0.1:18789/readyz
 
 Aliases: `/health` and `/ready`.
 
+`/healthz` is a shallow liveness probe for "the gateway process is up".
+`/readyz` stays ready during startup grace, then becomes `503` only if required
+managed channels are still disconnected after grace or disconnect later.
+
 The Docker image includes a built-in `HEALTHCHECK` that pings `/healthz` in the
 background. In plain terms: Docker keeps checking if IronCliw is still
 responsive. If checks keep failing, Docker marks the container as `unhealthy`,
@@ -459,7 +490,7 @@ etc.) can automatically restart or replace it.
 Authenticated deep health snapshot (gateway + channels):
 
 ```bash
-docker compose exec IronCliw-gateway node dist/index.js health --token "$IronCliw_GATEWAY_TOKEN"
+docker compose exec ironcliw-gateway node dist/index.js health --token "$IRONCLIW_GATEWAY_TOKEN"
 ```
 
 ### E2E smoke test (Docker)
@@ -476,7 +507,7 @@ pnpm test:docker:qr
 
 ### LAN vs loopback (Docker Compose)
 
-`docker-setup.sh` defaults `IronCliw_GATEWAY_BIND=lan` so host access to
+`docker-setup.sh` defaults `IRONCLIW_GATEWAY_BIND=lan` so host access to
 `http://127.0.0.1:18789` works with Docker port publishing.
 
 - `lan` (default): host browser + host CLI can reach the published gateway port.
@@ -494,16 +525,22 @@ If you see `Gateway target: ws://172.x.x.x:18789` or repeated `pairing required`
 errors from Docker CLI commands, run:
 
 ```bash
-docker compose run --rm IronCliw-cli config set gateway.mode local
-docker compose run --rm IronCliw-cli config set gateway.bind lan
-docker compose run --rm IronCliw-cli devices list --url ws://127.0.0.1:18789
+docker compose run --rm ironcliw-cli config set gateway.mode local
+docker compose run --rm ironcliw-cli config set gateway.bind lan
+docker compose run --rm ironcliw-cli devices list --url ws://127.0.0.1:18789
 ```
 
 ### Notes
 
-- Gateway bind defaults to `lan` for container use (`IronCliw_GATEWAY_BIND`).
+- Gateway bind defaults to `lan` for container use (`IRONCLIW_GATEWAY_BIND`).
 - Dockerfile CMD uses `--allow-unconfigured`; mounted config with `gateway.mode` not `local` will still start. Override CMD to enforce the guard.
-- The gateway container is the source of truth for sessions (`~/.IronCliw/agents/<agentId>/sessions/`).
+- The gateway container is the source of truth for sessions (`~/.ironcliw/agents/<agentId>/sessions/`).
+
+### Storage model
+
+- **Persistent host data:** Docker Compose bind-mounts `IRONCLIW_CONFIG_DIR` to `/home/node/.ironcliw` and `IRONCLIW_WORKSPACE_DIR` to `/home/node/.ironcliw/workspace`, so those paths survive container replacement.
+- **Ephemeral sandbox tmpfs:** when `agents.defaults.sandbox` is enabled, the sandbox containers use `tmpfs` for `/tmp`, `/var/tmp`, and `/run`. Those mounts are separate from the top-level Compose stack and disappear with the sandbox container.
+- **Disk growth hotspots:** watch `media/`, `agents/<agentId>/sessions/sessions.json`, transcript JSONL files, `cron/runs/*.jsonl`, and rolling file logs under `/tmp/ironcliw/` (or your configured `logging.file`). If you also run the macOS app outside Docker, its service logs are separate again: `~/.ironcliw/logs/gateway.log`, `~/.ironcliw/logs/gateway.err.log`, and `/tmp/ironcliw/ironcliw-gateway.log`.
 
 ## Agent Sandbox (host gateway + Docker tools)
 
@@ -539,9 +576,9 @@ precedence, and troubleshooting.
 
 ### Default behavior
 
-- Image: `IronCliw-sandbox:bookworm-slim`
+- Image: `ironcliw-sandbox:bookworm-slim`
 - One container per agent
-- Agent workspace access: `workspaceAccess: "none"` (default) uses `~/.IronCliw/sandboxes`
+- Agent workspace access: `workspaceAccess: "none"` (default) uses `~/.ironcliw/sandboxes`
   - `"ro"` keeps the sandbox workspace at `/workspace` and mounts the agent workspace read-only at `/agent` (disables `write`/`edit`/`apply_patch`)
   - `"rw"` mounts the agent workspace read/write at `/workspace`
 - Auto-prune: idle > 24h OR age > 7d
@@ -563,7 +600,7 @@ If you plan to install packages in `setupCommand`, note:
 - `user` must be root for `apt-get` (omit `user` or set `user: "0:0"`).
   IronCliw auto-recreates containers when `setupCommand` (or docker config) changes
   unless the container was **recently used** (within ~5 minutes). Hot containers
-  log a warning with the exact `IronCliw sandbox recreate ...` command.
+  log a warning with the exact `ironcliw sandbox recreate ...` command.
 
 ```json5
 {
@@ -573,9 +610,9 @@ If you plan to install packages in `setupCommand`, note:
         mode: "non-main", // off | non-main | all
         scope: "agent", // session | agent | shared (agent is default)
         workspaceAccess: "none", // none | ro | rw
-        workspaceRoot: "~/.IronCliw/sandboxes",
+        workspaceRoot: "~/.ironcliw/sandboxes",
         docker: {
-          image: "IronCliw-sandbox:bookworm-slim",
+          image: "ironcliw-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -593,7 +630,7 @@ If you plan to install packages in `setupCommand`, note:
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "IronCliw-sandbox",
+          apparmorProfile: "ironcliw-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
         },
@@ -640,7 +677,7 @@ Multi-agent: override `agents.defaults.sandbox.{docker,browser,prune}.*` per age
 scripts/sandbox-setup.sh
 ```
 
-This builds `IronCliw-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
+This builds `ironcliw-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
 
 ### Sandbox common image (optional)
 
@@ -650,13 +687,13 @@ If you want a sandbox image with common build tooling (Node, Go, Rust, etc.), bu
 scripts/sandbox-common-setup.sh
 ```
 
-This builds `IronCliw-sandbox-common:bookworm-slim`. To use it:
+This builds `ironcliw-sandbox-common:bookworm-slim`. To use it:
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "IronCliw-sandbox-common:bookworm-slim" } },
+      sandbox: { docker: { image: "ironcliw-sandbox-common:bookworm-slim" } },
     },
   },
 }
@@ -670,7 +707,7 @@ To run the browser tool inside the sandbox, build the browser image:
 scripts/sandbox-browser-setup.sh
 ```
 
-This builds `IronCliw-sandbox-browser:bookworm-slim` using
+This builds `ironcliw-sandbox-browser:bookworm-slim` using
 `Dockerfile.sandbox-browser`. The container runs Chromium with CDP enabled and
 an optional noVNC observer (headful via Xvfb).
 
@@ -679,12 +716,12 @@ Notes:
 - Headful (Xvfb) reduces bot blocking vs headless.
 - Headless can still be used by setting `agents.defaults.sandbox.browser.headless=true`.
 - No full desktop environment (GNOME) is needed; Xvfb provides the display.
-- Browser containers default to a dedicated Docker network (`IronCliw-sandbox-browser`) instead of global `bridge`.
+- Browser containers default to a dedicated Docker network (`ironcliw-sandbox-browser`) instead of global `bridge`.
 - Optional `agents.defaults.sandbox.browser.cdpSourceRange` restricts container-edge CDP ingress by CIDR (for example `172.21.0.1/32`).
 - noVNC observer access is password-protected by default; IronCliw provides a short-lived observer token URL that serves a local bootstrap page and keeps the password in URL fragment (instead of URL query).
 - Browser container startup defaults are conservative for shared/container workloads, including:
   - `--remote-debugging-address=127.0.0.1`
-  - `--remote-debugging-port=<derived from IronCliw_BROWSER_CDP_PORT>`
+  - `--remote-debugging-port=<derived from IRONCLIW_BROWSER_CDP_PORT>`
   - `--user-data-dir=${HOME}/.chrome`
   - `--no-first-run`
   - `--no-default-browser-check`
@@ -703,13 +740,13 @@ Notes:
   - If `agents.defaults.sandbox.browser.noSandbox` is set, `--no-sandbox` and
     `--disable-setuid-sandbox` are also appended.
   - The three graphics hardening flags above are optional. If your workload needs
-    WebGL/3D, set `IronCliw_BROWSER_DISABLE_GRAPHICS_FLAGS=0` to run without
+    WebGL/3D, set `IRONCLIW_BROWSER_DISABLE_GRAPHICS_FLAGS=0` to run without
     `--disable-3d-apis`, `--disable-software-rasterizer`, and `--disable-gpu`.
   - Extension behavior is controlled by `--disable-extensions` and can be disabled
-    (enables extensions) via `IronCliw_BROWSER_DISABLE_EXTENSIONS=0` for
+    (enables extensions) via `IRONCLIW_BROWSER_DISABLE_EXTENSIONS=0` for
     extension-dependent pages or extensions-heavy workflows.
   - `--renderer-process-limit=2` is also configurable with
-    `IronCliw_BROWSER_RENDERER_PROCESS_LIMIT`; set `0` to let Chromium choose its
+    `IRONCLIW_BROWSER_RENDERER_PROCESS_LIMIT`; set `0` to let Chromium choose its
     default process limit when browser concurrency needs tuning.
 
 Defaults are applied by default in the bundled image. If you need different
@@ -735,7 +772,7 @@ Custom browser image:
 {
   agents: {
     defaults: {
-      sandbox: { browser: { image: "my-IronCliw-browser" } },
+      sandbox: { browser: { image: "my-ironcliw-browser" } },
     },
   },
 }
@@ -755,14 +792,14 @@ Prune rules (`agents.defaults.sandbox.prune`) apply to browser containers too.
 Build your own image and point config to it:
 
 ```bash
-docker build -t my-IronCliw-sbx -f Dockerfile.sandbox .
+docker build -t my-ironcliw-sbx -f Dockerfile.sandbox .
 ```
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "my-IronCliw-sbx" } },
+      sandbox: { docker: { image: "my-ironcliw-sbx" } },
     },
   },
 }
@@ -796,7 +833,7 @@ Example:
 
 ## Troubleshooting
 
-- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/IronCliw/IronCliw/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
+- Image missing: build with [`scripts/sandbox-setup.sh`](https://github.com/ironcliw/ironcliw/blob/main/scripts/sandbox-setup.sh) or set `agents.defaults.sandbox.docker.image`.
 - Container not running: it will auto-create per session on demand.
 - Permission errors in sandbox: set `docker.user` to a UID:GID that matches your
   mounted workspace ownership (or chown the workspace folder).

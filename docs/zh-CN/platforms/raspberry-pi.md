@@ -119,14 +119,14 @@ sudo sysctl -p
 ### 选项 A：标准安装（推荐）
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash
+curl -fsSL https://ironcliw.ai/install.sh | bash
 ```
 
 ### 选项 B：可修改安装（用于调试）
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 npm install
 npm run build
 npm link
@@ -137,7 +137,7 @@ npm link
 ## 7) 运行新手引导
 
 ```bash
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
 按照向导操作：
@@ -151,13 +151,13 @@ IronCliw onboard --install-daemon
 
 ```bash
 # 检查状态
-IronCliw status
+ironcliw status
 
 # 检查服务
-sudo systemctl status IronCliw
+sudo systemctl status ironcliw
 
 # 查看日志
-journalctl -u IronCliw -f
+journalctl -u ironcliw -f
 ```
 
 ## 9) 访问仪表板
@@ -180,8 +180,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # 更新配置
-IronCliw config set gateway.bind tailnet
-sudo systemctl restart IronCliw
+ironcliw config set gateway.bind tailnet
+sudo systemctl restart ironcliw
 ```
 
 ---
@@ -278,13 +278,13 @@ uname -m
 
 ```bash
 # 检查服务是否已启用
-sudo systemctl is-enabled IronCliw
+sudo systemctl is-enabled ironcliw
 
 # 如果没有则启用
-sudo systemctl enable IronCliw
+sudo systemctl enable ironcliw
 
 # 开机启动
-sudo systemctl start IronCliw
+sudo systemctl start ironcliw
 ```
 
 ---
@@ -311,12 +311,12 @@ free -h
 
 ```bash
 # 检查日志
-journalctl -u IronCliw --no-pager -n 100
+journalctl -u ironcliw --no-pager -n 100
 
 # 常见修复：重新构建
-cd ~/IronCliw  # 如果使用可修改安装
+cd ~/ironcliw  # 如果使用可修改安装
 npm run build
-sudo systemctl restart IronCliw
+sudo systemctl restart ironcliw
 ```
 
 ### ARM 二进制问题

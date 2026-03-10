@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `IronCliw pairing` (approve/list pairing requests)"
+summary: "CLI reference for `ironcliw pairing` (approve/list pairing requests)"
 read_when:
   - You’re using pairing-mode DMs and need to approve senders
 title: "pairing"
 ---
 
-# `IronCliw pairing`
+# `ironcliw pairing`
 
 Approve or inspect DM pairing requests (for channels that support pairing).
 
@@ -16,12 +16,12 @@ Related:
 ## Commands
 
 ```bash
-IronCliw pairing list telegram
-IronCliw pairing list --channel telegram --account work
-IronCliw pairing list telegram --json
+ironcliw pairing list telegram
+ironcliw pairing list --channel telegram --account work
+ironcliw pairing list telegram --json
 
-IronCliw pairing approve telegram <code>
-IronCliw pairing approve --channel telegram --account work <code> --notify
+ironcliw pairing approve telegram <code>
+ironcliw pairing approve --channel telegram --account work <code> --notify
 ```
 
 ## Notes

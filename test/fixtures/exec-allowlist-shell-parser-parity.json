@@ -8,7 +8,7 @@
     },
     {
       "id": "chained-commands",
-      "command": "ls && rm -rf /tmp/IronCliw-allowlist",
+      "command": "ls && rm -rf /tmp/ironcliw-allowlist",
       "ok": true,
       "executables": ["ls", "rm"]
     },

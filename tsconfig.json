@@ -18,9 +18,9 @@
     "target": "es2023",
     "useDefineForClassFields": false,
     "paths": {
-      "IronCliw/plugin-sdk": ["./src/plugin-sdk/index.ts"],
-      "IronCliw/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
-      "IronCliw/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
+      "ironcliw/plugin-sdk": ["./src/plugin-sdk/index.ts"],
+      "ironcliw/plugin-sdk/*": ["./src/plugin-sdk/*.ts"],
+      "ironcliw/plugin-sdk/account-id": ["./src/plugin-sdk/account-id.ts"]
     }
   },
   "include": ["src/**/*", "ui/**/*", "extensions/**/*"],

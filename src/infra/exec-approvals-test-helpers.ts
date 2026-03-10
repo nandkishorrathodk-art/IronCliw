@@ -10,7 +10,7 @@ export function makePathEnv(binDir: string): NodeJS.ProcessEnv {
 }
 
 export function makeTempDir(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-exec-approvals-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-exec-approvals-"));
 }
 
 export type ShellParserParityFixtureCase = {

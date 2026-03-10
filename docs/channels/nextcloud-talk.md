@@ -16,13 +16,13 @@ Nextcloud Talk ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-IronCliw plugins install @IronCliw/nextcloud-talk
+ironcliw plugins install @ironcliw/nextcloud-talk
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-IronCliw plugins install ./extensions/nextcloud-talk
+ironcliw plugins install ./extensions/nextcloud-talk
 ```
 
 If you choose Nextcloud Talk during configure/onboarding and a git checkout is detected,
@@ -71,8 +71,8 @@ Minimal config:
 
 - Default: `channels.nextcloud-talk.dmPolicy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `IronCliw pairing list nextcloud-talk`
-  - `IronCliw pairing approve nextcloud-talk <CODE>`
+  - `ironcliw pairing list nextcloud-talk`
+  - `ironcliw pairing approve nextcloud-talk <CODE>`
 - Public DMs: `channels.nextcloud-talk.dmPolicy="open"` plus `channels.nextcloud-talk.allowFrom=["*"]`.
 - `allowFrom` matches Nextcloud user IDs only; display names are ignored.
 

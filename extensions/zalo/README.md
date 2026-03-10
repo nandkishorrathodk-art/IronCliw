@@ -1,17 +1,17 @@
-# @IronCliw/zalo
+# @ironcliw/zalo
 
 Zalo channel plugin for IronCliw (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-IronCliw plugins install ./extensions/zalo
+ironcliw plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-IronCliw plugins install @IronCliw/zalo
+ironcliw plugins install @ironcliw/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

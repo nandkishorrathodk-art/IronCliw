@@ -1,1 +1,1 @@
-export * from "IronCliw";
+export * from "ironcliw";

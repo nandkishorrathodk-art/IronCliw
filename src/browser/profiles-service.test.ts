@@ -19,7 +19,7 @@ vi.mock("./trash.js", () => ({
 }));
 
 vi.mock("./chrome.js", () => ({
-  resolveIronCliwUserDataDir: vi.fn(() => "/tmp/IronCliw-test/IronCliw/user-data"),
+  resolveIronCliwUserDataDir: vi.fn(() => "/tmp/ironcliw-test/ironcliw/user-data"),
 }));
 
 import { loadConfig, writeConfigFile } from "../config/config.js";
@@ -132,6 +132,37 @@ describe("BrowserProfilesService", () => {
     );
   });
 
+  it("rejects driver=extension with non-loopback cdpUrl", async () => {
+    const resolved = resolveBrowserConfig({});
+    const { ctx } = createCtx(resolved);
+    vi.mocked(loadConfig).mockReturnValue({ browser: { profiles: {} } });
+
+    const service = createBrowserProfilesService(ctx);
+
+    await expect(
+      service.createProfile({
+        name: "chrome-remote",
+        driver: "extension",
+        cdpUrl: "http://10.0.0.42:9222",
+      }),
+    ).rejects.toThrow(/loopback cdpUrl host/i);
+  });
+
+  it("rejects driver=extension without an explicit cdpUrl", async () => {
+    const resolved = resolveBrowserConfig({});
+    const { ctx } = createCtx(resolved);
+    vi.mocked(loadConfig).mockReturnValue({ browser: { profiles: {} } });
+
+    const service = createBrowserProfilesService(ctx);
+
+    await expect(
+      service.createProfile({
+        name: "chrome-extension",
+        driver: "extension",
+      }),
+    ).rejects.toThrow(/requires an explicit loopback cdpUrl/i);
+  });
+
   it("deletes remote profiles without stopping or removing local data", async () => {
     const resolved = resolveBrowserConfig({
       profiles: {
@@ -142,9 +173,9 @@ describe("BrowserProfilesService", () => {
 
     vi.mocked(loadConfig).mockReturnValue({
       browser: {
-        defaultProfile: "IronCliw",
+        defaultProfile: "ironcliw",
         profiles: {
-          IronCliw: { cdpPort: 18800, color: "#FF4500" },
+          ironcliw: { cdpPort: 18800, color: "#FF4500" },
           remote: { cdpUrl: "http://10.0.0.42:9222", color: "#0066CC" },
         },
       },
@@ -168,15 +199,15 @@ describe("BrowserProfilesService", () => {
 
     vi.mocked(loadConfig).mockReturnValue({
       browser: {
-        defaultProfile: "IronCliw",
+        defaultProfile: "ironcliw",
         profiles: {
-          IronCliw: { cdpPort: 18800, color: "#FF4500" },
+          ironcliw: { cdpPort: 18800, color: "#FF4500" },
           work: { cdpPort: 18801, color: "#0066CC" },
         },
       },
     });
 
-    const tempDir = fs.mkdtempSync(path.join("/tmp", "IronCliw-profile-"));
+    const tempDir = fs.mkdtempSync(path.join("/tmp", "ironcliw-profile-"));
     const userDataDir = path.join(tempDir, "work", "user-data");
     fs.mkdirSync(path.dirname(userDataDir), { recursive: true });
     vi.mocked(resolveIronCliwUserDataDir).mockReturnValue(userDataDir);

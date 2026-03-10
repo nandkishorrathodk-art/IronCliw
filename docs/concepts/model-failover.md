@@ -19,9 +19,9 @@ This doc explains the runtime rules and the data that backs them.
 
 IronCliw uses **auth profiles** for both API keys and OAuth tokens.
 
-- Secrets live in `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json` (legacy: `~/.IronCliw/agent/auth-profiles.json`).
+- Secrets live in `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json` (legacy: `~/.ironcliw/agent/auth-profiles.json`).
 - Config `auth.profiles` / `auth.order` are **metadata + routing only** (no secrets).
-- Legacy import-only OAuth file: `~/.IronCliw/credentials/oauth.json` (imported into `auth-profiles.json` on first use).
+- Legacy import-only OAuth file: `~/.ironcliw/credentials/oauth.json` (imported into `auth-profiles.json` on first use).
 
 More detail: [/concepts/oauth](/concepts/oauth)
 
@@ -37,7 +37,7 @@ OAuth logins create distinct profiles so multiple accounts can coexist.
 - Default: `provider:default` when no email is available.
 - OAuth with email: `provider:<email>` (for example `google-antigravity:user@gmail.com`).
 
-Profiles live in `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json` under `profiles`.
+Profiles live in `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json` under `profiles`.
 
 ## Rotation order
 

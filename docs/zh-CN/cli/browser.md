@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 你使用 `IronCliw browser` 并想要常见任务的示例
+  - 你使用 `ironcliw browser` 并想要常见任务的示例
   - 你想通过 node host 控制在另一台机器上运行的浏览器
   - 你想使用 Chrome 扩展中继（通过工具栏按钮附加/分离）
-summary: "`IronCliw browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
+summary: "`ironcliw browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
 title: browser
 x-i18n:
   generated_at: "2026-02-03T07:44:49Z"
@@ -14,7 +14,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `IronCliw browser`
+# `ironcliw browser`
 
 管理 IronCliw 的浏览器控制服务器并运行浏览器操作（标签页、快照、截图、导航、点击、输入）。
 
@@ -34,38 +34,38 @@ x-i18n:
 ## 快速开始（本地）
 
 ```bash
-IronCliw browser --browser-profile chrome tabs
-IronCliw browser --browser-profile IronCliw start
-IronCliw browser --browser-profile IronCliw open https://example.com
-IronCliw browser --browser-profile IronCliw snapshot
+ironcliw browser --browser-profile chrome tabs
+ironcliw browser --browser-profile ironcliw start
+ironcliw browser --browser-profile ironcliw open https://example.com
+ironcliw browser --browser-profile ironcliw snapshot
 ```
 
 ## 配置文件
 
 配置文件是命名的浏览器路由配置。实际上：
 
-- `IronCliw`：启动/附加到专用的 IronCliw 管理的 Chrome 实例（隔离的用户数据目录）。
+- `ironcliw`：启动/附加到专用的 IronCliw 管理的 Chrome 实例（隔离的用户数据目录）。
 - `chrome`：通过 Chrome 扩展中继控制你现有的 Chrome 标签页。
 
 ```bash
-IronCliw browser profiles
-IronCliw browser create-profile --name work --color "#FF5A36"
-IronCliw browser delete-profile --name work
+ironcliw browser profiles
+ironcliw browser create-profile --name work --color "#FF5A36"
+ironcliw browser delete-profile --name work
 ```
 
 使用特定配置文件：
 
 ```bash
-IronCliw browser --browser-profile work tabs
+ironcliw browser --browser-profile work tabs
 ```
 
 ## 标签页
 
 ```bash
-IronCliw browser tabs
-IronCliw browser open https://docs.IronCliw.ai
-IronCliw browser focus <targetId>
-IronCliw browser close <targetId>
+ironcliw browser tabs
+ironcliw browser open https://docs.ironcliw.ai
+ironcliw browser focus <targetId>
+ironcliw browser close <targetId>
 ```
 
 ## 快照 / 截图 / 操作
@@ -73,21 +73,21 @@ IronCliw browser close <targetId>
 快照：
 
 ```bash
-IronCliw browser snapshot
+ironcliw browser snapshot
 ```
 
 截图：
 
 ```bash
-IronCliw browser screenshot
+ironcliw browser screenshot
 ```
 
 导航/点击/输入（基于 ref 的 UI 自动化）：
 
 ```bash
-IronCliw browser navigate https://example.com
-IronCliw browser click <ref>
-IronCliw browser type <ref> "hello"
+ironcliw browser navigate https://example.com
+ironcliw browser click <ref>
+ironcliw browser type <ref> "hello"
 ```
 
 ## Chrome 扩展中继（通过工具栏按钮附加）
@@ -97,8 +97,8 @@ IronCliw browser type <ref> "hello"
 将未打包的扩展安装到稳定路径：
 
 ```bash
-IronCliw browser extension install
-IronCliw browser extension path
+ironcliw browser extension install
+ironcliw browser extension path
 ```
 
 然后 Chrome → `chrome://extensions` → 启用"开发者模式" → "加载已解压的扩展程序" → 选择打印的文件夹。

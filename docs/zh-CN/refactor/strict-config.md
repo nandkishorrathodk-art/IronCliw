@@ -35,13 +35,13 @@ x-i18n:
 - `plugins.entries.<id>.config` 必须由插件的 schema 验证。
   - 如果插件缺少 schema，**拒绝插件加载**并显示清晰的错误。
 - 未知的 `channels.<id>` 键是错误，除非插件清单声明了该渠道 id。
-- 所有插件都需要插件清单（`IronCliw.plugin.json`）。
+- 所有插件都需要插件清单（`ironcliw.plugin.json`）。
 
 ## 插件 schema 强制执行
 
 - 每个插件为其配置提供严格的 JSON Schema（内联在清单中）。
 - 插件加载流程：
-  1. 解析插件清单 + schema（`IronCliw.plugin.json`）。
+  1. 解析插件清单 + schema（`ironcliw.plugin.json`）。
   2. 根据 schema 验证配置。
   3. 如果缺少 schema 或配置无效：阻止插件加载，记录错误。
 - 错误消息包括：
@@ -55,8 +55,8 @@ x-i18n:
 - 每次加载配置时都会运行 Doctor（默认 dry-run）。
 - 如果配置无效：
   - 打印摘要 + 可操作的错误。
-  - 指示：`IronCliw doctor --fix`。
-- `IronCliw doctor --fix`：
+  - 指示：`ironcliw doctor --fix`。
+- `ironcliw doctor --fix`：
   - 应用迁移。
   - 移除未知键。
   - 写入更新后的配置。
@@ -65,14 +65,14 @@ x-i18n:
 
 允许的命令（仅诊断）：
 
-- `IronCliw doctor`
-- `IronCliw logs`
-- `IronCliw health`
-- `IronCliw help`
-- `IronCliw status`
-- `IronCliw gateway status`
+- `ironcliw doctor`
+- `ironcliw logs`
+- `ironcliw health`
+- `ironcliw help`
+- `ironcliw status`
+- `ironcliw gateway status`
 
-其他所有命令必须硬失败并显示："Config invalid. Run `IronCliw doctor --fix`."
+其他所有命令必须硬失败并显示："Config invalid. Run `ironcliw doctor --fix`."
 
 ## 错误用户体验格式
 

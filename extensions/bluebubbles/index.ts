@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/bluebubbles";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/bluebubbles";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/bluebubbles";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/bluebubbles";
 import { bluebubblesPlugin } from "./src/channel.js";
 import { setBlueBubblesRuntime } from "./src/runtime.js";
 

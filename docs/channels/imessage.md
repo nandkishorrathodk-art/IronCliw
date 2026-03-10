@@ -61,7 +61,7 @@ imsg rpc --help
       <Step title="Start gateway">
 
 ```bash
-IronCliw gateway
+ironcliw gateway
 ```
 
       </Step>
@@ -69,8 +69,8 @@ IronCliw gateway
       <Step title="Approve first DM pairing (default dmPolicy)">
 
 ```bash
-IronCliw pairing list imessage
-IronCliw pairing approve imessage <CODE>
+ironcliw pairing list imessage
+ironcliw pairing approve imessage <CODE>
 ```
 
         Pairing requests expire after 1 hour.
@@ -94,7 +94,7 @@ exec ssh -T gateway-host imsg "$@"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.IronCliw/scripts/imsg-ssh",
+      cliPath: "~/.ironcliw/scripts/imsg-ssh",
       remoteHost: "user@gateway-host", // used for SCP attachment fetches
       includeAttachments: true,
       // Optional: override allowed attachment roots.
@@ -217,7 +217,7 @@ imsg send <handle> "test"
   channels: {
     imessage: {
       enabled: true,
-      cliPath: "~/.IronCliw/scripts/imsg-ssh",
+      cliPath: "~/.ironcliw/scripts/imsg-ssh",
       remoteHost: "bot@mac-mini.tailnet-1234.ts.net",
       includeAttachments: true,
       dbPath: "/Users/bot/Library/Messages/chat.db",
@@ -309,7 +309,7 @@ Disable:
 
 ```bash
 imsg rpc --help
-IronCliw channels status --probe
+ironcliw channels status --probe
 ```
 
     If probe reports RPC unsupported, update `imsg`.
@@ -321,7 +321,7 @@ IronCliw channels status --probe
 
     - `channels.imessage.dmPolicy`
     - `channels.imessage.allowFrom`
-    - pairing approvals (`IronCliw pairing list imessage`)
+    - pairing approvals (`ironcliw pairing list imessage`)
 
   </Accordion>
 

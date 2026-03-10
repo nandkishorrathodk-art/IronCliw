@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import { normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
+import { normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
 import type { CoreConfig } from "../../types.js";
 import { getMatrixLogService } from "../sdk-runtime.js";
 import { resolveMatrixAuth } from "./config.js";

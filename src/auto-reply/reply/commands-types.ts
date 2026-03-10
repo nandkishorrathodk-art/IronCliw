@@ -26,6 +26,7 @@ export type CommandContext = {
 
 export type HandleCommandsParams = {
   ctx: MsgContext;
+  rootCtx?: MsgContext;
   cfg: IronCliwConfig;
   command: CommandContext;
   agentId?: string;

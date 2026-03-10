@@ -27,7 +27,7 @@
     },
     "dbPath": {
       "label": "Database Path",
-      "placeholder": "~/.IronCliw/memory/lancedb",
+      "placeholder": "~/.ironcliw/memory/lancedb",
       "advanced": true
     },
     "autoCapture": {

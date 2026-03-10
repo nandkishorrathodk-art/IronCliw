@@ -3,7 +3,8 @@ import {
   issuePairingChallenge,
   readStoreAllowFromForDmPolicy,
   resolveDmGroupAccessWithLists,
-} from "IronCliw/plugin-sdk/matrix";
+  resolveSenderScopedGroupPolicy,
+} from "ironcliw/plugin-sdk/matrix";
 import {
   normalizeMatrixAllowList,
   resolveMatrixAllowListMatch,
@@ -32,12 +33,10 @@ export async function resolveMatrixAccessState(params: {
       })
     : [];
   const normalizedGroupAllowFrom = normalizeMatrixAllowList(params.groupAllowFrom);
-  const senderGroupPolicy =
-    params.groupPolicy === "disabled"
-      ? "disabled"
-      : normalizedGroupAllowFrom.length > 0
-        ? "allowlist"
-        : "open";
+  const senderGroupPolicy = resolveSenderScopedGroupPolicy({
+    groupPolicy: params.groupPolicy,
+    groupAllowFrom: normalizedGroupAllowFrom,
+  });
   const access = resolveDmGroupAccessWithLists({
     isGroup: !params.isDirectMessage,
     dmPolicy: params.dmPolicy,
@@ -104,7 +103,7 @@ export async function enforceMatrixDirectMessageAccess(params: {
           `Pairing code: ${code}`,
           "",
           "Ask the bot owner to approve with:",
-          "IronCliw pairing approve matrix <code>",
+          "ironcliw pairing approve matrix <code>",
         ].join("\n"),
       sendPairingReply: params.sendPairingReply,
       onCreated: () => {

@@ -1,15 +1,12 @@
-import {
-  getOAuthApiKey,
-  getOAuthProviders,
-  type OAuthCredentials,
-  type OAuthProvider,
-} from "@mariozechner/pi-ai";
+import type { OAuthCredentials, OAuthProvider } from "@mariozechner/pi-ai/oauth";
+import { getOAuthApiKey, getOAuthProviders } from "@mariozechner/pi-ai/oauth";
 import { loadConfig, type IronCliwConfig } from "../../config/config.js";
 import { coerceSecretRef } from "../../config/types.secrets.js";
 import { withFileLock } from "../../infra/file-lock.js";
 import { refreshQwenPortalCredentials } from "../../providers/qwen-portal-oauth.js";
 import { resolveSecretRefString, type SecretRefResolveCache } from "../../secrets/resolve.js";
 import { refreshChutesTokens } from "../chutes-oauth.js";
+import { normalizeProviderId } from "../model-selection.js";
 import { AUTH_STORE_LOCK_OPTIONS, log } from "./constants.js";
 import { resolveTokenExpiryState } from "./credential-state.js";
 import { formatAuthDoctorHint } from "./doctor.js";
@@ -23,6 +20,7 @@ const OAUTH_PROVIDER_IDS = new Set<string>(getOAuthProviders().map((provider) =>
 const isOAuthProvider = (provider: string): provider is OAuthProvider =>
   OAUTH_PROVIDER_IDS.has(provider);
 
+// eslint-disable-next-line typescript-eslint/no-redundant-type-constituents
 const resolveOAuthProvider = (provider: string): OAuthProvider | null =>
   isOAuthProvider(provider) ? provider : null;
 
@@ -87,6 +85,27 @@ function buildOAuthProfileResult(params: {
   });
 }
 
+function extractErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function shouldUseOpenaiCodexRefreshFallback(params: {
+  provider: string;
+  credentials: OAuthCredentials;
+  error: unknown;
+}): boolean {
+  if (normalizeProviderId(params.provider) !== "openai-codex") {
+    return false;
+  }
+  const message = extractErrorMessage(params.error);
+  if (!/extract\s+accountid\s+from\s+token/i.test(message)) {
+    return false;
+  }
+  return (
+    typeof params.credentials.access === "string" && params.credentials.access.trim().length > 0
+  );
+}
+
 type ResolveApiKeyForProfileParams = {
   cfg?: IronCliwConfig;
   store: AuthProfileStore;
@@ -100,7 +119,9 @@ function adoptNewerMainOAuthCredential(params: {
   store: AuthProfileStore;
   profileId: string;
   agentDir?: string;
+  // eslint-disable-next-line typescript-eslint/no-redundant-type-constituents
   cred: OAuthCredentials & { type: "oauth"; provider: string; email?: string };
+  // eslint-disable-next-line typescript-eslint/no-redundant-type-constituents
 }): (OAuthCredentials & { type: "oauth"; provider: string; email?: string }) | null {
   if (!params.agentDir) {
     return null;
@@ -434,7 +455,25 @@ export async function resolveApiKeyForProfile(
       }
     }
 
-    const message = error instanceof Error ? error.message : String(error);
+    if (
+      shouldUseOpenaiCodexRefreshFallback({
+        provider: cred.provider,
+        credentials: cred,
+        error,
+      })
+    ) {
+      log.warn("openai-codex oauth refresh failed; using cached access token fallback", {
+        profileId,
+        provider: cred.provider,
+      });
+      return buildApiKeyProfileResult({
+        apiKey: cred.access,
+        provider: cred.provider,
+        email: cred.email,
+      });
+    }
+
+    const message = extractErrorMessage(error);
     const hint = formatAuthDoctorHint({
       cfg,
       store: refreshedStore,

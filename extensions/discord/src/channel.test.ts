@@ -1,4 +1,4 @@
-import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/discord";
+import type { IronCliwConfig, PluginRuntime } from "ironcliw/plugin-sdk/discord";
 import { describe, expect, it, vi } from "vitest";
 import { discordPlugin } from "./channel.js";
 import { setDiscordRuntime } from "./runtime.js";

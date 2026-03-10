@@ -87,4 +87,3 @@ func validatePlaceholders(text string, placeholders []string) error {
 	}
 	return nil
 }
-

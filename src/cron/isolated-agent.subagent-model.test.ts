@@ -11,11 +11,11 @@ import { runCronIsolatedAgentTurn } from "./isolated-agent.js";
 import type { CronJob } from "./types.js";
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeHelper(fn, { prefix: "IronCliw-cron-submodel-" });
+  return withTempHomeHelper(fn, { prefix: "ironcliw-cron-submodel-" });
 }
 
 async function writeSessionStore(home: string) {
-  const dir = path.join(home, ".IronCliw", "sessions");
+  const dir = path.join(home, ".ironcliw", "sessions");
   await fs.mkdir(dir, { recursive: true });
   const storePath = path.join(dir, "sessions.json");
   await fs.writeFile(
@@ -46,7 +46,7 @@ function makeCfg(
     agents: {
       defaults: {
         model: "anthropic/claude-sonnet-4-5",
-        workspace: path.join(home, "IronCliw"),
+        workspace: path.join(home, "ironcliw"),
       },
     },
     session: { store: storePath, mainKey: "main" },
@@ -163,7 +163,7 @@ describe("runCronIsolatedAgentTurn: subagent model resolution (#11461)", () => {
               agents: {
                 defaults: {
                   ...cfgOverrides.agents?.defaults,
-                  workspace: path.join(home, "IronCliw"),
+                  workspace: path.join(home, "ironcliw"),
                 },
               },
             } satisfies Partial<IronCliwConfig>);
@@ -181,7 +181,7 @@ describe("runCronIsolatedAgentTurn: subagent model resolution (#11461)", () => {
           agents: {
             defaults: {
               model: "anthropic/claude-sonnet-4-5",
-              workspace: path.join(home, "IronCliw"),
+              workspace: path.join(home, "ironcliw"),
               subagents: { model: "ollama/llama3.2:3b" },
             },
           },

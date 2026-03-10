@@ -9,15 +9,15 @@ import {
 } from "../logging.js";
 import { loggingState } from "./state.js";
 
-const testLogPath = path.join(os.tmpdir(), "IronCliw-test-env-log-level.log");
+const testLogPath = path.join(os.tmpdir(), "ironcliw-test-env-log-level.log");
 const defaultMaxFileBytes = 500 * 1024 * 1024;
 
-describe("IronCliw_LOG_LEVEL", () => {
+describe("IRONCLIW_LOG_LEVEL", () => {
   let originalEnv: string | undefined;
 
   beforeEach(() => {
-    originalEnv = process.env.IronCliw_LOG_LEVEL;
-    delete process.env.IronCliw_LOG_LEVEL;
+    originalEnv = process.env.IRONCLIW_LOG_LEVEL;
+    delete process.env.IRONCLIW_LOG_LEVEL;
     loggingState.invalidEnvLogLevelValue = null;
     resetLogger();
     setLoggerOverride(null);
@@ -25,9 +25,9 @@ describe("IronCliw_LOG_LEVEL", () => {
 
   afterEach(() => {
     if (originalEnv === undefined) {
-      delete process.env.IronCliw_LOG_LEVEL;
+      delete process.env.IRONCLIW_LOG_LEVEL;
     } else {
-      process.env.IronCliw_LOG_LEVEL = originalEnv;
+      process.env.IRONCLIW_LOG_LEVEL = originalEnv;
     }
     loggingState.invalidEnvLogLevelValue = null;
     resetLogger();
@@ -42,7 +42,7 @@ describe("IronCliw_LOG_LEVEL", () => {
       consoleStyle: "json",
       file: testLogPath,
     });
-    process.env.IronCliw_LOG_LEVEL = "debug";
+    process.env.IRONCLIW_LOG_LEVEL = "debug";
 
     expect(getResolvedLoggerSettings()).toEqual({
       level: "debug",
@@ -62,7 +62,7 @@ describe("IronCliw_LOG_LEVEL", () => {
       consoleStyle: "compact",
       file: testLogPath,
     });
-    process.env.IronCliw_LOG_LEVEL = "nope";
+    process.env.IRONCLIW_LOG_LEVEL = "nope";
     const stderrSpy = vi.spyOn(process.stderr, "write").mockImplementation(
       () => true as unknown as ReturnType<typeof process.stderr.write>, // preserve stream contract in test spy
     );
@@ -74,8 +74,8 @@ describe("IronCliw_LOG_LEVEL", () => {
 
     const warnings = stderrSpy.mock.calls
       .map(([firstArg]) => String(firstArg))
-      .filter((line) => line.includes("IronCliw_LOG_LEVEL"));
+      .filter((line) => line.includes("IRONCLIW_LOG_LEVEL"));
     expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toContain('Ignoring invalid IronCliw_LOG_LEVEL="nope"');
+    expect(warnings[0]).toContain('Ignoring invalid IRONCLIW_LOG_LEVEL="nope"');
   });
 });

@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/llm-task",
-  "version": "2026.3.2",
+  "name": "@ironcliw/llm-task",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw JSON-only LLM task plugin",
   "type": "module",
@@ -8,7 +8,7 @@
     "@sinclair/typebox": "0.34.48",
     "ajv": "^8.18.0"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

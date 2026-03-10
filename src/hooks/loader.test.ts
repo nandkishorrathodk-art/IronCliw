@@ -19,7 +19,7 @@ describe("loader", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-hooks-loader-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-hooks-loader-"));
   });
 
   beforeEach(async () => {
@@ -29,8 +29,8 @@ describe("loader", () => {
     await fs.mkdir(tmpDir, { recursive: true });
 
     // Disable bundled hooks during tests by setting env var to non-existent directory
-    envSnapshot = captureEnv(["IronCliw_BUNDLED_HOOKS_DIR"]);
-    process.env.IronCliw_BUNDLED_HOOKS_DIR = "/nonexistent/bundled/hooks";
+    envSnapshot = captureEnv(["IRONCLIW_BUNDLED_HOOKS_DIR"]);
+    process.env.IRONCLIW_BUNDLED_HOOKS_DIR = "/nonexistent/bundled/hooks";
   });
 
   async function writeHandlerModule(
@@ -253,7 +253,7 @@ describe("loader", () => {
           "---",
           "name: symlink-hook",
           "description: symlink test",
-          'metadata: {"IronCliw":{"events":["command:new"]}}',
+          'metadata: {"ironcliw":{"events":["command:new"]}}',
           "---",
           "",
           "# Symlink Hook",
@@ -298,7 +298,7 @@ describe("loader", () => {
           "---",
           "name: hardlink-hook",
           "description: hardlink test",
-          'metadata: {"IronCliw":{"events":["command:new"]}}',
+          'metadata: {"ironcliw":{"events":["command:new"]}}',
           "---",
           "",
           "# Hardlink Hook",

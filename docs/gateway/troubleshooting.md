@@ -16,18 +16,18 @@ Start at [/help/troubleshooting](/help/troubleshooting) if you want the fast tri
 Run these first, in this order:
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 Expected healthy signals:
 
-- `IronCliw gateway status` shows `Runtime: running` and `RPC probe: ok`.
-- `IronCliw doctor` reports no blocking config/service issues.
-- `IronCliw channels status --probe` shows connected/ready channels.
+- `ironcliw gateway status` shows `Runtime: running` and `RPC probe: ok`.
+- `ironcliw doctor` reports no blocking config/service issues.
+- `ironcliw channels status --probe` shows connected/ready channels.
 
 ## Anthropic 429 extra usage required for long context
 
@@ -35,9 +35,9 @@ Use this when logs/errors include:
 `HTTP 429: rate_limit_error: Extra usage is required for long context requests`.
 
 ```bash
-IronCliw logs --follow
-IronCliw models status
-IronCliw config get agents.defaults.models
+ironcliw logs --follow
+ironcliw models status
+ironcliw config get agents.defaults.models
 ```
 
 Look for:
@@ -63,11 +63,11 @@ Related:
 If channels are up but nothing answers, check routing and policy before reconnecting anything.
 
 ```bash
-IronCliw status
-IronCliw channels status --probe
-IronCliw pairing list --channel <channel> [--account <id>]
-IronCliw config get channels
-IronCliw logs --follow
+ironcliw status
+ironcliw channels status --probe
+ironcliw pairing list --channel <channel> [--account <id>]
+ironcliw config get channels
+ironcliw logs --follow
 ```
 
 Look for:
@@ -93,11 +93,11 @@ Related:
 When dashboard/control UI will not connect, validate URL, auth mode, and secure context assumptions.
 
 ```bash
-IronCliw gateway status
-IronCliw status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw gateway status --json
+ironcliw gateway status
+ironcliw status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw gateway status --json
 ```
 
 Look for:
@@ -119,9 +119,9 @@ Common signatures:
 Device auth v2 migration check:
 
 ```bash
-IronCliw --version
-IronCliw doctor
-IronCliw gateway status
+ironcliw --version
+ironcliw doctor
+ironcliw gateway status
 ```
 
 If logs show nonce/signature errors, update the connecting client and verify it:
@@ -141,11 +141,11 @@ Related:
 Use this when service is installed but process does not stay up.
 
 ```bash
-IronCliw gateway status
-IronCliw status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw gateway status --deep
+ironcliw gateway status
+ironcliw status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw gateway status --deep
 ```
 
 Look for:
@@ -156,7 +156,7 @@ Look for:
 
 Common signatures:
 
-- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `IronCliw configure`). If you are running IronCliw via Podman using the dedicated `IronCliw` user, the config lives at `~IronCliw/.IronCliw/IronCliw.json`.
+- `Gateway start blocked: set gateway.mode=local` → local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `ironcliw configure`). If you are running IronCliw via Podman using the dedicated `ironcliw` user, the config lives at `~ironcliw/.ironcliw/ironcliw.json`.
 - `refusing to bind gateway ... without auth` → non-loopback bind without token/password.
 - `another gateway instance is already listening` / `EADDRINUSE` → port conflict.
 
@@ -171,11 +171,11 @@ Related:
 If channel state is connected but message flow is dead, focus on policy, permissions, and channel specific delivery rules.
 
 ```bash
-IronCliw channels status --probe
-IronCliw pairing list --channel <channel> [--account <id>]
-IronCliw status --deep
-IronCliw logs --follow
-IronCliw config get channels
+ironcliw channels status --probe
+ironcliw pairing list --channel <channel> [--account <id>]
+ironcliw status --deep
+ironcliw logs --follow
+ironcliw config get channels
 ```
 
 Look for:
@@ -202,11 +202,11 @@ Related:
 If cron or heartbeat did not run or did not deliver, verify scheduler state first, then delivery target.
 
 ```bash
-IronCliw cron status
-IronCliw cron list
-IronCliw cron runs --id <jobId> --limit 20
-IronCliw system heartbeat last
-IronCliw logs --follow
+ironcliw cron status
+ironcliw cron list
+ironcliw cron runs --id <jobId> --limit 20
+ironcliw system heartbeat last
+ironcliw logs --follow
 ```
 
 Look for:
@@ -234,11 +234,11 @@ Related:
 If a node is paired but tools fail, isolate foreground, permission, and approval state.
 
 ```bash
-IronCliw nodes status
-IronCliw nodes describe --node <idOrNameOrIp>
-IronCliw approvals get --node <idOrNameOrIp>
-IronCliw logs --follow
-IronCliw status
+ironcliw nodes status
+ironcliw nodes describe --node <idOrNameOrIp>
+ironcliw approvals get --node <idOrNameOrIp>
+ironcliw logs --follow
+ironcliw status
 ```
 
 Look for:
@@ -265,11 +265,11 @@ Related:
 Use this when browser tool actions fail even though the gateway itself is healthy.
 
 ```bash
-IronCliw browser status
-IronCliw browser start --browser-profile IronCliw
-IronCliw browser profiles
-IronCliw logs --follow
-IronCliw doctor
+ironcliw browser status
+ironcliw browser start --browser-profile ironcliw
+ironcliw browser profiles
+ironcliw logs --follow
+ironcliw doctor
 ```
 
 Look for:
@@ -298,10 +298,10 @@ Most post-upgrade breakage is config drift or stricter defaults now being enforc
 ### 1) Auth and URL override behavior changed
 
 ```bash
-IronCliw gateway status
-IronCliw config get gateway.mode
-IronCliw config get gateway.remote.url
-IronCliw config get gateway.auth.mode
+ironcliw gateway status
+ironcliw config get gateway.mode
+ironcliw config get gateway.remote.url
+ironcliw config get gateway.auth.mode
 ```
 
 What to check:
@@ -317,10 +317,10 @@ Common signatures:
 ### 2) Bind and auth guardrails are stricter
 
 ```bash
-IronCliw config get gateway.bind
-IronCliw config get gateway.auth.token
-IronCliw gateway status
-IronCliw logs --follow
+ironcliw config get gateway.bind
+ironcliw config get gateway.auth.token
+ironcliw gateway status
+ironcliw logs --follow
 ```
 
 What to check:
@@ -336,10 +336,10 @@ Common signatures:
 ### 3) Pairing and device identity state changed
 
 ```bash
-IronCliw devices list
-IronCliw pairing list --channel <channel> [--account <id>]
-IronCliw logs --follow
-IronCliw doctor
+ironcliw devices list
+ironcliw pairing list --channel <channel> [--account <id>]
+ironcliw logs --follow
+ironcliw doctor
 ```
 
 What to check:
@@ -355,8 +355,8 @@ Common signatures:
 If the service config and runtime still disagree after checks, reinstall service metadata from the same profile/state directory:
 
 ```bash
-IronCliw gateway install --force
-IronCliw gateway restart
+ironcliw gateway install --force
+ironcliw gateway restart
 ```
 
 Related:

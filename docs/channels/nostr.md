@@ -16,7 +16,7 @@ Nostr is a decentralized protocol for social networking. This channel enables Ir
 
 ### Onboarding (recommended)
 
-- The onboarding wizard (`IronCliw onboard`) and `IronCliw channels add` list optional channel plugins.
+- The onboarding wizard (`ironcliw onboard`) and `ironcliw channels add` list optional channel plugins.
 - Selecting Nostr prompts you to install the plugin on demand.
 
 Install defaults:
@@ -29,13 +29,13 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-IronCliw plugins install @IronCliw/nostr
+ironcliw plugins install @ironcliw/nostr
 ```
 
 Use a local checkout (dev workflows):
 
 ```bash
-IronCliw plugins install --link <path-to-IronCliw>/extensions/nostr
+ironcliw plugins install --link <path-to-ironcliw>/extensions/nostr
 ```
 
 Restart the Gateway after installing or enabling plugins.
@@ -93,14 +93,14 @@ Example:
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "IronCliw",
+        "name": "ironcliw",
         "displayName": "IronCliw",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "IronCliw@example.com",
-        "lud16": "IronCliw@example.com"
+        "nip05": "ironcliw@example.com",
+        "lud16": "ironcliw@example.com"
       }
     }
   }

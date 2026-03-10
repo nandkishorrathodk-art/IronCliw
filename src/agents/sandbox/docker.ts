@@ -342,11 +342,11 @@ export function buildSandboxCreateArgs(params: {
 
   const createdAtMs = params.createdAtMs ?? Date.now();
   const args = ["create", "--name", params.name];
-  args.push("--label", "IronCliw.sandbox=1");
-  args.push("--label", `IronCliw.sessionKey=${params.scopeKey}`);
-  args.push("--label", `IronCliw.createdAtMs=${createdAtMs}`);
+  args.push("--label", "ironcliw.sandbox=1");
+  args.push("--label", `ironcliw.sessionKey=${params.scopeKey}`);
+  args.push("--label", `ironcliw.createdAtMs=${createdAtMs}`);
   if (params.configHash) {
-    args.push("--label", `IronCliw.configHash=${params.configHash}`);
+    args.push("--label", `ironcliw.configHash=${params.configHash}`);
   }
   for (const [key, value] of Object.entries(params.labels ?? {})) {
     if (key && value) {
@@ -472,18 +472,18 @@ async function createSandboxContainer(params: {
 }
 
 async function readContainerConfigHash(containerName: string): Promise<string | null> {
-  return await readDockerContainerLabel(containerName, "IronCliw.configHash");
+  return await readDockerContainerLabel(containerName, "ironcliw.configHash");
 }
 
 function formatSandboxRecreateHint(params: { scope: SandboxConfig["scope"]; sessionKey: string }) {
   if (params.scope === "session") {
-    return formatCliCommand(`IronCliw sandbox recreate --session ${params.sessionKey}`);
+    return formatCliCommand(`ironcliw sandbox recreate --session ${params.sessionKey}`);
   }
   if (params.scope === "agent") {
     const agentId = resolveSandboxAgentId(params.sessionKey) ?? "main";
-    return formatCliCommand(`IronCliw sandbox recreate --agent ${agentId}`);
+    return formatCliCommand(`ironcliw sandbox recreate --agent ${agentId}`);
   }
-  return formatCliCommand("IronCliw sandbox recreate --all");
+  return formatCliCommand("ironcliw sandbox recreate --all");
 }
 
 export async function ensureSandboxContainer(params: {

@@ -1,14 +1,18 @@
 import type { Command } from "commander";
-import { AutonomousHunter, type HuntSummary, type ReconResult } from "../../plugins/hunter/autonomous-hunter.js";
+import {
+  AutonomousHunter,
+  type HuntSummary,
+  type ReconResult,
+} from "../../plugins/hunter/autonomous-hunter.js";
 import type { ProFinding } from "../../plugins/proscan/scanner.js";
 import { scopeManager } from "../../security/scope-manager.js";
 
 const SEVERITY_COLOR: Record<string, string> = {
   critical: "🔴",
-  high:     "🟠",
-  medium:   "🟡",
-  low:      "🔵",
-  info:     "⚪",
+  high: "🟠",
+  medium: "🟡",
+  low: "🔵",
+  info: "⚪",
 };
 
 function printBanner(target: string) {
@@ -26,12 +30,16 @@ function printRecon(recon: ReconResult) {
   console.log(`  Title      : ${recon.title}`);
   console.log(`  Status     : HTTP ${recon.statusCode} (${recon.responseTimeMs}ms)`);
   console.log(`  Final URL  : ${recon.finalUrl}`);
-  console.log(`  Tech Stack : ${recon.techStack.length > 0 ? recon.techStack.join(", ") : "Unknown"}`);
+  console.log(
+    `  Tech Stack : ${recon.techStack.length > 0 ? recon.techStack.join(", ") : "Unknown"}`,
+  );
   console.log(`  Endpoints  : ${recon.endpoints.length} discovered`);
   console.log(`  Login Page : ${recon.hasLogin ? "✅ Yes" : "❌ No"}`);
   console.log(`  API Surface: ${recon.hasApi ? "✅ Yes" : "❌ No"}`);
   if (recon.robots.length > 0) {
-    console.log(`  robots.txt : ${recon.robots.slice(0, 5).join(", ")}${recon.robots.length > 5 ? " ..." : ""}`);
+    console.log(
+      `  robots.txt : ${recon.robots.slice(0, 5).join(", ")}${recon.robots.length > 5 ? " ..." : ""}`,
+    );
   }
   console.log();
 }
@@ -40,10 +48,16 @@ function printFinding(f: ProFinding) {
   const icon = SEVERITY_COLOR[f.severity] ?? "⚪";
   console.log(`  ${icon} [${f.severity.toUpperCase()}] ${f.title}`);
   console.log(`     URL      : ${f.url}`);
-  if (f.parameter) { console.log(`     Param    : ${f.parameter}`); }
-  if (f.payload) { console.log(`     Payload  : ${f.payload.slice(0, 70)}`); }
+  if (f.parameter) {
+    console.log(`     Param    : ${f.parameter}`);
+  }
+  if (f.payload) {
+    console.log(`     Payload  : ${f.payload.slice(0, 70)}`);
+  }
   console.log(`     Evidence : ${f.evidence.slice(0, 100)}`);
-  if (f.cvss) { console.log(`     CVSS     : ${f.cvss}`); }
+  if (f.cvss) {
+    console.log(`     CVSS     : ${f.cvss}`);
+  }
   console.log();
 }
 
@@ -121,7 +135,11 @@ export function registerHuntCommand(program: Command) {
       });
 
       const credentials = options.username
-        ? { username: options.username, password: options.password ?? "", loginUrl: options.loginUrl }
+        ? {
+            username: options.username,
+            password: options.password ?? "",
+            loginUrl: options.loginUrl,
+          }
         : undefined;
 
       const summary = await hunter.hunt({

@@ -28,8 +28,8 @@ function mkSessionsSpawnToolCall(content: string): AgentMessage {
 }
 
 describe("sanitizeToolCallInputs redacts sessions_spawn attachments", () => {
-  it("replaces attachments[].content with __IronCliw_REDACTED__", () => {
-    const secret = "SUPER_SECRET_SHOULD_NOT_PERSIST";
+  it("replaces attachments[].content with __IRONCLIW_REDACTED__", () => {
+    const secret = "SUPER_SECRET_SHOULD_NOT_PERSIST"; // pragma: allowlist secret
     const input = [mkSessionsSpawnToolCall(secret)];
     const out = sanitizeToolCallInputs(input);
     expect(out).toHaveLength(1);
@@ -39,12 +39,12 @@ describe("sanitizeToolCallInputs redacts sessions_spawn attachments", () => {
       arguments?: { attachments?: Array<{ content?: string }> };
     } | null;
     expect(tool?.name).toBe("sessions_spawn");
-    expect(tool?.arguments?.attachments?.[0]?.content).toBe("__IronCliw_REDACTED__");
+    expect(tool?.arguments?.attachments?.[0]?.content).toBe("__IRONCLIW_REDACTED__");
     expect(JSON.stringify(out)).not.toContain(secret);
   });
 
   it("redacts attachments content from tool input payloads too", () => {
-    const secret = "INPUT_SECRET_SHOULD_NOT_PERSIST";
+    const secret = "INPUT_SECRET_SHOULD_NOT_PERSIST"; // pragma: allowlist secret
     const input = castAgentMessages([
       {
         role: "assistant",
@@ -71,7 +71,7 @@ describe("sanitizeToolCallInputs redacts sessions_spawn attachments", () => {
     } | null;
     expect(
       tool?.input?.attachments?.[0]?.content || tool?.arguments?.attachments?.[0]?.content,
-    ).toBe("__IronCliw_REDACTED__");
+    ).toBe("__IRONCLIW_REDACTED__");
     expect(JSON.stringify(out)).not.toContain(secret);
   });
 });

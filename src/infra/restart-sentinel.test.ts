@@ -17,9 +17,9 @@ describe("restart sentinel", () => {
   let tempDir: string;
 
   beforeEach(async () => {
-    envSnapshot = captureEnv(["IronCliw_STATE_DIR"]);
-    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sentinel-"));
-    process.env.IronCliw_STATE_DIR = tempDir;
+    envSnapshot = captureEnv(["IRONCLIW_STATE_DIR"]);
+    tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sentinel-"));
+    process.env.IRONCLIW_STATE_DIR = tempDir;
   });
 
   afterEach(async () => {

@@ -31,7 +31,7 @@ describe("connect params client id validation", () => {
   );
 
   test("rejects unknown client ids", () => {
-    const ok = validateConnectParams(makeConnectParams("IronCliw-mobile"));
+    const ok = validateConnectParams(makeConnectParams("ironcliw-mobile"));
     expect(ok).toBe(false);
   });
 });

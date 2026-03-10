@@ -5,11 +5,11 @@ import { homedir } from "node:os";
 import * as path from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import { fetchWithSsrFGuard } from "IronCliw/plugin-sdk/tlon";
+import { fetchWithSsrFGuard } from "ironcliw/plugin-sdk/tlon";
 import { getDefaultSsrFPolicy } from "../urbit/context.js";
 
 // Default to IronCliw workspace media directory
-const DEFAULT_MEDIA_DIR = path.join(homedir(), ".IronCliw", "workspace", "media", "inbound");
+const DEFAULT_MEDIA_DIR = path.join(homedir(), ".ironcliw", "workspace", "media", "inbound");
 
 export interface ExtractedImage {
   url: string;

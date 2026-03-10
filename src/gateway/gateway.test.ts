@@ -34,39 +34,39 @@ describe("gateway e2e", () => {
     async () => {
       const envSnapshot = captureEnv([
         "HOME",
-        "IronCliw_CONFIG_PATH",
-        "IronCliw_GATEWAY_TOKEN",
-        "IronCliw_SKIP_CHANNELS",
-        "IronCliw_SKIP_GMAIL_WATCHER",
-        "IronCliw_SKIP_CRON",
-        "IronCliw_SKIP_CANVAS_HOST",
-        "IronCliw_SKIP_BROWSER_CONTROL_SERVER",
+        "IRONCLIW_CONFIG_PATH",
+        "IRONCLIW_GATEWAY_TOKEN",
+        "IRONCLIW_SKIP_CHANNELS",
+        "IRONCLIW_SKIP_GMAIL_WATCHER",
+        "IRONCLIW_SKIP_CRON",
+        "IRONCLIW_SKIP_CANVAS_HOST",
+        "IRONCLIW_SKIP_BROWSER_CONTROL_SERVER",
       ]);
 
       const { baseUrl: openaiBaseUrl, restore } = installOpenAiResponsesMock();
 
-      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-mock-home-"));
+      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-mock-home-"));
       process.env.HOME = tempHome;
-      process.env.IronCliw_SKIP_CHANNELS = "1";
-      process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-      process.env.IronCliw_SKIP_CRON = "1";
-      process.env.IronCliw_SKIP_CANVAS_HOST = "1";
-      process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER = "1";
+      process.env.IRONCLIW_SKIP_CHANNELS = "1";
+      process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+      process.env.IRONCLIW_SKIP_CRON = "1";
+      process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
+      process.env.IRONCLIW_SKIP_BROWSER_CONTROL_SERVER = "1";
 
       const token = nextGatewayId("test-token");
-      process.env.IronCliw_GATEWAY_TOKEN = token;
+      process.env.IRONCLIW_GATEWAY_TOKEN = token;
 
-      const workspaceDir = path.join(tempHome, "IronCliw");
+      const workspaceDir = path.join(tempHome, "ironcliw");
       await fs.mkdir(workspaceDir, { recursive: true });
 
       const nonceA = nextGatewayId("nonce-a");
       const nonceB = nextGatewayId("nonce-b");
-      const toolProbePath = path.join(workspaceDir, `.IronCliw-tool-probe.${nonceA}.txt`);
+      const toolProbePath = path.join(workspaceDir, `.ironcliw-tool-probe.${nonceA}.txt`);
       await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
-      const configDir = path.join(tempHome, ".IronCliw");
+      const configDir = path.join(tempHome, ".ironcliw");
       await fs.mkdir(configDir, { recursive: true });
-      const configPath = path.join(configDir, "IronCliw.json");
+      const configPath = path.join(configDir, "ironcliw.json");
 
       const cfg = {
         agents: { defaults: { workspace: workspaceDir } },
@@ -131,27 +131,27 @@ describe("gateway e2e", () => {
     async () => {
       const envSnapshot = captureEnv([
         "HOME",
-        "IronCliw_STATE_DIR",
-        "IronCliw_CONFIG_PATH",
-        "IronCliw_GATEWAY_TOKEN",
-        "IronCliw_SKIP_CHANNELS",
-        "IronCliw_SKIP_GMAIL_WATCHER",
-        "IronCliw_SKIP_CRON",
-        "IronCliw_SKIP_CANVAS_HOST",
-        "IronCliw_SKIP_BROWSER_CONTROL_SERVER",
+        "IRONCLIW_STATE_DIR",
+        "IRONCLIW_CONFIG_PATH",
+        "IRONCLIW_GATEWAY_TOKEN",
+        "IRONCLIW_SKIP_CHANNELS",
+        "IRONCLIW_SKIP_GMAIL_WATCHER",
+        "IRONCLIW_SKIP_CRON",
+        "IRONCLIW_SKIP_CANVAS_HOST",
+        "IRONCLIW_SKIP_BROWSER_CONTROL_SERVER",
       ]);
 
-      process.env.IronCliw_SKIP_CHANNELS = "1";
-      process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-      process.env.IronCliw_SKIP_CRON = "1";
-      process.env.IronCliw_SKIP_CANVAS_HOST = "1";
-      process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER = "1";
-      delete process.env.IronCliw_GATEWAY_TOKEN;
+      process.env.IRONCLIW_SKIP_CHANNELS = "1";
+      process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+      process.env.IRONCLIW_SKIP_CRON = "1";
+      process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
+      process.env.IRONCLIW_SKIP_BROWSER_CONTROL_SERVER = "1";
+      delete process.env.IRONCLIW_GATEWAY_TOKEN;
 
-      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-wizard-home-"));
+      const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-wizard-home-"));
       process.env.HOME = tempHome;
-      delete process.env.IronCliw_STATE_DIR;
-      delete process.env.IronCliw_CONFIG_PATH;
+      delete process.env.IRONCLIW_STATE_DIR;
+      delete process.env.IRONCLIW_CONFIG_PATH;
 
       const wizardToken = nextGatewayId("wiz-token");
       const port = await getFreeGatewayPort();

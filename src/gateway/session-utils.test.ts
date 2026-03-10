@@ -180,7 +180,7 @@ describe("gateway session utils", () => {
   test("resolveGatewaySessionStoreTarget uses canonical key for main alias", () => {
     const storeTemplate = path.join(
       os.tmpdir(),
-      "IronCliw-session-utils",
+      "ironcliw-session-utils",
       "{agentId}",
       "sessions.json",
     );
@@ -314,7 +314,7 @@ describe("gateway session utils", () => {
   });
 
   test("listAgentsForGateway keeps explicit agents.list scope over disk-only agents (scope boundary)", async () => {
-    await withStateDirEnv("IronCliw-agent-list-scope-", async ({ stateDir }) => {
+    await withStateDirEnv("ironcliw-agent-list-scope-", async ({ stateDir }) => {
       fs.mkdirSync(path.join(stateDir, "agents", "main"), { recursive: true });
       fs.mkdirSync(path.join(stateDir, "agents", "codex"), { recursive: true });
 
@@ -766,7 +766,7 @@ describe("listSessionsFromStore search", () => {
 
 describe("loadCombinedSessionStoreForGateway includes disk-only agents (#32804)", () => {
   test("ACP agent sessions are visible even when agents.list is configured", async () => {
-    await withStateDirEnv("IronCliw-acp-vis-", async ({ stateDir }) => {
+    await withStateDirEnv("ironcliw-acp-vis-", async ({ stateDir }) => {
       const agentsDir = path.join(stateDir, "agents");
       const mainDir = path.join(agentsDir, "main", "sessions");
       const codexDir = path.join(agentsDir, "codex", "sessions");

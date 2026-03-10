@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/synology-chat";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/synology-chat";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/synology-chat";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/synology-chat";
 import { createSynologyChatPlugin } from "./src/channel.js";
 import { setSynologyRuntime } from "./src/runtime.js";
 

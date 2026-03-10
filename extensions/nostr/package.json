@@ -1,13 +1,13 @@
 {
-  "name": "@IronCliw/nostr",
-  "version": "2026.3.2",
+  "name": "@ironcliw/nostr",
+  "version": "2026.3.9",
   "description": "IronCliw Nostr channel plugin for NIP-04 encrypted DMs",
   "type": "module",
   "dependencies": {
     "nostr-tools": "^2.23.3",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,9 +22,14 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@IronCliw/nostr",
+      "npmSpec": "@ironcliw/nostr",
       "localPath": "extensions/nostr",
       "defaultChoice": "npm"
+    },
+    "releaseChecks": {
+      "rootDependencyMirrorAllowlist": [
+        "nostr-tools"
+      ]
     }
   }
 }

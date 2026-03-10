@@ -52,8 +52,8 @@ async function expectExecCwdResolvesTo(
 
 describe("workspace path resolution", () => {
   it("resolves relative read/write/edit paths against workspaceDir even after cwd changes", async () => {
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
-      await withTempDir("IronCliw-cwd-", async (otherDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
+      await withTempDir("ironcliw-cwd-", async (otherDir) => {
         const cwdSpy = vi.spyOn(process, "cwd").mockReturnValue(otherDir);
         try {
           const tools = createIronCliwCodingTools({ workspaceDir });
@@ -78,10 +78,10 @@ describe("workspace path resolution", () => {
           await editTool.execute("ws-edit", {
             path: editFile,
             oldText: "world",
-            newText: "IronCliw",
+            newText: "ironcliw",
           });
           expect(await fs.readFile(path.join(workspaceDir, editFile), "utf8")).toBe(
-            "hello IronCliw",
+            "hello ironcliw",
           );
         } finally {
           cwdSpy.mockRestore();
@@ -91,8 +91,8 @@ describe("workspace path resolution", () => {
   });
 
   it("allows deletion edits with empty newText", async () => {
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
-      await withTempDir("IronCliw-cwd-", async (otherDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
+      await withTempDir("ironcliw-cwd-", async (otherDir) => {
         const testFile = "delete.txt";
         await fs.writeFile(path.join(workspaceDir, testFile), "hello world", "utf8");
 
@@ -116,15 +116,15 @@ describe("workspace path resolution", () => {
   });
 
   it("defaults exec cwd to workspaceDir when workdir is omitted", async () => {
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
       const execTool = createExecTool(workspaceDir);
       await expectExecCwdResolvesTo(execTool, "ws-exec", { command: "echo ok" }, workspaceDir);
     });
   });
 
   it("lets exec workdir override the workspace default", async () => {
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
-      await withTempDir("IronCliw-override-", async (overrideDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
+      await withTempDir("ironcliw-override-", async (overrideDir) => {
         const execTool = createExecTool(workspaceDir);
         await expectExecCwdResolvesTo(
           execTool,
@@ -137,12 +137,12 @@ describe("workspace path resolution", () => {
   });
 
   it("rejects @-prefixed absolute paths outside workspace when workspaceOnly is enabled", async () => {
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
       const cfg: IronCliwConfig = { tools: { fs: { workspaceOnly: true } } };
       const tools = createIronCliwCodingTools({ workspaceDir, config: cfg });
       const { readTool } = expectReadWriteEditTools(tools);
 
-      const outsideAbsolute = path.resolve(path.parse(workspaceDir).root, "outside-IronCliw.txt");
+      const outsideAbsolute = path.resolve(path.parse(workspaceDir).root, "outside-ironcliw.txt");
       await expect(
         readTool.execute("ws-read-at-prefix", { path: `@${outsideAbsolute}` }),
       ).rejects.toThrow(/Path escapes sandbox root/i);
@@ -153,7 +153,7 @@ describe("workspace path resolution", () => {
     if (process.platform === "win32") {
       return;
     }
-    await withTempDir("IronCliw-ws-", async (workspaceDir) => {
+    await withTempDir("ironcliw-ws-", async (workspaceDir) => {
       const cfg: IronCliwConfig = { tools: { fs: { workspaceOnly: true } } };
       const tools = createIronCliwCodingTools({ workspaceDir, config: cfg });
       const { readTool, writeTool } = expectReadWriteEditTools(tools);
@@ -192,8 +192,8 @@ describe("workspace path resolution", () => {
 
 describe("sandboxed workspace paths", () => {
   it("uses sandbox workspace for relative read/write/edit", async () => {
-    await withTempDir("IronCliw-sandbox-", async (sandboxDir) => {
-      await withTempDir("IronCliw-workspace-", async (workspaceDir) => {
+    await withTempDir("ironcliw-sandbox-", async (sandboxDir) => {
+      await withTempDir("ironcliw-workspace-", async (workspaceDir) => {
         const sandbox = createPiToolsSandboxContext({
           workspaceDir: sandboxDir,
           agentWorkspaceDir: workspaceDir,

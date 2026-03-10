@@ -7,12 +7,12 @@ import {
   resetSessionsSpawnConfigOverride,
   setupSessionsSpawnGatewayMock,
   setSessionsSpawnConfigOverride,
-} from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./ironcliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const fastModeEnv = vi.hoisted(() => {
-  const previous = process.env.IronCliw_TEST_FAST;
-  process.env.IronCliw_TEST_FAST = "1";
+  const previous = process.env.IRONCLIW_TEST_FAST;
+  process.env.IRONCLIW_TEST_FAST = "1";
   return { previous };
 });
 
@@ -102,7 +102,7 @@ async function emitLifecycleEndAndFlush(params: {
   }
 }
 
-describe("IronCliw-tools: subagents (sessions_spawn lifecycle)", () => {
+describe("ironcliw-tools: subagents (sessions_spawn lifecycle)", () => {
   beforeEach(() => {
     resetSessionsSpawnConfigOverride();
     setSessionsSpawnConfigOverride({
@@ -122,10 +122,10 @@ describe("IronCliw-tools: subagents (sessions_spawn lifecycle)", () => {
 
   afterAll(() => {
     if (fastModeEnv.previous === undefined) {
-      delete process.env.IronCliw_TEST_FAST;
+      delete process.env.IRONCLIW_TEST_FAST;
       return;
     }
-    process.env.IronCliw_TEST_FAST = fastModeEnv.previous;
+    process.env.IRONCLIW_TEST_FAST = fastModeEnv.previous;
   });
 
   it("sessions_spawn runs cleanup flow after subagent completion", async () => {

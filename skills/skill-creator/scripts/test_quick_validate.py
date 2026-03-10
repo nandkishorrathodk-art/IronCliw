@@ -51,7 +51,7 @@ allowed-tools:
   - gh
 metadata: |
   {
-    "owners": ["team-IronCliw"]
+    "owners": ["team-ironcliw"]
   }
 ---
 # Skill

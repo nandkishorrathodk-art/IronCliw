@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 ZIP=${1:?"Usage: $0 IronCliw-<ver>.zip"}
-FEED_URL=${2:-"https://raw.githubusercontent.com/IronCliw/IronCliw/main/appcast.xml"}
+FEED_URL=${2:-"https://raw.githubusercontent.com/ironcliw/ironcliw/main/appcast.xml"}
 PRIVATE_KEY_FILE=${SPARKLE_PRIVATE_KEY_FILE:-}
 if [[ -z "$PRIVATE_KEY_FILE" ]]; then
   echo "Set SPARKLE_PRIVATE_KEY_FILE to your ed25519 private key (Sparkle)." >&2
@@ -50,7 +50,7 @@ else
 fi
 cp -f "$NOTES_HTML" "$TMP_DIR/${ZIP_BASE}.html"
 
-DOWNLOAD_URL_PREFIX=${SPARKLE_DOWNLOAD_URL_PREFIX:-"https://github.com/IronCliw/IronCliw/releases/download/v${VERSION}/"}
+DOWNLOAD_URL_PREFIX=${SPARKLE_DOWNLOAD_URL_PREFIX:-"https://github.com/ironcliw/ironcliw/releases/download/v${VERSION}/"}
 
 export PATH="$ROOT/apps/macos/.build/artifacts/sparkle/Sparkle/bin:$PATH"
 if ! command -v generate_appcast >/dev/null; then
@@ -68,4 +68,3 @@ generate_appcast \
 cp -f "$TMP_DIR/appcast.xml" "$ROOT/appcast.xml"
 
 echo "Appcast generated (appcast.xml). Upload alongside $ZIP at $FEED_URL"
-

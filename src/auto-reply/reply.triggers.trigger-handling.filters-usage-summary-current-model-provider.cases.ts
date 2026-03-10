@@ -156,7 +156,7 @@ export function registerTriggerHandlingUsageSummaryCases(params: {
           runEmbeddedPiAgentMock.mockClear();
           const cfg = makeCfg(home);
           cfg.session = { ...cfg.session, store: join(home, "auth-profile-status.sessions.json") };
-          const agentDir = join(home, ".IronCliw", "agents", "main", "agent");
+          const agentDir = join(home, ".ironcliw", "agents", "main", "agent");
           await mkdir(agentDir, { recursive: true });
           await writeFile(
             join(agentDir, "auth-profiles.json"),
@@ -213,7 +213,7 @@ export function registerTriggerHandlingUsageSummaryCases(params: {
           expect(text).toContain("api-key");
           expect(text).not.toContain("sk-test");
           expect(text).not.toContain("abcdef");
-          expect(text).not.toContain("1234567890abcdef");
+          expect(text).not.toContain("1234567890abcdef"); // pragma: allowlist secret
           expect(text).toContain("(anthropic:work)");
           expect(text).not.toContain("mixed");
           expect(runEmbeddedPiAgentMock).not.toHaveBeenCalled();

@@ -11,6 +11,13 @@ vi.mock("./register.agent.js", () => ({
   },
 }));
 
+vi.mock("./register.backup.js", () => ({
+  registerBackupCommand: (program: Command) => {
+    const backup = program.command("backup");
+    backup.command("create");
+  },
+}));
+
 vi.mock("./register.maintenance.js", () => ({
   registerMaintenanceCommands: (program: Command) => {
     program.command("doctor");
@@ -67,6 +74,7 @@ describe("command-registry", () => {
     expect(names).toContain("config");
     expect(names).toContain("memory");
     expect(names).toContain("agents");
+    expect(names).toContain("backup");
     expect(names).toContain("browser");
     expect(names).toContain("sessions");
     expect(names).not.toContain("agent");
@@ -93,14 +101,14 @@ describe("command-registry", () => {
 
   it("registers doctor placeholder for doctor primary command", () => {
     const program = createProgram();
-    registerCoreCliCommands(program, testProgramContext, ["node", "IronCliw", "doctor"]);
+    registerCoreCliCommands(program, testProgramContext, ["node", "ironcliw", "doctor"]);
 
     expect(namesOf(program)).toEqual(["doctor"]);
   });
 
   it("does not narrow to the primary command when help is requested", () => {
     const program = createProgram();
-    registerCoreCliCommands(program, testProgramContext, ["node", "IronCliw", "doctor", "--help"]);
+    registerCoreCliCommands(program, testProgramContext, ["node", "ironcliw", "doctor", "--help"]);
 
     const names = namesOf(program);
     expect(names).toContain("doctor");
@@ -123,10 +131,10 @@ describe("command-registry", () => {
 
   it("registers grouped core entry placeholders without duplicate command errors", async () => {
     const program = createProgram();
-    registerCoreCliCommands(program, testProgramContext, ["node", "IronCliw", "vitest"]);
+    registerCoreCliCommands(program, testProgramContext, ["node", "ironcliw", "vitest"]);
     program.exitOverride();
-    await withProcessArgv(["node", "IronCliw", "status"], async () => {
-      await program.parseAsync(["node", "IronCliw", "status"]);
+    await withProcessArgv(["node", "ironcliw", "status"], async () => {
+      await program.parseAsync(["node", "ironcliw", "status"]);
     });
 
     const names = namesOf(program);
@@ -137,7 +145,7 @@ describe("command-registry", () => {
 
   it("replaces placeholders when loading a grouped entry by secondary command name", async () => {
     const program = createProgram();
-    registerCoreCliCommands(program, testProgramContext, ["node", "IronCliw", "doctor"]);
+    registerCoreCliCommands(program, testProgramContext, ["node", "ironcliw", "doctor"]);
     expect(namesOf(program)).toEqual(["doctor"]);
 
     const found = await registerCoreCliByName(program, testProgramContext, "dashboard");

@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import { normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
+import { normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
 
 // Support multiple active clients for multi-account
 const activeClients = new Map<string, MatrixClient>();

@@ -1,7 +1,7 @@
-import type { WizardPrompter } from "IronCliw/plugin-sdk/bluebubbles";
+import type { WizardPrompter } from "ironcliw/plugin-sdk/bluebubbles";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("IronCliw/plugin-sdk/bluebubbles", () => ({
+vi.mock("ironcliw/plugin-sdk/bluebubbles", () => ({
   DEFAULT_ACCOUNT_ID: "default",
   addWildcardAllowFrom: vi.fn(),
   formatDocsLink: (_url: string, fallback: string) => fallback,
@@ -23,6 +23,10 @@ vi.mock("IronCliw/plugin-sdk/bluebubbles", () => ({
     );
   },
   mergeAllowFromEntries: (_existing: unknown, entries: string[]) => entries,
+  createAccountListHelpers: () => ({
+    listAccountIds: () => ["default"],
+    resolveDefaultAccountId: () => "default",
+  }),
   normalizeSecretInputString: (value: unknown) => {
     if (typeof value !== "string") {
       return undefined;
@@ -33,6 +37,10 @@ vi.mock("IronCliw/plugin-sdk/bluebubbles", () => ({
   normalizeAccountId: (value?: string | null) =>
     value && value.trim().length > 0 ? value : "default",
   promptAccountId: vi.fn(),
+  resolveAccountIdForConfigure: async (params: {
+    accountOverride?: string;
+    defaultAccountId: string;
+  }) => params.accountOverride?.trim() || params.defaultAccountId,
 }));
 
 describe("bluebubbles onboarding SecretInput", () => {

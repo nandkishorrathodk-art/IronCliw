@@ -39,11 +39,11 @@ x-i18n:
 ## CLI 工作流程（支持无头模式）
 
 ```bash
-IronCliw nodes pending
-IronCliw nodes approve <requestId>
-IronCliw nodes reject <requestId>
-IronCliw nodes status
-IronCliw nodes rename --node <id|name|ip> --name "Living Room iPad"
+ironcliw nodes pending
+ironcliw nodes approve <requestId>
+ironcliw nodes reject <requestId>
+ironcliw nodes status
+ironcliw nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` 显示已配对/已连接的节点及其功能。
@@ -80,12 +80,12 @@ IronCliw nodes rename --node <id|name|ip> --name "Living Room iPad"
 
 ## 存储（本地，私有）
 
-配对状态存储在 Gateway 网关状态目录下（默认 `~/.IronCliw`）：
+配对状态存储在 Gateway 网关状态目录下（默认 `~/.ironcliw`）：
 
-- `~/.IronCliw/nodes/paired.json`
-- `~/.IronCliw/nodes/pending.json`
+- `~/.ironcliw/nodes/paired.json`
+- `~/.ironcliw/nodes/pending.json`
 
-如果你覆盖了 `IronCliw_STATE_DIR`，`nodes/` 文件夹会随之移动。
+如果你覆盖了 `IRONCLIW_STATE_DIR`，`nodes/` 文件夹会随之移动。
 
 安全注意事项：
 

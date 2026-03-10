@@ -29,4 +29,3 @@ fi
 
 echo "Missing package manager: pnpm, bun, or npm required." >&2
 exit 1
-

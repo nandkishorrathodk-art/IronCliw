@@ -69,4 +69,3 @@ parallel ("first", on-fail: "continue"):
   session "Slow but reliable"
 
 session "Got the first result, even if it was a handled failure"
-

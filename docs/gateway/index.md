@@ -30,11 +30,11 @@ Use this page for day-1 startup and day-2 operations of the Gateway service.
   <Step title="Start the Gateway">
 
 ```bash
-IronCliw gateway --port 18789
+ironcliw gateway --port 18789
 # debug/trace mirrored to stdio
-IronCliw gateway --port 18789 --verbose
+ironcliw gateway --port 18789 --verbose
 # force-kill listener on selected port, then start
-IronCliw gateway --force
+ironcliw gateway --force
 ```
 
   </Step>
@@ -42,9 +42,9 @@ IronCliw gateway --force
   <Step title="Verify service health">
 
 ```bash
-IronCliw gateway status
-IronCliw status
-IronCliw logs --follow
+ironcliw gateway status
+ironcliw status
+ironcliw logs --follow
 ```
 
 Healthy baseline: `Runtime: running` and `RPC probe: ok`.
@@ -54,14 +54,14 @@ Healthy baseline: `Runtime: running` and `RPC probe: ok`.
   <Step title="Validate channel readiness">
 
 ```bash
-IronCliw channels status --probe
+ironcliw channels status --probe
 ```
 
   </Step>
 </Steps>
 
 <Note>
-Gateway config reload watches the active config file path (resolved from profile/state defaults, or `IronCliw_CONFIG_PATH` when set).
+Gateway config reload watches the active config file path (resolved from profile/state defaults, or `IRONCLIW_CONFIG_PATH` when set).
 Default mode is `gateway.reload.mode="hybrid"`.
 </Note>
 
@@ -73,13 +73,13 @@ Default mode is `gateway.reload.mode="hybrid"`.
   - HTTP APIs (OpenAI-compatible, Responses, tools invoke)
   - Control UI and hooks
 - Default bind mode: `loopback`.
-- Auth is required by default (`gateway.auth.token` / `gateway.auth.password`, or `IronCliw_GATEWAY_TOKEN` / `IronCliw_GATEWAY_PASSWORD`).
+- Auth is required by default (`gateway.auth.token` / `gateway.auth.password`, or `IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD`).
 
 ### Port and bind precedence
 
 | Setting      | Resolution order                                              |
 | ------------ | ------------------------------------------------------------- |
-| Gateway port | `--port` → `IronCliw_GATEWAY_PORT` → `gateway.port` → `18789` |
+| Gateway port | `--port` → `IRONCLIW_GATEWAY_PORT` → `gateway.port` → `18789` |
 | Bind mode    | CLI/override → `gateway.bind` → `loopback`                    |
 
 ### Hot reload modes
@@ -94,15 +94,15 @@ Default mode is `gateway.reload.mode="hybrid"`.
 ## Operator command set
 
 ```bash
-IronCliw gateway status
-IronCliw gateway status --deep
-IronCliw gateway status --json
-IronCliw gateway install
-IronCliw gateway restart
-IronCliw gateway stop
-IronCliw secrets reload
-IronCliw logs --follow
-IronCliw doctor
+ironcliw gateway status
+ironcliw gateway status --deep
+ironcliw gateway status --json
+ironcliw gateway install
+ironcliw gateway restart
+ironcliw gateway stop
+ironcliw secrets reload
+ironcliw logs --follow
+ironcliw doctor
 ```
 
 ## Remote access
@@ -130,22 +130,22 @@ Use supervised runs for production-like reliability.
   <Tab title="macOS (launchd)">
 
 ```bash
-IronCliw gateway install
-IronCliw gateway status
-IronCliw gateway restart
-IronCliw gateway stop
+ironcliw gateway install
+ironcliw gateway status
+ironcliw gateway restart
+ironcliw gateway stop
 ```
 
-LaunchAgent labels are `ai.IronCliw.gateway` (default) or `ai.IronCliw.<profile>` (named profile). `IronCliw doctor` audits and repairs service config drift.
+LaunchAgent labels are `ai.ironcliw.gateway` (default) or `ai.ironcliw.<profile>` (named profile). `ironcliw doctor` audits and repairs service config drift.
 
   </Tab>
 
   <Tab title="Linux (systemd user)">
 
 ```bash
-IronCliw gateway install
-systemctl --user enable --now IronCliw-gateway[-<profile>].service
-IronCliw gateway status
+ironcliw gateway install
+systemctl --user enable --now ironcliw-gateway[-<profile>].service
+ironcliw gateway status
 ```
 
 For persistence after logout, enable lingering:
@@ -162,7 +162,7 @@ Use a system unit for multi-user/always-on hosts.
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now IronCliw-gateway[-<profile>].service
+sudo systemctl enable --now ironcliw-gateway[-<profile>].service
 ```
 
   </Tab>
@@ -176,15 +176,15 @@ Use multiple only for strict isolation/redundancy (for example a rescue profile)
 Checklist per instance:
 
 - Unique `gateway.port`
-- Unique `IronCliw_CONFIG_PATH`
-- Unique `IronCliw_STATE_DIR`
+- Unique `IRONCLIW_CONFIG_PATH`
+- Unique `IRONCLIW_STATE_DIR`
 - Unique `agents.defaults.workspace`
 
 Example:
 
 ```bash
-IronCliw_CONFIG_PATH=~/.IronCliw/a.json IronCliw_STATE_DIR=~/.IronCliw-a IronCliw gateway --port 19001
-IronCliw_CONFIG_PATH=~/.IronCliw/b.json IronCliw_STATE_DIR=~/.IronCliw-b IronCliw gateway --port 19002
+IRONCLIW_CONFIG_PATH=~/.ironcliw/a.json IRONCLIW_STATE_DIR=~/.ironcliw-a ironcliw gateway --port 19001
+IRONCLIW_CONFIG_PATH=~/.ironcliw/b.json IRONCLIW_STATE_DIR=~/.ironcliw-b ironcliw gateway --port 19002
 ```
 
 See: [Multiple gateways](/gateway/multiple-gateways).
@@ -192,9 +192,9 @@ See: [Multiple gateways](/gateway/multiple-gateways).
 ### Dev profile quick path
 
 ```bash
-IronCliw --dev setup
-IronCliw --dev gateway --allow-unconfigured
-IronCliw --dev status
+ironcliw --dev setup
+ironcliw --dev gateway --allow-unconfigured
+ironcliw --dev status
 ```
 
 Defaults include isolated state/config and base gateway port `19001`.
@@ -223,9 +223,9 @@ See full protocol docs: [Gateway Protocol](/gateway/protocol).
 ### Readiness
 
 ```bash
-IronCliw gateway status
-IronCliw channels status --probe
-IronCliw health
+ironcliw gateway status
+ironcliw channels status --probe
+ironcliw health
 ```
 
 ### Gap recovery

@@ -16,13 +16,13 @@ provider mixes reasoning into normal text.
 
 Use `/debug` in chat to set **runtime-only** config overrides (memory, not disk).
 `/debug` is disabled by default; enable with `commands.debug: true`.
-This is handy when you need to toggle obscure settings without editing `IronCliw.json`.
+This is handy when you need to toggle obscure settings without editing `ironcliw.json`.
 
 Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[IronCliw]"
+/debug set messages.responsePrefix="[ironcliw]"
 /debug unset messages.responsePrefix
 /debug reset
 ```
@@ -51,7 +51,7 @@ on each restart.
 Use the dev profile to isolate state and spin up a safe, disposable setup for
 debugging. There are **two** `--dev` flags:
 
-- **Global `--dev` (profile):** isolates state under `~/.IronCliw-dev` and
+- **Global `--dev` (profile):** isolates state under `~/.ironcliw-dev` and
   defaults the gateway port to `19001` (derived ports shift with it).
 - **`gateway --dev`: tells the Gateway to auto-create a default config +
   workspace** when missing (and skip BOOTSTRAP.md).
@@ -60,18 +60,18 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-IronCliw_PROFILE=dev IronCliw tui
+IRONCLIW_PROFILE=dev ironcliw tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm IronCliw ...`.
+If you don’t have a global install yet, run the CLI via `pnpm ironcliw ...`.
 
 What this does:
 
 1. **Profile isolation** (global `--dev`)
-   - `IronCliw_PROFILE=dev`
-   - `IronCliw_STATE_DIR=~/.IronCliw-dev`
-   - `IronCliw_CONFIG_PATH=~/.IronCliw-dev/IronCliw.json`
-   - `IronCliw_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
+   - `IRONCLIW_PROFILE=dev`
+   - `IRONCLIW_STATE_DIR=~/.ironcliw-dev`
+   - `IRONCLIW_CONFIG_PATH=~/.ironcliw-dev/ironcliw.json`
+   - `IRONCLIW_GATEWAY_PORT=19001` (browser/canvas shift accordingly)
 
 2. **Dev bootstrap** (`gateway --dev`)
    - Writes a minimal config if missing (`gateway.mode=local`, bind loopback).
@@ -80,7 +80,7 @@ What this does:
    - Seeds the workspace files if missing:
      `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`.
    - Default identity: **C3‑PO** (protocol droid).
-   - Skips channel providers in dev mode (`IronCliw_SKIP_CHANNELS=1`).
+   - Skips channel providers in dev mode (`IRONCLIW_SKIP_CHANNELS=1`).
 
 Reset flow (fresh start):
 
@@ -92,7 +92,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-IronCliw_PROFILE=dev IronCliw gateway --dev --reset
+IRONCLIW_PROFILE=dev ironcliw gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -101,7 +101,7 @@ IronCliw_PROFILE=dev IronCliw gateway --dev --reset
 Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 
 ```bash
-IronCliw gateway stop
+ironcliw gateway stop
 ```
 
 ## Raw stream logging (IronCliw)
@@ -119,19 +119,19 @@ pnpm gateway:watch --raw-stream
 Optional path override:
 
 ```bash
-pnpm gateway:watch --raw-stream --raw-stream-path ~/.IronCliw/logs/raw-stream.jsonl
+pnpm gateway:watch --raw-stream --raw-stream-path ~/.ironcliw/logs/raw-stream.jsonl
 ```
 
 Equivalent env vars:
 
 ```bash
-IronCliw_RAW_STREAM=1
-IronCliw_RAW_STREAM_PATH=~/.IronCliw/logs/raw-stream.jsonl
+IRONCLIW_RAW_STREAM=1
+IRONCLIW_RAW_STREAM_PATH=~/.ironcliw/logs/raw-stream.jsonl
 ```
 
 Default file:
 
-`~/.IronCliw/logs/raw-stream.jsonl`
+`~/.ironcliw/logs/raw-stream.jsonl`
 
 ## Raw chunk logging (pi-mono)
 

@@ -105,10 +105,10 @@ export async function spawnGatewayInstance(name: string): Promise<GatewayInstanc
   const port = await getFreePort();
   const hookToken = `token-${name}-${randomUUID()}`;
   const gatewayToken = `gateway-${name}-${randomUUID()}`;
-  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `IronCliw-e2e-${name}-`));
-  const configDir = path.join(homeDir, ".IronCliw");
+  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `ironcliw-e2e-${name}-`));
+  const configDir = path.join(homeDir, ".ironcliw");
   await fs.mkdir(configDir, { recursive: true });
-  const configPath = path.join(configDir, "IronCliw.json");
+  const configPath = path.join(configDir, "ironcliw.json");
   const stateDir = path.join(configDir, "state");
   const config = {
     gateway: {
@@ -141,17 +141,17 @@ export async function spawnGatewayInstance(name: string): Promise<GatewayInstanc
         env: {
           ...process.env,
           HOME: homeDir,
-          IronCliw_CONFIG_PATH: configPath,
-          IronCliw_STATE_DIR: stateDir,
-          IronCliw_GATEWAY_TOKEN: "",
-          IronCliw_GATEWAY_PASSWORD: "",
-          IronCliw_SKIP_CHANNELS: "1",
-          IronCliw_SKIP_PROVIDERS: "1",
-          IronCliw_SKIP_GMAIL_WATCHER: "1",
-          IronCliw_SKIP_CRON: "1",
-          IronCliw_SKIP_BROWSER_CONTROL_SERVER: "1",
-          IronCliw_SKIP_CANVAS_HOST: "1",
-          IronCliw_TEST_MINIMAL_GATEWAY: "1",
+          IRONCLIW_CONFIG_PATH: configPath,
+          IRONCLIW_STATE_DIR: stateDir,
+          IRONCLIW_GATEWAY_TOKEN: "",
+          IRONCLIW_GATEWAY_PASSWORD: "",
+          IRONCLIW_SKIP_CHANNELS: "1",
+          IRONCLIW_SKIP_PROVIDERS: "1",
+          IRONCLIW_SKIP_GMAIL_WATCHER: "1",
+          IRONCLIW_SKIP_CRON: "1",
+          IRONCLIW_SKIP_BROWSER_CONTROL_SERVER: "1",
+          IRONCLIW_SKIP_CANVAS_HOST: "1",
+          IRONCLIW_TEST_MINIMAL_GATEWAY: "1",
           VITEST: "1",
         },
         stdio: ["ignore", "pipe", "pipe"],

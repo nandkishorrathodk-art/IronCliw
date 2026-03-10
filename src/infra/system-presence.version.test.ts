@@ -13,10 +13,10 @@ async function withPresenceModule<T>(
 }
 
 describe("system-presence version fallback", () => {
-  it("uses runtime VERSION when IronCliw_VERSION is not set", async () => {
+  it("uses runtime VERSION when IRONCLIW_VERSION is not set", async () => {
     await withPresenceModule(
       {
-        IronCliw_SERVICE_VERSION: "2.4.6-service",
+        IRONCLIW_SERVICE_VERSION: "2.4.6-service",
         npm_package_version: "1.0.0-package",
       },
       async ({ listSystemPresence }) => {
@@ -27,11 +27,11 @@ describe("system-presence version fallback", () => {
     );
   });
 
-  it("prefers IronCliw_VERSION over runtime VERSION", async () => {
+  it("prefers IRONCLIW_VERSION over runtime VERSION", async () => {
     await withPresenceModule(
       {
-        IronCliw_VERSION: "9.9.9-cli",
-        IronCliw_SERVICE_VERSION: "2.4.6-service",
+        IRONCLIW_VERSION: "9.9.9-cli",
+        IRONCLIW_SERVICE_VERSION: "2.4.6-service",
         npm_package_version: "1.0.0-package",
       },
       ({ listSystemPresence }) => {
@@ -41,11 +41,11 @@ describe("system-presence version fallback", () => {
     );
   });
 
-  it("uses runtime VERSION when IronCliw_VERSION and IronCliw_SERVICE_VERSION are blank", async () => {
+  it("uses runtime VERSION when IRONCLIW_VERSION and IRONCLIW_SERVICE_VERSION are blank", async () => {
     await withPresenceModule(
       {
-        IronCliw_VERSION: " ",
-        IronCliw_SERVICE_VERSION: "\t",
+        IRONCLIW_VERSION: " ",
+        IRONCLIW_SERVICE_VERSION: "\t",
         npm_package_version: "1.0.0-package",
       },
       async ({ listSystemPresence }) => {

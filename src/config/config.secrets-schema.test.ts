@@ -23,13 +23,13 @@ describe("config secret refs schema", () => {
           default: { source: "env" },
           filemain: {
             source: "file",
-            path: "~/.IronCliw/secrets.json",
+            path: "~/.ironcliw/secrets.json",
             mode: "json",
             timeoutMs: 10_000,
           },
           vault: {
             source: "exec",
-            command: "/usr/local/bin/IronCliw-secret-resolver",
+            command: "/usr/local/bin/ironcliw-secret-resolver",
             args: ["resolve"],
             allowSymlinkCommand: true,
           },
@@ -102,7 +102,7 @@ describe("config secret refs schema", () => {
         providers: {
           rawfile: {
             source: "file",
-            path: "~/.IronCliw/token.txt",
+            path: "~/.ironcliw/token.txt",
             mode: "singleValue",
           },
         },

@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesServerAccount } from "./account-resolve.js";
 import { postMultipartFormData } from "./multipart.js";
 import {

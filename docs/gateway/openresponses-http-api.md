@@ -16,7 +16,7 @@ This endpoint is **disabled by default**. Enable it in config first.
 - Same port as the Gateway (WS + HTTP multiplex): `http://<gateway-host>:<port>/v1/responses`
 
 Under the hood, requests are executed as a normal Gateway agent run (same codepath as
-`IronCliw agent`), so routing/permissions/config match your Gateway.
+`ironcliw agent`), so routing/permissions/config match your Gateway.
 
 ## Authentication
 
@@ -26,8 +26,8 @@ Uses the Gateway auth configuration. Send a bearer token:
 
 Notes:
 
-- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`).
-- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `IronCliw_GATEWAY_PASSWORD`).
+- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`).
+- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `IRONCLIW_GATEWAY_PASSWORD`).
 - If `gateway.auth.rateLimit` is configured and too many auth failures occur, the endpoint returns `429` with `Retry-After`.
 
 ## Security boundary (important)
@@ -37,6 +37,7 @@ Treat this endpoint as a **full operator-access** surface for the gateway instan
 - HTTP bearer auth here is not a narrow per-user scope model.
 - A valid Gateway token/password for this endpoint should be treated like an owner/operator credential.
 - Requests run through the same control-plane agent path as trusted operator actions.
+- There is no separate non-owner/per-user tool boundary on this endpoint; once a caller passes Gateway auth here, IronCliw treats that caller as a trusted operator for this gateway.
 - If the target agent policy allows sensitive tools, this endpoint can use them.
 - Keep this endpoint on loopback/tailnet/private ingress only; do not expose it directly to the public internet.
 
@@ -46,16 +47,16 @@ See [Security](/gateway/security) and [Remote access](/gateway/remote).
 
 No custom headers required: encode the agent id in the OpenResponses `model` field:
 
-- `model: "IronCliw:<agentId>"` (example: `"IronCliw:main"`, `"IronCliw:beta"`)
+- `model: "ironcliw:<agentId>"` (example: `"ironcliw:main"`, `"ironcliw:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
 Or target a specific IronCliw agent by header:
 
-- `x-IronCliw-agent-id: <agentId>` (default: `main`)
+- `x-ironcliw-agent-id: <agentId>` (default: `main`)
 
 Advanced:
 
-- `x-IronCliw-session-key: <sessionKey>` to fully control session routing.
+- `x-ironcliw-session-key: <sessionKey>` to fully control session routing.
 
 ## Enabling the endpoint
 
@@ -161,7 +162,7 @@ Supports base64 or URL sources:
 }
 ```
 
-Allowed MIME types (current): `image/jpeg`, `image/png`, `image/gif`, `image/webp`.
+Allowed MIME types (current): `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/heic`, `image/heif`.
 Max size (current): 10MB.
 
 ## Files (`input_file`)
@@ -242,7 +243,14 @@ Defaults can be tuned under `gateway.http.endpoints.responses`:
           images: {
             allowUrl: true,
             urlAllowlist: ["images.example.com"],
-            allowedMimes: ["image/jpeg", "image/png", "image/gif", "image/webp"],
+            allowedMimes: [
+              "image/jpeg",
+              "image/png",
+              "image/gif",
+              "image/webp",
+              "image/heic",
+              "image/heif",
+            ],
             maxBytes: 10485760,
             maxRedirects: 3,
             timeoutMs: 10000,
@@ -268,6 +276,7 @@ Defaults when omitted:
 - `images.maxBytes`: 10MB
 - `images.maxRedirects`: 3
 - `images.timeoutMs`: 10s
+- HEIC/HEIF `input_image` sources are accepted and normalized to JPEG before provider delivery.
 
 Security note:
 
@@ -323,9 +332,9 @@ Non-streaming:
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-IronCliw-agent-id: main' \
+  -H 'x-ironcliw-agent-id: main' \
   -d '{
-    "model": "IronCliw",
+    "model": "ironcliw",
     "input": "hi"
   }'
 ```
@@ -336,9 +345,9 @@ Streaming:
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-IronCliw-agent-id: main' \
+  -H 'x-ironcliw-agent-id: main' \
   -d '{
-    "model": "IronCliw",
+    "model": "ironcliw",
     "stream": true,
     "input": "hi"
   }'

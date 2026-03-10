@@ -1,20 +1,20 @@
 ---
-summary: "CLI reference for `IronCliw sessions` (list stored sessions + usage)"
+summary: "CLI reference for `ironcliw sessions` (list stored sessions + usage)"
 read_when:
   - You want to list stored sessions and see recent activity
 title: "sessions"
 ---
 
-# `IronCliw sessions`
+# `ironcliw sessions`
 
 List stored conversation sessions.
 
 ```bash
-IronCliw sessions
-IronCliw sessions --agent work
-IronCliw sessions --all-agents
-IronCliw sessions --active 120
-IronCliw sessions --json
+ironcliw sessions
+ironcliw sessions --agent work
+ironcliw sessions --all-agents
+ironcliw sessions --active 120
+ironcliw sessions --json
 ```
 
 Scope selection:
@@ -26,14 +26,14 @@ Scope selection:
 
 JSON examples:
 
-`IronCliw sessions --all-agents --json`:
+`ironcliw sessions --all-agents --json`:
 
 ```json
 {
   "path": null,
   "stores": [
-    { "agentId": "main", "path": "/home/user/.IronCliw/agents/main/sessions/sessions.json" },
-    { "agentId": "work", "path": "/home/user/.IronCliw/agents/work/sessions/sessions.json" }
+    { "agentId": "main", "path": "/home/user/.ironcliw/agents/main/sessions/sessions.json" },
+    { "agentId": "work", "path": "/home/user/.ironcliw/agents/work/sessions/sessions.json" }
   ],
   "allAgents": true,
   "count": 2,
@@ -50,17 +50,17 @@ JSON examples:
 Run maintenance now (instead of waiting for the next write cycle):
 
 ```bash
-IronCliw sessions cleanup --dry-run
-IronCliw sessions cleanup --agent work --dry-run
-IronCliw sessions cleanup --all-agents --dry-run
-IronCliw sessions cleanup --enforce
-IronCliw sessions cleanup --enforce --active-key "agent:main:telegram:dm:123"
-IronCliw sessions cleanup --json
+ironcliw sessions cleanup --dry-run
+ironcliw sessions cleanup --agent work --dry-run
+ironcliw sessions cleanup --all-agents --dry-run
+ironcliw sessions cleanup --enforce
+ironcliw sessions cleanup --enforce --active-key "agent:main:telegram:dm:123"
+ironcliw sessions cleanup --json
 ```
 
-`IronCliw sessions cleanup` uses `session.maintenance` settings from config:
+`ironcliw sessions cleanup` uses `session.maintenance` settings from config:
 
-- Scope note: `IronCliw sessions cleanup` maintains session stores/transcripts only. It does not prune cron run logs (`cron/runs/<jobId>.jsonl`), which are managed by `cron.runLog.maxBytes` and `cron.runLog.keepLines` in [Cron configuration](/automation/cron-jobs#configuration) and explained in [Cron maintenance](/automation/cron-jobs#maintenance).
+- Scope note: `ironcliw sessions cleanup` maintains session stores/transcripts only. It does not prune cron run logs (`cron/runs/<jobId>.jsonl`), which are managed by `cron.runLog.maxBytes` and `cron.runLog.keepLines` in [Cron configuration](/automation/cron-jobs#configuration) and explained in [Cron maintenance](/automation/cron-jobs#maintenance).
 
 - `--dry-run`: preview how many entries would be pruned/capped without writing.
   - In text mode, dry-run prints a per-session action table (`Action`, `Key`, `Age`, `Model`, `Flags`) so you can see what would be kept vs removed.
@@ -71,7 +71,7 @@ IronCliw sessions cleanup --json
 - `--store <path>`: run against a specific `sessions.json` file.
 - `--json`: print a JSON summary. With `--all-agents`, output includes one summary per store.
 
-`IronCliw sessions cleanup --all-agents --dry-run --json`:
+`ironcliw sessions cleanup --all-agents --dry-run --json`:
 
 ```json
 {
@@ -81,7 +81,7 @@ IronCliw sessions cleanup --json
   "stores": [
     {
       "agentId": "main",
-      "storePath": "/home/user/.IronCliw/agents/main/sessions/sessions.json",
+      "storePath": "/home/user/.ironcliw/agents/main/sessions/sessions.json",
       "beforeCount": 120,
       "afterCount": 80,
       "pruned": 40,
@@ -89,7 +89,7 @@ IronCliw sessions cleanup --json
     },
     {
       "agentId": "work",
-      "storePath": "/home/user/.IronCliw/agents/work/sessions/sessions.json",
+      "storePath": "/home/user/.ironcliw/agents/work/sessions/sessions.json",
       "beforeCount": 18,
       "afterCount": 18,
       "pruned": 0,

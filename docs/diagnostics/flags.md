@@ -43,13 +43,13 @@ Restart the gateway after changing flags.
 ## Env override (one-off)
 
 ```bash
-IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
+IRONCLIW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Disable all flags:
 
 ```bash
-IronCliw_DIAGNOSTICS=0
+IRONCLIW_DIAGNOSTICS=0
 ```
 
 ## Where logs go
@@ -57,7 +57,7 @@ IronCliw_DIAGNOSTICS=0
 Flags emit logs into the standard diagnostics log file. By default:
 
 ```
-/tmp/IronCliw/IronCliw-YYYY-MM-DD.log
+/tmp/ironcliw/ironcliw-YYYY-MM-DD.log
 ```
 
 If you set `logging.file`, use that path instead. Logs are JSONL (one JSON object per line). Redaction still applies based on `logging.redactSensitive`.
@@ -67,22 +67,22 @@ If you set `logging.file`, use that path instead. Logs are JSONL (one JSON objec
 Pick the latest log file:
 
 ```bash
-ls -t /tmp/IronCliw/IronCliw-*.log | head -n 1
+ls -t /tmp/ironcliw/ironcliw-*.log | head -n 1
 ```
 
 Filter for Telegram HTTP diagnostics:
 
 ```bash
-rg "telegram http error" /tmp/IronCliw/IronCliw-*.log
+rg "telegram http error" /tmp/ironcliw/ironcliw-*.log
 ```
 
 Or tail while reproducing:
 
 ```bash
-tail -f /tmp/IronCliw/IronCliw-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/ironcliw/ironcliw-$(date +%F).log | rg "telegram http error"
 ```
 
-For remote gateways, you can also use `IronCliw logs --follow` (see [/cli/logs](/cli/logs)).
+For remote gateways, you can also use `ironcliw logs --follow` (see [/cli/logs](/cli/logs)).
 
 ## Notes
 

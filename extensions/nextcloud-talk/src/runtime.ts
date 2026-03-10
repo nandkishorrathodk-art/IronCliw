@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/nextcloud-talk";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/nextcloud-talk";
 
-let runtime: PluginRuntime | null = null;
-
-export function setNextcloudTalkRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getNextcloudTalkRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Nextcloud Talk runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setNextcloudTalkRuntime, getRuntime: getNextcloudTalkRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Nextcloud Talk runtime not initialized");
+export { getNextcloudTalkRuntime, setNextcloudTalkRuntime };

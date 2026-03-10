@@ -93,7 +93,7 @@ describe("channelsCapabilitiesCommand", () => {
         userToken: "xoxp-user",
         config: { userToken: "xoxp-user" },
       },
-      probe: { ok: true, bot: { name: "IronCliw" }, team: { name: "team" } },
+      probe: { ok: true, bot: { name: "ironcliw" }, team: { name: "team" } },
     });
     vi.mocked(listChannelPlugins).mockReturnValue([plugin]);
     vi.mocked(getChannelPlugin).mockReturnValue(plugin);

@@ -271,4 +271,3 @@ func filterDocQueue(docsRoot, targetLang string, ordered []string) ([]string, in
 	}
 	return pending, skipped, nil
 }
-

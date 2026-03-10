@@ -107,7 +107,7 @@ describe("web monitor inbox", () => {
   });
 
   it("logs inbound bodies to file", async () => {
-    const logPath = path.join(os.tmpdir(), `IronCliw-log-test-${crypto.randomUUID()}.log`);
+    const logPath = path.join(os.tmpdir(), `ironcliw-log-test-${crypto.randomUUID()}.log`);
     setLoggerOverride({ level: "trace", file: logPath });
 
     const { listener } = await runSingleUpsertAndCapture({

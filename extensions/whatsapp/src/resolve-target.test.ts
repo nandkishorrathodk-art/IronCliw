@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { installCommonResolveTargetErrorCases } from "../../shared/resolve-target-test-helpers.js";
 
-vi.mock("IronCliw/plugin-sdk/whatsapp", async () => {
-  const actual = await vi.importActual<typeof import("IronCliw/plugin-sdk/whatsapp")>(
-    "IronCliw/plugin-sdk/whatsapp",
+vi.mock("ironcliw/plugin-sdk/whatsapp", async () => {
+  const actual = await vi.importActual<typeof import("ironcliw/plugin-sdk/whatsapp")>(
+    "ironcliw/plugin-sdk/whatsapp",
   );
   const normalizeWhatsAppTarget = (value: string) => {
     if (value === "invalid-target") return null;

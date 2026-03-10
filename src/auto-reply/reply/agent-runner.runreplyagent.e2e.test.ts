@@ -95,7 +95,7 @@ beforeEach(() => {
   state.runCliAgentMock.mockClear();
   vi.mocked(enqueueFollowupRun).mockClear();
   vi.mocked(scheduleFollowupDrain).mockClear();
-  vi.stubEnv("IronCliw_TEST_FAST", "1");
+  vi.stubEnv("IRONCLIW_TEST_FAST", "1");
 });
 
 function createMinimalRun(params?: {
@@ -343,7 +343,7 @@ describe("runReplyAgent heartbeat followup guard", () => {
 describe("runReplyAgent typing (heartbeat)", () => {
   async function withTempStateDir<T>(fn: (stateDir: string) => Promise<T>): Promise<T> {
     return await withStateDirEnv(
-      "IronCliw-typing-heartbeat-",
+      "ironcliw-typing-heartbeat-",
       async ({ stateDir }) => await fn(stateDir),
     );
   }
@@ -1055,6 +1055,11 @@ describe("runReplyAgent typing (heartbeat)", () => {
         expectedReason: "rate limit",
       },
       {
+        existingReason: undefined,
+        reportedReason: "overloaded",
+        expectedReason: "overloaded",
+      },
+      {
         existingReason: "rate limit",
         reportedReason: "timeout",
         expectedReason: "timeout",
@@ -1468,7 +1473,7 @@ describe("runReplyAgent memory flush", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "IronCliw-memory-flush-"));
+    fixtureRoot = await fs.mkdtemp(path.join(tmpdir(), "ironcliw-memory-flush-"));
   });
 
   afterAll(async () => {

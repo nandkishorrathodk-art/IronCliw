@@ -7,7 +7,7 @@ import { AUTH_STORE_VERSION, log } from "./auth-profiles/constants.js";
 
 describe("ensureAuthProfileStore", () => {
   it("migrates legacy auth.json and deletes it (PR #368)", () => {
-    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-profiles-"));
+    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-profiles-"));
     try {
       const legacyPath = path.join(agentDir, "auth.json");
       fs.writeFileSync(
@@ -48,8 +48,8 @@ describe("ensureAuthProfileStore", () => {
   });
 
   it("merges main auth profiles into agent store and keeps agent overrides", () => {
-    const root = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-merge-"));
-    const previousAgentDir = process.env.IronCliw_AGENT_DIR;
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-merge-"));
+    const previousAgentDir = process.env.IRONCLIW_AGENT_DIR;
     const previousPiAgentDir = process.env.PI_CODING_AGENT_DIR;
     try {
       const mainDir = path.join(root, "main-agent");
@@ -57,7 +57,7 @@ describe("ensureAuthProfileStore", () => {
       fs.mkdirSync(mainDir, { recursive: true });
       fs.mkdirSync(agentDir, { recursive: true });
 
-      process.env.IronCliw_AGENT_DIR = mainDir;
+      process.env.IRONCLIW_AGENT_DIR = mainDir;
       process.env.PI_CODING_AGENT_DIR = mainDir;
 
       const mainStore = {
@@ -110,9 +110,9 @@ describe("ensureAuthProfileStore", () => {
       });
     } finally {
       if (previousAgentDir === undefined) {
-        delete process.env.IronCliw_AGENT_DIR;
+        delete process.env.IRONCLIW_AGENT_DIR;
       } else {
-        process.env.IronCliw_AGENT_DIR = previousAgentDir;
+        process.env.IRONCLIW_AGENT_DIR = previousAgentDir;
       }
       if (previousPiAgentDir === undefined) {
         delete process.env.PI_CODING_AGENT_DIR;
@@ -130,7 +130,7 @@ describe("ensureAuthProfileStore", () => {
         profile: {
           provider: "anthropic",
           mode: "api_key",
-          apiKey: "sk-ant-alias",
+          apiKey: "sk-ant-alias", // pragma: allowlist secret
         },
         expected: {
           type: "api_key",
@@ -156,7 +156,7 @@ describe("ensureAuthProfileStore", () => {
           provider: "anthropic",
           type: "api_key",
           key: "sk-ant-canonical",
-          apiKey: "sk-ant-alias",
+          apiKey: "sk-ant-alias", // pragma: allowlist secret
         },
         expected: {
           type: "api_key",
@@ -178,7 +178,7 @@ describe("ensureAuthProfileStore", () => {
     ] as const;
 
     for (const testCase of cases) {
-      const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-alias-"));
+      const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-alias-"));
       try {
         const storeData = {
           version: AUTH_STORE_VERSION,
@@ -201,7 +201,7 @@ describe("ensureAuthProfileStore", () => {
   });
 
   it("normalizes mode/apiKey aliases while migrating legacy auth.json", () => {
-    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-legacy-alias-"));
+    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-legacy-alias-"));
     try {
       fs.writeFileSync(
         path.join(agentDir, "auth.json"),
@@ -210,7 +210,7 @@ describe("ensureAuthProfileStore", () => {
             anthropic: {
               provider: "anthropic",
               mode: "api_key",
-              apiKey: "sk-ant-legacy",
+              apiKey: "sk-ant-legacy", // pragma: allowlist secret
             },
           },
           null,
@@ -231,7 +231,7 @@ describe("ensureAuthProfileStore", () => {
   });
 
   it("logs one warning with aggregated reasons for rejected auth-profiles entries", () => {
-    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-invalid-"));
+    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-invalid-"));
     const warnSpy = vi.spyOn(log, "warn").mockImplementation(() => undefined);
     try {
       const invalidStore = {

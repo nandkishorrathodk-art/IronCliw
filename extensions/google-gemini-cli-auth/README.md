@@ -13,7 +13,7 @@ OAuth provider plugin for **Gemini CLI** (Google Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-IronCliw plugins enable google-gemini-cli-auth
+ironcliw plugins enable google-gemini-cli-auth
 ```
 
 Restart the Gateway after enabling.
@@ -21,7 +21,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-IronCliw models auth login --provider google-gemini-cli --set-default
+ironcliw models auth login --provider google-gemini-cli --set-default
 ```
 
 ## Requirements
@@ -37,5 +37,5 @@ brew install gemini-cli
 
 Override auto-detected credentials with:
 
-- `IronCliw_GEMINI_OAUTH_CLIENT_ID` / `GEMINI_CLI_OAUTH_CLIENT_ID`
-- `IronCliw_GEMINI_OAUTH_CLIENT_SECRET` / `GEMINI_CLI_OAUTH_CLIENT_SECRET`
+- `IRONCLIW_GEMINI_OAUTH_CLIENT_ID` / `GEMINI_CLI_OAUTH_CLIENT_ID`
+- `IRONCLIW_GEMINI_OAUTH_CLIENT_SECRET` / `GEMINI_CLI_OAUTH_CLIENT_SECRET`

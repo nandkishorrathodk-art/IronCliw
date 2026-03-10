@@ -32,8 +32,8 @@ beforeEach(() => {
   loadConfigCalls = 0;
   snapshot = captureConsoleSnapshot();
   originalIsTty = process.stdout.isTTY;
-  originalIronCliwTestConsole = process.env.IronCliw_TEST_CONSOLE;
-  process.env.IronCliw_TEST_CONSOLE = "1";
+  originalIronCliwTestConsole = process.env.IRONCLIW_TEST_CONSOLE;
+  process.env.IRONCLIW_TEST_CONSOLE = "1";
   Object.defineProperty(process.stdout, "isTTY", { value: false, configurable: true });
 });
 
@@ -45,9 +45,9 @@ afterEach(() => {
   console.debug = snapshot.debug;
   console.trace = snapshot.trace;
   if (originalIronCliwTestConsole === undefined) {
-    delete process.env.IronCliw_TEST_CONSOLE;
+    delete process.env.IRONCLIW_TEST_CONSOLE;
   } else {
-    process.env.IronCliw_TEST_CONSOLE = originalIronCliwTestConsole;
+    process.env.IRONCLIW_TEST_CONSOLE = originalIronCliwTestConsole;
   }
   Object.defineProperty(process.stdout, "isTTY", { value: originalIsTty, configurable: true });
   logging.setConsoleConfigLoaderForTests();

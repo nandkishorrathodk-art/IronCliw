@@ -9,14 +9,14 @@ const mocks = vi.hoisted(() => {
         type: "oauth",
         provider: "anthropic",
         access: "sk-ant-oat01-ACCESS-TOKEN-1234567890",
-        refresh: "sk-ant-ort01-REFRESH-TOKEN-1234567890",
+        refresh: "sk-ant-ort01-REFRESH-TOKEN-1234567890", // pragma: allowlist secret
         expires: Date.now() + 60_000,
         email: "peter@example.com",
       },
       "anthropic:work": {
         type: "api_key",
         provider: "anthropic",
-        key: "sk-ant-api-0123456789abcdefghijklmnopqrstuvwxyz",
+        key: "sk-ant-api-0123456789abcdefghijklmnopqrstuvwxyz", // pragma: allowlist secret
       },
       "openai-codex:default": {
         type: "oauth",
@@ -30,8 +30,8 @@ const mocks = vi.hoisted(() => {
 
   return {
     store,
-    resolveIronCliwAgentDir: vi.fn().mockReturnValue("/tmp/IronCliw-agent"),
-    resolveAgentDir: vi.fn().mockReturnValue("/tmp/IronCliw-agent"),
+    resolveIronCliwAgentDir: vi.fn().mockReturnValue("/tmp/ironcliw-agent"),
+    resolveAgentDir: vi.fn().mockReturnValue("/tmp/ironcliw-agent"),
     resolveAgentExplicitModelPrimary: vi.fn().mockReturnValue(undefined),
     resolveAgentEffectiveModelPrimary: vi.fn().mockReturnValue(undefined),
     resolveAgentModelFallbacksOverride: vi.fn().mockReturnValue(undefined),
@@ -45,17 +45,17 @@ const mocks = vi.hoisted(() => {
     resolveAuthProfileDisplayLabel: vi.fn(({ profileId }: { profileId: string }) => profileId),
     resolveAuthStorePathForDisplay: vi
       .fn()
-      .mockReturnValue("/tmp/IronCliw-agent/auth-profiles.json"),
+      .mockReturnValue("/tmp/ironcliw-agent/auth-profiles.json"),
     resolveEnvApiKey: vi.fn((provider: string) => {
       if (provider === "openai") {
         return {
-          apiKey: "sk-openai-0123456789abcdefghijklmnopqrstuvwxyz",
+          apiKey: "sk-openai-0123456789abcdefghijklmnopqrstuvwxyz", // pragma: allowlist secret
           source: "shell env: OPENAI_API_KEY",
         };
       }
       if (provider === "anthropic") {
         return {
-          apiKey: "sk-ant-oat01-ACCESS-TOKEN-1234567890",
+          apiKey: "sk-ant-oat01-ACCESS-TOKEN-1234567890", // pragma: allowlist secret
           source: "env: ANTHROPIC_OAUTH_TOKEN",
         };
       }
@@ -64,6 +64,9 @@ const mocks = vi.hoisted(() => {
     getCustomProviderApiKey: vi.fn().mockReturnValue(undefined),
     getShellEnvAppliedKeys: vi.fn().mockReturnValue(["OPENAI_API_KEY", "ANTHROPIC_OAUTH_TOKEN"]),
     shouldEnableShellEnvFallback: vi.fn().mockReturnValue(true),
+    createConfigIO: vi.fn().mockReturnValue({
+      configPath: "/tmp/ironcliw-dev/ironcliw.json",
+    }),
     loadConfig: vi.fn().mockReturnValue({
       agents: {
         defaults: {
@@ -115,6 +118,7 @@ vi.mock("../../config/config.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../../config/config.js")>();
   return {
     ...actual,
+    createConfigIO: mocks.createConfigIO,
     loadConfig: mocks.loadConfig,
   };
 });
@@ -188,7 +192,7 @@ async function withAgentScopeOverrides<T>(
     if (originalAgentDir) {
       mocks.resolveAgentDir.mockImplementation(originalAgentDir);
     } else {
-      mocks.resolveAgentDir.mockReturnValue("/tmp/IronCliw-agent");
+      mocks.resolveAgentDir.mockReturnValue("/tmp/ironcliw-agent");
     }
   }
 }
@@ -200,7 +204,8 @@ describe("modelsStatusCommand auth overview", () => {
 
     expect(mocks.resolveIronCliwAgentDir).toHaveBeenCalled();
     expect(payload.defaultModel).toBe("anthropic/claude-opus-4-5");
-    expect(payload.auth.storePath).toBe("/tmp/IronCliw-agent/auth-profiles.json");
+    expect(payload.configPath).toBe("/tmp/ironcliw-dev/ironcliw.json");
+    expect(payload.auth.storePath).toBe("/tmp/ironcliw-agent/auth-profiles.json");
     expect(payload.auth.shellEnvFallback.enabled).toBe(true);
     expect(payload.auth.shellEnvFallback.appliedKeys).toContain("OPENAI_API_KEY");
     expect(payload.auth.missingProvidersInUse).toEqual([]);
@@ -231,7 +236,7 @@ describe("modelsStatusCommand auth overview", () => {
 
   it("does not emit raw short api-key values in JSON labels", async () => {
     const localRuntime = createRuntime();
-    const shortSecret = "abc123";
+    const shortSecret = "abc123"; // pragma: allowlist secret
     const originalProfiles = { ...mocks.store.profiles };
     mocks.store.profiles = {
       ...mocks.store.profiles,
@@ -264,14 +269,14 @@ describe("modelsStatusCommand auth overview", () => {
       {
         primary: "openai/gpt-4",
         fallbacks: ["openai/gpt-3.5"],
-        agentDir: "/tmp/IronCliw-agent-custom",
+        agentDir: "/tmp/ironcliw-agent-custom",
       },
       async () => {
         await modelsStatusCommand({ json: true, agent: "Jeremiah" }, localRuntime as never);
         expect(mocks.resolveAgentDir).toHaveBeenCalledWith(expect.anything(), "jeremiah");
         const payload = JSON.parse(String((localRuntime.log as Mock).mock.calls[0]?.[0]));
         expect(payload.agentId).toBe("jeremiah");
-        expect(payload.agentDir).toBe("/tmp/IronCliw-agent-custom");
+        expect(payload.agentDir).toBe("/tmp/ironcliw-agent-custom");
         expect(payload.defaultModel).toBe("openai/gpt-4");
         expect(payload.fallbacks).toEqual(["openai/gpt-3.5"]);
         expect(payload.modelConfig).toEqual({

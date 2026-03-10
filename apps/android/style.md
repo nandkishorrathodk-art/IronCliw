@@ -104,10 +104,10 @@ Hard rule: avoid ultra-thin weights on light backgrounds.
 
 ## 11. Source Of Truth
 
-- `app/src/main/java/ai/IronCliw/android/ui/IronCliwTheme.kt`
-- `app/src/main/java/ai/IronCliw/android/ui/OnboardingFlow.kt`
-- `app/src/main/java/ai/IronCliw/android/ui/RootScreen.kt`
-- `app/src/main/java/ai/IronCliw/android/ui/SettingsSheet.kt`
-- `app/src/main/java/ai/IronCliw/android/MainViewModel.kt`
+- `app/src/main/java/ai/ironcliw/android/ui/IronCliwTheme.kt`
+- `app/src/main/java/ai/ironcliw/android/ui/OnboardingFlow.kt`
+- `app/src/main/java/ai/ironcliw/android/ui/RootScreen.kt`
+- `app/src/main/java/ai/ironcliw/android/ui/SettingsSheet.kt`
+- `app/src/main/java/ai/ironcliw/android/MainViewModel.kt`
 
 If style and implementation diverge, update both in the same change.

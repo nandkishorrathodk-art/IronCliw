@@ -9,7 +9,7 @@
 import { randomUUID } from "node:crypto";
 import type * as LanceDB from "@lancedb/lancedb";
 import { Type } from "@sinclair/typebox";
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/memory-lancedb";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/memory-lancedb";
 import OpenAI from "openai";
 import {
   DEFAULT_CAPTURE_MAX_CHARS,

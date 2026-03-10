@@ -1,10 +1,10 @@
 {
-  "name": "@IronCliw/telegram",
-  "version": "2026.3.2",
+  "name": "@ironcliw/telegram",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw Telegram channel plugin",
   "type": "module",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

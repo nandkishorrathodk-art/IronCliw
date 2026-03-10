@@ -17,7 +17,7 @@ export type GatewayTlsConfig = {
 
 export type WideAreaDiscoveryConfig = {
   enabled?: boolean;
-  /** Optional unicast DNS-SD domain (e.g. "IronCliw.internal"). */
+  /** Optional unicast DNS-SD domain (e.g. "ironcliw.internal"). */
   domain?: string;
 };
 
@@ -40,7 +40,7 @@ export type DiscoveryConfig = {
 
 export type CanvasHostConfig = {
   enabled?: boolean;
-  /** Directory to serve (default: ~/.IronCliw/workspace/canvas). */
+  /** Directory to serve (default: ~/.ironcliw/workspace/canvas). */
   root?: string;
   /** HTTP port to listen on (default: 18793). */
   port?: number;
@@ -63,6 +63,13 @@ export type TalkProviderConfig = {
   [key: string]: unknown;
 };
 
+export type ResolvedTalkConfig = {
+  /** Active Talk TTS provider resolved from the current config payload. */
+  provider: string;
+  /** Provider config for the active Talk provider. */
+  config: TalkProviderConfig;
+};
+
 export type TalkConfig = {
   /** Active Talk TTS provider (for example "elevenlabs"). */
   provider?: string;
@@ -70,6 +77,8 @@ export type TalkConfig = {
   providers?: Record<string, TalkProviderConfig>;
   /** Stop speaking when user starts talking (default: true). */
   interruptOnSpeech?: boolean;
+  /** Milliseconds of user silence before Talk mode sends the transcript after a pause. */
+  silenceTimeoutMs?: number;
 
   /**
    * Legacy ElevenLabs compatibility fields.
@@ -82,10 +91,15 @@ export type TalkConfig = {
   apiKey?: SecretInput;
 };
 
+export type TalkConfigResponse = TalkConfig & {
+  /** Canonical active Talk payload for clients. */
+  resolved?: ResolvedTalkConfig;
+};
+
 export type GatewayControlUiConfig = {
   /** If false, the Gateway will not serve the Control UI (default /). */
   enabled?: boolean;
-  /** Optional base path prefix for the Control UI (e.g. "/IronCliw"). */
+  /** Optional base path prefix for the Control UI (e.g. "/ironcliw"). */
   basePath?: string;
   /** Optional filesystem root for Control UI assets (defaults to dist/control-ui). */
   root?: string;
@@ -136,8 +150,8 @@ export type GatewayTrustedProxyConfig = {
 export type GatewayAuthConfig = {
   /** Authentication mode for Gateway connections. Defaults to token when unset. */
   mode?: GatewayAuthMode;
-  /** Shared token for token mode (stored locally for CLI auth). */
-  token?: string;
+  /** Shared token for token mode (plaintext or SecretRef). */
+  token?: SecretInput;
   /** Shared password for password mode (consider env instead). */
   password?: SecretInput;
   /** Allow Tailscale identity headers when serve mode is enabled. */
@@ -203,6 +217,41 @@ export type GatewayHttpChatCompletionsConfig = {
    * Default: false when absent.
    */
   enabled?: boolean;
+  /**
+   * Max request body size in bytes for `/v1/chat/completions`.
+   * Default: 20MB.
+   */
+  maxBodyBytes?: number;
+  /**
+   * Max number of `image_url` parts processed from the latest user message.
+   * Default: 8.
+   */
+  maxImageParts?: number;
+  /**
+   * Max cumulative decoded image bytes for all `image_url` parts in one request.
+   * Default: 20MB.
+   */
+  maxTotalImageBytes?: number;
+  /** Image input controls for `image_url` parts. */
+  images?: GatewayHttpChatCompletionsImagesConfig;
+};
+
+export type GatewayHttpChatCompletionsImagesConfig = {
+  /** Allow URL fetches for `image_url` parts. Default: false. */
+  allowUrl?: boolean;
+  /**
+   * Optional hostname allowlist for URL fetches.
+   * Supports exact hosts and `*.example.com` wildcards.
+   */
+  urlAllowlist?: string[];
+  /** Allowed MIME types (case-insensitive). */
+  allowedMimes?: string[];
+  /** Max bytes per image. Default: 10MB. */
+  maxBytes?: number;
+  /** Max redirects when fetching a URL. Default: 3. */
+  maxRedirects?: number;
+  /** Fetch timeout in ms. Default: 10s. */
+  timeoutMs?: number;
 };
 
 export type GatewayHttpResponsesConfig = {

@@ -113,7 +113,7 @@ export async function createWaSocket(
     version,
     logger,
     printQRInTerminal: false,
-    browser: ["IronCliw", "cli", VERSION],
+    browser: ["ironcliw", "cli", VERSION],
     syncFullHistory: false,
     markOnlineOnConnect: false,
   });
@@ -136,7 +136,7 @@ export async function createWaSocket(
           if (status === DisconnectReason.loggedOut) {
             console.error(
               danger(
-                `WhatsApp session logged out. Run: ${formatCliCommand("IronCliw channels login")}`,
+                `WhatsApp session logged out. Run: ${formatCliCommand("ironcliw channels login")}`,
               ),
             );
           }

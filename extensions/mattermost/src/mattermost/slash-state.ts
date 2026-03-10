@@ -10,7 +10,7 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/mattermost";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import { resolveSlashCommandConfig, type MattermostRegisteredCommand } from "./slash-commands.js";
 import { createSlashCommandHttpHandler } from "./slash-http.js";
@@ -86,8 +86,8 @@ export function activateSlashCommands(params: {
   registeredCommands: MattermostRegisteredCommand[];
   triggerMap?: Map<string, string>;
   api: {
-    cfg: import("IronCliw/plugin-sdk/mattermost").IronCliwConfig;
-    runtime: import("IronCliw/plugin-sdk/mattermost").RuntimeEnv;
+    cfg: import("ironcliw/plugin-sdk/mattermost").IronCliwConfig;
+    runtime: import("ironcliw/plugin-sdk/mattermost").RuntimeEnv;
   };
   log?: (msg: string) => void;
 }) {

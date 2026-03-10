@@ -48,7 +48,7 @@ export function isAuthorizedBrowserRequest(
   }
 
   if (auth.password) {
-    const passwordHeader = firstHeaderValue(req.headers["x-IronCliw-password"]).trim();
+    const passwordHeader = firstHeaderValue(req.headers["x-ironcliw-password"]).trim();
     if (passwordHeader && safeEqualSecret(passwordHeader, auth.password)) {
       return true;
     }

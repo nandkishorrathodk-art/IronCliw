@@ -15,9 +15,9 @@ describe("hasAnyWhatsAppAuth", () => {
   };
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["IronCliw_OAUTH_DIR"]);
-    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-oauth-"));
-    process.env.IronCliw_OAUTH_DIR = tempOauthDir;
+    envSnapshot = captureEnv(["IRONCLIW_OAUTH_DIR"]);
+    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-oauth-"));
+    process.env.IRONCLIW_OAUTH_DIR = tempOauthDir;
   });
 
   afterEach(() => {
@@ -43,7 +43,7 @@ describe("hasAnyWhatsAppAuth", () => {
   });
 
   it("includes authDir overrides", () => {
-    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-wa-auth-"));
+    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-wa-auth-"));
     try {
       writeCreds(customDir);
       const cfg = {

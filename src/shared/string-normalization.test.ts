@@ -9,6 +9,11 @@ import {
 describe("shared/string-normalization", () => {
   it("normalizes mixed allow-list entries", () => {
     expect(normalizeStringEntries([" a ", 42, "", "  ", "z"])).toEqual(["a", "42", "z"]);
+    expect(normalizeStringEntries([" ok ", null, { toString: () => " obj " }])).toEqual([
+      "ok",
+      "null",
+      "obj",
+    ]);
     expect(normalizeStringEntries(undefined)).toEqual([]);
   });
 
@@ -17,16 +22,16 @@ describe("shared/string-normalization", () => {
   });
 
   it("normalizes slug-like labels while preserving supported symbols", () => {
-    expect(normalizeHyphenSlug("  Team Room  ")).toBe("Team-Room");
-    expect(normalizeHyphenSlug(" #My_Channel + Alerts ")).toBe("#My_Channel-+-Alerts");
+    expect(normalizeHyphenSlug("  Team Room  ")).toBe("team-room");
+    expect(normalizeHyphenSlug(" #My_Channel + Alerts ")).toBe("#my_channel-+-alerts");
     expect(normalizeHyphenSlug("..foo---bar..")).toBe("foo-bar");
     expect(normalizeHyphenSlug(undefined)).toBe("");
     expect(normalizeHyphenSlug(null)).toBe("");
   });
 
   it("normalizes @/# prefixed slugs used by channel allowlists", () => {
-    expect(normalizeAtHashSlug(" #My_Channel + Alerts ")).toBe("My-Channel-Alerts");
-    expect(normalizeAtHashSlug("@@Room___Name")).toBe("Room-Name");
+    expect(normalizeAtHashSlug(" #My_Channel + Alerts ")).toBe("my-channel-alerts");
+    expect(normalizeAtHashSlug("@@Room___Name")).toBe("room-name");
     expect(normalizeAtHashSlug(undefined)).toBe("");
     expect(normalizeAtHashSlug(null)).toBe("");
   });

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw webhooks` (webhook helpers + Gmail Pub/Sub)"
+summary: "CLI reference for `ironcliw webhooks` (webhook helpers + Gmail Pub/Sub)"
 read_when:
   - You want to wire Gmail Pub/Sub events into IronCliw
   - You want webhook helper commands
 title: "webhooks"
 ---
 
-# `IronCliw webhooks`
+# `ironcliw webhooks`
 
 Webhook helpers and integrations (Gmail Pub/Sub, webhook helpers).
 
@@ -18,8 +18,8 @@ Related:
 ## Gmail
 
 ```bash
-IronCliw webhooks gmail setup --account you@example.com
-IronCliw webhooks gmail run
+ironcliw webhooks gmail setup --account you@example.com
+ironcliw webhooks gmail run
 ```
 
 See [Gmail Pub/Sub documentation](/automation/gmail-pubsub) for details.

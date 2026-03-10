@@ -9,7 +9,7 @@ describe("logger timestamp format", () => {
   let logPath = "";
 
   beforeEach(() => {
-    logPath = path.join(os.tmpdir(), `IronCliw-log-ts-${crypto.randomUUID()}.log`);
+    logPath = path.join(os.tmpdir(), `ironcliw-log-ts-${crypto.randomUUID()}.log`);
     resetLogger();
     setLoggerOverride(null);
   });

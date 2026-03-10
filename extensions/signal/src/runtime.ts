@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/signal";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/signal";
 
-let runtime: PluginRuntime | null = null;
-
-export function setSignalRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getSignalRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Signal runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setSignalRuntime, getRuntime: getSignalRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Signal runtime not initialized");
+export { getSignalRuntime, setSignalRuntime };

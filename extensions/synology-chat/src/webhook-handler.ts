@@ -9,7 +9,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "IronCliw/plugin-sdk/synology-chat";
+} from "ironcliw/plugin-sdk/synology-chat";
 import { sendMessage, resolveChatUserId } from "./client.js";
 import { validateToken, authorizeUserForDm, sanitizeInput, RateLimiter } from "./security.js";
 import type { SynologyWebhookPayload, ResolvedSynologyChatAccount } from "./types.js";
@@ -124,7 +124,7 @@ function extractTokenFromHeaders(req: IncomingMessage): string | undefined {
   const explicit =
     headerValue(req.headers["x-synology-token"]) ??
     headerValue(req.headers["x-webhook-token"]) ??
-    headerValue(req.headers["x-IronCliw-token"]);
+    headerValue(req.headers["x-ironcliw-token"]);
   if (explicit) return explicit;
 
   const auth = headerValue(req.headers.authorization);
@@ -225,6 +225,7 @@ export interface WebhookHandlerDeps {
     chatType: string;
     sessionKey: string;
     accountId: string;
+    commandAuthorized: boolean;
     /** Chat API user_id for sending replies (may differ from webhook user_id) */
     chatUserId?: string;
   }) => Promise<string | null>;
@@ -364,6 +365,7 @@ export function createWebhookHandler(deps: WebhookHandlerDeps) {
         chatType: "direct",
         sessionKey,
         accountId: account.accountId,
+        commandAuthorized: auth.allowed,
         chatUserId: replyUserId,
       });
 

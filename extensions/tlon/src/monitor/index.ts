@@ -1,5 +1,5 @@
-import type { RuntimeEnv, ReplyPayload, IronCliwConfig } from "IronCliw/plugin-sdk/tlon";
-import { createLoggerBackedRuntime, createReplyPrefixOptions } from "IronCliw/plugin-sdk/tlon";
+import type { RuntimeEnv, ReplyPayload, IronCliwConfig } from "ironcliw/plugin-sdk/tlon";
+import { createLoggerBackedRuntime, createReplyPrefixOptions } from "ironcliw/plugin-sdk/tlon";
 import { getTlonRuntime } from "../runtime.js";
 import { createSettingsManager, type TlonSettingsStore } from "../settings.js";
 import { normalizeShip, parseChannelNest } from "../targets.js";
@@ -971,7 +971,7 @@ export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<v
             `This can leak conversation context between users.\n\n` +
             `Fix: Add to your IronCliw config:\n` +
             `session:\n  dmScope: "per-channel-peer"\n\n` +
-            `Docs: https://docs.IronCliw.ai/concepts/session#secure-dm-mode`;
+            `Docs: https://docs.ironcliw.ai/concepts/session#secure-dm-mode`;
 
           // Send async, don't block message processing
           sendDm({

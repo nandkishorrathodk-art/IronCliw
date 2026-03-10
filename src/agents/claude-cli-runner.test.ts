@@ -83,7 +83,7 @@ describe("runClaudeCliAgent", () => {
     );
 
     await runClaudeCliAgent({
-      sessionId: "IronCliw-session",
+      sessionId: "ironcliw-session",
       sessionFile: "/tmp/session.jsonl",
       workspaceDir: "/tmp",
       prompt: "hi",
@@ -106,7 +106,7 @@ describe("runClaudeCliAgent", () => {
     );
 
     await runClaudeCliAgent({
-      sessionId: "IronCliw-session",
+      sessionId: "ironcliw-session",
       sessionFile: "/tmp/session.jsonl",
       workspaceDir: "/tmp",
       prompt: "hi",

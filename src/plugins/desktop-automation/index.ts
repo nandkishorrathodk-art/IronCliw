@@ -1,11 +1,11 @@
-import { desktopVision } from "../../vision/desktop-vision.js";
-import { desktopInput } from "../../input/desktop-input.js";
-import { windowManager } from "../../utils/window-manager.js";
-import { systemManager } from "../../utils/system-manager.js";
-import { scopeManager } from "../../security/scope-manager.js";
-import { createSubsystemLogger } from "../../logging/subsystem.js";
 import path from "node:path";
+import { desktopInput } from "../../input/desktop-input.js";
+import { createSubsystemLogger } from "../../logging/subsystem.js";
+import { scopeManager } from "../../security/scope-manager.js";
 import { CONFIG_DIR } from "../../utils.js";
+import { systemManager } from "../../utils/system-manager.js";
+import { windowManager } from "../../utils/window-manager.js";
+import { desktopVision } from "../../vision/desktop-vision.js";
 
 const log = createSubsystemLogger("plugin/desktop");
 
@@ -14,7 +14,6 @@ const log = createSubsystemLogger("plugin/desktop");
  * Provides global vision and input control with strict safety scoping.
  */
 export class DesktopAutomationPlugin {
-  
   async init() {
     await scopeManager.load();
     log.info("Desktop Automation Plugin Initialized.");
@@ -25,10 +24,10 @@ export class DesktopAutomationPlugin {
    */
   async analyzeDesktop(task: string) {
     const screenshotPath = path.join(CONFIG_DIR, "tmp", `desktop_${Date.now()}.png`);
-    
+
     // 1. Capture
     await desktopVision.captureScreenshot(screenshotPath);
-    
+
     // 2. Returning the path for external processing
     log.info(`Desktop captured for task: ${task}`);
     return { screenshotPath, task };
@@ -37,7 +36,10 @@ export class DesktopAutomationPlugin {
   /**
    * Focuses an authorized app and performs actions.
    */
-  async controlApp(appName: string, actions: Array<{ action: "click" | "type" | "combo", x?: number, y?: number, text?: string }>) {
+  async controlApp(
+    appName: string,
+    actions: Array<{ action: "click" | "type" | "combo"; x?: number; y?: number; text?: string }>,
+  ) {
     // 1. Check Scope
     if (!(await scopeManager.isAppAuthorized(appName))) {
       throw new Error(`Unauthorized application: ${appName}`);
@@ -86,10 +88,14 @@ export class DesktopAutomationPlugin {
    */
   async listAvailableTargets() {
     const windows = await windowManager.listWindows();
-    const authorized = await Promise.all(windows.map(async w => ({
-      ...w,
-      isAuthorized: await scopeManager.isAppAuthorized(w.processName) || await scopeManager.isAppAuthorized(w.title)
-    })));
+    const authorized = await Promise.all(
+      windows.map(async (w) => ({
+        ...w,
+        isAuthorized:
+          (await scopeManager.isAppAuthorized(w.processName)) ||
+          (await scopeManager.isAppAuthorized(w.title)),
+      })),
+    );
     return authorized;
   }
 }

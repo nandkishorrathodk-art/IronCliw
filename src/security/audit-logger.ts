@@ -1,6 +1,6 @@
+import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import crypto from "node:crypto";
 
 export interface AuditEntry {
   id: string;
@@ -25,17 +25,19 @@ export class AuditLogger {
   }
 
   public async log(entry: Omit<AuditEntry, "id" | "timestamp">) {
-    if (!this.logDirectory) {return;} // Not initialized
+    if (!this.logDirectory) {
+      return;
+    } // Not initialized
 
     const fullEntry: AuditEntry = {
       ...entry,
       id: crypto.randomUUID(),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // ELK-compatible JSON line
     const logLine = JSON.stringify(fullEntry) + "\n";
-    
+
     // Rotate files daily: audit-YYYY-MM-DD.log
     const dateStr = fullEntry.timestamp.split("T")[0];
     const filePath = path.join(this.logDirectory, `audit-${dateStr}.log`);

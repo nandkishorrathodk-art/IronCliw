@@ -20,7 +20,7 @@ x-i18n:
 通过 Node 使用 `tsx` 运行 IronCliw 时，启动阶段报错：
 
 ```
-[IronCliw] Failed to start CLI: TypeError: __name is not a function
+[ironcliw] Failed to start CLI: TypeError: __name is not a function
     at createSubsystemLogger (.../src/logging/subsystem.ts:203:25)
     at .../src/agents/auth-profiles/constants.ts:25:20
 ```
@@ -63,7 +63,7 @@ node --import tsx scripts/repro/tsx-name-repro.ts
 ## 回归历史
 
 - `2871657e`（2026-01-06）：脚本从 Bun 改为 tsx，使 Bun 成为可选项。
-- 在此之前（Bun 路径），`IronCliw status` 和 `gateway:watch` 均正常工作。
+- 在此之前（Bun 路径），`ironcliw status` 和 `gateway:watch` 均正常工作。
 
 ## 解决方法
 
@@ -71,9 +71,9 @@ node --import tsx scripts/repro/tsx-name-repro.ts
 - 使用 Node + tsc watch，然后运行编译产物：
   ```bash
   pnpm exec tsc --watch --preserveWatchOutput
-  node --watch IronCliw.mjs status
+  node --watch ironcliw.mjs status
   ```
-- 已在本地确认：`pnpm exec tsc -p tsconfig.json` + `node IronCliw.mjs status` 在 Node 25 上可正常运行。
+- 已在本地确认：`pnpm exec tsc -p tsconfig.json` + `node ironcliw.mjs status` 在 Node 25 上可正常运行。
 - 如果可能，在 TS 加载器中禁用 esbuild 的 keepNames（防止插入 `__name` 辅助函数）；tsx 目前不提供此配置项。
 - 在 Node LTS（22/24）上测试 `tsx`，确认该问题是否为 Node 25 特有。
 

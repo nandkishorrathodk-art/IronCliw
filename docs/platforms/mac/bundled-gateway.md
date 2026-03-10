@@ -10,16 +10,16 @@ title: "Gateway on macOS"
 # Gateway on macOS (external launchd)
 
 IronCliw.app no longer bundles Node/Bun or the Gateway runtime. The macOS app
-expects an **external** `IronCliw` CLI install, does not spawn the Gateway as a
+expects an **external** `ironcliw` CLI install, does not spawn the Gateway as a
 child process, and manages a per‑user launchd service to keep the Gateway
 running (or attaches to an existing local Gateway if one is already running).
 
 ## Install the CLI (required for local mode)
 
-You need Node 22+ on the Mac, then install `IronCliw` globally:
+You need Node 22+ on the Mac, then install `ironcliw` globally:
 
 ```bash
-npm install -g IronCliw@<version>
+npm install -g ironcliw@<version>
 ```
 
 The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun not recommended for Gateway runtime).
@@ -28,17 +28,17 @@ The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun no
 
 Label:
 
-- `ai.IronCliw.gateway` (or `ai.IronCliw.<profile>`; legacy `com.IronCliw.*` may remain)
+- `ai.ironcliw.gateway` (or `ai.ironcliw.<profile>`; legacy `com.ironcliw.*` may remain)
 
 Plist location (per‑user):
 
-- `~/Library/LaunchAgents/ai.IronCliw.gateway.plist`
-  (or `~/Library/LaunchAgents/ai.IronCliw.<profile>.plist`)
+- `~/Library/LaunchAgents/ai.ironcliw.gateway.plist`
+  (or `~/Library/LaunchAgents/ai.ironcliw.<profile>.plist`)
 
 Manager:
 
 - The macOS app owns LaunchAgent install/update in Local mode.
-- The CLI can also install it: `IronCliw gateway install`.
+- The CLI can also install it: `ironcliw gateway install`.
 
 Behavior:
 
@@ -49,7 +49,7 @@ Behavior:
 
 Logging:
 
-- launchd stdout/err: `/tmp/IronCliw/IronCliw-gateway.log`
+- launchd stdout/err: `/tmp/ironcliw/ironcliw-gateway.log`
 
 ## Version compatibility
 
@@ -59,15 +59,15 @@ incompatible, update the global CLI to match the app version.
 ## Smoke check
 
 ```bash
-IronCliw --version
+ironcliw --version
 
-IronCliw_SKIP_CHANNELS=1 \
-IronCliw_SKIP_CANVAS_HOST=1 \
-IronCliw gateway --port 18999 --bind loopback
+IRONCLIW_SKIP_CHANNELS=1 \
+IRONCLIW_SKIP_CANVAS_HOST=1 \
+ironcliw gateway --port 18999 --bind loopback
 ```
 
 Then:
 
 ```bash
-IronCliw gateway call health --url ws://127.0.0.1:18999 --timeout 3000
+ironcliw gateway call health --url ws://127.0.0.1:18999 --timeout 3000
 ```

@@ -30,7 +30,7 @@ const makeMsg = (overrides: Partial<WebInboundMsg>): WebInboundMsg =>
   }) as WebInboundMsg;
 
 describe("isBotMentionedFromTargets", () => {
-  const mentionCfg = { mentionRegexes: [/\bIronCliw\b/i] };
+  const mentionCfg = { mentionRegexes: [/\bironcliw\b/i] };
 
   function expectMentioned(
     msg: WebInboundMsg,
@@ -63,7 +63,7 @@ describe("isBotMentionedFromTargets", () => {
 
   it("falls back to regex when no mentions are present", () => {
     const msg = makeMsg({
-      body: "IronCliw can you help?",
+      body: "ironcliw can you help?",
       selfE164: "+15551234567",
       selfJid: "15551234567@s.whatsapp.net",
     });
@@ -71,7 +71,7 @@ describe("isBotMentionedFromTargets", () => {
   });
 
   it("ignores JID mentions in self-chat mode", () => {
-    const cfg = { mentionRegexes: [/\bIronCliw\b/i], allowFrom: ["+999"] };
+    const cfg = { mentionRegexes: [/\bironcliw\b/i], allowFrom: ["+999"] };
     const msg = makeMsg({
       body: "@owner ping",
       mentionedJids: ["999@s.whatsapp.net"],
@@ -81,7 +81,7 @@ describe("isBotMentionedFromTargets", () => {
     expectMentioned(msg, cfg, false);
 
     const msgTextMention = makeMsg({
-      body: "IronCliw ping",
+      body: "ironcliw ping",
       selfE164: "+999",
       selfJid: "999@s.whatsapp.net",
     });
@@ -100,7 +100,7 @@ describe("isBotMentionedFromTargets", () => {
 
 describe("resolveMentionTargets with @lid mapping", () => {
   it("uses @lid reverse mapping for mentions and self identity", async () => {
-    await withTempDir("IronCliw-lid-mapping-", async (authDir) => {
+    await withTempDir("ironcliw-lid-mapping-", async (authDir) => {
       await fs.writeFile(
         path.join(authDir, "lid-mapping-777_reverse.json"),
         JSON.stringify("+1777"),
@@ -134,7 +134,7 @@ describe("getSessionSnapshot", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 0, 18, 5, 0, 0));
     try {
-      await withTempDir("IronCliw-snapshot-", async (root) => {
+      await withTempDir("ironcliw-snapshot-", async (root) => {
         const storePath = path.join(root, "sessions.json");
         const sessionKey = "agent:main:whatsapp:dm:s1";
 
@@ -176,13 +176,13 @@ describe("web auto-reply util", () => {
     it("returns normalized debug fields and mention outcome", () => {
       const msg = makeMsg({
         from: "777@lid",
-        body: "IronCliw ping",
+        body: "ironcliw ping",
         selfE164: "+15551234567",
         selfJid: "15551234567@s.whatsapp.net",
       });
-      const result = debugMention(msg, { mentionRegexes: [/\bIronCliw\b/i] });
+      const result = debugMention(msg, { mentionRegexes: [/\bironcliw\b/i] });
       expect(result.wasMentioned).toBe(true);
-      expect(result.details.bodyClean).toBe("IronCliw ping");
+      expect(result.details.bodyClean).toBe("ironcliw ping");
       expect(result.details.normalizedMentionedJids).toBeNull();
     });
 

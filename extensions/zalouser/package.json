@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/zalouser",
-  "version": "2026.3.2",
+  "name": "@ironcliw/zalouser",
+  "version": "2026.3.9",
   "description": "IronCliw Zalo Personal Account plugin via native zca-js integration",
   "type": "module",
   "dependencies": {
@@ -8,7 +8,7 @@
     "zca-js": "2.1.1",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -26,9 +26,14 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@IronCliw/zalouser",
+      "npmSpec": "@ironcliw/zalouser",
       "localPath": "extensions/zalouser",
       "defaultChoice": "npm"
+    },
+    "releaseChecks": {
+      "rootDependencyMirrorAllowlist": [
+        "zca-js"
+      ]
     }
   }
 }

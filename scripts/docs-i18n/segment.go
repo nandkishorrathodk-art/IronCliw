@@ -9,4 +9,3 @@ type Segment struct {
 	Translated string
 	CacheKey   string
 }
-

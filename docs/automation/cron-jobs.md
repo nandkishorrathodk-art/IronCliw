@@ -22,7 +22,7 @@ Troubleshooting: [/automation/troubleshooting](/automation/troubleshooting)
 ## TL;DR
 
 - Cron runs **inside the Gateway** (not inside the model).
-- Jobs persist under `~/.IronCliw/cron/` so restarts don’t lose schedules.
+- Jobs persist under `~/.ironcliw/cron/` so restarts don’t lose schedules.
 - Two execution styles:
   - **Main session**: enqueue a system event, then run on the next heartbeat.
   - **Isolated**: run a dedicated agent turn in `cron:<jobId>`, with delivery (announce by default or none).
@@ -35,7 +35,7 @@ Troubleshooting: [/automation/troubleshooting](/automation/troubleshooting)
 Create a one-shot reminder, verify it exists, and run it immediately:
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Reminder" \
   --at "2026-02-01T16:00:00Z" \
   --session main \
@@ -43,15 +43,15 @@ IronCliw cron add \
   --wake now \
   --delete-after-run
 
-IronCliw cron list
-IronCliw cron run <job-id>
-IronCliw cron runs --id <job-id>
+ironcliw cron list
+ironcliw cron run <job-id>
+ironcliw cron runs --id <job-id>
 ```
 
 Schedule a recurring isolated job with delivery:
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Morning brief" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -68,9 +68,9 @@ For the canonical JSON shapes and examples, see [JSON schema for tool calls](/au
 
 ## Where cron jobs are stored
 
-Cron jobs are persisted on the Gateway host at `~/.IronCliw/cron/jobs.json` by default.
+Cron jobs are persisted on the Gateway host at `~/.ironcliw/cron/jobs.json` by default.
 The Gateway loads the file into memory and writes it back on changes, so manual edits
-are only safe when the Gateway is stopped. Prefer `IronCliw cron add/edit` or the cron
+are only safe when the Gateway is stopped. Prefer `ironcliw cron add/edit` or the cron
 tool call API for changes.
 
 ## Beginner-friendly overview
@@ -176,6 +176,7 @@ Common `agentTurn` fields:
 - `message`: required text prompt.
 - `model` / `thinking`: optional overrides (see below).
 - `timeoutSeconds`: optional timeout override.
+- `lightContext`: optional lightweight bootstrap mode for jobs that do not need workspace bootstrap file injection.
 
 Delivery config:
 
@@ -234,6 +235,14 @@ Resolution priority:
 1. Job payload override (highest)
 2. Hook-specific defaults (e.g., `hooks.gmail.model`)
 3. Agent config default
+
+### Lightweight bootstrap context
+
+Isolated jobs (`agentTurn`) can set `lightContext: true` to run with lightweight bootstrap context.
+
+- Use this for scheduled chores that do not need workspace bootstrap file injection.
+- In practice, the embedded runtime runs with `bootstrapContextMode: "lightweight"`, which keeps cron bootstrap context empty on purpose.
+- CLI equivalents: `ironcliw cron add --light-context ...` and `ironcliw cron edit --light-context`.
 
 ### Delivery (channel + target)
 
@@ -298,7 +307,8 @@ Recurring, isolated job with delivery:
   "wakeMode": "next-heartbeat",
   "payload": {
     "kind": "agentTurn",
-    "message": "Summarize overnight updates."
+    "message": "Summarize overnight updates.",
+    "lightContext": true
   },
   "delivery": {
     "mode": "announce",
@@ -348,8 +358,8 @@ Notes:
 
 ## Storage & history
 
-- Job store: `~/.IronCliw/cron/jobs.json` (Gateway-managed JSON).
-- Run history: `~/.IronCliw/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned by size and line count).
+- Job store: `~/.ironcliw/cron/jobs.json` (Gateway-managed JSON).
+- Run history: `~/.ironcliw/cron/runs/<jobId>.jsonl` (JSONL, auto-pruned by size and line count).
 - Isolated cron run sessions in `sessions.json` are pruned by `cron.sessionRetention` (default `24h`; set `false` to disable).
 - Override store path: `cron.store` in config.
 
@@ -360,6 +370,7 @@ When a job fails, IronCliw classifies errors as **transient** (retryable) or **p
 ### Transient errors (retried)
 
 - Rate limit (429, too many requests, resource exhausted)
+- Provider overload (for example Anthropic `529 overloaded_error`, overload fallback summaries)
 - Network errors (timeout, ECONNRESET, fetch failed, socket)
 - Server errors (5xx)
 - Cloudflare-related errors
@@ -391,13 +402,13 @@ Configure `cron.retry` to override these defaults (see [Configuration](/automati
 {
   cron: {
     enabled: true, // default true
-    store: "~/.IronCliw/cron/jobs.json",
+    store: "~/.ironcliw/cron/jobs.json",
     maxConcurrentRuns: 1, // default 1
     // Optional: override retry policy for one-shot jobs
     retry: {
       maxAttempts: 3,
       backoffMs: [60000, 120000, 300000],
-      retryOn: ["rate_limit", "network", "server_error"],
+      retryOn: ["rate_limit", "overloaded", "network", "server_error"],
     },
     webhook: "https://example.invalid/legacy", // deprecated fallback for stored notify:true jobs
     webhookToken: "replace-with-dedicated-webhook-token", // optional bearer token for webhook mode
@@ -428,7 +439,7 @@ Webhook behavior:
 Disable cron entirely:
 
 - `cron.enabled: false` (config)
-- `IronCliw_SKIP_CRON=1` (env)
+- `IRONCLIW_SKIP_CRON=1` (env)
 
 ## Maintenance
 
@@ -463,7 +474,7 @@ What to do:
 - keep `cron.sessionRetention` as short as your debugging/audit needs allow
 - keep run logs bounded with moderate `runLog.maxBytes` and `runLog.keepLines`
 - move noisy background jobs to isolated mode with delivery rules that avoid unnecessary chatter
-- review growth periodically with `IronCliw cron runs` and adjust retention before logs become large
+- review growth periodically with `ironcliw cron runs` and adjust retention before logs become large
 
 ### Customize examples
 
@@ -514,7 +525,7 @@ Tune for high-volume cron usage (example):
 One-shot reminder (UTC ISO, auto-delete after success):
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Send reminder" \
   --at "2026-01-12T18:00:00Z" \
   --session main \
@@ -526,7 +537,7 @@ IronCliw cron add \
 One-shot reminder (main session, wake immediately):
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Calendar check" \
   --at "20m" \
   --session main \
@@ -537,7 +548,7 @@ IronCliw cron add \
 Recurring isolated job (announce to WhatsApp):
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Morning status" \
   --cron "0 7 * * *" \
   --tz "America/Los_Angeles" \
@@ -551,7 +562,7 @@ IronCliw cron add \
 Recurring cron job with explicit 30-second stagger:
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Minute watcher" \
   --cron "0 * * * * *" \
   --tz "UTC" \
@@ -564,7 +575,7 @@ IronCliw cron add \
 Recurring isolated job (deliver to a Telegram topic):
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Nightly summary (topic)" \
   --cron "0 22 * * *" \
   --tz "America/Los_Angeles" \
@@ -578,7 +589,7 @@ IronCliw cron add \
 Isolated job with model and thinking override:
 
 ```bash
-IronCliw cron add \
+ironcliw cron add \
   --name "Deep analysis" \
   --cron "0 6 * * 1" \
   --tz "America/Los_Angeles" \
@@ -595,24 +606,26 @@ Agent selection (multi-agent setups):
 
 ```bash
 # Pin a job to agent "ops" (falls back to default if that agent is missing)
-IronCliw cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
+ironcliw cron add --name "Ops sweep" --cron "0 6 * * *" --session isolated --message "Check ops queue" --agent ops
 
 # Switch or clear the agent on an existing job
-IronCliw cron edit <jobId> --agent ops
-IronCliw cron edit <jobId> --clear-agent
+ironcliw cron edit <jobId> --agent ops
+ironcliw cron edit <jobId> --clear-agent
 ```
 
 Manual run (force is the default, use `--due` to only run when due):
 
 ```bash
-IronCliw cron run <jobId>
-IronCliw cron run <jobId> --due
+ironcliw cron run <jobId>
+ironcliw cron run <jobId> --due
 ```
+
+`cron.run` now acknowledges once the manual run is queued, not after the job finishes. Successful queue responses look like `{ ok: true, enqueued: true, runId }`. If the job is already running or `--due` finds nothing due, the response stays `{ ok: true, ran: false, reason }`. Use `ironcliw cron runs --id <jobId>` or the `cron.runs` gateway method to inspect the eventual finished entry.
 
 Edit an existing job (patch fields):
 
 ```bash
-IronCliw cron edit <jobId> \
+ironcliw cron edit <jobId> \
   --message "Updated prompt" \
   --model "opus" \
   --thinking low
@@ -621,32 +634,32 @@ IronCliw cron edit <jobId> \
 Force an existing cron job to run exactly on schedule (no stagger):
 
 ```bash
-IronCliw cron edit <jobId> --exact
+ironcliw cron edit <jobId> --exact
 ```
 
 Run history:
 
 ```bash
-IronCliw cron runs --id <jobId> --limit 50
+ironcliw cron runs --id <jobId> --limit 50
 ```
 
 Immediate system event without creating a job:
 
 ```bash
-IronCliw system event --mode now --text "Next heartbeat: check battery."
+ironcliw system event --mode now --text "Next heartbeat: check battery."
 ```
 
 ## Gateway API surface
 
 - `cron.list`, `cron.status`, `cron.add`, `cron.update`, `cron.remove`
 - `cron.run` (force or due), `cron.runs`
-  For immediate system events without a job, use [`IronCliw system event`](/cli/system).
+  For immediate system events without a job, use [`ironcliw system event`](/cli/system).
 
 ## Troubleshooting
 
 ### “Nothing runs”
 
-- Check cron is enabled: `cron.enabled` and `IronCliw_SKIP_CRON`.
+- Check cron is enabled: `cron.enabled` and `IRONCLIW_SKIP_CRON`.
 - Check the Gateway is running continuously (cron runs inside the Gateway process).
 - For `cron` schedules: confirm timezone (`--tz`) vs the host timezone.
 
@@ -655,7 +668,7 @@ IronCliw system event --mode now --text "Next heartbeat: check battery."
 - IronCliw applies exponential retry backoff for recurring jobs after consecutive errors:
   30s, 1m, 5m, 15m, then 60m between retries.
 - Backoff resets automatically after the next successful run.
-- One-shot (`at`) jobs retry transient errors (rate limit, network, server_error) up to 3 times with backoff; permanent errors disable immediately. See [Retry policy](/automation/cron-jobs#retry-policy).
+- One-shot (`at`) jobs retry transient errors (rate limit, overloaded, network, server_error) up to 3 times with backoff; permanent errors disable immediately. See [Retry policy](/automation/cron-jobs#retry-policy).
 
 ### Telegram delivers to the wrong place
 

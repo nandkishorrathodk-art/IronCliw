@@ -21,22 +21,22 @@ describe("noteSecurityWarnings gateway exposure", () => {
   beforeEach(() => {
     note.mockClear();
     pluginRegistry.list = [];
-    prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    prevPassword = process.env.IronCliw_GATEWAY_PASSWORD;
-    delete process.env.IronCliw_GATEWAY_TOKEN;
-    delete process.env.IronCliw_GATEWAY_PASSWORD;
+    prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    prevPassword = process.env.IRONCLIW_GATEWAY_PASSWORD;
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_PASSWORD;
   });
 
   afterEach(() => {
     if (prevToken === undefined) {
-      delete process.env.IronCliw_GATEWAY_TOKEN;
+      delete process.env.IRONCLIW_GATEWAY_TOKEN;
     } else {
-      process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+      process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
     }
     if (prevPassword === undefined) {
-      delete process.env.IronCliw_GATEWAY_PASSWORD;
+      delete process.env.IRONCLIW_GATEWAY_PASSWORD;
     } else {
-      process.env.IronCliw_GATEWAY_PASSWORD = prevPassword;
+      process.env.IRONCLIW_GATEWAY_PASSWORD = prevPassword;
     }
   });
 
@@ -53,8 +53,24 @@ describe("noteSecurityWarnings gateway exposure", () => {
   });
 
   it("uses env token to avoid critical warning", async () => {
-    process.env.IronCliw_GATEWAY_TOKEN = "token-123";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "token-123";
     const cfg = { gateway: { bind: "lan" } } as IronCliwConfig;
+    await noteSecurityWarnings(cfg);
+    const message = lastMessage();
+    expect(message).toContain("WARNING");
+    expect(message).not.toContain("CRITICAL");
+  });
+
+  it("treats SecretRef token config as authenticated for exposure warning level", async () => {
+    const cfg = {
+      gateway: {
+        bind: "lan",
+        auth: {
+          mode: "token",
+          token: { source: "env", provider: "default", id: "IRONCLIW_GATEWAY_TOKEN" },
+        },
+      },
+    } as IronCliwConfig;
     await noteSecurityWarnings(cfg);
     const message = lastMessage();
     expect(message).toContain("WARNING");
@@ -117,6 +133,68 @@ describe("noteSecurityWarnings gateway exposure", () => {
     const message = lastMessage();
     expect(message).toContain("disables approval forwarding only");
     expect(message).toContain("exec-approvals.json");
-    expect(message).toContain("IronCliw approvals get --gateway");
+    expect(message).toContain("ironcliw approvals get --gateway");
+  });
+
+  it("warns when heartbeat delivery relies on implicit directPolicy defaults", async () => {
+    const cfg = {
+      agents: {
+        defaults: {
+          heartbeat: {
+            target: "last",
+          },
+        },
+      },
+    } as IronCliwConfig;
+    await noteSecurityWarnings(cfg);
+    const message = lastMessage();
+    expect(message).toContain("Heartbeat defaults");
+    expect(message).toContain("agents.defaults.heartbeat.directPolicy");
+    expect(message).toContain("direct/DM targets by default");
+  });
+
+  it("warns when a per-agent heartbeat relies on implicit directPolicy", async () => {
+    const cfg = {
+      agents: {
+        list: [
+          {
+            id: "ops",
+            heartbeat: {
+              target: "last",
+            },
+          },
+        ],
+      },
+    } as IronCliwConfig;
+    await noteSecurityWarnings(cfg);
+    const message = lastMessage();
+    expect(message).toContain('Heartbeat agent "ops"');
+    expect(message).toContain('heartbeat.directPolicy for agent "ops"');
+    expect(message).toContain("direct/DM targets by default");
+  });
+
+  it("skips heartbeat directPolicy warning when delivery is internal-only or explicit", async () => {
+    const cfg = {
+      agents: {
+        defaults: {
+          heartbeat: {
+            target: "none",
+          },
+        },
+        list: [
+          {
+            id: "ops",
+            heartbeat: {
+              target: "last",
+              directPolicy: "block",
+            },
+          },
+        ],
+      },
+    } as IronCliwConfig;
+    await noteSecurityWarnings(cfg);
+    const message = lastMessage();
+    expect(message).not.toContain("Heartbeat defaults");
+    expect(message).not.toContain('Heartbeat agent "ops"');
   });
 });

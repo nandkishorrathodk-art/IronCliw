@@ -26,7 +26,7 @@ export class PluginManager {
         try {
           const pluginPath = path.join(this.pluginsDirectory, file);
           const imported = await import(`file://${pluginPath}`);
-          
+
           if (imported.default && imported.default.name) {
             const plugin = imported.default as IronCliwPlugin;
             await this.registerPlugin(plugin);
@@ -56,7 +56,9 @@ export class PluginManager {
     for (const plugin of this.loadedPlugins.values()) {
       if (plugin.onCommand) {
         const result = await plugin.onCommand(command);
-        if (result) {return result;} // Plugin handled the command
+        if (result) {
+          return result;
+        } // Plugin handled the command
       }
     }
     return null;

@@ -31,6 +31,8 @@ const unitIsolatedFilesRaw = [
   "src/commands/doctor.runs-legacy-state-migrations-yes-mode-without.test.ts",
   // Setup-heavy CLI update flow suite; move off unit-fast critical path.
   "src/cli/update-cli.test.ts",
+  // Uses temp repos + module cache resets; keep it off vmForks to avoid ref-resolution flakes.
+  "src/infra/git-commit.test.ts",
   // Expensive schema build/bootstrap checks; keep coverage but run in isolated lane.
   "src/config/schema.test.ts",
   "src/config/schema.tags.test.ts",
@@ -63,7 +65,7 @@ const unitIsolatedFilesRaw = [
   // Heavy runner/exec/archive suites are stable but contend on shared resources under vmForks.
   "src/agents/pi-embedded-runner.test.ts",
   "src/agents/bash-tools.test.ts",
-  "src/agents/IronCliw-tools.subagents.sessions-spawn.lifecycle.test.ts",
+  "src/agents/ironcliw-tools.subagents.sessions-spawn.lifecycle.test.ts",
   "src/agents/bash-tools.exec.background-abort.test.ts",
   "src/agents/subagent-announce.format.test.ts",
   "src/infra/archive.test.ts",
@@ -86,6 +88,8 @@ const unitIsolatedFilesRaw = [
   "src/slack/monitor/slash.test.ts",
   // Uses process-level unhandledRejection listeners; keep it off vmForks to avoid cross-file leakage.
   "src/imessage/monitor.shutdown.unhandled-rejection.test.ts",
+  // Mutates process.cwd() and mocks core module loaders; isolate from the shared fast lane.
+  "src/infra/git-commit.test.ts",
 ];
 const unitIsolatedFiles = unitIsolatedFilesRaw.filter((file) => fs.existsSync(file));
 
@@ -100,19 +104,30 @@ const hostMemoryGiB = Math.floor(os.totalmem() / 1024 ** 3);
 const highMemLocalHost = !isCI && hostMemoryGiB >= 96;
 const lowMemLocalHost = !isCI && hostMemoryGiB < 64;
 const nodeMajor = Number.parseInt(process.versions.node.split(".")[0] ?? "", 10);
-// vmForks is a big win for transform/import heavy suites, but Node 24 had
-// regressions with Vitest's vm runtime in this repo, and low-memory local hosts
+// vmForks is a big win for transform/import heavy suites, but Node 24+
+// regressed with Vitest's vm runtime in this repo, and low-memory local hosts
 // are more likely to hit per-worker V8 heap ceilings. Keep it opt-out via
-// IronCliw_TEST_VM_FORKS=0, and let users force-enable with =1.
-const supportsVmForks = Number.isFinite(nodeMajor) ? nodeMajor !== 24 : true;
+// IRONCLIW_TEST_VM_FORKS=0, and let users force-enable with =1.
+const supportsVmForks = Number.isFinite(nodeMajor) ? nodeMajor < 24 : true;
 const useVmForks =
-  process.env.IronCliw_TEST_VM_FORKS === "1" ||
-  (process.env.IronCliw_TEST_VM_FORKS !== "0" && !isWindows && supportsVmForks && !lowMemLocalHost);
-const disableIsolation = process.env.IronCliw_TEST_NO_ISOLATE === "1";
-const includeGatewaySuite = process.env.IronCliw_TEST_INCLUDE_GATEWAY === "1";
-const includeExtensionsSuite = process.env.IronCliw_TEST_INCLUDE_EXTENSIONS === "1";
+  process.env.IRONCLIW_TEST_VM_FORKS === "1" ||
+  (process.env.IRONCLIW_TEST_VM_FORKS !== "0" && !isWindows && supportsVmForks && !lowMemLocalHost);
+const disableIsolation = process.env.IRONCLIW_TEST_NO_ISOLATE === "1";
+const includeGatewaySuite = process.env.IRONCLIW_TEST_INCLUDE_GATEWAY === "1";
+const includeExtensionsSuite = process.env.IRONCLIW_TEST_INCLUDE_EXTENSIONS === "1";
+const rawTestProfile = process.env.IRONCLIW_TEST_PROFILE?.trim().toLowerCase();
+const testProfile =
+  rawTestProfile === "low" ||
+  rawTestProfile === "max" ||
+  rawTestProfile === "normal" ||
+  rawTestProfile === "serial"
+    ? rawTestProfile
+    : "normal";
+// Even on low-memory hosts, keep the isolated lane split so files like
+// git-commit.test.ts still get the worker/process isolation they require.
+const shouldSplitUnitRuns = testProfile !== "serial";
 const runs = [
-  ...(useVmForks
+  ...(shouldSplitUnitRuns
     ? [
         {
           name: "unit-fast",
@@ -121,7 +136,7 @@ const runs = [
             "run",
             "--config",
             "vitest.unit.config.ts",
-            "--pool=vmForks",
+            `--pool=${useVmForks ? "vmForks" : "forks"}`,
             ...(disableIsolation ? ["--isolate=false"] : []),
             ...unitIsolatedFiles.flatMap((file) => ["--exclude", file]),
           ],
@@ -141,7 +156,14 @@ const runs = [
     : [
         {
           name: "unit",
-          args: ["vitest", "run", "--config", "vitest.unit.config.ts"],
+          args: [
+            "vitest",
+            "run",
+            "--config",
+            "vitest.unit.config.ts",
+            `--pool=${useVmForks ? "vmForks" : "forks"}`,
+            ...(disableIsolation ? ["--isolate=false"] : []),
+          ],
         },
       ]),
   ...(includeExtensionsSuite
@@ -175,61 +197,54 @@ const runs = [
       ]
     : []),
 ];
-const shardOverride = Number.parseInt(process.env.IronCliw_TEST_SHARDS ?? "", 10);
+const shardOverride = Number.parseInt(process.env.IRONCLIW_TEST_SHARDS ?? "", 10);
 const configuredShardCount =
   Number.isFinite(shardOverride) && shardOverride > 1 ? shardOverride : null;
 const shardCount = configuredShardCount ?? (isWindowsCi ? 2 : 1);
 const shardIndexOverride = (() => {
-  const parsed = Number.parseInt(process.env.IronCliw_TEST_SHARD_INDEX ?? "", 10);
+  const parsed = Number.parseInt(process.env.IRONCLIW_TEST_SHARD_INDEX ?? "", 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 })();
 
 if (shardIndexOverride !== null && shardCount <= 1) {
   console.error(
-    `[test-parallel] IronCliw_TEST_SHARD_INDEX=${String(
+    `[test-parallel] IRONCLIW_TEST_SHARD_INDEX=${String(
       shardIndexOverride,
-    )} requires IronCliw_TEST_SHARDS>1.`,
+    )} requires IRONCLIW_TEST_SHARDS>1.`,
   );
   process.exit(2);
 }
 
 if (shardIndexOverride !== null && shardIndexOverride > shardCount) {
   console.error(
-    `[test-parallel] IronCliw_TEST_SHARD_INDEX=${String(
+    `[test-parallel] IRONCLIW_TEST_SHARD_INDEX=${String(
       shardIndexOverride,
-    )} exceeds IronCliw_TEST_SHARDS=${String(shardCount)}.`,
+    )} exceeds IRONCLIW_TEST_SHARDS=${String(shardCount)}.`,
   );
   process.exit(2);
 }
 const windowsCiArgs = isWindowsCi ? ["--dangerouslyIgnoreUnhandledErrors"] : [];
 const silentArgs =
-  process.env.IronCliw_TEST_SHOW_PASSED_LOGS === "1" ? [] : ["--silent=passed-only"];
+  process.env.IRONCLIW_TEST_SHOW_PASSED_LOGS === "1" ? [] : ["--silent=passed-only"];
 const rawPassthroughArgs = process.argv.slice(2);
 const passthroughArgs =
   rawPassthroughArgs[0] === "--" ? rawPassthroughArgs.slice(1) : rawPassthroughArgs;
-const rawTestProfile = process.env.IronCliw_TEST_PROFILE?.trim().toLowerCase();
-const testProfile =
-  rawTestProfile === "low" ||
-  rawTestProfile === "max" ||
-  rawTestProfile === "normal" ||
-  rawTestProfile === "serial"
-    ? rawTestProfile
-    : "normal";
-const overrideWorkers = Number.parseInt(process.env.IronCliw_TEST_WORKERS ?? "", 10);
+const topLevelParallelEnabled = testProfile !== "low" && testProfile !== "serial";
+const overrideWorkers = Number.parseInt(process.env.IRONCLIW_TEST_WORKERS ?? "", 10);
 const resolvedOverride =
   Number.isFinite(overrideWorkers) && overrideWorkers > 0 ? overrideWorkers : null;
 const parallelGatewayEnabled =
-  process.env.IronCliw_TEST_PARALLEL_GATEWAY === "1" || (!isCI && highMemLocalHost);
+  process.env.IRONCLIW_TEST_PARALLEL_GATEWAY === "1" || (!isCI && highMemLocalHost);
 // Keep gateway serial by default except when explicitly requested or on high-memory local hosts.
 const keepGatewaySerial =
   isWindowsCi ||
-  process.env.IronCliw_TEST_SERIAL_GATEWAY === "1" ||
+  process.env.IRONCLIW_TEST_SERIAL_GATEWAY === "1" ||
   testProfile === "serial" ||
   !parallelGatewayEnabled;
 const parallelRuns = keepGatewaySerial ? runs.filter((entry) => entry.name !== "gateway") : runs;
 const serialRuns = keepGatewaySerial ? runs.filter((entry) => entry.name === "gateway") : [];
 const baseLocalWorkers = Math.max(4, Math.min(16, hostCpuCount));
-const loadAwareDisabledRaw = process.env.IronCliw_TEST_LOAD_AWARE?.trim().toLowerCase();
+const loadAwareDisabledRaw = process.env.IRONCLIW_TEST_LOAD_AWARE?.trim().toLowerCase();
 const loadAwareDisabled = loadAwareDisabledRaw === "0" || loadAwareDisabledRaw === "false";
 const loadRatio =
   !isCI && !loadAwareDisabled && process.platform !== "win32" && hostCpuCount > 0
@@ -318,7 +333,7 @@ const WARNING_SUPPRESSION_FLAGS = [
 const DEFAULT_CI_MAX_OLD_SPACE_SIZE_MB = 4096;
 const maxOldSpaceSizeMb = (() => {
   // CI can hit Node heap limits (especially on large suites). Allow override, default to 4GB.
-  const raw = process.env.IronCliw_TEST_MAX_OLD_SPACE_SIZE_MB ?? "";
+  const raw = process.env.IRONCLIW_TEST_MAX_OLD_SPACE_SIZE_MB ?? "";
   const parsed = Number.parseInt(raw, 10);
   if (Number.isFinite(parsed) && parsed > 0) {
     return parsed;
@@ -399,6 +414,23 @@ const run = async (entry) => {
   return 0;
 };
 
+const runEntries = async (entries) => {
+  if (topLevelParallelEnabled) {
+    const codes = await Promise.all(entries.map(run));
+    return codes.find((code) => code !== 0);
+  }
+
+  for (const entry of entries) {
+    // eslint-disable-next-line no-await-in-loop
+    const code = await run(entry);
+    if (code !== 0) {
+      return code;
+    }
+  }
+
+  return undefined;
+};
+
 const shutdown = (signal) => {
   for (const child of children) {
     child.kill(signal);
@@ -451,8 +483,7 @@ if (passthroughArgs.length > 0) {
   process.exit(Number(code) || 0);
 }
 
-const parallelCodes = await Promise.all(parallelRuns.map(run));
-const failedParallel = parallelCodes.find((code) => code !== 0);
+const failedParallel = await runEntries(parallelRuns);
 if (failedParallel !== undefined) {
   process.exit(failedParallel);
 }

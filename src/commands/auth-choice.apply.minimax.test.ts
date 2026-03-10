@@ -29,15 +29,15 @@ function createMinimaxPrompter(
 
 describe("applyAuthChoiceMiniMax", () => {
   const lifecycle = createAuthTestLifecycle([
-    "IronCliw_STATE_DIR",
-    "IronCliw_AGENT_DIR",
+    "IRONCLIW_STATE_DIR",
+    "IRONCLIW_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "MINIMAX_API_KEY",
     "MINIMAX_OAUTH_TOKEN",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("IronCliw-minimax-");
+    const env = await setupAuthTestEnv("ironcliw-minimax-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }
@@ -159,7 +159,7 @@ describe("applyAuthChoiceMiniMax", () => {
     },
     {
       name: "uses env token for minimax-api-key-cn as keyRef in ref mode",
-      opts: { secretInputMode: "ref" as const },
+      opts: { secretInputMode: "ref" as const }, // pragma: allowlist secret
       expectKey: undefined,
       expectKeyRef: {
         source: "env",
@@ -172,7 +172,7 @@ describe("applyAuthChoiceMiniMax", () => {
     const { agentDir, result, text, confirm } = await runMiniMaxChoice({
       authChoice: "minimax-api-key-cn",
       opts,
-      env: { apiKey: "mm-env-token" },
+      env: { apiKey: "mm-env-token" }, // pragma: allowlist secret
     });
 
     expect(result).not.toBeNull();

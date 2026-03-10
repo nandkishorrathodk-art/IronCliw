@@ -13,7 +13,7 @@ describe("detectMacCloudSyncedStateDir", () => {
       "Mobile Documents",
       "com~apple~CloudDocs",
       "IronCliw",
-      ".IronCliw",
+      ".ironcliw",
     );
 
     const result = detectMacCloudSyncedStateDir(stateDir, {
@@ -28,7 +28,7 @@ describe("detectMacCloudSyncedStateDir", () => {
   });
 
   it("detects state dir under Library/CloudStorage", () => {
-    const stateDir = path.join(home, "Library", "CloudStorage", "Dropbox", "IronCliw", ".IronCliw");
+    const stateDir = path.join(home, "Library", "CloudStorage", "Dropbox", "IronCliw", ".ironcliw");
 
     const result = detectMacCloudSyncedStateDir(stateDir, {
       platform: "darwin",
@@ -42,14 +42,14 @@ describe("detectMacCloudSyncedStateDir", () => {
   });
 
   it("detects cloud-synced target when state dir resolves via symlink", () => {
-    const symlinkPath = "/tmp/IronCliw-state";
+    const symlinkPath = "/tmp/ironcliw-state";
     const resolvedCloudPath = path.join(
       home,
       "Library",
       "CloudStorage",
       "OneDrive-Personal",
       "IronCliw",
-      ".IronCliw",
+      ".ironcliw",
     );
 
     const result = detectMacCloudSyncedStateDir(symlinkPath, {
@@ -71,9 +71,9 @@ describe("detectMacCloudSyncedStateDir", () => {
       "CloudStorage",
       "OneDrive-Personal",
       "IronCliw",
-      ".IronCliw",
+      ".ironcliw",
     );
-    const resolvedLocalPath = path.join(home, ".IronCliw");
+    const resolvedLocalPath = path.join(home, ".ironcliw");
 
     const result = detectMacCloudSyncedStateDir(symlinkPath, {
       platform: "darwin",
@@ -84,10 +84,10 @@ describe("detectMacCloudSyncedStateDir", () => {
     expect(result).toBeNull();
   });
 
-  it("anchors cloud detection to OS homedir when IronCliw_HOME is overridden", () => {
-    const stateDir = path.join(home, "Library", "CloudStorage", "iCloud Drive", ".IronCliw");
-    const originalIronCliwHome = process.env.IronCliw_HOME;
-    process.env.IronCliw_HOME = "/tmp/IronCliw-home-override";
+  it("anchors cloud detection to OS homedir when IRONCLIW_HOME is overridden", () => {
+    const stateDir = path.join(home, "Library", "CloudStorage", "iCloud Drive", ".ironcliw");
+    const originalIronCliwHome = process.env.IRONCLIW_HOME;
+    process.env.IRONCLIW_HOME = "/tmp/ironcliw-home-override";
     const homedirSpy = vi.spyOn(os, "homedir").mockReturnValue(home);
     try {
       const result = detectMacCloudSyncedStateDir(stateDir, {
@@ -101,9 +101,9 @@ describe("detectMacCloudSyncedStateDir", () => {
     } finally {
       homedirSpy.mockRestore();
       if (originalIronCliwHome === undefined) {
-        delete process.env.IronCliw_HOME;
+        delete process.env.IRONCLIW_HOME;
       } else {
-        process.env.IronCliw_HOME = originalIronCliwHome;
+        process.env.IRONCLIW_HOME = originalIronCliwHome;
       }
     }
   });
@@ -115,7 +115,7 @@ describe("detectMacCloudSyncedStateDir", () => {
       "Mobile Documents",
       "com~apple~CloudDocs",
       "IronCliw",
-      ".IronCliw",
+      ".ironcliw",
     );
 
     const result = detectMacCloudSyncedStateDir(stateDir, {

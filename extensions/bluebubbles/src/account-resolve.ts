@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 import { normalizeResolvedSecretInputString } from "./secret-input.js";
 

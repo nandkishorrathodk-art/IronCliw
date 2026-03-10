@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "IronCliw/plugin-sdk/matrix";
+import type { ChannelDirectoryEntry } from "ironcliw/plugin-sdk/matrix";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { listMatrixDirectoryGroupsLive, listMatrixDirectoryPeersLive } from "./directory-live.js";
 import { resolveMatrixTargets } from "./resolve-targets.js";

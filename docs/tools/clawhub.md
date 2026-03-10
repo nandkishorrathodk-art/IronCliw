@@ -66,7 +66,7 @@ pnpm add -g clawhub
 
 ## How it fits into IronCliw
 
-By default, the CLI installs skills into `./skills` under your current working directory. If a IronCliw workspace is configured, `clawhub` falls back to that workspace unless you override `--workdir` (or `CLAWHUB_WORKDIR`). IronCliw loads workspace skills from `<workspace>/skills` and will pick them up in the **next** session. If you already use `~/.IronCliw/skills` or bundled skills, workspace skills take precedence.
+By default, the CLI installs skills into `./skills` under your current working directory. If a IronCliw workspace is configured, `clawhub` falls back to that workspace unless you override `--workdir` (or `CLAWHUB_WORKDIR`). IronCliw loads workspace skills from `<workspace>/skills` and will pick them up in the **next** session. If you already use `~/.ironcliw/skills` or bundled skills, workspace skills take precedence.
 
 For more detail on how skills are loaded, shared, and gated, see
 [Skills](/tools/skills).
@@ -233,7 +233,7 @@ Updates compare the local skill contents to registry versions using a content ha
 
 ### Sync scanning and fallback roots
 
-`clawhub sync` scans your current workdir first. If no skills are found, it falls back to known legacy locations (for example `~/IronCliw/skills` and `~/.IronCliw/skills`). This is designed to find older skill installs without extra flags.
+`clawhub sync` scans your current workdir first. If no skills are found, it falls back to known legacy locations (for example `~/ironcliw/skills` and `~/.ironcliw/skills`). This is designed to find older skill installs without extra flags.
 
 ### Storage and lockfile
 

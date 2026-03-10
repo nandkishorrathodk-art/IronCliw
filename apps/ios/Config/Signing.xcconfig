@@ -1,10 +1,10 @@
 // Shared iOS signing defaults for local development + CI.
-IronCliw_IOS_DEFAULT_TEAM = Y5PE65HELJ
-IronCliw_IOS_SELECTED_TEAM = $(IronCliw_IOS_DEFAULT_TEAM)
-IronCliw_APP_BUNDLE_ID = ai.IronCliw.ios
-IronCliw_WATCH_APP_BUNDLE_ID = ai.IronCliw.ios.watchkitapp
-IronCliw_WATCH_EXTENSION_BUNDLE_ID = ai.IronCliw.ios.watchkitapp.extension
-IronCliw_ACTIVITY_WIDGET_BUNDLE_ID = ai.IronCliw.ios.activitywidget
+IRONCLIW_IOS_DEFAULT_TEAM = Y5PE65HELJ
+IRONCLIW_IOS_SELECTED_TEAM = $(IRONCLIW_IOS_DEFAULT_TEAM)
+IRONCLIW_APP_BUNDLE_ID = ai.ironcliw.ios
+IRONCLIW_WATCH_APP_BUNDLE_ID = ai.ironcliw.ios.watchkitapp
+IRONCLIW_WATCH_EXTENSION_BUNDLE_ID = ai.ironcliw.ios.watchkitapp.extension
+IRONCLIW_ACTIVITY_WIDGET_BUNDLE_ID = ai.ironcliw.ios.activitywidget
 
 // Local contributors can override this by running scripts/ios-configure-signing.sh.
 // Keep include after defaults: xcconfig is evaluated top-to-bottom.
@@ -13,7 +13,7 @@ IronCliw_ACTIVITY_WIDGET_BUNDLE_ID = ai.IronCliw.ios.activitywidget
 
 CODE_SIGN_STYLE = Automatic
 CODE_SIGN_IDENTITY = Apple Development
-DEVELOPMENT_TEAM = $(IronCliw_IOS_SELECTED_TEAM)
+DEVELOPMENT_TEAM = $(IRONCLIW_IOS_SELECTED_TEAM)
 
 // Let Xcode manage provisioning for the selected local team.
 PROVISIONING_PROFILE_SPECIFIER =

@@ -170,14 +170,6 @@ const CORE_TOOL_DEFINITIONS: CoreToolDefinition[] = [
     includeInIronCliwGroup: true,
   },
   {
-    id: "browser_visual_click",
-    label: "browser_visual_click",
-    description: "Find and click element visually in browser",
-    sectionId: "ui",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
     id: "canvas",
     label: "canvas",
     description: "Control canvases",
@@ -241,54 +233,6 @@ const CORE_TOOL_DEFINITIONS: CoreToolDefinition[] = [
     profiles: [],
     includeInIronCliwGroup: true,
   },
-  {
-    id: "desktop_capture",
-    label: "desktop_capture",
-    description: "Capture screenshot of the host desktop",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
-    id: "desktop_control",
-    label: "desktop_control",
-    description: "Control host desktop (click/type/combo)",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
-    id: "desktop_targets",
-    label: "desktop_targets",
-    description: "List all active windows on the host",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
-    id: "desktop_clipboard_get",
-    label: "desktop_clipboard_get",
-    description: "Read text from the host clipboard",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
-    id: "desktop_clipboard_set",
-    label: "desktop_clipboard_set",
-    description: "Write text to the host clipboard",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
-  {
-    id: "desktop_processes",
-    label: "desktop_processes",
-    description: "List all running processes on the host",
-    sectionId: "automation",
-    profiles: ["coding"],
-    includeInIronCliwGroup: true,
-  },
 ];
 
 const CORE_TOOL_BY_ID = new Map<string, CoreToolDefinition>(
@@ -322,11 +266,11 @@ function buildCoreToolGroupMap() {
     list.push(tool.id);
     sectionToolMap.set(groupId, list);
   }
-  const IronCliwTools = CORE_TOOL_DEFINITIONS.filter((tool) => tool.includeInIronCliwGroup).map(
+  const ironcliwTools = CORE_TOOL_DEFINITIONS.filter((tool) => tool.includeInIronCliwGroup).map(
     (tool) => tool.id,
   );
   return {
-    "group:IronCliw": IronCliwTools,
+    "group:ironcliw": ironcliwTools,
     ...Object.fromEntries(sectionToolMap.entries()),
   };
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/feishu",
-  "version": "2026.3.2",
+  "name": "@ironcliw/feishu",
+  "version": "2026.3.9",
   "description": "IronCliw Feishu/Lark channel plugin (community maintained by @m1heng)",
   "type": "module",
   "dependencies": {
@@ -9,7 +9,7 @@
     "https-proxy-agent": "^7.0.6",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -27,7 +27,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@IronCliw/feishu",
+      "npmSpec": "@ironcliw/feishu",
       "localPath": "extensions/feishu",
       "defaultChoice": "npm"
     }

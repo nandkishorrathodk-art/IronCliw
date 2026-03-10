@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你想从终端搜索实时 IronCliw 文档
-summary: "`IronCliw docs` 的 CLI 参考（搜索实时文档索引）"
+summary: "`ironcliw docs` 的 CLI 参考（搜索实时文档索引）"
 title: docs
 x-i18n:
   generated_at: "2026-02-03T07:44:50Z"
@@ -12,11 +12,11 @@ x-i18n:
   workflow: 15
 ---
 
-# `IronCliw docs`
+# `ironcliw docs`
 
 搜索实时文档索引。
 
 ```bash
-IronCliw docs browser extension
-IronCliw docs sandbox allowHostControl
+ironcliw docs browser extension
+ironcliw docs sandbox allowHostControl
 ```

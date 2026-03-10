@@ -1,4 +1,4 @@
-# @IronCliw/voice-call
+# @ironcliw/voice-call
 
 Official Voice Call plugin for **IronCliw**.
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.IronCliw.ai/plugins/voice-call`
-Plugin system: `https://docs.IronCliw.ai/plugin`
+Docs: `https://docs.ironcliw.ai/plugins/voice-call`
+Plugin system: `https://docs.ironcliw.ai/plugin`
 
 ## Install (local dev)
 
 ### Option A: install via IronCliw (recommended)
 
 ```bash
-IronCliw plugins install @IronCliw/voice-call
+ironcliw plugins install @ironcliw/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.IronCliw/extensions
-cp -R extensions/voice-call ~/.IronCliw/extensions/voice-call
-cd ~/.IronCliw/extensions/voice-call && pnpm install
+mkdir -p ~/.ironcliw/extensions
+cp -R extensions/voice-call ~/.ironcliw/extensions/voice-call
+cd ~/.ironcliw/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -143,13 +143,13 @@ Notes:
 ## CLI
 
 ```bash
-IronCliw voicecall call --to "+15555550123" --message "Hello from IronCliw"
-IronCliw voicecall continue --call-id <id> --message "Any questions?"
-IronCliw voicecall speak --call-id <id> --message "One moment"
-IronCliw voicecall end --call-id <id>
-IronCliw voicecall status --call-id <id>
-IronCliw voicecall tail
-IronCliw voicecall expose --mode funnel
+ironcliw voicecall call --to "+15555550123" --message "Hello from IronCliw"
+ironcliw voicecall continue --call-id <id> --message "Any questions?"
+ironcliw voicecall speak --call-id <id> --message "One moment"
+ironcliw voicecall end --call-id <id>
+ironcliw voicecall status --call-id <id>
+ironcliw voicecall tail
+ironcliw voicecall expose --mode funnel
 ```
 
 ## Tool

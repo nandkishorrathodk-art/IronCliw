@@ -20,7 +20,7 @@ const myPlugin: IronCliwPlugin = {
       return "Hello from MyCustomPlugin!";
     }
     return null;
-  }
+  },
 };
 
 export default myPlugin;

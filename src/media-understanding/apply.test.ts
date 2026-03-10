@@ -5,7 +5,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vites
 import { resolveApiKeyForProvider } from "../agents/model-auth.js";
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { IronCliwConfig } from "../config/config.js";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 import { fetchRemoteMedia } from "../media/fetch.js";
 import { runExec } from "../process/exec.js";
 import { withEnvAsync } from "../test-utils/env.js";
@@ -14,7 +14,7 @@ import { createSafeAudioFixtureBuffer } from "./runner.test-utils.js";
 
 vi.mock("../agents/model-auth.js", () => ({
   resolveApiKeyForProvider: vi.fn(async () => ({
-    apiKey: "test-key",
+    apiKey: "test-key", // pragma: allowlist secret
     source: "test",
     mode: "api-key",
   })),
@@ -37,7 +37,7 @@ vi.mock("../process/exec.js", () => ({
 let applyMediaUnderstanding: typeof import("./apply.js").applyMediaUnderstanding;
 const mockedRunExec = vi.mocked(runExec);
 
-const TEMP_MEDIA_PREFIX = "IronCliw-media-";
+const TEMP_MEDIA_PREFIX = "ironcliw-media-";
 let suiteTempMediaRootDir = "";
 let tempMediaDirCounter = 0;
 let sharedTempMediaCacheDir = "";
@@ -159,7 +159,7 @@ async function withMediaAutoDetectEnv<T>(
       GROQ_API_KEY: undefined,
       DEEPGRAM_API_KEY: undefined,
       GEMINI_API_KEY: undefined,
-      IronCliw_AGENT_DIR: undefined,
+      IRONCLIW_AGENT_DIR: undefined,
       PI_CODING_AGENT_DIR: undefined,
       ...env,
     },
@@ -243,7 +243,7 @@ describe("applyMediaUnderstanding", () => {
   beforeEach(() => {
     mockedResolveApiKey.mockReset();
     mockedResolveApiKey.mockResolvedValue({
-      apiKey: "test-key",
+      apiKey: "test-key", // pragma: allowlist secret
       source: "test",
       mode: "api-key",
     });
@@ -664,7 +664,7 @@ describe("applyMediaUnderstanding", () => {
     await withMediaAutoDetectEnv(
       {
         PATH: emptyBinDir,
-        IronCliw_AGENT_DIR: isolatedAgentDir,
+        IRONCLIW_AGENT_DIR: isolatedAgentDir,
         PI_CODING_AGENT_DIR: isolatedAgentDir,
       },
       async () => {

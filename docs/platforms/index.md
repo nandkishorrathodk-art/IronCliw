@@ -36,18 +36,18 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 - Install guide: [Getting Started](/start/getting-started)
 - Gateway runbook: [Gateway](/gateway)
 - Gateway configuration: [Configuration](/gateway/configuration)
-- Service status: `IronCliw gateway status`
+- Service status: `ironcliw gateway status`
 
 ## Gateway service install (CLI)
 
 Use one of these (all supported):
 
-- Wizard (recommended): `IronCliw onboard --install-daemon`
-- Direct: `IronCliw gateway install`
-- Configure flow: `IronCliw configure` → select **Gateway service**
-- Repair/migrate: `IronCliw doctor` (offers to install or fix the service)
+- Wizard (recommended): `ironcliw onboard --install-daemon`
+- Direct: `ironcliw gateway install`
+- Configure flow: `ironcliw configure` → select **Gateway service**
+- Repair/migrate: `ironcliw doctor` (offers to install or fix the service)
 
 The service target depends on OS:
 
-- macOS: LaunchAgent (`ai.IronCliw.gateway` or `ai.IronCliw.<profile>`; legacy `com.IronCliw.*`)
-- Linux/WSL2: systemd user service (`IronCliw-gateway[-<profile>].service`)
+- macOS: LaunchAgent (`ai.ironcliw.gateway` or `ai.ironcliw.<profile>`; legacy `com.ironcliw.*`)
+- Linux/WSL2: systemd user service (`ironcliw-gateway[-<profile>].service`)

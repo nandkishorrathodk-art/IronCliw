@@ -61,7 +61,7 @@ export async function retryClick(
   opts: RetryOptions = {},
 ): Promise<void> {
   const maxRetries = opts.maxRetries ?? 3;
-  const delayMs = opts.delayMs ?? 800;
+  const delayMs = opts.delayMs ?? 300;
   const timeoutMs = opts.timeoutMs ?? 5000;
 
   let lastError: Error | null = null;
@@ -73,7 +73,9 @@ export async function retryClick(
       // Scroll into view
       await page.evaluate((sel) => {
         const el = document.querySelector(sel);
-        if (el) {el.scrollIntoView({ block: "center", behavior: "smooth" });}
+        if (el) {
+          el.scrollIntoView({ block: "center", behavior: "smooth" });
+        }
       }, selector);
       // Brief wait for scroll to settle
       await new Promise((r) => setTimeout(r, 150));
@@ -118,7 +120,7 @@ export async function retryFill(
   opts: RetryOptions = {},
 ): Promise<void> {
   const maxRetries = opts.maxRetries ?? 3;
-  const delayMs = opts.delayMs ?? 500;
+  const delayMs = opts.delayMs ?? 200;
   const timeoutMs = opts.timeoutMs ?? 5000;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -128,7 +130,9 @@ export async function retryFill(
       await page.type(selector, value, { delay: 30 }); // human typing speed
       return;
     } catch (err) {
-      if (attempt >= maxRetries) {throw err;}
+      if (attempt >= maxRetries) {
+        throw err;
+      }
       await new Promise((r) => setTimeout(r, delayMs * attempt));
     }
   }
@@ -191,7 +195,9 @@ export async function waitForNavigation(
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     const current = page.url();
-    if (current !== fromUrl) {return current;}
+    if (current !== fromUrl) {
+      return current;
+    }
     await new Promise((r) => setTimeout(r, 200));
   }
   throw new Error(`waitForNavigation: URL did not change from "${fromUrl}" within ${timeoutMs}ms`);
@@ -213,7 +219,7 @@ export async function smartScreenshot(
   opts: { maxRetries?: number; delayMs?: number } = {},
 ): Promise<Buffer> {
   const maxRetries = opts.maxRetries ?? 3;
-  const delayMs = opts.delayMs ?? 600;
+  const delayMs = opts.delayMs ?? 250;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     await waitForNetworkIdle(page, 3000);
@@ -254,7 +260,9 @@ export async function saveCookies(page: Page, filePath: string): Promise<void> {
  * await page.goto('https://github.com'); // will be logged in
  */
 export async function loadCookies(page: Page, filePath: string): Promise<boolean> {
-  if (!existsSync(filePath)) {return false;}
+  if (!existsSync(filePath)) {
+    return false;
+  }
   try {
     const cookies = JSON.parse(readFileSync(filePath, "utf-8")) as Parameters<
       ReturnType<Page["context"]>["addCookies"]

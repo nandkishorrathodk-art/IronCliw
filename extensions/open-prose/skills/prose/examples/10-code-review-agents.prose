@@ -30,4 +30,3 @@ session: security-reviewer
 session: security-reviewer
   model: sonnet
   prompt: "Create a consolidated report of all review findings with priority rankings"
-

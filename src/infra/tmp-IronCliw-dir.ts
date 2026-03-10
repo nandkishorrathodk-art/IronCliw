@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-export const POSIX_IronCliw_TMP_DIR = "/tmp/IronCliw";
+export const POSIX_IRONCLIW_TMP_DIR = "/tmp/ironcliw";
 const TMP_DIR_ACCESS_MODE = fs.constants.W_OK | fs.constants.X_OK;
 
 type ResolvePreferredIronCliwTmpDirOptions = {
@@ -67,7 +67,7 @@ export function resolvePreferredIronCliwTmpDir(
 
   const fallback = (): string => {
     const base = tmpdir();
-    const suffix = uid === undefined ? "IronCliw" : `IronCliw-${uid}`;
+    const suffix = uid === undefined ? "ironcliw" : `ironcliw-${uid}`;
     return path.join(base, suffix);
   };
 
@@ -109,7 +109,7 @@ export function resolvePreferredIronCliwTmpDir(
         return false;
       }
       chmodSync(candidatePath, 0o700);
-      warn(`[IronCliw] tightened permissions on temp dir: ${candidatePath}`);
+      warn(`[ironcliw] tightened permissions on temp dir: ${candidatePath}`);
       return resolveDirState(candidatePath) === "available";
     } catch {
       return false;
@@ -140,13 +140,13 @@ export function resolvePreferredIronCliwTmpDir(
     return fallbackPath;
   };
 
-  const existingPreferredState = resolveDirState(POSIX_IronCliw_TMP_DIR);
+  const existingPreferredState = resolveDirState(POSIX_IRONCLIW_TMP_DIR);
   if (existingPreferredState === "available") {
-    return POSIX_IronCliw_TMP_DIR;
+    return POSIX_IRONCLIW_TMP_DIR;
   }
   if (existingPreferredState === "invalid") {
-    if (tryRepairWritableBits(POSIX_IronCliw_TMP_DIR)) {
-      return POSIX_IronCliw_TMP_DIR;
+    if (tryRepairWritableBits(POSIX_IRONCLIW_TMP_DIR)) {
+      return POSIX_IRONCLIW_TMP_DIR;
     }
     return ensureTrustedFallbackDir();
   }
@@ -154,15 +154,15 @@ export function resolvePreferredIronCliwTmpDir(
   try {
     accessSync("/tmp", TMP_DIR_ACCESS_MODE);
     // Create with a safe default; subsequent callers expect it exists.
-    mkdirSync(POSIX_IronCliw_TMP_DIR, { recursive: true, mode: 0o700 });
-    chmodSync(POSIX_IronCliw_TMP_DIR, 0o700);
+    mkdirSync(POSIX_IRONCLIW_TMP_DIR, { recursive: true, mode: 0o700 });
+    chmodSync(POSIX_IRONCLIW_TMP_DIR, 0o700);
     if (
-      resolveDirState(POSIX_IronCliw_TMP_DIR) !== "available" &&
-      !tryRepairWritableBits(POSIX_IronCliw_TMP_DIR)
+      resolveDirState(POSIX_IRONCLIW_TMP_DIR) !== "available" &&
+      !tryRepairWritableBits(POSIX_IRONCLIW_TMP_DIR)
     ) {
       return ensureTrustedFallbackDir();
     }
-    return POSIX_IronCliw_TMP_DIR;
+    return POSIX_IRONCLIW_TMP_DIR;
   } catch {
     return ensureTrustedFallbackDir();
   }

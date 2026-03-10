@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { IronCliwConfig } from "../config/config.js";
@@ -13,6 +15,8 @@ import {
   resolveAgentModelPrimary,
   resolveRunModelFallbacksOverride,
   resolveAgentWorkspaceDir,
+  resolveAgentIdByWorkspacePath,
+  resolveAgentIdsByWorkspacePath,
 } from "./agent-scope.js";
 
 afterEach(() => {
@@ -29,7 +33,7 @@ describe("resolveAgentConfig", () => {
   it("should return undefined when agent id does not exist", () => {
     const cfg: IronCliwConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/IronCliw" }],
+        list: [{ id: "main", workspace: "~/ironcliw" }],
       },
     };
     const result = resolveAgentConfig(cfg, "nonexistent");
@@ -43,8 +47,8 @@ describe("resolveAgentConfig", () => {
           {
             id: "main",
             name: "Main Agent",
-            workspace: "~/IronCliw",
-            agentDir: "~/.IronCliw/agents/main",
+            workspace: "~/ironcliw",
+            agentDir: "~/.ironcliw/agents/main",
             model: "anthropic/claude-opus-4",
           },
         ],
@@ -53,8 +57,8 @@ describe("resolveAgentConfig", () => {
     const result = resolveAgentConfig(cfg, "main");
     expect(result).toEqual({
       name: "Main Agent",
-      workspace: "~/IronCliw",
-      agentDir: "~/.IronCliw/agents/main",
+      workspace: "~/ironcliw",
+      agentDir: "~/.ironcliw/agents/main",
       model: "anthropic/claude-opus-4",
       identity: undefined,
       groupChat: undefined,
@@ -322,7 +326,7 @@ describe("resolveAgentConfig", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -350,7 +354,7 @@ describe("resolveAgentConfig", () => {
         list: [
           {
             id: "restricted",
-            workspace: "~/IronCliw-restricted",
+            workspace: "~/ironcliw-restricted",
             tools: {
               allow: ["read"],
               deny: ["exec", "write", "edit"],
@@ -380,7 +384,7 @@ describe("resolveAgentConfig", () => {
         list: [
           {
             id: "family",
-            workspace: "~/IronCliw-family",
+            workspace: "~/ironcliw-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -401,30 +405,119 @@ describe("resolveAgentConfig", () => {
   it("should normalize agent id", () => {
     const cfg: IronCliwConfig = {
       agents: {
-        list: [{ id: "main", workspace: "~/IronCliw" }],
+        list: [{ id: "main", workspace: "~/ironcliw" }],
       },
     };
     // Should normalize to "main" (default)
     const result = resolveAgentConfig(cfg, "");
     expect(result).toBeDefined();
-    expect(result?.workspace).toBe("~/IronCliw");
+    expect(result?.workspace).toBe("~/ironcliw");
   });
 
-  it("uses IronCliw_HOME for default agent workspace", () => {
-    const home = path.join(path.sep, "srv", "IronCliw-home");
-    vi.stubEnv("IronCliw_HOME", home);
+  it("uses IRONCLIW_HOME for default agent workspace", () => {
+    const home = path.join(path.sep, "srv", "ironcliw-home");
+    vi.stubEnv("IRONCLIW_HOME", home);
 
     const workspace = resolveAgentWorkspaceDir({} as IronCliwConfig, "main");
-    expect(workspace).toBe(path.join(path.resolve(home), ".IronCliw", "workspace"));
+    expect(workspace).toBe(path.join(path.resolve(home), ".ironcliw", "workspace"));
   });
 
-  it("uses IronCliw_HOME for default agentDir", () => {
-    const home = path.join(path.sep, "srv", "IronCliw-home");
-    vi.stubEnv("IronCliw_HOME", home);
-    // Clear state dir so it falls back to IronCliw_HOME
-    vi.stubEnv("IronCliw_STATE_DIR", "");
+  it("uses IRONCLIW_HOME for default agentDir", () => {
+    const home = path.join(path.sep, "srv", "ironcliw-home");
+    vi.stubEnv("IRONCLIW_HOME", home);
+    // Clear state dir so it falls back to IRONCLIW_HOME
+    vi.stubEnv("IRONCLIW_STATE_DIR", "");
 
     const agentDir = resolveAgentDir({} as IronCliwConfig, "main");
-    expect(agentDir).toBe(path.join(path.resolve(home), ".IronCliw", "agents", "main", "agent"));
+    expect(agentDir).toBe(path.join(path.resolve(home), ".ironcliw", "agents", "main", "agent"));
+  });
+});
+
+describe("resolveAgentIdByWorkspacePath", () => {
+  it("returns the most specific workspace match for a directory", () => {
+    const workspaceRoot = `/tmp/ironcliw-agent-scope-${Date.now()}-root`;
+    const opsWorkspace = `${workspaceRoot}/projects/ops`;
+    const cfg: IronCliwConfig = {
+      agents: {
+        list: [
+          { id: "main", workspace: workspaceRoot },
+          { id: "ops", workspace: opsWorkspace },
+        ],
+      },
+    };
+
+    expect(resolveAgentIdByWorkspacePath(cfg, `${opsWorkspace}/src`)).toBe("ops");
+  });
+
+  it("returns undefined when directory has no matching workspace", () => {
+    const workspaceRoot = `/tmp/ironcliw-agent-scope-${Date.now()}-root`;
+    const cfg: IronCliwConfig = {
+      agents: {
+        list: [
+          { id: "main", workspace: workspaceRoot },
+          { id: "ops", workspace: `${workspaceRoot}-ops` },
+        ],
+      },
+    };
+
+    expect(
+      resolveAgentIdByWorkspacePath(cfg, `/tmp/ironcliw-agent-scope-${Date.now()}-unrelated`),
+    ).toBeUndefined();
+  });
+
+  it("matches workspace paths through symlink aliases", () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-agent-scope-"));
+    const realWorkspaceRoot = path.join(tempRoot, "real-root");
+    const realOpsWorkspace = path.join(realWorkspaceRoot, "projects", "ops");
+    const aliasWorkspaceRoot = path.join(tempRoot, "alias-root");
+    try {
+      fs.mkdirSync(path.join(realOpsWorkspace, "src"), { recursive: true });
+      fs.symlinkSync(
+        realWorkspaceRoot,
+        aliasWorkspaceRoot,
+        process.platform === "win32" ? "junction" : "dir",
+      );
+
+      const cfg: IronCliwConfig = {
+        agents: {
+          list: [
+            { id: "main", workspace: realWorkspaceRoot },
+            { id: "ops", workspace: realOpsWorkspace },
+          ],
+        },
+      };
+
+      expect(
+        resolveAgentIdByWorkspacePath(cfg, path.join(aliasWorkspaceRoot, "projects", "ops")),
+      ).toBe("ops");
+      expect(
+        resolveAgentIdByWorkspacePath(cfg, path.join(aliasWorkspaceRoot, "projects", "ops", "src")),
+      ).toBe("ops");
+    } finally {
+      fs.rmSync(tempRoot, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("resolveAgentIdsByWorkspacePath", () => {
+  it("returns matching workspaces ordered by specificity", () => {
+    const workspaceRoot = `/tmp/ironcliw-agent-scope-${Date.now()}-root`;
+    const opsWorkspace = `${workspaceRoot}/projects/ops`;
+    const opsDevWorkspace = `${opsWorkspace}/dev`;
+    const cfg: IronCliwConfig = {
+      agents: {
+        list: [
+          { id: "main", workspace: workspaceRoot },
+          { id: "ops", workspace: opsWorkspace },
+          { id: "ops-dev", workspace: opsDevWorkspace },
+        ],
+      },
+    };
+
+    expect(resolveAgentIdsByWorkspacePath(cfg, `${opsDevWorkspace}/pkg`)).toEqual([
+      "ops-dev",
+      "ops",
+      "main",
+    ]);
   });
 });

@@ -77,7 +77,7 @@ async function openVerifiedLocalFile(
   },
 ): Promise<SafeOpenResult> {
   // Reject directories before opening so we never surface EISDIR to callers (e.g. tool
-  // results that get sent to messaging channels). See IronCliw/IronCliw#31186.
+  // results that get sent to messaging channels). See ironcliw/ironcliw#31186.
   try {
     const preStat = await fs.lstat(filePath);
     if (preStat.isDirectory()) {
@@ -554,32 +554,67 @@ export async function copyFileWithinRoot(params: {
 
   let target: SafeWritableOpenResult | null = null;
   let sourceClosedByStream = false;
-  let targetClosedByStream = false;
+  let targetClosedByUs = false;
+  let tempHandle: FileHandle | null = null;
+  let tempPath: string | null = null;
+  let tempClosedByStream = false;
   try {
     target = await openWritableFileWithinRoot({
       rootDir: params.rootDir,
       relativePath: params.relativePath,
       mkdir: params.mkdir,
+      truncateExisting: false,
     });
+    const destinationPath = target.openedRealPath;
+    const targetMode = target.openedStat.mode & 0o777;
+    await target.handle.close().catch(() => {});
+    targetClosedByUs = true;
+
+    tempPath = buildAtomicWriteTempPath(destinationPath);
+    tempHandle = await fs.open(tempPath, OPEN_WRITE_CREATE_FLAGS, targetMode || 0o600);
     const sourceStream = source.handle.createReadStream();
-    const targetStream = target.handle.createWriteStream();
+    const targetStream = tempHandle.createWriteStream();
     sourceStream.once("close", () => {
       sourceClosedByStream = true;
     });
     targetStream.once("close", () => {
-      targetClosedByStream = true;
+      tempClosedByStream = true;
     });
     await pipeline(sourceStream, targetStream);
+    const writtenStat = await fs.stat(tempPath);
+    if (!tempClosedByStream) {
+      await tempHandle.close().catch(() => {});
+      tempClosedByStream = true;
+    }
+    tempHandle = null;
+    await fs.rename(tempPath, destinationPath);
+    tempPath = null;
+    try {
+      await verifyAtomicWriteResult({
+        rootDir: params.rootDir,
+        targetPath: destinationPath,
+        expectedStat: writtenStat,
+      });
+    } catch (err) {
+      emitWriteBoundaryWarning(`post-copy verification failed: ${String(err)}`);
+      throw err;
+    }
   } catch (err) {
     if (target?.createdForWrite) {
       await fs.rm(target.openedRealPath, { force: true }).catch(() => {});
     }
     throw err;
   } finally {
+    if (tempPath) {
+      await fs.rm(tempPath, { force: true }).catch(() => {});
+    }
     if (!sourceClosedByStream) {
       await source.handle.close().catch(() => {});
     }
-    if (target && !targetClosedByStream) {
+    if (tempHandle && !tempClosedByStream) {
+      await tempHandle.close().catch(() => {});
+    }
+    if (target && !targetClosedByUs) {
       await target.handle.close().catch(() => {});
     }
   }

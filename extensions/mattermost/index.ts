@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/mattermost";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/mattermost";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/mattermost";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/mattermost";
 import { mattermostPlugin } from "./src/channel.js";
 import { getSlashCommandState, registerSlashCommandRoute } from "./src/mattermost/slash-state.js";
 import { setMattermostRuntime } from "./src/runtime.js";

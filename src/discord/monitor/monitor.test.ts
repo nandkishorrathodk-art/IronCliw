@@ -340,7 +340,7 @@ describe("discord component interactions", () => {
     deliverDiscordReplyMock.mockClear();
     recordInboundSessionMock.mockClear().mockResolvedValue(undefined);
     readSessionUpdatedAtMock.mockClear().mockReturnValue(undefined);
-    resolveStorePathMock.mockClear().mockReturnValue("/tmp/IronCliw-sessions-test.json");
+    resolveStorePathMock.mockClear().mockReturnValue("/tmp/ironcliw-sessions-test.json");
   });
 
   it("routes button clicks with reply references", async () => {
@@ -743,14 +743,14 @@ describe("resolveDiscordPresenceUpdate", () => {
     const presence = resolveDiscordPresenceUpdate({
       activity: "Live",
       activityType: 1,
-      activityUrl: "https://twitch.tv/IronCliw",
+      activityUrl: "https://twitch.tv/ironcliw",
     });
     expect(presence).not.toBeNull();
     expect(presence?.activities).toHaveLength(1);
     expect(presence?.activities[0]).toMatchObject({
       type: 1,
       name: "Live",
-      url: "https://twitch.tv/IronCliw",
+      url: "https://twitch.tv/ironcliw",
     });
   });
 });

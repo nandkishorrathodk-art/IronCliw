@@ -79,7 +79,7 @@ AI 触发工作流；Lobster 执行步骤。审批关卡使副作用显式且可
 
 ```bash
 gog.gmail.search --query 'newer_than:1d' \
-  | IronCliw.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
+  | ironcliw.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
 ```
 
 ## 纯 JSON 的 LLM 步骤（llm-task）
@@ -111,7 +111,7 @@ gog.gmail.search --query 'newer_than:1d' \
 在管道中使用它：
 
 ```lobster
-IronCliw.invoke --tool llm-task --action json --args-json '{
+ironcliw.invoke --tool llm-task --action json --args-json '{
   "prompt": "Given the input email, return intent and draft.",
   "input": { "subject": "Hello", "body": "Can you help?" },
   "schema": {
@@ -160,7 +160,7 @@ steps:
 
 ## 安装 Lobster
 
-在运行 IronCliw Gateway 网关的**同一主机**上安装 Lobster CLI（参见 [Lobster 仓库](https://github.com/IronCliw/lobster)），并确保 `lobster` 在 `PATH` 中。
+在运行 IronCliw Gateway 网关的**同一主机**上安装 Lobster CLI（参见 [Lobster 仓库](https://github.com/ironcliw/lobster)），并确保 `lobster` 在 `PATH` 中。
 如果你想使用自定义二进制位置，在工具调用中传递**绝对**路径 `lobsterPath`。
 
 ## 启用工具
@@ -206,12 +206,12 @@ Lobster 是一个**可选**的插件工具（默认未启用）。
 
 ```
 用户："检查我的邮件并起草回复"
-→ IronCliw 调用 gmail.list
+→ ironcliw 调用 gmail.list
 → LLM 总结
 → 用户："给 #2 和 #5 起草回复"
 → LLM 起草
 → 用户："发送 #2"
-→ IronCliw 调用 gmail.send
+→ ironcliw 调用 gmail.send
 （每天重复，不记得已分类的内容）
 ```
 

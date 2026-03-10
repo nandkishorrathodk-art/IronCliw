@@ -5,8 +5,8 @@
  * resolves agent routes, and handles replies.
  */
 
-import type { ReplyPayload, IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
-import { createReplyPrefixOptions } from "IronCliw/plugin-sdk/twitch";
+import type { ReplyPayload, IronCliwConfig } from "ironcliw/plugin-sdk/twitch";
+import { createReplyPrefixOptions } from "ironcliw/plugin-sdk/twitch";
 import { checkTwitchAccessControl } from "./access-control.js";
 import { getOrCreateClientManager } from "./client-manager-registry.js";
 import { getTwitchRuntime } from "./runtime.js";

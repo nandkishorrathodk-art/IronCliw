@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/nostr";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/nostr";
 
-let runtime: PluginRuntime | null = null;
-
-export function setNostrRuntime(next: PluginRuntime): void {
-  runtime = next;
-}
-
-export function getNostrRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Nostr runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setNostrRuntime, getRuntime: getNostrRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Nostr runtime not initialized");
+export { getNostrRuntime, setNostrRuntime };

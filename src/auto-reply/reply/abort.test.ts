@@ -83,7 +83,7 @@ describe("abort detection", () => {
     sessionIdsByKey?: Record<string, string>;
     nowMs?: number;
   }) {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-abort-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-abort-"));
     const storePath = path.join(root, "sessions.json");
     const cfg = {
       session: { store: storePath },
@@ -168,7 +168,7 @@ describe("abort detection", () => {
   });
 
   it("triggerBodyNormalized extracts /stop from RawBody for abort detection", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-abort-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-abort-"));
     const storePath = path.join(root, "sessions.json");
     const cfg = { session: { store: storePath } } as IronCliwConfig;
 
@@ -197,8 +197,8 @@ describe("abort detection", () => {
       "wait",
       "exit",
       "interrupt",
-      "stop IronCliw",
-      "IronCliw stop",
+      "stop ironcliw",
+      "ironcliw stop",
       "stop action",
       "stop current action",
       "stop run",
@@ -212,8 +212,8 @@ describe("abort detection", () => {
       "do not do that",
       "please stop",
       "stop please",
-      "STOP IronCliw",
-      "stop IronCliw!!!",
+      "STOP IRONCLIW",
+      "stop ironcliw!!!",
       "stop don’t do anything",
       "detente",
       "detén",
@@ -254,15 +254,15 @@ describe("abort detection", () => {
     expect(isAbortRequestText("Stop")).toBe(true);
     expect(isAbortRequestText("STOP")).toBe(true);
     expect(isAbortRequestText("stop action")).toBe(true);
-    expect(isAbortRequestText("stop IronCliw!!!")).toBe(true);
+    expect(isAbortRequestText("stop ironcliw!!!")).toBe(true);
     expect(isAbortRequestText("やめて")).toBe(true);
     expect(isAbortRequestText("остановись")).toBe(true);
     expect(isAbortRequestText("halt")).toBe(true);
     expect(isAbortRequestText("stopp")).toBe(true);
     expect(isAbortRequestText("pare")).toBe(true);
     expect(isAbortRequestText(" توقف ")).toBe(true);
-    expect(isAbortRequestText("/stop@IronCliw_bot", { botUsername: "IronCliw_bot" })).toBe(true);
-    expect(isAbortRequestText("/Stop@IronCliw_bot", { botUsername: "IronCliw_bot" })).toBe(true);
+    expect(isAbortRequestText("/stop@ironcliw_bot", { botUsername: "ironcliw_bot" })).toBe(true);
+    expect(isAbortRequestText("/Stop@ironcliw_bot", { botUsername: "ironcliw_bot" })).toBe(true);
 
     expect(isAbortRequestText("/status")).toBe(false);
     expect(isAbortRequestText("do not do that")).toBe(true);
@@ -354,6 +354,20 @@ describe("abort detection", () => {
     });
     expect(resolveSessionEntryForKey(store, "session-2")).toEqual({});
     expect(resolveSessionEntryForKey(undefined, "session-1")).toEqual({});
+  });
+
+  it("resolves Telegram forum topic session when lookup key has different casing than store", () => {
+    // Store normalizes keys to lowercase; caller may pass mixed-case. /stop in topic must find entry.
+    const storeKey = "agent:main:telegram:group:-1001234567890:topic:99";
+    const lookupKey = "Agent:Main:Telegram:Group:-1001234567890:Topic:99";
+    const store = {
+      [storeKey]: { sessionId: "pi-topic-99", updatedAt: 0 },
+    } as Record<string, { sessionId: string; updatedAt: number }>;
+    // Direct lookup fails (store uses lowercase keys); normalization fallback must succeed.
+    expect(store[lookupKey]).toBeUndefined();
+    const result = resolveSessionEntryForKey(store, lookupKey);
+    expect(result.entry?.sessionId).toBe("pi-topic-99");
+    expect(result.key).toBe(storeKey);
   });
 
   it("fast-aborts even when text commands are disabled", async () => {

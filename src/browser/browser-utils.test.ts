@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { appendCdpPath, getHeadersWithAuth } from "./cdp.helpers.js";
+import {
+  appendCdpPath,
+  getHeadersWithAuth,
+  normalizeCdpHttpBaseForJsonEndpoints,
+} from "./cdp.helpers.js";
 import { __test } from "./client-fetch.js";
 import { resolveBrowserConfig, resolveProfile } from "./config.js";
 import { shouldRejectBrowserMutation } from "./csrf.js";
@@ -155,6 +159,30 @@ describe("cdp.helpers", () => {
     expect(url).toBe("https://example.com/chrome/json/list?token=abc");
   });
 
+  it("normalizes direct WebSocket CDP URLs to an HTTP base for /json endpoints", () => {
+    const url = normalizeCdpHttpBaseForJsonEndpoints(
+      "wss://connect.example.com/devtools/browser/ABC?token=abc",
+    );
+    expect(url).toBe("https://connect.example.com/?token=abc");
+  });
+
+  it("preserves auth and query params when normalizing secure loopback WebSocket CDP URLs", () => {
+    const url = normalizeCdpHttpBaseForJsonEndpoints(
+      "wss://user:pass@127.0.0.1:9222/devtools/browser/ABC?token=abc",
+    );
+    expect(url).toBe("https://user:pass@127.0.0.1:9222/?token=abc");
+  });
+
+  it("strips a trailing /cdp suffix when normalizing HTTP bases", () => {
+    const url = normalizeCdpHttpBaseForJsonEndpoints("ws://127.0.0.1:9222/cdp?token=abc");
+    expect(url).toBe("http://127.0.0.1:9222/?token=abc");
+  });
+
+  it("preserves base prefixes when stripping a trailing /cdp suffix", () => {
+    const url = normalizeCdpHttpBaseForJsonEndpoints("ws://127.0.0.1:9222/browser/cdp?token=abc");
+    expect(url).toBe("http://127.0.0.1:9222/browser?token=abc");
+  });
+
   it("adds basic auth headers when credentials are present", () => {
     const headers = getHeadersWithAuth("https://user:pass@example.com");
     expect(headers.Authorization).toBe(`Basic ${Buffer.from("user:pass").toString("base64")}`);
@@ -169,25 +197,25 @@ describe("cdp.helpers", () => {
 
   it("does not add relay header for unknown loopback ports", () => {
     const headers = getHeadersWithAuth("http://127.0.0.1:19444/json/version");
-    expect(headers["x-IronCliw-relay-token"]).toBeUndefined();
+    expect(headers["x-ironcliw-relay-token"]).toBeUndefined();
   });
 
   it("adds relay header for known relay ports", async () => {
     const port = await getFreePort();
     const cdpUrl = `http://127.0.0.1:${port}`;
-    const prev = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "test-gateway-token";
+    const prev = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "test-gateway-token";
     try {
       await ensureChromeExtensionRelayServer({ cdpUrl });
       const headers = getHeadersWithAuth(`${cdpUrl}/json/version`);
-      expect(headers["x-IronCliw-relay-token"]).toBeTruthy();
-      expect(headers["x-IronCliw-relay-token"]).not.toBe("test-gateway-token");
+      expect(headers["x-ironcliw-relay-token"]).toBeTruthy();
+      expect(headers["x-ironcliw-relay-token"]).not.toBe("test-gateway-token");
     } finally {
       await stopChromeExtensionRelayServer({ cdpUrl }).catch(() => {});
       if (prev === undefined) {
-        delete process.env.IronCliw_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.IronCliw_GATEWAY_TOKEN = prev;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prev;
       }
     }
   });
@@ -213,14 +241,14 @@ describe("fetchBrowserJson loopback auth (bridge auth registry)", () => {
 describe("browser server-context listKnownProfileNames", () => {
   it("includes configured and runtime-only profile names", () => {
     const resolved = resolveBrowserConfig({
-      defaultProfile: "IronCliw",
+      defaultProfile: "ironcliw",
       profiles: {
-        IronCliw: { cdpPort: 18800, color: "#FF4500" },
+        ironcliw: { cdpPort: 18800, color: "#FF4500" },
       },
     });
-    const IronCliw = resolveProfile(resolved, "IronCliw");
-    if (!IronCliw) {
-      throw new Error("expected IronCliw profile");
+    const ironcliw = resolveProfile(resolved, "ironcliw");
+    if (!ironcliw) {
+      throw new Error("expected ironcliw profile");
     }
 
     const state: BrowserServerState = {
@@ -231,7 +259,7 @@ describe("browser server-context listKnownProfileNames", () => {
         [
           "stale-removed",
           {
-            profile: { ...IronCliw, name: "stale-removed" },
+            profile: { ...ironcliw, name: "stale-removed" },
             running: null,
           },
         ],
@@ -240,7 +268,7 @@ describe("browser server-context listKnownProfileNames", () => {
 
     expect(listKnownProfileNames(state).toSorted()).toEqual([
       "chrome",
-      "IronCliw",
+      "ironcliw",
       "stale-removed",
     ]);
   });

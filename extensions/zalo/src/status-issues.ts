@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "IronCliw/plugin-sdk/zalo";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "ironcliw/plugin-sdk/zalo";
 
 type ZaloAccountStatus = {
   accountId?: unknown;

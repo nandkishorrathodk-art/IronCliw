@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema } from "IronCliw/plugin-sdk/twitch";
+import { MarkdownConfigSchema } from "ironcliw/plugin-sdk/twitch";
 import { z } from "zod";
 
 /**

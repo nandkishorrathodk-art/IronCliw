@@ -1,4 +1,4 @@
-import type { IronCliwConfig, PluginRuntime } from "IronCliw/plugin-sdk/line";
+import type { IronCliwConfig, PluginRuntime } from "ironcliw/plugin-sdk/line";
 import { describe, expect, it, vi } from "vitest";
 import { linePlugin } from "./channel.js";
 import { setLineRuntime } from "./runtime.js";

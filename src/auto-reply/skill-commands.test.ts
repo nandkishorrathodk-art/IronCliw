@@ -69,10 +69,14 @@ vi.mock("../agents/skills.js", () => {
 
 let listSkillCommandsForAgents: typeof import("./skill-commands.js").listSkillCommandsForAgents;
 let resolveSkillCommandInvocation: typeof import("./skill-commands.js").resolveSkillCommandInvocation;
+let skillCommandsTesting: typeof import("./skill-commands.js").__testing;
 
 beforeAll(async () => {
-  ({ listSkillCommandsForAgents, resolveSkillCommandInvocation } =
-    await import("./skill-commands.js"));
+  ({
+    listSkillCommandsForAgents,
+    resolveSkillCommandInvocation,
+    __testing: skillCommandsTesting,
+  } = await import("./skill-commands.js"));
 });
 
 describe("resolveSkillCommandInvocation", () => {
@@ -125,8 +129,8 @@ describe("listSkillCommandsForAgents", () => {
     );
   });
 
-  it("lists all agents when agentIds is omitted", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-");
+  it("deduplicates by skillName across agents, keeping the first registration", async () => {
+    const baseDir = await makeTempDir("ironcliw-skills-");
     const mainWorkspace = path.join(baseDir, "main");
     const researchWorkspace = path.join(baseDir, "research");
     await fs.mkdir(mainWorkspace, { recursive: true });
@@ -144,12 +148,12 @@ describe("listSkillCommandsForAgents", () => {
     });
     const names = commands.map((entry) => entry.name);
     expect(names).toContain("demo_skill");
-    expect(names).toContain("demo_skill_2");
+    expect(names).not.toContain("demo_skill_2");
     expect(names).toContain("extra_skill");
   });
 
   it("scopes to specific agents when agentIds is provided", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-filter-");
+    const baseDir = await makeTempDir("ironcliw-skills-filter-");
     const researchWorkspace = path.join(baseDir, "research");
     await fs.mkdir(researchWorkspace, { recursive: true });
 
@@ -167,7 +171,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("prevents cross-agent skill leakage when each agent has an allowlist", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-leak-");
+    const baseDir = await makeTempDir("ironcliw-skills-leak-");
     const mainWorkspace = path.join(baseDir, "main");
     const researchWorkspace = path.join(baseDir, "research");
     await fs.mkdir(mainWorkspace, { recursive: true });
@@ -190,7 +194,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("merges allowlists for agents that share one workspace", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-shared-");
+    const baseDir = await makeTempDir("ironcliw-skills-shared-");
     const sharedWorkspace = path.join(baseDir, "research");
     await fs.mkdir(sharedWorkspace, { recursive: true });
 
@@ -211,7 +215,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("deduplicates overlapping allowlists for shared workspace", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-overlap-");
+    const baseDir = await makeTempDir("ironcliw-skills-overlap-");
     const sharedWorkspace = path.join(baseDir, "research");
     await fs.mkdir(sharedWorkspace, { recursive: true });
 
@@ -233,7 +237,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("keeps workspace unrestricted when one co-tenant agent has no skills filter", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-unfiltered-");
+    const baseDir = await makeTempDir("ironcliw-skills-unfiltered-");
     const sharedWorkspace = path.join(baseDir, "research");
     await fs.mkdir(sharedWorkspace, { recursive: true });
 
@@ -255,7 +259,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("merges empty allowlist with non-empty allowlist for shared workspace", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-empty-");
+    const baseDir = await makeTempDir("ironcliw-skills-empty-");
     const sharedWorkspace = path.join(baseDir, "research");
     await fs.mkdir(sharedWorkspace, { recursive: true });
 
@@ -275,7 +279,7 @@ describe("listSkillCommandsForAgents", () => {
   });
 
   it("skips agents with missing workspaces gracefully", async () => {
-    const baseDir = await makeTempDir("IronCliw-skills-missing-");
+    const baseDir = await makeTempDir("ironcliw-skills-missing-");
     const validWorkspace = path.join(baseDir, "research");
     const missingWorkspace = path.join(baseDir, "nonexistent");
     await fs.mkdir(validWorkspace, { recursive: true });
@@ -295,5 +299,40 @@ describe("listSkillCommandsForAgents", () => {
     // The valid agent's skills should still be listed despite the broken one.
     expect(commands.length).toBeGreaterThan(0);
     expect(commands.map((entry) => entry.skillName)).toContain("demo-skill");
+  });
+});
+
+describe("dedupeBySkillName", () => {
+  it("keeps the first entry when multiple commands share a skillName", () => {
+    const input = [
+      { name: "github", skillName: "github", description: "GitHub" },
+      { name: "github_2", skillName: "github", description: "GitHub" },
+      { name: "weather", skillName: "weather", description: "Weather" },
+      { name: "weather_2", skillName: "weather", description: "Weather" },
+    ];
+    const output = skillCommandsTesting.dedupeBySkillName(input);
+    expect(output.map((e) => e.name)).toEqual(["github", "weather"]);
+  });
+
+  it("matches skillName case-insensitively", () => {
+    const input = [
+      { name: "ClawHub", skillName: "ClawHub", description: "ClawHub" },
+      { name: "clawhub_2", skillName: "clawhub", description: "ClawHub" },
+    ];
+    const output = skillCommandsTesting.dedupeBySkillName(input);
+    expect(output).toHaveLength(1);
+    expect(output[0]?.name).toBe("ClawHub");
+  });
+
+  it("passes through commands with an empty skillName", () => {
+    const input = [
+      { name: "a", skillName: "", description: "A" },
+      { name: "b", skillName: "", description: "B" },
+    ];
+    expect(skillCommandsTesting.dedupeBySkillName(input)).toHaveLength(2);
+  });
+
+  it("returns an empty array for empty input", () => {
+    expect(skillCommandsTesting.dedupeBySkillName([])).toEqual([]);
   });
 });

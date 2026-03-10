@@ -131,7 +131,7 @@ export function formatSandboxToolPolicyBlockedMessage(params: {
     lines.push(`- Use main session key (direct): ${runtime.mainSessionKey}`);
   }
   lines.push(
-    `- See: ${formatCliCommand(`IronCliw sandbox explain --session ${runtime.sessionKey}`)}`,
+    `- See: ${formatCliCommand(`ironcliw sandbox explain --session ${runtime.sessionKey}`)}`,
   );
 
   return lines.join("\n");

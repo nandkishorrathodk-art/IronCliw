@@ -52,7 +52,7 @@ vi.mock("../plugins/tools.js", () => ({
 
 // Perf: the real tool factory instantiates many tools per request; for these HTTP
 // routing/policy tests we only need a small set of tool names.
-vi.mock("../agents/IronCliw-tools.js", () => {
+vi.mock("../agents/ironcliw-tools.js", () => {
   const toolInputError = (message: string) => {
     const err = new Error(message);
     err.name = "ToolInputError";
@@ -201,8 +201,8 @@ afterAll(async () => {
 });
 
 beforeEach(() => {
-  delete process.env.IronCliw_GATEWAY_TOKEN;
-  delete process.env.IronCliw_GATEWAY_PASSWORD;
+  delete process.env.IRONCLIW_GATEWAY_TOKEN;
+  delete process.env.IRONCLIW_GATEWAY_PASSWORD;
   pluginHttpHandlers = [];
   cfg = {};
   lastCreateIronCliwToolsContext = undefined;
@@ -335,6 +335,7 @@ describe("POST /tools/invoke", () => {
     const body = await res.json();
     expect(body.ok).toBe(true);
     expect(body).toHaveProperty("result");
+    expect(lastCreateIronCliwToolsContext?.allowMediaInvokeCommands).toBe(true);
   });
 
   it("supports tools.alsoAllow in profile and implicit modes", async () => {
@@ -443,8 +444,8 @@ describe("POST /tools/invoke", () => {
       port: sharedPort,
       headers: {
         ...gatewayAuthHeaders(),
-        "x-IronCliw-message-to": "channel:24514",
-        "x-IronCliw-thread-id": "thread-24514",
+        "x-ironcliw-message-to": "channel:24514",
+        "x-ironcliw-thread-id": "thread-24514",
       },
       tool: "sessions_spawn",
       sessionKey: "main",

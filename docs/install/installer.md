@@ -1,7 +1,7 @@
 ---
 summary: "How the installer scripts work (install.sh, install-cli.sh, install.ps1), flags, and automation"
 read_when:
-  - You want to understand `IronCliw.ai/install.sh`
+  - You want to understand `ironcliw.ai/install.sh`
   - You want to automate installs (CI / headless)
   - You want to install from a GitHub checkout
 title: "Installer Internals"
@@ -9,12 +9,12 @@ title: "Installer Internals"
 
 # Installer internals
 
-IronCliw ships three installer scripts, served from `IronCliw.ai`.
+IronCliw ships three installer scripts, served from `ironcliw.ai`.
 
 | Script                             | Platform             | What it does                                                                                 |
 | ---------------------------------- | -------------------- | -------------------------------------------------------------------------------------------- |
 | [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs IronCliw via npm (default) or git, and can run onboarding. |
-| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + IronCliw into a local prefix (`~/.IronCliw`). No root required.              |
+| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + IronCliw into a local prefix (`~/.ironcliw`). No root required.              |
 | [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs IronCliw via npm (default) or git, and can run onboarding. |
 
 ## Quick commands
@@ -22,38 +22,38 @@ IronCliw ships three installer scripts, served from `IronCliw.ai`.
 <Tabs>
   <Tab title="install.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install-cli.sh">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash
     ```
 
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash -s -- --help
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash -s -- --help
     ```
 
   </Tab>
   <Tab title="install.ps1">
     ```powershell
-    iwr -useb https://IronCliw.ai/install.ps1 | iex
+    iwr -useb https://ironcliw.ai/install.ps1 | iex
     ```
 
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -Tag beta -NoOnboard -DryRun
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -Tag beta -NoOnboard -DryRun
     ```
 
   </Tab>
 </Tabs>
 
 <Note>
-If install succeeds but `IronCliw` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
+If install succeeds but `ironcliw` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
 </Note>
 
 ---
@@ -78,10 +78,10 @@ Recommended for most interactive installs on macOS/Linux/WSL.
   </Step>
   <Step title="Install IronCliw">
     - `npm` method (default): global npm install
-    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/IronCliw`
+    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/ironcliw`
   </Step>
   <Step title="Post-install tasks">
-    - Runs `IronCliw doctor --non-interactive` on upgrades and git installs (best effort)
+    - Runs `ironcliw doctor --non-interactive` on upgrades and git installs (best effort)
     - Attempts onboarding when appropriate (TTY available, onboarding not disabled, and bootstrap/config checks pass)
     - Defaults `SHARP_IGNORE_GLOBAL_LIBVIPS=1`
   </Step>
@@ -103,22 +103,22 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash
     ```
   </Tab>
   <Tab title="Skip onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --no-onboard
     ```
   </Tab>
   <Tab title="Git install">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --install-method git
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --install-method git
     ```
   </Tab>
   <Tab title="Dry run">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --dry-run
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --dry-run
     ```
   </Tab>
 </Tabs>
@@ -133,7 +133,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 | `--git`                         | Shortcut for git method. Alias: `--github`                 |
 | `--version <version\|dist-tag>` | npm version or dist-tag (default: `latest`)                |
 | `--beta`                        | Use beta dist-tag if available, else fallback to `latest`  |
-| `--git-dir <path>`              | Checkout directory (default: `~/IronCliw`). Alias: `--dir` |
+| `--git-dir <path>`              | Checkout directory (default: `~/ironcliw`). Alias: `--dir` |
 | `--no-git-update`               | Skip `git pull` for existing checkout                      |
 | `--no-prompt`                   | Disable prompts                                            |
 | `--no-onboard`                  | Skip onboarding                                            |
@@ -148,16 +148,16 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 
 | Variable                                    | Description                                   |
 | ------------------------------------------- | --------------------------------------------- |
-| `IronCliw_INSTALL_METHOD=git\|npm`          | Install method                                |
-| `IronCliw_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
-| `IronCliw_BETA=0\|1`                        | Use beta if available                         |
-| `IronCliw_GIT_DIR=<path>`                   | Checkout directory                            |
-| `IronCliw_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
-| `IronCliw_NO_PROMPT=1`                      | Disable prompts                               |
-| `IronCliw_NO_ONBOARD=1`                     | Skip onboarding                               |
-| `IronCliw_DRY_RUN=1`                        | Dry run mode                                  |
-| `IronCliw_VERBOSE=1`                        | Debug mode                                    |
-| `IronCliw_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
+| `IRONCLIW_INSTALL_METHOD=git\|npm`          | Install method                                |
+| `IRONCLIW_VERSION=latest\|next\|<semver>`   | npm version or dist-tag                       |
+| `IRONCLIW_BETA=0\|1`                        | Use beta if available                         |
+| `IRONCLIW_GIT_DIR=<path>`                   | Checkout directory                            |
+| `IRONCLIW_GIT_UPDATE=0\|1`                  | Toggle git updates                            |
+| `IRONCLIW_NO_PROMPT=1`                      | Disable prompts                               |
+| `IRONCLIW_NO_ONBOARD=1`                     | Skip onboarding                               |
+| `IRONCLIW_DRY_RUN=1`                        | Dry run mode                                  |
+| `IRONCLIW_VERBOSE=1`                        | Debug mode                                    |
+| `IRONCLIW_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                 |
 | `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`) |
 
   </Accordion>
@@ -168,7 +168,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 ## install-cli.sh
 
 <Info>
-Designed for environments where you want everything under a local prefix (default `~/.IronCliw`) and no system Node dependency.
+Designed for environments where you want everything under a local prefix (default `~/.ironcliw`) and no system Node dependency.
 </Info>
 
 ### Flow (install-cli.sh)
@@ -181,7 +181,7 @@ Designed for environments where you want everything under a local prefix (defaul
     If Git is missing, attempts install via apt/dnf/yum on Linux or Homebrew on macOS.
   </Step>
   <Step title="Install IronCliw under prefix">
-    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/IronCliw`.
+    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/ironcliw`.
   </Step>
 </Steps>
 
@@ -190,22 +190,22 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash
     ```
   </Tab>
   <Tab title="Custom prefix + version">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash -s -- --prefix /opt/IronCliw --version latest
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash -s -- --prefix /opt/ironcliw --version latest
     ```
   </Tab>
   <Tab title="Automation JSON output">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash -s -- --json --prefix /opt/IronCliw
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash -s -- --json --prefix /opt/ironcliw
     ```
   </Tab>
   <Tab title="Run onboarding">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash -s -- --onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash -s -- --onboard
     ```
   </Tab>
 </Tabs>
@@ -215,11 +215,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Flag                   | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
-| `--prefix <path>`      | Install prefix (default: `~/.IronCliw`)                                         |
+| `--prefix <path>`      | Install prefix (default: `~/.ironcliw`)                                         |
 | `--version <ver>`      | IronCliw version or dist-tag (default: `latest`)                                |
 | `--node-version <ver>` | Node version (default: `22.22.0`)                                               |
 | `--json`               | Emit NDJSON events                                                              |
-| `--onboard`            | Run `IronCliw onboard` after install                                            |
+| `--onboard`            | Run `ironcliw onboard` after install                                            |
 | `--no-onboard`         | Skip onboarding (default)                                                       |
 | `--set-npm-prefix`     | On Linux, force npm prefix to `~/.npm-global` if current prefix is not writable |
 | `--help`               | Show usage (`-h`)                                                               |
@@ -230,12 +230,12 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Variable                                    | Description                                                                       |
 | ------------------------------------------- | --------------------------------------------------------------------------------- |
-| `IronCliw_PREFIX=<path>`                    | Install prefix                                                                    |
-| `IronCliw_VERSION=<ver>`                    | IronCliw version or dist-tag                                                      |
-| `IronCliw_NODE_VERSION=<ver>`               | Node version                                                                      |
-| `IronCliw_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
-| `IronCliw_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
-| `IronCliw_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
+| `IRONCLIW_PREFIX=<path>`                    | Install prefix                                                                    |
+| `IRONCLIW_VERSION=<ver>`                    | IronCliw version or dist-tag                                                      |
+| `IRONCLIW_NODE_VERSION=<ver>`               | Node version                                                                      |
+| `IRONCLIW_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
+| `IRONCLIW_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
+| `IRONCLIW_GIT_DIR=<path>`                   | Legacy cleanup lookup path (used when removing old `Peekaboo` submodule checkout) |
 | `SHARP_IGNORE_GLOBAL_LIBVIPS=0\|1`          | Control sharp/libvips behavior (default: `1`)                                     |
 
   </Accordion>
@@ -256,10 +256,10 @@ Designed for environments where you want everything under a local prefix (defaul
   </Step>
   <Step title="Install IronCliw">
     - `npm` method (default): global npm install using selected `-Tag`
-    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\IronCliw.cmd`
+    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\ironcliw.cmd`
   </Step>
   <Step title="Post-install tasks">
-    Adds needed bin directory to user PATH when possible, then runs `IronCliw doctor --non-interactive` on upgrades and git installs (best effort).
+    Adds needed bin directory to user PATH when possible, then runs `ironcliw doctor --non-interactive` on upgrades and git installs (best effort).
   </Step>
 </Steps>
 
@@ -268,29 +268,29 @@ Designed for environments where you want everything under a local prefix (defaul
 <Tabs>
   <Tab title="Default">
     ```powershell
-    iwr -useb https://IronCliw.ai/install.ps1 | iex
+    iwr -useb https://ironcliw.ai/install.ps1 | iex
     ```
   </Tab>
   <Tab title="Git install">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -InstallMethod git
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -InstallMethod git
     ```
   </Tab>
   <Tab title="Custom git directory">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -InstallMethod git -GitDir "C:\IronCliw"
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -InstallMethod git -GitDir "C:\ironcliw"
     ```
   </Tab>
   <Tab title="Dry run">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -DryRun
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -DryRun
     ```
   </Tab>
   <Tab title="Debug trace">
     ```powershell
     # install.ps1 has no dedicated -Verbose flag yet.
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
   </Tab>
@@ -303,7 +303,7 @@ Designed for environments where you want everything under a local prefix (defaul
 | ------------------------- | ------------------------------------------------------ |
 | `-InstallMethod npm\|git` | Install method (default: `npm`)                        |
 | `-Tag <tag>`              | npm dist-tag (default: `latest`)                       |
-| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\IronCliw`) |
+| `-GitDir <path>`          | Checkout directory (default: `%USERPROFILE%\ironcliw`) |
 | `-NoOnboard`              | Skip onboarding                                        |
 | `-NoGitUpdate`            | Skip `git pull`                                        |
 | `-DryRun`                 | Print actions only                                     |
@@ -314,11 +314,11 @@ Designed for environments where you want everything under a local prefix (defaul
 
 | Variable                           | Description        |
 | ---------------------------------- | ------------------ |
-| `IronCliw_INSTALL_METHOD=git\|npm` | Install method     |
-| `IronCliw_GIT_DIR=<path>`          | Checkout directory |
-| `IronCliw_NO_ONBOARD=1`            | Skip onboarding    |
-| `IronCliw_GIT_UPDATE=0`            | Disable git pull   |
-| `IronCliw_DRY_RUN=1`               | Dry run mode       |
+| `IRONCLIW_INSTALL_METHOD=git\|npm` | Install method     |
+| `IRONCLIW_GIT_DIR=<path>`          | Checkout directory |
+| `IRONCLIW_NO_ONBOARD=1`            | Skip onboarding    |
+| `IRONCLIW_GIT_UPDATE=0`            | Disable git pull   |
+| `IRONCLIW_DRY_RUN=1`               | Dry run mode       |
 
   </Accordion>
 </AccordionGroup>
@@ -336,23 +336,23 @@ Use non-interactive flags/env vars for predictable runs.
 <Tabs>
   <Tab title="install.sh (non-interactive npm)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --no-prompt --no-onboard
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --no-prompt --no-onboard
     ```
   </Tab>
   <Tab title="install.sh (non-interactive git)">
     ```bash
-    IronCliw_INSTALL_METHOD=git IronCliw_NO_PROMPT=1 \
-      curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash
+    IRONCLIW_INSTALL_METHOD=git IRONCLIW_NO_PROMPT=1 \
+      curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash
     ```
   </Tab>
   <Tab title="install-cli.sh (JSON)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install-cli.sh | bash -s -- --json --prefix /opt/IronCliw
+    curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install-cli.sh | bash -s -- --json --prefix /opt/ironcliw
     ```
   </Tab>
   <Tab title="install.ps1 (skip onboarding)">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
     ```
   </Tab>
 </Tabs>
@@ -374,7 +374,7 @@ Use non-interactive flags/env vars for predictable runs.
     The scripts default `SHARP_IGNORE_GLOBAL_LIBVIPS=1` to avoid sharp building against system libvips. To override:
 
     ```bash
-    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash
+    SHARP_IGNORE_GLOBAL_LIBVIPS=0 curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash
     ```
 
   </Accordion>
@@ -383,7 +383,7 @@ Use non-interactive flags/env vars for predictable runs.
     Install Git for Windows, reopen PowerShell, rerun installer.
   </Accordion>
 
-  <Accordion title='Windows: "IronCliw is not recognized"'>
+  <Accordion title='Windows: "ironcliw is not recognized"'>
     Run `npm config get prefix` and add that directory to your user PATH (no `\bin` suffix needed on Windows), then reopen PowerShell.
   </Accordion>
 
@@ -393,13 +393,13 @@ Use non-interactive flags/env vars for predictable runs.
 
     ```powershell
     Set-PSDebug -Trace 1
-    & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+    & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
     Set-PSDebug -Trace 0
     ```
 
   </Accordion>
 
-  <Accordion title="IronCliw not found after install">
+  <Accordion title="ironcliw not found after install">
     Usually a PATH issue. See [Node.js troubleshooting](/install/node#troubleshooting).
   </Accordion>
 </AccordionGroup>

@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/tlon";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/tlon";
 
 export type TlonResolvedAccount = {
   accountId: string;

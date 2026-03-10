@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw hooks` (agent hooks)"
+summary: "CLI reference for `ironcliw hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 title: "hooks"
 ---
 
-# `IronCliw hooks`
+# `ironcliw hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -18,7 +18,7 @@ Related:
 ## List All Hooks
 
 ```bash
-IronCliw hooks list
+ironcliw hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -44,7 +44,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-IronCliw hooks list --verbose
+ironcliw hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -52,7 +52,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-IronCliw hooks list --json
+ironcliw hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -60,7 +60,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-IronCliw hooks info <name>
+ironcliw hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -76,7 +76,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-IronCliw hooks info session-memory
+ironcliw hooks info session-memory
 ```
 
 **Output:**
@@ -87,10 +87,10 @@ IronCliw hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: IronCliw-bundled
-  Path: /path/to/IronCliw/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/IronCliw/hooks/bundled/session-memory/handler.ts
-  Homepage: https://docs.IronCliw.ai/automation/hooks#session-memory
+  Source: ironcliw-bundled
+  Path: /path/to/ironcliw/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/ironcliw/hooks/bundled/session-memory/handler.ts
+  Homepage: https://docs.ironcliw.ai/automation/hooks#session-memory
   Events: command:new
 
 Requirements:
@@ -100,7 +100,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-IronCliw hooks check
+ironcliw hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -122,12 +122,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-IronCliw hooks enable <name>
+ironcliw hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.IronCliw/config.json`).
+Enable a specific hook by adding it to your config (`~/.ironcliw/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `IronCliw hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `ironcliw hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -137,7 +137,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-IronCliw hooks enable session-memory
+ironcliw hooks enable session-memory
 ```
 
 **Output:**
@@ -159,7 +159,7 @@ IronCliw hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-IronCliw hooks disable <name>
+ironcliw hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -171,7 +171,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-IronCliw hooks disable command-logger
+ironcliw hooks disable command-logger
 ```
 
 **Output:**
@@ -187,18 +187,23 @@ IronCliw hooks disable command-logger
 ## Install Hooks
 
 ```bash
-IronCliw hooks install <path-or-spec>
-IronCliw hooks install <npm-spec> --pin
+ironcliw hooks install <path-or-spec>
+ironcliw hooks install <npm-spec> --pin
 ```
 
 Install a hook pack from a local folder/archive or npm.
 
-Npm specs are **registry-only** (package name + optional version/tag). Git/URL/file
-specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
+Npm specs are **registry-only** (package name + optional **exact version** or
+**dist-tag**). Git/URL/file specs and semver ranges are rejected. Dependency
+installs run with `--ignore-scripts` for safety.
+
+Bare specs and `@latest` stay on the stable track. If npm resolves either of
+those to a prerelease, IronCliw stops and asks you to opt in explicitly with a
+prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 **What it does:**
 
-- Copies the hook pack into `~/.IronCliw/hooks/<id>`
+- Copies the hook pack into `~/.ironcliw/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -213,23 +218,23 @@ specs are rejected. Dependency installs run with `--ignore-scripts` for safety.
 
 ```bash
 # Local directory
-IronCliw hooks install ./my-hook-pack
+ironcliw hooks install ./my-hook-pack
 
 # Local archive
-IronCliw hooks install ./my-hook-pack.zip
+ironcliw hooks install ./my-hook-pack.zip
 
 # NPM package
-IronCliw hooks install @IronCliw/my-hook-pack
+ironcliw hooks install @ironcliw/my-hook-pack
 
 # Link a local directory without copying
-IronCliw hooks install -l ./my-hook-pack
+ironcliw hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-IronCliw hooks update <id>
-IronCliw hooks update --all
+ironcliw hooks update <id>
+ironcliw hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -252,10 +257,10 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-IronCliw hooks enable session-memory
+ironcliw hooks enable session-memory
 ```
 
-**Output:** `~/.IronCliw/workspace/memory/YYYY-MM-DD-slug.md`
+**Output:** `~/.ironcliw/workspace/memory/YYYY-MM-DD-slug.md`
 
 **See:** [session-memory documentation](/automation/hooks#session-memory)
 
@@ -266,7 +271,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable:**
 
 ```bash
-IronCliw hooks enable bootstrap-extra-files
+ironcliw hooks enable bootstrap-extra-files
 ```
 
 **See:** [bootstrap-extra-files documentation](/automation/hooks#bootstrap-extra-files)
@@ -278,22 +283,22 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-IronCliw hooks enable command-logger
+ironcliw hooks enable command-logger
 ```
 
-**Output:** `~/.IronCliw/logs/commands.log`
+**Output:** `~/.ironcliw/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.IronCliw/logs/commands.log
+tail -n 20 ~/.ironcliw/logs/commands.log
 
 # Pretty-print
-cat ~/.IronCliw/logs/commands.log | jq .
+cat ~/.ironcliw/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.IronCliw/logs/commands.log | jq .
+grep '"action":"new"' ~/.ironcliw/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/automation/hooks#command-logger)
@@ -307,7 +312,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-IronCliw hooks enable boot-md
+ironcliw hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/automation/hooks#boot-md)

@@ -27,13 +27,13 @@ export function registerNodeCli(program: Command) {
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
           [
-            "IronCliw node run --host 127.0.0.1 --port 18789",
+            "ironcliw node run --host 127.0.0.1 --port 18789",
             "Run the node host in the foreground.",
           ],
-          ["IronCliw node status", "Check node host service status."],
-          ["IronCliw node install", "Install the node host service."],
-          ["IronCliw node restart", "Restart the installed node host service."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.IronCliw.ai/cli/node")}\n`,
+          ["ironcliw node status", "Check node host service status."],
+          ["ironcliw node install", "Install the node host service."],
+          ["ironcliw node restart", "Restart the installed node host service."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.ironcliw.ai/cli/node")}\n`,
     );
 
   node

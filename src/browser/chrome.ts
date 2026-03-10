@@ -17,7 +17,7 @@ import {
   CHROME_STOP_TIMEOUT_MS,
   CHROME_WS_READY_TIMEOUT_MS,
 } from "./cdp-timeouts.js";
-import { appendCdpPath, fetchCdpChecked, openCdpWebSocket } from "./cdp.helpers.js";
+import { appendCdpPath, fetchCdpChecked, isWebSocketUrl, openCdpWebSocket } from "./cdp.helpers.js";
 import { normalizeCdpWsUrl } from "./cdp.js";
 import {
   type BrowserExecutable,
@@ -30,8 +30,8 @@ import {
 } from "./chrome.profile-decoration.js";
 import type { ResolvedBrowserConfig, ResolvedBrowserProfile } from "./config.js";
 import {
-  DEFAULT_IronCliw_BROWSER_COLOR,
-  DEFAULT_IronCliw_BROWSER_PROFILE_NAME,
+  DEFAULT_IRONCLIW_BROWSER_COLOR,
+  DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 
 const log = createSubsystemLogger("browser").child("chrome");
@@ -70,7 +70,7 @@ function resolveBrowserExecutable(resolved: ResolvedBrowserConfig): BrowserExecu
   return resolveBrowserExecutableForPlatform(resolved, process.platform);
 }
 
-export function resolveIronCliwUserDataDir(profileName = DEFAULT_IronCliw_BROWSER_PROFILE_NAME) {
+export function resolveIronCliwUserDataDir(profileName = DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME) {
   return path.join(CONFIG_DIR, "browser", profileName, "user-data");
 }
 
@@ -78,10 +78,29 @@ function cdpUrlForPort(cdpPort: number) {
   return `http://127.0.0.1:${cdpPort}`;
 }
 
+async function canOpenWebSocket(url: string, timeoutMs: number): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    const ws = openCdpWebSocket(url, { handshakeTimeoutMs: timeoutMs });
+    ws.once("open", () => {
+      try {
+        ws.close();
+      } catch {
+        // ignore
+      }
+      resolve(true);
+    });
+    ws.once("error", () => resolve(false));
+  });
+}
+
 export async function isChromeReachable(
   cdpUrl: string,
   timeoutMs = CHROME_REACHABILITY_TIMEOUT_MS,
 ): Promise<boolean> {
+  if (isWebSocketUrl(cdpUrl)) {
+    // Direct WebSocket endpoint — probe via WS handshake.
+    return await canOpenWebSocket(cdpUrl, timeoutMs);
+  }
   const version = await fetchChromeVersion(cdpUrl, timeoutMs);
   return Boolean(version);
 }
@@ -117,6 +136,10 @@ export async function getChromeWebSocketUrl(
   cdpUrl: string,
   timeoutMs = CHROME_REACHABILITY_TIMEOUT_MS,
 ): Promise<string | null> {
+  if (isWebSocketUrl(cdpUrl)) {
+    // Direct WebSocket endpoint — the cdpUrl is already the WebSocket URL.
+    return cdpUrl;
+  }
   const version = await fetchChromeVersion(cdpUrl, timeoutMs);
   const wsUrl = String(version?.webSocketDebuggerUrl ?? "").trim();
   if (!wsUrl) {
@@ -234,7 +257,7 @@ export async function launchIronCliwChrome(
   const needsDecorate = !isProfileDecorated(
     userDataDir,
     profile.name,
-    (profile.color ?? DEFAULT_IronCliw_BROWSER_COLOR).toUpperCase(),
+    (profile.color ?? DEFAULT_IRONCLIW_BROWSER_COLOR).toUpperCase(),
   );
 
   // First launch to create preference files if missing, then decorate and relaunch.
@@ -247,10 +270,20 @@ export async function launchIronCliwChrome(
       "--disable-sync",
       "--disable-background-networking",
       "--disable-component-update",
-      "--disable-features=Translate,MediaRouter",
+      "--disable-features=Translate,MediaRouter,OptimizationHints",
       "--disable-session-crashed-bubble",
       "--hide-crash-restore-bubble",
       "--password-store=basic",
+      "--disk-cache-size=104857600",
+      "--media-cache-size=52428800",
+      "--disable-background-timer-throttling",
+      "--disable-renderer-backgrounding",
+      "--disable-backgrounding-occluded-windows",
+      "--disable-ipc-flooding-protection",
+      "--js-flags=--max-old-space-size=512",
+      "--max-active-webgl-contexts=16",
+      "--aggressive-cache-discard",
+      "--enable-tcp-fast-open",
     ];
 
     if (resolved.headless) {
@@ -265,9 +298,6 @@ export async function launchIronCliwChrome(
     if (process.platform === "linux") {
       args.push("--disable-dev-shm-usage");
     }
-
-    // Stealth: hide navigator.webdriver from automation detection (#80)
-    args.push("--disable-blink-features=AutomationControlled");
 
     // Append user-configured extra arguments (e.g., stealth flags, window size)
     if (resolved.extraArgs.length > 0) {
@@ -324,16 +354,16 @@ export async function launchIronCliwChrome(
         name: profile.name,
         color: profile.color,
       });
-      log.info(`🦾 IronCliw browser profile decorated (${profile.color})`);
+      log.info(`🦞 ironcliw browser profile decorated (${profile.color})`);
     } catch (err) {
-      log.warn(`IronCliw browser profile decoration failed: ${String(err)}`);
+      log.warn(`ironcliw browser profile decoration failed: ${String(err)}`);
     }
   }
 
   try {
     ensureProfileCleanExit(userDataDir);
   } catch (err) {
-    log.warn(`IronCliw browser clean-exit prefs failed: ${String(err)}`);
+    log.warn(`ironcliw browser clean-exit prefs failed: ${String(err)}`);
   }
 
   const proc = spawnOnce();
@@ -381,7 +411,7 @@ export async function launchIronCliwChrome(
 
   const pid = proc.pid ?? -1;
   log.info(
-    `🦾 IronCliw browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
+    `🦞 ironcliw browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
   );
 
   return {

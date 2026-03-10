@@ -25,13 +25,13 @@ want “always works” text responses without relying on external APIs.
 You can use Claude Code CLI **without any config** (IronCliw ships a built-in default):
 
 ```bash
-IronCliw agent --message "hi" --model claude-cli/opus-4.6
+ironcliw agent --message "hi" --model claude-cli/opus-4.6
 ```
 
 Codex CLI also works out of the box:
 
 ```bash
-IronCliw agent --message "hi" --model codex-cli/gpt-5.3-codex
+ironcliw agent --message "hi" --model codex-cli/gpt-5.4
 ```
 
 If your gateway runs under launchd/systemd and PATH is minimal, add just the

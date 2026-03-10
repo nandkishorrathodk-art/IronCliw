@@ -7,7 +7,7 @@ import {
 } from "./redact-snapshot.js";
 import { __test__ } from "./schema.hints.js";
 import type { ConfigUiHints } from "./schema.js";
-import type { ConfigFileSnapshot } from "./types.IronCliw.js";
+import type { ConfigFileSnapshot } from "./types.ironcliw.js";
 import { IronCliwSchema } from "./zod-schema.js";
 
 const { mapSensitivePaths } = __test__;
@@ -24,7 +24,7 @@ function makeSnapshot<TConfig extends Record<string, unknown>>(
   raw?: string,
 ): TestSnapshot<TConfig> {
   return {
-    path: "/home/user/.IronCliw/config.json5",
+    path: "/home/user/.ironcliw/config.json5",
     exists: true,
     raw: raw ?? JSON.stringify(config),
     parsed: config,
@@ -120,7 +120,7 @@ describe("redactConfigSnapshot", () => {
           serviceAccount: {
             type: "service_account",
             client_email: "bot@example.iam.gserviceaccount.com",
-            private_key: "-----BEGIN PRIVATE KEY-----secret-----END PRIVATE KEY-----",
+            private_key: "-----BEGIN PRIVATE KEY-----secret-----END PRIVATE KEY-----", // pragma: allowlist secret
           },
         },
       },
@@ -221,9 +221,9 @@ describe("redactConfigSnapshot", () => {
     const snapshot = makeSnapshot({
       channels: {
         irc: {
-          passwordFile: "/etc/IronCliw/irc-password.txt",
+          passwordFile: "/etc/ironcliw/irc-password.txt",
           nickserv: {
-            passwordFile: "/etc/IronCliw/nickserv-password.txt",
+            passwordFile: "/etc/ironcliw/nickserv-password.txt",
             password: "super-secret-nickserv-password",
           },
         },
@@ -235,8 +235,8 @@ describe("redactConfigSnapshot", () => {
     const irc = channels.irc;
     const nickserv = irc.nickserv as Record<string, unknown>;
 
-    expect(irc.passwordFile).toBe("/etc/IronCliw/irc-password.txt");
-    expect(nickserv.passwordFile).toBe("/etc/IronCliw/nickserv-password.txt");
+    expect(irc.passwordFile).toBe("/etc/ironcliw/irc-password.txt");
+    expect(nickserv.passwordFile).toBe("/etc/ironcliw/nickserv-password.txt");
     expect(nickserv.password).toBe(REDACTED_SENTINEL);
   });
 
@@ -259,7 +259,7 @@ describe("redactConfigSnapshot", () => {
     const config = {
       gateway: {
         mode: "local",
-        auth: { password: "local" },
+        auth: { password: "local" }, // pragma: allowlist secret
       },
     };
     const snapshot = makeSnapshot(config, JSON.stringify(config));
@@ -299,7 +299,7 @@ describe("redactConfigSnapshot", () => {
 
   it("handles overlap fallback and SecretRef in the same snapshot", () => {
     const config = {
-      gateway: { mode: "default", auth: { password: "default" } },
+      gateway: { mode: "default", auth: { password: "default" } }, // pragma: allowlist secret
       models: {
         providers: {
           default: {
@@ -780,7 +780,7 @@ describe("redactConfigSnapshot", () => {
     };
     const snapshot = makeSnapshot({
       env: {
-        GROQ_API_KEY: "gsk-secret-123",
+        GROQ_API_KEY: "gsk-secret-123", // pragma: allowlist secret
         NODE_ENV: "production",
       },
     });
@@ -803,7 +803,7 @@ describe("redactConfigSnapshot", () => {
         entries: {
           web_search: {
             env: {
-              GEMINI_API_KEY: "gemini-secret-456",
+              GEMINI_API_KEY: "gemini-secret-456", // pragma: allowlist secret
               BRAVE_REGION: "us",
             },
           },
@@ -828,14 +828,14 @@ describe("redactConfigSnapshot", () => {
     const hints = mainSchemaHints;
     const snapshot = makeSnapshot({
       env: {
-        GROQ_API_KEY: "gsk-contract-123",
+        GROQ_API_KEY: "gsk-contract-123", // pragma: allowlist secret
         NODE_ENV: "production",
       },
       skills: {
         entries: {
           web_search: {
             env: {
-              GEMINI_API_KEY: "gemini-contract-456",
+              GEMINI_API_KEY: "gemini-contract-456", // pragma: allowlist secret
               BRAVE_REGION: "us",
             },
           },

@@ -146,13 +146,13 @@ describe("chrome extension relay server", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv([
-      "IronCliw_GATEWAY_TOKEN",
-      "IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS",
-      "IronCliw_EXTENSION_RELAY_COMMAND_RECONNECT_WAIT_MS",
+      "IRONCLIW_GATEWAY_TOKEN",
+      "IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS",
+      "IRONCLIW_EXTENSION_RELAY_COMMAND_RECONNECT_WAIT_MS",
     ]);
-    process.env.IronCliw_GATEWAY_TOKEN = TEST_GATEWAY_TOKEN;
-    delete process.env.IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS;
-    delete process.env.IronCliw_EXTENSION_RELAY_COMMAND_RECONNECT_WAIT_MS;
+    process.env.IRONCLIW_GATEWAY_TOKEN = TEST_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS;
+    delete process.env.IRONCLIW_EXTENSION_RELAY_COMMAND_RECONNECT_WAIT_MS;
   });
 
   afterEach(async () => {
@@ -227,8 +227,8 @@ describe("chrome extension relay server", () => {
     const sharedUrl = await ensureSharedRelayServer();
 
     const headers = getChromeExtensionRelayAuthHeaders(sharedUrl);
-    expect(Object.keys(headers)).toContain("x-IronCliw-relay-token");
-    expect(headers["x-IronCliw-relay-token"]).not.toBe(TEST_GATEWAY_TOKEN);
+    expect(Object.keys(headers)).toContain("x-ironcliw-relay-token");
+    expect(headers["x-ironcliw-relay-token"]).not.toBe(TEST_GATEWAY_TOKEN);
   });
 
   it("rejects CDP access without relay auth token", async () => {
@@ -273,14 +273,14 @@ describe("chrome extension relay server", () => {
       headers: {
         Origin: origin,
         "Access-Control-Request-Method": "GET",
-        "Access-Control-Request-Headers": "x-IronCliw-relay-token",
+        "Access-Control-Request-Headers": "x-ironcliw-relay-token",
       },
     });
 
     expect(res.status).toBe(204);
     expect(res.headers.get("access-control-allow-origin")).toBe(origin);
     expect(res.headers.get("access-control-allow-headers") ?? "").toContain(
-      "x-IronCliw-relay-token",
+      "x-ironcliw-relay-token",
     );
   });
 
@@ -516,7 +516,7 @@ describe("chrome extension relay server", () => {
   });
 
   it("closes CDP clients after reconnect grace when extension stays disconnected", async () => {
-    process.env.IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS = "150";
+    process.env.IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS = "150";
 
     const { port, ext } = await startRelayWithExtension();
     const cdp = new WebSocket(`ws://127.0.0.1:${port}/cdp`, {
@@ -529,7 +529,7 @@ describe("chrome extension relay server", () => {
   });
 
   it("stops advertising websocket endpoint after reconnect grace expires", async () => {
-    process.env.IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS = "120";
+    process.env.IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS = "120";
 
     const { ext } = await startRelayWithExtension();
     ext.send(
@@ -578,7 +578,7 @@ describe("chrome extension relay server", () => {
     const sharedPort = new URL(sharedUrl).port;
 
     const token = relayAuthHeaders(`ws://127.0.0.1:${sharedPort}/extension`)[
-      "x-IronCliw-relay-token"
+      "x-ironcliw-relay-token"
     ];
     expect(token).toBeTruthy();
     const ext = new WebSocket(
@@ -591,7 +591,7 @@ describe("chrome extension relay server", () => {
   it("accepts /json endpoints with relay token query param", async () => {
     const sharedUrl = await ensureSharedRelayServer();
 
-    const token = relayAuthHeaders(sharedUrl)["x-IronCliw-relay-token"];
+    const token = relayAuthHeaders(sharedUrl)["x-ironcliw-relay-token"];
     expect(token).toBeTruthy();
     const versionRes = await fetch(
       `${sharedUrl}/json/version?token=${encodeURIComponent(String(token))}`,
@@ -604,7 +604,7 @@ describe("chrome extension relay server", () => {
     const sharedPort = new URL(sharedUrl).port;
 
     const versionRes = await fetch(`${sharedUrl}/json/version`, {
-      headers: { "x-IronCliw-relay-token": TEST_GATEWAY_TOKEN },
+      headers: { "x-ironcliw-relay-token": TEST_GATEWAY_TOKEN },
     });
     expect(versionRes.status).toBe(200);
 
@@ -944,7 +944,7 @@ describe("chrome extension relay server", () => {
     let probeToken: string | undefined;
     const fakeRelay = createServer((req, res) => {
       if (req.url?.startsWith("/json/version")) {
-        const header = req.headers["x-IronCliw-relay-token"];
+        const header = req.headers["x-ironcliw-relay-token"];
         probeToken = Array.isArray(header) ? header[0] : header;
         if (!probeToken) {
           res.writeHead(401);
@@ -986,7 +986,7 @@ describe("chrome extension relay server", () => {
   it(
     "restores tabs after extension reconnects and re-announces",
     async () => {
-      process.env.IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS = "200";
+      process.env.IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS = "200";
 
       const { port, ext: ext1 } = await startRelayWithExtension();
 
@@ -1071,7 +1071,7 @@ describe("chrome extension relay server", () => {
   it(
     "preserves tab across a fast extension reconnect within grace period",
     async () => {
-      process.env.IronCliw_EXTENSION_RELAY_RECONNECT_GRACE_MS = "2000";
+      process.env.IRONCLIW_EXTENSION_RELAY_RECONNECT_GRACE_MS = "2000";
 
       const { port, ext: ext1 } = await startRelayWithExtension();
 
@@ -1152,7 +1152,7 @@ describe("chrome extension relay server", () => {
     RELAY_TEST_TIMEOUT_MS,
   );
 
-  it("does not swallow EADDRINUSE when occupied port is not an IronCliw relay", async () => {
+  it("does not swallow EADDRINUSE when occupied port is not an ironcliw relay", async () => {
     const port = await getFreePort();
     const blocker = createServer((_, res) => {
       res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
@@ -1168,4 +1168,57 @@ describe("chrome extension relay server", () => {
     );
     await new Promise<void>((resolve) => blocker.close(() => resolve()));
   });
+
+  it(
+    "respects bindHost override to bind on a non-loopback address",
+    async () => {
+      const port = await getFreePort();
+      cdpUrl = `http://127.0.0.1:${port}`;
+      const relay = await ensureChromeExtensionRelayServer({
+        cdpUrl,
+        bindHost: "0.0.0.0",
+      });
+      expect(relay.port).toBe(port);
+      // Verify the server actually bound to 0.0.0.0, not the cdpUrl host.
+      expect(relay.bindHost).toBe("0.0.0.0");
+
+      const res = await fetch(`http://127.0.0.1:${port}/`);
+      expect(res.status).toBe(200);
+    },
+    RELAY_TEST_TIMEOUT_MS,
+  );
+
+  it(
+    "defaults bindHost to cdpUrl host when not specified",
+    async () => {
+      const port = await getFreePort();
+      cdpUrl = `http://127.0.0.1:${port}`;
+      const relay = await ensureChromeExtensionRelayServer({ cdpUrl });
+      expect(relay.host).toBe("127.0.0.1");
+      expect(relay.bindHost).toBe("127.0.0.1");
+
+      const res = await fetch(`http://127.0.0.1:${port}/`);
+      expect(res.status).toBe(200);
+    },
+    RELAY_TEST_TIMEOUT_MS,
+  );
+
+  it(
+    "restarts the relay when bindHost changes for the same port",
+    async () => {
+      const port = await getFreePort();
+      cdpUrl = `http://127.0.0.1:${port}`;
+
+      const initial = await ensureChromeExtensionRelayServer({ cdpUrl });
+      expect(initial.bindHost).toBe("127.0.0.1");
+
+      const rebound = await ensureChromeExtensionRelayServer({
+        cdpUrl,
+        bindHost: "0.0.0.0",
+      });
+      expect(rebound.bindHost).toBe("0.0.0.0");
+      expect(rebound.port).toBe(port);
+    },
+    RELAY_TEST_TIMEOUT_MS,
+  );
 });

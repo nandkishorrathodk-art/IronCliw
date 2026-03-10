@@ -15,11 +15,10 @@
  */
 
 import { execSync } from "node:child_process";
+import { EventEmitter } from "node:events";
 import { readFileSync } from "node:fs";
 import { freemem, totalmem, cpus, platform, hostname, uptime } from "node:os";
 import { join } from "node:path";
-import { EventEmitter } from "node:events";
-
 
 /* ─────────────────────────────────────────────────────────────
    Types
@@ -83,7 +82,8 @@ function getCpuTimes() {
   return coreList.reduce(
     (acc, core) => {
       acc.idle += core.times.idle;
-      acc.total += core.times.user + core.times.nice + core.times.sys + core.times.idle + core.times.irq;
+      acc.total +=
+        core.times.user + core.times.nice + core.times.sys + core.times.idle + core.times.irq;
       return acc;
     },
     { idle: 0, total: 0 },
@@ -98,7 +98,9 @@ async function measureCpuUsage(sampleMs = 200): Promise<number> {
   const idleDelta = after.idle - before.idle;
   const totalDelta = after.total - before.total;
 
-  if (totalDelta === 0) {return 0;}
+  if (totalDelta === 0) {
+    return 0;
+  }
   return Math.round(((totalDelta - idleDelta) / totalDelta) * 100);
 }
 
@@ -117,7 +119,7 @@ function getDiskInfo(): DiskInfo {
   try {
     if (platform() === "win32") {
       const output = execSync(
-        'wmic logicaldisk where "DeviceID=\'C:\'" get Size,FreeSpace /format:value',
+        "wmic logicaldisk where \"DeviceID='C:'\" get Size,FreeSpace /format:value",
         { timeout: 5000, stdio: "pipe" },
       ).toString();
 
@@ -163,14 +165,16 @@ function getDiskInfo(): DiskInfo {
 
 function readIronCliwVersion(): string {
   try {
-    const pkg = JSON.parse(
-      readFileSync(join(process.cwd(), "package.json"), "utf-8"),
-    ) as { version?: string };
+    const pkg = JSON.parse(readFileSync(join(process.cwd(), "package.json"), "utf-8")) as {
+      version?: string;
+    };
     return pkg.version ?? "unknown";
   } catch {
     return "unknown";
   }
 }
+
+const IRONCLIW_VERSION = readIronCliwVersion();
 
 /* ─────────────────────────────────────────────────────────────
    HealthWatchdog class
@@ -197,7 +201,9 @@ export class HealthWatchdog extends EventEmitter {
 
   /** Start monitoring. Safe to call multiple times. */
   start(): void {
-    if (this._running) {return;}
+    if (this._running) {
+      return;
+    }
     this._running = true;
 
     // Immediate first sample
@@ -233,7 +239,9 @@ export class HealthWatchdog extends EventEmitter {
   /** Average CPU usage over the last N samples (default: all history). */
   avgCpu(samples?: number): number {
     const slice = samples ? this._history.slice(-samples) : this._history;
-    if (slice.length === 0) { return 0; }
+    if (slice.length === 0) {
+      return 0;
+    }
     return Math.round(slice.reduce((s, h) => s + h.cpu.usagePercent, 0) / slice.length);
   }
 
@@ -276,10 +284,11 @@ export class HealthWatchdog extends EventEmitter {
       warnings.push(`🔴 Disk usage critical: ${disk.usagePercent}% (only ${disk.freeGb}GB free)`);
     }
 
-    const status: SystemStats["status"] =
-      warnings.some((w) => w.startsWith("🔴")) ? "critical"
-      : warnings.length > 0 ? "warning"
-      : "healthy";
+    const status: SystemStats["status"] = warnings.some((w) => w.startsWith("🔴"))
+      ? "critical"
+      : warnings.length > 0
+        ? "warning"
+        : "healthy";
 
     const stats: SystemStats = {
       timestamp: Date.now(),
@@ -306,7 +315,7 @@ export class HealthWatchdog extends EventEmitter {
         hostname: hostname(),
         uptimeSeconds: Math.round(uptime()),
         nodeVersion: process.version,
-        ironcliwVersion: readIronCliwVersion(),
+        ironcliwVersion: IRONCLIW_VERSION,
       },
       status,
       warnings,
@@ -346,7 +355,9 @@ export class HealthWatchdog extends EventEmitter {
       `🌐 Host:   ${stats.system.hostname} | ${stats.system.platform}`,
       `⬆️  Uptime: ${Math.round(stats.system.uptimeSeconds / 3600)}h ${Math.round((stats.system.uptimeSeconds % 3600) / 60)}m`,
       `📦 Version: IronCliw ${stats.system.ironcliwVersion} | Node ${stats.system.nodeVersion}`,
-      ...(stats.warnings.length > 0 ? [`\n⚠️  Warnings:`, ...stats.warnings.map((w) => `   ${w}`)] : []),
+      ...(stats.warnings.length > 0
+        ? [`\n⚠️  Warnings:`, ...stats.warnings.map((w) => `   ${w}`)]
+        : []),
     ].join("\n");
   }
 }
@@ -355,7 +366,13 @@ export class HealthWatchdog extends EventEmitter {
    Singleton instance (auto-started with gateway)
    ───────────────────────────────────────────────────────────── */
 
-/** Global watchdog instance — started automatically when imported. */
+/**
+ * Global watchdog instance. Call `.start()` to begin monitoring.
+ *
+ * @example
+ * globalHealthWatchdog.start();
+ * globalHealthWatchdog.on('alert', ({ warnings }) => notifyAdmin(warnings));
+ */
 export const globalHealthWatchdog = new HealthWatchdog({
   intervalMs: 30_000,
   consoleAlerts: true,

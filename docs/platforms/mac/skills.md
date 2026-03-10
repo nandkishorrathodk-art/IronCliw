@@ -14,18 +14,18 @@ The macOS app surfaces IronCliw skills via the gateway; it does not parse skills
 
 - `skills.status` (gateway) returns all skills plus eligibility and missing requirements
   (including allowlist blocks for bundled skills).
-- Requirements are derived from `metadata.IronCliw.requires` in each `SKILL.md`.
+- Requirements are derived from `metadata.ironcliw.requires` in each `SKILL.md`.
 
 ## Install actions
 
-- `metadata.IronCliw.install` defines install options (brew/node/go/uv).
+- `metadata.ironcliw.install` defines install options (brew/node/go/uv).
 - The app calls `skills.install` to run installers on the gateway host.
 - The gateway surfaces only one preferred installer when multiple are provided
   (brew when available, otherwise node manager from `skills.install`, default npm).
 
 ## Env/API keys
 
-- The app stores keys in `~/.IronCliw/IronCliw.json` under `skills.entries.<skillKey>`.
+- The app stores keys in `~/.ironcliw/ironcliw.json` under `skills.entries.<skillKey>`.
 - `skills.update` patches `enabled`, `apiKey`, and `env`.
 
 ## Remote mode

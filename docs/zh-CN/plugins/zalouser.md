@@ -34,7 +34,7 @@ x-i18n:
 ### 选项 A：从 npm 安装
 
 ```bash
-IronCliw plugins install @IronCliw/zalouser
+ironcliw plugins install @ironcliw/zalouser
 ```
 
 之后重启 Gateway 网关。
@@ -42,7 +42,7 @@ IronCliw plugins install @IronCliw/zalouser
 ### 选项 B：从本地文件夹安装（开发）
 
 ```bash
-IronCliw plugins install ./extensions/zalouser
+ironcliw plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -74,11 +74,11 @@ zca --version
 ## CLI
 
 ```bash
-IronCliw channels login --channel zalouser
-IronCliw channels logout --channel zalouser
-IronCliw channels status --probe
-IronCliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
-IronCliw directory peers list --channel zalouser --query "name"
+ironcliw channels login --channel zalouser
+ironcliw channels logout --channel zalouser
+ironcliw channels status --probe
+ironcliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
+ironcliw directory peers list --channel zalouser --query "name"
 ```
 
 ## 智能体工具

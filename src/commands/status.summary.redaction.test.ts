@@ -29,14 +29,14 @@ describe("redactSensitiveStatusSummary", () => {
       channelSummary: ["ok"],
       queuedSystemEvents: ["none"],
       sessions: {
-        paths: ["/tmp/IronCliw/sessions.json"],
+        paths: ["/tmp/ironcliw/sessions.json"],
         count: 1,
         defaults: { model: "gpt-5", contextTokens: 200_000 },
         recent: [createRecentSessionRow()],
         byAgent: [
           {
             agentId: "main",
-            path: "/tmp/IronCliw/main-sessions.json",
+            path: "/tmp/ironcliw/main-sessions.json",
             count: 1,
             recent: [createRecentSessionRow()],
           },

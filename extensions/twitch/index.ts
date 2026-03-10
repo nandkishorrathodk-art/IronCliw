@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/twitch";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/twitch";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/twitch";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/twitch";
 import { twitchPlugin } from "./src/plugin.js";
 import { setTwitchRuntime } from "./src/runtime.js";
 

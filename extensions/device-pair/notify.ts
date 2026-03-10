@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/device-pair";
-import { listDevicePairing } from "IronCliw/plugin-sdk/device-pair";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/device-pair";
+import { listDevicePairing } from "ironcliw/plugin-sdk/device-pair";
 
 const NOTIFY_STATE_FILE = "device-pair-notify.json";
 const NOTIFY_POLL_INTERVAL_MS = 10_000;

@@ -1,4 +1,4 @@
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/diffs";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/diffs";
 
 const DEFAULT_GATEWAY_PORT = 18789;
 

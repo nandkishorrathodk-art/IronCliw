@@ -98,9 +98,9 @@ vi.mock("@opentelemetry/semantic-conventions", () => ({
   ATTR_SERVICE_NAME: "service.name",
 }));
 
-vi.mock("IronCliw/plugin-sdk/diagnostics-otel", async () => {
-  const actual = await vi.importActual<typeof import("IronCliw/plugin-sdk/diagnostics-otel")>(
-    "IronCliw/plugin-sdk/diagnostics-otel",
+vi.mock("ironcliw/plugin-sdk/diagnostics-otel", async () => {
+  const actual = await vi.importActual<typeof import("ironcliw/plugin-sdk/diagnostics-otel")>(
+    "ironcliw/plugin-sdk/diagnostics-otel",
   );
   return {
     ...actual,
@@ -108,11 +108,11 @@ vi.mock("IronCliw/plugin-sdk/diagnostics-otel", async () => {
   };
 });
 
-import type { IronCliwPluginServiceContext } from "IronCliw/plugin-sdk/diagnostics-otel";
-import { emitDiagnosticEvent } from "IronCliw/plugin-sdk/diagnostics-otel";
+import type { IronCliwPluginServiceContext } from "ironcliw/plugin-sdk/diagnostics-otel";
+import { emitDiagnosticEvent } from "ironcliw/plugin-sdk/diagnostics-otel";
 import { createDiagnosticsOtelService } from "./service.js";
 
-const OTEL_TEST_STATE_DIR = "/tmp/IronCliw-diagnostics-otel-test";
+const OTEL_TEST_STATE_DIR = "/tmp/ironcliw-diagnostics-otel-test";
 const OTEL_TEST_ENDPOINT = "http://otel-collector:4318";
 const OTEL_TEST_PROTOCOL = "http/protobuf";
 
@@ -243,26 +243,26 @@ describe("diagnostics-otel service", () => {
       attempt: 2,
     });
 
-    expect(telemetryState.counters.get("IronCliw.webhook.received")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("ironcliw.webhook.received")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("IronCliw.webhook.duration_ms")?.record,
+      telemetryState.histograms.get("ironcliw.webhook.duration_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.counters.get("IronCliw.message.queued")?.add).toHaveBeenCalled();
-    expect(telemetryState.counters.get("IronCliw.message.processed")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("ironcliw.message.queued")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("ironcliw.message.processed")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("IronCliw.message.duration_ms")?.record,
+      telemetryState.histograms.get("ironcliw.message.duration_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("IronCliw.queue.wait_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("IronCliw.session.stuck")?.add).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("ironcliw.queue.wait_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("ironcliw.session.stuck")?.add).toHaveBeenCalled();
     expect(
-      telemetryState.histograms.get("IronCliw.session.stuck_age_ms")?.record,
+      telemetryState.histograms.get("ironcliw.session.stuck_age_ms")?.record,
     ).toHaveBeenCalled();
-    expect(telemetryState.counters.get("IronCliw.run.attempt")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("ironcliw.run.attempt")?.add).toHaveBeenCalled();
 
     const spanNames = telemetryState.tracer.startSpan.mock.calls.map((call) => call[0]);
-    expect(spanNames).toContain("IronCliw.webhook.processed");
-    expect(spanNames).toContain("IronCliw.message.processed");
-    expect(spanNames).toContain("IronCliw.session.stuck");
+    expect(spanNames).toContain("ironcliw.webhook.processed");
+    expect(spanNames).toContain("ironcliw.message.processed");
+    expect(spanNames).toContain("ironcliw.session.stuck");
 
     expect(registerLogTransportMock).toHaveBeenCalledTimes(1);
     expect(registeredTransports).toHaveLength(1);
@@ -329,13 +329,13 @@ describe("diagnostics-otel service", () => {
 
   test("redacts sensitive data from log attributes before export", async () => {
     const emitCall = await emitAndCaptureLog({
-      0: '{"token":"ghp_abcdefghijklmnopqrstuvwxyz123456"}',
+      0: '{"token":"ghp_abcdefghijklmnopqrstuvwxyz123456"}', // pragma: allowlist secret
       1: "auth configured",
       _meta: { logLevelName: "DEBUG", date: new Date() },
     });
 
-    const tokenAttr = emitCall?.attributes?.["IronCliw.token"];
-    expect(tokenAttr).not.toBe("ghp_abcdefghijklmnopqrstuvwxyz123456");
+    const tokenAttr = emitCall?.attributes?.["ironcliw.token"];
+    expect(tokenAttr).not.toBe("ghp_abcdefghijklmnopqrstuvwxyz123456"); // pragma: allowlist secret
     if (typeof tokenAttr === "string") {
       expect(tokenAttr).toContain("…");
     }
@@ -349,20 +349,20 @@ describe("diagnostics-otel service", () => {
     emitDiagnosticEvent({
       type: "session.state",
       state: "waiting",
-      reason: "token=ghp_abcdefghijklmnopqrstuvwxyz123456",
+      reason: "token=ghp_abcdefghijklmnopqrstuvwxyz123456", // pragma: allowlist secret
     });
 
-    const sessionCounter = telemetryState.counters.get("IronCliw.session.state");
+    const sessionCounter = telemetryState.counters.get("ironcliw.session.state");
     expect(sessionCounter?.add).toHaveBeenCalledWith(
       1,
       expect.objectContaining({
-        "IronCliw.reason": expect.stringContaining("…"),
+        "ironcliw.reason": expect.stringContaining("…"),
       }),
     );
     const attrs = sessionCounter?.add.mock.calls[0]?.[1] as Record<string, unknown> | undefined;
-    expect(typeof attrs?.["IronCliw.reason"]).toBe("string");
-    expect(String(attrs?.["IronCliw.reason"])).not.toContain(
-      "ghp_abcdefghijklmnopqrstuvwxyz123456",
+    expect(typeof attrs?.["ironcliw.reason"]).toBe("string");
+    expect(String(attrs?.["ironcliw.reason"])).not.toContain(
+      "ghp_abcdefghijklmnopqrstuvwxyz123456", // pragma: allowlist secret
     );
     await service.stop?.(ctx);
   });

@@ -15,7 +15,7 @@ const NOW_MS = Date.UTC(2026, 1, 10, 0, 0, 0);
 const tempDirs: string[] = [];
 
 async function makeTempDir(): Promise<string> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-temporal-decay-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-temporal-decay-"));
   tempDirs.push(dir);
   return dir;
 }

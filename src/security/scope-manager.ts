@@ -41,7 +41,7 @@ export class ScopeManager {
       }
     } catch {
       this.authorizedScopes = [];
-      this.authorizedApps = ["burp suite", "chrome", "firefox", "msedge"]; // Default safe-ish apps
+      this.authorizedApps = ["chrome", "firefox", "msedge"]; // Default safe-ish apps
       this.authorizedPaths = [path.join(CONFIG_DIR, "workspace")]; // Default sandbox path
     } finally {
       this.loaded = true;
@@ -52,7 +52,9 @@ export class ScopeManager {
    * Ensures scopes are loaded exactly once. Safe to call concurrently.
    */
   private async ensureLoaded(): Promise<void> {
-    if (this.loaded) {return;}
+    if (this.loaded) {
+      return;
+    }
     if (!this.loadPromise) {
       this.loadPromise = this.load();
     }
@@ -64,8 +66,10 @@ export class ScopeManager {
    */
   async isAuthorized(target: string): Promise<boolean> {
     await this.ensureLoaded();
-    if (!target) {return false;}
-    
+    if (!target) {
+      return false;
+    }
+
     let hostname: string;
     try {
       const url = new URL(target.startsWith("http") ? target : `https://${target}`);
@@ -75,7 +79,9 @@ export class ScopeManager {
     }
 
     return this.authorizedScopes.some((scope) => {
-      if (scope === hostname) {return true;}
+      if (scope === hostname) {
+        return true;
+      }
       if (scope.startsWith("*.")) {
         const domain = scope.slice(2);
         return hostname === domain || hostname.endsWith(`.${domain}`);
@@ -89,9 +95,11 @@ export class ScopeManager {
    */
   async isAppAuthorized(appName: string): Promise<boolean> {
     await this.ensureLoaded();
-    if (!appName) {return false;}
+    if (!appName) {
+      return false;
+    }
     const normalized = appName.toLowerCase().trim();
-    return this.authorizedApps.some(app => normalized.includes(app));
+    return this.authorizedApps.some((app) => normalized.includes(app));
   }
 
   /**
@@ -99,9 +107,11 @@ export class ScopeManager {
    */
   async isPathAuthorized(targetPath: string): Promise<boolean> {
     await this.ensureLoaded();
-    if (!targetPath) {return false;}
+    if (!targetPath) {
+      return false;
+    }
     const resolvedTarget = path.resolve(targetPath);
-    return this.authorizedPaths.some(authorized => {
+    return this.authorizedPaths.some((authorized) => {
       return resolvedTarget === authorized || resolvedTarget.startsWith(authorized + path.sep);
     });
   }
@@ -132,7 +142,9 @@ export class ScopeManager {
   async addScope(domain: string): Promise<boolean> {
     await this.ensureLoaded();
     const normalized = domain.toLowerCase().trim();
-    if (!normalized || this.authorizedScopes.includes(normalized)) {return false;}
+    if (!normalized || this.authorizedScopes.includes(normalized)) {
+      return false;
+    }
     this.authorizedScopes.push(normalized);
     return true;
   }
@@ -144,7 +156,9 @@ export class ScopeManager {
     await this.ensureLoaded();
     const normalized = domain.toLowerCase().trim();
     const index = this.authorizedScopes.indexOf(normalized);
-    if (index === -1) {return false;}
+    if (index === -1) {
+      return false;
+    }
     this.authorizedScopes.splice(index, 1);
     return true;
   }
@@ -155,7 +169,9 @@ export class ScopeManager {
   async addAppScope(appName: string): Promise<boolean> {
     await this.ensureLoaded();
     const normalized = appName.toLowerCase().trim();
-    if (!normalized || this.authorizedApps.includes(normalized)) {return false;}
+    if (!normalized || this.authorizedApps.includes(normalized)) {
+      return false;
+    }
     this.authorizedApps.push(normalized);
     return true;
   }
@@ -168,11 +184,15 @@ export class ScopeManager {
     await fs.mkdir(path.dirname(this.scopeFilePath), { recursive: true });
     await fs.writeFile(
       this.scopeFilePath,
-      JSON.stringify({
-        domains: this.authorizedScopes,
-        apps: this.authorizedApps,
-        paths: this.authorizedPaths,
-      }, null, 2),
+      JSON.stringify(
+        {
+          domains: this.authorizedScopes,
+          apps: this.authorizedApps,
+          paths: this.authorizedPaths,
+        },
+        null,
+        2,
+      ),
       "utf-8",
     );
   }

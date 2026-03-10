@@ -16,4 +16,3 @@ session synthesizer:
   model: opus
   prompt: "Synthesize the reviews into a unified report"
   context: { security, performance, style }
-

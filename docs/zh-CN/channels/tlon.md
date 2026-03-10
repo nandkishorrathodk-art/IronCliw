@@ -25,13 +25,13 @@ Tlon 作为插件提供，不包含在核心安装中。
 通过 CLI 安装（npm 仓库）：
 
 ```bash
-IronCliw plugins install @IronCliw/tlon
+ironcliw plugins install @ironcliw/tlon
 ```
 
 本地检出（从 git 仓库运行时）：
 
 ```bash
-IronCliw plugins install ./extensions/tlon
+ironcliw plugins install ./extensions/tlon
 ```
 
 详情：[插件](/tools/plugin)
@@ -124,7 +124,7 @@ IronCliw plugins install ./extensions/tlon
 
 ## 投递目标（CLI/cron）
 
-与 `IronCliw message send` 或 cron 投递一起使用：
+与 `ironcliw message send` 或 cron 投递一起使用：
 
 - 私信：`~sampel-palnet` 或 `dm/~sampel-palnet`
 - 群组：`chat/~host-ship/channel` 或 `group:~host-ship/channel`

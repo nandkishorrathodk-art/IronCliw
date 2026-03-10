@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `IronCliw agents` (list/add/delete/bindings/bind/unbind/set identity)"
+summary: "CLI reference for `ironcliw agents` (list/add/delete/bindings/bind/unbind/set identity)"
 read_when:
   - You want multiple isolated agents (workspaces + routing + auth)
 title: "agents"
 ---
 
-# `IronCliw agents`
+# `ironcliw agents`
 
 Manage isolated agents (workspaces + auth + routing).
 
@@ -17,14 +17,14 @@ Related:
 ## Examples
 
 ```bash
-IronCliw agents list
-IronCliw agents add work --workspace ~/.IronCliw/workspace-work
-IronCliw agents bindings
-IronCliw agents bind --agent work --bind telegram:ops
-IronCliw agents unbind --agent work --bind telegram:ops
-IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
-IronCliw agents set-identity --agent main --avatar avatars/IronCliw.png
-IronCliw agents delete work
+ironcliw agents list
+ironcliw agents add work --workspace ~/.ironcliw/workspace-work
+ironcliw agents bindings
+ironcliw agents bind --agent work --bind telegram:ops
+ironcliw agents unbind --agent work --bind telegram:ops
+ironcliw agents set-identity --workspace ~/.ironcliw/workspace --from-identity
+ironcliw agents set-identity --agent main --avatar avatars/ironcliw.png
+ironcliw agents delete work
 ```
 
 ## Routing bindings
@@ -34,15 +34,15 @@ Use routing bindings to pin inbound channel traffic to a specific agent.
 List bindings:
 
 ```bash
-IronCliw agents bindings
-IronCliw agents bindings --agent work
-IronCliw agents bindings --json
+ironcliw agents bindings
+ironcliw agents bindings --agent work
+ironcliw agents bindings --json
 ```
 
 Add bindings:
 
 ```bash
-IronCliw agents bind --agent work --bind telegram:ops --bind discord:guild-a
+ironcliw agents bind --agent work --bind telegram:ops --bind discord:guild-a
 ```
 
 If you omit `accountId` (`--bind <channel>`), IronCliw resolves it from channel defaults and plugin setup hooks when available.
@@ -57,10 +57,10 @@ Example:
 
 ```bash
 # initial channel-only binding
-IronCliw agents bind --agent work --bind telegram
+ironcliw agents bind --agent work --bind telegram
 
 # later upgrade to account-scoped binding
-IronCliw agents bind --agent work --bind telegram:ops
+ironcliw agents bind --agent work --bind telegram:ops
 ```
 
 After the upgrade, routing for that binding is scoped to `telegram:ops`. If you also want default-account routing, add it explicitly (for example `--bind telegram:default`).
@@ -68,15 +68,15 @@ After the upgrade, routing for that binding is scoped to `telegram:ops`. If you 
 Remove bindings:
 
 ```bash
-IronCliw agents unbind --agent work --bind telegram:ops
-IronCliw agents unbind --agent work --all
+ironcliw agents unbind --agent work --bind telegram:ops
+ironcliw agents unbind --agent work --all
 ```
 
 ## Identity files
 
 Each agent workspace can include an `IDENTITY.md` at the workspace root:
 
-- Example path: `~/.IronCliw/workspace/IDENTITY.md`
+- Example path: `~/.ironcliw/workspace/IDENTITY.md`
 - `set-identity --from-identity` reads from the workspace root (or an explicit `--identity-file`)
 
 Avatar paths resolve relative to the workspace root.
@@ -93,13 +93,13 @@ Avatar paths resolve relative to the workspace root.
 Load from `IDENTITY.md`:
 
 ```bash
-IronCliw agents set-identity --workspace ~/.IronCliw/workspace --from-identity
+ironcliw agents set-identity --workspace ~/.ironcliw/workspace --from-identity
 ```
 
 Override fields explicitly:
 
 ```bash
-IronCliw agents set-identity --agent main --name "IronCliw" --emoji "🦾" --avatar avatars/IronCliw.png
+ironcliw agents set-identity --agent main --name "IronCliw" --emoji "🦞" --avatar avatars/ironcliw.png
 ```
 
 Config sample:
@@ -112,9 +112,9 @@ Config sample:
         id: "main",
         identity: {
           name: "IronCliw",
-          theme: "iron grip",
-          emoji: "🦾",
-          avatar: "avatars/IronCliw.png",
+          theme: "space lobster",
+          emoji: "🦞",
+          avatar: "avatars/ironcliw.png",
         },
       },
     ],

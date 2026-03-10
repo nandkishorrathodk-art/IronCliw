@@ -18,10 +18,10 @@ A skill is a directory containing a `SKILL.md` file (which provides instructions
 
 ### 1. Create the Directory
 
-Skills live in your workspace, usually `~/.IronCliw/workspace/skills/`. Create a new folder for your skill:
+Skills live in your workspace, usually `~/.ironcliw/workspace/skills/`. Create a new folder for your skill:
 
 ```bash
-mkdir -p ~/.IronCliw/workspace/skills/hello-world
+mkdir -p ~/.ironcliw/workspace/skills/hello-world
 ```
 
 ### 2. Define the `SKILL.md`
@@ -51,7 +51,7 @@ Ask your agent to "refresh skills" or restart the gateway. IronCliw will discove
 
 - **Be Concise**: Instruct the model on _what_ to do, not how to be an AI.
 - **Safety First**: If your skill uses `bash`, ensure the prompts don't allow arbitrary command injection from untrusted user input.
-- **Test Locally**: Use `IronCliw agent --message "use my new skill"` to test.
+- **Test Locally**: Use `ironcliw agent --message "use my new skill"` to test.
 
 ## Shared Skills
 

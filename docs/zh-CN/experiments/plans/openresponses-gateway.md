@@ -1,6 +1,6 @@
 ---
 last_updated: "2026-01-19"
-owner: IronCliw
+owner: ironcliw
 status: draft
 summary: 计划：添加 OpenResponses /v1/responses 端点并干净地弃用 chat completions
 title: OpenResponses Gateway 网关计划

@@ -56,14 +56,14 @@ const pluginSdkSubpaths = [
 
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `IronCliw/plugin-sdk` alias is a prefix match.
+    // Keep this ordered: the base `ironcliw/plugin-sdk` alias is a prefix match.
     alias: [
       ...pluginSdkSubpaths.map((subpath) => ({
-        find: `IronCliw/plugin-sdk/${subpath}`,
+        find: `ironcliw/plugin-sdk/${subpath}`,
         replacement: path.join(repoRoot, "src", "plugin-sdk", `${subpath}.ts`),
       })),
       {
-        find: "IronCliw/plugin-sdk",
+        find: "ironcliw/plugin-sdk",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       },
     ],

@@ -50,8 +50,8 @@ export function renderOverview(props: OverviewProps) {
       <div class="muted" style="margin-top: 8px">
         ${t("overview.pairing.hint")}
         <div style="margin-top: 6px">
-          <span class="mono">IronCliw devices list</span><br />
-          <span class="mono">IronCliw devices approve &lt;requestId&gt;</span>
+          <span class="mono">ironcliw devices list</span><br />
+          <span class="mono">ironcliw devices approve &lt;requestId&gt;</span>
         </div>
         <div style="margin-top: 6px; font-size: 12px;">
           ${t("overview.pairing.mobileHint")}
@@ -59,7 +59,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.IronCliw.ai/web/control-ui#device-pairing-first-connection"
+            href="https://docs.ironcliw.ai/web/control-ui#device-pairing-first-connection"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Device pairing docs (opens in new tab)"
@@ -110,13 +110,13 @@ export function renderOverview(props: OverviewProps) {
         <div class="muted" style="margin-top: 8px">
           ${t("overview.auth.required")}
           <div style="margin-top: 6px">
-            <span class="mono">IronCliw dashboard --no-open</span> → tokenized URL<br />
-            <span class="mono">IronCliw doctor --generate-gateway-token</span> → set token
+            <span class="mono">ironcliw dashboard --no-open</span> → tokenized URL<br />
+            <span class="mono">ironcliw doctor --generate-gateway-token</span> → set token
           </div>
           <div style="margin-top: 6px">
             <a
               class="session-link"
-              href="https://docs.IronCliw.ai/web/dashboard"
+              href="https://docs.ironcliw.ai/web/dashboard"
               target=${EXTERNAL_LINK_TARGET}
               rel=${buildExternalLinkRel()}
               title="Control UI auth docs (opens in new tab)"
@@ -128,11 +128,11 @@ export function renderOverview(props: OverviewProps) {
     }
     return html`
       <div class="muted" style="margin-top: 8px">
-        ${t("overview.auth.failed", { command: "IronCliw dashboard --no-open" })}
+        ${t("overview.auth.failed", { command: "ironcliw dashboard --no-open" })}
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.IronCliw.ai/web/dashboard"
+            href="https://docs.ironcliw.ai/web/dashboard"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Control UI auth docs (opens in new tab)"
@@ -171,7 +171,7 @@ export function renderOverview(props: OverviewProps) {
         <div style="margin-top: 6px">
           <a
             class="session-link"
-            href="https://docs.IronCliw.ai/gateway/tailscale"
+            href="https://docs.ironcliw.ai/gateway/tailscale"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Tailscale Serve docs (opens in new tab)"
@@ -180,7 +180,7 @@ export function renderOverview(props: OverviewProps) {
           <span class="muted"> · </span>
           <a
             class="session-link"
-            href="https://docs.IronCliw.ai/web/control-ui#insecure-http"
+            href="https://docs.ironcliw.ai/web/control-ui#insecure-http"
             target=${EXTERNAL_LINK_TARGET}
             rel=${buildExternalLinkRel()}
             title="Insecure HTTP docs (opens in new tab)"
@@ -193,7 +193,23 @@ export function renderOverview(props: OverviewProps) {
 
   const currentLocale = i18n.getLocale();
 
+  const heroVersion = props.hello?.server?.version ?? "—";
   return html`
+    <section class="hero card" style="margin-bottom: 24px;">
+      <div class="hero-content">
+        <div class="hero-logo" aria-hidden="true">🦾</div>
+        <div class="hero-text">
+          <h1 class="hero-title">IRONCLIW</h1>
+          <p class="hero-subtitle">The Iron Grip of AI Automation</p>
+          <div class="hero-badges">
+            <span class="pill">${heroVersion}</span>
+            <span class="pill ok">ONLINE</span>
+            <span class="pill">HYPERTASK v2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="grid grid-cols-2">
       <div class="card">
         <div class="card-title">${t("overview.access.title")}</div>
@@ -222,7 +238,7 @@ export function renderOverview(props: OverviewProps) {
                       const v = (e.target as HTMLInputElement).value;
                       props.onSettingsChange({ ...props.settings, token: v });
                     }}
-                    placeholder="IronCliw_GATEWAY_TOKEN"
+                    placeholder="IRONCLIW_GATEWAY_TOKEN"
                   />
                 </label>
                 <label class="field">

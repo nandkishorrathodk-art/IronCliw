@@ -43,7 +43,7 @@ IronCliw 按以下顺序选择模型：
 如果你不想手动编辑配置，请运行新手引导向导：
 
 ```bash
-IronCliw onboard
+ironcliw onboard
 ```
 
 它可以为常见提供商设置模型 + 认证，包括 **OpenAI Code（Codex）订阅**（OAuth）和 **Anthropic**（推荐使用 API 密钥；也支持 `claude setup-token`）。
@@ -113,27 +113,27 @@ Model "provider/model" is not allowed. Use /model to list available models.
 ## CLI 命令
 
 ```bash
-IronCliw models list
-IronCliw models status
-IronCliw models set <provider/model>
-IronCliw models set-image <provider/model>
+ironcliw models list
+ironcliw models status
+ironcliw models set <provider/model>
+ironcliw models set-image <provider/model>
 
-IronCliw models aliases list
-IronCliw models aliases add <alias> <provider/model>
-IronCliw models aliases remove <alias>
+ironcliw models aliases list
+ironcliw models aliases add <alias> <provider/model>
+ironcliw models aliases remove <alias>
 
-IronCliw models fallbacks list
-IronCliw models fallbacks add <provider/model>
-IronCliw models fallbacks remove <provider/model>
-IronCliw models fallbacks clear
+ironcliw models fallbacks list
+ironcliw models fallbacks add <provider/model>
+ironcliw models fallbacks remove <provider/model>
+ironcliw models fallbacks clear
 
-IronCliw models image-fallbacks list
-IronCliw models image-fallbacks add <provider/model>
-IronCliw models image-fallbacks remove <provider/model>
-IronCliw models image-fallbacks clear
+ironcliw models image-fallbacks list
+ironcliw models image-fallbacks add <provider/model>
+ironcliw models image-fallbacks remove <provider/model>
+ironcliw models image-fallbacks clear
 ```
 
-`IronCliw models`（无子命令）是 `models status` 的快捷方式。
+`ironcliw models`（无子命令）是 `models status` 的快捷方式。
 
 ### `models list`
 
@@ -156,12 +156,12 @@ JSON 包括 `auth.oauth`（警告窗口 + 配置文件）和 `auth.providers`（
 
 ```bash
 claude setup-token
-IronCliw models status
+ironcliw models status
 ```
 
 ## 扫描（OpenRouter 免费模型）
 
-`IronCliw models scan` 检查 OpenRouter 的**免费模型目录**，并可选择性地探测模型的工具和图像支持。
+`ironcliw models scan` 检查 OpenRouter 的**免费模型目录**，并可选择性地探测模型的工具和图像支持。
 
 关键标志：
 
@@ -193,4 +193,4 @@ IronCliw models status
 
 ## 模型注册表（`models.json`）
 
-`models.providers` 中的自定义提供商会写入智能体目录下的 `models.json`（默认 `~/.IronCliw/agents/<agentId>/models.json`）。除非 `models.mode` 设置为 `replace`，否则此文件默认会被合并。
+`models.providers` 中的自定义提供商会写入智能体目录下的 `models.json`（默认 `~/.ironcliw/agents/<agentId>/models.json`）。除非 `models.mode` 设置为 `replace`，否则此文件默认会被合并。

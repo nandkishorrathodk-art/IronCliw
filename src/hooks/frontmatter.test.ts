@@ -41,7 +41,7 @@ name: session-memory
 description: "Save session context"
 metadata:
   {
-    "IronCliw": {
+    "ironcliw": {
       "emoji": "💾",
       "events": ["command:new"]
     }
@@ -58,8 +58,8 @@ metadata:
 
     // Verify the metadata is valid JSON
     const parsed = JSON.parse(result.metadata);
-    expect(parsed.IronCliw.emoji).toBe("💾");
-    expect(parsed.IronCliw.events).toEqual(["command:new"]);
+    expect(parsed.ironcliw.emoji).toBe("💾");
+    expect(parsed.ironcliw.events).toEqual(["command:new"]);
   });
 
   it("parses multi-line metadata with complex nested structure", () => {
@@ -68,7 +68,7 @@ name: command-logger
 description: "Log all command events"
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "📝",
         "events": ["command"],
@@ -83,21 +83,21 @@ metadata:
     expect(result.metadata).toBeDefined();
 
     const parsed = JSON.parse(result.metadata);
-    expect(parsed.IronCliw.emoji).toBe("📝");
-    expect(parsed.IronCliw.events).toEqual(["command"]);
-    expect(parsed.IronCliw.requires.config).toEqual(["workspace.dir"]);
-    expect(parsed.IronCliw.install[0].kind).toBe("bundled");
+    expect(parsed.ironcliw.emoji).toBe("📝");
+    expect(parsed.ironcliw.events).toEqual(["command"]);
+    expect(parsed.ironcliw.requires.config).toEqual(["workspace.dir"]);
+    expect(parsed.ironcliw.install[0].kind).toBe("bundled");
   });
 
   it("handles single-line metadata (inline JSON)", () => {
     const content = `---
 name: simple-hook
-metadata: {"IronCliw": {"events": ["test"]}}
+metadata: {"ironcliw": {"events": ["test"]}}
 ---
 `;
     const result = parseFrontmatter(content);
     expect(result.name).toBe("simple-hook");
-    expect(result.metadata).toBe('{"IronCliw": {"events": ["test"]}}');
+    expect(result.metadata).toBe('{"ironcliw": {"events": ["test"]}}');
   });
 
   it("handles mixed single-line and multi-line values", () => {
@@ -107,7 +107,7 @@ description: "A hook with mixed values"
 homepage: https://example.com
 metadata:
   {
-    "IronCliw": {
+    "ironcliw": {
       "events": ["command:new"]
     }
   }
@@ -149,11 +149,11 @@ description: 'single-quoted'
 });
 
 describe("resolveIronCliwMetadata", () => {
-  it("extracts IronCliw metadata from parsed frontmatter", () => {
+  it("extracts ironcliw metadata from parsed frontmatter", () => {
     const frontmatter = {
       name: "test-hook",
       metadata: JSON.stringify({
-        IronCliw: {
+        ironcliw: {
           emoji: "🔥",
           events: ["command:new", "command:reset"],
           requires: {
@@ -178,7 +178,7 @@ describe("resolveIronCliwMetadata", () => {
     expect(result).toBeUndefined();
   });
 
-  it("returns undefined when IronCliw key is missing", () => {
+  it("returns undefined when ironcliw key is missing", () => {
     const frontmatter = {
       metadata: JSON.stringify({ other: "data" }),
     };
@@ -197,11 +197,11 @@ describe("resolveIronCliwMetadata", () => {
   it("handles install specs", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        IronCliw: {
+        ironcliw: {
           events: ["command"],
           install: [
             { id: "bundled", kind: "bundled", label: "Bundled with IronCliw" },
-            { id: "npm", kind: "npm", package: "@IronCliw/hook" },
+            { id: "npm", kind: "npm", package: "@ironcliw/hook" },
           ],
         },
       }),
@@ -211,13 +211,13 @@ describe("resolveIronCliwMetadata", () => {
     expect(result?.install).toHaveLength(2);
     expect(result?.install?.[0].kind).toBe("bundled");
     expect(result?.install?.[1].kind).toBe("npm");
-    expect(result?.install?.[1].package).toBe("@IronCliw/hook");
+    expect(result?.install?.[1].package).toBe("@ironcliw/hook");
   });
 
   it("handles os restrictions", () => {
     const frontmatter = {
       metadata: JSON.stringify({
-        IronCliw: {
+        ironcliw: {
           events: ["command"],
           os: ["darwin", "linux"],
         },
@@ -233,10 +233,10 @@ describe("resolveIronCliwMetadata", () => {
     const content = `---
 name: session-memory
 description: "Save session context to memory when /new or /reset command is issued"
-homepage: https://docs.IronCliw.ai/automation/hooks#session-memory
+homepage: https://docs.ironcliw.ai/automation/hooks#session-memory
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "💾",
         "events": ["command:new", "command:reset"],
@@ -253,28 +253,28 @@ metadata:
     expect(frontmatter.name).toBe("session-memory");
     expect(frontmatter.metadata).toBeDefined();
 
-    const IronCliw = resolveIronCliwMetadata(frontmatter);
-    expect(IronCliw).toBeDefined();
-    expect(IronCliw?.emoji).toBe("💾");
-    expect(IronCliw?.events).toEqual(["command:new", "command:reset"]);
-    expect(IronCliw?.requires?.config).toEqual(["workspace.dir"]);
-    expect(IronCliw?.install?.[0].kind).toBe("bundled");
+    const ironcliw = resolveIronCliwMetadata(frontmatter);
+    expect(ironcliw).toBeDefined();
+    expect(ironcliw?.emoji).toBe("💾");
+    expect(ironcliw?.events).toEqual(["command:new", "command:reset"]);
+    expect(ironcliw?.requires?.config).toEqual(["workspace.dir"]);
+    expect(ironcliw?.install?.[0].kind).toBe("bundled");
   });
 
   it("parses YAML metadata map", () => {
     const content = `---
 name: yaml-metadata
 metadata:
-  IronCliw:
+  ironcliw:
     emoji: disk
     events:
       - command:new
 ---
 `;
     const frontmatter = parseFrontmatter(content);
-    const IronCliw = resolveIronCliwMetadata(frontmatter);
-    expect(IronCliw?.emoji).toBe("disk");
-    expect(IronCliw?.events).toEqual(["command:new"]);
+    const ironcliw = resolveIronCliwMetadata(frontmatter);
+    expect(ironcliw?.emoji).toBe("disk");
+    expect(ironcliw?.events).toEqual(["command:new"]);
   });
 });
 

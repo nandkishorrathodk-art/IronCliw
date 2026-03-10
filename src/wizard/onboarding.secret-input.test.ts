@@ -16,10 +16,10 @@ describe("resolveOnboardingSecretInputString", () => {
   it("resolves env-template SecretInput strings", async () => {
     const resolved = await resolveOnboardingSecretInputString({
       config: makeConfig(),
-      value: "${IronCliw_GATEWAY_PASSWORD}",
+      value: "${IRONCLIW_GATEWAY_PASSWORD}",
       path: "gateway.auth.password",
       env: {
-        IronCliw_GATEWAY_PASSWORD: "gateway-secret",
+        IRONCLIW_GATEWAY_PASSWORD: "gateway-secret", // pragma: allowlist secret
       },
     });
 
@@ -40,12 +40,12 @@ describe("resolveOnboardingSecretInputString", () => {
     await expect(
       resolveOnboardingSecretInputString({
         config: makeConfig(),
-        value: "${IronCliw_GATEWAY_PASSWORD}",
+        value: "${IRONCLIW_GATEWAY_PASSWORD}",
         path: "gateway.auth.password",
         env: {},
       }),
     ).rejects.toThrow(
-      'gateway.auth.password: failed to resolve SecretRef "env:default:IronCliw_GATEWAY_PASSWORD"',
+      'gateway.auth.password: failed to resolve SecretRef "env:default:IRONCLIW_GATEWAY_PASSWORD"',
     );
   });
 });

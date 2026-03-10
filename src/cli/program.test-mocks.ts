@@ -9,6 +9,7 @@ export const onboardCommand: Mock<(...args: unknown[]) => unknown> = vi.fn();
 export const callGateway: Mock<(...args: unknown[]) => unknown> = vi.fn();
 export const runChannelLogin: Mock<(...args: unknown[]) => unknown> = vi.fn();
 export const runChannelLogout: Mock<(...args: unknown[]) => unknown> = vi.fn();
+export const runTui: Mock<(...args: unknown[]) => unknown> = vi.fn();
 
 export const loadAndMaybeMigrateDoctorConfig: Mock<(...args: unknown[]) => unknown> = vi.fn();
 export const ensureConfigReady: Mock<(...args: unknown[]) => unknown> = vi.fn();
@@ -54,6 +55,7 @@ export function installBaseProgramMocks() {
   vi.mock("../commands/onboard.js", () => ({ onboardCommand }));
   vi.mock("../runtime.js", () => ({ defaultRuntime: runtime }));
   vi.mock("./channel-auth.js", () => ({ runChannelLogin, runChannelLogout }));
+  vi.mock("../tui/tui.js", () => ({ runTui }));
   vi.mock("../gateway/call.js", () => ({
     callGateway,
     randomIdempotencyKey: () => "idem-test",

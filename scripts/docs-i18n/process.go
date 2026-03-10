@@ -200,4 +200,3 @@ func translateSnippet(ctx context.Context, translator *PiTranslator, tm *Transla
 	tm.Put(entry)
 	return translated, nil
 }
-

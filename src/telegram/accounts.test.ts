@@ -4,6 +4,7 @@ import { withEnv } from "../test-utils/env.js";
 import {
   listTelegramAccountIds,
   resetMissingDefaultWarnFlag,
+  resolveTelegramPollActionGateState,
   resolveDefaultTelegramAccountId,
   resolveTelegramAccount,
 } from "./accounts.js";
@@ -93,7 +94,7 @@ describe("resolveTelegramAccount", () => {
   });
 
   it("formats debug logs with inspect-style output when debug env is enabled", () => {
-    withEnv({ TELEGRAM_BOT_TOKEN: "", IronCliw_DEBUG_TELEGRAM_ACCOUNTS: "1" }, () => {
+    withEnv({ TELEGRAM_BOT_TOKEN: "", IRONCLIW_DEBUG_TELEGRAM_ACCOUNTS: "1" }, () => {
       const cfg: IronCliwConfig = {
         channels: {
           telegram: { accounts: { work: { botToken: "tok-work" } } },
@@ -305,6 +306,26 @@ describe("resolveTelegramAccount allowFrom precedence", () => {
 
     expect(resolved.config.allowFrom).toBeUndefined();
     expect(resolved.config.groupAllowFrom).toBeUndefined();
+  });
+});
+
+describe("resolveTelegramPollActionGateState", () => {
+  it("requires both sendMessage and poll actions", () => {
+    const state = resolveTelegramPollActionGateState((key) => key !== "poll");
+    expect(state).toEqual({
+      sendMessageEnabled: true,
+      pollEnabled: false,
+      enabled: false,
+    });
+  });
+
+  it("returns enabled only when both actions are enabled", () => {
+    const state = resolveTelegramPollActionGateState(() => true);
+    expect(state).toEqual({
+      sendMessageEnabled: true,
+      pollEnabled: true,
+      enabled: true,
+    });
   });
 });
 

@@ -4,10 +4,11 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import type { IronCliwConfig } from "../../config/config.js";
 import { clearPluginManifestRegistryCache } from "../../plugins/manifest-registry.js";
+import { writePluginWithSkill } from "../test-helpers/skill-plugin-fixtures.js";
 import { resolveEmbeddedRunSkillEntries } from "./skills-runtime.js";
 
 const tempDirs: string[] = [];
-const originalBundledDir = process.env.IronCliw_BUNDLED_PLUGINS_DIR;
+const originalBundledDir = process.env.IRONCLIW_BUNDLED_PLUGINS_DIR;
 
 async function createTempDir(prefix: string) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
@@ -16,36 +17,22 @@ async function createTempDir(prefix: string) {
 }
 
 async function setupBundledDiffsPlugin() {
-  const bundledPluginsDir = await createTempDir("IronCliw-bundled-");
-  const workspaceDir = await createTempDir("IronCliw-workspace-");
+  const bundledPluginsDir = await createTempDir("ironcliw-bundled-");
+  const workspaceDir = await createTempDir("ironcliw-workspace-");
   const pluginRoot = path.join(bundledPluginsDir, "diffs");
 
-  await fs.mkdir(path.join(pluginRoot, "skills", "diffs"), { recursive: true });
-  await fs.writeFile(
-    path.join(pluginRoot, "IronCliw.plugin.json"),
-    JSON.stringify(
-      {
-        id: "diffs",
-        skills: ["./skills"],
-        configSchema: { type: "object", additionalProperties: false, properties: {} },
-      },
-      null,
-      2,
-    ),
-    "utf-8",
-  );
-  await fs.writeFile(path.join(pluginRoot, "index.ts"), "export {};\n", "utf-8");
-  await fs.writeFile(
-    path.join(pluginRoot, "skills", "diffs", "SKILL.md"),
-    `---\nname: diffs\ndescription: runtime integration test\n---\n`,
-    "utf-8",
-  );
+  await writePluginWithSkill({
+    pluginRoot,
+    pluginId: "diffs",
+    skillId: "diffs",
+    skillDescription: "runtime integration test",
+  });
 
   return { bundledPluginsDir, workspaceDir };
 }
 
 afterEach(async () => {
-  process.env.IronCliw_BUNDLED_PLUGINS_DIR = originalBundledDir;
+  process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = originalBundledDir;
   clearPluginManifestRegistryCache();
   await Promise.all(
     tempDirs.splice(0, tempDirs.length).map((dir) => fs.rm(dir, { recursive: true, force: true })),
@@ -55,7 +42,7 @@ afterEach(async () => {
 describe("resolveEmbeddedRunSkillEntries (integration)", () => {
   it("loads bundled diffs skill when explicitly enabled in config", async () => {
     const { bundledPluginsDir, workspaceDir } = await setupBundledDiffsPlugin();
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledPluginsDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledPluginsDir;
     clearPluginManifestRegistryCache();
 
     const config: IronCliwConfig = {
@@ -77,7 +64,7 @@ describe("resolveEmbeddedRunSkillEntries (integration)", () => {
 
   it("skips bundled diffs skill when config is missing", async () => {
     const { bundledPluginsDir, workspaceDir } = await setupBundledDiffsPlugin();
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledPluginsDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledPluginsDir;
     clearPluginManifestRegistryCache();
 
     const result = resolveEmbeddedRunSkillEntries({

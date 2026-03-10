@@ -58,7 +58,7 @@ export function buildInboundMetaSystemPrompt(ctx: TemplateContext): string {
   const channelValue = resolveInboundChannel(ctx);
 
   const payload = {
-    schema: "IronCliw.inbound_meta.v1",
+    schema: "ironcliw.inbound_meta.v1",
     chat_id: safeTrim(ctx.OriginatingTo),
     account_id: safeTrim(ctx.AccountId),
     channel: channelValue,

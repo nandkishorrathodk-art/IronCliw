@@ -8,7 +8,7 @@ import type { IronCliwConfig } from "../../config/config.js";
 import { logVerbose } from "../../globals.js";
 import { copyFileWithinRoot, SafeOpenError } from "../../infra/fs-safe.js";
 import { normalizeScpRemoteHost } from "../../infra/scp-host.js";
-import { resolvePreferredIronCliwTmpDir } from "../../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../../infra/tmp-ironcliw-dir.js";
 import {
   isInboundPathAllowed,
   resolveIMessageRemoteAttachmentRoots,
@@ -39,7 +39,7 @@ export async function stageSandboxMedia(params: {
     workspaceDir,
   });
 
-  // For remote attachments without sandbox, use ~/.IronCliw/media (not agent workspace for privacy)
+  // For remote attachments without sandbox, use ~/.ironcliw/media (not agent workspace for privacy)
   const remoteMediaCacheDir = ctx.MediaRemoteHost
     ? path.join(CONFIG_DIR, "media", "remote-cache", sessionKey)
     : null;

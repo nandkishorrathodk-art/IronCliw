@@ -6,7 +6,7 @@ import * as crypto from "node:crypto";
 import {
   createFixedWindowRateLimiter,
   type FixedWindowRateLimiter,
-} from "IronCliw/plugin-sdk/synology-chat";
+} from "ironcliw/plugin-sdk/synology-chat";
 
 export type DmAuthorizationResult =
   | { allowed: true }
@@ -21,7 +21,7 @@ export function validateToken(received: string, expected: string): boolean {
 
   // Use HMAC to normalize lengths before comparison,
   // preventing timing side-channel on token length.
-  const key = "IronCliw-token-cmp";
+  const key = "ironcliw-token-cmp";
   const a = crypto.createHmac("sha256", key).update(received).digest();
   const b = crypto.createHmac("sha256", key).update(expected).digest();
 

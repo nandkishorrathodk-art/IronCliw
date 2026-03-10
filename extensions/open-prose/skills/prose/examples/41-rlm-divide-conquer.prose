@@ -36,4 +36,3 @@ block process(data, depth):
     context: partials
 
 output answer = do process(corpus, 4)
-

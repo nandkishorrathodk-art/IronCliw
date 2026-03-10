@@ -36,7 +36,7 @@ You want this:
 ```mermaid
 flowchart TB
     A["<b>Your Phone (personal)<br></b><br>Your WhatsApp<br>+1-555-YOU"] -- message --> B["<b>Second Phone (assistant)<br></b><br>Assistant WA<br>+1-555-ASSIST"]
-    B -- linked via QR --> C["<b>Your Mac (IronCliw)<br></b><br>Pi agent"]
+    B -- linked via QR --> C["<b>Your Mac (ironcliw)<br></b><br>Pi agent"]
 ```
 
 If you link your personal WhatsApp to IronCliw, every message to you becomes “agent input”. That’s rarely what you want.
@@ -46,16 +46,16 @@ If you link your personal WhatsApp to IronCliw, every message to you becomes “
 1. Pair WhatsApp Web (shows QR; scan with the assistant phone):
 
 ```bash
-IronCliw channels login
+ironcliw channels login
 ```
 
 2. Start the Gateway (leave it running):
 
 ```bash
-IronCliw gateway --port 18789
+ironcliw gateway --port 18789
 ```
 
-3. Put a minimal config in `~/.IronCliw/IronCliw.json`:
+3. Put a minimal config in `~/.ironcliw/ironcliw.json`:
 
 ```json5
 {
@@ -65,18 +65,18 @@ IronCliw gateway --port 18789
 
 Now message the assistant number from your allowlisted phone.
 
-When onboarding finishes, we auto-open the dashboard and print a clean (non-tokenized) link. If it prompts for auth, paste the token from `gateway.auth.token` into Control UI settings. To reopen later: `IronCliw dashboard`.
+When onboarding finishes, we auto-open the dashboard and print a clean (non-tokenized) link. If it prompts for auth, paste the token from `gateway.auth.token` into Control UI settings. To reopen later: `ironcliw dashboard`.
 
 ## Give the agent a workspace (AGENTS)
 
 IronCliw reads operating instructions and “memory” from its workspace directory.
 
-By default, IronCliw uses `~/.IronCliw/workspace` as the agent workspace, and will create it (plus starter `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`) automatically on setup/first agent run. `BOOTSTRAP.md` is only created when the workspace is brand new (it should not come back after you delete it). `MEMORY.md` is optional (not auto-created); when present, it is loaded for normal sessions. Subagent sessions only inject `AGENTS.md` and `TOOLS.md`.
+By default, IronCliw uses `~/.ironcliw/workspace` as the agent workspace, and will create it (plus starter `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`) automatically on setup/first agent run. `BOOTSTRAP.md` is only created when the workspace is brand new (it should not come back after you delete it). `MEMORY.md` is optional (not auto-created); when present, it is loaded for normal sessions. Subagent sessions only inject `AGENTS.md` and `TOOLS.md`.
 
 Tip: treat this folder like IronCliw’s “memory” and make it a git repo (ideally private) so your `AGENTS.md` + memory files are backed up. If git is installed, brand-new workspaces are auto-initialized.
 
 ```bash
-IronCliw setup
+ironcliw setup
 ```
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
@@ -87,7 +87,7 @@ Optional: choose a different workspace with `agents.defaults.workspace` (support
 ```json5
 {
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
   },
 }
 ```
@@ -117,7 +117,7 @@ Example:
   logging: { level: "info" },
   agent: {
     model: "anthropic/claude-opus-4-6",
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     thinkingDefault: "high",
     timeoutSeconds: 1800,
     // Start with 0; enable later.
@@ -133,7 +133,7 @@ Example:
   },
   routing: {
     groupChat: {
-      mentionPatterns: ["@IronCliw", "IronCliw"],
+      mentionPatterns: ["@ironcliw", "ironcliw"],
     },
   },
   session: {
@@ -150,8 +150,8 @@ Example:
 
 ## Sessions and memory
 
-- Session files: `~/.IronCliw/agents/<agentId>/sessions/{{SessionId}}.jsonl`
-- Session metadata (token usage, last route, etc): `~/.IronCliw/agents/<agentId>/sessions/sessions.json` (legacy: `~/.IronCliw/sessions/sessions.json`)
+- Session files: `~/.ironcliw/agents/<agentId>/sessions/{{SessionId}}.jsonl`
+- Session metadata (token usage, last route, etc): `~/.ironcliw/agents/<agentId>/sessions/sessions.json` (legacy: `~/.ironcliw/sessions/sessions.json`)
 - `/new` or `/reset` starts a fresh session for that chat (configurable via `resetTriggers`). If sent alone, the agent replies with a short hello to confirm the reset.
 - `/compact [instructions]` compacts the session context and reports the remaining context budget.
 
@@ -195,13 +195,13 @@ IronCliw extracts these and sends them as media alongside the text.
 ## Operations checklist
 
 ```bash
-IronCliw status          # local status (creds, sessions, queued events)
-IronCliw status --all    # full diagnosis (read-only, pasteable)
-IronCliw status --deep   # adds gateway health probes (Telegram + Discord)
-IronCliw health --json   # gateway health snapshot (WS)
+ironcliw status          # local status (creds, sessions, queued events)
+ironcliw status --all    # full diagnosis (read-only, pasteable)
+ironcliw status --deep   # adds gateway health probes (Telegram + Discord)
+ironcliw health --json   # gateway health snapshot (WS)
 ```
 
-Logs live under `/tmp/IronCliw/` (default: `IronCliw-YYYY-MM-DD.log`).
+Logs live under `/tmp/ironcliw/` (default: `ironcliw-YYYY-MM-DD.log`).
 
 ## Next steps
 

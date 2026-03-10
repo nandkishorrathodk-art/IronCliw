@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/telegram";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/telegram";
 
-let runtime: PluginRuntime | null = null;
-
-export function setTelegramRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getTelegramRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Telegram runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setTelegramRuntime, getRuntime: getTelegramRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Telegram runtime not initialized");
+export { getTelegramRuntime, setTelegramRuntime };

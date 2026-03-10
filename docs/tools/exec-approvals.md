@@ -22,7 +22,7 @@ resolved by the **ask fallback** (default: deny).
 
 Exec approvals are enforced locally on the execution host:
 
-- **gateway host** → `IronCliw` process on the gateway machine
+- **gateway host** → `ironcliw` process on the gateway machine
 - **node host** → node runner (macOS companion app or headless node host)
 
 Trust model note:
@@ -30,6 +30,9 @@ Trust model note:
 - Gateway-authenticated callers are trusted operators for that Gateway.
 - Paired nodes extend that trusted operator capability onto the node host.
 - Exec approvals reduce accidental execution risk, but are not a per-user auth boundary.
+- Approved node-host runs also bind canonical execution context: canonical cwd, pinned executable
+  path when applicable, and interpreter-style script operands. If a bound script changes after
+  approval but before execution, the run is denied instead of executing drifted content.
 
 macOS split:
 
@@ -40,7 +43,7 @@ macOS split:
 
 Approvals live in a local JSON file on the execution host:
 
-`~/.IronCliw/exec-approvals.json`
+`~/.ironcliw/exec-approvals.json`
 
 Example schema:
 
@@ -48,7 +51,7 @@ Example schema:
 {
   "version": 1,
   "socket": {
-    "path": "~/.IronCliw/exec-approvals.sock",
+    "path": "~/.ironcliw/exec-approvals.sock",
     "token": "base64url-token"
   },
   "defaults": {
@@ -208,9 +211,9 @@ Configuration location:
 - `safeBins` comes from config (`tools.exec.safeBins` or per-agent `agents.list[].tools.exec.safeBins`).
 - `safeBinTrustedDirs` comes from config (`tools.exec.safeBinTrustedDirs` or per-agent `agents.list[].tools.exec.safeBinTrustedDirs`).
 - `safeBinProfiles` comes from config (`tools.exec.safeBinProfiles` or per-agent `agents.list[].tools.exec.safeBinProfiles`). Per-agent profile keys override global keys.
-- allowlist entries live in host-local `~/.IronCliw/exec-approvals.json` under `agents.<id>.allowlist` (or via Control UI / `IronCliw approvals allowlist ...`).
-- `IronCliw security audit` warns with `tools.exec.safe_bins_interpreter_unprofiled` when interpreter/runtime bins appear in `safeBins` without explicit profiles.
-- `IronCliw doctor --fix` can scaffold missing custom `safeBinProfiles.<bin>` entries as `{}` (review and tighten afterward). Interpreter/runtime bins are not auto-scaffolded.
+- allowlist entries live in host-local `~/.ironcliw/exec-approvals.json` under `agents.<id>.allowlist` (or via Control UI / `ironcliw approvals allowlist ...`).
+- `ironcliw security audit` warns with `tools.exec.safe_bins_interpreter_unprofiled` when interpreter/runtime bins appear in `safeBins` without explicit profiles.
+- `ironcliw doctor --fix` can scaffold missing custom `safeBinProfiles.<bin>` entries as `{}` (review and tighten afterward). Interpreter/runtime bins are not auto-scaffolded.
 
 Custom profile example:
 
@@ -242,9 +245,9 @@ per pattern so you can keep the list tidy.
 The target selector chooses **Gateway** (local approvals) or a **Node**. Nodes
 must advertise `system.execApprovals.get/set` (macOS app or headless node host).
 If a node does not advertise exec approvals yet, edit its local
-`~/.IronCliw/exec-approvals.json` directly.
+`~/.ironcliw/exec-approvals.json` directly.
 
-CLI: `IronCliw approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
+CLI: `ironcliw approvals` supports gateway or node editing (see [Approvals CLI](/cli/approvals)).
 
 ## Approval flow
 

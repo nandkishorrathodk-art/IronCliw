@@ -79,7 +79,7 @@ export function getUsedPorts(
 }
 
 export const PROFILE_COLORS = [
-  "#FF4500", // Orange-red (IronCliw default)
+  "#FF4500", // Orange-red (ironcliw default)
   "#0066CC", // Blue
   "#00AA00", // Green
   "#9933FF", // Purple

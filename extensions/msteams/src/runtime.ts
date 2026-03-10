@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/msteams";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/msteams";
 
-let runtime: PluginRuntime | null = null;
-
-export function setMSTeamsRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getMSTeamsRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("MSTeams runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setMSTeamsRuntime, getRuntime: getMSTeamsRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("MSTeams runtime not initialized");
+export { getMSTeamsRuntime, setMSTeamsRuntime };

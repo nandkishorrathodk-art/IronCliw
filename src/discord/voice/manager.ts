@@ -24,7 +24,7 @@ import { isDangerousNameMatchingEnabled } from "../../config/dangerous-name-matc
 import type { DiscordAccountConfig, TtsConfig } from "../../config/types.js";
 import { logVerbose, shouldLogVerbose } from "../../globals.js";
 import { formatErrorMessage } from "../../infra/errors.js";
-import { resolvePreferredIronCliwTmpDir } from "../../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../../infra/tmp-ironcliw-dir.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import {
   buildProviderRegistry,
@@ -673,7 +673,11 @@ export class DiscordVoiceManager {
       cfg: this.params.cfg,
       override: this.params.discordConfig.voice?.tts,
     });
-    const directive = parseTtsDirectives(replyText, ttsConfig.modelOverrides);
+    const directive = parseTtsDirectives(
+      replyText,
+      ttsConfig.modelOverrides,
+      ttsConfig.openai.baseUrl,
+    );
     const speakText = directive.overrides.ttsText ?? directive.cleanedText.trim();
     if (!speakText) {
       logVoiceVerbose(

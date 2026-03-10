@@ -57,10 +57,10 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
     },
     {
       env: {
-        IronCliw_AGENT_DIR: (home) => path.join(home, ".IronCliw", "agent"),
-        PI_CODING_AGENT_DIR: (home) => path.join(home, ".IronCliw", "agent"),
+        IRONCLIW_AGENT_DIR: (home) => path.join(home, ".ironcliw", "agent"),
+        PI_CODING_AGENT_DIR: (home) => path.join(home, ".ironcliw", "agent"),
       },
-      prefix: "IronCliw-reply-",
+      prefix: "ironcliw-reply-",
     },
   );
 }
@@ -77,7 +77,7 @@ export function makeWhatsAppDirectiveConfig(
   return {
     agents: {
       defaults: {
-        workspace: path.join(home, "IronCliw"),
+        workspace: path.join(home, "ironcliw"),
         ...defaults,
       },
     },
@@ -148,7 +148,7 @@ export function makeRestrictedElevatedDisabledConfig(home: string) {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: path.join(home, "IronCliw"),
+        workspace: path.join(home, "ironcliw"),
       },
       list: [
         {

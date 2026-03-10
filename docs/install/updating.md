@@ -8,16 +8,16 @@ title: "Updating"
 
 # Updating
 
-IronCliw is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `IronCliw update`, which restarts) → verify.
+IronCliw is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `ironcliw update`, which restarts) → verify.
 
 ## Recommended: re-run the website installer (upgrade in place)
 
 The **preferred** update path is to re-run the installer from the website. It
-detects existing installs, upgrades in place, and runs `IronCliw doctor` when
+detects existing installs, upgrades in place, and runs `ironcliw doctor` when
 needed.
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash
+curl -fsSL https://ironcliw.ai/install.sh | bash
 ```
 
 Notes:
@@ -26,12 +26,12 @@ Notes:
 - For **source installs**, use:
 
   ```bash
-  curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --install-method git --no-onboard
+  curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --install-method git --no-onboard
   ```
 
   The installer will `git pull --rebase` **only** if the repo is clean.
 
-- For **global installs**, the script uses `npm install -g IronCliw@latest` under the hood.
+- For **global installs**, the script uses `npm install -g ironcliw@latest` under the hood.
 - Legacy note: `clawdbot` remains available as a compatibility shim.
 
 ## Before you update
@@ -39,20 +39,20 @@ Notes:
 - Know how you installed: **global** (npm/pnpm) vs **from source** (git clone).
 - Know how your Gateway is running: **foreground terminal** vs **supervised service** (launchd/systemd).
 - Snapshot your tailoring:
-  - Config: `~/.IronCliw/IronCliw.json`
-  - Credentials: `~/.IronCliw/credentials/`
-  - Workspace: `~/.IronCliw/workspace`
+  - Config: `~/.ironcliw/ironcliw.json`
+  - Credentials: `~/.ironcliw/credentials/`
+  - Workspace: `~/.ironcliw/workspace`
 
 ## Update (global install)
 
 Global install (pick one):
 
 ```bash
-npm i -g IronCliw@latest
+npm i -g ironcliw@latest
 ```
 
 ```bash
-pnpm add -g IronCliw@latest
+pnpm add -g ironcliw@latest
 ```
 
 We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
@@ -60,9 +60,9 @@ We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
 To switch update channels (git + npm installs):
 
 ```bash
-IronCliw update --channel beta
-IronCliw update --channel dev
-IronCliw update --channel stable
+ironcliw update --channel beta
+ironcliw update --channel dev
+ironcliw update --channel stable
 ```
 
 Use `--tag <dist-tag|version>` for a one-off install tag/version.
@@ -93,29 +93,29 @@ Behavior:
 
 - `stable`: when a new version is seen, IronCliw waits `stableDelayHours` and then applies a deterministic per-install jitter in `stableJitterHours` (spread rollout).
 - `beta`: checks on `betaCheckIntervalHours` cadence (default: hourly) and applies when an update is available.
-- `dev`: no automatic apply; use manual `IronCliw update`.
+- `dev`: no automatic apply; use manual `ironcliw update`.
 
-Use `IronCliw update --dry-run` to preview update actions before enabling automation.
+Use `ironcliw update --dry-run` to preview update actions before enabling automation.
 
 Then:
 
 ```bash
-IronCliw doctor
-IronCliw gateway restart
-IronCliw health
+ironcliw doctor
+ironcliw gateway restart
+ironcliw health
 ```
 
 Notes:
 
-- If your Gateway runs as a service, `IronCliw gateway restart` is preferred over killing PIDs.
+- If your Gateway runs as a service, `ironcliw gateway restart` is preferred over killing PIDs.
 - If you’re pinned to a specific version, see “Rollback / pinning” below.
 
-## Update (`IronCliw update`)
+## Update (`ironcliw update`)
 
 For **source installs** (git checkout), prefer:
 
 ```bash
-IronCliw update
+ironcliw update
 ```
 
 It runs a safe-ish update flow:
@@ -123,16 +123,16 @@ It runs a safe-ish update flow:
 - Requires a clean worktree.
 - Switches to the selected channel (tag or branch).
 - Fetches + rebases against the configured upstream (dev channel).
-- Installs deps, builds, builds the Control UI, and runs `IronCliw doctor`.
+- Installs deps, builds, builds the Control UI, and runs `ironcliw doctor`.
 - Restarts the gateway by default (use `--no-restart` to skip).
 
-If you installed via **npm/pnpm** (no git metadata), `IronCliw update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
+If you installed via **npm/pnpm** (no git metadata), `ironcliw update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
 
 ## Update (Control UI / RPC)
 
 The Control UI has **Update & Restart** (RPC: `update.run`). It:
 
-1. Runs the same source-update flow as `IronCliw update` (git checkout only).
+1. Runs the same source-update flow as `ironcliw update` (git checkout only).
 2. Writes a restart sentinel with a structured report (stdout/stderr tail).
 3. Restarts the gateway and pings the last active session with the report.
 
@@ -145,7 +145,7 @@ From the repo checkout:
 Preferred:
 
 ```bash
-IronCliw update
+ironcliw update
 ```
 
 Manual (equivalent-ish):
@@ -155,22 +155,22 @@ git pull
 pnpm install
 pnpm build
 pnpm ui:build # auto-installs UI deps on first run
-IronCliw doctor
-IronCliw health
+ironcliw doctor
+ironcliw health
 ```
 
 Notes:
 
-- `pnpm build` matters when you run the packaged `IronCliw` binary ([`IronCliw.mjs`](https://github.com/IronCliw/IronCliw/blob/main/IronCliw.mjs)) or use Node to run `dist/`.
-- If you run from a repo checkout without a global install, use `pnpm IronCliw ...` for CLI commands.
-- If you run directly from TypeScript (`pnpm IronCliw ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
-- Switching between global and git installs is easy: install the other flavor, then run `IronCliw doctor` so the gateway service entrypoint is rewritten to the current install.
+- `pnpm build` matters when you run the packaged `ironcliw` binary ([`ironcliw.mjs`](https://github.com/ironcliw/ironcliw/blob/main/ironcliw.mjs)) or use Node to run `dist/`.
+- If you run from a repo checkout without a global install, use `pnpm ironcliw ...` for CLI commands.
+- If you run directly from TypeScript (`pnpm ironcliw ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
+- Switching between global and git installs is easy: install the other flavor, then run `ironcliw doctor` so the gateway service entrypoint is rewritten to the current install.
 
-## Always Run: `IronCliw doctor`
+## Always Run: `ironcliw doctor`
 
 Doctor is the “safe update” command. It’s intentionally boring: repair + migrate + warn.
 
-Note: if you’re on a **source install** (git checkout), `IronCliw doctor` will offer to run `IronCliw update` first.
+Note: if you’re on a **source install** (git checkout), `ironcliw doctor` will offer to run `ironcliw update` first.
 
 Typical things it does:
 
@@ -187,19 +187,19 @@ Details: [Doctor](/gateway/doctor)
 CLI (works regardless of OS):
 
 ```bash
-IronCliw gateway status
-IronCliw gateway stop
-IronCliw gateway restart
-IronCliw gateway --port 18789
-IronCliw logs --follow
+ironcliw gateway status
+ironcliw gateway stop
+ironcliw gateway restart
+ironcliw gateway --port 18789
+ironcliw logs --follow
 ```
 
 If you’re supervised:
 
-- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.IronCliw.gateway` (use `ai.IronCliw.<profile>`; legacy `com.IronCliw.*` still works)
-- Linux systemd user service: `systemctl --user restart IronCliw-gateway[-<profile>].service`
-- Windows (WSL2): `systemctl --user restart IronCliw-gateway[-<profile>].service`
-  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `IronCliw gateway install`.
+- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.ironcliw.gateway` (use `ai.ironcliw.<profile>`; legacy `com.ironcliw.*` still works)
+- Linux systemd user service: `systemctl --user restart ironcliw-gateway[-<profile>].service`
+- Windows (WSL2): `systemctl --user restart ironcliw-gateway[-<profile>].service`
+  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `ironcliw gateway install`.
 
 Runbook + exact service labels: [Gateway runbook](/gateway)
 
@@ -210,20 +210,20 @@ Runbook + exact service labels: [Gateway runbook](/gateway)
 Install a known-good version (replace `<version>` with the last working one):
 
 ```bash
-npm i -g IronCliw@<version>
+npm i -g ironcliw@<version>
 ```
 
 ```bash
-pnpm add -g IronCliw@<version>
+pnpm add -g ironcliw@<version>
 ```
 
-Tip: to see the current published version, run `npm view IronCliw version`.
+Tip: to see the current published version, run `npm view ironcliw version`.
 
 Then restart + re-run doctor:
 
 ```bash
-IronCliw doctor
-IronCliw gateway restart
+ironcliw doctor
+ironcliw gateway restart
 ```
 
 ### Pin (source) by date
@@ -240,7 +240,7 @@ Then reinstall deps + restart:
 ```bash
 pnpm install
 pnpm build
-IronCliw gateway restart
+ironcliw gateway restart
 ```
 
 If you want to go back to latest later:
@@ -252,6 +252,6 @@ git pull
 
 ## If you’re stuck
 
-- Run `IronCliw doctor` again and read the output carefully (it often tells you the fix).
+- Run `ironcliw doctor` again and read the output carefully (it often tells you the fix).
 - Check: [Troubleshooting](/gateway/troubleshooting)
 - Ask in Discord: [https://discord.gg/clawd](https://discord.gg/clawd)

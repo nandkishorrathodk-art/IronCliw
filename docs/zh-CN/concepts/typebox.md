@@ -91,7 +91,7 @@ Connect（第一条消息）：
     "minProtocol": 2,
     "maxProtocol": 2,
     "client": {
-      "id": "IronCliw-macos",
+      "id": "ironcliw-macos",
       "displayName": "macos",
       "version": "1.0.0",
       "platform": "macos 15.1",
@@ -275,7 +275,7 @@ Swift 生成器输出：
 
 生成的 JSON Schema 在仓库的 `dist/protocol.schema.json` 中。发布的原始文件通常可在以下位置获取：
 
-- https://raw.githubusercontent.com/IronCliw/IronCliw/main/dist/protocol.schema.json
+- https://raw.githubusercontent.com/ironcliw/ironcliw/main/dist/protocol.schema.json
 
 ## 当你更改模式时
 

@@ -14,23 +14,23 @@ describe("buildCleanupPlan", () => {
     const tmpRoot = path.join(path.parse(process.cwd()).root, "tmp");
     const cfg = {
       agents: {
-        defaults: { workspace: path.join(tmpRoot, "IronCliw-workspace-1") },
-        list: [{ workspace: path.join(tmpRoot, "IronCliw-workspace-2") }],
+        defaults: { workspace: path.join(tmpRoot, "ironcliw-workspace-1") },
+        list: [{ workspace: path.join(tmpRoot, "ironcliw-workspace-2") }],
       },
     };
     const plan = buildCleanupPlan({
       cfg: cfg as unknown as IronCliwConfig,
-      stateDir: path.join(tmpRoot, "IronCliw-state"),
-      configPath: path.join(tmpRoot, "IronCliw-state", "IronCliw.json"),
-      oauthDir: path.join(tmpRoot, "IronCliw-oauth"),
+      stateDir: path.join(tmpRoot, "ironcliw-state"),
+      configPath: path.join(tmpRoot, "ironcliw-state", "ironcliw.json"),
+      oauthDir: path.join(tmpRoot, "ironcliw-oauth"),
     });
 
     expect(plan.configInsideState).toBe(true);
     expect(plan.oauthInsideState).toBe(false);
     expect(new Set(plan.workspaceDirs)).toEqual(
       new Set([
-        path.join(tmpRoot, "IronCliw-workspace-1"),
-        path.join(tmpRoot, "IronCliw-workspace-2"),
+        path.join(tmpRoot, "ironcliw-workspace-1"),
+        path.join(tmpRoot, "ironcliw-workspace-2"),
       ]),
     );
   });
@@ -69,11 +69,11 @@ describe("cleanup path removals", () => {
 
   it("removes state and only linked paths outside state", async () => {
     const runtime = createRuntimeMock();
-    const tmpRoot = path.join(path.parse(process.cwd()).root, "tmp", "IronCliw-cleanup");
+    const tmpRoot = path.join(path.parse(process.cwd()).root, "tmp", "ironcliw-cleanup");
     await removeStateAndLinkedPaths(
       {
         stateDir: path.join(tmpRoot, "state"),
-        configPath: path.join(tmpRoot, "state", "IronCliw.json"),
+        configPath: path.join(tmpRoot, "state", "ironcliw.json"),
         oauthDir: path.join(tmpRoot, "oauth"),
         configInsideState: true,
         oauthInsideState: false,
@@ -85,19 +85,19 @@ describe("cleanup path removals", () => {
     const joinedLogs = runtime.log.mock.calls
       .map(([line]) => line.replaceAll("\\", "/"))
       .join("\n");
-    expect(joinedLogs).toContain("/tmp/IronCliw-cleanup/state");
-    expect(joinedLogs).toContain("/tmp/IronCliw-cleanup/oauth");
-    expect(joinedLogs).not.toContain("IronCliw.json");
+    expect(joinedLogs).toContain("/tmp/ironcliw-cleanup/state");
+    expect(joinedLogs).toContain("/tmp/ironcliw-cleanup/oauth");
+    expect(joinedLogs).not.toContain("ironcliw.json");
   });
 
   it("removes every workspace directory", async () => {
     const runtime = createRuntimeMock();
-    const workspaces = ["/tmp/IronCliw-workspace-1", "/tmp/IronCliw-workspace-2"];
+    const workspaces = ["/tmp/ironcliw-workspace-1", "/tmp/ironcliw-workspace-2"];
 
     await removeWorkspaceDirs(workspaces, runtime, { dryRun: true });
 
     const logs = runtime.log.mock.calls.map(([line]) => line);
-    expect(logs).toContain("[dry-run] remove /tmp/IronCliw-workspace-1");
-    expect(logs).toContain("[dry-run] remove /tmp/IronCliw-workspace-2");
+    expect(logs).toContain("[dry-run] remove /tmp/ironcliw-workspace-1");
+    expect(logs).toContain("[dry-run] remove /tmp/ironcliw-workspace-2");
   });
 });

@@ -22,14 +22,14 @@ and how you prefer to configure providers.
 Run the wizard in a terminal:
 
 ```bash
-IronCliw onboard
+ironcliw onboard
 ```
 
 Use the CLI wizard when you want full control of the Gateway, workspace,
 channels, and skills. Docs:
 
 - [Onboarding Wizard (CLI)](/start/wizard)
-- [`IronCliw onboard` command](/cli/onboard)
+- [`ironcliw onboard` command](/cli/onboard)
 
 ## macOS app onboarding
 

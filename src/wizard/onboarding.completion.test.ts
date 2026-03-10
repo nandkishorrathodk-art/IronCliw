@@ -10,12 +10,12 @@ function createPrompter(confirmValue = false) {
 
 function createDeps() {
   const deps: NonNullable<Parameters<typeof setupOnboardingShellCompletion>[0]["deps"]> = {
-    resolveCliName: () => "IronCliw",
+    resolveCliName: () => "ironcliw",
     checkShellCompletionStatus: vi.fn(async (_binName: string) => ({
       shell: "zsh" as const,
       profileInstalled: false,
       cacheExists: false,
-      cachePath: "/tmp/IronCliw.zsh",
+      cachePath: "/tmp/ironcliw.zsh",
       usesSlowPattern: false,
     })),
     ensureCompletionCacheExists: vi.fn(async (_binName: string) => true),
@@ -32,8 +32,8 @@ describe("setupOnboardingShellCompletion", () => {
     await setupOnboardingShellCompletion({ flow: "quickstart", prompter, deps });
 
     expect(prompter.confirm).not.toHaveBeenCalled();
-    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("IronCliw");
-    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "IronCliw");
+    expect(deps.ensureCompletionCacheExists).toHaveBeenCalledWith("ironcliw");
+    expect(deps.installCompletion).toHaveBeenCalledWith("zsh", true, "ironcliw");
     expect(prompter.note).toHaveBeenCalled();
   });
 

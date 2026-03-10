@@ -1,11 +1,11 @@
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import { POSIX_IronCliw_TMP_DIR, resolvePreferredIronCliwTmpDir } from "./tmp-IronCliw-dir.js";
+import { POSIX_IRONCLIW_TMP_DIR, resolvePreferredIronCliwTmpDir } from "./tmp-ironcliw-dir.js";
 
 type TmpDirOptions = NonNullable<Parameters<typeof resolvePreferredIronCliwTmpDir>[0]>;
 
 function fallbackTmp(uid = 501) {
-  return path.join("/var/fallback", `IronCliw-${uid}`);
+  return path.join("/var/fallback", `ironcliw-${uid}`);
 }
 
 function nodeErrorWithCode(code: string) {
@@ -54,7 +54,7 @@ function resolveWithReadOnlyTmpFallback(params: {
   return resolvePreferredIronCliwTmpDir({
     accessSync: readOnlyTmpAccessSync(),
     lstatSync: vi.fn((target: string) => {
-      if (target === POSIX_IronCliw_TMP_DIR) {
+      if (target === POSIX_IRONCLIW_TMP_DIR) {
         throw nodeErrorWithCode("ENOENT");
       }
       if (target === params.fallbackPath) {
@@ -104,7 +104,7 @@ function resolveWithMocks(params: {
   const chmodSync = params.chmodSync ?? vi.fn();
   const warn = params.warn ?? vi.fn();
   const wrappedLstatSync = vi.fn((target: string) => {
-    if (target === POSIX_IronCliw_TMP_DIR) {
+    if (target === POSIX_IRONCLIW_TMP_DIR) {
       return params.lstatSync(target);
     }
     if (target === fallbackPath) {
@@ -131,7 +131,7 @@ function resolveWithMocks(params: {
 }
 
 describe("resolvePreferredIronCliwTmpDir", () => {
-  it("prefers /tmp/IronCliw when it already exists and is writable", () => {
+  it("prefers /tmp/ironcliw when it already exists and is writable", () => {
     const lstatSync: NonNullable<TmpDirOptions["lstatSync"]> = vi.fn(() => ({
       isDirectory: () => true,
       isSymbolicLink: () => false,
@@ -142,24 +142,24 @@ describe("resolvePreferredIronCliwTmpDir", () => {
 
     expect(lstatSync).toHaveBeenCalledTimes(1);
     expect(accessSync).toHaveBeenCalledTimes(1);
-    expect(resolved).toBe(POSIX_IronCliw_TMP_DIR);
+    expect(resolved).toBe(POSIX_IRONCLIW_TMP_DIR);
     expect(tmpdir).not.toHaveBeenCalled();
   });
 
-  it("prefers /tmp/IronCliw when it does not exist but /tmp is writable", () => {
+  it("prefers /tmp/ironcliw when it does not exist but /tmp is writable", () => {
     const lstatSyncMock = missingThenSecureLstat();
 
     const { resolved, accessSync, mkdirSync, tmpdir } = resolveWithMocks({
       lstatSync: lstatSyncMock,
     });
 
-    expect(resolved).toBe(POSIX_IronCliw_TMP_DIR);
+    expect(resolved).toBe(POSIX_IRONCLIW_TMP_DIR);
     expect(accessSync).toHaveBeenCalledWith("/tmp", expect.any(Number));
-    expect(mkdirSync).toHaveBeenCalledWith(POSIX_IronCliw_TMP_DIR, expect.any(Object));
+    expect(mkdirSync).toHaveBeenCalledWith(POSIX_IRONCLIW_TMP_DIR, expect.any(Object));
     expect(tmpdir).not.toHaveBeenCalled();
   });
 
-  it("falls back to os.tmpdir()/IronCliw when /tmp/IronCliw is not a directory", () => {
+  it("falls back to os.tmpdir()/ironcliw when /tmp/ironcliw is not a directory", () => {
     const lstatSync = vi.fn(() => makeDirStat({ isDirectory: false, mode: 0o100644 }));
     const { resolved, tmpdir } = resolveWithMocks({ lstatSync });
 
@@ -167,7 +167,7 @@ describe("resolvePreferredIronCliwTmpDir", () => {
     expect(tmpdir).toHaveBeenCalled();
   });
 
-  it("falls back to os.tmpdir()/IronCliw when /tmp is not writable", () => {
+  it("falls back to os.tmpdir()/ironcliw when /tmp is not writable", () => {
     const accessSync = vi.fn((target: string) => {
       if (target === "/tmp") {
         throw new Error("read-only");
@@ -185,15 +185,15 @@ describe("resolvePreferredIronCliwTmpDir", () => {
     expect(tmpdir).toHaveBeenCalled();
   });
 
-  it("falls back when /tmp/IronCliw is a symlink", () => {
+  it("falls back when /tmp/ironcliw is a symlink", () => {
     expectFallsBackToOsTmpDir({ lstatSync: symlinkTmpDirLstat() });
   });
 
-  it("falls back when /tmp/IronCliw is not owned by the current user", () => {
+  it("falls back when /tmp/ironcliw is not owned by the current user", () => {
     expectFallsBackToOsTmpDir({ lstatSync: vi.fn(() => makeDirStat({ uid: 0 })) });
   });
 
-  it("falls back when /tmp/IronCliw is group/other writable", () => {
+  it("falls back when /tmp/ironcliw is group/other writable", () => {
     expectFallsBackToOsTmpDir({ lstatSync: vi.fn(() => makeDirStat({ mode: 0o40777 })) });
   });
 

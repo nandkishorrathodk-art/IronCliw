@@ -22,7 +22,7 @@ enum WatchMessagingError: LocalizedError {
 
 @MainActor
 final class WatchMessagingService: NSObject, @preconcurrency WatchMessagingServicing {
-    nonisolated private static let logger = Logger(subsystem: "ai.IronCliw", category: "watch.messaging")
+    nonisolated private static let logger = Logger(subsystem: "ai.ironcliw", category: "watch.messaging")
     private let session: WCSession?
     private var pendingActivationContinuations: [CheckedContinuation<Void, Never>] = []
     private var replyHandler: (@Sendable (WatchQuickReplyEvent) -> Void)?

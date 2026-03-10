@@ -2,7 +2,7 @@
 
 Stop typing `docker-compose` commands. Just type `clawdock-start`.
 
-Inspired by Simon Willison's [Running IronCliw in Docker](https://til.simonwillison.net/llms/IronCliw-docker).
+Inspired by Simon Willison's [Running IronCliw in Docker](https://til.simonwillison.net/llms/ironcliw-docker).
 
 - [Quickstart](#quickstart)
 - [Available Commands](#available-commands)
@@ -25,7 +25,7 @@ Inspired by Simon Willison's [Running IronCliw in Docker](https://til.simonwilli
 **Install:**
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/IronCliw/IronCliw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/ironcliw/ironcliw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 ```bash
@@ -40,7 +40,7 @@ clawdock-help
 
 On first command, ClawDock auto-detects your IronCliw directory:
 
-- Checks common paths (`~/IronCliw`, `~/workspace/IronCliw`, etc.)
+- Checks common paths (`~/ironcliw`, `~/workspace/ironcliw`, etc.)
 - If found, asks you to confirm
 - Saves to `~/.clawdock/config`
 
@@ -155,7 +155,7 @@ clawdock-shell
 **Inside the container, login to WhatsApp:**
 
 ```bash
-IronCliw channels login --channel whatsapp --verbose
+ironcliw channels login --channel whatsapp --verbose
 ```
 
 Scan the QR code with WhatsApp on your phone.
@@ -163,7 +163,7 @@ Scan the QR code with WhatsApp on your phone.
 **Verify connection:**
 
 ```bash
-IronCliw status
+ironcliw status
 ```
 
 ### Troubleshooting Device Pairing

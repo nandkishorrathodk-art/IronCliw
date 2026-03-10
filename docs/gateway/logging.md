@@ -17,9 +17,9 @@ IronCliw has two log “surfaces”:
 
 ## File-based logger
 
-- Default rolling log file is under `/tmp/IronCliw/` (one file per day): `IronCliw-YYYY-MM-DD.log`
+- Default rolling log file is under `/tmp/ironcliw/` (one file per day): `ironcliw-YYYY-MM-DD.log`
   - Date uses the gateway host's local timezone.
-- The log file path and level can be configured via `~/.IronCliw/IronCliw.json`:
+- The log file path and level can be configured via `~/.ironcliw/ironcliw.json`:
   - `logging.file`
   - `logging.level`
 
@@ -29,7 +29,7 @@ The Control UI Logs tab tails this file via the gateway (`logs.tail`).
 CLI can do the same:
 
 ```bash
-IronCliw logs --follow
+ironcliw logs --follow
 ```
 
 **Verbose vs. log levels**
@@ -73,7 +73,7 @@ The gateway prints WebSocket protocol logs in two modes:
 
 ### WS log style
 
-`IronCliw gateway` supports a per-gateway style switch:
+`ironcliw gateway` supports a per-gateway style switch:
 
 - `--ws-log auto` (default): normal mode is optimized; verbose mode uses compact output
 - `--ws-log compact`: compact output (paired request/response) when verbose
@@ -84,13 +84,13 @@ Examples:
 
 ```bash
 # optimized (only errors/slow)
-IronCliw gateway
+ironcliw gateway
 
 # show all WS traffic (paired)
-IronCliw gateway --verbose --ws-log compact
+ironcliw gateway --verbose --ws-log compact
 
 # show all WS traffic (full meta)
-IronCliw gateway --verbose --ws-log full
+ironcliw gateway --verbose --ws-log full
 ```
 
 ## Console formatting (subsystem logging)

@@ -22,7 +22,7 @@ async function withSymlinkPathEscape<T>(params: {
   rootDir: string;
   run: (relativePath: string) => Promise<T>;
 }): Promise<T> {
-  const outsideDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-route-escape-"));
+  const outsideDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-route-escape-"));
   const linkName = `escape-link-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   const linkPath = path.join(params.rootDir, linkName);
   await fs.mkdir(params.rootDir, { recursive: true });

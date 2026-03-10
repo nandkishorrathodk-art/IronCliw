@@ -1,4 +1,4 @@
-import type { AcpRuntime, IronCliwPluginServiceContext } from "IronCliw/plugin-sdk/acpx";
+import type { AcpRuntime, IronCliwPluginServiceContext } from "ironcliw/plugin-sdk/acpx";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../../src/acp/runtime/errors.js";
 import {

@@ -1,5 +1,5 @@
-import type { OAuthCredentials } from "@mariozechner/pi-ai";
-import { loginOpenAICodex } from "@mariozechner/pi-ai";
+import type { OAuthCredentials } from "@mariozechner/pi-ai/oauth";
+import { loginOpenAICodex } from "@mariozechner/pi-ai/oauth";
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { createVpsAwareOAuthHandlers } from "./oauth-flow.js";
@@ -14,6 +14,7 @@ export async function loginOpenAICodexOAuth(params: {
   isRemote: boolean;
   openUrl: (url: string) => Promise<void>;
   localBrowserMessage?: string;
+  // eslint-disable-next-line typescript-eslint/no-redundant-type-constituents
 }): Promise<OAuthCredentials | null> {
   const { prompter, runtime, isRemote, openUrl, localBrowserMessage } = params;
   const preflight = await runOpenAIOAuthTlsPreflight();
@@ -41,7 +42,7 @@ export async function loginOpenAICodexOAuth(params: {
 
   const spin = prompter.progress("Starting OAuth flow…");
   try {
-    const { onAuth, onPrompt } = createVpsAwareOAuthHandlers({
+    const { onAuth: baseOnAuth, onPrompt } = createVpsAwareOAuthHandlers({
       isRemote,
       prompter,
       runtime,
@@ -51,16 +52,16 @@ export async function loginOpenAICodexOAuth(params: {
     });
 
     const creds = await loginOpenAICodex({
-      onAuth,
+      onAuth: baseOnAuth,
       onPrompt,
-      onProgress: (msg) => spin.update(msg),
+      onProgress: (msg: string) => spin.update(msg),
     });
     spin.stop("OpenAI OAuth complete");
     return creds ?? null;
   } catch (err) {
     spin.stop("OpenAI OAuth failed");
     runtime.error(String(err));
-    await prompter.note("Trouble with OAuth? See https://docs.IronCliw.ai/start/faq", "OAuth help");
+    await prompter.note("Trouble with OAuth? See https://docs.ironcliw.ai/start/faq", "OAuth help");
     throw err;
   }
 }

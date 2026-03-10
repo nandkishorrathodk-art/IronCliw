@@ -1,5 +1,5 @@
-import type { LookupFn, SsrFPolicy } from "IronCliw/plugin-sdk/tlon";
-import { fetchWithSsrFGuard } from "IronCliw/plugin-sdk/tlon";
+import type { LookupFn, SsrFPolicy } from "ironcliw/plugin-sdk/tlon";
+import { fetchWithSsrFGuard } from "ironcliw/plugin-sdk/tlon";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 

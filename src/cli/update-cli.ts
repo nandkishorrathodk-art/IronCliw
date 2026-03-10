@@ -44,16 +44,16 @@ export function registerUpdateCli(program: Command) {
     .option("--yes", "Skip confirmation prompts (non-interactive)", false)
     .addHelpText("after", () => {
       const examples = [
-        ["IronCliw update", "Update a source checkout (git)"],
-        ["IronCliw update --channel beta", "Switch to beta channel (git + npm)"],
-        ["IronCliw update --channel dev", "Switch to dev channel (git + npm)"],
-        ["IronCliw update --tag beta", "One-off update to a dist-tag or version"],
-        ["IronCliw update --dry-run", "Preview actions without changing anything"],
-        ["IronCliw update --no-restart", "Update without restarting the service"],
-        ["IronCliw update --json", "Output result as JSON"],
-        ["IronCliw update --yes", "Non-interactive (accept downgrade prompts)"],
-        ["IronCliw update wizard", "Interactive update wizard"],
-        ["IronCliw --update", "Shorthand for IronCliw update"],
+        ["ironcliw update", "Update a source checkout (git)"],
+        ["ironcliw update --channel beta", "Switch to beta channel (git + npm)"],
+        ["ironcliw update --channel dev", "Switch to dev channel (git + npm)"],
+        ["ironcliw update --tag beta", "One-off update to a dist-tag or version"],
+        ["ironcliw update --dry-run", "Preview actions without changing anything"],
+        ["ironcliw update --no-restart", "Update without restarting the service"],
+        ["ironcliw update --json", "Output result as JSON"],
+        ["ironcliw update --yes", "Non-interactive (accept downgrade prompts)"],
+        ["ironcliw update wizard", "Interactive update wizard"],
+        ["ironcliw --update", "Shorthand for ironcliw update"],
       ] as const;
       const fmtExamples = examples
         .map(([cmd, desc]) => `  ${theme.command(cmd)} ${theme.muted(`# ${desc}`)}`)
@@ -65,7 +65,7 @@ ${theme.heading("What this does:")}
 
 ${theme.heading("Switch channels:")}
   - Use --channel stable|beta|dev to persist the update channel in config
-  - Run IronCliw update status to see the active channel and source
+  - Run ironcliw update status to see the active channel and source
   - Use --tag <dist-tag|version> for a one-off npm update without persisting
 
 ${theme.heading("Non-interactive:")}
@@ -82,7 +82,7 @@ ${theme.heading("Notes:")}
   - Downgrades require confirmation (can break configuration)
   - Skips update if the working directory has uncommitted changes
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.IronCliw.ai/cli/update")}`;
+${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.ironcliw.ai/cli/update")}`;
     })
     .action(async (opts) => {
       try {
@@ -107,7 +107,7 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.IronCliw.ai/cli/up
     .option("--timeout <seconds>", "Timeout for each update step in seconds (default: 1200)")
     .addHelpText(
       "after",
-      `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.IronCliw.ai/cli/update")}\n`,
+      `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.ironcliw.ai/cli/update")}\n`,
     )
     .action(async (opts, command) => {
       try {
@@ -129,14 +129,14 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.IronCliw.ai/cli/up
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw update status", "Show channel + version status."],
-          ["IronCliw update status --json", "JSON output."],
-          ["IronCliw update status --timeout 10", "Custom timeout."],
+          ["ironcliw update status", "Show channel + version status."],
+          ["ironcliw update status --json", "JSON output."],
+          ["ironcliw update status --timeout 10", "Custom timeout."],
         ])}\n\n${theme.heading("Notes:")}\n${theme.muted(
           "- Shows current update channel (stable/beta/dev) and source",
         )}\n${theme.muted("- Includes git tag/branch/SHA for source checkouts")}\n\n${theme.muted(
           "Docs:",
-        )} ${formatDocsLink("/cli/update", "docs.IronCliw.ai/cli/update")}`,
+        )} ${formatDocsLink("/cli/update", "docs.ironcliw.ai/cli/update")}`,
     )
     .action(async (opts, command) => {
       try {

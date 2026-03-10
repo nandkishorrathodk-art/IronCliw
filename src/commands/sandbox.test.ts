@@ -30,9 +30,9 @@ const NOW = Date.now();
 
 function createContainer(overrides: Partial<SandboxContainerInfo> = {}): SandboxContainerInfo {
   return {
-    containerName: "IronCliw-sandbox-test",
+    containerName: "ironcliw-sandbox-test",
     sessionKey: "test-session",
-    image: "IronCliw/sandbox:latest",
+    image: "ironcliw/sandbox:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,
@@ -43,9 +43,9 @@ function createContainer(overrides: Partial<SandboxContainerInfo> = {}): Sandbox
 
 function createBrowser(overrides: Partial<SandboxBrowserInfo> = {}): SandboxBrowserInfo {
   return {
-    containerName: "IronCliw-browser-test",
+    containerName: "ironcliw-browser-test",
     sessionKey: "test-session",
-    image: "IronCliw/browser:latest",
+    image: "ironcliw/browser:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,

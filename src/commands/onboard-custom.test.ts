@@ -345,7 +345,7 @@ describe("promptCustomApiConfig", () => {
         providers: {
           filemain: {
             source: "file",
-            path: "/tmp/IronCliw-missing-provider.json",
+            path: "/tmp/ironcliw-missing-provider.json",
             mode: "json",
           },
         },
@@ -429,7 +429,7 @@ describe("parseNonInteractiveCustomApiFlags", () => {
       baseUrl: "https://llm.example.com/v1",
       modelId: "foo-large",
       compatibility: "openai",
-      apiKey: "custom-test-key",
+      apiKey: "custom-test-key", // pragma: allowlist secret
       providerId: "my-custom",
     });
   });

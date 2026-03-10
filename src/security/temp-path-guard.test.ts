@@ -196,16 +196,16 @@ describe("temp path guard", () => {
 
   it("detects dynamic and ignores static fixtures", () => {
     const dynamicFixtures = [
-      "const p = path.join(os.tmpdir(), `IronCliw-${id}`);",
+      "const p = path.join(os.tmpdir(), `ironcliw-${id}`);",
       "const p = path.join(os.tmpdir(), 'safe', `${token}`);",
     ];
     const staticFixtures = [
-      "const p = path.join(os.tmpdir(), 'IronCliw-fixed');",
-      "const p = path.join(os.tmpdir(), `IronCliw-fixed`);",
+      "const p = path.join(os.tmpdir(), 'ironcliw-fixed');",
+      "const p = path.join(os.tmpdir(), `ironcliw-fixed`);",
       "const p = path.join(os.tmpdir(), prefix + '-x');",
       "const p = path.join(os.tmpdir(), segment);",
-      "const p = path.join('/tmp', `IronCliw-${id}`);",
-      "// path.join(os.tmpdir(), `IronCliw-${id}`)",
+      "const p = path.join('/tmp', `ironcliw-${id}`);",
+      "// path.join(os.tmpdir(), `ironcliw-${id}`)",
       "const p = path.join(os.tmpdir());",
     ];
 

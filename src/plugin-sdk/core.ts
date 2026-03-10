@@ -24,7 +24,7 @@ export {
   type PluginCommandRunOptions,
   type PluginCommandRunResult,
 } from "./run-command.js";
-export { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+export { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 
 export { resolveGatewayBindUrl } from "../shared/gateway-bind-url.js";
 export type { GatewayBindUrlResult } from "../shared/gateway-bind-url.js";

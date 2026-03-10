@@ -18,9 +18,9 @@ describe("noteSessionLockHealth", () => {
 
   beforeEach(async () => {
     note.mockClear();
-    envSnapshot = captureEnv(["IronCliw_STATE_DIR"]);
-    root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-doctor-locks-"));
-    process.env.IronCliw_STATE_DIR = root;
+    envSnapshot = captureEnv(["IRONCLIW_STATE_DIR"]);
+    root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-doctor-locks-"));
+    process.env.IRONCLIW_STATE_DIR = root;
   });
 
   afterEach(async () => {

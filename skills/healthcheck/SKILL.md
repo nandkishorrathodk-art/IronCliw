@@ -76,14 +76,14 @@ If the user grants read-only permission, run the OS-appropriate checks by defaul
 
 ### 2) Run IronCliw security audits (read-only)
 
-As part of the default read-only checks, run `IronCliw security audit --deep`. Only offer alternatives if the user requests them:
+As part of the default read-only checks, run `ironcliw security audit --deep`. Only offer alternatives if the user requests them:
 
-1. `IronCliw security audit` (faster, non-probing)
-2. `IronCliw security audit --json` (structured output)
+1. `ironcliw security audit` (faster, non-probing)
+2. `ironcliw security audit --json` (structured output)
 
 Offer to apply IronCliw safe defaults (numbered):
 
-1. `IronCliw security audit --fix`
+1. `ironcliw security audit --fix`
 
 Be explicit that `--fix` only tightens IronCliw defaults and file permissions. It does not change host firewall, SSH, or OS update policies.
 
@@ -91,7 +91,7 @@ If browser control is enabled, recommend that 2FA be enabled on all important ac
 
 ### 3) Check IronCliw version/update status (read-only)
 
-As part of the default read-only checks, run `IronCliw update status`.
+As part of the default read-only checks, run `ironcliw update status`.
 
 Report the current channel and whether an update is available.
 
@@ -170,9 +170,9 @@ If unsure, ask.
 
 After IronCliw install or first hardening pass, run at least one baseline audit and version check:
 
-- `IronCliw security audit`
-- `IronCliw security audit --deep`
-- `IronCliw update status`
+- `ironcliw security audit`
+- `ironcliw security audit --deep`
+- `ironcliw update status`
 
 Ongoing monitoring is recommended. Use the IronCliw cron tool/CLI to schedule periodic audits (Gateway scheduler). Do not create scheduled tasks without explicit approval. Store outputs in a user-approved location and avoid secrets in logs.
 When scheduling headless cron runs, include a note in the output that instructs the user to call `healthcheck` so issues can be fixed.
@@ -181,35 +181,35 @@ When scheduling headless cron runs, include a note in the output that instructs 
 
 After any audit or hardening pass, explicitly offer scheduling and require a direct response. Use a short prompt like (numbered):
 
-1. “Do you want me to schedule periodic audits (e.g., daily/weekly) via `IronCliw cron add`?”
+1. “Do you want me to schedule periodic audits (e.g., daily/weekly) via `ironcliw cron add`?”
 
 If the user says yes, ask for:
 
 - cadence (daily/weekly), preferred time window, and output location
-- whether to also schedule `IronCliw update status`
+- whether to also schedule `ironcliw update status`
 
 Use a stable cron job name so updates are deterministic. Prefer exact names:
 
 - `healthcheck:security-audit`
 - `healthcheck:update-status`
 
-Before creating, `IronCliw cron list` and match on exact `name`. If found, `IronCliw cron edit <id> ...`.
-If not found, `IronCliw cron add --name <name> ...`.
+Before creating, `ironcliw cron list` and match on exact `name`. If found, `ironcliw cron edit <id> ...`.
+If not found, `ironcliw cron add --name <name> ...`.
 
 Also offer a periodic version check so the user can decide when to update (numbered):
 
-1. `IronCliw update status` (preferred for source checkouts and channels)
-2. `npm view IronCliw version` (published npm version)
+1. `ironcliw update status` (preferred for source checkouts and channels)
+2. `npm view ironcliw version` (published npm version)
 
 ## IronCliw command accuracy
 
 Use only supported commands and flags:
 
-- `IronCliw security audit [--deep] [--fix] [--json]`
-- `IronCliw status` / `IronCliw status --deep`
-- `IronCliw health --json`
-- `IronCliw update status`
-- `IronCliw cron add|list|runs|run`
+- `ironcliw security audit [--deep] [--fix] [--json]`
+- `ironcliw status` / `ironcliw status --deep`
+- `ironcliw health --json`
+- `ironcliw update status`
+- `ironcliw cron add|list|runs|run`
 
 Do not invent CLI flags or imply IronCliw enforces host firewall/SSH policies.
 

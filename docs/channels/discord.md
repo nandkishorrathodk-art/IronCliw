@@ -96,12 +96,12 @@ You will need to create a new application with a bot, add the bot to your server
     Your Discord bot token is a secret (like a password). Set it on the machine running IronCliw before messaging your agent.
 
 ```bash
-IronCliw config set channels.discord.token '"YOUR_BOT_TOKEN"' --json
-IronCliw config set channels.discord.enabled true --json
-IronCliw gateway
+ironcliw config set channels.discord.token '"YOUR_BOT_TOKEN"' --json
+ironcliw config set channels.discord.enabled true --json
+ironcliw gateway
 ```
 
-    If IronCliw is already running as a background service, use `IronCliw gateway restart` instead.
+    If IronCliw is already running as a background service, use `ironcliw gateway restart` instead.
 
   </Step>
 
@@ -152,8 +152,8 @@ DISCORD_BOT_TOKEN=...
       <Tab title="CLI">
 
 ```bash
-IronCliw pairing list discord
-IronCliw pairing approve discord <CODE>
+ironcliw pairing list discord
+ironcliw pairing approve discord <CODE>
 ```
 
       </Tab>
@@ -265,19 +265,19 @@ Now create some channels on your Discord server and start chatting. Your agent c
 Discord forum and media channels only accept thread posts. IronCliw supports two ways to create them:
 
 - Send a message to the forum parent (`channel:<forumId>`) to auto-create a thread. The thread title uses the first non-empty line of your message.
-- Use `IronCliw message thread create` to create a thread directly. Do not pass `--message-id` for forum channels.
+- Use `ironcliw message thread create` to create a thread directly. Do not pass `--message-id` for forum channels.
 
 Example: send to forum parent to create a thread
 
 ```bash
-IronCliw message send --channel discord --target channel:<forumId> \
+ironcliw message send --channel discord --target channel:<forumId> \
   --message "Topic title\nBody of the post"
 ```
 
 Example: create a forum thread explicitly
 
 ```bash
-IronCliw message thread create --channel discord --target channel:<forumId> \
+ironcliw message thread create --channel discord --target channel:<forumId> \
   --thread-name "Topic title" --message "Body of the post"
 ```
 
@@ -407,7 +407,7 @@ Example:
     - guild must match `channels.discord.guilds` (`id` preferred, slug accepted)
     - optional sender allowlists: `users` (stable IDs recommended) and `roles` (role IDs only); if either is configured, senders are allowed when they match `users` OR `roles`
     - direct name/tag matching is disabled by default; enable `channels.discord.dangerouslyAllowNameMatching: true` only as break-glass compatibility mode
-    - names/tags are supported for `users`, but IDs are safer; `IronCliw security audit` warns when name/tag entries are used
+    - names/tags are supported for `users`, but IDs are safer; `ironcliw security audit` warns when name/tag entries are used
     - if a guild has `channels` configured, non-listed channels are denied
     - if a guild has no `channels` block, all channels in that allowlisted guild are allowed
 
@@ -685,6 +685,71 @@ Default slash command settings:
 
   </Accordion>
 
+  <Accordion title="Persistent ACP channel bindings">
+    For stable "always-on" ACP workspaces, configure top-level typed ACP bindings targeting Discord conversations.
+
+    Config path:
+
+    - `bindings[]` with `type: "acp"` and `match.channel: "discord"`
+
+    Example:
+
+```json5
+{
+  agents: {
+    list: [
+      {
+        id: "codex",
+        runtime: {
+          type: "acp",
+          acp: {
+            agent: "codex",
+            backend: "acpx",
+            mode: "persistent",
+            cwd: "/workspace/ironcliw",
+          },
+        },
+      },
+    ],
+  },
+  bindings: [
+    {
+      type: "acp",
+      agentId: "codex",
+      match: {
+        channel: "discord",
+        accountId: "default",
+        peer: { kind: "channel", id: "222222222222222222" },
+      },
+      acp: { label: "codex-main" },
+    },
+  ],
+  channels: {
+    discord: {
+      guilds: {
+        "111111111111111111": {
+          channels: {
+            "222222222222222222": {
+              requireMention: false,
+            },
+          },
+        },
+      },
+    },
+  },
+}
+```
+
+    Notes:
+
+    - Thread messages can inherit the parent channel ACP binding.
+    - In a bound channel or thread, `/new` and `/reset` reset the same ACP session in place.
+    - Temporary thread bindings still work and can override target resolution while active.
+
+    See [ACP Agents](/tools/acp-agents) for binding behavior details.
+
+  </Accordion>
+
   <Accordion title="Reaction notifications">
     Per-guild reaction notification mode:
 
@@ -825,7 +890,7 @@ Default slash command settings:
     discord: {
       activity: "Live coding",
       activityType: 1,
-      activityUrl: "https://twitch.tv/IronCliw",
+      activityUrl: "https://twitch.tv/ironcliw",
     },
   },
 }
@@ -876,6 +941,13 @@ Default slash command settings:
     - `agentFilter`, `sessionFilter`, `cleanupAfterResolve`
 
     When `target` is `channel` or `both`, the approval prompt is visible in the channel. Only configured approvers can use the buttons; other users receive an ephemeral denial. Approval prompts include the command text, so only enable channel delivery in trusted channels. If the channel ID cannot be derived from the session key, IronCliw falls back to DM delivery.
+
+    Gateway auth for this handler uses the same shared credential resolution contract as other Gateway clients:
+
+    - env-first local auth (`IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD` then `gateway.auth.*`)
+    - in local mode, `gateway.remote.*` can be used as fallback when `gateway.auth.*` is unset
+    - remote-mode support via `gateway.remote.*` when applicable
+    - URL overrides are override-safe: CLI overrides do not reuse implicit credentials, and env overrides use env credentials only
 
     If approvals fail with unknown approval IDs, verify approver list and feature enablement.
 
@@ -1015,9 +1087,9 @@ message(action="send", channel="discord", target="channel:123", path="/path/to/a
     Useful checks:
 
 ```bash
-IronCliw doctor
-IronCliw channels status --probe
-IronCliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
+ironcliw logs --follow
 ```
 
   </Accordion>
@@ -1037,11 +1109,18 @@ IronCliw logs --follow
 
     - `Listener DiscordMessageListener timed out after 30000ms for event MESSAGE_CREATE`
     - `Slow listener detected ...`
+    - `discord inbound worker timed out after ...`
 
-    Canonical knob:
+    Listener budget knob:
 
     - single-account: `channels.discord.eventQueue.listenerTimeout`
     - multi-account: `channels.discord.accounts.<accountId>.eventQueue.listenerTimeout`
+
+    Worker run timeout knob:
+
+    - single-account: `channels.discord.inboundWorker.runTimeoutMs`
+    - multi-account: `channels.discord.accounts.<accountId>.inboundWorker.runTimeoutMs`
+    - default: `1800000` (30 minutes); set `0` to disable
 
     Recommended baseline:
 
@@ -1054,6 +1133,9 @@ IronCliw logs --follow
           eventQueue: {
             listenerTimeout: 120000,
           },
+          inboundWorker: {
+            runTimeoutMs: 1800000,
+          },
         },
       },
     },
@@ -1061,7 +1143,8 @@ IronCliw logs --follow
 }
 ```
 
-    Tune this first before adding alternate timeout controls elsewhere.
+    Use `eventQueue.listenerTimeout` for slow listener setup and `inboundWorker.runTimeoutMs`
+    only if you want a separate safety valve for queued agent turns.
 
   </Accordion>
 
@@ -1090,7 +1173,7 @@ IronCliw logs --follow
 
   <Accordion title="Voice STT drops with DecryptionFailed(...)">
 
-    - keep IronCliw current (`IronCliw update`) so the Discord voice receive recovery logic is present
+    - keep IronCliw current (`ironcliw update`) so the Discord voice receive recovery logic is present
     - confirm `channels.discord.voice.daveEncryption=true` (default)
     - start from `channels.discord.voice.decryptionFailureTolerance=24` (upstream default) and tune only if needed
     - watch logs for:
@@ -1112,21 +1195,23 @@ High-signal Discord fields:
 - startup/auth: `enabled`, `token`, `accounts.*`, `allowBots`
 - policy: `groupPolicy`, `dm.*`, `guilds.*`, `guilds.*.channels.*`
 - command: `commands.native`, `commands.useAccessGroups`, `configWrites`, `slashCommand.*`
-- event queue: `eventQueue.listenerTimeout` (canonical), `eventQueue.maxQueueSize`, `eventQueue.maxConcurrency`
+- event queue: `eventQueue.listenerTimeout` (listener budget), `eventQueue.maxQueueSize`, `eventQueue.maxConcurrency`
+- inbound worker: `inboundWorker.runTimeoutMs`
 - reply/history: `replyToMode`, `historyLimit`, `dmHistoryLimit`, `dms.*.historyLimit`
 - delivery: `textChunkLimit`, `chunkMode`, `maxLinesPerMessage`
 - streaming: `streaming` (legacy alias: `streamMode`), `draftChunk`, `blockStreaming`, `blockStreamingCoalesce`
 - media/retry: `mediaMaxMb`, `retry`
+  - `mediaMaxMb` caps outbound Discord uploads (default: `8MB`)
 - actions: `actions.*`
 - presence: `activity`, `status`, `activityType`, `activityUrl`
 - UI: `ui.components.accentColor`
-- features: `pluralkit`, `execApprovals`, `intents`, `agentComponents`, `heartbeat`, `responsePrefix`
+- features: `threadBindings`, top-level `bindings[]` (`type: "acp"`), `pluralkit`, `execApprovals`, `intents`, `agentComponents`, `heartbeat`, `responsePrefix`
 
 ## Safety and operations
 
 - Treat bot tokens as secrets (`DISCORD_BOT_TOKEN` preferred in supervised environments).
 - Grant least-privilege Discord permissions.
-- If command deploy/state is stale, restart gateway and re-check with `IronCliw channels status --probe`.
+- If command deploy/state is stale, restart gateway and re-check with `ironcliw channels status --probe`.
 
 ## Related
 

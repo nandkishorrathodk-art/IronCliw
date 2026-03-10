@@ -11,7 +11,7 @@ let sessionDir: string | undefined;
 let sessionStorePath: string;
 
 beforeEach(async () => {
-  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-group-gating-"));
+  sessionDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-group-gating-"));
   sessionStorePath = path.join(sessionDir, "sessions.json");
   await fs.writeFile(sessionStorePath, "{}");
 });
@@ -96,7 +96,7 @@ function makeOwnerGroupConfig() {
 
 function makeInboundCfg(messagePrefix = "") {
   return {
-    agents: { defaults: { workspace: "/tmp/IronCliw" } },
+    agents: { defaults: { workspace: "/tmp/ironcliw" } },
     channels: { whatsapp: { messagePrefix } },
   } as never;
 }
@@ -236,7 +236,7 @@ describe("applyGroupGating", () => {
           groups: { "*": { requireMention: false } },
         },
       },
-      messages: { groupChat: { mentionPatterns: ["@IronCliw"] } },
+      messages: { groupChat: { mentionPatterns: ["@ironcliw"] } },
     });
 
     const { result } = runGroupGating({

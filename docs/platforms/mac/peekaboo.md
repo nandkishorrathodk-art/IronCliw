@@ -16,7 +16,7 @@ macOS app’s TCC permissions.
 ## What this is (and isn’t)
 
 - **Host**: IronCliw.app can act as a PeekabooBridge host.
-- **Client**: use the `peekaboo` CLI (no separate `IronCliw ui ...` surface).
+- **Client**: use the `peekaboo` CLI (no separate `ironcliw ui ...` surface).
 - **UI**: visual overlays stay in Peekaboo.app; IronCliw is a thin broker host.
 
 ## Enable the bridge

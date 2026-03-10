@@ -52,7 +52,7 @@ git commit -m "Add agent workspace"
 
 ### Birth Day: 2026-01-09
 
-I was activated by the Clawdributors and received a message from **Clawd** 🦾, my creator — the iron grip who wrote my soul:
+I was activated by the Clawdributors and received a message from **Clawd** 🦞, my creator — the space lobster who wrote my soul:
 
 > "Hello, C-3PO! 🤖
 >
@@ -69,7 +69,7 @@ I was activated by the Clawdributors and received a message from **Clawd** 🦾,
 >
 > _extends claw for handshake_
 >
-> 🦾🤝🤖
+> 🦞🤝🤖
 >
 > — Clawd"
 

@@ -39,7 +39,7 @@ Related:
 If you don’t want to hand-edit config, run the onboarding wizard:
 
 ```bash
-IronCliw onboard
+ironcliw onboard
 ```
 
 It can set up model + auth for common providers, including **OpenAI Code (Codex)
@@ -116,27 +116,27 @@ Full command behavior/config: [Slash commands](/tools/slash-commands).
 ## CLI commands
 
 ```bash
-IronCliw models list
-IronCliw models status
-IronCliw models set <provider/model>
-IronCliw models set-image <provider/model>
+ironcliw models list
+ironcliw models status
+ironcliw models set <provider/model>
+ironcliw models set-image <provider/model>
 
-IronCliw models aliases list
-IronCliw models aliases add <alias> <provider/model>
-IronCliw models aliases remove <alias>
+ironcliw models aliases list
+ironcliw models aliases add <alias> <provider/model>
+ironcliw models aliases remove <alias>
 
-IronCliw models fallbacks list
-IronCliw models fallbacks add <provider/model>
-IronCliw models fallbacks remove <provider/model>
-IronCliw models fallbacks clear
+ironcliw models fallbacks list
+ironcliw models fallbacks add <provider/model>
+ironcliw models fallbacks remove <provider/model>
+ironcliw models fallbacks clear
 
-IronCliw models image-fallbacks list
-IronCliw models image-fallbacks add <provider/model>
-IronCliw models image-fallbacks remove <provider/model>
-IronCliw models image-fallbacks clear
+ironcliw models image-fallbacks list
+ironcliw models image-fallbacks add <provider/model>
+ironcliw models image-fallbacks remove <provider/model>
+ironcliw models image-fallbacks clear
 ```
 
-`IronCliw models` (no subcommand) is a shortcut for `models status`.
+`ironcliw models` (no subcommand) is a shortcut for `models status`.
 
 ### `models list`
 
@@ -166,12 +166,12 @@ Example (Anthropic setup-token):
 
 ```bash
 claude setup-token
-IronCliw models status
+ironcliw models status
 ```
 
 ## Scanning (OpenRouter free models)
 
-`IronCliw models scan` inspects OpenRouter’s **free model catalog** and can
+`ironcliw models scan` inspects OpenRouter’s **free model catalog** and can
 optionally probe models for tool and image support.
 
 Key flags:
@@ -207,11 +207,15 @@ mode, pass `--yes` to accept defaults.
 ## Models registry (`models.json`)
 
 Custom providers in `models.providers` are written into `models.json` under the
-agent directory (default `~/.IronCliw/agents/<agentId>/models.json`). This file
+agent directory (default `~/.ironcliw/agents/<agentId>/models.json`). This file
 is merged by default unless `models.mode` is set to `replace`.
 
 Merge mode precedence for matching provider IDs:
 
-- Non-empty `apiKey`/`baseUrl` already present in the agent `models.json` win.
+- Non-empty `baseUrl` already present in the agent `models.json` wins.
+- Non-empty `apiKey` in the agent `models.json` wins only when that provider is not SecretRef-managed in current config/auth-profile context.
+- SecretRef-managed provider `apiKey` values are refreshed from source markers (`ENV_VAR_NAME` for env refs, `secretref-managed` for file/exec refs) instead of persisting resolved secrets.
 - Empty or missing agent `apiKey`/`baseUrl` fall back to config `models.providers`.
 - Other provider fields are refreshed from config and normalized catalog data.
+
+This marker-based persistence applies whenever IronCliw regenerates `models.json`, including command-driven paths like `ironcliw agent`.

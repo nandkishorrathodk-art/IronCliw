@@ -19,7 +19,9 @@ const state = vi.hoisted(() => ({
   printOutput: "",
   bootstrapError: "",
   dirs: new Set<string>(),
+  dirModes: new Map<string, number>(),
   files: new Map<string, string>(),
+  fileModes: new Map<string, number>(),
 }));
 const defaultProgramArguments = ["node", "-e", "process.exit(0)"];
 
@@ -62,16 +64,41 @@ vi.mock("node:fs/promises", async (importOriginal) => {
       }
       throw new Error(`ENOENT: no such file or directory, access '${key}'`);
     }),
-    mkdir: vi.fn(async (p: string) => {
-      state.dirs.add(String(p));
+    mkdir: vi.fn(async (p: string, opts?: { mode?: number }) => {
+      const key = String(p);
+      state.dirs.add(key);
+      state.dirModes.set(key, opts?.mode ?? 0o777);
+    }),
+    stat: vi.fn(async (p: string) => {
+      const key = String(p);
+      if (state.dirs.has(key)) {
+        return { mode: state.dirModes.get(key) ?? 0o777 };
+      }
+      if (state.files.has(key)) {
+        return { mode: state.fileModes.get(key) ?? 0o666 };
+      }
+      throw new Error(`ENOENT: no such file or directory, stat '${key}'`);
+    }),
+    chmod: vi.fn(async (p: string, mode: number) => {
+      const key = String(p);
+      if (state.dirs.has(key)) {
+        state.dirModes.set(key, mode);
+        return;
+      }
+      if (state.files.has(key)) {
+        state.fileModes.set(key, mode);
+        return;
+      }
+      throw new Error(`ENOENT: no such file or directory, chmod '${key}'`);
     }),
     unlink: vi.fn(async (p: string) => {
       state.files.delete(String(p));
     }),
-    writeFile: vi.fn(async (p: string, data: string) => {
+    writeFile: vi.fn(async (p: string, data: string, opts?: { mode?: number }) => {
       const key = String(p);
       state.files.set(key, data);
       state.dirs.add(String(key.split("/").slice(0, -1).join("/")));
+      state.fileModes.set(key, opts?.mode ?? 0o666);
     }),
   };
   return { ...wrapped, default: wrapped };
@@ -83,7 +110,9 @@ beforeEach(() => {
   state.printOutput = "";
   state.bootstrapError = "";
   state.dirs.clear();
+  state.dirModes.clear();
   state.files.clear();
+  state.fileModes.clear();
   vi.clearAllMocks();
 });
 
@@ -102,13 +131,46 @@ describe("launchd runtime parsing", () => {
       lastExitReason: "exited",
     });
   });
+
+  it("does not set pid when pid = 0", () => {
+    const output = ["state = running", "pid = 0"].join("\n");
+    const info = parseLaunchctlPrint(output);
+    expect(info.pid).toBeUndefined();
+    expect(info.state).toBe("running");
+  });
+
+  it("sets pid for positive values", () => {
+    const output = ["state = running", "pid = 1234"].join("\n");
+    const info = parseLaunchctlPrint(output);
+    expect(info.pid).toBe(1234);
+  });
+
+  it("does not set pid for negative values", () => {
+    const output = ["state = waiting", "pid = -1"].join("\n");
+    const info = parseLaunchctlPrint(output);
+    expect(info.pid).toBeUndefined();
+    expect(info.state).toBe("waiting");
+  });
+
+  it("rejects pid and exit status values with junk suffixes", () => {
+    const output = [
+      "state = waiting",
+      "pid = 123abc",
+      "last exit status = 7ms",
+      "last exit reason = exited",
+    ].join("\n");
+    expect(parseLaunchctlPrint(output)).toEqual({
+      state: "waiting",
+      lastExitReason: "exited",
+    });
+  });
 });
 
 describe("launchctl list detection", () => {
   it("detects the resolved label in launchctl list", async () => {
-    state.listOutput = "123 0 ai.IronCliw.gateway\n";
+    state.listOutput = "123 0 ai.ironcliw.gateway\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", IronCliw_PROFILE: "default" },
+      env: { HOME: "/Users/test", IRONCLIW_PROFILE: "default" },
     });
     expect(listed).toBe(true);
   });
@@ -116,27 +178,41 @@ describe("launchctl list detection", () => {
   it("returns false when the label is missing", async () => {
     state.listOutput = "123 0 com.other.service\n";
     const listed = await isLaunchAgentListed({
-      env: { HOME: "/Users/test", IronCliw_PROFILE: "default" },
+      env: { HOME: "/Users/test", IRONCLIW_PROFILE: "default" },
     });
     expect(listed).toBe(false);
   });
 });
 
 describe("launchd bootstrap repair", () => {
-  it("bootstraps and kickstarts the resolved label", async () => {
+  it("enables, bootstraps, and kickstarts the resolved label", async () => {
     const env: Record<string, string | undefined> = {
       HOME: "/Users/test",
-      IronCliw_PROFILE: "default",
+      IRONCLIW_PROFILE: "default",
     };
     const repair = await repairLaunchAgentBootstrap({ env });
     expect(repair.ok).toBe(true);
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.IronCliw.gateway";
+    const label = "ai.ironcliw.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
+    const serviceId = `${domain}/${label}`;
 
-    expect(state.launchctlCalls).toContainEqual(["bootstrap", domain, plistPath]);
-    expect(state.launchctlCalls).toContainEqual(["kickstart", "-k", `${domain}/${label}`]);
+    const enableIndex = state.launchctlCalls.findIndex(
+      (c) => c[0] === "enable" && c[1] === serviceId,
+    );
+    const bootstrapIndex = state.launchctlCalls.findIndex(
+      (c) => c[0] === "bootstrap" && c[1] === domain && c[2] === plistPath,
+    );
+    const kickstartIndex = state.launchctlCalls.findIndex(
+      (c) => c[0] === "kickstart" && c[1] === "-k" && c[2] === serviceId,
+    );
+
+    expect(enableIndex).toBeGreaterThanOrEqual(0);
+    expect(bootstrapIndex).toBeGreaterThanOrEqual(0);
+    expect(kickstartIndex).toBeGreaterThanOrEqual(0);
+    expect(enableIndex).toBeLessThan(bootstrapIndex);
+    expect(bootstrapIndex).toBeLessThan(kickstartIndex);
   });
 });
 
@@ -144,7 +220,7 @@ describe("launchd install", () => {
   function createDefaultLaunchdEnv(): Record<string, string | undefined> {
     return {
       HOME: "/Users/test",
-      IronCliw_PROFILE: "default",
+      IRONCLIW_PROFILE: "default",
     };
   }
 
@@ -157,7 +233,7 @@ describe("launchd install", () => {
     });
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.IronCliw.gateway";
+    const label = "ai.ironcliw.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
     const serviceId = `${domain}/${label}`;
 
@@ -208,7 +284,27 @@ describe("launchd install", () => {
     expect(plist).toContain(`<integer>${LAUNCH_AGENT_THROTTLE_INTERVAL_SECONDS}</integer>`);
   });
 
-  it("restarts LaunchAgent with bootout-bootstrap-kickstart order", async () => {
+  it("tightens writable bits on launch agent dirs and plist", async () => {
+    const env = createDefaultLaunchdEnv();
+    state.dirs.add(env.HOME!);
+    state.dirModes.set(env.HOME!, 0o777);
+    state.dirs.add("/Users/test/Library");
+    state.dirModes.set("/Users/test/Library", 0o777);
+
+    await installLaunchAgent({
+      env,
+      stdout: new PassThrough(),
+      programArguments: defaultProgramArguments,
+    });
+
+    const plistPath = resolveLaunchAgentPlistPath(env);
+    expect(state.dirModes.get(env.HOME!)).toBe(0o755);
+    expect(state.dirModes.get("/Users/test/Library")).toBe(0o755);
+    expect(state.dirModes.get("/Users/test/Library/LaunchAgents")).toBe(0o755);
+    expect(state.fileModes.get(plistPath)).toBe(0o644);
+  });
+
+  it("restarts LaunchAgent with bootout-enable-bootstrap-kickstart order", async () => {
     const env = createDefaultLaunchdEnv();
     await restartLaunchAgent({
       env,
@@ -216,22 +312,28 @@ describe("launchd install", () => {
     });
 
     const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-    const label = "ai.IronCliw.gateway";
+    const label = "ai.ironcliw.gateway";
     const plistPath = resolveLaunchAgentPlistPath(env);
+    const serviceId = `${domain}/${label}`;
     const bootoutIndex = state.launchctlCalls.findIndex(
-      (c) => c[0] === "bootout" && c[1] === `${domain}/${label}`,
+      (c) => c[0] === "bootout" && c[1] === serviceId,
+    );
+    const enableIndex = state.launchctlCalls.findIndex(
+      (c) => c[0] === "enable" && c[1] === serviceId,
     );
     const bootstrapIndex = state.launchctlCalls.findIndex(
       (c) => c[0] === "bootstrap" && c[1] === domain && c[2] === plistPath,
     );
     const kickstartIndex = state.launchctlCalls.findIndex(
-      (c) => c[0] === "kickstart" && c[1] === "-k" && c[2] === `${domain}/${label}`,
+      (c) => c[0] === "kickstart" && c[1] === "-k" && c[2] === serviceId,
     );
 
     expect(bootoutIndex).toBeGreaterThanOrEqual(0);
+    expect(enableIndex).toBeGreaterThanOrEqual(0);
     expect(bootstrapIndex).toBeGreaterThanOrEqual(0);
     expect(kickstartIndex).toBeGreaterThanOrEqual(0);
-    expect(bootoutIndex).toBeLessThan(bootstrapIndex);
+    expect(bootoutIndex).toBeLessThan(enableIndex);
+    expect(enableIndex).toBeLessThan(bootstrapIndex);
     expect(bootstrapIndex).toBeLessThan(kickstartIndex);
   });
 
@@ -257,7 +359,7 @@ describe("launchd install", () => {
       await restartPromise;
       expect(killSpy).toHaveBeenCalledWith(4242, 0);
       const domain = typeof process.getuid === "function" ? `gui/${process.getuid()}` : "gui/501";
-      const label = "ai.IronCliw.gateway";
+      const label = "ai.ironcliw.gateway";
       const bootoutIndex = state.launchctlCalls.findIndex(
         (c) => c[0] === "bootout" && c[1] === `${domain}/${label}`,
       );
@@ -286,7 +388,7 @@ describe("launchd install", () => {
     }
     expect(message).toContain("logged-in macOS GUI session");
     expect(message).toContain("wrong user (including sudo)");
-    expect(message).toContain("https://docs.IronCliw.ai/gateway");
+    expect(message).toContain("https://docs.ironcliw.ai/gateway");
   });
 
   it("surfaces generic bootstrap failures without GUI-specific guidance", async () => {
@@ -306,40 +408,40 @@ describe("launchd install", () => {
 describe("resolveLaunchAgentPlistPath", () => {
   it.each([
     {
-      name: "uses default label when IronCliw_PROFILE is unset",
+      name: "uses default label when IRONCLIW_PROFILE is unset",
       env: { HOME: "/Users/test" },
-      expected: "/Users/test/Library/LaunchAgents/ai.IronCliw.gateway.plist",
+      expected: "/Users/test/Library/LaunchAgents/ai.ironcliw.gateway.plist",
     },
     {
-      name: "uses profile-specific label when IronCliw_PROFILE is set to a custom value",
-      env: { HOME: "/Users/test", IronCliw_PROFILE: "jbphoenix" },
-      expected: "/Users/test/Library/LaunchAgents/ai.IronCliw.jbphoenix.plist",
+      name: "uses profile-specific label when IRONCLIW_PROFILE is set to a custom value",
+      env: { HOME: "/Users/test", IRONCLIW_PROFILE: "jbphoenix" },
+      expected: "/Users/test/Library/LaunchAgents/ai.ironcliw.jbphoenix.plist",
     },
     {
-      name: "prefers IronCliw_LAUNCHD_LABEL over IronCliw_PROFILE",
+      name: "prefers IRONCLIW_LAUNCHD_LABEL over IRONCLIW_PROFILE",
       env: {
         HOME: "/Users/test",
-        IronCliw_PROFILE: "jbphoenix",
-        IronCliw_LAUNCHD_LABEL: "com.custom.label",
+        IRONCLIW_PROFILE: "jbphoenix",
+        IRONCLIW_LAUNCHD_LABEL: "com.custom.label",
       },
       expected: "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     },
     {
-      name: "trims whitespace from IronCliw_LAUNCHD_LABEL",
+      name: "trims whitespace from IRONCLIW_LAUNCHD_LABEL",
       env: {
         HOME: "/Users/test",
-        IronCliw_LAUNCHD_LABEL: "  com.custom.label  ",
+        IRONCLIW_LAUNCHD_LABEL: "  com.custom.label  ",
       },
       expected: "/Users/test/Library/LaunchAgents/com.custom.label.plist",
     },
     {
-      name: "ignores empty IronCliw_LAUNCHD_LABEL and falls back to profile",
+      name: "ignores empty IRONCLIW_LAUNCHD_LABEL and falls back to profile",
       env: {
         HOME: "/Users/test",
-        IronCliw_PROFILE: "myprofile",
-        IronCliw_LAUNCHD_LABEL: "   ",
+        IRONCLIW_PROFILE: "myprofile",
+        IRONCLIW_LAUNCHD_LABEL: "   ",
       },
-      expected: "/Users/test/Library/LaunchAgents/ai.IronCliw.myprofile.plist",
+      expected: "/Users/test/Library/LaunchAgents/ai.ironcliw.myprofile.plist",
     },
   ])("$name", ({ env, expected }) => {
     expect(resolveLaunchAgentPlistPath(env)).toBe(expected);

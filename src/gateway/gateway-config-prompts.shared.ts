@@ -26,8 +26,8 @@ export const TAILSCALE_MISSING_BIN_NOTE_LINES = [
 
 export const TAILSCALE_DOCS_LINES = [
   "Docs:",
-  "https://docs.IronCliw.ai/gateway/tailscale",
-  "https://docs.IronCliw.ai/web",
+  "https://docs.ironcliw.ai/gateway/tailscale",
+  "https://docs.ironcliw.ai/web",
 ] as const;
 
 function normalizeTailnetHostForUrl(rawHost: string): string | null {

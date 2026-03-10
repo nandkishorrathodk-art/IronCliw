@@ -56,7 +56,7 @@ final class GatewayDiscoveryModel {
             let browser = GatewayDiscoveryBrowserSupport.makeBrowser(
                 serviceType: IronCliwBonjour.gatewayServiceType,
                 domain: domain,
-                queueLabelPrefix: "ai.IronCliw.ios.gateway-discovery",
+                queueLabelPrefix: "ai.ironcliw.ios.gateway-discovery",
                 onState: { [weak self] state in
                     guard let self else { return }
                     self.statesByDomain[domain] = state

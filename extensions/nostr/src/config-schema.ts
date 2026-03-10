@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema, buildChannelConfigSchema } from "IronCliw/plugin-sdk/nostr";
+import { MarkdownConfigSchema, buildChannelConfigSchema } from "ironcliw/plugin-sdk/nostr";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

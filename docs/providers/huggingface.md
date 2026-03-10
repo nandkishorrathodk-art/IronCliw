@@ -21,7 +21,7 @@ title: "Hugging Face (Inference)"
 2. Run onboarding and choose **Hugging Face** in the provider dropdown, then enter your API key when prompted:
 
 ```bash
-IronCliw onboard --auth-choice huggingface-api-key
+ironcliw onboard --auth-choice huggingface-api-key
 ```
 
 3. In the **Default Hugging Face model** dropdown, pick the model you want (the list is loaded from the Inference API when you have a valid token; otherwise a built-in list is shown). Your choice is saved as the default model.
@@ -40,7 +40,7 @@ IronCliw onboard --auth-choice huggingface-api-key
 ## Non-interactive example
 
 ```bash
-IronCliw onboard --non-interactive \
+ironcliw onboard --non-interactive \
   --mode local \
   --auth-choice huggingface-api-key \
   --huggingface-api-key "$HF_TOKEN"
@@ -51,7 +51,7 @@ This will set `huggingface/deepseek-ai/DeepSeek-R1` as the default model.
 ## Environment note
 
 If the Gateway runs as a daemon (launchd/systemd), make sure `HUGGINGFACE_HUB_TOKEN` or `HF_TOKEN`
-is available to that process (for example, in `~/.IronCliw/.env` or via
+is available to that process (for example, in `~/.ironcliw/.env` or via
 `env.shellEnv`).
 
 ## Model discovery and onboarding dropdown

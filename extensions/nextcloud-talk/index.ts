@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/nextcloud-talk";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/nextcloud-talk";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/nextcloud-talk";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/nextcloud-talk";
 import { nextcloudTalkPlugin } from "./src/channel.js";
 import { setNextcloudTalkRuntime } from "./src/runtime.js";
 

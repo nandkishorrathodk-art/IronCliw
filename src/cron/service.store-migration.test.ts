@@ -5,7 +5,7 @@ import { CronService } from "./service.js";
 import { setupCronServiceSuite } from "./service.test-harness.js";
 
 const { logger: noopLogger, makeStorePath } = setupCronServiceSuite({
-  prefix: "IronCliw-cron-",
+  prefix: "ironcliw-cron-",
   baseTimeIso: "2026-02-06T17:00:00.000Z",
 });
 

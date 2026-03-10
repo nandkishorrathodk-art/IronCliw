@@ -29,9 +29,9 @@ function makeBrowserState(): BrowserServerState {
       noSandbox: false,
       attachOnly: false,
       ssrfPolicy: { allowPrivateNetwork: true },
-      defaultProfile: "IronCliw",
+      defaultProfile: "ironcliw",
       profiles: {
-        IronCliw: { cdpPort: 18800, color: "#FF4500" },
+        ironcliw: { cdpPort: 18800, color: "#FF4500" },
       },
     },
     profiles: new Map(),
@@ -46,7 +46,7 @@ function mockLaunchedChrome(
   launchIronCliwChrome.mockResolvedValue({
     pid,
     exe: { kind: "chromium", path: "/usr/bin/chromium" },
-    userDataDir: "/tmp/IronCliw-test",
+    userDataDir: "/tmp/ironcliw-test",
     cdpPort: 18800,
     startedAt: Date.now(),
     proc,
@@ -64,7 +64,7 @@ function setupEnsureBrowserAvailableHarness() {
 
   const state = makeBrowserState();
   const ctx = createBrowserRouteContext({ getState: () => state });
-  const profile = ctx.forProfile("IronCliw");
+  const profile = ctx.forProfile("ironcliw");
 
   return { launchIronCliwChrome, stopIronCliwChrome, isChromeCdpReady, profile };
 }

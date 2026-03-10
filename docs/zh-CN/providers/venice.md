@@ -65,7 +65,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **方案 B：交互式设置（推荐）**
 
 ```bash
-IronCliw onboard --auth-choice venice-api-key
+ironcliw onboard --auth-choice venice-api-key
 ```
 
 这将：
@@ -78,7 +78,7 @@ IronCliw onboard --auth-choice venice-api-key
 **方案 C：非交互式**
 
 ```bash
-IronCliw onboard --non-interactive \
+ironcliw onboard --non-interactive \
   --auth-choice venice-api-key \
   --venice-api-key "vapi_xxxxxxxxxxxx"
 ```
@@ -86,7 +86,7 @@ IronCliw onboard --non-interactive \
 ### 3. 验证设置
 
 ```bash
-IronCliw chat --model venice/llama-3.3-70b "Hello, are you working?"
+ironcliw chat --model venice/llama-3.3-70b "Hello, are you working?"
 ```
 
 ## 模型选择
@@ -101,19 +101,19 @@ IronCliw chat --model venice/llama-3.3-70b "Hello, are you working?"
 随时更改默认模型：
 
 ```bash
-IronCliw models set venice/claude-opus-45
-IronCliw models set venice/llama-3.3-70b
+ironcliw models set venice/claude-opus-45
+ironcliw models set venice/llama-3.3-70b
 ```
 
 列出所有可用模型：
 
 ```bash
-IronCliw models list | grep venice
+ironcliw models list | grep venice
 ```
 
-## 通过 `IronCliw configure` 配置
+## 通过 `ironcliw configure` 配置
 
-1. 运行 `IronCliw configure`
+1. 运行 `ironcliw configure`
 2. 选择 **Model/auth**
 3. 选择 **Venice AI**
 
@@ -202,19 +202,19 @@ Venice 使用积分制。请查看 [venice.ai/pricing](https://venice.ai/pricing
 
 ```bash
 # 使用默认私密模型
-IronCliw chat --model venice/llama-3.3-70b
+ironcliw chat --model venice/llama-3.3-70b
 
 # 通过 Venice 使用 Claude（匿名化）
-IronCliw chat --model venice/claude-opus-45
+ironcliw chat --model venice/claude-opus-45
 
 # 使用无审查模型
-IronCliw chat --model venice/venice-uncensored
+ironcliw chat --model venice/venice-uncensored
 
 # 使用视觉模型处理图像
-IronCliw chat --model venice/qwen3-vl-235b-a22b
+ironcliw chat --model venice/qwen3-vl-235b-a22b
 
 # 使用编程模型
-IronCliw chat --model venice/qwen3-coder-480b-a35b-instruct
+ironcliw chat --model venice/qwen3-coder-480b-a35b-instruct
 ```
 
 ## 故障排除
@@ -223,14 +223,14 @@ IronCliw chat --model venice/qwen3-coder-480b-a35b-instruct
 
 ```bash
 echo $VENICE_API_KEY
-IronCliw models list | grep venice
+ironcliw models list | grep venice
 ```
 
 确保密钥以 `vapi_` 开头。
 
 ### 模型不可用
 
-Venice 模型目录会动态更新。运行 `IronCliw models list` 查看当前可用的模型。部分模型可能暂时离线。
+Venice 模型目录会动态更新。运行 `ironcliw models list` 查看当前可用的模型。部分模型可能暂时离线。
 
 ### 连接问题
 

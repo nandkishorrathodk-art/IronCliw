@@ -19,7 +19,10 @@ import { recordSessionMetaFromInbound } from "../../../config/sessions.js";
 import { logVerbose, shouldLogVerbose } from "../../../globals.js";
 import type { getChildLogger } from "../../../logging.js";
 import { getAgentScopedMediaLocalRoots } from "../../../media/local-roots.js";
-import type { resolveAgentRoute } from "../../../routing/resolve-route.js";
+import {
+  resolveInboundLastRouteSessionKey,
+  type resolveAgentRoute,
+} from "../../../routing/resolve-route.js";
 import {
   readStoreAllowFromForDmPolicy,
   resolvePinnedMainDmOwnerFromAllowlist,
@@ -279,7 +282,7 @@ export async function processMessage(params: {
   const responsePrefix =
     prefixOptions.responsePrefix ??
     (configuredResponsePrefix === undefined && isSelfChat
-      ? (resolveIdentityNamePrefix(params.cfg, params.route.agentId) ?? "[IronCliw]")
+      ? resolveIdentityNamePrefix(params.cfg, params.route.agentId)
       : undefined);
 
   const inboundHistory =
@@ -339,9 +342,13 @@ export async function processMessage(params: {
   });
   const shouldUpdateMainLastRoute =
     !pinnedMainDmRecipient || pinnedMainDmRecipient === dmRouteTarget;
+  const inboundLastRouteSessionKey = resolveInboundLastRouteSessionKey({
+    route: params.route,
+    sessionKey: params.route.sessionKey,
+  });
   if (
     dmRouteTarget &&
-    params.route.sessionKey === params.route.mainSessionKey &&
+    inboundLastRouteSessionKey === params.route.mainSessionKey &&
     shouldUpdateMainLastRoute
   ) {
     updateLastRouteInBackground({
@@ -357,7 +364,7 @@ export async function processMessage(params: {
     });
   } else if (
     dmRouteTarget &&
-    params.route.sessionKey === params.route.mainSessionKey &&
+    inboundLastRouteSessionKey === params.route.mainSessionKey &&
     pinnedMainDmRecipient
   ) {
     logVerbose(
@@ -381,74 +388,85 @@ export async function processMessage(params: {
   });
   trackBackgroundTask(params.backgroundTasks, metaTask);
 
-  const { queuedFinal } = await dispatchReplyWithBufferedBlockDispatcher({
-    ctx: ctxPayload,
-    cfg: params.cfg,
-    replyResolver: params.replyResolver,
-    dispatcherOptions: {
-      ...prefixOptions,
-      responsePrefix,
-      onHeartbeatStrip: () => {
-        if (!didLogHeartbeatStrip) {
-          didLogHeartbeatStrip = true;
-          logVerbose("Stripped stray HEARTBEAT_OK token from web reply");
-        }
+  let queuedFinal: boolean;
+  try {
+    ({ queuedFinal } = await dispatchReplyWithBufferedBlockDispatcher({
+      ctx: ctxPayload,
+      cfg: params.cfg,
+      replyResolver: params.replyResolver,
+      dispatcherOptions: {
+        ...prefixOptions,
+        responsePrefix,
+        onHeartbeatStrip: () => {
+          if (!didLogHeartbeatStrip) {
+            didLogHeartbeatStrip = true;
+            logVerbose("Stripped stray HEARTBEAT_OK token from web reply");
+          }
+        },
+        deliver: async (payload: ReplyPayload, info) => {
+          if (info.kind !== "final") {
+            // Only deliver final replies to external messaging channels (WhatsApp).
+            // Block (reasoning/thinking) and tool updates are meant for the internal
+            // web UI only; sending them here leaks chain-of-thought to end users.
+            return;
+          }
+          await deliverWebReply({
+            replyResult: payload,
+            msg: params.msg,
+            mediaLocalRoots,
+            maxMediaBytes: params.maxMediaBytes,
+            textLimit,
+            chunkMode,
+            replyLogger: params.replyLogger,
+            connectionId: params.connectionId,
+            skipLog: false,
+            tableMode,
+          });
+          didSendReply = true;
+          const shouldLog = payload.text ? true : undefined;
+          params.rememberSentText(payload.text, {
+            combinedBody,
+            combinedBodySessionKey: params.route.sessionKey,
+            logVerboseMessage: shouldLog,
+          });
+          const fromDisplay =
+            params.msg.chatType === "group" ? conversationId : (params.msg.from ?? "unknown");
+          const hasMedia = Boolean(payload.mediaUrl || payload.mediaUrls?.length);
+          whatsappOutboundLog.info(`Auto-replied to ${fromDisplay}${hasMedia ? " (media)" : ""}`);
+          if (shouldLogVerbose()) {
+            const preview = payload.text != null ? elide(payload.text, 400) : "<media>";
+            whatsappOutboundLog.debug(`Reply body: ${preview}${hasMedia ? " (media)" : ""}`);
+          }
+        },
+        onError: (err, info) => {
+          const label =
+            info.kind === "tool"
+              ? "tool update"
+              : info.kind === "block"
+                ? "block update"
+                : "auto-reply";
+          whatsappOutboundLog.error(
+            `Failed sending web ${label} to ${params.msg.from ?? conversationId}: ${formatError(err)}`,
+          );
+        },
+        onReplyStart: params.msg.sendComposing,
       },
-      deliver: async (payload: ReplyPayload, info) => {
-        if (info.kind !== "final") {
-          // Only deliver final replies to external messaging channels (WhatsApp).
-          // Block (reasoning/thinking) and tool updates are meant for the internal
-          // web UI only; sending them here leaks chain-of-thought to end users.
-          return;
-        }
-        await deliverWebReply({
-          replyResult: payload,
-          msg: params.msg,
-          mediaLocalRoots,
-          maxMediaBytes: params.maxMediaBytes,
-          textLimit,
-          chunkMode,
-          replyLogger: params.replyLogger,
-          connectionId: params.connectionId,
-          skipLog: false,
-          tableMode,
-        });
-        didSendReply = true;
-        const shouldLog = payload.text ? true : undefined;
-        params.rememberSentText(payload.text, {
-          combinedBody,
-          combinedBodySessionKey: params.route.sessionKey,
-          logVerboseMessage: shouldLog,
-        });
-        const fromDisplay =
-          params.msg.chatType === "group" ? conversationId : (params.msg.from ?? "unknown");
-        const hasMedia = Boolean(payload.mediaUrl || payload.mediaUrls?.length);
-        whatsappOutboundLog.info(`Auto-replied to ${fromDisplay}${hasMedia ? " (media)" : ""}`);
-        if (shouldLogVerbose()) {
-          const preview = payload.text != null ? elide(payload.text, 400) : "<media>";
-          whatsappOutboundLog.debug(`Reply body: ${preview}${hasMedia ? " (media)" : ""}`);
-        }
+      replyOptions: {
+        // WhatsApp delivery intentionally suppresses non-final payloads.
+        // Keep block streaming disabled so final replies are still produced.
+        disableBlockStreaming: true,
+        onModelSelected,
       },
-      onError: (err, info) => {
-        const label =
-          info.kind === "tool"
-            ? "tool update"
-            : info.kind === "block"
-              ? "block update"
-              : "auto-reply";
-        whatsappOutboundLog.error(
-          `Failed sending web ${label} to ${params.msg.from ?? conversationId}: ${formatError(err)}`,
-        );
-      },
-      onReplyStart: params.msg.sendComposing,
-    },
-    replyOptions: {
-      // WhatsApp delivery intentionally suppresses non-final payloads.
-      // Keep block streaming disabled so final replies are still produced.
-      disableBlockStreaming: true,
-      onModelSelected,
-    },
-  });
+    }));
+  } catch (err) {
+    whatsappOutboundLog.error(
+      `Fatal dispatch error to ${params.msg.from ?? conversationId}: ${formatError(err)}`,
+    );
+    try {
+      await params.msg.reply("\u26a0\ufe0f IronCliw encountered an error. Please try again.");
+    } catch {}
+    return false;
+  }
 
   if (!queuedFinal) {
     if (shouldClearGroupHistory) {

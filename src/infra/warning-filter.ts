@@ -1,4 +1,4 @@
-const warningFilterKey = Symbol.for("IronCliw.warning-filter");
+const warningFilterKey = Symbol.for("ironcliw.warning-filter");
 
 export type ProcessWarning = {
   code?: string;

@@ -1,4 +1,4 @@
-import type { PluginRuntime, SsrFPolicy } from "IronCliw/plugin-sdk/msteams";
+import type { PluginRuntime, SsrFPolicy } from "ironcliw/plugin-sdk/msteams";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPluginRuntimeMock } from "../../test-utils/plugin-runtime-mock.js";
 import {

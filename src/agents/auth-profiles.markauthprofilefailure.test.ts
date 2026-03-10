@@ -13,7 +13,7 @@ type AuthProfileStore = ReturnType<typeof ensureAuthProfileStore>;
 async function withAuthProfileStore(
   fn: (ctx: { agentDir: string; store: AuthProfileStore }) => Promise<void>,
 ): Promise<void> {
-  const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-"));
+  const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-"));
   try {
     const authPath = path.join(agentDir, "auth-profiles.json");
     fs.writeFileSync(
@@ -114,6 +114,22 @@ describe("markAuthProfileFailure", () => {
       expect(reloaded.usageStats?.["anthropic:default"]?.cooldownUntil).toBe(firstCooldownUntil);
     });
   });
+  it("records overloaded failures in the cooldown bucket", async () => {
+    await withAuthProfileStore(async ({ agentDir, store }) => {
+      await markAuthProfileFailure({
+        store,
+        profileId: "anthropic:default",
+        reason: "overloaded",
+        agentDir,
+      });
+
+      const stats = store.usageStats?.["anthropic:default"];
+      expect(typeof stats?.cooldownUntil).toBe("number");
+      expect(stats?.disabledUntil).toBeUndefined();
+      expect(stats?.disabledReason).toBeUndefined();
+      expect(stats?.failureCounts?.overloaded).toBe(1);
+    });
+  });
   it("disables auth_permanent failures via disabledUntil (like billing)", async () => {
     await withAuthProfileStore(async ({ agentDir, store }) => {
       await markAuthProfileFailure({
@@ -131,7 +147,7 @@ describe("markAuthProfileFailure", () => {
     });
   });
   it("resets backoff counters outside the failure window", async () => {
-    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-auth-"));
+    const agentDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-auth-"));
     try {
       const authPath = path.join(agentDir, "auth-profiles.json");
       const now = Date.now();

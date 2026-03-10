@@ -3,7 +3,7 @@ import { Type } from "@sinclair/typebox";
 import type { IronCliwConfig } from "../../config/config.js";
 import { resolveUserPath } from "../../utils.js";
 import { loadWebMedia } from "../../web/media.js";
-import { minimaxUnderstandImage } from "../minimax-vlm.js";
+import { isMinimaxVlmModel, isMinimaxVlmProvider, minimaxUnderstandImage } from "../minimax-vlm.js";
 import {
   coerceImageAssistantText,
   coerceImageModelConfig,
@@ -110,8 +110,8 @@ export function resolveImageModelConfigForTool(params: {
   let preferred: string | null = null;
 
   // MiniMax users: always try the canonical vision model first when auth exists.
-  if (primary.provider === "minimax" && providerOk) {
-    preferred = "minimax/MiniMax-VL-01";
+  if (isMinimaxVlmProvider(primary.provider) && providerOk) {
+    preferred = `${primary.provider}/MiniMax-VL-01`;
   } else if (providerOk && providerVisionFromConfig) {
     preferred = providerVisionFromConfig;
   } else if (primary.provider === "zai" && providerOk) {
@@ -229,7 +229,7 @@ async function runImagePrompt(params: {
       });
 
       // MiniMax VLM only supports a single image; use the first one.
-      if (model.provider === "minimax") {
+      if (isMinimaxVlmModel(model.provider, model.id)) {
         const first = params.images[0];
         const imageDataUrl = `data:${first.mimeType};base64,${first.base64}`;
         const text = await minimaxUnderstandImage({
@@ -462,16 +462,7 @@ export function createImageTool(options?: {
                 localRoots,
               });
         if (media.kind !== "image") {
-          // Return a structured result so the agent knows to use web_fetch instead of crashing.
-          return {
-            content: [
-              {
-                type: "text" as const,
-                text: `The URL did not return an image — it returned a ${media.kind} (e.g. an HTML web page). Use the \`web_fetch\` tool to read web pages, or provide a direct image URL (ending in .jpg / .png / .webp etc.).`,
-              },
-            ],
-            details: { error: "not_an_image", kind: media.kind, image: imageRawInput },
-          };
+          throw new Error(`Unsupported media type: ${media.kind}`);
         }
 
         const mimeType =

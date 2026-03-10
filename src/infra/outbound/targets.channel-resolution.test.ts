@@ -5,7 +5,7 @@ const mocks = vi.hoisted(() => ({
   loadIronCliwPlugins: vi.fn(),
 }));
 
-const TEST_WORKSPACE_ROOT = "/tmp/IronCliw-test-workspace";
+const TEST_WORKSPACE_ROOT = "/tmp/ironcliw-test-workspace";
 
 function normalizeChannel(value?: string) {
   return value?.trim().toLowerCase() ?? undefined;

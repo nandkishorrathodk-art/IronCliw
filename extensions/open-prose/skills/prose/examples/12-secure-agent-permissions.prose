@@ -41,4 +41,3 @@ session: code-reviewer
 
 session: doc-writer
   prompt: "Update the documentation based on the code review findings"
-

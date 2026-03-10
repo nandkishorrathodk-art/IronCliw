@@ -1,27 +1,69 @@
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("node:fs", () => ({
-  default: {
-    existsSync: vi.fn(),
-  },
-}));
+vi.mock("node:fs", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("node:fs")>();
+  const existsSync = vi.fn();
+  return {
+    ...actual,
+    existsSync,
+    default: {
+      ...actual,
+      existsSync,
+    },
+  };
+});
 
 const installPluginFromNpmSpec = vi.fn();
 vi.mock("../../plugins/install.js", () => ({
   installPluginFromNpmSpec: (...args: unknown[]) => installPluginFromNpmSpec(...args),
 }));
 
+const resolveBundledPluginSources = vi.fn();
+vi.mock("../../plugins/bundled-sources.js", () => ({
+  findBundledPluginSourceInMap: ({
+    bundled,
+    lookup,
+  }: {
+    bundled: ReadonlyMap<string, { pluginId: string; localPath: string; npmSpec?: string }>;
+    lookup: { kind: "pluginId" | "npmSpec"; value: string };
+  }) => {
+    const targetValue = lookup.value.trim();
+    if (!targetValue) {
+      return undefined;
+    }
+    if (lookup.kind === "pluginId") {
+      return bundled.get(targetValue);
+    }
+    for (const source of bundled.values()) {
+      if (source.npmSpec === targetValue) {
+        return source;
+      }
+    }
+    return undefined;
+  },
+  resolveBundledPluginSources: (...args: unknown[]) => resolveBundledPluginSources(...args),
+}));
+
 vi.mock("../../plugins/loader.js", () => ({
   loadIronCliwPlugins: vi.fn(),
+}));
+
+const clearPluginDiscoveryCache = vi.fn();
+vi.mock("../../plugins/discovery.js", () => ({
+  clearPluginDiscoveryCache: () => clearPluginDiscoveryCache(),
 }));
 
 import fs from "node:fs";
 import type { ChannelPluginCatalogEntry } from "../../channels/plugins/catalog.js";
 import type { IronCliwConfig } from "../../config/config.js";
+import { loadIronCliwPlugins } from "../../plugins/loader.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 import { makePrompter, makeRuntime } from "./__tests__/test-utils.js";
-import { ensureOnboardingPluginInstalled } from "./plugin-install.js";
+import {
+  ensureOnboardingPluginInstalled,
+  reloadOnboardingPluginRegistry,
+} from "./plugin-install.js";
 
 const baseEntry: ChannelPluginCatalogEntry = {
   id: "zalo",
@@ -34,13 +76,14 @@ const baseEntry: ChannelPluginCatalogEntry = {
     blurb: "Test",
   },
   install: {
-    npmSpec: "@IronCliw/zalo",
+    npmSpec: "@ironcliw/zalo",
     localPath: "extensions/zalo",
   },
 };
 
 beforeEach(() => {
   vi.clearAllMocks();
+  resolveBundledPluginSources.mockReturnValue(new Map());
 });
 
 function mockRepoLocalPathExists() {
@@ -102,10 +145,10 @@ describe("ensureOnboardingPluginInstalled", () => {
     expect(result.cfg.plugins?.entries?.zalo?.enabled).toBe(true);
     expect(result.cfg.plugins?.allow).toContain("zalo");
     expect(result.cfg.plugins?.installs?.zalo?.source).toBe("npm");
-    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@IronCliw/zalo");
+    expect(result.cfg.plugins?.installs?.zalo?.spec).toBe("@ironcliw/zalo");
     expect(result.cfg.plugins?.installs?.zalo?.installPath).toBe("/tmp/zalo");
     expect(installPluginFromNpmSpec).toHaveBeenCalledWith(
-      expect.objectContaining({ spec: "@IronCliw/zalo" }),
+      expect.objectContaining({ spec: "@ironcliw/zalo" }),
     );
   });
 
@@ -136,6 +179,45 @@ describe("ensureOnboardingPluginInstalled", () => {
     expect(await runInitialValueForChannel("beta")).toBe("npm");
   });
 
+  it("defaults to bundled local path on beta channel when available", async () => {
+    const runtime = makeRuntime();
+    const select = vi.fn((async <T extends string>() => "skip" as T) as WizardPrompter["select"]);
+    const prompter = makePrompter({ select: select as unknown as WizardPrompter["select"] });
+    const cfg: IronCliwConfig = { update: { channel: "beta" } };
+    vi.mocked(fs.existsSync).mockReturnValue(false);
+    resolveBundledPluginSources.mockReturnValue(
+      new Map([
+        [
+          "zalo",
+          {
+            pluginId: "zalo",
+            localPath: "/opt/ironcliw/extensions/zalo",
+            npmSpec: "@ironcliw/zalo",
+          },
+        ],
+      ]),
+    );
+
+    await ensureOnboardingPluginInstalled({
+      cfg,
+      entry: baseEntry,
+      prompter,
+      runtime,
+    });
+
+    expect(select).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialValue: "local",
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: "local",
+            hint: "/opt/ironcliw/extensions/zalo",
+          }),
+        ]),
+      }),
+    );
+  });
+
   it("falls back to local path after npm install failure", async () => {
     const runtime = makeRuntime();
     const note = vi.fn(async () => {});
@@ -162,5 +244,28 @@ describe("ensureOnboardingPluginInstalled", () => {
     expectPluginLoadedFromLocalPath(result);
     expect(note).toHaveBeenCalled();
     expect(runtime.error).not.toHaveBeenCalled();
+  });
+
+  it("clears discovery cache before reloading the onboarding plugin registry", () => {
+    const runtime = makeRuntime();
+    const cfg: IronCliwConfig = {};
+
+    reloadOnboardingPluginRegistry({
+      cfg,
+      runtime,
+      workspaceDir: "/tmp/ironcliw-workspace",
+    });
+
+    expect(clearPluginDiscoveryCache).toHaveBeenCalledTimes(1);
+    expect(loadIronCliwPlugins).toHaveBeenCalledWith(
+      expect.objectContaining({
+        config: cfg,
+        workspaceDir: "/tmp/ironcliw-workspace",
+        cache: false,
+      }),
+    );
+    expect(clearPluginDiscoveryCache.mock.invocationCallOrder[0]).toBeLessThan(
+      vi.mocked(loadIronCliwPlugins).mock.invocationCallOrder[0] ?? Number.POSITIVE_INFINITY,
+    );
   });
 });

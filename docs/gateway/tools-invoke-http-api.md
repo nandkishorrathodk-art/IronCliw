@@ -23,8 +23,8 @@ Uses the Gateway auth configuration. Send a bearer token:
 
 Notes:
 
-- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`).
-- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `IronCliw_GATEWAY_PASSWORD`).
+- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`).
+- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `IRONCLIW_GATEWAY_PASSWORD`).
 - If `gateway.auth.rateLimit` is configured and too many auth failures occur, the endpoint returns `429` with `Retry-After`.
 
 ## Request body
@@ -83,8 +83,8 @@ You can customize this deny list via `gateway.tools`:
 
 To help group policies resolve context, you can optionally set:
 
-- `x-IronCliw-message-channel: <channel>` (example: `slack`, `telegram`)
-- `x-IronCliw-account-id: <accountId>` (when multiple accounts exist)
+- `x-ironcliw-message-channel: <channel>` (example: `slack`, `telegram`)
+- `x-ironcliw-account-id: <accountId>` (when multiple accounts exist)
 
 ## Responses
 

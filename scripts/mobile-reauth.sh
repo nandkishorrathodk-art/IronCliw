@@ -32,7 +32,7 @@ case "$AUTH_STATUS" in
         "$SCRIPT_DIR/claude-auth-status.sh" full
         exit 0
         ;;
-    CLAUDE_EXPIRING|IronCliw_EXPIRING|CLAWDBOT_EXPIRING)
+    CLAUDE_EXPIRING|IRONCLIW_EXPIRING|CLAWDBOT_EXPIRING)
         echo -e "${YELLOW}Auth is expiring soon.${NC}"
         echo ""
         ;;
@@ -69,11 +69,11 @@ if claude setup-token; then
     echo ""
     "$SCRIPT_DIR/claude-auth-status.sh" full
 
-    # Restart IronCliw service if running
-    if systemctl --user is-active IronCliw >/dev/null 2>&1; then
+    # Restart ironcliw service if running
+    if systemctl --user is-active ironcliw >/dev/null 2>&1; then
         echo ""
-        echo "Restarting IronCliw service..."
-        systemctl --user restart IronCliw
+        echo "Restarting ironcliw service..."
+        systemctl --user restart ironcliw
         echo -e "${GREEN}Service restarted.${NC}"
     fi
 else
@@ -82,4 +82,3 @@ else
     echo "Please try again or check the Claude Code documentation."
     exit 1
 fi
-

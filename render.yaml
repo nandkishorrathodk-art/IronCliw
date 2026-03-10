@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: IronCliw
+    name: ironcliw
     runtime: docker
     plan: starter
     healthCheckPath: /health
@@ -9,13 +9,13 @@ services:
         value: "8080"
       - key: SETUP_PASSWORD
         sync: false
-      - key: IronCliw_STATE_DIR
-        value: /data/.IronCliw
-      - key: IronCliw_WORKSPACE_DIR
+      - key: IRONCLIW_STATE_DIR
+        value: /data/.ironcliw
+      - key: IRONCLIW_WORKSPACE_DIR
         value: /data/workspace
-      - key: IronCliw_GATEWAY_TOKEN
+      - key: IRONCLIW_GATEWAY_TOKEN
         generateValue: true
     disk:
-      name: IronCliw-data
+      name: ironcliw-data
       mountPath: /data
       sizeGB: 1

@@ -21,10 +21,10 @@ Skill 是一个包含 `SKILL.md` 文件（为 LLM 提供指令和工具定义）
 
 ### 1. 创建目录
 
-Skills 位于你的工作区中，通常是 `~/.IronCliw/workspace/skills/`。为你的 Skill 创建一个新文件夹：
+Skills 位于你的工作区中，通常是 `~/.ironcliw/workspace/skills/`。为你的 Skill 创建一个新文件夹：
 
 ```bash
-mkdir -p ~/.IronCliw/workspace/skills/hello-world
+mkdir -p ~/.ironcliw/workspace/skills/hello-world
 ```
 
 ### 2. 定义 `SKILL.md`
@@ -54,7 +54,7 @@ When the user asks for a greeting, use the `echo` tool to say "Hello from your c
 
 - **简洁明了**：指示模型*做什么*，而不是如何成为一个 AI。
 - **安全第一**：如果你的 Skill 使用 `bash`，确保提示词不允许来自不受信任用户输入的任意命令注入。
-- **本地测试**：使用 `IronCliw agent --message "use my new skill"` 进行测试。
+- **本地测试**：使用 `ironcliw agent --message "use my new skill"` 进行测试。
 
 ## 共享 Skills
 

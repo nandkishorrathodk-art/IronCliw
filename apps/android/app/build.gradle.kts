@@ -1,5 +1,35 @@
 import com.android.build.api.variant.impl.VariantOutputImpl
 
+val androidStoreFile = providers.gradleProperty("IRONCLIW_ANDROID_STORE_FILE").orNull?.takeIf { it.isNotBlank() }
+val androidStorePassword = providers.gradleProperty("IRONCLIW_ANDROID_STORE_PASSWORD").orNull?.takeIf { it.isNotBlank() }
+val androidKeyAlias = providers.gradleProperty("IRONCLIW_ANDROID_KEY_ALIAS").orNull?.takeIf { it.isNotBlank() }
+val androidKeyPassword = providers.gradleProperty("IRONCLIW_ANDROID_KEY_PASSWORD").orNull?.takeIf { it.isNotBlank() }
+val resolvedAndroidStoreFile =
+    androidStoreFile?.let { storeFilePath ->
+        if (storeFilePath.startsWith("~/")) {
+            "${System.getProperty("user.home")}/${storeFilePath.removePrefix("~/")}"
+        } else {
+            storeFilePath
+        }
+    }
+
+val hasAndroidReleaseSigning =
+    listOf(resolvedAndroidStoreFile, androidStorePassword, androidKeyAlias, androidKeyPassword).all { it != null }
+
+val wantsAndroidReleaseBuild =
+    gradle.startParameter.taskNames.any { taskName ->
+        taskName.contains("Release", ignoreCase = true) ||
+            Regex("""(^|:)(bundle|assemble)$""").containsMatchIn(taskName)
+    }
+
+if (wantsAndroidReleaseBuild && !hasAndroidReleaseSigning) {
+    error(
+        "Missing Android release signing properties. Set IRONCLIW_ANDROID_STORE_FILE, " +
+            "IRONCLIW_ANDROID_STORE_PASSWORD, IRONCLIW_ANDROID_KEY_ALIAS, and " +
+            "IRONCLIW_ANDROID_KEY_PASSWORD in ~/.gradle/gradle.properties.",
+    )
+}
+
 plugins {
     id("com.android.application")
     id("org.jlleitschuh.gradle.ktlint")
@@ -8,8 +38,20 @@ plugins {
 }
 
 android {
-    namespace = "ai.IronCliw.android"
+    namespace = "ai.ironcliw.app"
     compileSdk = 36
+
+    // Release signing is local-only; keep the keystore path and passwords out of the repo.
+    signingConfigs {
+        if (hasAndroidReleaseSigning) {
+            create("release") {
+                storeFile = project.file(checkNotNull(resolvedAndroidStoreFile))
+                storePassword = checkNotNull(androidStorePassword)
+                keyAlias = checkNotNull(androidKeyAlias)
+                keyPassword = checkNotNull(androidKeyPassword)
+            }
+        }
+    }
 
     sourceSets {
         getByName("main") {
@@ -18,11 +60,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ai.IronCliw.android"
+        applicationId = "ai.ironcliw.app"
         minSdk = 31
         targetSdk = 36
-        versionCode = 202603010
-        versionName = "2026.3.2"
+        versionCode = 202603090
+        versionName = "2026.3.9"
         ndk {
             // Support all major ABIs — native libs are tiny (~47 KB per ABI)
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
@@ -31,6 +73,9 @@ android {
 
     buildTypes {
         release {
+            if (hasAndroidReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -87,7 +132,7 @@ androidComponents {
                 val versionName = output.versionName.orNull ?: "0"
                 val buildType = variant.buildType
 
-                val outputFileName = "IronCliw-$versionName-$buildType.apk"
+                val outputFileName = "ironcliw-$versionName-$buildType.apk"
                 output.outputFileName = outputFileName
             }
     }

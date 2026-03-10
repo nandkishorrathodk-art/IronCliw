@@ -72,7 +72,7 @@ describe("subtitleForTab", () => {
 
   it("returns descriptive subtitles", () => {
     expect(subtitleForTab("chat")).toContain("chat session");
-    expect(subtitleForTab("config")).toContain("IronCliw.json");
+    expect(subtitleForTab("config")).toContain("ironcliw.json");
   });
 });
 
@@ -94,7 +94,7 @@ describe("normalizeBasePath", () => {
   });
 
   it("handles nested paths", () => {
-    expect(normalizeBasePath("/apps/IronCliw")).toBe("/apps/IronCliw");
+    expect(normalizeBasePath("/apps/ironcliw")).toBe("/apps/ironcliw");
   });
 });
 
@@ -121,7 +121,7 @@ describe("pathForTab", () => {
 
   it("prepends base path", () => {
     expect(pathForTab("chat", "/ui")).toBe("/ui/chat");
-    expect(pathForTab("sessions", "/apps/IronCliw")).toBe("/apps/IronCliw/sessions");
+    expect(pathForTab("sessions", "/apps/ironcliw")).toBe("/apps/ironcliw/sessions");
   });
 });
 
@@ -138,7 +138,7 @@ describe("tabFromPath", () => {
 
   it("handles base paths", () => {
     expect(tabFromPath("/ui/chat", "/ui")).toBe("chat");
-    expect(tabFromPath("/apps/IronCliw/sessions", "/apps/IronCliw")).toBe("sessions");
+    expect(tabFromPath("/apps/ironcliw/sessions", "/apps/ironcliw")).toBe("sessions");
   });
 
   it("returns null for unknown path", () => {
@@ -163,7 +163,7 @@ describe("inferBasePathFromPathname", () => {
 
   it("infers base path from nested paths", () => {
     expect(inferBasePathFromPathname("/ui/chat")).toBe("/ui");
-    expect(inferBasePathFromPathname("/apps/IronCliw/sessions")).toBe("/apps/IronCliw");
+    expect(inferBasePathFromPathname("/apps/ironcliw/sessions")).toBe("/apps/ironcliw");
   });
 
   it("handles index.html suffix", () => {
@@ -175,10 +175,10 @@ describe("inferBasePathFromPathname", () => {
 describe("TAB_GROUPS", () => {
   it("contains all expected groups", () => {
     const labels = TAB_GROUPS.map((g) => g.label);
-    expect(labels).toContain("Chat");
-    expect(labels).toContain("Control");
-    expect(labels).toContain("Agent");
-    expect(labels).toContain("Settings");
+    expect(labels).toContain("chat");
+    expect(labels).toContain("control");
+    expect(labels).toContain("agent");
+    expect(labels).toContain("settings");
   });
 
   it("all tabs are unique", () => {

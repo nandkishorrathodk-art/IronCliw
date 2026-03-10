@@ -1,4 +1,4 @@
-import type { AnyAgentTool, IronCliwPluginApi } from "IronCliw/plugin-sdk/llm-task";
+import type { AnyAgentTool, IronCliwPluginApi } from "ironcliw/plugin-sdk/llm-task";
 import { createLlmTaskTool } from "./src/llm-task-tool.js";
 
 export default function register(api: IronCliwPluginApi) {

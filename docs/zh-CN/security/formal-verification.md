@@ -30,7 +30,7 @@ x-i18n:
 
 ## 模型存放位置
 
-模型维护在一个单独的仓库中：[vignesh07/IronCliw-formal-models](https://github.com/vignesh07/IronCliw-formal-models)。
+模型维护在一个单独的仓库中：[vignesh07/ironcliw-formal-models](https://github.com/vignesh07/ironcliw-formal-models)。
 
 ## 重要注意事项
 
@@ -48,8 +48,8 @@ x-i18n:
 开始使用：
 
 ```bash
-git clone https://github.com/vignesh07/IronCliw-formal-models
-cd IronCliw-formal-models
+git clone https://github.com/vignesh07/ironcliw-formal-models
+cd ironcliw-formal-models
 
 # 需要 Java 11+（TLC 在 JVM 上运行）。
 # 仓库内置了固定版本的 `tla2tools.jar`（TLA+ 工具）并提供 `bin/tlc` + Make 目标。

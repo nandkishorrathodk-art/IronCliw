@@ -50,13 +50,13 @@ x-i18n:
 ## 环境变量覆盖（一次性）
 
 ```bash
-IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
+IRONCLIW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 禁用所有标志：
 
 ```bash
-IronCliw_DIAGNOSTICS=0
+IRONCLIW_DIAGNOSTICS=0
 ```
 
 ## 日志存储位置
@@ -64,7 +64,7 @@ IronCliw_DIAGNOSTICS=0
 标志将日志输出到标准诊断日志文件。默认位置：
 
 ```
-/tmp/IronCliw/IronCliw-YYYY-MM-DD.log
+/tmp/ironcliw/ironcliw-YYYY-MM-DD.log
 ```
 
 如果你设置了 `logging.file`，则使用该路径。日志为 JSONL 格式（每行一个 JSON 对象）。脱敏仍然根据 `logging.redactSensitive` 应用。
@@ -74,22 +74,22 @@ IronCliw_DIAGNOSTICS=0
 选择最新的日志文件：
 
 ```bash
-ls -t /tmp/IronCliw/IronCliw-*.log | head -n 1
+ls -t /tmp/ironcliw/ironcliw-*.log | head -n 1
 ```
 
 过滤 Telegram HTTP 诊断：
 
 ```bash
-rg "telegram http error" /tmp/IronCliw/IronCliw-*.log
+rg "telegram http error" /tmp/ironcliw/ironcliw-*.log
 ```
 
 或在复现时使用 tail：
 
 ```bash
-tail -f /tmp/IronCliw/IronCliw-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/ironcliw/ironcliw-$(date +%F).log | rg "telegram http error"
 ```
 
-对于远程 Gateway 网关，你也可以使用 `IronCliw logs --follow`（参见 [/cli/logs](/cli/logs)）。
+对于远程 Gateway 网关，你也可以使用 `ironcliw logs --follow`（参见 [/cli/logs](/cli/logs)）。
 
 ## 注意事项
 

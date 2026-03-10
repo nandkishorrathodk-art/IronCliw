@@ -32,7 +32,7 @@ export function createSandboxMediaStageConfig(home: string): IronCliwConfig {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: join(home, "IronCliw"),
+        workspace: join(home, "ironcliw"),
         sandbox: {
           mode: "non-main",
           workspaceRoot: join(home, "sandboxes"),

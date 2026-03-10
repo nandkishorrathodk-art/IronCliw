@@ -6,8 +6,8 @@
     {
       "layers" : [
         {
-          "image-name" : "IronCliw-mac.png",
-          "name" : "IronCliw-mac",
+          "image-name" : "ironcliw-mac.png",
+          "name" : "ironcliw-mac",
           "position" : {
             "scale" : 1.07,
             "translation-in-points" : [

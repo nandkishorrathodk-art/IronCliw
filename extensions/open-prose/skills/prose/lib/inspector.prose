@@ -194,4 +194,3 @@ output inspection = session: synthesizer
     Return as JSON with these three fields.
   """
   context: { verdict, diagram, report }
-

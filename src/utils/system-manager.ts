@@ -12,7 +12,7 @@ export class SystemManager {
     return new Promise((resolve, reject) => {
       const ps = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", psScript]);
       let output = "";
-      ps.stdout.on("data", (data) => output += data.toString());
+      ps.stdout.on("data", (data) => (output += data.toString()));
       ps.on("close", (code) => {
         if (code === 0) {
           resolve(output.trim());
@@ -44,23 +44,35 @@ export class SystemManager {
   /**
    * Lists running processes.
    */
-  async listProcesses(): Promise<Array<{ pid: number, name: string, cpu: number, memory: number }>> {
-    const psScript = "Get-Process | Select-Object Id, ProcessName, CPU, WorkingSet64 | ConvertTo-Json";
+  async listProcesses(): Promise<
+    Array<{ pid: number; name: string; cpu: number; memory: number }>
+  > {
+    const psScript =
+      "Get-Process | Select-Object Id, ProcessName, CPU, WorkingSet64 | ConvertTo-Json";
     return new Promise((resolve, reject) => {
       const ps = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", psScript]);
       let output = "";
-      ps.stdout.on("data", (data) => output += data.toString());
+      ps.stdout.on("data", (data) => (output += data.toString()));
       ps.on("close", (code) => {
         if (code === 0) {
           try {
             const data = JSON.parse(output);
             const list = Array.isArray(data) ? data : [data];
-            resolve((list as Array<{ Id: number, ProcessName: string, CPU: number | null, WorkingSet64: number }>).map((p) => ({
-              pid: p.Id,
-              name: p.ProcessName,
-              cpu: p.CPU || 0,
-              memory: Math.round((p.WorkingSet64 || 0) / 1024 / 1024) // MB
-            })));
+            resolve(
+              (
+                list as Array<{
+                  Id: number;
+                  ProcessName: string;
+                  CPU: number | null;
+                  WorkingSet64: number;
+                }>
+              ).map((p) => ({
+                pid: p.Id,
+                name: p.ProcessName,
+                cpu: p.CPU || 0,
+                memory: Math.round((p.WorkingSet64 || 0) / 1024 / 1024), // MB
+              })),
+            );
           } catch {
             resolve([]);
           }

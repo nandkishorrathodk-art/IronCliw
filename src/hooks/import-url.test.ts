@@ -19,13 +19,13 @@ describe("buildImportUrl", () => {
   });
 
   it("returns bare URL for bundled hooks (no query string)", () => {
-    const url = buildImportUrl(tmpFile, "IronCliw-bundled");
+    const url = buildImportUrl(tmpFile, "ironcliw-bundled");
     expect(url).not.toContain("?t=");
     expect(url).toMatch(/^file:\/\//);
   });
 
   it("appends mtime-based cache buster for workspace hooks", () => {
-    const url = buildImportUrl(tmpFile, "IronCliw-workspace");
+    const url = buildImportUrl(tmpFile, "ironcliw-workspace");
     expect(url).toMatch(/\?t=[\d.]+&s=\d+/);
 
     const { mtimeMs, size } = fs.statSync(tmpFile);
@@ -34,29 +34,29 @@ describe("buildImportUrl", () => {
   });
 
   it("appends mtime-based cache buster for managed hooks", () => {
-    const url = buildImportUrl(tmpFile, "IronCliw-managed");
+    const url = buildImportUrl(tmpFile, "ironcliw-managed");
     expect(url).toMatch(/\?t=[\d.]+&s=\d+/);
   });
 
   it("appends mtime-based cache buster for plugin hooks", () => {
-    const url = buildImportUrl(tmpFile, "IronCliw-plugin");
+    const url = buildImportUrl(tmpFile, "ironcliw-plugin");
     expect(url).toMatch(/\?t=[\d.]+&s=\d+/);
   });
 
   it("returns same URL for bundled hooks across calls (cacheable)", () => {
-    const url1 = buildImportUrl(tmpFile, "IronCliw-bundled");
-    const url2 = buildImportUrl(tmpFile, "IronCliw-bundled");
+    const url1 = buildImportUrl(tmpFile, "ironcliw-bundled");
+    const url2 = buildImportUrl(tmpFile, "ironcliw-bundled");
     expect(url1).toBe(url2);
   });
 
   it("returns same URL for workspace hooks when file is unchanged", () => {
-    const url1 = buildImportUrl(tmpFile, "IronCliw-workspace");
-    const url2 = buildImportUrl(tmpFile, "IronCliw-workspace");
+    const url1 = buildImportUrl(tmpFile, "ironcliw-workspace");
+    const url2 = buildImportUrl(tmpFile, "ironcliw-workspace");
     expect(url1).toBe(url2);
   });
 
   it("falls back to Date.now() when file does not exist", () => {
-    const url = buildImportUrl("/nonexistent/handler.js", "IronCliw-workspace");
+    const url = buildImportUrl("/nonexistent/handler.js", "ironcliw-workspace");
     expect(url).toMatch(/\?t=\d+/);
   });
 });

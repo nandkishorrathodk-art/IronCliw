@@ -17,4 +17,3 @@ parallel:
 # Synthesize all review results
 session "Create unified code review report"
   context: { security, perf, style }
-

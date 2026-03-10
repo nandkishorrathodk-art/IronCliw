@@ -11,7 +11,7 @@ title: "Agent Workspace"
 The workspace is the agent's home. It is the only working directory used for
 file tools and for workspace context. Keep it private and treat it as memory.
 
-This is separate from `~/.IronCliw/`, which stores config, credentials, and
+This is separate from `~/.ironcliw/`, which stores config, credentials, and
 sessions.
 
 **Important:** the workspace is the **default cwd**, not a hard sandbox. Tools
@@ -19,24 +19,24 @@ resolve relative paths against the workspace, but absolute paths can still reach
 elsewhere on the host unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) (and/or per‑agent sandbox config).
 When sandboxing is enabled and `workspaceAccess` is not `"rw"`, tools operate
-inside a sandbox workspace under `~/.IronCliw/sandboxes`, not your host workspace.
+inside a sandbox workspace under `~/.ironcliw/sandboxes`, not your host workspace.
 
 ## Default location
 
-- Default: `~/.IronCliw/workspace`
-- If `IronCliw_PROFILE` is set and not `"default"`, the default becomes
-  `~/.IronCliw/workspace-<profile>`.
-- Override in `~/.IronCliw/IronCliw.json`:
+- Default: `~/.ironcliw/workspace`
+- If `IRONCLIW_PROFILE` is set and not `"default"`, the default becomes
+  `~/.ironcliw/workspace-<profile>`.
+- Override in `~/.ironcliw/ironcliw.json`:
 
 ```json5
 {
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
   },
 }
 ```
 
-`IronCliw onboard`, `IronCliw configure`, or `IronCliw setup` will create the
+`ironcliw onboard`, `ironcliw configure`, or `ironcliw setup` will create the
 workspace and seed the bootstrap files if they are missing.
 Sandbox seed copies only accept regular in-workspace files; symlink/hardlink
 aliases that resolve outside the source workspace are ignored.
@@ -50,16 +50,16 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/IronCliw`. Keeping multiple workspace
+Older installs may have created `~/ironcliw`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/IronCliw`).
+extra folders, archive or move them to Trash (for example `trash ~/ironcliw`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`IronCliw doctor` warns when it detects extra workspace directories.
+`ironcliw doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
@@ -120,17 +120,17 @@ If any bootstrap file is missing, IronCliw injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust limits with `agents.defaults.bootstrapMaxChars` (default: 20000) and
 `agents.defaults.bootstrapTotalMaxChars` (default: 150000).
-`IronCliw setup` can recreate missing defaults without overwriting existing
+`ironcliw setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
 
-These live under `~/.IronCliw/` and should NOT be committed to the workspace repo:
+These live under `~/.ironcliw/` and should NOT be committed to the workspace repo:
 
-- `~/.IronCliw/IronCliw.json` (config)
-- `~/.IronCliw/credentials/` (OAuth tokens, API keys)
-- `~/.IronCliw/agents/<agentId>/sessions/` (session transcripts + metadata)
-- `~/.IronCliw/skills/` (managed skills)
+- `~/.ironcliw/ironcliw.json` (config)
+- `~/.ironcliw/credentials/` (OAuth tokens, API keys)
+- `~/.ironcliw/agents/<agentId>/sessions/` (session transcripts + metadata)
+- `~/.ironcliw/skills/` (managed skills)
 
 If you need to migrate sessions or config, copy them separately and keep them
 out of version control.
@@ -149,7 +149,7 @@ If git is installed, brand-new workspaces are initialized automatically. If this
 workspace is not already a repo, run:
 
 ```bash
-cd ~/.IronCliw/workspace
+cd ~/.ironcliw/workspace
 git init
 git add AGENTS.md SOUL.md TOOLS.md IDENTITY.md USER.md HEARTBEAT.md memory/
 git commit -m "Add agent workspace"
@@ -174,7 +174,7 @@ Option B: GitHub CLI (`gh`)
 
 ```bash
 gh auth login
-gh repo create IronCliw-workspace --private --source . --remote origin --push
+gh repo create ironcliw-workspace --private --source . --remote origin --push
 ```
 
 Option C: GitLab web UI
@@ -204,11 +204,11 @@ git push
 Even in a private repo, avoid storing secrets in the workspace:
 
 - API keys, OAuth tokens, passwords, or private credentials.
-- Anything under `~/.IronCliw/`.
+- Anything under `~/.ironcliw/`.
 - Raw dumps of chats or sensitive attachments.
 
 If you must store sensitive references, use placeholders and keep the real
-secret elsewhere (password manager, environment variables, or `~/.IronCliw/`).
+secret elsewhere (password manager, environment variables, or `~/.ironcliw/`).
 
 Suggested `.gitignore` starter:
 
@@ -222,10 +222,10 @@ Suggested `.gitignore` starter:
 
 ## Moving the workspace to a new machine
 
-1. Clone the repo to the desired path (default `~/.IronCliw/workspace`).
-2. Set `agents.defaults.workspace` to that path in `~/.IronCliw/IronCliw.json`.
-3. Run `IronCliw setup --workspace <path>` to seed any missing files.
-4. If you need sessions, copy `~/.IronCliw/agents/<agentId>/sessions/` from the
+1. Clone the repo to the desired path (default `~/.ironcliw/workspace`).
+2. Set `agents.defaults.workspace` to that path in `~/.ironcliw/ironcliw.json`.
+3. Run `ironcliw setup --workspace <path>` to seed any missing files.
+4. If you need sessions, copy `~/.ironcliw/agents/<agentId>/sessions/` from the
    old machine separately.
 
 ## Advanced notes

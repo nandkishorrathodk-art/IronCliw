@@ -42,12 +42,14 @@ export class EncryptedChannel {
     this.messageTtlMs = config.messageTtlMs ?? 15 * 60 * 1000;
     this.maxNonces = config.maxNonces ?? 10_000;
 
-    this.derivedKey = crypto.hkdfSync(
-      "sha256",
-      Buffer.from(secretKey, "utf-8"),
-      Buffer.alloc(32),
-      Buffer.from("IronCliw-AES256-GCM-v1"),
-      32,
+    this.derivedKey = Buffer.from(
+      crypto.hkdfSync(
+        "sha256",
+        Buffer.from(secretKey, "utf-8"),
+        Buffer.alloc(32),
+        Buffer.from("IronCliw-AES256-GCM-v1"),
+        32,
+      ),
     );
   }
 

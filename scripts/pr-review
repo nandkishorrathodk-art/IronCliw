@@ -11,4 +11,3 @@ if common_git_dir=$(git -C "$script_dir" rev-parse --path-format=absolute --git-
 fi
 
 exec "$base" review-init "$@"
-

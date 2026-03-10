@@ -10,9 +10,9 @@ import {
 const tempDirs: string[] = [];
 
 async function createStateEnv(): Promise<NodeJS.ProcessEnv> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-model-picker-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-model-picker-"));
   tempDirs.push(dir);
-  return { ...process.env, IronCliw_STATE_DIR: dir };
+  return { ...process.env, IRONCLIW_STATE_DIR: dir };
 }
 
 afterEach(async () => {
@@ -53,7 +53,7 @@ describe("discord model picker preferences", () => {
 
   it("falls back to an empty store when the file is corrupt", async () => {
     const env = await createStateEnv();
-    const stateDir = env.IronCliw_STATE_DIR as string;
+    const stateDir = env.IRONCLIW_STATE_DIR as string;
     const filePath = path.join(stateDir, "discord", "model-picker-preferences.json");
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, "{not-json", "utf-8");

@@ -1,6 +1,6 @@
 import { createEmptyPluginRegistry, type PluginRegistry } from "./registry.js";
 
-const REGISTRY_STATE = Symbol.for("IronCliw.pluginRegistryState");
+const REGISTRY_STATE = Symbol.for("ironcliw.pluginRegistryState");
 
 type RegistryState = {
   registry: PluginRegistry | null;

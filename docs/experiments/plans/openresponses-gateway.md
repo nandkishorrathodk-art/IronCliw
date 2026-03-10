@@ -3,7 +3,7 @@ summary: "Plan: Add OpenResponses /v1/responses endpoint and deprecate chat comp
 read_when:
   - Designing or implementing `/v1/responses` gateway support
   - Planning migration from Chat Completions compatibility
-owner: "IronCliw"
+owner: "ironcliw"
 status: "draft"
 last_updated: "2026-01-19"
 title: "OpenResponses Gateway Plan"

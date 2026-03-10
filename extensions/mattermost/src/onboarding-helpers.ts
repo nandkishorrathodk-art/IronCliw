@@ -1,1 +1,1 @@
-export { promptAccountId } from "IronCliw/plugin-sdk/mattermost";
+export { promptAccountId, resolveAccountIdForConfigure } from "ironcliw/plugin-sdk/mattermost";

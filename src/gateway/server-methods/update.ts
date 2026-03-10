@@ -1,6 +1,6 @@
 import { loadConfig } from "../../config/config.js";
 import { extractDeliveryInfo } from "../../config/sessions.js";
-import { resolveIronCliwPackageRoot } from "../../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRoot } from "../../infra/ironcliw-root.js";
 import {
   formatDoctorNonInteractiveHint,
   type RestartSentinelPayload,

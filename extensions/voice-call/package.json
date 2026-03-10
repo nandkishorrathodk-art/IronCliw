@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/voice-call",
-  "version": "2026.3.2",
+  "name": "@ironcliw/voice-call",
+  "version": "2026.3.9",
   "description": "IronCliw voice-call plugin",
   "type": "module",
   "dependencies": {
@@ -9,7 +9,7 @@
     "ws": "^8.19.0",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

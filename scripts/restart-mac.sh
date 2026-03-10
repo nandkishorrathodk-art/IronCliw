@@ -4,22 +4,22 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-APP_BUNDLE="${IronCliw_APP_BUNDLE:-}"
+APP_BUNDLE="${IRONCLIW_APP_BUNDLE:-}"
 APP_PROCESS_PATTERN="IronCliw.app/Contents/MacOS/IronCliw"
 DEBUG_PROCESS_PATTERN="${ROOT_DIR}/apps/macos/.build/debug/IronCliw"
 LOCAL_PROCESS_PATTERN="${ROOT_DIR}/apps/macos/.build-local/debug/IronCliw"
 RELEASE_PROCESS_PATTERN="${ROOT_DIR}/apps/macos/.build/release/IronCliw"
-LAUNCH_AGENT="${HOME}/Library/LaunchAgents/ai.IronCliw.mac.plist"
+LAUNCH_AGENT="${HOME}/Library/LaunchAgents/ai.ironcliw.mac.plist"
 LOCK_KEY="$(printf '%s' "${ROOT_DIR}" | shasum -a 256 | cut -c1-8)"
-LOCK_DIR="${TMPDIR:-/tmp}/IronCliw-restart-${LOCK_KEY}"
+LOCK_DIR="${TMPDIR:-/tmp}/ironcliw-restart-${LOCK_KEY}"
 LOCK_PID_FILE="${LOCK_DIR}/pid"
 WAIT_FOR_LOCK=0
-LOG_PATH="${IronCliw_RESTART_LOG:-/tmp/IronCliw-restart.log}"
+LOG_PATH="${IRONCLIW_RESTART_LOG:-/tmp/ironcliw-restart.log}"
 NO_SIGN=0
 SIGN=0
 AUTO_DETECT_SIGNING=1
-GATEWAY_WAIT_SECONDS="${IronCliw_GATEWAY_WAIT_SECONDS:-0}"
-LAUNCHAGENT_DISABLE_MARKER="${HOME}/.IronCliw/disable-launchagent"
+GATEWAY_WAIT_SECONDS="${IRONCLIW_GATEWAY_WAIT_SECONDS:-0}"
+LAUNCHAGENT_DISABLE_MARKER="${HOME}/.ironcliw/disable-launchagent"
 ATTACH_ONLY=1
 
 log()  { printf '%s\n' "$*"; }
@@ -93,14 +93,14 @@ for arg in "$@"; do
       log "  --no-attach-only Launch app without attach-only override"
       log ""
       log "Env:"
-      log "  IronCliw_GATEWAY_WAIT_SECONDS=0  Wait time before gateway port check (unsigned only)"
+      log "  IRONCLIW_GATEWAY_WAIT_SECONDS=0  Wait time before gateway port check (unsigned only)"
       log ""
       log "Unsigned recovery:"
-      log "  node IronCliw.mjs daemon install --force --runtime node"
-      log "  node IronCliw.mjs daemon restart"
+      log "  node ironcliw.mjs daemon install --force --runtime node"
+      log "  node ironcliw.mjs daemon restart"
       log ""
       log "Reset unsigned overrides:"
-      log "  rm ~/.IronCliw/disable-launchagent"
+      log "  rm ~/.ironcliw/disable-launchagent"
       log ""
       log "Default behavior: Auto-detect signing keys, fallback to --no-sign if none found"
       exit 0
@@ -126,7 +126,7 @@ fi
 
 acquire_lock
 
-kill_all_IronCliw() {
+kill_all_ironcliw() {
   for _ in {1..10}; do
     pkill -f "${APP_PROCESS_PATTERN}" 2>/dev/null || true
     pkill -f "${DEBUG_PROCESS_PATTERN}" 2>/dev/null || true
@@ -145,12 +145,12 @@ kill_all_IronCliw() {
 }
 
 stop_launch_agent() {
-  launchctl bootout gui/"$UID"/ai.IronCliw.mac 2>/dev/null || true
+  launchctl bootout gui/"$UID"/ai.ironcliw.mac 2>/dev/null || true
 }
 
 # 1) Kill all running instances first.
 log "==> Killing existing IronCliw instances"
-kill_all_IronCliw
+kill_all_ironcliw
 stop_launch_agent
 
 # Bundle Gateway-hosted Canvas A2UI assets.
@@ -173,7 +173,7 @@ fi
 if [ "$NO_SIGN" -eq 1 ]; then
   export ALLOW_ADHOC_SIGNING=1
   export SIGN_IDENTITY="-"
-  mkdir -p "${HOME}/.IronCliw"
+  mkdir -p "${HOME}/.ironcliw"
   run_step "disable launchagent writes" /usr/bin/touch "${LAUNCHAGENT_DISABLE_MARKER}"
 elif [ "$SIGN" -eq 1 ]; then
   if ! check_signing_keys; then
@@ -204,7 +204,7 @@ choose_app_bundle() {
     return 0
   fi
 
-  fail "App bundle not found. Set IronCliw_APP_BUNDLE to your installed IronCliw.app"
+  fail "App bundle not found. Set IRONCLIW_APP_BUNDLE to your installed IronCliw.app"
 }
 
 choose_app_bundle
@@ -217,8 +217,8 @@ fi
 # When unsigned, ensure the gateway LaunchAgent targets the repo CLI (before the app launches).
 # This reduces noisy "could not connect" errors during app startup.
 if [ "$NO_SIGN" -eq 1 ] && [ "$ATTACH_ONLY" -ne 1 ]; then
-  run_step "install gateway launch agent (unsigned)" bash -lc "cd '${ROOT_DIR}' && node IronCliw.mjs daemon install --force --runtime node"
-  run_step "restart gateway daemon (unsigned)" bash -lc "cd '${ROOT_DIR}' && node IronCliw.mjs daemon restart"
+  run_step "install gateway launch agent (unsigned)" bash -lc "cd '${ROOT_DIR}' && node ironcliw.mjs daemon install --force --runtime node"
+  run_step "restart gateway daemon (unsigned)" bash -lc "cd '${ROOT_DIR}' && node ironcliw.mjs daemon restart"
   if [[ "${GATEWAY_WAIT_SECONDS}" -gt 0 ]]; then
     run_step "wait for gateway (unsigned)" sleep "${GATEWAY_WAIT_SECONDS}"
   fi
@@ -227,7 +227,7 @@ if [ "$NO_SIGN" -eq 1 ] && [ "$ATTACH_ONLY" -ne 1 ]; then
       const fs = require("node:fs");
       const path = require("node:path");
       try {
-        const raw = fs.readFileSync(path.join(process.env.HOME, ".IronCliw", "IronCliw.json"), "utf8");
+        const raw = fs.readFileSync(path.join(process.env.HOME, ".ironcliw", "ironcliw.json"), "utf8");
         const cfg = JSON.parse(raw);
         const port = cfg && cfg.gateway && typeof cfg.gateway.port === "number" ? cfg.gateway.port : 18789;
         process.stdout.write(String(port));
@@ -265,6 +265,5 @@ else
 fi
 
 if [ "$NO_SIGN" -eq 1 ] && [ "$ATTACH_ONLY" -ne 1 ]; then
-  run_step "show gateway launch agent args (unsigned)" bash -lc "/usr/bin/plutil -p '${HOME}/Library/LaunchAgents/ai.IronCliw.gateway.plist' | head -n 40 || true"
+  run_step "show gateway launch agent args (unsigned)" bash -lc "/usr/bin/plutil -p '${HOME}/Library/LaunchAgents/ai.ironcliw.gateway.plist' | head -n 40 || true"
 fi
-

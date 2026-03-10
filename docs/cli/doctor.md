@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw doctor` (health checks + guided repairs)"
+summary: "CLI reference for `ironcliw doctor` (health checks + guided repairs)"
 read_when:
   - You have connectivity/auth issues and want guided fixes
   - You updated and want a sanity check
 title: "doctor"
 ---
 
-# `IronCliw doctor`
+# `ironcliw doctor`
 
 Health checks + quick fixes for the gateway and channels.
 
@@ -18,27 +18,27 @@ Related:
 ## Examples
 
 ```bash
-IronCliw doctor
-IronCliw doctor --repair
-IronCliw doctor --deep
+ironcliw doctor
+ironcliw doctor --repair
+ironcliw doctor --deep
 ```
 
 Notes:
 
 - Interactive prompts (like keychain/OAuth fixes) only run when stdin is a TTY and `--non-interactive` is **not** set. Headless runs (cron, Telegram, no terminal) will skip prompts.
-- `--fix` (alias for `--repair`) writes a backup to `~/.IronCliw/IronCliw.json.bak` and drops unknown config keys, listing each removal.
+- `--fix` (alias for `--repair`) writes a backup to `~/.ironcliw/ironcliw.json.bak` and drops unknown config keys, listing each removal.
 - State integrity checks now detect orphan transcript files in the sessions directory and can archive them as `.deleted.<timestamp>` to reclaim space safely.
-- Doctor includes a memory-search readiness check and can recommend `IronCliw configure --section model` when embedding credentials are missing.
-- If sandbox mode is enabled but Docker is unavailable, doctor reports a high-signal warning with remediation (`install Docker` or `IronCliw config set agents.defaults.sandbox.mode off`).
+- Doctor includes a memory-search readiness check and can recommend `ironcliw configure --section model` when embedding credentials are missing.
+- If sandbox mode is enabled but Docker is unavailable, doctor reports a high-signal warning with remediation (`install Docker` or `ironcliw config set agents.defaults.sandbox.mode off`).
 
 ## macOS: `launchctl` env overrides
 
-If you previously ran `launchctl setenv IronCliw_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
+If you previously ran `launchctl setenv IRONCLIW_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
 
 ```bash
-launchctl getenv IronCliw_GATEWAY_TOKEN
-launchctl getenv IronCliw_GATEWAY_PASSWORD
+launchctl getenv IRONCLIW_GATEWAY_TOKEN
+launchctl getenv IRONCLIW_GATEWAY_PASSWORD
 
-launchctl unsetenv IronCliw_GATEWAY_TOKEN
-launchctl unsetenv IronCliw_GATEWAY_PASSWORD
+launchctl unsetenv IRONCLIW_GATEWAY_TOKEN
+launchctl unsetenv IRONCLIW_GATEWAY_PASSWORD
 ```

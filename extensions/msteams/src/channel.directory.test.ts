@@ -1,4 +1,4 @@
-import type { IronCliwConfig, RuntimeEnv } from "IronCliw/plugin-sdk/msteams";
+import type { IronCliwConfig, RuntimeEnv } from "ironcliw/plugin-sdk/msteams";
 import { describe, expect, it } from "vitest";
 import { msteamsPlugin } from "./channel.js";
 

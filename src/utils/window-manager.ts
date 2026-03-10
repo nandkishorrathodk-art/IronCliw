@@ -25,17 +25,21 @@ export class WindowManager {
     return new Promise((resolve, reject) => {
       const ps = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", psScript]);
       let output = "";
-      ps.stdout.on("data", (data) => output += data.toString());
+      ps.stdout.on("data", (data) => (output += data.toString()));
       ps.on("close", (code) => {
         if (code === 0) {
           try {
             const data = JSON.parse(output);
             const list = Array.isArray(data) ? data : [data];
-            resolve((list as Array<{ Id: number, MainWindowTitle: string, ProcessName: string }>).map((item) => ({
-              id: item.Id,
-              title: item.MainWindowTitle,
-              processName: item.ProcessName
-            })));
+            resolve(
+              (list as Array<{ Id: number; MainWindowTitle: string; ProcessName: string }>).map(
+                (item) => ({
+                  id: item.Id,
+                  title: item.MainWindowTitle,
+                  processName: item.ProcessName,
+                }),
+              ),
+            );
           } catch {
             resolve([]);
           }

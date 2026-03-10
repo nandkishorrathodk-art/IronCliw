@@ -1,5 +1,5 @@
-import type { ChannelPlugin, IronCliwPluginApi } from "IronCliw/plugin-sdk/telegram";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/telegram";
+import type { ChannelPlugin, IronCliwPluginApi } from "ironcliw/plugin-sdk/telegram";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/telegram";
 import { telegramPlugin } from "./src/channel.js";
 import { setTelegramRuntime } from "./src/runtime.js";
 

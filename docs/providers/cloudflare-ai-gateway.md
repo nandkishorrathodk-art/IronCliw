@@ -22,7 +22,7 @@ For Anthropic models, use your Anthropic API key.
 1. Set the provider API key and Gateway details:
 
 ```bash
-IronCliw onboard --auth-choice cloudflare-ai-gateway-api-key
+ironcliw onboard --auth-choice cloudflare-ai-gateway-api-key
 ```
 
 2. Set a default model:
@@ -40,7 +40,7 @@ IronCliw onboard --auth-choice cloudflare-ai-gateway-api-key
 ## Non-interactive example
 
 ```bash
-IronCliw onboard --non-interactive \
+ironcliw onboard --non-interactive \
   --mode local \
   --auth-choice cloudflare-ai-gateway-api-key \
   --cloudflare-ai-gateway-account-id "your-account-id" \
@@ -68,4 +68,4 @@ If you enabled Gateway authentication in Cloudflare, add the `cf-aig-authorizati
 
 ## Environment note
 
-If the Gateway runs as a daemon (launchd/systemd), make sure `CLOUDFLARE_AI_GATEWAY_API_KEY` is available to that process (for example, in `~/.IronCliw/.env` or via `env.shellEnv`).
+If the Gateway runs as a daemon (launchd/systemd), make sure `CLOUDFLARE_AI_GATEWAY_API_KEY` is available to that process (for example, in `~/.ironcliw/.env` or via `env.shellEnv`).

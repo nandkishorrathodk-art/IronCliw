@@ -5,24 +5,24 @@ read_when:
 title: "IronCliw"
 ---
 
-# IronCliw 🦾
+# IronCliw 🦞
 
 <p align="center">
     <img
-        src="/assets/IronCliw-logo-text-dark.png"
+        src="/assets/ironcliw-logo-text-dark.png"
         alt="IronCliw"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/IronCliw-logo-text.png"
+        src="/assets/ironcliw-logo-text.png"
         alt="IronCliw"
         width="500"
         class="hidden dark:block"
     />
 </p>
 
-> _"EXFOLIATE! EXFOLIATE!"_ — A iron grip, probably
+> _"EXFOLIATE! EXFOLIATE!"_ — A space lobster, probably
 
 <p align="center">
   <strong>Any OS gateway for AI agents across WhatsApp, Telegram, Discord, iMessage, and more.</strong><br />
@@ -34,7 +34,7 @@ title: "IronCliw"
     Install IronCliw and bring up the Gateway in minutes.
   </Card>
   <Card title="Run the Wizard" href="/start/wizard" icon="sparkles">
-    Guided setup with `IronCliw onboard` and pairing flows.
+    Guided setup with `ironcliw onboard` and pairing flows.
   </Card>
   <Card title="Open the Control UI" href="/web/control-ui" icon="layout-dashboard">
     Launch the browser dashboard for chat, config, and sessions.
@@ -89,7 +89,7 @@ The Gateway is the single source of truth for sessions, routing, and channel con
     Browser dashboard for chat, config, sessions, and nodes.
   </Card>
   <Card title="Mobile nodes" icon="smartphone">
-    Pair iOS and Android nodes for Canvas, camera/screen, and voice-enabled workflows.
+    Pair iOS and Android nodes for Canvas, camera, and voice-enabled workflows.
   </Card>
 </Columns>
 
@@ -98,18 +98,18 @@ The Gateway is the single source of truth for sessions, routing, and channel con
 <Steps>
   <Step title="Install IronCliw">
     ```bash
-    npm install -g IronCliw@latest
+    npm install -g ironcliw@latest
     ```
   </Step>
   <Step title="Onboard and install the service">
     ```bash
-    IronCliw onboard --install-daemon
+    ironcliw onboard --install-daemon
     ```
   </Step>
   <Step title="Pair WhatsApp and start the Gateway">
     ```bash
-    IronCliw channels login
-    IronCliw gateway --port 18789
+    ironcliw channels login
+    ironcliw gateway --port 18789
     ```
   </Step>
 </Steps>
@@ -124,12 +124,12 @@ Open the browser Control UI after the Gateway starts.
 - Remote access: [Web surfaces](/web) and [Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="whatsapp-IronCliw.jpg" alt="IronCliw" width="420" />
+  <img src="/whatsapp-ironcliw.jpg" alt="IronCliw" width="420" />
 </p>
 
 ## Configuration (optional)
 
-Config lives at `~/.IronCliw/IronCliw.json`.
+Config lives at `~/.ironcliw/ironcliw.json`.
 
 - If you **do nothing**, IronCliw uses the bundled Pi binary in RPC mode with per-sender sessions.
 - If you want to lock it down, start with `channels.whatsapp.allowFrom` and (for groups) mention rules.
@@ -144,7 +144,7 @@ Example:
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@IronCliw"] } },
+  messages: { groupChat: { mentionPatterns: ["@ironcliw"] } },
 }
 ```
 
@@ -164,7 +164,7 @@ Example:
     Channel-specific setup for WhatsApp, Telegram, Discord, and more.
   </Card>
   <Card title="Nodes" href="/nodes" icon="smartphone">
-    iOS and Android nodes with pairing, Canvas, camera/screen, and device actions.
+    iOS and Android nodes with pairing, Canvas, camera, and device actions.
   </Card>
   <Card title="Help" href="/help" icon="life-buoy">
     Common fixes and troubleshooting entry point.

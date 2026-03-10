@@ -6,6 +6,7 @@ import {
   GATEWAY_SERVICE_MARKER,
   resolveGatewayLaunchAgentLabel,
   resolveGatewaySystemdServiceName,
+  resolveGatewayWindowsTaskName,
   NODE_SERVICE_KIND,
   NODE_SERVICE_MARKER,
   NODE_WINDOWS_TASK_SCRIPT_NAME,
@@ -29,7 +30,7 @@ type SharedServiceEnvironmentFields = {
   stateDir: string | undefined;
   configPath: string | undefined;
   tmpDir: string;
-  minimalPath: string;
+  minimalPath: string | undefined;
   proxyEnv: Record<string, string | undefined>;
   nodeCaCerts: string | undefined;
   nodeUseSystemCa: string | undefined;
@@ -244,27 +245,26 @@ export function buildMinimalServicePath(options: BuildServicePathOptions = {}): 
 export function buildServiceEnvironment(params: {
   env: Record<string, string | undefined>;
   port: number;
-  token?: string;
   launchdLabel?: string;
   platform?: NodeJS.Platform;
 }): Record<string, string | undefined> {
-  const { env, port, token, launchdLabel } = params;
+  const { env, port, launchdLabel } = params;
   const platform = params.platform ?? process.platform;
   const sharedEnv = resolveSharedServiceEnvironmentFields(env, platform);
-  const profile = env.IronCliw_PROFILE;
+  const profile = env.IRONCLIW_PROFILE;
   const resolvedLaunchdLabel =
     launchdLabel || (platform === "darwin" ? resolveGatewayLaunchAgentLabel(profile) : undefined);
   const systemdUnit = `${resolveGatewaySystemdServiceName(profile)}.service`;
   return {
     ...buildCommonServiceEnvironment(env, sharedEnv),
-    IronCliw_PROFILE: profile,
-    IronCliw_GATEWAY_PORT: String(port),
-    IronCliw_GATEWAY_TOKEN: token,
-    IronCliw_LAUNCHD_LABEL: resolvedLaunchdLabel,
-    IronCliw_SYSTEMD_UNIT: systemdUnit,
-    IronCliw_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
-    IronCliw_SERVICE_KIND: GATEWAY_SERVICE_KIND,
-    IronCliw_SERVICE_VERSION: VERSION,
+    IRONCLIW_PROFILE: profile,
+    IRONCLIW_GATEWAY_PORT: String(port),
+    IRONCLIW_LAUNCHD_LABEL: resolvedLaunchdLabel,
+    IRONCLIW_SYSTEMD_UNIT: systemdUnit,
+    IRONCLIW_WINDOWS_TASK_NAME: resolveGatewayWindowsTaskName(profile),
+    IRONCLIW_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
+    IRONCLIW_SERVICE_KIND: GATEWAY_SERVICE_KIND,
+    IRONCLIW_SERVICE_VERSION: VERSION,
   };
 }
 
@@ -276,18 +276,18 @@ export function buildNodeServiceEnvironment(params: {
   const platform = params.platform ?? process.platform;
   const sharedEnv = resolveSharedServiceEnvironmentFields(env, platform);
   const gatewayToken =
-    env.IronCliw_GATEWAY_TOKEN?.trim() || env.CLAWDBOT_GATEWAY_TOKEN?.trim() || undefined;
+    env.IRONCLIW_GATEWAY_TOKEN?.trim() || env.CLAWDBOT_GATEWAY_TOKEN?.trim() || undefined;
   return {
     ...buildCommonServiceEnvironment(env, sharedEnv),
-    IronCliw_GATEWAY_TOKEN: gatewayToken,
-    IronCliw_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    IronCliw_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    IronCliw_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    IronCliw_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    IronCliw_LOG_PREFIX: "node",
-    IronCliw_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    IronCliw_SERVICE_KIND: NODE_SERVICE_KIND,
-    IronCliw_SERVICE_VERSION: VERSION,
+    IRONCLIW_GATEWAY_TOKEN: gatewayToken,
+    IRONCLIW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    IRONCLIW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    IRONCLIW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    IRONCLIW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    IRONCLIW_LOG_PREFIX: "node",
+    IRONCLIW_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    IRONCLIW_SERVICE_KIND: NODE_SERVICE_KIND,
+    IRONCLIW_SERVICE_VERSION: VERSION,
   };
 }
 
@@ -295,24 +295,27 @@ function buildCommonServiceEnvironment(
   env: Record<string, string | undefined>,
   sharedEnv: SharedServiceEnvironmentFields,
 ): Record<string, string | undefined> {
-  return {
+  const serviceEnv: Record<string, string | undefined> = {
     HOME: env.HOME,
     TMPDIR: sharedEnv.tmpDir,
-    PATH: sharedEnv.minimalPath,
     ...sharedEnv.proxyEnv,
     NODE_EXTRA_CA_CERTS: sharedEnv.nodeCaCerts,
     NODE_USE_SYSTEM_CA: sharedEnv.nodeUseSystemCa,
-    IronCliw_STATE_DIR: sharedEnv.stateDir,
-    IronCliw_CONFIG_PATH: sharedEnv.configPath,
+    IRONCLIW_STATE_DIR: sharedEnv.stateDir,
+    IRONCLIW_CONFIG_PATH: sharedEnv.configPath,
   };
+  if (sharedEnv.minimalPath) {
+    serviceEnv.PATH = sharedEnv.minimalPath;
+  }
+  return serviceEnv;
 }
 
 function resolveSharedServiceEnvironmentFields(
   env: Record<string, string | undefined>,
   platform: NodeJS.Platform,
 ): SharedServiceEnvironmentFields {
-  const stateDir = env.IronCliw_STATE_DIR;
-  const configPath = env.IronCliw_CONFIG_PATH;
+  const stateDir = env.IRONCLIW_STATE_DIR;
+  const configPath = env.IRONCLIW_CONFIG_PATH;
   // Keep a usable temp directory for supervised services even when the host env omits TMPDIR.
   const tmpDir = env.TMPDIR?.trim() || os.tmpdir();
   const proxyEnv = readServiceProxyEnvironment(env);
@@ -326,7 +329,9 @@ function resolveSharedServiceEnvironmentFields(
     stateDir,
     configPath,
     tmpDir,
-    minimalPath: buildMinimalServicePath({ env }),
+    // On Windows, Scheduled Tasks should inherit the current task PATH instead of
+    // freezing the install-time snapshot into gateway.cmd/node-host.cmd.
+    minimalPath: platform === "win32" ? undefined : buildMinimalServicePath({ env, platform }),
     proxyEnv,
     nodeCaCerts,
     nodeUseSystemCa,

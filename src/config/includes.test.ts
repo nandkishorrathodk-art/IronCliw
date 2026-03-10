@@ -13,17 +13,17 @@ import {
 
 const ROOT_DIR = path.parse(process.cwd()).root;
 const CONFIG_DIR = path.join(ROOT_DIR, "config");
-const ETC_IronCliw_DIR = path.join(ROOT_DIR, "etc", "IronCliw");
+const ETC_IRONCLIW_DIR = path.join(ROOT_DIR, "etc", "ironcliw");
 const SHARED_DIR = path.join(ROOT_DIR, "shared");
 
-const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "IronCliw.json");
+const DEFAULT_BASE_PATH = path.join(CONFIG_DIR, "ironcliw.json");
 
 function configPath(...parts: string[]) {
   return path.join(CONFIG_DIR, ...parts);
 }
 
 function etcIronCliwPath(...parts: string[]) {
-  return path.join(ETC_IronCliw_DIR, ...parts);
+  return path.join(ETC_IRONCLIW_DIR, ...parts);
 }
 
 function sharedPath(...parts: string[]) {
@@ -322,7 +322,7 @@ describe("resolveConfigIncludes", () => {
         resolve(
           { $include: "../../shared/common.json" },
           { [sharedPath("common.json")]: { shared: true } },
-          configPath("sub", "IronCliw.json"),
+          configPath("sub", "ironcliw.json"),
         ),
       /escapes config directory/,
     );
@@ -620,7 +620,7 @@ describe("security: path traversal protection (CWE-22)", () => {
     });
 
     it("allows include files when the config root path is a symlink", async () => {
-      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-includes-symlink-"));
+      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-includes-symlink-"));
       try {
         const realRoot = path.join(tempRoot, "real");
         const linkRoot = path.join(tempRoot, "link");
@@ -634,7 +634,7 @@ describe("security: path traversal protection (CWE-22)", () => {
 
         const result = resolveConfigIncludes(
           { $include: "./includes/extra.json5" },
-          path.join(linkRoot, "IronCliw.json"),
+          path.join(linkRoot, "ironcliw.json"),
         );
         expect(result).toEqual({ logging: { redactSensitive: "tools" } });
       } finally {
@@ -646,7 +646,7 @@ describe("security: path traversal protection (CWE-22)", () => {
       if (process.platform === "win32") {
         return;
       }
-      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-includes-hardlink-"));
+      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-includes-hardlink-"));
       try {
         const configDir = path.join(tempRoot, "config");
         const outsideDir = path.join(tempRoot, "outside");
@@ -667,7 +667,7 @@ describe("security: path traversal protection (CWE-22)", () => {
         expect(() =>
           resolveConfigIncludes(
             { $include: "./extra.json5" },
-            path.join(configDir, "IronCliw.json"),
+            path.join(configDir, "ironcliw.json"),
           ),
         ).toThrow(/security checks|hardlink/i);
       } finally {
@@ -676,7 +676,7 @@ describe("security: path traversal protection (CWE-22)", () => {
     });
 
     it("rejects oversized include files", async () => {
-      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-includes-big-"));
+      const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-includes-big-"));
       try {
         const configDir = path.join(tempRoot, "config");
         await fs.mkdir(configDir, { recursive: true });
@@ -685,7 +685,7 @@ describe("security: path traversal protection (CWE-22)", () => {
         await fs.writeFile(includePath, `{"blob":"${payload}"}`, "utf-8");
 
         expect(() =>
-          resolveConfigIncludes({ $include: "./big.json5" }, path.join(configDir, "IronCliw.json")),
+          resolveConfigIncludes({ $include: "./big.json5" }, path.join(configDir, "ironcliw.json")),
         ).toThrow(/security checks|max/i);
       } finally {
         await fs.rm(tempRoot, { recursive: true, force: true });

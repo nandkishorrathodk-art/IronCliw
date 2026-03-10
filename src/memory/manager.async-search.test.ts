@@ -44,7 +44,7 @@ describe("memory search async sync", () => {
   beforeEach(async () => {
     embedBatch.mockClear();
     embedBatch.mockImplementation(async (input: string[]) => input.map(() => [0.2, 0.2, 0.2]));
-    workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-mem-async-"));
+    workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-mem-async-"));
     indexPath = path.join(workspaceDir, "index.sqlite");
     await fs.mkdir(path.join(workspaceDir, "memory"));
     await fs.writeFile(path.join(workspaceDir, "memory", "2026-01-07.md"), "hello\n");

@@ -11,52 +11,52 @@ import {
 describe("npm-resolution helpers", () => {
   it("keeps original spec when pin is disabled", () => {
     const result = resolvePinnedNpmSpec({
-      rawSpec: "@IronCliw/plugin-alpha@latest",
+      rawSpec: "@ironcliw/plugin-alpha@latest",
       pin: false,
-      resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+      resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
     });
     expect(result).toEqual({
-      recordSpec: "@IronCliw/plugin-alpha@latest",
+      recordSpec: "@ironcliw/plugin-alpha@latest",
     });
   });
 
   it("warns when pin is enabled but resolved spec is missing", () => {
     const result = resolvePinnedNpmSpec({
-      rawSpec: "@IronCliw/plugin-alpha@latest",
+      rawSpec: "@ironcliw/plugin-alpha@latest",
       pin: true,
     });
     expect(result).toEqual({
-      recordSpec: "@IronCliw/plugin-alpha@latest",
+      recordSpec: "@ironcliw/plugin-alpha@latest",
       pinWarning: "Could not resolve exact npm version for --pin; storing original npm spec.",
     });
   });
 
   it("returns pinned spec notice when resolved spec is available", () => {
     const result = resolvePinnedNpmSpec({
-      rawSpec: "@IronCliw/plugin-alpha@latest",
+      rawSpec: "@ironcliw/plugin-alpha@latest",
       pin: true,
-      resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+      resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
     });
     expect(result).toEqual({
-      recordSpec: "@IronCliw/plugin-alpha@1.2.3",
-      pinNotice: "Pinned npm install record to @IronCliw/plugin-alpha@1.2.3.",
+      recordSpec: "@ironcliw/plugin-alpha@1.2.3",
+      pinNotice: "Pinned npm install record to @ironcliw/plugin-alpha@1.2.3.",
     });
   });
 
   it("maps npm resolution metadata to install fields", () => {
     expect(
       mapNpmResolutionMetadata({
-        name: "@IronCliw/plugin-alpha",
+        name: "@ironcliw/plugin-alpha",
         version: "1.2.3",
-        resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+        resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
         integrity: "sha512-abc",
         shasum: "deadbeef",
         resolvedAt: "2026-02-21T00:00:00.000Z",
       }),
     ).toEqual({
-      resolvedName: "@IronCliw/plugin-alpha",
+      resolvedName: "@ironcliw/plugin-alpha",
       resolvedVersion: "1.2.3",
-      resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+      resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
       integrity: "sha512-abc",
       shasum: "deadbeef",
       resolvedAt: "2026-02-21T00:00:00.000Z",
@@ -66,24 +66,24 @@ describe("npm-resolution helpers", () => {
   it("builds common npm install record fields", () => {
     expect(
       buildNpmInstallRecordFields({
-        spec: "@IronCliw/plugin-alpha@1.2.3",
-        installPath: "/tmp/IronCliw/extensions/alpha",
+        spec: "@ironcliw/plugin-alpha@1.2.3",
+        installPath: "/tmp/ironcliw/extensions/alpha",
         version: "1.2.3",
         resolution: {
-          name: "@IronCliw/plugin-alpha",
+          name: "@ironcliw/plugin-alpha",
           version: "1.2.3",
-          resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+          resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
           integrity: "sha512-abc",
         },
       }),
     ).toEqual({
       source: "npm",
-      spec: "@IronCliw/plugin-alpha@1.2.3",
-      installPath: "/tmp/IronCliw/extensions/alpha",
+      spec: "@ironcliw/plugin-alpha@1.2.3",
+      installPath: "/tmp/ironcliw/extensions/alpha",
       version: "1.2.3",
-      resolvedName: "@IronCliw/plugin-alpha",
+      resolvedName: "@ironcliw/plugin-alpha",
       resolvedVersion: "1.2.3",
-      resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+      resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
       integrity: "sha512-abc",
       shasum: undefined,
       resolvedAt: undefined,
@@ -110,14 +110,14 @@ describe("npm-resolution helpers", () => {
     const logs: string[] = [];
     const warns: string[] = [];
     const record = resolvePinnedNpmInstallRecord({
-      rawSpec: "@IronCliw/plugin-alpha@latest",
+      rawSpec: "@ironcliw/plugin-alpha@latest",
       pin: true,
-      installPath: "/tmp/IronCliw/extensions/alpha",
+      installPath: "/tmp/ironcliw/extensions/alpha",
       version: "1.2.3",
       resolution: {
-        name: "@IronCliw/plugin-alpha",
+        name: "@ironcliw/plugin-alpha",
         version: "1.2.3",
-        resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+        resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
       },
       log: (message) => logs.push(message),
       warn: (message) => warns.push(message),
@@ -125,26 +125,26 @@ describe("npm-resolution helpers", () => {
 
     expect(record).toEqual({
       source: "npm",
-      spec: "@IronCliw/plugin-alpha@1.2.3",
-      installPath: "/tmp/IronCliw/extensions/alpha",
+      spec: "@ironcliw/plugin-alpha@1.2.3",
+      installPath: "/tmp/ironcliw/extensions/alpha",
       version: "1.2.3",
-      resolvedName: "@IronCliw/plugin-alpha",
+      resolvedName: "@ironcliw/plugin-alpha",
       resolvedVersion: "1.2.3",
-      resolvedSpec: "@IronCliw/plugin-alpha@1.2.3",
+      resolvedSpec: "@ironcliw/plugin-alpha@1.2.3",
       integrity: undefined,
       shasum: undefined,
       resolvedAt: undefined,
     });
-    expect(logs).toEqual(["Pinned npm install record to @IronCliw/plugin-alpha@1.2.3."]);
+    expect(logs).toEqual(["Pinned npm install record to @ironcliw/plugin-alpha@1.2.3."]);
     expect(warns).toEqual([]);
   });
 
   it("resolves pinned install record for CLI and formats warning output", () => {
     const logs: string[] = [];
     const record = resolvePinnedNpmInstallRecordForCli(
-      "@IronCliw/plugin-alpha@latest",
+      "@ironcliw/plugin-alpha@latest",
       true,
-      "/tmp/IronCliw/extensions/alpha",
+      "/tmp/ironcliw/extensions/alpha",
       "1.2.3",
       undefined,
       (message) => logs.push(message),
@@ -153,8 +153,8 @@ describe("npm-resolution helpers", () => {
 
     expect(record).toEqual({
       source: "npm",
-      spec: "@IronCliw/plugin-alpha@latest",
-      installPath: "/tmp/IronCliw/extensions/alpha",
+      spec: "@ironcliw/plugin-alpha@latest",
+      installPath: "/tmp/ironcliw/extensions/alpha",
       version: "1.2.3",
       resolvedName: undefined,
       resolvedVersion: undefined,

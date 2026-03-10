@@ -1,11 +1,11 @@
 # IronCliw Installer for Windows (PowerShell)
-# Usage: iwr -useb https://IronCliw.ai/install.ps1 | iex
-# Or: & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+# Usage: iwr -useb https://ironcliw.ai/install.ps1 | iex
+# Or: & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
 
 param(
     [string]$InstallMethod = "npm",
     [string]$Tag = "latest",
-    [string]$GitDir = "$env:USERPROFILE\IronCliw",
+    [string]$GitDir = "$env:USERPROFILE\ironcliw",
     [switch]$NoOnboard,
     [switch]$NoGitUpdate,
     [switch]$DryRun
@@ -14,11 +14,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 # Colors
-$ACCENT = "`e[38;2;0;229;255m"    # Neon Cyan
-$SUCCESS = "`e[38;2;0;230;118m"   # Neon Green
-$WARN = "`e[38;2;255;196;0m"      # Gold
-$ERROR = "`e[38;2;255;23;68m"     # Neon Red
-$MUTED = "`e[38;2;84;110;122m"    # Slate Gray
+$ACCENT = "`e[38;2;255;77;77m"    # coral-bright
+$SUCCESS = "`e[38;2;0;229;204m"    # cyan-bright
+$WARN = "`e[38;2;255;176;32m"     # amber
+$ERROR = "`e[38;2;230;57;70m"     # coral-mid
+$MUTED = "`e[38;2;90;100;128m"    # text-muted
 $NC = "`e[0m"                     # No Color
 
 function Write-Host {
@@ -34,14 +34,8 @@ function Write-Host {
 
 function Write-Banner {
     Write-Host ""
-    Write-Host "${ACCENT}  ___ ____   ___  _   _  ____ _     _____        __ $NC" -Level info
-    Write-Host "${ACCENT} |_ _|  _ \ / _ \| \ | |/ ___| |   |_ _\ \      / / $NC" -Level info
-    Write-Host "${ACCENT}  | || |_) | | | |  \| | |   | |    | | \ \ /\ / /  $NC" -Level info
-    Write-Host "${ACCENT}  | ||  _ <| |_| | |\  | |___| |___ | |  \ V  V /   $NC" -Level info
-    Write-Host "${ACCENT} |___|_| \_\\___/|_| \_|\____|_____|___|  \_/\_/    $NC" -Level info
-    Write-Host ""
-    Write-Host "${ACCENT}                  🦾 IronCliw Installer$NC" -Level info
-    Write-Host "${MUTED}                  The Iron Grip of AI Automation.$NC" -Level info
+    Write-Host "${ACCENT}  🦞 IronCliw Installer$NC" -Level info
+    Write-Host "${MUTED}  All your chats, one IronCliw.$NC" -Level info
     Write-Host ""
 }
 
@@ -208,11 +202,11 @@ function Ensure-Git {
 function Install-IronCliwNpm {
     param([string]$Version = "latest")
     
-    Write-Host "Installing IronCliw (IronCliw@$Version)..." -Level info
+    Write-Host "Installing IronCliw (ironcliw@$Version)..." -Level info
     
     try {
         # Use -ExecutionPolicy Bypass to handle restricted execution policy
-        npm install -g IronCliw@$Version --no-fund --no-audit 2>&1
+        npm install -g ironcliw@$Version --no-fund --no-audit 2>&1
         Write-Host "IronCliw installed" -Level success
         return $true
     } catch {
@@ -228,7 +222,7 @@ function Install-IronCliwGit {
     
     if (!(Test-Path $RepoDir)) {
         Write-Host "  Cloning repository..." -Level info
-        git clone https://github.com/IronCliw/IronCliw.git $RepoDir 2>&1
+        git clone https://github.com/ironcliw/ironcliw.git $RepoDir 2>&1
     } elseif ($Update) {
         Write-Host "  Updating repository..." -Level info
         git -C $RepoDir pull --rebase 2>&1
@@ -256,8 +250,8 @@ function Install-IronCliwGit {
     
     @"
 @echo off
-node "%~dp0..\IronCliw\dist\entry.js" %*
-"@ | Out-File -FilePath "$wrapperDir\IronCliw.cmd" -Encoding ASCII -Force
+node "%~dp0..\ironcliw\dist\entry.js" %*
+"@ | Out-File -FilePath "$wrapperDir\ironcliw.cmd" -Encoding ASCII -Force
     
     Write-Host "IronCliw installed" -Level success
     return $true
@@ -325,12 +319,11 @@ function Main {
     
     if (!$NoOnboard -and !$DryRun) {
         Write-Host ""
-        Write-Host "Run 'IronCliw onboard' to complete setup" -Level info
+        Write-Host "Run 'ironcliw onboard' to complete setup" -Level info
     }
     
     Write-Host ""
-    Write-Host "🦾 IronCliw installed successfully!" -Level success
+    Write-Host "🦞 IronCliw installed successfully!" -Level success
 }
 
 Main
-

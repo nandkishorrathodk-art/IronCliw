@@ -1,9 +1,7 @@
+import fs from "node:fs/promises";
 import type { Page } from "playwright-core";
 import { fireworksUnderstandImage } from "../agents/fireworks-vlm.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import fs from "node:fs/promises";
-import path from "node:path";
-import { CONFIG_DIR } from "../utils.js";
 
 const log = createSubsystemLogger("browser/visual");
 
@@ -17,17 +15,19 @@ export class VisualBrowser {
    * @param prompt Description of the element to find (e.g., "Login button")
    */
   async visualClick(page: Page, prompt: string): Promise<boolean> {
-    const screenshotPath = path.join(CONFIG_DIR, "tmp", `browser_vclick_${Date.now()}.png`);
-    
-    // 1. Take screenshot of the viewport
-    await page.screenshot({ path: screenshotPath });
-    log.info(`Captured page screenshot for visual click: ${screenshotPath}`);
-
     try {
+      // 1. Take screenshot of the viewport
+      const screenshotBuffer = await page.screenshot();
+      const imageDataUrl = `data:image/png;base64,${screenshotBuffer.toString("base64")}`;
+      log.info(
+        `Captured page screenshot for visual click (buffer size: ${screenshotBuffer.length})`,
+      );
+
       // 2. Analyze with Vision AI
       const analysis = await fireworksUnderstandImage({
-        imagePath: screenshotPath,
-        prompt: `List the coordinates (x, y) of the center of the "${prompt}" in the image. Return JSON format: { "x": number, "y": number }`
+        apiKey: process.env.FIREWORKS_API_KEY || "",
+        imageDataUrl,
+        prompt: `List the coordinates (x, y) of the center of the "${prompt}" in the image. Return JSON format: { "x": number, "y": number }`,
       });
 
       // 3. Parse coordinates
@@ -37,7 +37,7 @@ export class VisualBrowser {
         return false;
       }
 
-      const coords = JSON.parse(jsonMatch[0]) as { x: number, y: number };
+      const coords = JSON.parse(jsonMatch[0]) as { x: number; y: number };
       log.info(`AI found "${prompt}" at (${coords.x}, ${coords.y}). Clicking...`);
 
       // 4. Perform click

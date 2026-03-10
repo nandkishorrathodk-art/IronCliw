@@ -37,7 +37,7 @@ export function createWizardPrompter(
 }
 
 export async function setupAuthTestEnv(
-  prefix = "IronCliw-auth-",
+  prefix = "ironcliw-auth-",
   options?: { agentSubdir?: string },
 ): Promise<{
   stateDir: string;
@@ -45,8 +45,8 @@ export async function setupAuthTestEnv(
 }> {
   const stateDir = await makeTempWorkspace(prefix);
   const agentDir = path.join(stateDir, options?.agentSubdir ?? "agent");
-  process.env.IronCliw_STATE_DIR = stateDir;
-  process.env.IronCliw_AGENT_DIR = agentDir;
+  process.env.IRONCLIW_STATE_DIR = stateDir;
+  process.env.IRONCLIW_AGENT_DIR = agentDir;
   process.env.PI_CODING_AGENT_DIR = agentDir;
   await fs.mkdir(agentDir, { recursive: true });
   return { stateDir, agentDir };
@@ -75,9 +75,9 @@ export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
 }
 
 export function requireIronCliwAgentDir(): string {
-  const agentDir = process.env.IronCliw_AGENT_DIR;
+  const agentDir = process.env.IRONCLIW_AGENT_DIR;
   if (!agentDir) {
-    throw new Error("IronCliw_AGENT_DIR not set");
+    throw new Error("IRONCLIW_AGENT_DIR not set");
   }
   return agentDir;
 }

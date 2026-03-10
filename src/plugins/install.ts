@@ -46,12 +46,12 @@ type PackageManifest = PluginPackageManifest & {
 };
 
 const MISSING_EXTENSIONS_ERROR =
-  'package.json missing IronCliw.extensions; update the plugin package to include IronCliw.extensions (for example ["./dist/index.js"]). See https://docs.IronCliw.ai/help/troubleshooting#plugin-install-fails-with-missing-IronCliw-extensions';
+  'package.json missing ironcliw.extensions; update the plugin package to include ironcliw.extensions (for example ["./dist/index.js"]). See https://docs.ironcliw.ai/help/troubleshooting#plugin-install-fails-with-missing-ironcliw-extensions';
 
 export const PLUGIN_INSTALL_ERROR_CODE = {
   INVALID_NPM_SPEC: "invalid_npm_spec",
-  MISSING_IronCliw_EXTENSIONS: "missing_IronCliw_extensions",
-  EMPTY_IronCliw_EXTENSIONS: "empty_IronCliw_extensions",
+  MISSING_IRONCLIW_EXTENSIONS: "missing_ironcliw_extensions",
+  EMPTY_IRONCLIW_EXTENSIONS: "empty_ironcliw_extensions",
   NPM_PACKAGE_NOT_FOUND: "npm_package_not_found",
   PLUGIN_ID_MISMATCH: "plugin_id_mismatch",
 } as const;
@@ -112,14 +112,14 @@ function ensureIronCliwExtensions(params: { manifest: PackageManifest }):
     return {
       ok: false,
       error: MISSING_EXTENSIONS_ERROR,
-      code: PLUGIN_INSTALL_ERROR_CODE.MISSING_IronCliw_EXTENSIONS,
+      code: PLUGIN_INSTALL_ERROR_CODE.MISSING_IRONCLIW_EXTENSIONS,
     };
   }
   if (resolved.status === "empty") {
     return {
       ok: false,
-      error: "package.json IronCliw.extensions is empty",
-      code: PLUGIN_INSTALL_ERROR_CODE.EMPTY_IronCliw_EXTENSIONS,
+      error: "package.json ironcliw.extensions is empty",
+      code: PLUGIN_INSTALL_ERROR_CODE.EMPTY_IRONCLIW_EXTENSIONS,
     };
   }
   return {
@@ -236,9 +236,9 @@ async function installPluginFromPackageDir(
   const pkgName = typeof manifest.name === "string" ? manifest.name : "";
   const npmPluginId = pkgName ? unscopedPackageName(pkgName) : "plugin";
 
-  // Prefer the canonical `id` from IronCliw.plugin.json over the npm package name.
+  // Prefer the canonical `id` from ironcliw.plugin.json over the npm package name.
   // This avoids a latent key-mismatch bug: if the manifest id (e.g. "memory-cognee")
-  // differs from the npm package name (e.g. "cognee-IronCliw"), the plugin registry
+  // differs from the npm package name (e.g. "cognee-ironcliw"), the plugin registry
   // uses the manifest id as the authoritative key, so the config entry must match it.
   const ocManifestResult = loadPluginManifest(params.packageDir);
   const manifestPluginId =
@@ -296,12 +296,12 @@ async function installPluginFromPackageDir(
       );
     } else if (scanSummary.warn > 0) {
       logger.warn?.(
-        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "IronCliw security audit --deep" for details.`,
+        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "ironcliw security audit --deep" for details.`,
       );
     }
   } catch (err) {
     logger.warn?.(
-      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "IronCliw security audit --deep" after install.`,
+      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "ironcliw security audit --deep" after install.`,
     );
   }
 
@@ -349,10 +349,10 @@ async function installPluginFromPackageDir(
     copyErrorPrefix: "failed to copy plugin",
     hasDeps,
     depsLogMessage: "Installing plugin dependencies…",
-    afterCopy: async () => {
+    afterCopy: async (installedDir) => {
       for (const entry of extensions) {
-        const resolvedEntry = path.resolve(targetDir, entry);
-        if (!isPathInside(targetDir, resolvedEntry)) {
+        const resolvedEntry = path.resolve(installedDir, entry);
+        if (!isPathInside(installedDir, resolvedEntry)) {
           logger.warn?.(`extension entry escapes plugin directory: ${entry}`);
           continue;
         }
@@ -392,7 +392,7 @@ export async function installPluginFromArchive(
 
   return await withExtractedArchiveRoot({
     archivePath,
-    tempDirPrefix: "IronCliw-plugin-",
+    tempDirPrefix: "ironcliw-plugin-",
     timeoutMs,
     logger,
     onExtracted: async (packageDir) =>
@@ -509,7 +509,7 @@ export async function installPluginFromNpmSpec(params: {
 
   logger.info?.(`Downloading ${spec}…`);
   const flowResult = await installFromNpmSpecArchiveWithInstaller({
-    tempDirPrefix: "IronCliw-npm-pack-",
+    tempDirPrefix: "ironcliw-npm-pack-",
     spec,
     timeoutMs,
     expectedIntegrity: params.expectedIntegrity,

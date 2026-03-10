@@ -10,6 +10,8 @@ import {
 } from "./client.js";
 import { extractAttachmentsFromPrompt, extractTextFromPrompt } from "./event-mapper.js";
 
+const envVar = (...parts: string[]) => parts.join("_");
+
 function makePermissionRequest(
   overrides: Partial<RequestPermissionRequest> = {},
 ): RequestPermissionRequest {
@@ -36,36 +38,84 @@ function makePermissionRequest(
 }
 
 const tempDirs = createTrackedTempDirs();
-const createTempDir = () => tempDirs.make("IronCliw-acp-client-test-");
+const createTempDir = () => tempDirs.make("ironcliw-acp-client-test-");
 
 afterEach(async () => {
   await tempDirs.cleanup();
 });
 
 describe("resolveAcpClientSpawnEnv", () => {
-  it("sets IronCliw_SHELL marker and preserves existing env values", () => {
+  it("sets IRONCLIW_SHELL marker and preserves existing env values", () => {
     const env = resolveAcpClientSpawnEnv({
       PATH: "/usr/bin",
-      USER: "IronCliw",
+      USER: "ironcliw",
     });
 
-    expect(env.IronCliw_SHELL).toBe("acp-client");
+    expect(env.IRONCLIW_SHELL).toBe("acp-client");
     expect(env.PATH).toBe("/usr/bin");
-    expect(env.USER).toBe("IronCliw");
+    expect(env.USER).toBe("ironcliw");
   });
 
-  it("overrides pre-existing IronCliw_SHELL to acp-client", () => {
+  it("overrides pre-existing IRONCLIW_SHELL to acp-client", () => {
     const env = resolveAcpClientSpawnEnv({
-      IronCliw_SHELL: "wrong",
+      IRONCLIW_SHELL: "wrong",
     });
-    expect(env.IronCliw_SHELL).toBe("acp-client");
+    expect(env.IRONCLIW_SHELL).toBe("acp-client");
+  });
+
+  it("strips skill-injected env keys when stripKeys is provided", () => {
+    const openAiApiKeyEnv = envVar("OPENAI", "API", "KEY");
+    const elevenLabsApiKeyEnv = envVar("ELEVENLABS", "API", "KEY");
+    const anthropicApiKeyEnv = envVar("ANTHROPIC", "API", "KEY");
+    const stripKeys = new Set([openAiApiKeyEnv, elevenLabsApiKeyEnv]);
+    const env = resolveAcpClientSpawnEnv(
+      {
+        PATH: "/usr/bin",
+        [openAiApiKeyEnv]: "openai-test-value", // pragma: allowlist secret
+        [elevenLabsApiKeyEnv]: "elevenlabs-test-value", // pragma: allowlist secret
+        [anthropicApiKeyEnv]: "anthropic-test-value", // pragma: allowlist secret
+      },
+      { stripKeys },
+    );
+
+    expect(env.PATH).toBe("/usr/bin");
+    expect(env.IRONCLIW_SHELL).toBe("acp-client");
+    expect(env.ANTHROPIC_API_KEY).toBe("anthropic-test-value");
+    expect(env.OPENAI_API_KEY).toBeUndefined();
+    expect(env.ELEVENLABS_API_KEY).toBeUndefined();
+  });
+
+  it("does not modify the original baseEnv when stripping keys", () => {
+    const openAiApiKeyEnv = envVar("OPENAI", "API", "KEY");
+    const baseEnv: NodeJS.ProcessEnv = {
+      [openAiApiKeyEnv]: "openai-original", // pragma: allowlist secret
+      PATH: "/usr/bin",
+    };
+    const stripKeys = new Set([openAiApiKeyEnv]);
+    resolveAcpClientSpawnEnv(baseEnv, { stripKeys });
+
+    expect(baseEnv.OPENAI_API_KEY).toBe("openai-original");
+  });
+
+  it("preserves IRONCLIW_SHELL even when stripKeys contains it", () => {
+    const openAiApiKeyEnv = envVar("OPENAI", "API", "KEY");
+    const env = resolveAcpClientSpawnEnv(
+      {
+        IRONCLIW_SHELL: "skill-overridden",
+        [openAiApiKeyEnv]: "openai-leaked", // pragma: allowlist secret
+      },
+      { stripKeys: new Set(["IRONCLIW_SHELL", openAiApiKeyEnv]) },
+    );
+
+    expect(env.IRONCLIW_SHELL).toBe("acp-client");
+    expect(env.OPENAI_API_KEY).toBeUndefined();
   });
 });
 
 describe("resolveAcpClientSpawnInvocation", () => {
   it("keeps non-windows invocation unchanged", () => {
     const resolved = resolveAcpClientSpawnInvocation(
-      { serverCommand: "IronCliw", serverArgs: ["acp", "--verbose"] },
+      { serverCommand: "ironcliw", serverArgs: ["acp", "--verbose"] },
       {
         platform: "darwin",
         env: {},
@@ -73,7 +123,7 @@ describe("resolveAcpClientSpawnInvocation", () => {
       },
     );
     expect(resolved).toEqual({
-      command: "IronCliw",
+      command: "ironcliw",
       args: ["acp", "--verbose"],
       shell: undefined,
       windowsHide: undefined,
@@ -82,11 +132,11 @@ describe("resolveAcpClientSpawnInvocation", () => {
 
   it("unwraps .cmd shim entrypoint on windows", async () => {
     const dir = await createTempDir();
-    const scriptPath = path.join(dir, "IronCliw", "dist", "entry.js");
-    const shimPath = path.join(dir, "IronCliw.cmd");
+    const scriptPath = path.join(dir, "ironcliw", "dist", "entry.js");
+    const shimPath = path.join(dir, "ironcliw.cmd");
     await mkdir(path.dirname(scriptPath), { recursive: true });
     await writeFile(scriptPath, "console.log('ok')\n", "utf8");
-    await writeFile(shimPath, `@ECHO off\r\n"%~dp0\\IronCliw\\dist\\entry.js" %*\r\n`, "utf8");
+    await writeFile(shimPath, `@ECHO off\r\n"%~dp0\\ironcliw\\dist\\entry.js" %*\r\n`, "utf8");
 
     const resolved = resolveAcpClientSpawnInvocation(
       { serverCommand: shimPath, serverArgs: ["acp", "--verbose"] },
@@ -104,7 +154,7 @@ describe("resolveAcpClientSpawnInvocation", () => {
 
   it("falls back to shell mode for unresolved wrappers on windows", async () => {
     const dir = await createTempDir();
-    const shimPath = path.join(dir, "IronCliw.cmd");
+    const shimPath = path.join(dir, "ironcliw.cmd");
     await writeFile(shimPath, "@ECHO off\r\necho wrapper\r\n", "utf8");
 
     const resolved = resolveAcpClientSpawnInvocation(
@@ -223,7 +273,7 @@ describe("resolvePermissionRequest", () => {
           rawInput: { path: "docs/security.md" },
         },
       },
-      cwd: "/tmp/IronCliw-acp-cwd",
+      cwd: "/tmp/ironcliw-acp-cwd",
     });
   });
 
@@ -234,10 +284,10 @@ describe("resolvePermissionRequest", () => {
           toolCallId: "tool-read-inside-cwd-file-url",
           title: "read: ignored-by-raw-input",
           status: "pending",
-          rawInput: { path: "file:///tmp/IronCliw-acp-cwd/docs/security.md" },
+          rawInput: { path: "file:///tmp/ironcliw-acp-cwd/docs/security.md" },
         },
       },
-      cwd: "/tmp/IronCliw-acp-cwd",
+      cwd: "/tmp/ironcliw-acp-cwd",
     });
   });
 
@@ -252,7 +302,7 @@ describe("resolvePermissionRequest", () => {
           rawInput: { path: "../.ssh/id_rsa" },
         },
       }),
-      { prompt, log: () => {}, cwd: "/tmp/IronCliw-acp-cwd/workspace" },
+      { prompt, log: () => {}, cwd: "/tmp/ironcliw-acp-cwd/workspace" },
     );
     expect(prompt).toHaveBeenCalledTimes(1);
     expect(prompt).toHaveBeenCalledWith("read", "read: ignored-by-raw-input");

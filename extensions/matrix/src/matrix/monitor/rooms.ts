@@ -1,4 +1,4 @@
-import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "IronCliw/plugin-sdk/matrix";
+import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "ironcliw/plugin-sdk/matrix";
 import type { MatrixRoomConfig } from "../../types.js";
 
 export type MatrixRoomConfigResolved = {

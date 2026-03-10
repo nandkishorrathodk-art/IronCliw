@@ -34,7 +34,7 @@ async function runAutoAudioCase(params: {
   cfgExtra?: Partial<IronCliwConfig>;
 }) {
   let runResult: Awaited<ReturnType<typeof runCapability>> | undefined;
-  await withAudioFixture("IronCliw-auto-audio", async ({ ctx, media, cache }) => {
+  await withAudioFixture("ironcliw-auto-audio", async ({ ctx, media, cache }) => {
     const providerRegistry = createOpenAiAudioProvider(params.transcribeAudio);
     const cfg = createOpenAiAudioCfg(params.cfgExtra);
     runResult = await runCapability({
@@ -120,10 +120,10 @@ describe("runCapability auto audio entries", () => {
     delete process.env.GROQ_API_KEY;
     delete process.env.DEEPGRAM_API_KEY;
     delete process.env.GEMINI_API_KEY;
-    process.env.MISTRAL_API_KEY = "mistral-test-key";
+    process.env.MISTRAL_API_KEY = "mistral-test-key"; // pragma: allowlist secret
     let runResult: Awaited<ReturnType<typeof runCapability>> | undefined;
     try {
-      await withAudioFixture("IronCliw-auto-audio-mistral", async ({ ctx, media, cache }) => {
+      await withAudioFixture("ironcliw-auto-audio-mistral", async ({ ctx, media, cache }) => {
         const providerRegistry = buildProviderRegistry({
           openai: {
             id: "openai",
@@ -140,7 +140,7 @@ describe("runCapability auto audio entries", () => {
           models: {
             providers: {
               mistral: {
-                apiKey: "mistral-test-key",
+                apiKey: "mistral-test-key", // pragma: allowlist secret
                 models: [],
               },
             },

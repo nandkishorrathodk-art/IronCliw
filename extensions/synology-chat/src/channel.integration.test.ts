@@ -11,8 +11,8 @@ type RegisteredRoute = {
 const registerPluginHttpRouteMock = vi.fn<(params: RegisteredRoute) => () => void>(() => vi.fn());
 const dispatchReplyWithBufferedBlockDispatcher = vi.fn().mockResolvedValue({ counts: {} });
 
-vi.mock("IronCliw/plugin-sdk/synology-chat", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("IronCliw/plugin-sdk/synology-chat")>();
+vi.mock("ironcliw/plugin-sdk/synology-chat", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("ironcliw/plugin-sdk/synology-chat")>();
   return {
     ...actual,
     DEFAULT_ACCOUNT_ID: "default",

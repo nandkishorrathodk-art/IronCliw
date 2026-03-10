@@ -1,26 +1,26 @@
 ---
-summary: "CLI reference for `IronCliw daemon` (legacy alias for gateway service management)"
+summary: "CLI reference for `ironcliw daemon` (legacy alias for gateway service management)"
 read_when:
-  - You still use `IronCliw daemon ...` in scripts
+  - You still use `ironcliw daemon ...` in scripts
   - You need service lifecycle commands (install/start/stop/restart/status)
 title: "daemon"
 ---
 
-# `IronCliw daemon`
+# `ironcliw daemon`
 
 Legacy alias for Gateway service management commands.
 
-`IronCliw daemon ...` maps to the same service control surface as `IronCliw gateway ...` service commands.
+`ironcliw daemon ...` maps to the same service control surface as `ironcliw gateway ...` service commands.
 
 ## Usage
 
 ```bash
-IronCliw daemon status
-IronCliw daemon install
-IronCliw daemon start
-IronCliw daemon stop
-IronCliw daemon restart
-IronCliw daemon uninstall
+ironcliw daemon status
+ironcliw daemon install
+ironcliw daemon start
+ironcliw daemon stop
+ironcliw daemon restart
+ironcliw daemon uninstall
 ```
 
 ## Subcommands
@@ -38,6 +38,14 @@ IronCliw daemon uninstall
 - `install`: `--port`, `--runtime <node|bun>`, `--token`, `--force`, `--json`
 - lifecycle (`uninstall|start|stop|restart`): `--json`
 
+Notes:
+
+- `status` resolves configured auth SecretRefs for probe auth when possible.
+- On Linux systemd installs, `status` token-drift checks include both `Environment=` and `EnvironmentFile=` unit sources.
+- When token auth requires a token and `gateway.auth.token` is SecretRef-managed, `install` validates that the SecretRef is resolvable but does not persist the resolved token into service environment metadata.
+- If token auth requires a token and the configured token SecretRef is unresolved, install fails closed.
+- If both `gateway.auth.token` and `gateway.auth.password` are configured and `gateway.auth.mode` is unset, install is blocked until mode is set explicitly.
+
 ## Prefer
 
-Use [`IronCliw gateway`](/cli/gateway) for current docs and examples.
+Use [`ironcliw gateway`](/cli/gateway) for current docs and examples.

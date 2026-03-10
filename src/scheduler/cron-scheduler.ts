@@ -1,5 +1,5 @@
-import croner from "croner";
 import { spawn } from "node:child_process";
+import { Cron } from "croner";
 
 export interface ScheduledTask {
   id: string;
@@ -30,7 +30,7 @@ export interface TaskStats {
 const MAX_HISTORY = 50;
 
 export class CronScheduler {
-  private jobs: Map<string, croner.Cron> = new Map();
+  private jobs: Map<string, Cron> = new Map();
   private configMap: Map<string, ScheduledTask> = new Map();
   private history: Map<string, TaskRunRecord[]> = new Map();
   private runCounts: Map<string, { total: number; success: number; failed: number }> = new Map();
@@ -53,7 +53,7 @@ export class CronScheduler {
     }
 
     try {
-      const job = new croner.Cron(task.cronExpression, { timezone: task.timezone }, () => {
+      const job = new Cron(task.cronExpression, { timezone: task.timezone }, () => {
         this._executeScheduledTask(task).catch((err: Error) => {
           console.error(`[Scheduler] Unhandled error in task '${task.id}':`, err);
         });
@@ -72,7 +72,9 @@ export class CronScheduler {
    */
   public enableTask(taskId: string): boolean {
     const task = this.configMap.get(taskId);
-    if (!task) {return false;}
+    if (!task) {
+      return false;
+    }
     task.enabled = true;
     this.scheduleTask(task);
     return true;
@@ -84,7 +86,9 @@ export class CronScheduler {
    */
   public disableTask(taskId: string): boolean {
     const task = this.configMap.get(taskId);
-    if (!task) {return false;}
+    if (!task) {
+      return false;
+    }
     task.enabled = false;
     if (this.jobs.has(taskId)) {
       this.jobs.get(taskId)!.stop();
@@ -114,7 +118,9 @@ export class CronScheduler {
    */
   public getStats(taskId: string): TaskStats | null {
     const task = this.configMap.get(taskId);
-    if (!task) {return null;}
+    if (!task) {
+      return null;
+    }
     const historyList = this.history.get(taskId) ?? [];
     const counts = this.runCounts.get(taskId) ?? { total: 0, success: 0, failed: 0 };
     return {
@@ -137,7 +143,9 @@ export class CronScheduler {
 
     const historyList = this.history.get(task.id) ?? [];
     historyList.push(run);
-    if (historyList.length > MAX_HISTORY) {historyList.shift();}
+    if (historyList.length > MAX_HISTORY) {
+      historyList.shift();
+    }
     this.history.set(task.id, historyList);
 
     const counts = this.runCounts.get(task.id) ?? { total: 0, success: 0, failed: 0 };
@@ -165,7 +173,9 @@ export class CronScheduler {
     return new Promise((resolve) => {
       const isWindows = process.platform === "win32";
       const shell = isWindows ? "powershell.exe" : "sh";
-      const shellArgs = isWindows ? ["-NoProfile", "-NonInteractive", "-Command", command] : ["-c", command];
+      const shellArgs = isWindows
+        ? ["-NoProfile", "-NonInteractive", "-Command", command]
+        : ["-c", command];
 
       const child = spawn(shell, shellArgs, { stdio: "pipe" });
 

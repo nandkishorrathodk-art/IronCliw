@@ -40,7 +40,7 @@ function createSelectPrompter(
 }
 
 describe("promptRemoteGatewayConfig", () => {
-  const envSnapshot = captureEnv(["IronCliw_ALLOW_INSECURE_PRIVATE_WS"]);
+  const envSnapshot = captureEnv(["IRONCLIW_ALLOW_INSECURE_PRIVATE_WS"]);
 
   async function runRemotePrompt(params: {
     text: WizardPrompter["text"];
@@ -132,14 +132,35 @@ describe("promptRemoteGatewayConfig", () => {
     expect(next.gateway?.remote?.token).toBeUndefined();
   });
 
+  it("allows ws:// hostname remote URLs when IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1", async () => {
+    process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS = "1";
+    const text: WizardPrompter["text"] = vi.fn(async (params) => {
+      if (params.message === "Gateway WebSocket URL") {
+        expect(params.validate?.("ws://ironcliw-gateway.ai:18789")).toBeUndefined();
+        expect(params.validate?.("ws://1.1.1.1:18789")).toContain("Use wss://");
+        return "ws://ironcliw-gateway.ai:18789";
+      }
+      return "";
+    }) as WizardPrompter["text"];
+
+    const { next } = await runRemotePrompt({
+      text,
+      confirm: false,
+      selectResponses: { "Gateway auth": "off" },
+    });
+
+    expect(next.gateway?.mode).toBe("remote");
+    expect(next.gateway?.remote?.url).toBe("ws://ironcliw-gateway.ai:18789");
+  });
+
   it("supports storing remote auth as an external env secret ref", async () => {
-    process.env.IronCliw_GATEWAY_TOKEN = "remote-token-value";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "remote-token-value";
     const text: WizardPrompter["text"] = vi.fn(async (params) => {
       if (params.message === "Gateway WebSocket URL") {
         return "wss://remote.example.com:18789";
       }
       if (params.message === "Environment variable name") {
-        return "IronCliw_GATEWAY_TOKEN";
+        return "IRONCLIW_GATEWAY_TOKEN";
       }
       return "";
     }) as WizardPrompter["text"];
@@ -171,7 +192,7 @@ describe("promptRemoteGatewayConfig", () => {
     expect(next.gateway?.remote?.token).toEqual({
       source: "env",
       provider: "default",
-      id: "IronCliw_GATEWAY_TOKEN",
+      id: "IRONCLIW_GATEWAY_TOKEN",
     });
   });
 });

@@ -73,7 +73,7 @@ describe("doctor command", () => {
       findLegacyGatewayServices.mockResolvedValueOnce([
         {
           platform: "darwin",
-          label: "com.steipete.IronCliw.gateway",
+          label: "com.steipete.ironcliw.gateway",
           detail: "loaded",
         },
       ]);
@@ -88,9 +88,9 @@ describe("doctor command", () => {
   );
 
   it("offers to update first for git checkouts", async () => {
-    delete process.env.IronCliw_UPDATE_IN_PROGRESS;
+    delete process.env.IRONCLIW_UPDATE_IN_PROGRESS;
 
-    const root = "/tmp/IronCliw";
+    const root = "/tmp/ironcliw";
     resolveIronCliwPackageRoot.mockResolvedValueOnce(root);
     runCommandWithTimeout.mockResolvedValueOnce({
       stdout: `${root}\n`,

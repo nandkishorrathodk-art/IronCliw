@@ -1,16 +1,16 @@
 export const GATEWAY_CLIENT_IDS = {
   WEBCHAT_UI: "webchat-ui",
-  CONTROL_UI: "IronCliw-control-ui",
+  CONTROL_UI: "ironcliw-control-ui",
   WEBCHAT: "webchat",
   CLI: "cli",
   GATEWAY_CLIENT: "gateway-client",
-  MACOS_APP: "IronCliw-macos",
-  IOS_APP: "IronCliw-ios",
-  ANDROID_APP: "IronCliw-android",
+  MACOS_APP: "ironcliw-macos",
+  IOS_APP: "ironcliw-ios",
+  ANDROID_APP: "ironcliw-android",
   NODE_HOST: "node-host",
   TEST: "test",
   FINGERPRINT: "fingerprint",
-  PROBE: "IronCliw-probe",
+  PROBE: "ironcliw-probe",
 } as const;
 
 export type GatewayClientId = (typeof GATEWAY_CLIENT_IDS)[keyof typeof GATEWAY_CLIENT_IDS];

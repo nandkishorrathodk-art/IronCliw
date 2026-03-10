@@ -15,7 +15,7 @@ type SubCliEntry = {
 };
 
 const shouldRegisterPrimaryOnly = (argv: string[]) => {
-  if (isTruthyEnvValue(process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS)) {
+  if (isTruthyEnvValue(process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS)) {
     return false;
   }
   if (hasHelpOrVersion(argv)) {
@@ -25,13 +25,18 @@ const shouldRegisterPrimaryOnly = (argv: string[]) => {
 };
 
 const shouldEagerRegisterSubcommands = (_argv: string[]) => {
-  return isTruthyEnvValue(process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS);
+  return isTruthyEnvValue(process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS);
 };
 
-const loadConfig = async (): Promise<IronCliwConfig> => {
-  const mod = await import("../../config/config.js");
-  return mod.loadConfig();
-};
+export const loadValidatedConfigForPluginRegistration =
+  async (): Promise<IronCliwConfig | null> => {
+    const mod = await import("../../config/config.js");
+    const snapshot = await mod.readConfigFileSnapshot();
+    if (!snapshot.valid) {
+      return null;
+    }
+    return mod.loadConfig();
+  };
 
 // Note for humans and agents:
 // If you update the list of commands, also check whether they have subcommands
@@ -137,6 +142,15 @@ const entries: SubCliEntry[] = [
     },
   },
   {
+    name: "tui",
+    description: "Open a terminal UI connected to the Gateway",
+    hasSubcommands: false,
+    register: async (program) => {
+      const mod = await import("../tui-cli.js");
+      mod.registerTuiCli(program);
+    },
+  },
+  {
     name: "cron",
     description: "Manage cron jobs via the Gateway scheduler",
     hasSubcommands: true,
@@ -208,7 +222,10 @@ const entries: SubCliEntry[] = [
       // The pairing CLI calls listPairingChannels() at registration time,
       // which requires the plugin registry to be populated with channel plugins.
       const { registerPluginCliCommands } = await import("../../plugins/cli.js");
-      registerPluginCliCommands(program, await loadConfig());
+      const config = await loadValidatedConfigForPluginRegistration();
+      if (config) {
+        registerPluginCliCommands(program, config);
+      }
       const mod = await import("../pairing-cli.js");
       mod.registerPairingCli(program);
     },
@@ -221,7 +238,10 @@ const entries: SubCliEntry[] = [
       const mod = await import("../plugins-cli.js");
       mod.registerPluginsCli(program);
       const { registerPluginCliCommands } = await import("../../plugins/cli.js");
-      registerPluginCliCommands(program, await loadConfig());
+      const config = await loadValidatedConfigForPluginRegistration();
+      if (config) {
+        registerPluginCliCommands(program, config);
+      }
     },
   },
   {

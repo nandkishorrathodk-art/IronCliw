@@ -1,6 +1,6 @@
 # IronCliw Security & Trust
 
-**Live:** [trust.IronCliw.ai](https://trust.IronCliw.ai)
+**Live:** [trust.ironcliw.ai](https://trust.ironcliw.ai)
 
 ## Documents
 
@@ -9,7 +9,7 @@
 
 ## Reporting Vulnerabilities
 
-See the [Trust page](https://trust.IronCliw.ai) for full reporting instructions covering all repos.
+See the [Trust page](https://trust.ironcliw.ai) for full reporting instructions covering all repos.
 
 ## Contact
 

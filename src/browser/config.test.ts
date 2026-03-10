@@ -3,24 +3,24 @@ import { withEnv } from "../test-utils/env.js";
 import { resolveBrowserConfig, resolveProfile, shouldStartLocalBrowserServer } from "./config.js";
 
 describe("browser config", () => {
-  it("defaults to enabled with loopback defaults and lobster-orange color", () => {
+  it("defaults to enabled with loopback defaults and iron-cyan color", () => {
     const resolved = resolveBrowserConfig(undefined);
     expect(resolved.enabled).toBe(true);
     expect(resolved.controlPort).toBe(18791);
-    expect(resolved.color).toBe("#FF4500");
+    expect(resolved.color).toBe("#00BFFF");
     expect(shouldStartLocalBrowserServer(resolved)).toBe(true);
     expect(resolved.cdpHost).toBe("127.0.0.1");
     expect(resolved.cdpProtocol).toBe("http");
     const profile = resolveProfile(resolved, resolved.defaultProfile);
-    expect(profile?.name).toBe("IronCliw");
-    expect(profile?.driver).toBe("IronCliw");
+    expect(profile?.name).toBe("ironcliw");
+    expect(profile?.driver).toBe("ironcliw");
     expect(profile?.cdpPort).toBe(18800);
     expect(profile?.cdpUrl).toBe("http://127.0.0.1:18800");
 
-    const IronCliw = resolveProfile(resolved, "IronCliw");
-    expect(IronCliw?.driver).toBe("IronCliw");
-    expect(IronCliw?.cdpPort).toBe(18800);
-    expect(IronCliw?.cdpUrl).toBe("http://127.0.0.1:18800");
+    const ironcliw = resolveProfile(resolved, "ironcliw");
+    expect(ironcliw?.driver).toBe("ironcliw");
+    expect(ironcliw?.cdpPort).toBe(18800);
+    expect(ironcliw?.cdpUrl).toBe("http://127.0.0.1:18800");
     const chrome = resolveProfile(resolved, "chrome");
     expect(chrome?.driver).toBe("extension");
     expect(chrome?.cdpPort).toBe(18792);
@@ -29,8 +29,8 @@ describe("browser config", () => {
     expect(resolved.remoteCdpHandshakeTimeoutMs).toBe(3000);
   });
 
-  it("derives default ports from IronCliw_GATEWAY_PORT when unset", () => {
-    withEnv({ IronCliw_GATEWAY_PORT: "19001" }, () => {
+  it("derives default ports from IRONCLIW_GATEWAY_PORT when unset", () => {
+    withEnv({ IRONCLIW_GATEWAY_PORT: "19001" }, () => {
       const resolved = resolveBrowserConfig(undefined);
       expect(resolved.controlPort).toBe(19003);
       const chrome = resolveProfile(resolved, "chrome");
@@ -38,14 +38,14 @@ describe("browser config", () => {
       expect(chrome?.cdpPort).toBe(19004);
       expect(chrome?.cdpUrl).toBe("http://127.0.0.1:19004");
 
-      const IronCliw = resolveProfile(resolved, "IronCliw");
-      expect(IronCliw?.cdpPort).toBe(19012);
-      expect(IronCliw?.cdpUrl).toBe("http://127.0.0.1:19012");
+      const ironcliw = resolveProfile(resolved, "ironcliw");
+      expect(ironcliw?.cdpPort).toBe(19012);
+      expect(ironcliw?.cdpUrl).toBe("http://127.0.0.1:19012");
     });
   });
 
   it("derives default ports from gateway.port when env is unset", () => {
-    withEnv({ IronCliw_GATEWAY_PORT: undefined }, () => {
+    withEnv({ IRONCLIW_GATEWAY_PORT: undefined }, () => {
       const resolved = resolveBrowserConfig(undefined, { gateway: { port: 19011 } });
       expect(resolved.controlPort).toBe(19013);
       const chrome = resolveProfile(resolved, "chrome");
@@ -53,9 +53,9 @@ describe("browser config", () => {
       expect(chrome?.cdpPort).toBe(19014);
       expect(chrome?.cdpUrl).toBe("http://127.0.0.1:19014");
 
-      const IronCliw = resolveProfile(resolved, "IronCliw");
-      expect(IronCliw?.cdpPort).toBe(19022);
-      expect(IronCliw?.cdpUrl).toBe("http://127.0.0.1:19022");
+      const ironcliw = resolveProfile(resolved, "ironcliw");
+      expect(ironcliw?.cdpPort).toBe(19022);
+      expect(ironcliw?.cdpUrl).toBe("http://127.0.0.1:19022");
     });
   });
 
@@ -63,10 +63,10 @@ describe("browser config", () => {
     const resolved = resolveBrowserConfig({
       cdpPortRangeStart: 19000,
     });
-    const IronCliw = resolveProfile(resolved, "IronCliw");
+    const ironcliw = resolveProfile(resolved, "ironcliw");
     expect(resolved.cdpPortRangeStart).toBe(19000);
-    expect(IronCliw?.cdpPort).toBe(19000);
-    expect(IronCliw?.cdpUrl).toBe("http://127.0.0.1:19000");
+    expect(ironcliw?.cdpPort).toBe(19000);
+    expect(ironcliw?.cdpUrl).toBe("http://127.0.0.1:19000");
   });
 
   it("rejects cdpPortRangeStart values that overflow the CDP range window", () => {
@@ -95,14 +95,14 @@ describe("browser config", () => {
     const resolved = resolveBrowserConfig({
       color: "#GGGGGG",
     });
-    expect(resolved.color).toBe("#FF4500");
+    expect(resolved.color).toBe("#00BFFF");
   });
 
   it("treats non-loopback cdpUrl as remote", () => {
     const resolved = resolveBrowserConfig({
       cdpUrl: "http://example.com:9222",
     });
-    const profile = resolveProfile(resolved, "IronCliw");
+    const profile = resolveProfile(resolved, "ironcliw");
     expect(profile?.cdpIsLoopback).toBe(false);
   });
 
@@ -110,7 +110,7 @@ describe("browser config", () => {
     const resolved = resolveBrowserConfig({
       cdpUrl: "http://example.com:9222",
     });
-    const profile = resolveProfile(resolved, "IronCliw");
+    const profile = resolveProfile(resolved, "ironcliw");
     expect(profile?.cdpPort).toBe(9222);
     expect(profile?.cdpUrl).toBe("http://example.com:9222");
     expect(profile?.cdpIsLoopback).toBe(false);
@@ -165,18 +165,53 @@ describe("browser config", () => {
     expect(work?.cdpUrl).toBe("https://example.com:18801");
   });
 
+  it("preserves wss:// cdpUrl with query params for the default profile", () => {
+    const resolved = resolveBrowserConfig({
+      cdpUrl: "wss://connect.browserbase.com?apiKey=test-key",
+    });
+    const profile = resolveProfile(resolved, "ironcliw");
+    expect(profile?.cdpUrl).toBe("wss://connect.browserbase.com/?apiKey=test-key");
+    expect(profile?.cdpHost).toBe("connect.browserbase.com");
+    expect(profile?.cdpPort).toBe(443);
+    expect(profile?.cdpIsLoopback).toBe(false);
+  });
+
+  it("preserves loopback direct WebSocket cdpUrl for explicit profiles", () => {
+    const resolved = resolveBrowserConfig({
+      profiles: {
+        localws: {
+          cdpUrl: "ws://127.0.0.1:9222/devtools/browser/ABC?token=test-key",
+          color: "#0066CC",
+        },
+      },
+    });
+    const profile = resolveProfile(resolved, "localws");
+    expect(profile?.cdpUrl).toBe("ws://127.0.0.1:9222/devtools/browser/ABC?token=test-key");
+    expect(profile?.cdpPort).toBe(9222);
+    expect(profile?.cdpIsLoopback).toBe(true);
+  });
+
+  it("trims relayBindHost when configured", () => {
+    const resolved = resolveBrowserConfig({
+      relayBindHost: " 0.0.0.0 ",
+    });
+    expect(resolved.relayBindHost).toBe("0.0.0.0");
+  });
+
   it("rejects unsupported protocols", () => {
-    expect(() => resolveBrowserConfig({ cdpUrl: "ws://127.0.0.1:18791" })).toThrow(/must be http/i);
+    expect(() => resolveBrowserConfig({ cdpUrl: "ftp://127.0.0.1:18791" })).toThrow(
+      "must be http(s) or ws(s)",
+    );
   });
 
   it("does not add the built-in chrome extension profile if the derived relay port is already used", () => {
     const resolved = resolveBrowserConfig({
       profiles: {
-        IronCliw: { cdpPort: 18792, color: "#FF4500" },
+        ironcliw: { cdpPort: 18792, color: "#FF4500" },
       },
     });
     expect(resolveProfile(resolved, "chrome")).toBe(null);
-    expect(resolved.defaultProfile).toBe("IronCliw");
+    expect(resolved.defaultProfile).toBe("ironcliw");
   });
 
   it("defaults extraArgs to empty array when not provided", () => {
@@ -244,34 +279,34 @@ describe("browser config", () => {
   });
 
   describe("default profile preference", () => {
-    it("defaults to IronCliw profile when defaultProfile is not configured", () => {
+    it("defaults to ironcliw profile when defaultProfile is not configured", () => {
       const resolved = resolveBrowserConfig({
         headless: false,
         noSandbox: false,
       });
-      expect(resolved.defaultProfile).toBe("IronCliw");
+      expect(resolved.defaultProfile).toBe("ironcliw");
     });
 
-    it("keeps IronCliw default when headless=true", () => {
+    it("keeps ironcliw default when headless=true", () => {
       const resolved = resolveBrowserConfig({
         headless: true,
       });
-      expect(resolved.defaultProfile).toBe("IronCliw");
+      expect(resolved.defaultProfile).toBe("ironcliw");
     });
 
-    it("keeps IronCliw default when noSandbox=true", () => {
+    it("keeps ironcliw default when noSandbox=true", () => {
       const resolved = resolveBrowserConfig({
         noSandbox: true,
       });
-      expect(resolved.defaultProfile).toBe("IronCliw");
+      expect(resolved.defaultProfile).toBe("ironcliw");
     });
 
-    it("keeps IronCliw default when both headless and noSandbox are true", () => {
+    it("keeps ironcliw default when both headless and noSandbox are true", () => {
       const resolved = resolveBrowserConfig({
         headless: true,
         noSandbox: true,
       });
-      expect(resolved.defaultProfile).toBe("IronCliw");
+      expect(resolved.defaultProfile).toBe("ironcliw");
     });
 
     it("explicit defaultProfile config overrides defaults in headless mode", () => {

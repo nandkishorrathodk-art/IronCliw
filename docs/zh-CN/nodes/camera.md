@@ -75,10 +75,10 @@ IronCliw 支持用于智能体工作流的**相机捕获**：
 示例：
 
 ```bash
-IronCliw nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
-IronCliw nodes camera snap --node <id> --facing front
-IronCliw nodes camera clip --node <id> --duration 3000
-IronCliw nodes camera clip --node <id> --no-audio
+ironcliw nodes camera snap --node <id>               # default: both front + back (2 MEDIA lines)
+ironcliw nodes camera snap --node <id> --facing front
+ironcliw nodes camera clip --node <id> --duration 3000
+ironcliw nodes camera clip --node <id> --no-audio
 ```
 
 注意事项：
@@ -116,31 +116,31 @@ IronCliw nodes camera clip --node <id> --no-audio
 
 macOS 配套应用暴露一个复选框：
 
-- **设置 → 通用 → 允许相机**（`IronCliw.cameraEnabled`）
+- **设置 → 通用 → 允许相机**（`ironcliw.cameraEnabled`）
   - 默认：**关闭**
   - 关闭时：相机请求返回"用户已禁用相机"。
 
 ### CLI 辅助工具（节点调用）
 
-使用主 `IronCliw` CLI 在 macOS 节点上调用相机命令。
+使用主 `ironcliw` CLI 在 macOS 节点上调用相机命令。
 
 示例：
 
 ```bash
-IronCliw nodes camera list --node <id>            # list camera ids
-IronCliw nodes camera snap --node <id>            # prints MEDIA:<path>
-IronCliw nodes camera snap --node <id> --max-width 1280
-IronCliw nodes camera snap --node <id> --delay-ms 2000
-IronCliw nodes camera snap --node <id> --device-id <id>
-IronCliw nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
-IronCliw nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
-IronCliw nodes camera clip --node <id> --device-id <id>
-IronCliw nodes camera clip --node <id> --no-audio
+ironcliw nodes camera list --node <id>            # list camera ids
+ironcliw nodes camera snap --node <id>            # prints MEDIA:<path>
+ironcliw nodes camera snap --node <id> --max-width 1280
+ironcliw nodes camera snap --node <id> --delay-ms 2000
+ironcliw nodes camera snap --node <id> --device-id <id>
+ironcliw nodes camera clip --node <id> --duration 10s          # prints MEDIA:<path>
+ironcliw nodes camera clip --node <id> --duration-ms 3000      # prints MEDIA:<path> (legacy flag)
+ironcliw nodes camera clip --node <id> --device-id <id>
+ironcliw nodes camera clip --node <id> --no-audio
 ```
 
 注意事项：
 
-- `IronCliw nodes camera snap` 默认 `maxWidth=1600`，除非被覆盖。
+- `ironcliw nodes camera snap` 默认 `maxWidth=1600`，除非被覆盖。
 - 在 macOS 上，`camera.snap` 在预热/曝光稳定后等待 `delayMs`（默认 2000ms）再捕获。
 - 照片载荷会重新压缩以保持 base64 小于 5 MB。
 
@@ -154,7 +154,7 @@ IronCliw nodes camera clip --node <id> --no-audio
 对于*屏幕*视频（非相机），使用 macOS 配套应用：
 
 ```bash
-IronCliw nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
+ironcliw nodes screen record --node <id> --duration 10s --fps 15   # prints MEDIA:<path>
 ```
 
 注意事项：

@@ -12,7 +12,7 @@ describe("infra parsing", () => {
         diagnostics: { flags: ["telegram.http", "cache.*"] },
       } as IronCliwConfig;
       const env = {
-        IronCliw_DIAGNOSTICS: "foo,bar",
+        IRONCLIW_DIAGNOSTICS: "foo,bar",
       } as NodeJS.ProcessEnv;
 
       const flags = resolveDiagnosticFlags(cfg, env);
@@ -23,12 +23,12 @@ describe("infra parsing", () => {
     });
 
     it("treats env true as wildcard", () => {
-      const env = { IronCliw_DIAGNOSTICS: "1" } as NodeJS.ProcessEnv;
+      const env = { IRONCLIW_DIAGNOSTICS: "1" } as NodeJS.ProcessEnv;
       expect(isDiagnosticFlagEnabled("anything.here", undefined, env)).toBe(true);
     });
 
     it("treats env false as disabled", () => {
-      const env = { IronCliw_DIAGNOSTICS: "0" } as NodeJS.ProcessEnv;
+      const env = { IRONCLIW_DIAGNOSTICS: "0" } as NodeJS.ProcessEnv;
       expect(isDiagnosticFlagEnabled("telegram.http", undefined, env)).toBe(false);
     });
   });
@@ -56,14 +56,14 @@ describe("infra parsing", () => {
       ).toBe(true);
     });
 
-    it("returns true for dist/entry.js when launched via IronCliw.mjs wrapper", () => {
+    it("returns true for dist/entry.js when launched via ironcliw.mjs wrapper", () => {
       expect(
         isMainModule({
           currentFile: "/repo/dist/entry.js",
-          argv: ["node", "/repo/IronCliw.mjs"],
+          argv: ["node", "/repo/ironcliw.mjs"],
           cwd: "/repo",
           env: {},
-          wrapperEntryPairs: [{ wrapperBasename: "IronCliw.mjs", entryBasename: "entry.js" }],
+          wrapperEntryPairs: [{ wrapperBasename: "ironcliw.mjs", entryBasename: "entry.js" }],
         }),
       ).toBe(true);
     });
@@ -72,7 +72,7 @@ describe("infra parsing", () => {
       expect(
         isMainModule({
           currentFile: "/repo/dist/entry.js",
-          argv: ["node", "/repo/IronCliw.mjs"],
+          argv: ["node", "/repo/ironcliw.mjs"],
           cwd: "/repo",
           env: {},
         }),
@@ -83,10 +83,10 @@ describe("infra parsing", () => {
       expect(
         isMainModule({
           currentFile: "/repo/dist/index.js",
-          argv: ["node", "/repo/IronCliw.mjs"],
+          argv: ["node", "/repo/ironcliw.mjs"],
           cwd: "/repo",
           env: {},
-          wrapperEntryPairs: [{ wrapperBasename: "IronCliw.mjs", entryBasename: "entry.js" }],
+          wrapperEntryPairs: [{ wrapperBasename: "ironcliw.mjs", entryBasename: "entry.js" }],
         }),
       ).toBe(false);
     });
@@ -94,7 +94,7 @@ describe("infra parsing", () => {
     it("returns false when running under PM2 but this module is imported", () => {
       expect(
         isMainModule({
-          currentFile: "/repo/node_modules/IronCliw/dist/index.js",
+          currentFile: "/repo/node_modules/ironcliw/dist/index.js",
           argv: ["node", "/repo/app.js"],
           cwd: "/repo",
           env: { pm_exec_path: "/repo/app.js", pm_id: "0" },

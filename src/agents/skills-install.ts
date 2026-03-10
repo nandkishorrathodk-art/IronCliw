@@ -72,12 +72,12 @@ async function collectSkillInstallScanWarnings(entry: SkillEntry): Promise<strin
       );
     } else if (summary.warn > 0) {
       warnings.push(
-        `Skill "${skillName}" has ${summary.warn} suspicious code pattern(s). Run "IronCliw security audit --deep" for details.`,
+        `Skill "${skillName}" has ${summary.warn} suspicious code pattern(s). Run "ironcliw security audit --deep" for details.`,
       );
     }
   } catch (err) {
     warnings.push(
-      `Skill "${skillName}" code safety scan failed (${String(err)}). Installation continues; run "IronCliw security audit --deep" after install.`,
+      `Skill "${skillName}" code safety scan failed (${String(err)}). Installation continues; run "ironcliw security audit --deep" after install.`,
     );
   }
 
@@ -144,24 +144,6 @@ function buildInstallCommand(
         return { argv: null, error: "missing uv package" };
       }
       return { argv: ["uv", "tool", "install", spec.package] };
-    }
-    case "choco": {
-      if (!spec.package) {
-        return { argv: null, error: "missing choco package" };
-      }
-      return { argv: ["choco", "install", "-y", spec.package] };
-    }
-    case "scoop": {
-      if (!spec.package) {
-        return { argv: null, error: "missing scoop package" };
-      }
-      return { argv: ["scoop", "install", spec.package] };
-    }
-    case "pip": {
-      if (!spec.package) {
-        return { argv: null, error: "missing pip package" };
-      }
-      return { argv: ["pip", "install", spec.package] };
     }
     case "download": {
       return { argv: null, error: "download install handled separately" };
@@ -264,12 +246,10 @@ async function runBestEffortCommand(
 
 function resolveBrewMissingFailure(spec: SkillInstallSpec): SkillInstallResult {
   const formula = spec.formula ?? "this package";
-  let hint = "Homebrew is not installed. Install it from https://brew.sh";
-  if (process.platform === "linux") {
-    hint = `Homebrew is not installed. Install it from https://brew.sh or install "${formula}" manually using your system package manager (e.g. apt, dnf, pacman).`;
-  } else if (process.platform === "win32") {
-    hint = `Homebrew is not available on Windows. Try installing "${formula}" manually using Chocolatey (choco) or Scoop, or check if an npm/go/uv installer is available for this skill.`;
-  }
+  const hint =
+    process.platform === "linux"
+      ? `Homebrew is not installed. Install it from https://brew.sh or install "${formula}" manually using your system package manager (e.g. apt, dnf, pacman).`
+      : "Homebrew is not installed. Install it from https://brew.sh";
   return createInstallFailure({ message: `brew not installed — ${hint}` });
 }
 

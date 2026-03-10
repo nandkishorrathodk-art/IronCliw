@@ -60,7 +60,7 @@ describe("models-config", () => {
 
         const agentDir = path.join(home, "agent-empty");
         // ensureAuthProfileStore merges the main auth store into non-main dirs; point main at our temp dir.
-        process.env.IronCliw_AGENT_DIR = agentDir;
+        process.env.IRONCLIW_AGENT_DIR = agentDir;
         process.env.PI_CODING_AGENT_DIR = agentDir;
 
         const result = await ensureIronCliwModelsJson(
@@ -97,7 +97,7 @@ describe("models-config", () => {
         envValue: "sk-minimax-test",
         providerKey: "minimax",
         expectedBaseUrl: "https://api.minimax.io/anthropic",
-        expectedApiKeyRef: "MINIMAX_API_KEY",
+        expectedApiKeyRef: "MINIMAX_API_KEY", // pragma: allowlist secret
         expectedModelIds: ["MiniMax-M2.5", "MiniMax-VL-01"],
       });
     });
@@ -110,7 +110,7 @@ describe("models-config", () => {
         envValue: "sk-synthetic-test",
         providerKey: "synthetic",
         expectedBaseUrl: "https://api.synthetic.new/anthropic",
-        expectedApiKeyRef: "SYNTHETIC_API_KEY",
+        expectedApiKeyRef: "SYNTHETIC_API_KEY", // pragma: allowlist secret
         expectedModelIds: ["hf:MiniMaxAI/MiniMax-M2.5"],
       });
     });

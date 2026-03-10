@@ -4,10 +4,10 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { IronCliwConfig } from "../config/config.js";
 import "./test-helpers/fast-core-tools.js";
-import { createIronCliwTools } from "./IronCliw-tools.js";
+import { createIronCliwTools } from "./ironcliw-tools.js";
 
 async function withTempAgentDir<T>(run: (agentDir: string) => Promise<T>): Promise<T> {
-  const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-tools-pdf-"));
+  const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-tools-pdf-"));
   try {
     return await run(agentDir);
   } finally {

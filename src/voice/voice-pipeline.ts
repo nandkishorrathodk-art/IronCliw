@@ -49,14 +49,22 @@ export interface VoicePipelineConfig {
   debug?: boolean;
 }
 
+export type VoicePipelineStatus =
+  | "idle"
+  | "listening"
+  | "recording"
+  | "transcribing"
+  | "speaking"
+  | "stopped";
+
 export interface VoicePipelineHandle {
   start(): Promise<void>;
   stop(): Promise<void>;
-  readonly status: "idle" | "listening" | "recording" | "transcribing" | "speaking" | "stopped";
+  readonly status: VoicePipelineStatus;
   on(event: "transcript", listener: (text: string) => void): this;
   on(event: "response", listener: (text: string) => void): this;
   on(event: "error", listener: (err: Error) => void): this;
-  on(event: "status", listener: (status: string) => void): this;
+  on(event: "status", listener: (status: VoicePipelineStatus) => void): this;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -135,16 +143,24 @@ class GatewayClient extends EventEmitter {
 
   private _scheduleReconnect(): void {
     if (this.reconnectAttempts >= this.maxReconnectAttempts) {
-      this.emit("error", new Error(`Gateway reconnect failed after ${this.maxReconnectAttempts} attempts`));
+      this.emit(
+        "error",
+        new Error(`Gateway reconnect failed after ${this.maxReconnectAttempts} attempts`),
+      );
       return;
     }
     const delayMs = Math.min(1000 * 2 ** this.reconnectAttempts, 30_000);
     this.reconnectAttempts++;
     this.reconnectTimer = setTimeout(() => {
-      if (this.stopped) {return;}
+      if (this.stopped) {
+        return;
+      }
       this.emit("reconnecting", this.reconnectAttempts);
       this._doConnect().catch((err: Error) => {
-        this.emit("error", new Error(`Reconnect attempt ${this.reconnectAttempts} failed: ${err.message}`));
+        this.emit(
+          "error",
+          new Error(`Reconnect attempt ${this.reconnectAttempts} failed: ${err.message}`),
+        );
         this._scheduleReconnect();
       });
     }, delayMs);
@@ -238,7 +254,7 @@ if (-not $ffmpegPath) {
    ───────────────────────────────────────────────────────────── */
 
 class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
-  private _status: VoicePipelineHandle["status"] = "idle";
+  private _status: VoicePipelineStatus = "idle";
   private gateway: GatewayClient;
   private running = false;
   private loopAbort: AbortController | null = null;
@@ -253,11 +269,11 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
     );
   }
 
-  get status(): VoicePipelineHandle["status"] {
+  get status(): VoicePipelineStatus {
     return this._status;
   }
 
-  private setStatus(s: VoicePipelineHandle["status"]): void {
+  private setStatus(s: VoicePipelineStatus): void {
     this._status = s;
     this.emit("status", s);
     if (this.config.debug) {
@@ -266,7 +282,9 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
   }
 
   async start(): Promise<void> {
-    if (this.running) {return;}
+    if (this.running) {
+      return;
+    }
     this.running = true;
     this.loopAbort = new AbortController();
 
@@ -318,6 +336,10 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
 
         // Wait for Enter key press (PTT mode)
         await new Promise<void>((resolve) => {
+          if (signal.aborted) {
+            resolve();
+            return;
+          }
           const handler = (chunk: Buffer) => {
             if (chunk[0] === 0x0d || chunk[0] === 0x0a) {
               process.stdin.off("data", handler);
@@ -325,10 +347,19 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
             }
           };
           process.stdin.on("data", handler);
-          if (signal.aborted) {resolve();}
+          signal.addEventListener(
+            "abort",
+            () => {
+              process.stdin.off("data", handler);
+              resolve();
+            },
+            { once: true },
+          );
         });
 
-        if (signal.aborted || !this.running) {break;}
+        if (signal.aborted || !this.running) {
+          break;
+        }
 
         this.setStatus("recording");
         console.log("[IronCliw Voice] 🔴 Recording... (press ENTER to stop)");
@@ -343,15 +374,22 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
             }
           };
           process.stdin.on("data", handler);
-          signal.addEventListener("abort", () => {
-            process.stdin.off("data", handler);
-            resolve();
-          }, { once: true });
+          signal.addEventListener(
+            "abort",
+            () => {
+              process.stdin.off("data", handler);
+              resolve();
+            },
+            { once: true },
+          );
         });
 
         stopOnEnter.then(() => stopRecording.abort()).catch(() => {});
 
-        const audioBuffer = await recordMicrophone(this.config.maxRecordingMs, stopRecording.signal);
+        const audioBuffer = await recordMicrophone(
+          this.config.maxRecordingMs,
+          stopRecording.signal,
+        );
 
         this.setStatus("transcribing");
         console.log("[IronCliw Voice] 🔄 Transcribing...");
@@ -390,11 +428,11 @@ class VoicePipelineImpl extends EventEmitter implements VoicePipelineHandle {
   }
 
   // Typed event overrides
-  on(event: "transcript", listener: (text: string) => void): this;
-  on(event: "response", listener: (text: string) => void): this;
-  on(event: "error", listener: (err: Error) => void): this;
-  on(event: "status", listener: (status: string) => void): this;
-  on(event: string, listener: (...args: unknown[]) => void): this {
+  override on(event: "transcript", listener: (text: string) => void): this;
+  override on(event: "response", listener: (text: string) => void): this;
+  override on(event: "error", listener: (err: Error) => void): this;
+  override on(event: "status", listener: (status: VoicePipelineStatus) => void): this;
+  override on(event: string, listener: (...args: unknown[]) => void): this {
     return super.on(event, listener);
   }
 }

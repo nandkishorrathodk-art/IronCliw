@@ -121,7 +121,7 @@ export function registerControlUiAndPairingSuite(): void {
     };
   };
 
-  const startServerWithOperatorIdentity = async (identityPrefix = "IronCliw-device-scope-") => {
+  const startServerWithOperatorIdentity = async (identityPrefix = "ironcliw-device-scope-") => {
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
     const { identityPath, identity, client } = await createOperatorIdentityFixture(identityPrefix);
     return { server, ws, port, prevToken, identityPath, identity, client };
@@ -236,10 +236,10 @@ export function registerControlUiAndPairingSuite(): void {
 
   test("allows control ui password-only auth on localhost when insecure auth is enabled", async () => {
     testState.gatewayControlUi = { allowInsecureAuth: true };
-    testState.gatewayAuth = { mode: "password", password: "secret" };
+    testState.gatewayAuth = { mode: "password", password: "secret" }; // pragma: allowlist secret
     await withGatewayServer(async ({ port }) => {
       const ws = await openWs(port, { origin: originForPort(port) });
-      await connectControlUiWithoutDeviceAndExpectOk({ ws, password: "secret" });
+      await connectControlUiWithoutDeviceAndExpectOk({ ws, password: "secret" }); // pragma: allowlist secret
       ws.close();
     });
   });
@@ -251,8 +251,8 @@ export function registerControlUiAndPairingSuite(): void {
     };
     testState.gatewayAuth = { mode: "token", token: "secret" };
     await writeTrustedProxyControlUiConfig({ allowInsecureAuth: true });
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "secret";
     try {
       await withGatewayServer(async ({ port }) => {
         const ws = new WebSocket(`ws://127.0.0.1:${port}`, {
@@ -286,7 +286,7 @@ export function registerControlUiAndPairingSuite(): void {
           clientMode: GATEWAY_CLIENT_MODES.WEBCHAT,
           identityPath: path.join(
             os.tmpdir(),
-            `IronCliw-controlui-device-${process.pid}-${process.env.VITEST_POOL_ID ?? "0"}-${controlUiIdentityPathSeq++}.json`,
+            `ironcliw-controlui-device-${process.pid}-${process.env.VITEST_POOL_ID ?? "0"}-${controlUiIdentityPathSeq++}.json`,
           ),
           nonce: String(nonce),
         });
@@ -313,8 +313,8 @@ export function registerControlUiAndPairingSuite(): void {
   test("allows control ui with stale device identity when device auth is disabled", async () => {
     testState.gatewayControlUi = { dangerouslyDisableDeviceAuth: true };
     testState.gatewayAuth = { mode: "token", token: "secret" };
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "secret";
     try {
       await withGatewayServer(async ({ port }) => {
         const ws = await openWs(port, { origin: originForPort(port) });
@@ -554,7 +554,7 @@ export function registerControlUiAndPairingSuite(): void {
     const { getPairedDevice, listDevicePairing } = await import("../infra/device-pairing.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
     const { identity, identityPath } = await seedApprovedOperatorReadPairing({
-      identityPrefix: "IronCliw-device-token-scope-",
+      identityPrefix: "ironcliw-device-token-scope-",
       clientId: CONTROL_UI_CLIENT.id,
       clientMode: CONTROL_UI_CLIENT.mode,
       displayName: "loopback-control-ui-upgrade",
@@ -593,7 +593,7 @@ export function registerControlUiAndPairingSuite(): void {
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
     ws.close();
     const { identityPath, identity, client } =
-      await createOperatorIdentityFixture("IronCliw-device-scope-");
+      await createOperatorIdentityFixture("ironcliw-device-scope-");
     const connectWithNonce = async (role: "operator" | "node", scopes: string[]) => {
       const socket = new WebSocket(`ws://127.0.0.1:${port}`, {
         headers: { host: "gateway.example" },
@@ -712,7 +712,7 @@ export function registerControlUiAndPairingSuite(): void {
     const { approveDevicePairing, getPairedDevice, listDevicePairing, requestDevicePairing } =
       await import("../infra/device-pairing.js");
     const { identityPath, identity } = await createOperatorIdentityFixture(
-      "IronCliw-device-legacy-meta-",
+      "ironcliw-device-legacy-meta-",
     );
     const deviceId = identity.deviceId;
     const publicKey = publicKeyRawBase64UrlFromPem(identity.publicKeyPem);
@@ -767,7 +767,7 @@ export function registerControlUiAndPairingSuite(): void {
   test("auto-approves local scope upgrades even when paired metadata is legacy-shaped", async () => {
     const { getPairedDevice, listDevicePairing } = await import("../infra/device-pairing.js");
     const { identity, identityPath } = await seedApprovedOperatorReadPairing({
-      identityPrefix: "IronCliw-device-legacy-",
+      identityPrefix: "ironcliw-device-legacy-",
       clientId: TEST_OPERATOR_CLIENT.id,
       clientMode: TEST_OPERATOR_CLIENT.mode,
       displayName: "legacy-upgrade-test",
@@ -838,9 +838,9 @@ export function registerControlUiAndPairingSuite(): void {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.IronCliw_GATEWAY_TOKEN;
+      delete process.env.IRONCLIW_GATEWAY_TOKEN;
     } else {
-      process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+      process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
     }
   });
 

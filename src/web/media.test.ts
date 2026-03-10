@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { resolveStateDir } from "../config/paths.js";
 import { sendVoiceMessageDiscord } from "../discord/send.js";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 import { optimizeImageToPng } from "../media/image-ops.js";
 import { mockPinnedHostnameResolution } from "../test-helpers/ssrf.js";
 import { captureEnv } from "../test-utils/env.js";
@@ -16,6 +16,17 @@ import {
   optimizeImageToJpeg,
 } from "./media.js";
 
+const convertHeicToJpegMock = vi.fn();
+
+vi.mock("../media/image-ops.js", async () => {
+  const actual =
+    await vi.importActual<typeof import("../media/image-ops.js")>("../media/image-ops.js");
+  return {
+    ...actual,
+    convertHeicToJpeg: (...args: unknown[]) => convertHeicToJpegMock(...args),
+  };
+});
+
 let fixtureRoot = "";
 let fixtureFileCount = 0;
 let largeJpegBuffer: Buffer;
@@ -23,6 +34,7 @@ let largeJpegFile = "";
 let tinyPngBuffer: Buffer;
 let tinyPngFile = "";
 let tinyPngWrongExtFile = "";
+let fakeHeicFile = "";
 let alphaPngBuffer: Buffer;
 let alphaPngFile = "";
 let fallbackPngBuffer: Buffer;
@@ -56,7 +68,7 @@ function cloneStatWithDev<T extends { dev: number | bigint }>(stat: T, dev: numb
 
 beforeAll(async () => {
   fixtureRoot = await fs.mkdtemp(
-    path.join(resolvePreferredIronCliwTmpDir(), "IronCliw-media-test-"),
+    path.join(resolvePreferredIronCliwTmpDir(), "ironcliw-media-test-"),
   );
   largeJpegBuffer = await sharp({
     create: {
@@ -76,6 +88,7 @@ beforeAll(async () => {
     .toBuffer();
   tinyPngFile = await writeTempFile(tinyPngBuffer, ".png");
   tinyPngWrongExtFile = await writeTempFile(tinyPngBuffer, ".bin");
+  fakeHeicFile = await writeTempFile(Buffer.from("fake-heic"), ".heic");
   alphaPngBuffer = await sharp({
     create: {
       width: 64,
@@ -114,14 +127,14 @@ afterEach(() => {
 
 describe("web media loading", () => {
   beforeAll(() => {
-    // Ensure state dir is stable and not influenced by other tests that stub IronCliw_STATE_DIR.
+    // Ensure state dir is stable and not influenced by other tests that stub IRONCLIW_STATE_DIR.
     // Also keep it outside the IronCliw temp root so default localRoots doesn't accidentally make all state readable.
-    stateDirSnapshot = captureEnv(["IronCliw_STATE_DIR"]);
-    process.env.IronCliw_STATE_DIR = path.join(
+    stateDirSnapshot = captureEnv(["IRONCLIW_STATE_DIR"]);
+    process.env.IRONCLIW_STATE_DIR = path.join(
       path.parse(os.tmpdir()).root,
       "var",
       "lib",
-      "IronCliw-media-state-test",
+      "ironcliw-media-state-test",
     );
   });
 
@@ -176,6 +189,22 @@ describe("web media loading", () => {
 
     expect(result.kind).toBe("image");
     expect(result.contentType).toBe("image/jpeg");
+  });
+
+  it("normalizes HEIC local files to JPEG output", async () => {
+    convertHeicToJpegMock.mockResolvedValueOnce(tinyPngBuffer);
+
+    const result = await loadWebMedia(fakeHeicFile, 1024 * 1024);
+
+    expect(convertHeicToJpegMock).toHaveBeenCalledTimes(1);
+    expect(result.kind).toBe("image");
+    expect(result.contentType).toBe("image/jpeg");
+    expect(result.fileName).toBe(path.basename(fakeHeicFile, ".heic") + ".jpg");
+    expect(result.buffer.length).toBeGreaterThan(0);
+    expect(result.buffer.equals(tinyPngBuffer)).toBe(false);
+    // Confirm the output is actually JPEG (magic bytes 0xFF 0xD8)
+    expect(result.buffer[0]).toBe(0xff);
+    expect(result.buffer[1]).toBe(0xd8);
   });
 
   it("includes URL + status in fetch errors", async () => {
@@ -428,7 +457,7 @@ describe("local media root guard", () => {
       }),
     ).resolves.toEqual(
       expect.objectContaining({
-        kind: "unknown",
+        kind: undefined,
       }),
     );
 
@@ -439,7 +468,7 @@ describe("local media root guard", () => {
       }),
     ).resolves.toEqual(
       expect.objectContaining({
-        kind: "unknown",
+        kind: undefined,
       }),
     );
   });
@@ -469,7 +498,7 @@ describe("local media root guard", () => {
       }),
     ).resolves.toEqual(
       expect.objectContaining({
-        kind: "unknown",
+        kind: undefined,
       }),
     );
   });

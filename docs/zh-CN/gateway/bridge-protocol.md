@@ -77,7 +77,7 @@ Payload 字段（除非注明，否则都是可选的）：
 
 ## Tailnet 使用
 
-- 将 bridge 绑定到 tailnet IP：在 `~/.IronCliw/IronCliw.json` 中设置 `bridge.bind: "tailnet"`。
+- 将 bridge 绑定到 tailnet IP：在 `~/.ironcliw/ironcliw.json` 中设置 `bridge.bind: "tailnet"`。
 - 客户端通过 MagicDNS 名称或 tailnet IP 连接。
 - Bonjour **不**跨网络；需要时使用手动主机/端口或广域 DNS‑SD。
 

@@ -11,7 +11,7 @@ title: "Control UI"
 The Control UI is a small **Vite + Lit** single-page app served by the Gateway:
 
 - default: `http://<host>:18789/`
-- optional prefix: set `gateway.controlUi.basePath` (e.g. `/IronCliw`)
+- optional prefix: set `gateway.controlUi.basePath` (e.g. `/ironcliw`)
 
 It speaks **directly to the Gateway WebSocket** on the same port.
 
@@ -21,7 +21,7 @@ If the Gateway is running on the same computer, open:
 
 - [http://127.0.0.1:18789/](http://127.0.0.1:18789/) (or [http://localhost:18789/](http://localhost:18789/))
 
-If the page fails to load, start the Gateway first: `IronCliw gateway`.
+If the page fails to load, start the Gateway first: `ironcliw gateway`.
 
 Auth is supplied during the WebSocket handshake via:
 
@@ -43,14 +43,14 @@ unauthorized access.
 
 ```bash
 # List pending requests
-IronCliw devices list
+ironcliw devices list
 
 # Approve by request ID
-IronCliw devices approve <requestId>
+ironcliw devices approve <requestId>
 ```
 
 Once approved, the device is remembered and won't require re-approval unless
-you revoke it with `IronCliw devices revoke --device <id> --role <role>`. See
+you revoke it with `ironcliw devices revoke --device <id> --role <role>`. See
 [Devices CLI](/cli/devices) for token rotation and revocation.
 
 **Notes:**
@@ -59,6 +59,15 @@ you revoke it with `IronCliw devices revoke --device <id> --role <role>`. See
 - Remote connections (LAN, Tailnet, etc.) require explicit approval.
 - Each browser profile generates a unique device ID, so switching browsers or
   clearing browser data will require re-pairing.
+
+## Language support
+
+The Control UI can localize itself on first load based on your browser locale, and you can override it later from the language picker in the Access card.
+
+- Supported locales: `en`, `zh-CN`, `zh-TW`, `pt-BR`, `de`, `es`
+- Non-English translations are lazy-loaded in the browser.
+- The selected locale is saved in browser storage and reused on future visits.
+- Missing translation keys fall back to English.
 
 ## What it can do (today)
 
@@ -71,7 +80,7 @@ you revoke it with `IronCliw devices revoke --device <id> --role <role>`. See
 - Skills: status, enable/disable, install, API key updates (`skills.*`)
 - Nodes: list + caps (`node.list`)
 - Exec approvals: edit gateway or node allowlists + ask policy for `exec host=gateway/node` (`exec.approvals.*`)
-- Config: view/edit `~/.IronCliw/IronCliw.json` (`config.get`, `config.set`)
+- Config: view/edit `~/.ironcliw/ironcliw.json` (`config.get`, `config.set`)
 - Config: apply + restart with validation (`config.apply`) and wake the last active session
 - Config writes include a base-hash guard to prevent clobbering concurrent edits
 - Config schema + form rendering (`config.schema`, including plugin + channel schemas); Raw JSON editor remains available
@@ -99,7 +108,7 @@ Cron jobs panel notes:
 - `chat.inject` appends an assistant note to the session transcript and broadcasts a `chat` event for UI-only updates (no agent run, no channel delivery).
 - Stop:
   - Click **Stop** (calls `chat.abort`)
-  - Type `/stop` (or standalone abort phrases like `stop`, `stop action`, `stop run`, `stop IronCliw`, `please stop`) to abort out-of-band
+  - Type `/stop` (or standalone abort phrases like `stop`, `stop action`, `stop run`, `stop ironcliw`, `please stop`) to abort out-of-band
   - `chat.abort` supports `{ sessionKey }` (no `runId`) to abort all active runs for that session
 - Abort partial retention:
   - When a run is aborted, partial assistant text can still be shown in the UI
@@ -113,7 +122,7 @@ Cron jobs panel notes:
 Keep the Gateway on loopback and let Tailscale Serve proxy it with HTTPS:
 
 ```bash
-IronCliw gateway --tailscale serve
+ironcliw gateway --tailscale serve
 ```
 
 Open:
@@ -133,7 +142,7 @@ code may run on that host, require token/password auth.
 ### Bind to tailnet + token
 
 ```bash
-IronCliw gateway --bind tailnet --token "$(openssl rand -hex 32)"
+ironcliw gateway --bind tailnet --token "$(openssl rand -hex 32)"
 ```
 
 Then open:
@@ -195,7 +204,7 @@ pnpm ui:build # auto-installs UI deps on first run
 Optional absolute base (when you want fixed asset URLs):
 
 ```bash
-IronCliw_CONTROL_UI_BASE_PATH=/IronCliw/ pnpm ui:build
+IRONCLIW_CONTROL_UI_BASE_PATH=/ironcliw/ pnpm ui:build
 ```
 
 For local development (separate dev server):
@@ -222,13 +231,14 @@ http://localhost:5173/?gatewayUrl=ws://<gateway-host>:18789
 Optional one-time auth (if needed):
 
 ```text
-http://localhost:5173/?gatewayUrl=wss://<gateway-host>:18789&token=<gateway-token>
+http://localhost:5173/?gatewayUrl=wss://<gateway-host>:18789#token=<gateway-token>
 ```
 
 Notes:
 
 - `gatewayUrl` is stored in localStorage after load and removed from the URL.
-- `token` is stored in localStorage; `password` is kept in memory only.
+- `token` is imported into memory for the current tab and stripped from the URL; it is not stored in localStorage.
+- `password` is kept in memory only.
 - When `gatewayUrl` is set, the UI does not fall back to config or environment credentials.
   Provide `token` (or `password`) explicitly. Missing explicit credentials is an error.
 - Use `wss://` when the Gateway is behind TLS (Tailscale Serve, HTTPS proxy, etc.).

@@ -12,6 +12,7 @@ import { type IronCliwConfig, loadConfig } from "../../config/config.js";
 import { applyLinkUnderstanding } from "../../link-understanding/apply.js";
 import { applyMediaUnderstanding } from "../../media-understanding/apply.js";
 import { defaultRuntime } from "../../runtime.js";
+import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import { resolveCommandAuthorization } from "../command-auth.js";
 import type { MsgContext } from "../templating.js";
 import { SILENT_REPLY_TOKEN } from "../tokens.js";
@@ -33,7 +34,7 @@ function mergeSkillFilters(channelFilter?: string[], agentFilter?: string[]): st
     if (!Array.isArray(list)) {
       return undefined;
     }
-    return list.map((entry) => String(entry).trim()).filter(Boolean);
+    return normalizeStringEntries(list);
   };
   const channel = normalize(channelFilter);
   const agent = normalize(agentFilter);
@@ -58,7 +59,7 @@ export async function getReplyFromConfig(
   opts?: GetReplyOptions,
   configOverride?: IronCliwConfig,
 ): Promise<ReplyPayload | ReplyPayload[] | undefined> {
-  const isFastTestEnv = process.env.IronCliw_TEST_FAST === "1";
+  const isFastTestEnv = process.env.IRONCLIW_TEST_FAST === "1";
   const cfg = configOverride ?? loadConfig();
   const targetSessionKey =
     ctx.CommandSource === "native" ? ctx.CommandTargetSessionKey?.trim() : undefined;

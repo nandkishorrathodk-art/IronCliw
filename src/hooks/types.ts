@@ -35,7 +35,7 @@ export type ParsedHookFrontmatter = Record<string, string>;
 export type Hook = {
   name: string;
   description: string;
-  source: "IronCliw-bundled" | "IronCliw-managed" | "IronCliw-workspace" | "IronCliw-plugin";
+  source: "ironcliw-bundled" | "ironcliw-managed" | "ironcliw-workspace" | "ironcliw-plugin";
   pluginId?: string;
   filePath: string; // Path to HOOK.md
   baseDir: string; // Directory containing hook

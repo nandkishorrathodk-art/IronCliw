@@ -531,11 +531,11 @@ struct OnboardingWizardView: View {
                         if let id = self.issue.requestId, !id.isEmpty {
                             return "Request ID: \(id)"
                         }
-                        return "Request ID: check `IronCliw devices list`."
+                        return "Request ID: check `ironcliw devices list`."
                     }()
                     Text(
                         "Approve this device on the gateway.\n"
-                            + "1) `IronCliw devices approve` (or `IronCliw devices approve <requestId>`)\n"
+                            + "1) `ironcliw devices approve` (or `ironcliw devices approve <requestId>`)\n"
                             + "2) `/pair approve` in Telegram\n"
                             + "\(requestLine)\n"
                             + "IronCliw will also retry automatically when you return to this app.")
@@ -741,12 +741,12 @@ struct OnboardingWizardView: View {
                     self.manualPort = port
                     self.manualTLS = useTLS
                 case .discovered:
-                    self.manualHost = "IronCliw.local"
+                    self.manualHost = "ironcliw.local"
                     self.manualPort = 18789
                     self.manualTLS = true
                 }
             } else {
-                self.manualHost = "IronCliw.local"
+                self.manualHost = "ironcliw.local"
                 self.manualPort = 18789
                 self.manualTLS = true
             }
@@ -755,7 +755,7 @@ struct OnboardingWizardView: View {
         if self.selectedMode == nil {
             self.selectedMode = OnboardingStateStore.lastMode()
         }
-        if self.selectedMode == .developerLocal && self.manualHost == "IronCliw.local" {
+        if self.selectedMode == .developerLocal && self.manualHost == "ironcliw.local" {
             self.manualHost = "localhost"
             self.manualTLS = false
         }
@@ -810,15 +810,15 @@ struct OnboardingWizardView: View {
 
     private func applyModeDefaults(_ mode: OnboardingConnectionMode) {
         let host = self.manualHost.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let hostIsDefaultLike = host.isEmpty || host == "IronCliw.local" || host == "localhost"
+        let hostIsDefaultLike = host.isEmpty || host == "ironcliw.local" || host == "localhost"
 
         switch mode {
         case .homeNetwork:
-            if hostIsDefaultLike { self.manualHost = "IronCliw.local" }
+            if hostIsDefaultLike { self.manualHost = "ironcliw.local" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .remoteDomain:
-            if host == "IronCliw.local" || host == "localhost" { self.manualHost = "" }
+            if host == "ironcliw.local" || host == "localhost" { self.manualHost = "" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .developerLocal:

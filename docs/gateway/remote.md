@@ -76,10 +76,10 @@ ssh -N -L 18789:127.0.0.1:18789 user@host
 
 With the tunnel up:
 
-- `IronCliw health` and `IronCliw status --deep` now reach the remote gateway via `ws://127.0.0.1:18789`.
-- `IronCliw gateway {status,health,send,agent,call}` can also target the forwarded URL via `--url` when needed.
+- `ironcliw health` and `ironcliw status --deep` now reach the remote gateway via `ws://127.0.0.1:18789`.
+- `ironcliw gateway {status,health,send,agent,call}` can also target the forwarded URL via `--url` when needed.
 
-Note: replace `18789` with your configured `gateway.port` (or `--port`/`IronCliw_GATEWAY_PORT`).
+Note: replace `18789` with your configured `gateway.port` (or `--port`/`IRONCLIW_GATEWAY_PORT`).
 Note: when you pass `--url`, the CLI does not fall back to config or environment credentials.
 Include `--token` or `--password` explicitly. Missing explicit credentials is an error.
 
@@ -103,17 +103,20 @@ When the gateway is loopback-only, keep the URL at `ws://127.0.0.1:18789` and op
 
 ## Credential precedence
 
-Gateway call/probe credential resolution now follows one shared contract:
+Gateway credential resolution follows one shared contract across call/probe/status paths, Discord exec-approval monitoring, and node-host connections:
 
-- Explicit credentials (`--token`, `--password`, or tool `gatewayToken`) always win.
+- Explicit credentials (`--token`, `--password`, or tool `gatewayToken`) always win on call paths that accept explicit auth.
+- URL override safety:
+  - CLI URL overrides (`--url`) never reuse implicit config/env credentials.
+  - Env URL overrides (`IRONCLIW_GATEWAY_URL`) may use env credentials only (`IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD`).
 - Local mode defaults:
-  - token: `IronCliw_GATEWAY_TOKEN` -> `gateway.auth.token` -> `gateway.remote.token`
-  - password: `IronCliw_GATEWAY_PASSWORD` -> `gateway.auth.password` -> `gateway.remote.password`
+  - token: `IRONCLIW_GATEWAY_TOKEN` -> `gateway.auth.token` -> `gateway.remote.token`
+  - password: `IRONCLIW_GATEWAY_PASSWORD` -> `gateway.auth.password` -> `gateway.remote.password`
 - Remote mode defaults:
-  - token: `gateway.remote.token` -> `IronCliw_GATEWAY_TOKEN` -> `gateway.auth.token`
-  - password: `IronCliw_GATEWAY_PASSWORD` -> `gateway.remote.password` -> `gateway.auth.password`
+  - token: `gateway.remote.token` -> `IRONCLIW_GATEWAY_TOKEN` -> `gateway.auth.token`
+  - password: `IRONCLIW_GATEWAY_PASSWORD` -> `gateway.remote.password` -> `gateway.auth.password`
 - Remote probe/status token checks are strict by default: they use `gateway.remote.token` only (no local token fallback) when targeting remote mode.
-- Legacy `CLAWDBOT_GATEWAY_*` env vars are only used by compatibility call paths; probe/status/auth resolution uses `IronCliw_GATEWAY_*` only.
+- Legacy `CLAWDBOT_GATEWAY_*` env vars are only used by compatibility call paths; probe/status/auth resolution uses `IRONCLIW_GATEWAY_*` only.
 
 ## Chat UI over SSH
 
@@ -134,7 +137,7 @@ Short version: **keep the Gateway loopback-only** unless you’re sure you need 
 
 - **Loopback + SSH/Tailscale Serve** is the safest default (no public exposure).
 - Plaintext `ws://` is loopback-only by default. For trusted private networks,
-  set `IronCliw_ALLOW_INSECURE_PRIVATE_WS=1` on the client process as break-glass.
+  set `IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1` on the client process as break-glass.
 - **Non-loopback binds** (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) must use auth tokens/passwords.
 - `gateway.remote.token` / `.password` are client credential sources. They do **not** configure server auth by themselves.
 - Local call paths can use `gateway.remote.*` as fallback when `gateway.auth.*` is unset.

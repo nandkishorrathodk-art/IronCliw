@@ -25,7 +25,7 @@ async function runAudioCapabilityWithFetchCapture(params: {
       models: {
         providers: {
           openai: {
-            apiKey: "test-key",
+            apiKey: "test-key", // pragma: allowlist secret
             models: [],
           },
         },
@@ -61,7 +61,7 @@ describe("runCapability proxy fetch passthrough", () => {
   it("passes fetchFn to audio provider when HTTPS_PROXY is set", async () => {
     vi.stubEnv("HTTPS_PROXY", "http://proxy.test:8080");
     const seenFetchFn = await runAudioCapabilityWithFetchCapture({
-      fixturePrefix: "IronCliw-audio-proxy",
+      fixturePrefix: "ironcliw-audio-proxy",
       outputText: "transcribed",
     });
     expect(seenFetchFn).toBeDefined();
@@ -71,7 +71,7 @@ describe("runCapability proxy fetch passthrough", () => {
   it("passes fetchFn to video provider when HTTPS_PROXY is set", async () => {
     vi.stubEnv("HTTPS_PROXY", "http://proxy.test:8080");
 
-    await withVideoFixture("IronCliw-video-proxy", async ({ ctx, media, cache }) => {
+    await withVideoFixture("ironcliw-video-proxy", async ({ ctx, media, cache }) => {
       let seenFetchFn: typeof fetch | undefined;
 
       const result = await runCapability({
@@ -80,7 +80,7 @@ describe("runCapability proxy fetch passthrough", () => {
           models: {
             providers: {
               moonshot: {
-                apiKey: "test-key",
+                apiKey: "test-key", // pragma: allowlist secret
                 models: [],
               },
             },
@@ -125,7 +125,7 @@ describe("runCapability proxy fetch passthrough", () => {
     vi.stubEnv("http_proxy", "");
 
     const seenFetchFn = await runAudioCapabilityWithFetchCapture({
-      fixturePrefix: "IronCliw-audio-no-proxy",
+      fixturePrefix: "ironcliw-audio-no-proxy",
       outputText: "ok",
     });
     expect(seenFetchFn).toBeUndefined();

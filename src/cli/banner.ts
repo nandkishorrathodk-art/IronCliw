@@ -14,6 +14,22 @@ type BannerOptions = TaglineOptions & {
 
 let bannerEmitted = false;
 
+const graphemeSegmenter =
+  typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+    : null;
+
+function splitGraphemes(value: string): string[] {
+  if (!graphemeSegmenter) {
+    return Array.from(value);
+  }
+  try {
+    return Array.from(graphemeSegmenter.segment(value), (seg) => seg.segment);
+  } catch {
+    return Array.from(value);
+  }
+}
+
 const hasJsonFlag = (argv: string[]) =>
   argv.some((arg) => arg === "--json" || arg.startsWith("--json="));
 
@@ -41,7 +57,8 @@ function resolveTaglineMode(options: BannerOptions): TaglineMode | undefined {
 }
 
 export function formatCliBannerLine(version: string, options: BannerOptions = {}): string {
-  const commit = options.commit ?? resolveCommitHash({ env: options.env });
+  const commit =
+    options.commit ?? resolveCommitHash({ env: options.env, moduleUrl: import.meta.url });
   const commitLabel = commit ?? "unknown";
   const tagline = pickTagline({ ...options, mode: resolveTaglineMode(options) });
   const rich = options.richTty ?? isRich();
@@ -80,33 +97,45 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   return `${line1}\n${line2}`;
 }
 
-const IRONCLIW_ASCII = [
-  "  ___ ____   ___  _   _  ____ _     _____        __ ",
-  " |_ _|  _ \\ / _ \\| \\ | |/ ___| |   |_ _\\ \\      / / ",
-  "  | || |_) | | | |  \\| | |   | |    | | \\ \\ /\\ / /  ",
-  "  | ||  _ <| |_| | |\\  | |___| |___ | |  \\ V  V /   ",
-  " |___|_| \\_\\\\___/|_| \\_|\\____|_____|___|  \\_/\\_/    ",
-  "                                                    ",
-  "                  🦾 IronCliw 🦾                    ",
+const IRON_ASCII = [
+  "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+  "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██",
+  "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
+  "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
+  "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+  "                  🦾 IRONCLIW 🦾                    ",
   " ",
 ];
 
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
   if (!rich) {
-    return IRONCLIW_ASCII.join("\n");
+    return IRON_ASCII.join("\n");
   }
 
-  const colored = IRONCLIW_ASCII.map((line) => {
-    if (line.includes("IronCliw")) {
+  const colorChar = (ch: string) => {
+    if (ch === "█") {
+      return theme.accentBright(ch);
+    }
+    if (ch === "░") {
+      return theme.accentDim(ch);
+    }
+    if (ch === "▀") {
+      return theme.accent(ch);
+    }
+    return theme.muted(ch);
+  };
+
+  const colored = IRON_ASCII.map((line) => {
+    if (line.includes("IRONCLIW")) {
       return (
         theme.muted("              ") +
         theme.accent("🦾") +
-        theme.info(" IronCliw ") +
+        theme.info(" IRONCLIW ") +
         theme.accent("🦾")
       );
     }
-    return theme.accent(line);
+    return splitGraphemes(line).map(colorChar).join("");
   });
 
   return colored.join("\n");

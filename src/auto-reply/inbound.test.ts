@@ -236,7 +236,7 @@ describe("inbound dedupe", () => {
     ).toBe(false);
   });
 
-  it("does not dedupe across session keys", () => {
+  it("does not dedupe across agent ids", () => {
     resetInboundDedupe();
     const base: MsgContext = {
       Provider: "whatsapp",
@@ -248,10 +248,34 @@ describe("inbound dedupe", () => {
       shouldSkipDuplicateInbound({ ...base, SessionKey: "agent:alpha:main" }, { now: 100 }),
     ).toBe(false);
     expect(
-      shouldSkipDuplicateInbound({ ...base, SessionKey: "agent:bravo:main" }, { now: 200 }),
+      shouldSkipDuplicateInbound(
+        { ...base, SessionKey: "agent:bravo:whatsapp:direct:+1555" },
+        {
+          now: 200,
+        },
+      ),
     ).toBe(false);
     expect(
       shouldSkipDuplicateInbound({ ...base, SessionKey: "agent:alpha:main" }, { now: 300 }),
+    ).toBe(true);
+  });
+
+  it("dedupes when the same agent sees the same inbound message under different session keys", () => {
+    resetInboundDedupe();
+    const base: MsgContext = {
+      Provider: "telegram",
+      OriginatingChannel: "telegram",
+      OriginatingTo: "telegram:7463849194",
+      MessageSid: "msg-1",
+    };
+    expect(
+      shouldSkipDuplicateInbound({ ...base, SessionKey: "agent:main:main" }, { now: 100 }),
+    ).toBe(false);
+    expect(
+      shouldSkipDuplicateInbound(
+        { ...base, SessionKey: "agent:main:telegram:direct:7463849194" },
+        { now: 200 },
+      ),
     ).toBe(true);
   });
 });
@@ -326,7 +350,7 @@ describe("createInboundDebouncer", () => {
 
 describe("initSessionState BodyStripped", () => {
   it("prefers BodyForAgent over Body for group chats", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sender-meta-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sender-meta-"));
     const storePath = path.join(root, "sessions.json");
     const cfg = { session: { store: storePath } } as IronCliwConfig;
 
@@ -348,7 +372,7 @@ describe("initSessionState BodyStripped", () => {
   });
 
   it("prefers BodyForAgent over Body for direct chats", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sender-meta-direct-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sender-meta-direct-"));
     const storePath = path.join(root, "sessions.json");
     const cfg = { session: { store: storePath } } as IronCliwConfig;
 
@@ -373,22 +397,22 @@ describe("mention helpers", () => {
   it("builds regexes and skips invalid patterns", () => {
     const regexes = buildMentionRegexes({
       messages: {
-        groupChat: { mentionPatterns: ["\\bIronCliw\\b", "(invalid"] },
+        groupChat: { mentionPatterns: ["\\bironcliw\\b", "(invalid"] },
       },
     });
     expect(regexes).toHaveLength(1);
-    expect(regexes[0]?.test("IronCliw")).toBe(true);
+    expect(regexes[0]?.test("ironcliw")).toBe(true);
   });
 
   it("normalizes zero-width characters", () => {
-    expect(normalizeMentionText("open\u200bclaw")).toBe("IronCliw");
+    expect(normalizeMentionText("open\u200bclaw")).toBe("ironcliw");
   });
 
   it("matches patterns case-insensitively", () => {
     const regexes = buildMentionRegexes({
-      messages: { groupChat: { mentionPatterns: ["\\bIronCliw\\b"] } },
+      messages: { groupChat: { mentionPatterns: ["\\bironcliw\\b"] } },
     });
-    expect(matchesMentionPatterns("IronCliw: hi", regexes)).toBe(true);
+    expect(matchesMentionPatterns("IRONCLIW: hi", regexes)).toBe(true);
   });
 
   it("uses per-agent mention patterns when configured", () => {
@@ -464,6 +488,54 @@ describe("resolveGroupRequireMention", () => {
       key: "slack:group:C123",
       channel: "slack",
       id: "C123",
+      chatType: "group",
+    };
+
+    expect(resolveGroupRequireMention({ cfg, ctx, groupResolution })).toBe(false);
+  });
+
+  it("respects LINE prefixed group keys in reply-stage requireMention resolution", () => {
+    const cfg: IronCliwConfig = {
+      channels: {
+        line: {
+          groups: {
+            "room:r123": { requireMention: false },
+          },
+        },
+      },
+    };
+    const ctx: TemplateContext = {
+      Provider: "line",
+      From: "line:room:r123",
+    };
+    const groupResolution: GroupKeyResolution = {
+      key: "line:group:r123",
+      channel: "line",
+      id: "r123",
+      chatType: "group",
+    };
+
+    expect(resolveGroupRequireMention({ cfg, ctx, groupResolution })).toBe(false);
+  });
+
+  it("preserves plugin-backed channel requireMention resolution", () => {
+    const cfg: IronCliwConfig = {
+      channels: {
+        bluebubbles: {
+          groups: {
+            "chat:primary": { requireMention: false },
+          },
+        },
+      },
+    };
+    const ctx: TemplateContext = {
+      Provider: "bluebubbles",
+      From: "bluebubbles:group:chat:primary",
+    };
+    const groupResolution: GroupKeyResolution = {
+      key: "bluebubbles:group:chat:primary",
+      channel: "bluebubbles",
+      id: "chat:primary",
       chatType: "group",
     };
 

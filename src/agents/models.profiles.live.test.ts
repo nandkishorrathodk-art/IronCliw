@@ -9,15 +9,19 @@ import {
   isAnthropicBillingError,
   isAnthropicRateLimitError,
 } from "./live-auth-keys.js";
+import {
+  isMiniMaxModelNotFoundErrorMessage,
+  isModelNotFoundErrorMessage,
+} from "./live-model-errors.js";
 import { isModernModelRef } from "./live-model-filter.js";
 import { getApiKeyForModel, requireApiKey } from "./model-auth.js";
 import { ensureIronCliwModelsJson } from "./models-config.js";
 import { isRateLimitErrorMessage } from "./pi-embedded-helpers/errors.js";
 import { discoverAuthStorage, discoverModels } from "./pi-model-discovery.js";
 
-const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IronCliw_LIVE_TEST);
-const DIRECT_ENABLED = Boolean(process.env.IronCliw_LIVE_MODELS?.trim());
-const REQUIRE_PROFILE_KEYS = isTruthyEnvValue(process.env.IronCliw_LIVE_REQUIRE_PROFILE_KEYS);
+const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IRONCLIW_LIVE_TEST);
+const DIRECT_ENABLED = Boolean(process.env.IRONCLIW_LIVE_MODELS?.trim());
+const REQUIRE_PROFILE_KEYS = isTruthyEnvValue(process.env.IRONCLIW_LIVE_REQUIRE_PROFILE_KEYS);
 
 const describeLive = LIVE ? describe : describe.skip;
 
@@ -77,23 +81,6 @@ function isGoogleModelNotFoundError(err: unknown): boolean {
     return true;
   }
   if (/"code"\\s*:\\s*404/.test(msg)) {
-    return true;
-  }
-  return false;
-}
-
-function isModelNotFoundErrorMessage(raw: string): boolean {
-  const msg = raw.trim();
-  if (!msg) {
-    return false;
-  }
-  if (/\b404\b/.test(msg) && /not[_-]?found/i.test(msg)) {
-    return true;
-  }
-  if (/not_found_error/i.test(msg)) {
-    return true;
-  }
-  if (/model:\s*[a-z0-9._-]+/i.test(msg) && /not[_-]?found/i.test(msg)) {
     return true;
   }
   return false;
@@ -273,7 +260,7 @@ describeLive("live models (profile keys)", () => {
       await ensureIronCliwModelsJson(cfg);
       if (!DIRECT_ENABLED) {
         logProgress(
-          "[live-models] skipping (set IronCliw_LIVE_MODELS=modern|all|<list>; all=modern)",
+          "[live-models] skipping (set IRONCLIW_LIVE_MODELS=modern|all|<list>; all=modern)",
         );
         return;
       }
@@ -288,14 +275,14 @@ describeLive("live models (profile keys)", () => {
       const modelRegistry = discoverModels(authStorage, agentDir);
       const models = modelRegistry.getAll();
 
-      const rawModels = process.env.IronCliw_LIVE_MODELS?.trim();
+      const rawModels = process.env.IRONCLIW_LIVE_MODELS?.trim();
       const useModern = rawModels === "modern" || rawModels === "all";
       const useExplicit = Boolean(rawModels) && !useModern;
       const filter = useExplicit ? parseModelFilter(rawModels) : null;
       const allowNotFoundSkip = useModern;
-      const providers = parseProviderFilter(process.env.IronCliw_LIVE_PROVIDERS);
-      const perModelTimeoutMs = toInt(process.env.IronCliw_LIVE_MODEL_TIMEOUT_MS, 30_000);
-      const maxModels = toInt(process.env.IronCliw_LIVE_MAX_MODELS, 0);
+      const providers = parseProviderFilter(process.env.IRONCLIW_LIVE_PROVIDERS);
+      const perModelTimeoutMs = toInt(process.env.IRONCLIW_LIVE_MODEL_TIMEOUT_MS, 30_000);
+      const maxModels = toInt(process.env.IRONCLIW_LIVE_MAX_MODELS, 0);
 
       const failures: Array<{ model: string; error: string }> = [];
       const skipped: Array<{ model: string; reason: string }> = [];
@@ -345,7 +332,7 @@ describeLive("live models (profile keys)", () => {
       logProgress(`[live-models] selection=${useExplicit ? "explicit" : "modern"}`);
       if (selectedCandidates.length < candidates.length) {
         logProgress(
-          `[live-models] capped to ${selectedCandidates.length}/${candidates.length} via IronCliw_LIVE_MAX_MODELS=${maxModels}`,
+          `[live-models] capped to ${selectedCandidates.length}/${candidates.length} via IRONCLIW_LIVE_MAX_MODELS=${maxModels}`,
         );
       }
       logProgress(`[live-models] running ${selectedCandidates.length} models`);
@@ -488,7 +475,11 @@ describeLive("live models (profile keys)", () => {
 
             if (ok.res.stopReason === "error") {
               const msg = ok.res.errorMessage ?? "";
-              if (allowNotFoundSkip && isModelNotFoundErrorMessage(msg)) {
+              if (
+                allowNotFoundSkip &&
+                (isModelNotFoundErrorMessage(msg) ||
+                  (model.provider === "minimax" && isMiniMaxModelNotFoundErrorMessage(msg)))
+              ) {
                 skipped.push({ model: id, reason: msg });
                 logProgress(`${progressLabel}: skip (model not found)`);
                 break;
@@ -570,6 +561,15 @@ describeLive("live models (profile keys)", () => {
             ) {
               skipped.push({ model: id, reason: message });
               logProgress(`${progressLabel}: skip (google model not found)`);
+              break;
+            }
+            if (
+              allowNotFoundSkip &&
+              model.provider === "minimax" &&
+              isMiniMaxModelNotFoundErrorMessage(message)
+            ) {
+              skipped.push({ model: id, reason: message });
+              logProgress(`${progressLabel}: skip (model not found)`);
               break;
             }
             if (

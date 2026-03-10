@@ -1,10 +1,10 @@
 {
-  "name": "@IronCliw/slack",
-  "version": "2026.3.2",
+  "name": "@ironcliw/slack",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw Slack channel plugin",
   "type": "module",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

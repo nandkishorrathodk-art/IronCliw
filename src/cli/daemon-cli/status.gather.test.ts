@@ -21,8 +21,8 @@ const serviceReadRuntime = vi.fn(async (_env?: NodeJS.ProcessEnv) => ({ status: 
 const serviceReadCommand = vi.fn(async (_env?: NodeJS.ProcessEnv) => ({
   programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
   environment: {
-    IronCliw_STATE_DIR: "/tmp/IronCliw-daemon",
-    IronCliw_CONFIG_PATH: "/tmp/IronCliw-daemon/IronCliw.json",
+    IRONCLIW_STATE_DIR: "/tmp/ironcliw-daemon",
+    IRONCLIW_CONFIG_PATH: "/tmp/ironcliw-daemon/ironcliw.json",
   },
 }));
 const resolveGatewayBindHost = vi.fn(
@@ -31,10 +31,10 @@ const resolveGatewayBindHost = vi.fn(
 const pickPrimaryTailnetIPv4 = vi.fn(() => "100.64.0.9");
 const resolveGatewayPort = vi.fn((_cfg?: unknown, _env?: unknown) => 18789);
 const resolveStateDir = vi.fn(
-  (env: NodeJS.ProcessEnv) => env.IronCliw_STATE_DIR ?? "/tmp/IronCliw-cli",
+  (env: NodeJS.ProcessEnv) => env.IRONCLIW_STATE_DIR ?? "/tmp/ironcliw-cli",
 );
 const resolveConfigPath = vi.fn((env: NodeJS.ProcessEnv, stateDir: string) => {
-  return env.IronCliw_CONFIG_PATH ?? `${stateDir}/IronCliw.json`;
+  return env.IRONCLIW_CONFIG_PATH ?? `${stateDir}/ironcliw.json`;
 });
 let daemonLoadedConfig: Record<string, unknown> = {
   gateway: {
@@ -51,7 +51,7 @@ let cliLoadedConfig: Record<string, unknown> = {
 
 vi.mock("../../config/config.js", () => ({
   createConfigIO: ({ configPath }: { configPath: string }) => {
-    const isDaemon = configPath.includes("/IronCliw-daemon/");
+    const isDaemon = configPath.includes("/ironcliw-daemon/");
     return {
       readConfigFileSnapshot: async () => ({
         path: configPath,
@@ -119,16 +119,18 @@ describe("gatherDaemonStatus", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv([
-      "IronCliw_STATE_DIR",
-      "IronCliw_CONFIG_PATH",
-      "IronCliw_GATEWAY_TOKEN",
-      "IronCliw_GATEWAY_PASSWORD",
+      "IRONCLIW_STATE_DIR",
+      "IRONCLIW_CONFIG_PATH",
+      "IRONCLIW_GATEWAY_TOKEN",
+      "IRONCLIW_GATEWAY_PASSWORD",
+      "DAEMON_GATEWAY_TOKEN",
       "DAEMON_GATEWAY_PASSWORD",
     ]);
-    process.env.IronCliw_STATE_DIR = "/tmp/IronCliw-cli";
-    process.env.IronCliw_CONFIG_PATH = "/tmp/IronCliw-cli/IronCliw.json";
-    delete process.env.IronCliw_GATEWAY_TOKEN;
-    delete process.env.IronCliw_GATEWAY_PASSWORD;
+    process.env.IRONCLIW_STATE_DIR = "/tmp/ironcliw-cli";
+    process.env.IRONCLIW_CONFIG_PATH = "/tmp/ironcliw-cli/ironcliw.json";
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_PASSWORD;
+    delete process.env.DAEMON_GATEWAY_TOKEN;
     delete process.env.DAEMON_GATEWAY_PASSWORD;
     callGatewayStatusProbe.mockClear();
     loadGatewayTlsRuntime.mockClear();
@@ -203,7 +205,7 @@ describe("gatherDaemonStatus", () => {
         },
       },
     };
-    process.env.DAEMON_GATEWAY_PASSWORD = "daemon-secretref-password";
+    process.env.DAEMON_GATEWAY_PASSWORD = "daemon-secretref-password"; // pragma: allowlist secret
 
     await gatherDaemonStatus({
       rpc: {},
@@ -213,7 +215,38 @@ describe("gatherDaemonStatus", () => {
 
     expect(callGatewayStatusProbe).toHaveBeenCalledWith(
       expect.objectContaining({
-        password: "daemon-secretref-password",
+        password: "daemon-secretref-password", // pragma: allowlist secret
+      }),
+    );
+  });
+
+  it("resolves daemon gateway auth token SecretRef values before probing", async () => {
+    daemonLoadedConfig = {
+      gateway: {
+        bind: "lan",
+        tls: { enabled: true },
+        auth: {
+          mode: "token",
+          token: "${DAEMON_GATEWAY_TOKEN}",
+        },
+      },
+      secrets: {
+        providers: {
+          default: { source: "env" },
+        },
+      },
+    };
+    process.env.DAEMON_GATEWAY_TOKEN = "daemon-secretref-token";
+
+    await gatherDaemonStatus({
+      rpc: {},
+      probe: true,
+      deep: false,
+    });
+
+    expect(callGatewayStatusProbe).toHaveBeenCalledWith(
+      expect.objectContaining({
+        token: "daemon-secretref-token",
       }),
     );
   });
@@ -246,6 +279,38 @@ describe("gatherDaemonStatus", () => {
       expect.objectContaining({
         token: "daemon-token",
         password: undefined,
+      }),
+    );
+  });
+
+  it("keeps remote probe auth strict when remote token is missing", async () => {
+    daemonLoadedConfig = {
+      gateway: {
+        mode: "remote",
+        remote: {
+          url: "wss://gateway.example",
+          password: "remote-password", // pragma: allowlist secret
+        },
+        auth: {
+          mode: "token",
+          token: "local-token",
+          password: "local-password", // pragma: allowlist secret
+        },
+      },
+    };
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token";
+    process.env.IRONCLIW_GATEWAY_PASSWORD = "env-password"; // pragma: allowlist secret
+
+    await gatherDaemonStatus({
+      rpc: {},
+      probe: true,
+      deep: false,
+    });
+
+    expect(callGatewayStatusProbe).toHaveBeenCalledWith(
+      expect.objectContaining({
+        token: undefined,
+        password: "env-password", // pragma: allowlist secret
       }),
     );
   });

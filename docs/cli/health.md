@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `IronCliw health` (gateway health endpoint via RPC)"
+summary: "CLI reference for `ironcliw health` (gateway health endpoint via RPC)"
 read_when:
   - You want to quickly check the running Gateway’s health
 title: "health"
 ---
 
-# `IronCliw health`
+# `ironcliw health`
 
 Fetch health from the running Gateway.
 
 ```bash
-IronCliw health
-IronCliw health --json
-IronCliw health --verbose
+ironcliw health
+ironcliw health --json
+ironcliw health --verbose
 ```
 
 Notes:

@@ -25,12 +25,12 @@ IronCliw 将**唤醒词作为单一全局列表**，由 **Gateway 网关**拥有
 
 唤醒词存储在 Gateway 网关机器上：
 
-- `~/.IronCliw/settings/voicewake.json`
+- `~/.ironcliw/settings/voicewake.json`
 
 结构：
 
 ```json
-{ "triggers": ["IronCliw", "claude", "computer"], "updatedAtMs": 1730000000000 }
+{ "triggers": ["ironcliw", "claude", "computer"], "updatedAtMs": 1730000000000 }
 ```
 
 ## 协议

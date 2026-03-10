@@ -1,6 +1,6 @@
 {
-  "name": "@IronCliw/googlechat",
-  "version": "2026.3.2",
+  "name": "@ironcliw/googlechat",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw Google Chat channel plugin",
   "type": "module",
@@ -8,14 +8,14 @@
     "google-auth-library": "^10.6.1"
   },
   "peerDependencies": {
-    "IronCliw": "workspace:*"
+    "ironcliw": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "IronCliw": {
+    "ironcliw": {
       "optional": true
     }
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -34,9 +34,14 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@IronCliw/googlechat",
+      "npmSpec": "@ironcliw/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
+    },
+    "releaseChecks": {
+      "rootDependencyMirrorAllowlist": [
+        "google-auth-library"
+      ]
     }
   }
 }

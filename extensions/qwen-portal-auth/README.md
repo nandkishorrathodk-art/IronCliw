@@ -7,7 +7,7 @@ OAuth provider plugin for **Qwen** (free-tier OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-IronCliw plugins enable qwen-portal-auth
+ironcliw plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-IronCliw models auth login --provider qwen-portal --set-default
+ironcliw models auth login --provider qwen-portal --set-default
 ```
 
 ## Notes

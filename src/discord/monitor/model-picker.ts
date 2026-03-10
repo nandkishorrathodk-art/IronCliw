@@ -541,8 +541,11 @@ function buildModelRows(params: {
  * Source-of-truth data for Discord picker views. This intentionally reuses the
  * same provider/model resolver used by text and Telegram model commands.
  */
-export async function loadDiscordModelPickerData(cfg: IronCliwConfig): Promise<ModelsProviderData> {
-  return buildModelsProviderData(cfg);
+export async function loadDiscordModelPickerData(
+  cfg: IronCliwConfig,
+  agentId?: string,
+): Promise<ModelsProviderData> {
+  return buildModelsProviderData(cfg, agentId);
 }
 
 export function buildDiscordModelPickerCustomId(params: {

@@ -1,10 +1,10 @@
 ---
 name: bootstrap-extra-files
 description: "Inject additional workspace bootstrap files via glob/path patterns"
-homepage: https://docs.IronCliw.ai/automation/hooks#bootstrap-extra-files
+homepage: https://docs.ironcliw.ai/automation/hooks#bootstrap-extra-files
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "📎",
         "events": ["agent:bootstrap"],

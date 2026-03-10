@@ -1,16 +1,44 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { pathToFileURL } from "node:url";
+import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { withEnv } from "../test-utils/env.js";
-import { getGlobalHookRunner, resetGlobalHookRunner } from "./hook-runner-global.js";
-import { __testing, loadIronCliwPlugins } from "./loader.js";
+async function importFreshPluginTestModules() {
+  vi.resetModules();
+  vi.unmock("node:fs");
+  vi.unmock("node:fs/promises");
+  vi.unmock("node:module");
+  vi.unmock("./hook-runner-global.js");
+  vi.unmock("./hooks.js");
+  vi.unmock("./loader.js");
+  vi.unmock("jiti");
+  const [loader, hookRunnerGlobal, hooks] = await Promise.all([
+    import("./loader.js"),
+    import("./hook-runner-global.js"),
+    import("./hooks.js"),
+  ]);
+  return {
+    ...loader,
+    ...hookRunnerGlobal,
+    ...hooks,
+  };
+}
+
+const {
+  __testing,
+  createHookRunner,
+  getGlobalHookRunner,
+  loadIronCliwPlugins,
+  resetGlobalHookRunner,
+} = await importFreshPluginTestModules();
 
 type TempPlugin = { dir: string; file: string; id: string };
 
-const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-plugin-"));
+const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-plugin-"));
 let tempDirIndex = 0;
-const prevBundledDir = process.env.IronCliw_BUNDLED_PLUGINS_DIR;
+const prevBundledDir = process.env.IRONCLIW_BUNDLED_PLUGINS_DIR;
 const EMPTY_PLUGIN_SCHEMA = { type: "object", additionalProperties: false, properties: {} };
 let cachedBundledTelegramDir = "";
 let cachedBundledMemoryDir = "";
@@ -55,7 +83,7 @@ function writePlugin(params: {
   const file = path.join(dir, filename);
   fs.writeFileSync(file, params.body, "utf-8");
   fs.writeFileSync(
-    path.join(dir, "IronCliw.plugin.json"),
+    path.join(dir, "ironcliw.plugin.json"),
     JSON.stringify(
       {
         id: params.id,
@@ -75,7 +103,7 @@ function loadBundledMemoryPluginRegistry(options?: {
   pluginFilename?: string;
 }) {
   if (!options && cachedBundledMemoryDir) {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = cachedBundledMemoryDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = cachedBundledMemoryDir;
     return loadIronCliwPlugins({
       cache: false,
       workspaceDir: cachedBundledMemoryDir,
@@ -104,7 +132,7 @@ function loadBundledMemoryPluginRegistry(options?: {
           name: options.packageMeta.name,
           version: options.packageMeta.version,
           description: options.packageMeta.description,
-          IronCliw: { extensions: [`./${pluginFilename}`] },
+          ironcliw: { extensions: [`./${pluginFilename}`] },
         },
         null,
         2,
@@ -124,7 +152,7 @@ function loadBundledMemoryPluginRegistry(options?: {
   if (!options) {
     cachedBundledMemoryDir = bundledDir;
   }
-  process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+  process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
 
   return loadIronCliwPlugins({
     cache: false,
@@ -149,7 +177,7 @@ function setupBundledTelegramPlugin() {
       filename: "telegram.cjs",
     });
   }
-  process.env.IronCliw_BUNDLED_PLUGINS_DIR = cachedBundledTelegramDir;
+  process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = cachedBundledTelegramDir;
 }
 
 function expectTelegramLoaded(registry: ReturnType<typeof loadIronCliwPlugins>) {
@@ -159,7 +187,7 @@ function expectTelegramLoaded(registry: ReturnType<typeof loadIronCliwPlugins>) 
 }
 
 function useNoBundledPlugins() {
-  process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+  process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
 }
 
 function loadRegistryFromSinglePlugin(params: {
@@ -190,6 +218,15 @@ function createWarningLogger(warnings: string[]) {
   };
 }
 
+function createErrorLogger(errors: string[]) {
+  return {
+    info: () => {},
+    warn: () => {},
+    error: (msg: string) => errors.push(msg),
+    debug: () => {},
+  };
+}
+
 function createEscapingEntryFixture(params: { id: string; sourceBody: string }) {
   const pluginDir = makeTempDir();
   const outsideDir = makeTempDir();
@@ -197,7 +234,7 @@ function createEscapingEntryFixture(params: { id: string; sourceBody: string }) 
   const linkedEntry = path.join(pluginDir, "entry.cjs");
   fs.writeFileSync(outsideEntry, params.sourceBody, "utf-8");
   fs.writeFileSync(
-    path.join(pluginDir, "IronCliw.plugin.json"),
+    path.join(pluginDir, "ironcliw.plugin.json"),
     JSON.stringify(
       {
         id: params.id,
@@ -229,9 +266,9 @@ function createPluginSdkAliasFixture(params?: {
 
 afterEach(() => {
   if (prevBundledDir === undefined) {
-    delete process.env.IronCliw_BUNDLED_PLUGINS_DIR;
+    delete process.env.IRONCLIW_BUNDLED_PLUGINS_DIR;
   } else {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = prevBundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = prevBundledDir;
   }
 });
 
@@ -255,7 +292,7 @@ describe("loadIronCliwPlugins", () => {
       dir: bundledDir,
       filename: "bundled.cjs",
     });
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
 
     const registry = loadIronCliwPlugins({
       cache: false,
@@ -338,7 +375,7 @@ describe("loadIronCliwPlugins", () => {
   it("preserves package.json metadata for bundled memory plugins", () => {
     const registry = loadBundledMemoryPluginRegistry({
       packageMeta: {
-        name: "@IronCliw/memory-core",
+        name: "@ironcliw/memory-core",
         version: "1.2.3",
         description: "Memory plugin package",
       },
@@ -353,7 +390,7 @@ describe("loadIronCliwPlugins", () => {
     expect(memory?.version).toBe("1.2.3");
   });
   it("loads plugins from config paths", () => {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
     const plugin = writePlugin({
       id: "allowed",
       filename: "allowed.cjs",
@@ -382,7 +419,7 @@ describe("loadIronCliwPlugins", () => {
   });
 
   it("re-initializes global hook runner when serving registry from cache", () => {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
     const plugin = writePlugin({
       id: "cache-hook-runner",
       filename: "cache-hook-runner.cjs",
@@ -573,6 +610,65 @@ describe("loadIronCliwPlugins", () => {
     expect(httpPlugin?.httpRoutes).toBe(1);
   });
 
+  it("rewrites removed registerHttpHandler failures into migration diagnostics", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "http-handler-legacy",
+      filename: "http-handler-legacy.cjs",
+      body: `module.exports = { id: "http-handler-legacy", register(api) {
+  api.registerHttpHandler({ path: "/legacy", handler: async () => true });
+} };`,
+    });
+
+    const errors: string[] = [];
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["http-handler-legacy"],
+      },
+      options: {
+        logger: createErrorLogger(errors),
+      },
+    });
+
+    const loaded = registry.plugins.find((entry) => entry.id === "http-handler-legacy");
+    expect(loaded?.status).toBe("error");
+    expect(loaded?.error).toContain("api.registerHttpHandler(...) was removed");
+    expect(loaded?.error).toContain("api.registerHttpRoute(...)");
+    expect(loaded?.error).toContain("registerPluginHttpRoute(...)");
+    expect(
+      registry.diagnostics.some((diag) =>
+        String(diag.message).includes("api.registerHttpHandler(...) was removed"),
+      ),
+    ).toBe(true);
+    expect(errors.some((entry) => entry.includes("api.registerHttpHandler(...) was removed"))).toBe(
+      true,
+    );
+  });
+
+  it("does not rewrite unrelated registerHttpHandler helper failures", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "http-handler-local-helper",
+      filename: "http-handler-local-helper.cjs",
+      body: `module.exports = { id: "http-handler-local-helper", register() {
+  const registerHttpHandler = undefined;
+  registerHttpHandler();
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["http-handler-local-helper"],
+      },
+    });
+
+    const loaded = registry.plugins.find((entry) => entry.id === "http-handler-local-helper");
+    expect(loaded?.status).toBe("error");
+    expect(loaded?.error).not.toContain("api.registerHttpHandler(...) was removed");
+  });
+
   it("rejects plugin http routes missing explicit auth", () => {
     useNoBundledPlugins();
     const plugin = writePlugin({
@@ -662,8 +758,61 @@ describe("loadIronCliwPlugins", () => {
     ).toBe(true);
   });
 
+  it("rejects mixed-auth overlapping http routes", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "http-route-overlap",
+      filename: "http-route-overlap.cjs",
+      body: `module.exports = { id: "http-route-overlap", register(api) {
+  api.registerHttpRoute({ path: "/plugin/secure", auth: "gateway", match: "prefix", handler: async () => true });
+  api.registerHttpRoute({ path: "/plugin/secure/report", auth: "plugin", match: "exact", handler: async () => true });
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["http-route-overlap"],
+      },
+    });
+
+    const routes = registry.httpRoutes.filter((entry) => entry.pluginId === "http-route-overlap");
+    expect(routes).toHaveLength(1);
+    expect(routes[0]?.path).toBe("/plugin/secure");
+    expect(
+      registry.diagnostics.some((diag) =>
+        String(diag.message).includes("http route overlap rejected"),
+      ),
+    ).toBe(true);
+  });
+
+  it("allows same-auth overlapping http routes", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "http-route-overlap-same-auth",
+      filename: "http-route-overlap-same-auth.cjs",
+      body: `module.exports = { id: "http-route-overlap-same-auth", register(api) {
+  api.registerHttpRoute({ path: "/plugin/public", auth: "plugin", match: "prefix", handler: async () => true });
+  api.registerHttpRoute({ path: "/plugin/public/report", auth: "plugin", match: "exact", handler: async () => true });
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["http-route-overlap-same-auth"],
+      },
+    });
+
+    const routes = registry.httpRoutes.filter(
+      (entry) => entry.pluginId === "http-route-overlap-same-auth",
+    );
+    expect(routes).toHaveLength(2);
+    expect(registry.diagnostics).toEqual([]);
+  });
+
   it("respects explicit disable in config", () => {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
     const plugin = writePlugin({
       id: "config-disable",
       body: `module.exports = { id: "config-disable", register() {} };`,
@@ -685,8 +834,124 @@ describe("loadIronCliwPlugins", () => {
     expect(disabled?.status).toBe("disabled");
   });
 
+  it("blocks before_prompt_build but preserves legacy model overrides when prompt injection is disabled", async () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "hook-policy",
+      filename: "hook-policy.cjs",
+      body: `module.exports = { id: "hook-policy", register(api) {
+  api.on("before_prompt_build", () => ({ prependContext: "prepend" }));
+  api.on("before_agent_start", () => ({
+    prependContext: "legacy",
+    modelOverride: "gpt-4o",
+    providerOverride: "anthropic",
+  }));
+  api.on("before_model_resolve", () => ({ providerOverride: "openai" }));
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["hook-policy"],
+        entries: {
+          "hook-policy": {
+            hooks: {
+              allowPromptInjection: false,
+            },
+          },
+        },
+      },
+    });
+
+    expect(registry.plugins.find((entry) => entry.id === "hook-policy")?.status).toBe("loaded");
+    expect(registry.typedHooks.map((entry) => entry.hookName)).toEqual([
+      "before_agent_start",
+      "before_model_resolve",
+    ]);
+    const runner = createHookRunner(registry);
+    const legacyResult = await runner.runBeforeAgentStart({ prompt: "hello", messages: [] }, {});
+    expect(legacyResult).toEqual({
+      modelOverride: "gpt-4o",
+      providerOverride: "anthropic",
+    });
+    const blockedDiagnostics = registry.diagnostics.filter((diag) =>
+      String(diag.message).includes(
+        "blocked by plugins.entries.hook-policy.hooks.allowPromptInjection=false",
+      ),
+    );
+    expect(blockedDiagnostics).toHaveLength(1);
+    const constrainedDiagnostics = registry.diagnostics.filter((diag) =>
+      String(diag.message).includes(
+        "prompt fields constrained by plugins.entries.hook-policy.hooks.allowPromptInjection=false",
+      ),
+    );
+    expect(constrainedDiagnostics).toHaveLength(1);
+  });
+
+  it("keeps prompt-injection typed hooks enabled by default", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "hook-policy-default",
+      filename: "hook-policy-default.cjs",
+      body: `module.exports = { id: "hook-policy-default", register(api) {
+  api.on("before_prompt_build", () => ({ prependContext: "prepend" }));
+  api.on("before_agent_start", () => ({ prependContext: "legacy" }));
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["hook-policy-default"],
+      },
+    });
+
+    expect(registry.typedHooks.map((entry) => entry.hookName)).toEqual([
+      "before_prompt_build",
+      "before_agent_start",
+    ]);
+  });
+
+  it("ignores unknown typed hooks from plugins and keeps loading", () => {
+    useNoBundledPlugins();
+    const plugin = writePlugin({
+      id: "hook-unknown",
+      filename: "hook-unknown.cjs",
+      body: `module.exports = { id: "hook-unknown", register(api) {
+  api.on("totally_unknown_hook_name", () => ({ foo: "bar" }));
+  api.on(123, () => ({ foo: "baz" }));
+  api.on("before_model_resolve", () => ({ providerOverride: "openai" }));
+} };`,
+    });
+
+    const registry = loadRegistryFromSinglePlugin({
+      plugin,
+      pluginConfig: {
+        allow: ["hook-unknown"],
+      },
+    });
+
+    expect(registry.plugins.find((entry) => entry.id === "hook-unknown")?.status).toBe("loaded");
+    expect(registry.typedHooks.map((entry) => entry.hookName)).toEqual(["before_model_resolve"]);
+    const unknownHookDiagnostics = registry.diagnostics.filter((diag) =>
+      String(diag.message).includes('unknown typed hook "'),
+    );
+    expect(unknownHookDiagnostics).toHaveLength(2);
+    expect(
+      unknownHookDiagnostics.some((diag) =>
+        String(diag.message).includes('unknown typed hook "totally_unknown_hook_name" ignored'),
+      ),
+    ).toBe(true);
+    expect(
+      unknownHookDiagnostics.some((diag) =>
+        String(diag.message).includes('unknown typed hook "123" ignored'),
+      ),
+    ).toBe(true);
+  });
+
   it("enforces memory slot selection", () => {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
     const memoryA = writePlugin({
       id: "memory-a",
       body: `module.exports = { id: "memory-a", kind: "memory", register() {} };`,
@@ -731,7 +996,7 @@ describe("loadIronCliwPlugins", () => {
       body: `module.exports = { id: "memory-b", kind: "memory", register() {} };`,
     });
     fs.writeFileSync(
-      path.join(memoryADir, "IronCliw.plugin.json"),
+      path.join(memoryADir, "ironcliw.plugin.json"),
       JSON.stringify(
         {
           id: "memory-a",
@@ -744,7 +1009,7 @@ describe("loadIronCliwPlugins", () => {
       "utf-8",
     );
     fs.writeFileSync(
-      path.join(memoryBDir, "IronCliw.plugin.json"),
+      path.join(memoryBDir, "ironcliw.plugin.json"),
       JSON.stringify(
         {
           id: "memory-b",
@@ -756,7 +1021,7 @@ describe("loadIronCliwPlugins", () => {
       ),
       "utf-8",
     );
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
 
     const registry = loadIronCliwPlugins({
       cache: false,
@@ -780,7 +1045,7 @@ describe("loadIronCliwPlugins", () => {
   });
 
   it("disables memory plugins when slot is none", () => {
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = "/nonexistent/bundled/plugins";
     const memory = writePlugin({
       id: "memory-off",
       body: `module.exports = { id: "memory-off", kind: "memory", register() {} };`,
@@ -808,7 +1073,7 @@ describe("loadIronCliwPlugins", () => {
       dir: bundledDir,
       filename: "shadow.cjs",
     });
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
 
     const override = writePlugin({
       id: "shadow",
@@ -842,10 +1107,10 @@ describe("loadIronCliwPlugins", () => {
       dir: bundledDir,
       filename: "index.cjs",
     });
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
 
     const stateDir = makeTempDir();
-    withEnv({ IronCliw_STATE_DIR: stateDir, CLAWDBOT_STATE_DIR: undefined }, () => {
+    withEnv({ IRONCLIW_STATE_DIR: stateDir, CLAWDBOT_STATE_DIR: undefined }, () => {
       const globalDir = path.join(stateDir, "extensions", "feishu");
       fs.mkdirSync(globalDir, { recursive: true });
       writePlugin({
@@ -900,7 +1165,7 @@ describe("loadIronCliwPlugins", () => {
   it("warns when loaded non-bundled plugin has no install/load-path provenance", () => {
     useNoBundledPlugins();
     const stateDir = makeTempDir();
-    withEnv({ IronCliw_STATE_DIR: stateDir, CLAWDBOT_STATE_DIR: undefined }, () => {
+    withEnv({ IRONCLIW_STATE_DIR: stateDir, CLAWDBOT_STATE_DIR: undefined }, () => {
       const globalDir = path.join(stateDir, "extensions", "rogue");
       fs.mkdirSync(globalDir, { recursive: true });
       writePlugin({
@@ -1025,7 +1290,7 @@ describe("loadIronCliwPlugins", () => {
       throw err;
     }
 
-    process.env.IronCliw_BUNDLED_PLUGINS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = bundledDir;
     const registry = loadIronCliwPlugins({
       cache: false,
       workspaceDir: bundledDir,
@@ -1077,27 +1342,49 @@ describe("loadIronCliwPlugins", () => {
     expect(record?.status).toBe("loaded");
   });
 
-  it("supports legacy plugins importing monolithic plugin-sdk root", () => {
+  it("supports legacy plugins importing monolithic plugin-sdk root", async () => {
     useNoBundledPlugins();
     const plugin = writePlugin({
       id: "legacy-root-import",
       filename: "legacy-root-import.cjs",
       body: `module.exports = {
   id: "legacy-root-import",
-  configSchema: (require("IronCliw/plugin-sdk").emptyPluginConfigSchema)(),
+  configSchema: (require("ironcliw/plugin-sdk").emptyPluginConfigSchema)(),
   register() {},
 };`,
     });
 
-    const registry = loadRegistryFromSinglePlugin({
-      plugin,
-      pluginConfig: {
-        allow: ["legacy-root-import"],
-      },
-    });
+    const loaderModuleUrl = pathToFileURL(
+      path.join(process.cwd(), "src", "plugins", "loader.ts"),
+    ).href;
+    const script = `
+      import { loadIronCliwPlugins } from ${JSON.stringify(loaderModuleUrl)};
+      const registry = loadIronCliwPlugins({
+        cache: false,
+        workspaceDir: ${JSON.stringify(plugin.dir)},
+        config: {
+          plugins: {
+            load: { paths: [${JSON.stringify(plugin.file)}] },
+            allow: ["legacy-root-import"],
+          },
+        },
+      });
+      const record = registry.plugins.find((entry) => entry.id === "legacy-root-import");
+      if (!record || record.status !== "loaded") {
+        console.error(record?.error ?? "legacy-root-import missing");
+        process.exit(1);
+      }
+    `;
 
-    const record = registry.plugins.find((entry) => entry.id === "legacy-root-import");
-    expect(record?.status).toBe("loaded");
+    execFileSync(process.execPath, ["--import", "tsx", "--input-type=module", "-e", script], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        IRONCLIW_BUNDLED_PLUGINS_DIR: "/nonexistent/bundled/plugins",
+      },
+      encoding: "utf-8",
+      stdio: "pipe",
+    });
   });
 
   it("prefers dist plugin-sdk alias when loader runs from dist", () => {
@@ -1111,10 +1398,59 @@ describe("loadIronCliwPlugins", () => {
     expect(resolved).toBe(distFile);
   });
 
+  it("prefers dist candidates first for production src runtime", () => {
+    const { root, srcFile, distFile } = createPluginSdkAliasFixture();
+
+    const candidates = withEnv({ NODE_ENV: "production", VITEST: undefined }, () =>
+      __testing.listPluginSdkAliasCandidates({
+        srcFile: "index.ts",
+        distFile: "index.js",
+        modulePath: path.join(root, "src", "plugins", "loader.ts"),
+      }),
+    );
+
+    expect(candidates.indexOf(distFile)).toBeLessThan(candidates.indexOf(srcFile));
+  });
+
   it("prefers src plugin-sdk alias when loader runs from src in non-production", () => {
     const { root, srcFile } = createPluginSdkAliasFixture();
 
     const resolved = withEnv({ NODE_ENV: undefined }, () =>
+      __testing.resolvePluginSdkAliasFile({
+        srcFile: "index.ts",
+        distFile: "index.js",
+        modulePath: path.join(root, "src", "plugins", "loader.ts"),
+      }),
+    );
+    expect(resolved).toBe(srcFile);
+  });
+
+  it("prefers src candidates first for non-production src runtime", () => {
+    const { root, srcFile, distFile } = createPluginSdkAliasFixture();
+
+    const candidates = withEnv({ NODE_ENV: undefined }, () =>
+      __testing.listPluginSdkAliasCandidates({
+        srcFile: "index.ts",
+        distFile: "index.js",
+        modulePath: path.join(root, "src", "plugins", "loader.ts"),
+      }),
+    );
+
+    expect(candidates.indexOf(srcFile)).toBeLessThan(candidates.indexOf(distFile));
+  });
+
+  it("derives plugin-sdk subpaths from package exports", () => {
+    const subpaths = __testing.listPluginSdkExportedSubpaths();
+    expect(subpaths).toContain("compat");
+    expect(subpaths).toContain("telegram");
+    expect(subpaths).not.toContain("root-alias");
+  });
+
+  it("falls back to src plugin-sdk alias when dist is missing in production", () => {
+    const { root, srcFile, distFile } = createPluginSdkAliasFixture();
+    fs.rmSync(distFile);
+
+    const resolved = withEnv({ NODE_ENV: "production", VITEST: undefined }, () =>
       __testing.resolvePluginSdkAliasFile({
         srcFile: "index.ts",
         distFile: "index.js",

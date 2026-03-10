@@ -77,7 +77,7 @@ vi.mock("node:child_process", async (importOriginal) => {
   };
 });
 
-vi.mock("../infra/tmp-IronCliw-dir.js", () => ({
+vi.mock("../infra/tmp-ironcliw-dir.js", () => ({
   resolvePreferredIronCliwTmpDir: () => "/tmp",
 }));
 

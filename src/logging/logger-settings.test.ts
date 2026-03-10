@@ -24,10 +24,10 @@ beforeAll(async () => {
 });
 
 beforeEach(() => {
-  originalTestFileLog = process.env.IronCliw_TEST_FILE_LOG;
-  originalIronCliwLogLevel = process.env.IronCliw_LOG_LEVEL;
-  delete process.env.IronCliw_TEST_FILE_LOG;
-  delete process.env.IronCliw_LOG_LEVEL;
+  originalTestFileLog = process.env.IRONCLIW_TEST_FILE_LOG;
+  originalIronCliwLogLevel = process.env.IRONCLIW_LOG_LEVEL;
+  delete process.env.IRONCLIW_TEST_FILE_LOG;
+  delete process.env.IRONCLIW_LOG_LEVEL;
   readLoggingConfigMock.mockClear();
   fallbackRequireMock.mockClear();
   logging.resetLogger();
@@ -36,14 +36,14 @@ beforeEach(() => {
 
 afterEach(() => {
   if (originalTestFileLog === undefined) {
-    delete process.env.IronCliw_TEST_FILE_LOG;
+    delete process.env.IRONCLIW_TEST_FILE_LOG;
   } else {
-    process.env.IronCliw_TEST_FILE_LOG = originalTestFileLog;
+    process.env.IRONCLIW_TEST_FILE_LOG = originalTestFileLog;
   }
   if (originalIronCliwLogLevel === undefined) {
-    delete process.env.IronCliw_LOG_LEVEL;
+    delete process.env.IRONCLIW_LOG_LEVEL;
   } else {
-    process.env.IronCliw_LOG_LEVEL = originalIronCliwLogLevel;
+    process.env.IRONCLIW_LOG_LEVEL = originalIronCliwLogLevel;
   }
   logging.resetLogger();
   logging.setLoggerOverride(null);
@@ -59,7 +59,7 @@ describe("getResolvedLoggerSettings", () => {
   });
 
   it("reads logging config when test file logging is explicitly enabled", () => {
-    process.env.IronCliw_TEST_FILE_LOG = "1";
+    process.env.IRONCLIW_TEST_FILE_LOG = "1";
     const settings = logging.getResolvedLoggerSettings();
     expect(settings.level).toBe("info");
   });

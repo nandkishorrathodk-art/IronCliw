@@ -11,7 +11,7 @@ import { ensureAuthProfileStore, markAuthProfileUsed } from "./auth-profiles.js"
 
 describe("auth profile runtime snapshot persistence", () => {
   it("does not write resolved plaintext keys during usage updates", async () => {
-    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-auth-runtime-save-"));
+    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-auth-runtime-save-"));
     const agentDir = path.join(stateDir, "agents", "main", "agent");
     const authPath = path.join(agentDir, "auth-profiles.json");
     try {
@@ -37,7 +37,7 @@ describe("auth profile runtime snapshot persistence", () => {
 
       const snapshot = await prepareSecretsRuntimeSnapshot({
         config: {},
-        env: { OPENAI_API_KEY: "sk-runtime-openai" },
+        env: { OPENAI_API_KEY: "sk-runtime-openai" }, // pragma: allowlist secret
         agentDirs: [agentDir],
       });
       activateSecretsRuntimeSnapshot(snapshot);

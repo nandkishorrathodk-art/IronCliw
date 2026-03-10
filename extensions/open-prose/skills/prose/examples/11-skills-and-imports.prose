@@ -25,4 +25,3 @@ session: researcher
 # Documentation phase
 session: documenter
   prompt: "Create a technical summary of the research findings"
-

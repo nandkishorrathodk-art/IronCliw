@@ -195,7 +195,7 @@ export async function maybeRepairSandboxImages(
       "",
       "Options:",
       "- Install Docker and restart the gateway",
-      "- Disable sandbox mode: IronCliw config set agents.defaults.sandbox.mode off",
+      "- Disable sandbox mode: ironcliw config set agents.defaults.sandbox.mode off",
     ];
     note(lines.join("\n"), "Sandbox");
     return cfg;

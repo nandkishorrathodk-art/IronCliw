@@ -7,7 +7,7 @@ const visionEngine = new VisionEngine();
 export const visionHandlers: GatewayRequestHandlers = {
   "vision.analyze": async ({ params, respond }) => {
     const { imagePath } = params as { imagePath: string };
-    
+
     if (!imagePath) {
       respond(false, undefined, errorShape(ErrorCodes.INVALID_REQUEST, "imagePath is required"));
       return;
@@ -27,5 +27,5 @@ export const visionHandlers: GatewayRequestHandlers = {
     } catch (err: unknown) {
       respond(false, undefined, errorShape(ErrorCodes.UNAVAILABLE, (err as Error).message));
     }
-  }
+  },
 };

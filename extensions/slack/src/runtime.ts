@@ -1,14 +1,6 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/slack";
+import { createPluginRuntimeStore } from "ironcliw/plugin-sdk";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/slack";
 
-let runtime: PluginRuntime | null = null;
-
-export function setSlackRuntime(next: PluginRuntime) {
-  runtime = next;
-}
-
-export function getSlackRuntime(): PluginRuntime {
-  if (!runtime) {
-    throw new Error("Slack runtime not initialized");
-  }
-  return runtime;
-}
+const { setRuntime: setSlackRuntime, getRuntime: getSlackRuntime } =
+  createPluginRuntimeStore<PluginRuntime>("Slack runtime not initialized");
+export { getSlackRuntime, setSlackRuntime };

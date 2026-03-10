@@ -30,7 +30,7 @@ type SandboxExplainOptions = {
   json: boolean;
 };
 
-const SANDBOX_DOCS_URL = "https://docs.IronCliw.ai/sandbox";
+const SANDBOX_DOCS_URL = "https://docs.ironcliw.ai/sandbox";
 
 function normalizeExplainSessionKey(params: {
   cfg: IronCliwConfig;
@@ -331,7 +331,7 @@ export async function sandboxExplainCommand(
     lines.push(`  - ${key}`);
   }
   lines.push("");
-  lines.push(`${key("Docs:")} ${formatDocsLink("/sandbox", "docs.IronCliw.ai/sandbox")}`);
+  lines.push(`${key("Docs:")} ${formatDocsLink("/sandbox", "docs.ironcliw.ai/sandbox")}`);
 
   runtime.log(`${lines.join("\n")}\n`);
 }

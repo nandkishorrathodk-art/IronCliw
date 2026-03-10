@@ -32,12 +32,12 @@ describe("resolveGatewayLaunchAgentLabel", () => {
   it("returns default label when no profile is set", () => {
     const result = resolveGatewayLaunchAgentLabel();
     expect(result).toBe(GATEWAY_LAUNCH_AGENT_LABEL);
-    expect(result).toBe("ai.IronCliw.gateway");
+    expect(result).toBe("ai.ironcliw.gateway");
   });
 
   it("returns profile-specific label when profile is set", () => {
     const result = resolveGatewayLaunchAgentLabel("dev");
-    expect(result).toBe("ai.IronCliw.dev");
+    expect(result).toBe("ai.ironcliw.dev");
   });
 });
 
@@ -45,12 +45,12 @@ describe("resolveGatewaySystemdServiceName", () => {
   it("returns default service name when no profile is set", () => {
     const result = resolveGatewaySystemdServiceName();
     expect(result).toBe(GATEWAY_SYSTEMD_SERVICE_NAME);
-    expect(result).toBe("IronCliw-gateway");
+    expect(result).toBe("ironcliw-gateway");
   });
 
   it("returns profile-specific service name when profile is set", () => {
     const result = resolveGatewaySystemdServiceName("dev");
-    expect(result).toBe("IronCliw-gateway-dev");
+    expect(result).toBe("ironcliw-gateway-dev");
   });
 });
 
@@ -114,7 +114,7 @@ describe("resolveGatewayServiceDescription", () => {
   it("prefers explicit description override", () => {
     expect(
       resolveGatewayServiceDescription({
-        env: { IronCliw_PROFILE: "work", IronCliw_SERVICE_VERSION: "1.0.0" },
+        env: { IRONCLIW_PROFILE: "work", IRONCLIW_SERVICE_VERSION: "1.0.0" },
         description: "Custom",
       }),
     ).toBe("Custom");
@@ -123,8 +123,8 @@ describe("resolveGatewayServiceDescription", () => {
   it("resolves version from explicit environment map", () => {
     expect(
       resolveGatewayServiceDescription({
-        env: { IronCliw_PROFILE: "work", IronCliw_SERVICE_VERSION: "local" },
-        environment: { IronCliw_SERVICE_VERSION: "remote" },
+        env: { IRONCLIW_PROFILE: "work", IRONCLIW_SERVICE_VERSION: "local" },
+        environment: { IRONCLIW_SERVICE_VERSION: "remote" },
       }),
     ).toBe("IronCliw Gateway (profile: work, vremote)");
   });

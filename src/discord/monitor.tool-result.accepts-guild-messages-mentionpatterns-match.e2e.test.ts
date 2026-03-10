@@ -123,10 +123,10 @@ function createDefaultThreadConfig(): LoadedConfig {
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: "/tmp/IronCliw",
+        workspace: "/tmp/ironcliw",
       },
     },
-    session: { store: "/tmp/IronCliw-sessions.json" },
+    session: { store: "/tmp/ironcliw-sessions.json" },
     messages: { responsePrefix: "PFX" },
     channels: {
       discord: {
@@ -155,10 +155,10 @@ function createMentionRequiredGuildConfig(
     agents: {
       defaults: {
         model: "anthropic/claude-opus-4-5",
-        workspace: "/tmp/IronCliw",
+        workspace: "/tmp/ironcliw",
       },
     },
-    session: { store: "/tmp/IronCliw-sessions.json" },
+    session: { store: "/tmp/ironcliw-sessions.json" },
     channels: { discord: createGuildChannelPolicyConfig(true) },
     ...(params.messages ? { messages: params.messages } : {}),
   } as LoadedConfig;
@@ -287,7 +287,7 @@ describe("discord tool result dispatch", () => {
       const cfg = createMentionRequiredGuildConfig({
         messages: {
           responsePrefix: "PFX",
-          groupChat: { mentionPatterns: ["\\bIronCliw\\b"] },
+          groupChat: { mentionPatterns: ["\\bironcliw\\b"] },
         },
       });
 
@@ -295,7 +295,7 @@ describe("discord tool result dispatch", () => {
       const client = createGuildTextClient();
 
       await handler(
-        createGuildMessageEvent({ messageId: "m2", content: "IronCliw: hello" }),
+        createGuildMessageEvent({ messageId: "m2", content: "ironcliw: hello" }),
         client,
       );
 
@@ -315,10 +315,10 @@ describe("discord tool result dispatch", () => {
           defaults: {
             model: "anthropic/claude-opus-4-5",
             humanDelay: { mode: "off" },
-            workspace: "/tmp/IronCliw",
+            workspace: "/tmp/ironcliw",
           },
         },
-        session: { store: "/tmp/IronCliw-sessions.json" },
+        session: { store: "/tmp/ironcliw-sessions.json" },
         channels: {
           discord: { dm: { enabled: true, policy: "open" } },
         },

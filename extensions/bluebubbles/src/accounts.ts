@@ -1,9 +1,5 @@
-import {
-  DEFAULT_ACCOUNT_ID,
-  normalizeAccountId,
-  normalizeOptionalAccountId,
-} from "IronCliw/plugin-sdk/account-id";
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
+import { createAccountListHelpers, type IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import { hasConfiguredSecretInput, normalizeSecretInputString } from "./secret-input.js";
 import { normalizeBlueBubblesServerUrl, type BlueBubblesAccountConfig } from "./types.js";
 
@@ -16,36 +12,11 @@ export type ResolvedBlueBubblesAccount = {
   baseUrl?: string;
 };
 
-function listConfiguredAccountIds(cfg: IronCliwConfig): string[] {
-  const accounts = cfg.channels?.bluebubbles?.accounts;
-  if (!accounts || typeof accounts !== "object") {
-    return [];
-  }
-  return Object.keys(accounts).filter(Boolean);
-}
-
-export function listBlueBubblesAccountIds(cfg: IronCliwConfig): string[] {
-  const ids = listConfiguredAccountIds(cfg);
-  if (ids.length === 0) {
-    return [DEFAULT_ACCOUNT_ID];
-  }
-  return ids.toSorted((a, b) => a.localeCompare(b));
-}
-
-export function resolveDefaultBlueBubblesAccountId(cfg: IronCliwConfig): string {
-  const preferred = normalizeOptionalAccountId(cfg.channels?.bluebubbles?.defaultAccount);
-  if (
-    preferred &&
-    listBlueBubblesAccountIds(cfg).some((accountId) => normalizeAccountId(accountId) === preferred)
-  ) {
-    return preferred;
-  }
-  const ids = listBlueBubblesAccountIds(cfg);
-  if (ids.includes(DEFAULT_ACCOUNT_ID)) {
-    return DEFAULT_ACCOUNT_ID;
-  }
-  return ids[0] ?? DEFAULT_ACCOUNT_ID;
-}
+const {
+  listAccountIds: listBlueBubblesAccountIds,
+  resolveDefaultAccountId: resolveDefaultBlueBubblesAccountId,
+} = createAccountListHelpers("bluebubbles");
+export { listBlueBubblesAccountIds, resolveDefaultBlueBubblesAccountId };
 
 function resolveAccountConfig(
   cfg: IronCliwConfig,

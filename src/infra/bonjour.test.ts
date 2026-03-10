@@ -20,7 +20,7 @@ function enableAdvertiserUnitMode(hostname = "test-host") {
   delete process.env.VITEST;
   process.env.NODE_ENV = "development";
   vi.spyOn(os, "hostname").mockReturnValue(hostname);
-  process.env.IronCliw_MDNS_HOSTNAME = hostname;
+  process.env.IRONCLIW_MDNS_HOSTNAME = hostname;
 }
 
 function mockCiaoService(params?: {
@@ -129,12 +129,12 @@ describe("gateway bonjour advertiser", () => {
       gatewayPort: 18789,
       sshPort: 2222,
       tailnetDns: "host.tailnet.ts.net",
-      cliPath: "/opt/homebrew/bin/IronCliw",
+      cliPath: "/opt/homebrew/bin/ironcliw",
     });
 
     expect(createService).toHaveBeenCalledTimes(1);
     const [gatewayCall] = createService.mock.calls as Array<[Record<string, unknown>]>;
-    expect(gatewayCall?.[0]?.type).toBe("IronCliw-gw");
+    expect(gatewayCall?.[0]?.type).toBe("ironcliw-gw");
     const gatewayType = asString(gatewayCall?.[0]?.type, "");
     expect(gatewayType.length).toBeLessThanOrEqual(15);
     expect(gatewayCall?.[0]?.port).toBe(18789);
@@ -144,7 +144,7 @@ describe("gateway bonjour advertiser", () => {
     expect((gatewayCall?.[0]?.txt as Record<string, string>)?.gatewayPort).toBe("18789");
     expect((gatewayCall?.[0]?.txt as Record<string, string>)?.sshPort).toBe("2222");
     expect((gatewayCall?.[0]?.txt as Record<string, string>)?.cliPath).toBe(
-      "/opt/homebrew/bin/IronCliw",
+      "/opt/homebrew/bin/ironcliw",
     );
     expect((gatewayCall?.[0]?.txt as Record<string, string>)?.transport).toBe("gateway");
 
@@ -168,7 +168,7 @@ describe("gateway bonjour advertiser", () => {
     const started = await startGatewayBonjourAdvertiser({
       gatewayPort: 18789,
       sshPort: 2222,
-      cliPath: "/opt/homebrew/bin/IronCliw",
+      cliPath: "/opt/homebrew/bin/ironcliw",
       minimal: true,
     });
 
@@ -300,10 +300,10 @@ describe("gateway bonjour advertiser", () => {
     });
 
     const [gatewayCall] = createService.mock.calls as Array<[ServiceCall]>;
-    expect(gatewayCall?.[0]?.name).toBe("IronCliw (IronCliw)");
+    expect(gatewayCall?.[0]?.name).toBe("ironcliw (IronCliw)");
     expect(gatewayCall?.[0]?.domain).toBe("local");
-    expect(gatewayCall?.[0]?.hostname).toBe("IronCliw");
-    expect((gatewayCall?.[0]?.txt as Record<string, string>)?.lanHost).toBe("IronCliw.local");
+    expect(gatewayCall?.[0]?.hostname).toBe("ironcliw");
+    expect((gatewayCall?.[0]?.txt as Record<string, string>)?.lanHost).toBe("ironcliw.local");
 
     await started.stop();
   });

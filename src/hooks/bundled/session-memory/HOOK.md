@@ -1,10 +1,10 @@
 ---
 name: session-memory
 description: "Save session context to memory when /new or /reset command is issued"
-homepage: https://docs.IronCliw.ai/automation/hooks#session-memory
+homepage: https://docs.ironcliw.ai/automation/hooks#session-memory
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "💾",
         "events": ["command:new", "command:reset"],
@@ -82,7 +82,7 @@ Example configuration:
 
 The hook automatically:
 
-- Uses your workspace directory (`~/.IronCliw/workspace` by default)
+- Uses your workspace directory (`~/.ironcliw/workspace` by default)
 - Uses your configured LLM for slug generation
 - Falls back to timestamp slugs if LLM is unavailable
 
@@ -91,7 +91,7 @@ The hook automatically:
 To disable this hook:
 
 ```bash
-IronCliw hooks disable session-memory
+ironcliw hooks disable session-memory
 ```
 
 Or remove it from your config:

@@ -1,5 +1,5 @@
-import type { PluginRuntime } from "IronCliw/plugin-sdk/test-utils";
-import { removeAckReactionAfterReply, shouldAckReaction } from "IronCliw/plugin-sdk/test-utils";
+import type { PluginRuntime } from "ironcliw/plugin-sdk/test-utils";
+import { removeAckReactionAfterReply, shouldAckReaction } from "ironcliw/plugin-sdk/test-utils";
 import { vi } from "vitest";
 
 type DeepPartial<T> = {
@@ -123,6 +123,17 @@ export function createPluginRuntimeMock(overrides: DeepPartial<PluginRuntime> = 
         })) as unknown as PluginRuntime["channel"]["reply"]["resolveEnvelopeFormatOptions"],
       },
       routing: {
+        buildAgentSessionKey: vi.fn(
+          ({
+            agentId,
+            channel,
+            peer,
+          }: {
+            agentId: string;
+            channel: string;
+            peer?: { kind?: string; id?: string };
+          }) => `agent:${agentId}:${channel}:${peer?.kind ?? "direct"}:${peer?.id ?? "peer"}`,
+        ) as unknown as PluginRuntime["channel"]["routing"]["buildAgentSessionKey"],
         resolveAgentRoute: vi.fn(() => ({
           agentId: "main",
           accountId: "default",
@@ -240,7 +251,14 @@ export function createPluginRuntimeMock(overrides: DeepPartial<PluginRuntime> = 
       })),
     },
     state: {
-      resolveStateDir: vi.fn(() => "/tmp/IronCliw"),
+      resolveStateDir: vi.fn(() => "/tmp/ironcliw"),
+    },
+    subagent: {
+      run: vi.fn(),
+      waitForRun: vi.fn(),
+      getSessionMessages: vi.fn(),
+      getSession: vi.fn(),
+      deleteSession: vi.fn(),
     },
   };
 

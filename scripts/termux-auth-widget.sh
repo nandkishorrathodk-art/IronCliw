@@ -6,25 +6,25 @@
 # It's designed for quick one-tap checking from phone home screen.
 
 # Server hostname (via Tailscale or SSH config)
-SERVER="${IronCliw_SERVER:-${CLAWDBOT_SERVER:-l36}}"
+SERVER="${IRONCLIW_SERVER:-${CLAWDBOT_SERVER:-l36}}"
 
 # Check auth status
 termux-toast "Checking IronCliw auth..."
 
-STATUS=$(ssh "$SERVER" '$HOME/IronCliw/scripts/claude-auth-status.sh simple' 2>&1)
+STATUS=$(ssh "$SERVER" '$HOME/ironcliw/scripts/claude-auth-status.sh simple' 2>&1)
 EXIT_CODE=$?
 
 case "$STATUS" in
     OK)
         # Get remaining time
-        DETAILS=$(ssh "$SERVER" '$HOME/IronCliw/scripts/claude-auth-status.sh json' 2>&1)
+        DETAILS=$(ssh "$SERVER" '$HOME/ironcliw/scripts/claude-auth-status.sh json' 2>&1)
         HOURS=$(echo "$DETAILS" | jq -r '.claude_code.status' | grep -oP '\d+(?=h)' || echo "?")
 
         termux-vibrate -d 50
         termux-toast "Auth OK (${HOURS}h left)"
         ;;
 
-    CLAUDE_EXPIRING|IronCliw_EXPIRING|CLAWDBOT_EXPIRING)
+    CLAUDE_EXPIRING|IRONCLIW_EXPIRING|CLAWDBOT_EXPIRING)
         termux-vibrate -d 100
 
         # Ask if user wants to re-auth now
@@ -43,7 +43,7 @@ case "$STATUS" in
 
                 # Open terminal to server
                 am start -n com.termux/com.termux.app.TermuxActivity -a android.intent.action.MAIN
-                termux-toast "Run: ssh $SERVER '$HOME/IronCliw/scripts/mobile-reauth.sh'"
+                termux-toast "Run: ssh $SERVER '$HOME/ironcliw/scripts/mobile-reauth.sh'"
                 ;;
             *)
                 termux-toast "Reminder: Auth expires soon"
@@ -51,7 +51,7 @@ case "$STATUS" in
         esac
         ;;
 
-    CLAUDE_EXPIRED|IronCliw_EXPIRED|CLAWDBOT_EXPIRED)
+    CLAUDE_EXPIRED|IRONCLIW_EXPIRED|CLAWDBOT_EXPIRED)
         termux-vibrate -d 300
 
         CHOICE=$(termux-dialog radio -t "Auth Expired!" -v "Re-auth now,Dismiss")
@@ -66,7 +66,7 @@ case "$STATUS" in
 2. Return here and tap OK to SSH"
 
                 am start -n com.termux/com.termux.app.TermuxActivity -a android.intent.action.MAIN
-                termux-toast "Run: ssh $SERVER '$HOME/IronCliw/scripts/mobile-reauth.sh'"
+                termux-toast "Run: ssh $SERVER '$HOME/ironcliw/scripts/mobile-reauth.sh'"
                 ;;
             *)
                 termux-toast "Warning: IronCliw won't work until re-auth"
@@ -79,4 +79,3 @@ case "$STATUS" in
         termux-toast "Error: $STATUS"
         ;;
 esac
-

@@ -144,8 +144,8 @@ describe("gateway-cli coverage", () => {
       {
         instanceName: "Studio (IronCliw)",
         displayName: "Studio",
-        domain: "IronCliw.internal.",
-        host: "studio.IronCliw.internal",
+        domain: "ironcliw.internal.",
+        host: "studio.ironcliw.internal",
         lanHost: "studio.local",
         tailnetDns: "studio.tailnet.ts.net",
         gatewayPort: 18789,
@@ -237,7 +237,7 @@ describe("gateway-cli coverage", () => {
   });
 
   it("uses env/config port when --port is omitted", async () => {
-    await withEnvOverride({ IronCliw_GATEWAY_PORT: "19001" }, async () => {
+    await withEnvOverride({ IRONCLIW_GATEWAY_PORT: "19001" }, async () => {
       resetRuntimeCapture();
       startGatewayServer.mockClear();
 

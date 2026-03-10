@@ -29,7 +29,7 @@ No external `zca`/`openzca` CLI binary is required.
 ### Option A: install from npm
 
 ```bash
-IronCliw plugins install @IronCliw/zalouser
+ironcliw plugins install @ironcliw/zalouser
 ```
 
 Restart the Gateway afterwards.
@@ -37,7 +37,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev)
 
 ```bash
-IronCliw plugins install ./extensions/zalouser
+ironcliw plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -61,11 +61,11 @@ Channel config lives under `channels.zalouser` (not `plugins.entries.*`):
 ## CLI
 
 ```bash
-IronCliw channels login --channel zalouser
-IronCliw channels logout --channel zalouser
-IronCliw channels status --probe
-IronCliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
-IronCliw directory peers list --channel zalouser --query "name"
+ironcliw channels login --channel zalouser
+ironcliw channels logout --channel zalouser
+ironcliw channels status --probe
+ironcliw message send --channel zalouser --target <threadId> --message "Hello from IronCliw"
+ironcliw directory peers list --channel zalouser --query "name"
 ```
 
 ## Agent tool

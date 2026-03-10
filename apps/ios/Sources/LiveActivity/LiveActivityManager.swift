@@ -7,7 +7,7 @@ import os
 final class LiveActivityManager {
     static let shared = LiveActivityManager()
 
-    private let logger = Logger(subsystem: "ai.IronCliw.ios", category: "LiveActivity")
+    private let logger = Logger(subsystem: "ai.ironcliw.ios", category: "LiveActivity")
     private var currentActivity: Activity<IronCliwActivityAttributes>?
     private var activityStartDate: Date = .now
 

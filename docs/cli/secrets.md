@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `IronCliw secrets` (reload, audit, configure, apply)"
+summary: "CLI reference for `ironcliw secrets` (reload, audit, configure, apply)"
 read_when:
   - Re-resolving secret refs at runtime
   - Auditing plaintext residues and unresolved refs
@@ -7,26 +7,26 @@ read_when:
 title: "secrets"
 ---
 
-# `IronCliw secrets`
+# `ironcliw secrets`
 
-Use `IronCliw secrets` to manage SecretRefs and keep the active runtime snapshot healthy.
+Use `ironcliw secrets` to manage SecretRefs and keep the active runtime snapshot healthy.
 
 Command roles:
 
 - `reload`: gateway RPC (`secrets.reload`) that re-resolves refs and swaps runtime snapshot only on full success (no config writes).
-- `audit`: read-only scan of configuration/auth stores and legacy residues for plaintext, unresolved refs, and precedence drift.
+- `audit`: read-only scan of configuration/auth/generated-model stores and legacy residues for plaintext, unresolved refs, and precedence drift.
 - `configure`: interactive planner for provider setup, target mapping, and preflight (TTY required).
 - `apply`: execute a saved plan (`--dry-run` for validation only), then scrub targeted plaintext residues.
 
 Recommended operator loop:
 
 ```bash
-IronCliw secrets audit --check
-IronCliw secrets configure
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json --dry-run
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json
-IronCliw secrets audit --check
-IronCliw secrets reload
+ironcliw secrets audit --check
+ironcliw secrets configure
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json --dry-run
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json
+ironcliw secrets audit --check
+ironcliw secrets reload
 ```
 
 Exit code note for CI/gates:
@@ -45,8 +45,8 @@ Related:
 Re-resolve secret refs and atomically swap runtime snapshot.
 
 ```bash
-IronCliw secrets reload
-IronCliw secrets reload --json
+ironcliw secrets reload
+ironcliw secrets reload --json
 ```
 
 Notes:
@@ -61,13 +61,18 @@ Scan IronCliw state for:
 
 - plaintext secret storage
 - unresolved refs
-- precedence drift (`auth-profiles.json` credentials shadowing `IronCliw.json` refs)
+- precedence drift (`auth-profiles.json` credentials shadowing `ironcliw.json` refs)
+- generated `agents/*/agent/models.json` residues (provider `apiKey` values and sensitive provider headers)
 - legacy residues (legacy auth store entries, OAuth reminders)
 
+Header residue note:
+
+- Sensitive provider header detection is name-heuristic based (common auth/credential header names and fragments such as `authorization`, `x-api-key`, `token`, `secret`, `password`, and `credential`).
+
 ```bash
-IronCliw secrets audit
-IronCliw secrets audit --check
-IronCliw secrets audit --json
+ironcliw secrets audit
+ironcliw secrets audit --check
+ironcliw secrets audit --json
 ```
 
 Exit behavior:
@@ -90,13 +95,13 @@ Report shape highlights:
 Build provider and SecretRef changes interactively, run preflight, and optionally apply:
 
 ```bash
-IronCliw secrets configure
-IronCliw secrets configure --plan-out /tmp/IronCliw-secrets-plan.json
-IronCliw secrets configure --apply --yes
-IronCliw secrets configure --providers-only
-IronCliw secrets configure --skip-provider-setup
-IronCliw secrets configure --agent ops
-IronCliw secrets configure --json
+ironcliw secrets configure
+ironcliw secrets configure --plan-out /tmp/ironcliw-secrets-plan.json
+ironcliw secrets configure --apply --yes
+ironcliw secrets configure --providers-only
+ironcliw secrets configure --skip-provider-setup
+ironcliw secrets configure --agent ops
+ironcliw secrets configure --json
 ```
 
 Flow:
@@ -115,7 +120,7 @@ Notes:
 
 - Requires an interactive TTY.
 - You cannot combine `--providers-only` with `--skip-provider-setup`.
-- `configure` targets secret-bearing fields in `IronCliw.json` plus `auth-profiles.json` for the selected agent scope.
+- `configure` targets secret-bearing fields in `ironcliw.json` plus `auth-profiles.json` for the selected agent scope.
 - `configure` supports creating new `auth-profiles.json` mappings directly in the picker flow.
 - Canonical supported surface: [SecretRef Credential Surface](/reference/secretref-credential-surface).
 - It performs preflight resolution before apply.
@@ -135,9 +140,9 @@ Exec provider safety note:
 Apply or preflight a plan generated previously:
 
 ```bash
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json --dry-run
-IronCliw secrets apply --from /tmp/IronCliw-secrets-plan.json --json
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json --dry-run
+ironcliw secrets apply --from /tmp/ironcliw-secrets-plan.json --json
 ```
 
 Plan contract details (allowed target paths, validation rules, and failure semantics):
@@ -146,10 +151,10 @@ Plan contract details (allowed target paths, validation rules, and failure seman
 
 What `apply` may update:
 
-- `IronCliw.json` (SecretRef targets + provider upserts/deletes)
+- `ironcliw.json` (SecretRef targets + provider upserts/deletes)
 - `auth-profiles.json` (provider-target scrubbing)
 - legacy `auth.json` residues
-- `~/.IronCliw/.env` known secret keys whose values were migrated
+- `~/.ironcliw/.env` known secret keys whose values were migrated
 
 ## Why no rollback backups
 
@@ -160,9 +165,9 @@ Safety comes from strict preflight + atomic-ish apply with best-effort in-memory
 ## Example
 
 ```bash
-IronCliw secrets audit --check
-IronCliw secrets configure
-IronCliw secrets audit --check
+ironcliw secrets audit --check
+ironcliw secrets configure
+ironcliw secrets audit --check
 ```
 
 If `audit --check` still reports plaintext findings, update the remaining reported target paths and rerun audit.

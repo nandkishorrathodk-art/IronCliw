@@ -1,18 +1,18 @@
 {
-  "name": "@IronCliw/memory-core",
-  "version": "2026.3.2",
+  "name": "@ironcliw/memory-core",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw core memory search plugin",
   "type": "module",
   "peerDependencies": {
-    "IronCliw": "workspace:*"
+    "ironcliw": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "IronCliw": {
+    "ironcliw": {
       "optional": true
     }
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

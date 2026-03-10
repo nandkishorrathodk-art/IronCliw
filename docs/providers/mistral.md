@@ -15,9 +15,9 @@ Mistral can also be used for memory embeddings (`memorySearch.provider = "mistra
 ## CLI setup
 
 ```bash
-IronCliw onboard --auth-choice mistral-api-key
+ironcliw onboard --auth-choice mistral-api-key
 # or non-interactive
-IronCliw onboard --mistral-api-key "$MISTRAL_API_KEY"
+ironcliw onboard --mistral-api-key "$MISTRAL_API_KEY"
 ```
 
 ## Config snippet (LLM provider)

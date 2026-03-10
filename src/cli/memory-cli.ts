@@ -581,11 +581,16 @@ export function registerMemoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw memory status", "Show index and provider status."],
-          ["IronCliw memory index --force", "Force a full reindex."],
-          ['IronCliw memory search --query "deployment notes"', "Search indexed memory entries."],
-          ["IronCliw memory status --json", "Output machine-readable JSON."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.IronCliw.ai/cli/memory")}\n`,
+          ["ironcliw memory status", "Show index and provider status."],
+          ["ironcliw memory status --deep", "Probe embedding provider readiness."],
+          ["ironcliw memory index --force", "Force a full reindex."],
+          ['ironcliw memory search "meeting notes"', "Quick search using positional query."],
+          [
+            'ironcliw memory search --query "deployment" --max-results 20',
+            "Limit results for focused troubleshooting.",
+          ],
+          ["ironcliw memory status --json", "Output machine-readable JSON (good for scripts)."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.ironcliw.ai/cli/memory")}\n`,
     );
 
   memory

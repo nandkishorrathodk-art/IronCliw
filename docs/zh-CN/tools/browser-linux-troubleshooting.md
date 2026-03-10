@@ -18,7 +18,7 @@ x-i18n:
 IronCliw 的浏览器控制服务器无法启动 Chrome/Brave/Edge/Chromium，出现以下错误：
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"IronCliw\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"ironcliw\"."}
 ```
 
 ### 根本原因
@@ -44,7 +44,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-然后更新你的 IronCliw 配置（`~/.IronCliw/IronCliw.json`）：
+然后更新你的 IronCliw 配置（`~/.ironcliw/ironcliw.json`）：
 
 ```json
 {
@@ -79,20 +79,20 @@ sudo apt --fix-broken install -y  # if there are dependency errors
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.IronCliw/browser/IronCliw/user-data \
+  --user-data-dir=$HOME/.ironcliw/browser/ironcliw/user-data \
   about:blank &
 ```
 
 3. 可选创建 systemd 用户服务以自动启动 Chrome：
 
 ```ini
-# ~/.config/systemd/user/IronCliw-browser.service
+# ~/.config/systemd/user/ironcliw-browser.service
 [Unit]
 Description=IronCliw Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.IronCliw/browser/IronCliw/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.ironcliw/browser/ironcliw/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -100,7 +100,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-启用：`systemctl --user enable --now IronCliw-browser.service`
+启用：`systemctl --user enable --now ironcliw-browser.service`
 
 ### 验证浏览器是否工作
 
@@ -134,11 +134,11 @@ curl -s http://127.0.0.1:18791/tabs
 
 修复选项：
 
-1. **使用托管浏览器：** `IronCliw browser start --browser-profile IronCliw`
-   （或设置 `browser.defaultProfile: "IronCliw"`）。
+1. **使用托管浏览器：** `ironcliw browser start --browser-profile ironcliw`
+   （或设置 `browser.defaultProfile: "ironcliw"`）。
 2. **使用扩展中继：** 安装扩展，打开一个标签页，然后点击 IronCliw 扩展图标来附加它。
 
 注意事项：
 
 - `chrome` 配置文件在可能时使用你的**系统默认 Chromium 浏览器**。
-- 本地 `IronCliw` 配置文件自动分配 `cdpPort`/`cdpUrl`；仅为远程 CDP 设置这些。
+- 本地 `ironcliw` 配置文件自动分配 `cdpPort`/`cdpUrl`；仅为远程 CDP 设置这些。

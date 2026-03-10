@@ -1,0 +1,281 @@
+version: '3.8'
+
+# IronCliw Docker Compose - 2x Better Than IronCliw
+# Full stack with all services
+
+services:
+  # Main IronCliw Application
+  ironcliw:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: production
+    image: ironcliw/core:latest
+    container_name: ironcliw-main
+    restart: unless-stopped
+    ports:
+      - "3000:3000"  # Main API
+      - "8080:8080"  # Dashboard
+      - "9090:9090"  # Gateway
+    volumes:
+      - ironcliw-workspace:/app/workspace
+      - ironcliw-logs:/app/logs
+      - ironcliw-config:/app/config
+      - ironcliw-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # For container management
+    environment:
+      - NODE_ENV=production
+      - IRONCLI_WORKSPACE=/app/workspace
+      - IRONCLI_LOGS=/app/logs
+      - IRONCLI_CONFIG=/app/config
+      - IRONCLI_DB_URL=mongodb://mongo:27017/ironcliw
+      - IRONCLI_REDIS_URL=redis://redis:6379
+      - IRONCLI_ENABLE_GPU=false
+    env_file:
+      - ../.env
+    networks:
+      - ironcliw-network
+    depends_on:
+      - mongo
+      - redis
+      - postgres
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # GPU-enabled variant for local AI models
+  ironcliw-gpu:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gpu
+      target: production
+    image: ironcliw/gpu:latest
+    container_name: ironcliw-gpu
+    restart: unless-stopped
+    profiles: ["gpu"]
+    runtime: nvidia
+    ports:
+      - "3001:3000"
+      - "8081:8080"
+    volumes:
+      - ironcliw-workspace:/app/workspace
+      - ironcliw-logs:/app/logs
+      - ironcliw-config:/app/config
+      - ironcliw-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - IRONCLI_ENABLE_GPU=true
+      - NVIDIA_VISIBLE_DEVICES=all
+    env_file:
+      - ../.env
+    networks:
+      - ironcliw-network
+    depends_on:
+      - mongo
+      - redis
+
+  # Web Dashboard (React SPA)
+  dashboard:
+    build:
+      context: ../apps/dashboard
+      dockerfile: Dockerfile
+    image: ironcliw/dashboard:latest
+    container_name: ironcliw-dashboard
+    restart: unless-stopped
+    ports:
+      - "3002:80"
+    environment:
+      - REACT_APP_API_URL=http://ironcliw:3000
+      - REACT_APP_GATEWAY_URL=http://ironcliw:9090
+    networks:
+      - ironcliw-network
+    depends_on:
+      - ironcliw
+
+  # MongoDB for data persistence
+  mongo:
+    image: mongo:7
+    container_name: ironcliw-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ironcliw
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongo_password
+    secrets:
+      - mongo_password
+    networks:
+      - ironcliw-network
+
+  # Redis for caching and pub/sub
+  redis:
+    image: redis:7-alpine
+    container_name: ironcliw-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-ironcliw123}
+    networks:
+      - ironcliw-network
+
+  # PostgreSQL for structured data
+  postgres:
+    image: postgres:16-alpine
+    container_name: ironcliw-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ironcliw
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_DB=ironcliw
+    secrets:
+      - postgres_password
+    networks:
+      - ironcliw-network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: ironcliw-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-cache:/var/cache/nginx
+    networks:
+      - ironcliw-network
+    depends_on:
+      - ironcliw
+      - dashboard
+
+  # Skill Registry Service
+  registry:
+    build:
+      context: ../skills/marketplace
+      dockerfile: Dockerfile
+    image: ironcliw/registry:latest
+    container_name: ironcliw-registry
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - registry-data:/app/data
+    environment:
+      - REGISTRY_DB_URL=mongodb://mongo:27017/registry
+      - REGISTRY_STORAGE_PATH=/app/data
+    networks:
+      - ironcliw-network
+    depends_on:
+      - mongo
+
+  # Monitoring - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ironcliw-prometheus
+    restart: unless-stopped
+    profiles: ["monitoring"]
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - ironcliw-network
+
+  # Monitoring - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ironcliw-grafana
+    restart: unless-stopped
+    profiles: ["monitoring"]
+    ports:
+      - "3003:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana-datasources:/etc/grafana/provisioning/datasources:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD_FILE=/run/secrets/grafana_password
+    secrets:
+      - grafana_password
+    networks:
+      - ironcliw-network
+
+  # Local AI Model Server (Ollama)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ironcliw-ollama
+    restart: unless-stopped
+    profiles: ["local-ai"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    environment:
+      - OLLAMA_ORIGINS=*
+    networks:
+      - ironcliw-network
+
+  # Voice Processing Service
+  voice:
+    build:
+      context: ../src/voice
+      dockerfile: Dockerfile
+    image: ironcliw/voice:latest
+    container_name: ironcliw-voice
+    restart: unless-stopped
+    profiles: ["voice"]
+    ports:
+      - "5000:5000"
+    volumes:
+      - voice-models:/app/models
+    environment:
+      - VOICE_API_KEY=${VOICE_API_KEY}
+      - WHISPER_MODEL=base
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+    networks:
+      - ironcliw-network
+
+volumes:
+  ironcliw-workspace:
+  ironcliw-logs:
+  ironcliw-config:
+  ironcliw-data:
+  mongo-data:
+  redis-data:
+  postgres-data:
+  registry-data:
+  prometheus-data:
+  grafana-data:
+  nginx-cache:
+  ollama-models:
+  voice-models:
+
+networks:
+  ironcliw-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+secrets:
+  mongo_password:
+    file: ./secrets/mongo_password.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  grafana_password:
+    file: ./secrets/grafana_password.txt

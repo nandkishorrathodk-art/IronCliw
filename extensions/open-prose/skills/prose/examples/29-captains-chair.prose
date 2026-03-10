@@ -216,4 +216,3 @@ else:
   output result = session: captain
     prompt: "Summarize what was completed and what issues remain for user attention"
     context: { integration, final_review }
-

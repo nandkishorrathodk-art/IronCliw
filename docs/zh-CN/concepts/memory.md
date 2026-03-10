@@ -30,7 +30,7 @@ IronCliw 记忆是**智能体工作空间中的纯 Markdown 文件**。这些文
   - 精心整理的长期记忆。
   - **仅在主要的私人会话中加载**（绝不在群组上下文中加载）。
 
-这些文件位于工作空间下（`agents.defaults.workspace`，默认 `~/.IronCliw/workspace`）。完整布局参见[智能体工作空间](/concepts/agent-workspace)。
+这些文件位于工作空间下（`agents.defaults.workspace`，默认 `~/.ironcliw/workspace`）。完整布局参见[智能体工作空间](/concepts/agent-workspace)。
 
 ## 何时写入记忆
 
@@ -216,7 +216,7 @@ agents: {
 ### 索引内容（及时机）
 
 - 文件类型：仅 Markdown（`MEMORY.md`、`memory/**/*.md`，以及 `memorySearch.extraPaths` 下的任何 `.md` 文件）。
-- 索引存储：每个智能体的 SQLite 位于 `~/.IronCliw/memory/<agentId>.sqlite`（可通过 `agents.defaults.memorySearch.store.path` 配置，支持 `{agentId}` 令牌）。
+- 索引存储：每个智能体的 SQLite 位于 `~/.ironcliw/memory/<agentId>.sqlite`（可通过 `agents.defaults.memorySearch.store.path` 配置，支持 `{agentId}` 令牌）。
 - 新鲜度：监视器监视 `MEMORY.md`、`memory/` 和 `memorySearch.extraPaths`，标记索引为脏（去抖动 1.5 秒）。同步在会话开始时、搜索时或按间隔安排，并异步运行。会话记录使用增量阈值触发后台同步。
 - 重新索引触发器：索引存储嵌入的**提供商/模型 + 端点指纹 + 分块参数**。如果其中任何一个发生变化，IronCliw 会自动重置并重新索引整个存储。
 
@@ -332,7 +332,7 @@ agents: {
 - `memory_search` 永远不会阻塞索引；在后台同步完成之前，结果可能略有延迟。
 - 结果仍然只包含片段；`memory_get` 仍然仅限于记忆文件。
 - 会话索引按智能体隔离（仅索引该智能体的会话日志）。
-- 会话日志存储在磁盘上（`~/.IronCliw/agents/<agentId>/sessions/*.jsonl`）。任何具有文件系统访问权限的进程/用户都可以读取它们，因此将磁盘访问视为信任边界。对于更严格的隔离，在单独的操作系统用户或主机下运行智能体。
+- 会话日志存储在磁盘上（`~/.ironcliw/agents/<agentId>/sessions/*.jsonl`）。任何具有文件系统访问权限的进程/用户都可以读取它们，因此将磁盘访问视为信任边界。对于更严格的隔离，在单独的操作系统用户或主机下运行智能体。
 
 增量阈值（显示默认值）：
 

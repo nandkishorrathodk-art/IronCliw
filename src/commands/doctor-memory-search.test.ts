@@ -135,8 +135,38 @@ describe("noteMemorySearchHealth", () => {
     await expectNoWarningWithConfiguredRemoteApiKey("openai");
   });
 
+  it("treats SecretRef remote apiKey as configured for explicit provider", async () => {
+    resolveMemorySearchConfig.mockReturnValue({
+      provider: "openai",
+      local: {},
+      remote: {
+        apiKey: { source: "env", provider: "default", id: "OPENAI_API_KEY" },
+      },
+    });
+
+    await noteMemorySearchHealth(cfg, {});
+
+    expect(note).not.toHaveBeenCalled();
+    expect(resolveApiKeyForProvider).not.toHaveBeenCalled();
+  });
+
   it("does not warn in auto mode when remote apiKey is configured", async () => {
     await expectNoWarningWithConfiguredRemoteApiKey("auto");
+  });
+
+  it("treats SecretRef remote apiKey as configured in auto mode", async () => {
+    resolveMemorySearchConfig.mockReturnValue({
+      provider: "auto",
+      local: {},
+      remote: {
+        apiKey: { source: "env", provider: "default", id: "OPENAI_API_KEY" },
+      },
+    });
+
+    await noteMemorySearchHealth(cfg, {});
+
+    expect(note).not.toHaveBeenCalled();
+    expect(resolveApiKeyForProvider).not.toHaveBeenCalled();
   });
 
   it("resolves provider auth from the default agent directory", async () => {
@@ -215,8 +245,8 @@ describe("noteMemorySearchHealth", () => {
 
     const message = note.mock.calls[0]?.[0] as string;
     expect(message).toContain("Gateway memory probe for default agent is not ready");
-    expect(message).toContain("IronCliw configure --section model");
-    expect(message).not.toContain("IronCliw auth add --provider");
+    expect(message).toContain("ironcliw configure --section model");
+    expect(message).not.toContain("ironcliw auth add --provider");
   });
 
   it("warns in auto mode when no local modelPath and no API keys are configured", async () => {
@@ -233,7 +263,7 @@ describe("noteMemorySearchHealth", () => {
     // provider: "local". So with no local file and no API keys, warn.
     expect(note).toHaveBeenCalledTimes(1);
     const message = String(note.mock.calls[0]?.[0] ?? "");
-    expect(message).toContain("IronCliw configure --section model");
+    expect(message).toContain("ironcliw configure --section model");
   });
 
   it("still warns in auto mode when only ollama credentials exist", async () => {
@@ -245,7 +275,7 @@ describe("noteMemorySearchHealth", () => {
     resolveApiKeyForProvider.mockImplementation(async ({ provider }: { provider: string }) => {
       if (provider === "ollama") {
         return {
-          apiKey: "ollama-local",
+          apiKey: "ollama-local", // pragma: allowlist secret
           source: "env: OLLAMA_API_KEY",
           mode: "api-key",
         };
@@ -264,7 +294,7 @@ describe("noteMemorySearchHealth", () => {
 
 describe("detectLegacyWorkspaceDirs", () => {
   it("returns active workspace and no legacy dirs", () => {
-    const workspaceDir = "/home/user/IronCliw";
+    const workspaceDir = "/home/user/ironcliw";
     const detection = detectLegacyWorkspaceDirs({ workspaceDir });
     expect(detection.activeWorkspace).toBe(path.resolve(workspaceDir));
     expect(detection.legacyDirs).toEqual([]);

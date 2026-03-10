@@ -15,24 +15,24 @@ If you only have 2 minutes, use this page as a triage front door.
 Run this exact ladder in order:
 
 ```bash
-IronCliw status
-IronCliw status --all
-IronCliw gateway probe
-IronCliw gateway status
-IronCliw doctor
-IronCliw channels status --probe
-IronCliw logs --follow
+ironcliw status
+ironcliw status --all
+ironcliw gateway probe
+ironcliw gateway status
+ironcliw doctor
+ironcliw channels status --probe
+ironcliw logs --follow
 ```
 
 Good output in one line:
 
-- `IronCliw status` → shows configured channels and no obvious auth errors.
-- `IronCliw status --all` → full report is present and shareable.
-- `IronCliw gateway probe` → expected gateway target is reachable.
-- `IronCliw gateway status` → `Runtime: running` and `RPC probe: ok`.
-- `IronCliw doctor` → no blocking config/service errors.
-- `IronCliw channels status --probe` → channels report `connected` or `ready`.
-- `IronCliw logs --follow` → steady activity, no repeating fatal errors.
+- `ironcliw status` → shows configured channels and no obvious auth errors.
+- `ironcliw status --all` → full report is present and shareable.
+- `ironcliw gateway probe` → expected gateway target is reachable.
+- `ironcliw gateway status` → `Runtime: running` and `RPC probe: ok`.
+- `ironcliw doctor` → no blocking config/service errors.
+- `ironcliw channels status --probe` → channels report `connected` or `ready`.
+- `ironcliw logs --follow` → steady activity, no repeating fatal errors.
 
 ## Anthropic long context 429
 
@@ -40,24 +40,24 @@ If you see:
 `HTTP 429: rate_limit_error: Extra usage is required for long context requests`,
 go to [/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context](/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context).
 
-## Plugin install fails with missing IronCliw extensions
+## Plugin install fails with missing ironcliw extensions
 
-If install fails with `package.json missing IronCliw.extensions`, the plugin package
+If install fails with `package.json missing ironcliw.extensions`, the plugin package
 is using an old shape that IronCliw no longer accepts.
 
 Fix in the plugin package:
 
-1. Add `IronCliw.extensions` to `package.json`.
+1. Add `ironcliw.extensions` to `package.json`.
 2. Point entries at built runtime files (usually `./dist/index.js`).
-3. Republish the plugin and run `IronCliw plugins install <npm-spec>` again.
+3. Republish the plugin and run `ironcliw plugins install <npm-spec>` again.
 
 Example:
 
 ```json
 {
-  "name": "@IronCliw/my-plugin",
+  "name": "@ironcliw/my-plugin",
   "version": "1.2.3",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": ["./dist/index.js"]
   }
 }
@@ -90,11 +90,11 @@ flowchart TD
 <AccordionGroup>
   <Accordion title="No replies">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw channels status --probe
-    IronCliw pairing list --channel <channel> [--account <id>]
-    IronCliw logs --follow
+    ironcliw status
+    ironcliw gateway status
+    ironcliw channels status --probe
+    ironcliw pairing list --channel <channel> [--account <id>]
+    ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -120,16 +120,16 @@ flowchart TD
 
   <Accordion title="Dashboard or Control UI will not connect">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw logs --follow
-    IronCliw doctor
-    IronCliw channels status --probe
+    ironcliw status
+    ironcliw gateway status
+    ironcliw logs --follow
+    ironcliw doctor
+    ironcliw channels status --probe
     ```
 
     Good output looks like:
 
-    - `Dashboard: http://...` is shown in `IronCliw gateway status`
+    - `Dashboard: http://...` is shown in `ironcliw gateway status`
     - `RPC probe: ok`
     - No auth loop in logs
 
@@ -149,11 +149,11 @@ flowchart TD
 
   <Accordion title="Gateway will not start or service installed but not running">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw logs --follow
-    IronCliw doctor
-    IronCliw channels status --probe
+    ironcliw status
+    ironcliw gateway status
+    ironcliw logs --follow
+    ironcliw doctor
+    ironcliw channels status --probe
     ```
 
     Good output looks like:
@@ -178,11 +178,11 @@ flowchart TD
 
   <Accordion title="Channel connects but messages do not flow">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw logs --follow
-    IronCliw doctor
-    IronCliw channels status --probe
+    ironcliw status
+    ironcliw gateway status
+    ironcliw logs --follow
+    ironcliw doctor
+    ironcliw channels status --probe
     ```
 
     Good output looks like:
@@ -206,12 +206,12 @@ flowchart TD
 
   <Accordion title="Cron or heartbeat did not fire or did not deliver">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw cron status
-    IronCliw cron list
-    IronCliw cron runs --id <jobId> --limit 20
-    IronCliw logs --follow
+    ironcliw status
+    ironcliw gateway status
+    ironcliw cron status
+    ironcliw cron list
+    ironcliw cron runs --id <jobId> --limit 20
+    ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -237,11 +237,11 @@ flowchart TD
 
   <Accordion title="Node is paired but tool fails camera canvas screen exec">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw nodes status
-    IronCliw nodes describe --node <idOrNameOrIp>
-    IronCliw logs --follow
+    ironcliw status
+    ironcliw gateway status
+    ironcliw nodes status
+    ironcliw nodes describe --node <idOrNameOrIp>
+    ironcliw logs --follow
     ```
 
     Good output looks like:
@@ -267,17 +267,17 @@ flowchart TD
 
   <Accordion title="Browser tool fails">
     ```bash
-    IronCliw status
-    IronCliw gateway status
-    IronCliw browser status
-    IronCliw logs --follow
-    IronCliw doctor
+    ironcliw status
+    ironcliw gateway status
+    ironcliw browser status
+    ironcliw logs --follow
+    ironcliw doctor
     ```
 
     Good output looks like:
 
     - Browser status shows `running: true` and a chosen browser/profile.
-    - `IronCliw` profile starts or `chrome` relay has an attached tab.
+    - `ironcliw` profile starts or `chrome` relay has an attached tab.
 
     Common log signatures:
 
@@ -290,6 +290,7 @@ flowchart TD
 
     - [/gateway/troubleshooting#browser-tool-fails](/gateway/troubleshooting#browser-tool-fails)
     - [/tools/browser-linux-troubleshooting](/tools/browser-linux-troubleshooting)
+    - [/tools/browser-wsl2-windows-remote-cdp-troubleshooting](/tools/browser-wsl2-windows-remote-cdp-troubleshooting)
     - [/tools/chrome-extension](/tools/chrome-extension)
 
   </Accordion>

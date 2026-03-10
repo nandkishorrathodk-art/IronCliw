@@ -443,4 +443,3 @@ output result = {
   # For next run
   next_step: "Run again with mode:'incremental' to process new logs and mature patterns"
 }
-

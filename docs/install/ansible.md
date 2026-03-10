@@ -9,19 +9,19 @@ title: "Ansible"
 
 # Ansible Installation
 
-The recommended way to deploy IronCliw to production servers is via **[IronCliw-ansible](https://github.com/IronCliw/IronCliw-ansible)** — an automated installer with security-first architecture.
+The recommended way to deploy IronCliw to production servers is via **[ironcliw-ansible](https://github.com/ironcliw/ironcliw-ansible)** — an automated installer with security-first architecture.
 
 ## Quick Start
 
 One-command install:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/IronCliw/IronCliw-ansible/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ironcliw/ironcliw-ansible/main/install.sh | bash
 ```
 
-> **📦 Full guide: [github.com/IronCliw/IronCliw-ansible](https://github.com/IronCliw/IronCliw-ansible)**
+> **📦 Full guide: [github.com/ironcliw/ironcliw-ansible](https://github.com/ironcliw/ironcliw-ansible)**
 >
-> The IronCliw-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
+> The ironcliw-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
 
 ## What You Get
 
@@ -54,10 +54,10 @@ Note: The gateway runs **directly on the host** (not in Docker), but agent sandb
 
 ## Post-Install Setup
 
-After installation completes, switch to the IronCliw user:
+After installation completes, switch to the ironcliw user:
 
 ```bash
-sudo -i -u IronCliw
+sudo -i -u ironcliw
 ```
 
 The post-install script will guide you through:
@@ -71,17 +71,17 @@ The post-install script will guide you through:
 
 ```bash
 # Check service status
-sudo systemctl status IronCliw
+sudo systemctl status ironcliw
 
 # View live logs
-sudo journalctl -u IronCliw -f
+sudo journalctl -u ironcliw -f
 
 # Restart gateway
-sudo systemctl restart IronCliw
+sudo systemctl restart ironcliw
 
-# Provider login (run as IronCliw user)
-sudo -i -u IronCliw
-IronCliw channels login
+# Provider login (run as ironcliw user)
+sudo -i -u ironcliw
+ironcliw channels login
 ```
 
 ## Security Architecture
@@ -118,8 +118,8 @@ If you prefer manual control over the automation:
 sudo apt update && sudo apt install -y ansible git
 
 # 2. Clone repository
-git clone https://github.com/IronCliw/IronCliw-ansible.git
-cd IronCliw-ansible
+git clone https://github.com/ironcliw/ironcliw-ansible.git
+cd ironcliw-ansible
 
 # 3. Install Ansible collections
 ansible-galaxy collection install -r requirements.yml
@@ -127,7 +127,7 @@ ansible-galaxy collection install -r requirements.yml
 # 4. Run playbook
 ./run-playbook.sh
 
-# Or run directly (then manually execute /tmp/IronCliw-setup.sh after)
+# Or run directly (then manually execute /tmp/ironcliw-setup.sh after)
 # ansible-playbook playbook.yml --ask-become-pass
 ```
 
@@ -138,7 +138,7 @@ The Ansible installer sets up IronCliw for manual updates. See [Updating](/insta
 To re-run the Ansible playbook (e.g., for configuration changes):
 
 ```bash
-cd IronCliw-ansible
+cd ironcliw-ansible
 ./run-playbook.sh
 ```
 
@@ -158,14 +158,14 @@ If you're locked out:
 
 ```bash
 # Check logs
-sudo journalctl -u IronCliw -n 100
+sudo journalctl -u ironcliw -n 100
 
 # Verify permissions
-sudo ls -la /opt/IronCliw
+sudo ls -la /opt/ironcliw
 
 # Test manual start
-sudo -i -u IronCliw
-cd ~/IronCliw
+sudo -i -u ironcliw
+cd ~/ironcliw
 pnpm start
 ```
 
@@ -176,33 +176,33 @@ pnpm start
 sudo systemctl status docker
 
 # Check sandbox image
-sudo docker images | grep IronCliw-sandbox
+sudo docker images | grep ironcliw-sandbox
 
 # Build sandbox image if missing
-cd /opt/IronCliw/IronCliw
-sudo -u IronCliw ./scripts/sandbox-setup.sh
+cd /opt/ironcliw/ironcliw
+sudo -u ironcliw ./scripts/sandbox-setup.sh
 ```
 
 ### Provider login fails
 
-Make sure you're running as the `IronCliw` user:
+Make sure you're running as the `ironcliw` user:
 
 ```bash
-sudo -i -u IronCliw
-IronCliw channels login
+sudo -i -u ironcliw
+ironcliw channels login
 ```
 
 ## Advanced Configuration
 
 For detailed security architecture and troubleshooting:
 
-- [Security Architecture](https://github.com/IronCliw/IronCliw-ansible/blob/main/docs/security.md)
-- [Technical Details](https://github.com/IronCliw/IronCliw-ansible/blob/main/docs/architecture.md)
-- [Troubleshooting Guide](https://github.com/IronCliw/IronCliw-ansible/blob/main/docs/troubleshooting.md)
+- [Security Architecture](https://github.com/ironcliw/ironcliw-ansible/blob/main/docs/security.md)
+- [Technical Details](https://github.com/ironcliw/ironcliw-ansible/blob/main/docs/architecture.md)
+- [Troubleshooting Guide](https://github.com/ironcliw/ironcliw-ansible/blob/main/docs/troubleshooting.md)
 
 ## Related
 
-- [IronCliw-ansible](https://github.com/IronCliw/IronCliw-ansible) — full deployment guide
+- [ironcliw-ansible](https://github.com/ironcliw/ironcliw-ansible) — full deployment guide
 - [Docker](/install/docker) — containerized gateway setup
 - [Sandboxing](/gateway/sandboxing) — agent sandbox configuration
 - [Multi-Agent Sandbox & Tools](/tools/multi-agent-sandbox-tools) — per-agent isolation

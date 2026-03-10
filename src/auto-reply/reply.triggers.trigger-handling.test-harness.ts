@@ -110,7 +110,7 @@ type TempHomeEnvSnapshot = {
   userProfile: string | undefined;
   homeDrive: string | undefined;
   homePath: string | undefined;
-  IronCliwHome: string | undefined;
+  ironcliwHome: string | undefined;
   stateDir: string | undefined;
 };
 
@@ -123,8 +123,8 @@ function snapshotTempHomeEnv(): TempHomeEnvSnapshot {
     userProfile: process.env.USERPROFILE,
     homeDrive: process.env.HOMEDRIVE,
     homePath: process.env.HOMEPATH,
-    IronCliwHome: process.env.IronCliw_HOME,
-    stateDir: process.env.IronCliw_STATE_DIR,
+    ironcliwHome: process.env.IRONCLIW_HOME,
+    stateDir: process.env.IRONCLIW_STATE_DIR,
   };
 }
 
@@ -141,15 +141,15 @@ function restoreTempHomeEnv(snapshot: TempHomeEnvSnapshot): void {
   restoreKey("USERPROFILE", snapshot.userProfile);
   restoreKey("HOMEDRIVE", snapshot.homeDrive);
   restoreKey("HOMEPATH", snapshot.homePath);
-  restoreKey("IronCliw_HOME", snapshot.IronCliwHome);
-  restoreKey("IronCliw_STATE_DIR", snapshot.stateDir);
+  restoreKey("IRONCLIW_HOME", snapshot.ironcliwHome);
+  restoreKey("IRONCLIW_STATE_DIR", snapshot.stateDir);
 }
 
 function setTempHomeEnv(home: string): void {
   process.env.HOME = home;
   process.env.USERPROFILE = home;
-  delete process.env.IronCliw_HOME;
-  process.env.IronCliw_STATE_DIR = join(home, ".IronCliw");
+  delete process.env.IRONCLIW_HOME;
+  process.env.IRONCLIW_STATE_DIR = join(home, ".ironcliw");
 
   if (process.platform !== "win32") {
     return;
@@ -163,7 +163,7 @@ function setTempHomeEnv(home: string): void {
 }
 
 beforeAll(async () => {
-  suiteTempHomeRoot = await fs.mkdtemp(join(os.tmpdir(), "IronCliw-triggers-suite-"));
+  suiteTempHomeRoot = await fs.mkdtemp(join(os.tmpdir(), "ironcliw-triggers-suite-"));
 });
 
 afterAll(async () => {
@@ -178,7 +178,7 @@ afterAll(async () => {
 export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
   const home = join(suiteTempHomeRoot, `case-${++suiteTempHomeId}`);
   const snapshot = snapshotTempHomeEnv();
-  await fs.mkdir(join(home, ".IronCliw", "agents", "main", "sessions"), { recursive: true });
+  await fs.mkdir(join(home, ".ironcliw", "agents", "main", "sessions"), { recursive: true });
   setTempHomeEnv(home);
 
   try {
@@ -197,7 +197,7 @@ export function makeCfg(home: string): IronCliwConfig {
     agents: {
       defaults: {
         model: { primary: "anthropic/claude-opus-4-5" },
-        workspace: join(home, "IronCliw"),
+        workspace: join(home, "ironcliw"),
         // Test harness: avoid 1s coalescer idle sleeps that dominate trigger suites.
         blockStreamingCoalesce: { idleMs: 1 },
         // Trigger tests assert routing/authorization behavior, not delivery pacing.

@@ -1,4 +1,4 @@
-import { normalizeWebhookPath, type IronCliwConfig } from "IronCliw/plugin-sdk/bluebubbles";
+import { normalizeWebhookPath, type IronCliwConfig } from "ironcliw/plugin-sdk/bluebubbles";
 import type { ResolvedBlueBubblesAccount } from "./accounts.js";
 import { getBlueBubblesRuntime } from "./runtime.js";
 import type { BlueBubblesAccountConfig } from "./types.js";

@@ -1,14 +1,15 @@
 import {
-  addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
-  promptAccountId,
   promptChannelAccessConfig,
+  resolveAccountIdForConfigure,
+  setTopLevelChannelAllowFrom,
+  setTopLevelChannelDmPolicyWithAllowFrom,
   type ChannelOnboardingAdapter,
   type ChannelOnboardingDmPolicy,
   type DmPolicy,
   type WizardPrompter,
-} from "IronCliw/plugin-sdk/irc";
+} from "ironcliw/plugin-sdk/irc";
 import { listIrcAccountIds, resolveDefaultIrcAccountId, resolveIrcAccount } from "./accounts.js";
 import {
   isChannelTarget,
@@ -90,32 +91,19 @@ function updateIrcAccountConfig(
 }
 
 function setIrcDmPolicy(cfg: CoreConfig, dmPolicy: DmPolicy): CoreConfig {
-  const allowFrom =
-    dmPolicy === "open" ? addWildcardAllowFrom(cfg.channels?.irc?.allowFrom) : undefined;
-  return {
-    ...cfg,
-    channels: {
-      ...cfg.channels,
-      irc: {
-        ...cfg.channels?.irc,
-        dmPolicy,
-        ...(allowFrom ? { allowFrom } : {}),
-      },
-    },
-  };
+  return setTopLevelChannelDmPolicyWithAllowFrom({
+    cfg,
+    channel: "irc",
+    dmPolicy,
+  }) as CoreConfig;
 }
 
 function setIrcAllowFrom(cfg: CoreConfig, allowFrom: string[]): CoreConfig {
-  return {
-    ...cfg,
-    channels: {
-      ...cfg.channels,
-      irc: {
-        ...cfg.channels?.irc,
-        allowFrom,
-      },
-    },
-  };
+  return setTopLevelChannelAllowFrom({
+    cfg,
+    channel: "irc",
+    allowFrom,
+  }) as CoreConfig;
 }
 
 function setIrcNickServ(
@@ -308,19 +296,16 @@ export const ircOnboardingAdapter: ChannelOnboardingAdapter = {
     forceAllowFrom,
   }) => {
     let next = cfg as CoreConfig;
-    const ircOverride = accountOverrides.irc?.trim();
     const defaultAccountId = resolveDefaultIrcAccountId(next);
-    let accountId = ircOverride || defaultAccountId;
-    if (shouldPromptAccountIds && !ircOverride) {
-      accountId = await promptAccountId({
-        cfg: next,
-        prompter,
-        label: "IRC",
-        currentId: accountId,
-        listAccountIds: listIrcAccountIds,
-        defaultAccountId,
-      });
-    }
+    const accountId = await resolveAccountIdForConfigure({
+      cfg: next,
+      prompter,
+      label: "IRC",
+      accountOverride: accountOverrides.irc,
+      shouldPromptAccountIds,
+      listAccountIds: listIrcAccountIds,
+      defaultAccountId,
+    });
 
     const resolved = resolveIrcAccount({ cfg: next, accountId });
     const isDefaultAccount = accountId === DEFAULT_ACCOUNT_ID;
@@ -379,7 +364,7 @@ export const ircOnboardingAdapter: ChannelOnboardingAdapter = {
       const username = String(
         await prompter.text({
           message: "IRC username",
-          initialValue: resolved.config.username || nick || "IronCliw",
+          initialValue: resolved.config.username || nick || "ironcliw",
           validate: (value) => (String(value ?? "").trim() ? undefined : "Required"),
         }),
       ).trim();
@@ -394,7 +379,7 @@ export const ircOnboardingAdapter: ChannelOnboardingAdapter = {
 
       const channelsRaw = await prompter.text({
         message: "Auto-join IRC channels (optional, comma-separated)",
-        placeholder: "#IronCliw, #ops",
+        placeholder: "#ironcliw, #ops",
         initialValue: (resolved.config.channels ?? []).join(", "),
       });
       const channels = [
@@ -424,7 +409,7 @@ export const ircOnboardingAdapter: ChannelOnboardingAdapter = {
       label: "IRC channels",
       currentPolicy: afterConfig.config.groupPolicy ?? "allowlist",
       currentEntries: Object.keys(afterConfig.config.groups ?? {}),
-      placeholder: "#IronCliw, #ops, *",
+      placeholder: "#ironcliw, #ops, *",
       updatePrompt: Boolean(afterConfig.config.groups),
     });
     if (accessConfig) {
@@ -457,7 +442,7 @@ export const ircOnboardingAdapter: ChannelOnboardingAdapter = {
     await prompter.note(
       [
         "Next: restart gateway and verify status.",
-        "Command: IronCliw channels status --probe",
+        "Command: ironcliw channels status --probe",
         `Docs: ${formatDocsLink("/channels/irc", "channels/irc")}`,
       ].join("\n"),
       "IRC next steps",

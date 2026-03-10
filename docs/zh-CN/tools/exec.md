@@ -38,7 +38,7 @@ x-i18n:
 
 - `host` 默认为 `sandbox`。
 - 当沙箱隔离关闭时，`elevated` 会被忽略（exec 已在主机上运行）。
-- `gateway`/`node` 审批由 `~/.IronCliw/exec-approvals.json` 控制。
+- `gateway`/`node` 审批由 `~/.ironcliw/exec-approvals.json` 控制。
 - `node` 需要已配对的节点（配套应用或无头节点主机）。
 - 如果有多个可用节点，设置 `exec.node` 或 `tools.exec.node` 来选择一个。
 - 在非 Windows 主机上，exec 会使用已设置的 `SHELL`；如果 `SHELL` 是 `fish`，它会优先从 `PATH` 中选择 `bash`（或 `sh`）以避免 fish 不兼容的脚本，如果两者都不存在则回退到 `SHELL`。
@@ -79,8 +79,8 @@ x-i18n:
 按智能体绑定节点（在配置中使用智能体列表索引）：
 
 ```bash
-IronCliw config get agents.list
-IronCliw config set agents.list[0].tools.exec.node "node-id-or-name"
+ironcliw config get agents.list
+ironcliw config set agents.list[0].tools.exec.node "node-id-or-name"
 ```
 
 控制 UI：Nodes 标签页包含一个小的"Exec 节点绑定"面板用于相同的设置。

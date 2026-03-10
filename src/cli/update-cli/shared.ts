@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { resolveStateDir } from "../../config/paths.js";
-import { resolveIronCliwPackageRoot } from "../../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRoot } from "../../infra/ironcliw-root.js";
 import { readPackageName, readPackageVersion } from "../../infra/package-json.js";
 import { normalizePackageTagInput } from "../../infra/package-tag.js";
 import { trimLogTail } from "../../infra/restart-sentinel.js";
@@ -52,14 +52,14 @@ export function parseTimeoutMsOrExit(timeout?: string): number | undefined | nul
   return timeoutMs;
 }
 
-const IronCliw_REPO_URL = "https://github.com/IronCliw/IronCliw.git";
+const IRONCLIW_REPO_URL = "https://github.com/ironcliw/ironcliw.git";
 const MAX_LOG_CHARS = 8000;
 
-export const DEFAULT_PACKAGE_NAME = "IronCliw";
+export const DEFAULT_PACKAGE_NAME = "ironcliw";
 const CORE_PACKAGE_NAMES = new Set([DEFAULT_PACKAGE_NAME]);
 
 export function normalizeTag(value?: string | null): string | null {
-  return normalizePackageTagInput(value, ["IronCliw", DEFAULT_PACKAGE_NAME]);
+  return normalizePackageTagInput(value, ["ironcliw", DEFAULT_PACKAGE_NAME]);
 }
 
 export function normalizeVersionTag(tag: string): string | null {
@@ -109,7 +109,7 @@ export async function isEmptyDir(targetPath: string): Promise<boolean> {
 }
 
 export function resolveGitInstallDir(): string {
-  const override = process.env.IronCliw_GIT_DIR?.trim();
+  const override = process.env.IRONCLIW_GIT_DIR?.trim();
   if (override) {
     return path.resolve(override);
   }
@@ -191,7 +191,7 @@ export async function ensureGitCheckout(params: {
   if (!dirExists) {
     return await runUpdateStep({
       name: "git clone",
-      argv: ["git", "clone", IronCliw_REPO_URL, params.dir],
+      argv: ["git", "clone", IRONCLIW_REPO_URL, params.dir],
       timeoutMs: params.timeoutMs,
       progress: params.progress,
     });
@@ -201,13 +201,13 @@ export async function ensureGitCheckout(params: {
     const empty = await isEmptyDir(params.dir);
     if (!empty) {
       throw new Error(
-        `IronCliw_GIT_DIR points at a non-git directory: ${params.dir}. Set IronCliw_GIT_DIR to an empty folder or an IronCliw checkout.`,
+        `IRONCLIW_GIT_DIR points at a non-git directory: ${params.dir}. Set IRONCLIW_GIT_DIR to an empty folder or an ironcliw checkout.`,
       );
     }
 
     return await runUpdateStep({
       name: "git clone",
-      argv: ["git", "clone", IronCliw_REPO_URL, params.dir],
+      argv: ["git", "clone", IRONCLIW_REPO_URL, params.dir],
       cwd: params.dir,
       timeoutMs: params.timeoutMs,
       progress: params.progress,
@@ -215,7 +215,7 @@ export async function ensureGitCheckout(params: {
   }
 
   if (!(await isCorePackage(params.dir))) {
-    throw new Error(`IronCliw_GIT_DIR does not look like a core checkout: ${params.dir}.`);
+    throw new Error(`IRONCLIW_GIT_DIR does not look like a core checkout: ${params.dir}.`);
   }
 
   return null;
@@ -244,7 +244,7 @@ export async function resolveGlobalManager(params: {
 }
 
 export async function tryWriteCompletionCache(root: string, jsonMode: boolean): Promise<void> {
-  const binPath = path.join(root, "IronCliw.mjs");
+  const binPath = path.join(root, "ironcliw.mjs");
   if (!(await pathExists(binPath))) {
     return;
   }

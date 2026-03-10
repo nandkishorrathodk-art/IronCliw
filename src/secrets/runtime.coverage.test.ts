@@ -27,7 +27,7 @@ function toConcretePathSegments(pathPattern: string): string[] {
 function buildConfigForIronCliwTarget(entry: SecretRegistryEntry, envId: string): IronCliwConfig {
   const config = {} as IronCliwConfig;
   const refTargetPath =
-    entry.secretShape === "sibling_ref" && entry.refPathPattern
+    entry.secretShape === "sibling_ref" && entry.refPathPattern // pragma: allowlist secret
       ? entry.refPathPattern
       : entry.pathPattern;
   setPathCreateStrict(config, toConcretePathSegments(refTargetPath), {
@@ -133,17 +133,17 @@ describe("secrets runtime target coverage", () => {
     clearSecretsRuntimeSnapshot();
   });
 
-  it("handles every IronCliw.json registry target when configured as active", async () => {
+  it("handles every ironcliw.json registry target when configured as active", async () => {
     const entries = listSecretTargetRegistryEntries().filter(
-      (entry) => entry.configFile === "IronCliw.json",
+      (entry) => entry.configFile === "ironcliw.json",
     );
     for (const [index, entry] of entries.entries()) {
-      const envId = `IronCliw_SECRET_TARGET_${index}`;
+      const envId = `IRONCLIW_SECRET_TARGET_${index}`;
       const expectedValue = `resolved-${entry.id}`;
       const snapshot = await prepareSecretsRuntimeSnapshot({
         config: buildConfigForIronCliwTarget(entry, envId),
         env: { [envId]: expectedValue },
-        agentDirs: ["/tmp/IronCliw-agent-main"],
+        agentDirs: ["/tmp/ironcliw-agent-main"],
         loadAuthStore: () => ({ version: 1, profiles: {} }),
       });
       const resolved = getPath(snapshot.config, toConcretePathSegments(entry.pathPattern));
@@ -162,12 +162,12 @@ describe("secrets runtime target coverage", () => {
       (entry) => entry.configFile === "auth-profiles.json",
     );
     for (const [index, entry] of entries.entries()) {
-      const envId = `IronCliw_AUTH_SECRET_TARGET_${index}`;
+      const envId = `IRONCLIW_AUTH_SECRET_TARGET_${index}`;
       const expectedValue = `resolved-${entry.id}`;
       const snapshot = await prepareSecretsRuntimeSnapshot({
         config: {} as IronCliwConfig,
         env: { [envId]: expectedValue },
-        agentDirs: ["/tmp/IronCliw-agent-main"],
+        agentDirs: ["/tmp/ironcliw-agent-main"],
         loadAuthStore: () => buildAuthStoreForTarget(entry, envId),
       });
       const store = snapshot.authStores[0]?.store;

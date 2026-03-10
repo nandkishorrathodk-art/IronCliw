@@ -34,7 +34,7 @@ Contents (examples):
 
 Delivery:
 
-- Publish as `IronCliw/plugin-sdk` (or export from core under `IronCliw/plugin-sdk`).
+- Publish as `ironcliw/plugin-sdk` (or export from core under `ironcliw/plugin-sdk`).
 - Semver with explicit stability guarantees.
 
 ### 2) Plugin Runtime (execution surface, injected)
@@ -154,7 +154,7 @@ Notes:
 
 ### Phase 0: scaffolding
 
-- Introduce `IronCliw/plugin-sdk`.
+- Introduce `ironcliw/plugin-sdk`.
 - Add `api.runtime` to `IronCliwPluginApi` with the surface above.
 - Maintain existing imports during a transition window (deprecation warnings).
 
@@ -189,7 +189,7 @@ Notes:
 
 - SDK: semver, published, documented changes.
 - Runtime: versioned per core release. Add `api.runtime.version`.
-- Plugins declare a required runtime range (e.g., `IronCliwRuntime: ">=2026.2.0"`).
+- Plugins declare a required runtime range (e.g., `ironcliwRuntime: ">=2026.2.0"`).
 
 ## Testing strategy
 

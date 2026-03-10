@@ -67,13 +67,16 @@ export async function deliverWebReply(params: {
         lastErr = err;
         const errText = formatError(err);
         const isLast = attempt === maxAttempts;
-        const shouldRetry = /closed|reset|timed\s*out|disconnect/i.test(errText);
+        const shouldRetry =
+          /closed|reset|timed\s*out|disconnect|epipe|socket not open|stream error|econnrefused|enetunreach/i.test(
+            errText,
+          );
         if (!shouldRetry || isLast) {
           throw err;
         }
         const backoffMs = 500 * attempt;
         logVerbose(
-          `Retrying ${label} to ${msg.from} after failure (${attempt}/${maxAttempts - 1}) in ${backoffMs}ms: ${errText}`,
+          `Retrying ${label} to ${msg.from} after failure (${attempt}/${maxAttempts}) in ${backoffMs}ms: ${errText}`,
         );
         await sleep(backoffMs);
       }

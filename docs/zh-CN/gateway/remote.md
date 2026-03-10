@@ -83,10 +83,10 @@ ssh -N -L 18789:127.0.0.1:18789 user@host
 
 隧道建立后：
 
-- `IronCliw health` 和 `IronCliw status --deep` 现在通过 `ws://127.0.0.1:18789` 访问远程 Gateway 网关。
-- `IronCliw gateway {status,health,send,agent,call}` 在需要时也可以通过 `--url` 指定转发的 URL。
+- `ironcliw health` 和 `ironcliw status --deep` 现在通过 `ws://127.0.0.1:18789` 访问远程 Gateway 网关。
+- `ironcliw gateway {status,health,send,agent,call}` 在需要时也可以通过 `--url` 指定转发的 URL。
 
-注意：将 `18789` 替换为你配置的 `gateway.port`（或 `--port`/`IronCliw_GATEWAY_PORT`）。
+注意：将 `18789` 替换为你配置的 `gateway.port`（或 `--port`/`IRONCLIW_GATEWAY_PORT`）。
 
 ## CLI 远程默认值
 

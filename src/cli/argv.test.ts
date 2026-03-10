@@ -20,47 +20,47 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "help flag",
-      argv: ["node", "IronCliw", "--help"],
+      argv: ["node", "ironcliw", "--help"],
       expected: true,
     },
     {
       name: "version flag",
-      argv: ["node", "IronCliw", "-V"],
+      argv: ["node", "ironcliw", "-V"],
       expected: true,
     },
     {
       name: "normal command",
-      argv: ["node", "IronCliw", "status"],
+      argv: ["node", "ironcliw", "status"],
       expected: false,
     },
     {
       name: "root -v alias",
-      argv: ["node", "IronCliw", "-v"],
+      argv: ["node", "ironcliw", "-v"],
       expected: true,
     },
     {
       name: "root -v alias with profile",
-      argv: ["node", "IronCliw", "--profile", "work", "-v"],
+      argv: ["node", "ironcliw", "--profile", "work", "-v"],
       expected: true,
     },
     {
       name: "root -v alias with log-level",
-      argv: ["node", "IronCliw", "--log-level", "debug", "-v"],
+      argv: ["node", "ironcliw", "--log-level", "debug", "-v"],
       expected: true,
     },
     {
       name: "subcommand -v should not be treated as version",
-      argv: ["node", "IronCliw", "acp", "-v"],
+      argv: ["node", "ironcliw", "acp", "-v"],
       expected: false,
     },
     {
       name: "root -v alias with equals profile",
-      argv: ["node", "IronCliw", "--profile=work", "-v"],
+      argv: ["node", "ironcliw", "--profile=work", "-v"],
       expected: true,
     },
     {
       name: "subcommand path after global root flags should not be treated as version",
-      argv: ["node", "IronCliw", "--dev", "skills", "list", "-v"],
+      argv: ["node", "ironcliw", "--dev", "skills", "list", "-v"],
       expected: false,
     },
   ])("detects help/version flags: $name", ({ argv, expected }) => {
@@ -70,27 +70,27 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "root --version",
-      argv: ["node", "IronCliw", "--version"],
+      argv: ["node", "ironcliw", "--version"],
       expected: true,
     },
     {
       name: "root -V",
-      argv: ["node", "IronCliw", "-V"],
+      argv: ["node", "ironcliw", "-V"],
       expected: true,
     },
     {
       name: "root -v alias with profile",
-      argv: ["node", "IronCliw", "--profile", "work", "-v"],
+      argv: ["node", "ironcliw", "--profile", "work", "-v"],
       expected: true,
     },
     {
       name: "subcommand version flag",
-      argv: ["node", "IronCliw", "status", "--version"],
+      argv: ["node", "ironcliw", "status", "--version"],
       expected: false,
     },
     {
       name: "unknown root flag with version",
-      argv: ["node", "IronCliw", "--unknown", "--version"],
+      argv: ["node", "ironcliw", "--unknown", "--version"],
       expected: false,
     },
   ])("detects root-only version invocations: $name", ({ argv, expected }) => {
@@ -100,42 +100,42 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "root --help",
-      argv: ["node", "IronCliw", "--help"],
+      argv: ["node", "ironcliw", "--help"],
       expected: true,
     },
     {
       name: "root -h",
-      argv: ["node", "IronCliw", "-h"],
+      argv: ["node", "ironcliw", "-h"],
       expected: true,
     },
     {
       name: "root --help with profile",
-      argv: ["node", "IronCliw", "--profile", "work", "--help"],
+      argv: ["node", "ironcliw", "--profile", "work", "--help"],
       expected: true,
     },
     {
       name: "subcommand --help",
-      argv: ["node", "IronCliw", "status", "--help"],
+      argv: ["node", "ironcliw", "status", "--help"],
       expected: false,
     },
     {
       name: "help before subcommand token",
-      argv: ["node", "IronCliw", "--help", "status"],
+      argv: ["node", "ironcliw", "--help", "status"],
       expected: false,
     },
     {
       name: "help after -- terminator",
-      argv: ["node", "IronCliw", "nodes", "run", "--", "git", "--help"],
+      argv: ["node", "ironcliw", "nodes", "run", "--", "git", "--help"],
       expected: false,
     },
     {
       name: "unknown root flag before help",
-      argv: ["node", "IronCliw", "--unknown", "--help"],
+      argv: ["node", "ironcliw", "--unknown", "--help"],
       expected: false,
     },
     {
       name: "unknown root flag after help",
-      argv: ["node", "IronCliw", "--help", "--unknown"],
+      argv: ["node", "ironcliw", "--help", "--unknown"],
       expected: false,
     },
   ])("detects root-only help invocations: $name", ({ argv, expected }) => {
@@ -145,17 +145,17 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "single command with trailing flag",
-      argv: ["node", "IronCliw", "status", "--json"],
+      argv: ["node", "ironcliw", "status", "--json"],
       expected: ["status"],
     },
     {
       name: "two-part command",
-      argv: ["node", "IronCliw", "agents", "list"],
+      argv: ["node", "ironcliw", "agents", "list"],
       expected: ["agents", "list"],
     },
     {
       name: "terminator cuts parsing",
-      argv: ["node", "IronCliw", "status", "--", "ignored"],
+      argv: ["node", "ironcliw", "status", "--", "ignored"],
       expected: ["status"],
     },
   ])("extracts command path: $name", ({ argv, expected }) => {
@@ -165,7 +165,7 @@ describe("argv helpers", () => {
   it("extracts command path while skipping known root option values", () => {
     expect(
       getCommandPathWithRootOptions(
-        ["node", "IronCliw", "--profile", "work", "--no-color", "config", "validate"],
+        ["node", "ironcliw", "--profile", "work", "--no-color", "config", "validate"],
         2,
       ),
     ).toEqual(["config", "validate"]);
@@ -174,7 +174,7 @@ describe("argv helpers", () => {
   it("extracts routed config get positionals with interleaved root options", () => {
     expect(
       getCommandPositionalsWithRootOptions(
-        ["node", "IronCliw", "config", "get", "--log-level", "debug", "update.channel", "--json"],
+        ["node", "ironcliw", "config", "get", "--log-level", "debug", "update.channel", "--json"],
         {
           commandPath: ["config", "get"],
           booleanFlags: ["--json"],
@@ -186,7 +186,7 @@ describe("argv helpers", () => {
   it("extracts routed config unset positionals with interleaved root options", () => {
     expect(
       getCommandPositionalsWithRootOptions(
-        ["node", "IronCliw", "config", "unset", "--profile", "work", "update.channel"],
+        ["node", "ironcliw", "config", "unset", "--profile", "work", "update.channel"],
         {
           commandPath: ["config", "unset"],
         },
@@ -197,7 +197,7 @@ describe("argv helpers", () => {
   it("returns null when routed command sees unknown options", () => {
     expect(
       getCommandPositionalsWithRootOptions(
-        ["node", "IronCliw", "config", "get", "--mystery", "value", "update.channel"],
+        ["node", "ironcliw", "config", "get", "--mystery", "value", "update.channel"],
         {
           commandPath: ["config", "get"],
           booleanFlags: ["--json"],
@@ -209,17 +209,17 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "returns first command token",
-      argv: ["node", "IronCliw", "agents", "list"],
+      argv: ["node", "ironcliw", "agents", "list"],
       expected: "agents",
     },
     {
       name: "returns null when no command exists",
-      argv: ["node", "IronCliw"],
+      argv: ["node", "ironcliw"],
       expected: null,
     },
     {
       name: "skips known root option values",
-      argv: ["node", "IronCliw", "--log-level", "debug", "status"],
+      argv: ["node", "ironcliw", "--log-level", "debug", "status"],
       expected: "status",
     },
   ])("returns primary command: $name", ({ argv, expected }) => {
@@ -229,13 +229,13 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "detects flag before terminator",
-      argv: ["node", "IronCliw", "status", "--json"],
+      argv: ["node", "ironcliw", "status", "--json"],
       flag: "--json",
       expected: true,
     },
     {
       name: "ignores flag after terminator",
-      argv: ["node", "IronCliw", "--", "--json"],
+      argv: ["node", "ironcliw", "--", "--json"],
       flag: "--json",
       expected: false,
     },
@@ -246,27 +246,27 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "value in next token",
-      argv: ["node", "IronCliw", "status", "--timeout", "5000"],
+      argv: ["node", "ironcliw", "status", "--timeout", "5000"],
       expected: "5000",
     },
     {
       name: "value in equals form",
-      argv: ["node", "IronCliw", "status", "--timeout=2500"],
+      argv: ["node", "ironcliw", "status", "--timeout=2500"],
       expected: "2500",
     },
     {
       name: "missing value",
-      argv: ["node", "IronCliw", "status", "--timeout"],
+      argv: ["node", "ironcliw", "status", "--timeout"],
       expected: null,
     },
     {
       name: "next token is another flag",
-      argv: ["node", "IronCliw", "status", "--timeout", "--json"],
+      argv: ["node", "ironcliw", "status", "--timeout", "--json"],
       expected: null,
     },
     {
       name: "flag appears after terminator",
-      argv: ["node", "IronCliw", "--", "--timeout=99"],
+      argv: ["node", "ironcliw", "--", "--timeout=99"],
       expected: undefined,
     },
   ])("extracts flag values: $name", ({ argv, expected }) => {
@@ -274,9 +274,9 @@ describe("argv helpers", () => {
   });
 
   it("parses verbose flags", () => {
-    expect(getVerboseFlag(["node", "IronCliw", "status", "--verbose"])).toBe(true);
-    expect(getVerboseFlag(["node", "IronCliw", "status", "--debug"])).toBe(false);
-    expect(getVerboseFlag(["node", "IronCliw", "status", "--debug"], { includeDebug: true })).toBe(
+    expect(getVerboseFlag(["node", "ironcliw", "status", "--verbose"])).toBe(true);
+    expect(getVerboseFlag(["node", "ironcliw", "status", "--debug"])).toBe(false);
+    expect(getVerboseFlag(["node", "ironcliw", "status", "--debug"], { includeDebug: true })).toBe(
       true,
     );
   });
@@ -284,22 +284,22 @@ describe("argv helpers", () => {
   it.each([
     {
       name: "missing flag",
-      argv: ["node", "IronCliw", "status"],
+      argv: ["node", "ironcliw", "status"],
       expected: undefined,
     },
     {
       name: "missing value",
-      argv: ["node", "IronCliw", "status", "--timeout"],
+      argv: ["node", "ironcliw", "status", "--timeout"],
       expected: null,
     },
     {
       name: "valid positive integer",
-      argv: ["node", "IronCliw", "status", "--timeout", "5000"],
+      argv: ["node", "ironcliw", "status", "--timeout", "5000"],
       expected: 5000,
     },
     {
       name: "invalid integer",
-      argv: ["node", "IronCliw", "status", "--timeout", "nope"],
+      argv: ["node", "ironcliw", "status", "--timeout", "nope"],
       expected: undefined,
     },
   ])("parses positive integer flag values: $name", ({ argv, expected }) => {
@@ -309,52 +309,52 @@ describe("argv helpers", () => {
   it("builds parse argv from raw args", () => {
     const cases = [
       {
-        rawArgs: ["node", "IronCliw", "status"],
-        expected: ["node", "IronCliw", "status"],
+        rawArgs: ["node", "ironcliw", "status"],
+        expected: ["node", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node-22", "IronCliw", "status"],
-        expected: ["node-22", "IronCliw", "status"],
+        rawArgs: ["node-22", "ironcliw", "status"],
+        expected: ["node-22", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node-22.2.0.exe", "IronCliw", "status"],
-        expected: ["node-22.2.0.exe", "IronCliw", "status"],
+        rawArgs: ["node-22.2.0.exe", "ironcliw", "status"],
+        expected: ["node-22.2.0.exe", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node-22.2", "IronCliw", "status"],
-        expected: ["node-22.2", "IronCliw", "status"],
+        rawArgs: ["node-22.2", "ironcliw", "status"],
+        expected: ["node-22.2", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node-22.2.exe", "IronCliw", "status"],
-        expected: ["node-22.2.exe", "IronCliw", "status"],
+        rawArgs: ["node-22.2.exe", "ironcliw", "status"],
+        expected: ["node-22.2.exe", "ironcliw", "status"],
       },
       {
-        rawArgs: ["/usr/bin/node-22.2.0", "IronCliw", "status"],
-        expected: ["/usr/bin/node-22.2.0", "IronCliw", "status"],
+        rawArgs: ["/usr/bin/node-22.2.0", "ironcliw", "status"],
+        expected: ["/usr/bin/node-22.2.0", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node24", "IronCliw", "status"],
-        expected: ["node24", "IronCliw", "status"],
+        rawArgs: ["node24", "ironcliw", "status"],
+        expected: ["node24", "ironcliw", "status"],
       },
       {
-        rawArgs: ["/usr/bin/node24", "IronCliw", "status"],
-        expected: ["/usr/bin/node24", "IronCliw", "status"],
+        rawArgs: ["/usr/bin/node24", "ironcliw", "status"],
+        expected: ["/usr/bin/node24", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node24.exe", "IronCliw", "status"],
-        expected: ["node24.exe", "IronCliw", "status"],
+        rawArgs: ["node24.exe", "ironcliw", "status"],
+        expected: ["node24.exe", "ironcliw", "status"],
       },
       {
-        rawArgs: ["nodejs", "IronCliw", "status"],
-        expected: ["nodejs", "IronCliw", "status"],
+        rawArgs: ["nodejs", "ironcliw", "status"],
+        expected: ["nodejs", "ironcliw", "status"],
       },
       {
-        rawArgs: ["node-dev", "IronCliw", "status"],
-        expected: ["node", "IronCliw", "node-dev", "IronCliw", "status"],
+        rawArgs: ["node-dev", "ironcliw", "status"],
+        expected: ["node", "ironcliw", "node-dev", "ironcliw", "status"],
       },
       {
-        rawArgs: ["IronCliw", "status"],
-        expected: ["node", "IronCliw", "status"],
+        rawArgs: ["ironcliw", "status"],
+        expected: ["node", "ironcliw", "status"],
       },
       {
         rawArgs: ["bun", "src/entry.ts", "status"],
@@ -364,7 +364,7 @@ describe("argv helpers", () => {
 
     for (const testCase of cases) {
       const parsed = buildParseArgv({
-        programName: "IronCliw",
+        programName: "ironcliw",
         rawArgs: [...testCase.rawArgs],
       });
       expect(parsed).toEqual([...testCase.expected]);
@@ -373,27 +373,27 @@ describe("argv helpers", () => {
 
   it("builds parse argv from fallback args", () => {
     const fallbackArgv = buildParseArgv({
-      programName: "IronCliw",
+      programName: "ironcliw",
       fallbackArgv: ["status"],
     });
-    expect(fallbackArgv).toEqual(["node", "IronCliw", "status"]);
+    expect(fallbackArgv).toEqual(["node", "ironcliw", "status"]);
   });
 
   it("decides when to migrate state", () => {
     const nonMutatingArgv = [
-      ["node", "IronCliw", "status"],
-      ["node", "IronCliw", "health"],
-      ["node", "IronCliw", "sessions"],
-      ["node", "IronCliw", "config", "get", "update"],
-      ["node", "IronCliw", "config", "unset", "update"],
-      ["node", "IronCliw", "models", "list"],
-      ["node", "IronCliw", "models", "status"],
-      ["node", "IronCliw", "memory", "status"],
-      ["node", "IronCliw", "agent", "--message", "hi"],
+      ["node", "ironcliw", "status"],
+      ["node", "ironcliw", "health"],
+      ["node", "ironcliw", "sessions"],
+      ["node", "ironcliw", "config", "get", "update"],
+      ["node", "ironcliw", "config", "unset", "update"],
+      ["node", "ironcliw", "models", "list"],
+      ["node", "ironcliw", "models", "status"],
+      ["node", "ironcliw", "memory", "status"],
+      ["node", "ironcliw", "agent", "--message", "hi"],
     ] as const;
     const mutatingArgv = [
-      ["node", "IronCliw", "agents", "list"],
-      ["node", "IronCliw", "message", "send"],
+      ["node", "ironcliw", "agents", "list"],
+      ["node", "ironcliw", "message", "send"],
     ] as const;
 
     for (const argv of nonMutatingArgv) {

@@ -2,7 +2,7 @@
 read_when:
   - 你正在管理已配对的节点（摄像头、屏幕、画布）
   - 你需要批准请求或调用节点命令
-summary: "`IronCliw nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
+summary: "`ironcliw nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
 title: nodes
 x-i18n:
   generated_at: "2026-02-03T10:04:26Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `IronCliw nodes`
+# `ironcliw nodes`
 
 管理已配对的节点（设备）并调用节点功能。
 
@@ -30,14 +30,14 @@ x-i18n:
 ## 常用命令
 
 ```bash
-IronCliw nodes list
-IronCliw nodes list --connected
-IronCliw nodes list --last-connected 24h
-IronCliw nodes pending
-IronCliw nodes approve <requestId>
-IronCliw nodes status
-IronCliw nodes status --connected
-IronCliw nodes status --last-connected 24h
+ironcliw nodes list
+ironcliw nodes list --connected
+ironcliw nodes list --last-connected 24h
+ironcliw nodes pending
+ironcliw nodes approve <requestId>
+ironcliw nodes status
+ironcliw nodes status --connected
+ironcliw nodes status --last-connected 24h
 ```
 
 `nodes list` 打印待处理/已配对表格。已配对行包含最近连接时长（Last Connect）。
@@ -47,10 +47,10 @@ IronCliw nodes status --last-connected 24h
 ## 调用 / 运行
 
 ```bash
-IronCliw nodes invoke --node <id|name|ip> --command <command> --params <json>
-IronCliw nodes run --node <id|name|ip> <command...>
-IronCliw nodes run --raw "git status"
-IronCliw nodes run --agent main --node <id|name|ip> --raw "git status"
+ironcliw nodes invoke --node <id|name|ip> --command <command> --params <json>
+ironcliw nodes run --node <id|name|ip> <command...>
+ironcliw nodes run --raw "git status"
+ironcliw nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 调用标志：

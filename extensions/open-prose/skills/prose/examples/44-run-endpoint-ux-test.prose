@@ -259,4 +259,3 @@ Create a final report with:
 ## Recommendations
 (Concrete, implementable suggestions)"""
   context: { ws_results, file_results, exec }
-

@@ -1,4 +1,5 @@
 import type { Command } from "commander";
+import { resolveCommitHash } from "../../infra/git-commit.js";
 import { formatDocsLink } from "../../terminal/links.js";
 import { isRich, theme } from "../../terminal/theme.js";
 import { escapeRegExp } from "../../utils.js";
@@ -20,25 +21,25 @@ const ROOT_COMMANDS_HINT =
   "Hint: commands suffixed with * have subcommands. Run <command> --help for details.";
 
 const EXAMPLES = [
-  ["IronCliw models --help", "Show detailed help for the models command."],
+  ["ironcliw models --help", "Show detailed help for the models command."],
   [
-    "IronCliw channels login --verbose",
+    "ironcliw channels login --verbose",
     "Link personal WhatsApp Web and show QR + connection logs.",
   ],
   [
-    'IronCliw message send --target +15555550123 --message "Hi" --json',
+    'ironcliw message send --target +15555550123 --message "Hi" --json',
     "Send via your web session and print JSON result.",
   ],
-  ["IronCliw gateway --port 18789", "Run the WebSocket Gateway locally."],
-  ["IronCliw --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-  ["IronCliw gateway --force", "Kill anything bound to the default gateway port, then start it."],
-  ["IronCliw gateway ...", "Gateway control via WebSocket."],
+  ["ironcliw gateway --port 18789", "Run the WebSocket Gateway locally."],
+  ["ironcliw --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
+  ["ironcliw gateway --force", "Kill anything bound to the default gateway port, then start it."],
+  ["ironcliw gateway ...", "Gateway control via WebSocket."],
   [
-    'IronCliw agent --to +15555550123 --message "Run summary" --deliver',
+    'ironcliw agent --to +15555550123 --message "Run summary" --deliver',
     "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
   ],
   [
-    'IronCliw message send --channel telegram --target @mychat --message "Hi"',
+    'ironcliw message send --channel telegram --target @mychat --message "Hi"',
     "Send via your Telegram bot.",
   ],
 ] as const;
@@ -50,11 +51,11 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     .version(ctx.programVersion)
     .option(
       "--dev",
-      "Dev profile: isolate state under ~/.IronCliw-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
+      "Dev profile: isolate state under ~/.ironcliw-dev, default gateway port 19001, and shift derived ports (browser/canvas)",
     )
     .option(
       "--profile <name>",
-      "Use a named profile (isolates IronCliw_STATE_DIR/IronCliw_CONFIG_PATH under ~/.IronCliw-<name>)",
+      "Use a named profile (isolates IRONCLIW_STATE_DIR/IRONCLIW_CONFIG_PATH under ~/.ironcliw-<name>)",
     )
     .option(
       "--log-level <level>",
@@ -109,7 +110,10 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     hasFlag(process.argv, "--version") ||
     hasRootVersionAlias(process.argv)
   ) {
-    console.log(ctx.programVersion);
+    const commit = resolveCommitHash({ moduleUrl: import.meta.url });
+    console.log(
+      commit ? `IronCliw ${ctx.programVersion} (${commit})` : `IronCliw ${ctx.programVersion}`,
+    );
     process.exit(0);
   }
 
@@ -130,7 +134,7 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
     if (command !== program) {
       return "";
     }
-    const docs = formatDocsLink("/cli", "docs.IronCliw.ai/cli");
+    const docs = formatDocsLink("/cli", "docs.ironcliw.ai/cli");
     return `\n${theme.heading("Examples:")}\n${fmtExamples}\n\n${theme.muted("Docs:")} ${docs}\n`;
   });
 }

@@ -11,7 +11,7 @@ describe("collectCommandSecretAssignmentsFromSnapshot", () => {
     } as unknown as IronCliwConfig;
     const resolvedConfig = {
       talk: {
-        apiKey: "talk-key",
+        apiKey: "talk-key", // pragma: allowlist secret
       },
     } as unknown as IronCliwConfig;
 

@@ -57,7 +57,7 @@ export function registerPairingCli(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/pairing", "docs.IronCliw.ai/cli/pairing")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/pairing", "docs.ironcliw.ai/cli/pairing")}\n`,
     );
 
   pairing
@@ -135,12 +135,12 @@ export function registerPairingCli(program: Command) {
           : codeOrChannel;
       if (!channelRaw || !resolvedCode) {
         throw new Error(
-          `Usage: ${formatCliCommand("IronCliw pairing approve <channel> <code>")} (or: ${formatCliCommand("IronCliw pairing approve --channel <channel> <code>")})`,
+          `Usage: ${formatCliCommand("ironcliw pairing approve <channel> <code>")} (or: ${formatCliCommand("ironcliw pairing approve --channel <channel> <code>")})`,
         );
       }
       if (opts.channel && code != null) {
         throw new Error(
-          `Too many arguments. Use: ${formatCliCommand("IronCliw pairing approve --channel <channel> <code>")}`,
+          `Too many arguments. Use: ${formatCliCommand("ironcliw pairing approve --channel <channel> <code>")}`,
         );
       }
       const channel = parseChannel(channelRaw, channels);

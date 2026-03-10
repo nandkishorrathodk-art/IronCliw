@@ -22,7 +22,7 @@ class I18nManager {
   }
 
   private resolveInitialLocale(): Locale {
-    const saved = localStorage.getItem("IronCliw.i18n.locale");
+    const saved = localStorage.getItem("ironcliw.i18n.locale");
     if (isSupportedLocale(saved)) {
       return saved;
     }
@@ -64,7 +64,7 @@ class I18nManager {
     }
 
     this.locale = locale;
-    localStorage.setItem("IronCliw.i18n.locale", locale);
+    localStorage.setItem("ironcliw.i18n.locale", locale);
     this.notify();
   }
 
@@ -117,7 +117,14 @@ class I18nManager {
 
     return value;
   }
+  public __resetForTest() {
+    this.locale = DEFAULT_LOCALE;
+    this.translations = { [DEFAULT_LOCALE]: en };
+    this.subscribers.clear();
+    this.loadLocale();
+  }
 }
 
 export const i18n = new I18nManager();
+export const resetI18n = () => i18n.__resetForTest();
 export const t = (key: string, params?: Record<string, string>) => i18n.t(key, params);

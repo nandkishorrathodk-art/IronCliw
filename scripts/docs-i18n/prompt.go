@@ -144,4 +144,3 @@ func buildGlossaryPrompt(glossary []GlossaryEntry) string {
 	}
 	return strings.Join(lines, "\n")
 }
-

@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import { assertNoPathAliasEscape, type PathAliasPolicy } from "../infra/path-alias-guards.js";
 import { isPathInside } from "../infra/path-guards.js";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 
 const UNICODE_SPACES = /[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g;
 const HTTP_URL_RE = /^https?:\/\//i;
@@ -190,11 +190,11 @@ async function resolveAllowedTmpMediaPath(params: {
     return undefined;
   }
   const resolved = path.resolve(resolveSandboxInputPath(params.candidate, params.sandboxRoot));
-  const IronCliwTmpDir = path.resolve(resolvePreferredIronCliwTmpDir());
-  if (!isPathInside(IronCliwTmpDir, resolved)) {
+  const ironCliwTmpDir = path.resolve(resolvePreferredIronCliwTmpDir());
+  if (!isPathInside(ironCliwTmpDir, resolved)) {
     return undefined;
   }
-  await assertNoTmpAliasEscape({ filePath: resolved, tmpRoot: IronCliwTmpDir });
+  await assertNoTmpAliasEscape({ filePath: resolved, tmpRoot: ironCliwTmpDir });
   return resolved;
 }
 

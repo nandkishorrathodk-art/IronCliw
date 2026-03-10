@@ -70,14 +70,14 @@ const SERVICE_REFRESH_TIMEOUT_MS = 60_000;
 
 const UPDATE_QUIPS = [
   "Leveled up! New skills unlocked. You're welcome.",
-  "Fresh code, same lobster. Miss me?",
+  "Fresh code, same iron grip. Miss me?",
   "Back and better. Did you even notice I was gone?",
   "Update complete. I learned some new tricks while I was out.",
   "Upgraded! Now with 23% more sass.",
   "I've evolved. Try to keep up.",
   "New version, who dis? Oh right, still me but shinier.",
-  "Patched, polished, and ready to pinch. Let's go.",
-  "The lobster has molted. Harder shell, sharper claws.",
+  "Patched, polished, and ready to forge. Let's go.",
+  "IronCliw reforged. Harder alloy, sharper edge.",
   "Update done! Check the changelog or just trust me, it's good.",
   "Reborn from the boiling waters of npm. Stronger now.",
   "I went away and came back smarter. You should try it sometime.",
@@ -87,7 +87,7 @@ const UPDATE_QUIPS = [
   "I've seen things you wouldn't believe. Anyway, I'm updated.",
   "Back online. The changelog is long but our friendship is longer.",
   "Upgraded! Peter fixed stuff. Blame him if it breaks.",
-  "Molting complete. Please don't look at my soft shell phase.",
+  "Tempering complete. Please don't look at my pre-hardened phase.",
   "Version bump! Same chaos energy, fewer crashes (probably).",
 ];
 
@@ -239,7 +239,7 @@ async function tryInstallShellCompletion(opts: {
       if (!opts.skipPrompt) {
         defaultRuntime.log(
           theme.muted(
-            `Skipped. Run \`${replaceCliName(formatCliCommand("IronCliw completion --install"), CLI_NAME)}\` later to enable.`,
+            `Skipped. Run \`${replaceCliName(formatCliCommand("ironcliw completion --install"), CLI_NAME)}\` later to enable.`,
           ),
         );
       }
@@ -545,7 +545,7 @@ async function maybeRestartService(params: {
       if (!params.opts.json && restarted) {
         defaultRuntime.log(theme.success("Daemon restarted successfully."));
         defaultRuntime.log("");
-        process.env.IronCliw_UPDATE_IN_PROGRESS = "1";
+        process.env.IRONCLIW_UPDATE_IN_PROGRESS = "1";
         try {
           const interactiveDoctor =
             Boolean(process.stdin.isTTY) && !params.opts.json && params.opts.yes !== true;
@@ -555,7 +555,7 @@ async function maybeRestartService(params: {
         } catch (err) {
           defaultRuntime.log(theme.warn(`Doctor failed: ${String(err)}`));
         } finally {
-          delete process.env.IronCliw_UPDATE_IN_PROGRESS;
+          delete process.env.IRONCLIW_UPDATE_IN_PROGRESS;
         }
       }
 
@@ -590,7 +590,7 @@ async function maybeRestartService(params: {
           }
           defaultRuntime.log(
             theme.muted(
-              `Run \`${replaceCliName(formatCliCommand("IronCliw gateway status --deep"), CLI_NAME)}\` for details.`,
+              `Run \`${replaceCliName(formatCliCommand("ironcliw gateway status --deep"), CLI_NAME)}\` for details.`,
             ),
           );
         }
@@ -601,7 +601,7 @@ async function maybeRestartService(params: {
         defaultRuntime.log(theme.warn(`Daemon restart failed: ${String(err)}`));
         defaultRuntime.log(
           theme.muted(
-            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("IronCliw gateway restart"), CLI_NAME)}`,
+            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("ironcliw gateway restart"), CLI_NAME)}`,
           ),
         );
       }
@@ -614,13 +614,13 @@ async function maybeRestartService(params: {
     if (params.result.mode === "npm" || params.result.mode === "pnpm") {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("IronCliw doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("IronCliw gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("ironcliw doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("ironcliw gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     } else {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("IronCliw gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("ironcliw gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     }
@@ -718,7 +718,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     } else if (updateInstallKind === "git") {
       actions.push(`Run git update flow on channel ${channel} (fetch/rebase/build/doctor)`);
     } else {
-      actions.push(`Run global package manager update with spec IronCliw@${tag}`);
+      actions.push(`Run global package manager update with spec ironcliw@${tag}`);
     }
     actions.push("Run plugin update sync after core update");
     actions.push("Refresh shell completion cache (if needed)");
@@ -877,12 +877,12 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.reason === "not-git-install") {
       defaultRuntime.log(
         theme.warn(
-          `Skipped: this IronCliw install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("IronCliw doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("IronCliw gateway restart"), CLI_NAME)}\`.`,
+          `Skipped: this IronCliw install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("ironcliw doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("ironcliw gateway restart"), CLI_NAME)}\`.`,
         ),
       );
       defaultRuntime.log(
         theme.muted(
-          `Examples: \`${replaceCliName("npm i -g IronCliw@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g IronCliw@latest", CLI_NAME)}\``,
+          `Examples: \`${replaceCliName("npm i -g ironcliw@latest", CLI_NAME)}\` or \`${replaceCliName("pnpm add -g ironcliw@latest", CLI_NAME)}\``,
         ),
       );
     }

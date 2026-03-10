@@ -129,4 +129,3 @@ func applyTranslations(body string, segments []Segment) string {
 	out.WriteString(body[last:])
 	return out.String()
 }
-

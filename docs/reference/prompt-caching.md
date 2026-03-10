@@ -145,7 +145,7 @@ IronCliw exposes dedicated cache-trace diagnostics for embedded agent runs.
 diagnostics:
   cacheTrace:
     enabled: true
-    filePath: "~/.IronCliw/logs/cache-trace.jsonl" # optional
+    filePath: "~/.ironcliw/logs/cache-trace.jsonl" # optional
     includeMessages: false # default true
     includePrompt: false # default true
     includeSystem: false # default true
@@ -153,18 +153,18 @@ diagnostics:
 
 Defaults:
 
-- `filePath`: `$IronCliw_STATE_DIR/logs/cache-trace.jsonl`
+- `filePath`: `$IRONCLIW_STATE_DIR/logs/cache-trace.jsonl`
 - `includeMessages`: `true`
 - `includePrompt`: `true`
 - `includeSystem`: `true`
 
 ### Env toggles (one-off debugging)
 
-- `IronCliw_CACHE_TRACE=1` enables cache tracing.
-- `IronCliw_CACHE_TRACE_FILE=/path/to/cache-trace.jsonl` overrides output path.
-- `IronCliw_CACHE_TRACE_MESSAGES=0|1` toggles full message payload capture.
-- `IronCliw_CACHE_TRACE_PROMPT=0|1` toggles prompt text capture.
-- `IronCliw_CACHE_TRACE_SYSTEM=0|1` toggles system prompt capture.
+- `IRONCLIW_CACHE_TRACE=1` enables cache tracing.
+- `IRONCLIW_CACHE_TRACE_FILE=/path/to/cache-trace.jsonl` overrides output path.
+- `IRONCLIW_CACHE_TRACE_MESSAGES=0|1` toggles full message payload capture.
+- `IRONCLIW_CACHE_TRACE_PROMPT=0|1` toggles prompt text capture.
+- `IRONCLIW_CACHE_TRACE_SYSTEM=0|1` toggles system prompt capture.
 
 ### What to inspect
 

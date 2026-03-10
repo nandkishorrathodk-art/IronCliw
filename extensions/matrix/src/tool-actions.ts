@@ -5,7 +5,7 @@ import {
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "IronCliw/plugin-sdk/matrix";
+} from "ironcliw/plugin-sdk/matrix";
 import {
   deleteMatrixMessage,
   editMatrixMessage,

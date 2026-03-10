@@ -1,5 +1,5 @@
 import { EventEmitter } from "node:events";
-import type { IronCliwConfig, RuntimeEnv } from "IronCliw/plugin-sdk/msteams";
+import type { IronCliwConfig, RuntimeEnv } from "ironcliw/plugin-sdk/msteams";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import type { MSTeamsPollStore } from "./polls.js";
@@ -15,7 +15,7 @@ const expressControl = vi.hoisted(() => ({
   mode: { value: "listening" as "listening" | "error" },
 }));
 
-vi.mock("IronCliw/plugin-sdk/msteams", () => ({
+vi.mock("ironcliw/plugin-sdk/msteams", () => ({
   DEFAULT_WEBHOOK_MAX_BODY_BYTES: 1024 * 1024,
   normalizeSecretInputString: (value: unknown) =>
     typeof value === "string" && value.trim() ? value.trim() : undefined,
@@ -140,7 +140,7 @@ function createConfig(port: number): IronCliwConfig {
       msteams: {
         enabled: true,
         appId: "app-id",
-        appPassword: "app-password",
+        appPassword: "app-password", // pragma: allowlist secret
         tenantId: "tenant-id",
         webhook: {
           port,

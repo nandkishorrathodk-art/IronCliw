@@ -23,8 +23,8 @@ x-i18n:
 
 Zalo Personal 作为插件提供，不包含在核心安装中。
 
-- 通过 CLI 安装：`IronCliw plugins install @IronCliw/zalouser`
-- 或从源码检出安装：`IronCliw plugins install ./extensions/zalouser`
+- 通过 CLI 安装：`ironcliw plugins install @ironcliw/zalouser`
+- 或从源码检出安装：`ironcliw plugins install ./extensions/zalouser`
 - 详情：[插件](/tools/plugin)
 
 ## 前置条件：zca-cli
@@ -38,7 +38,7 @@ Gateway 网关机器必须在 `PATH` 中有可用的 `zca` 二进制文件。
 
 1. 安装插件（见上文）。
 2. 登录（QR，在 Gateway 网关机器上）：
-   - `IronCliw channels login --channel zalouser`
+   - `ironcliw channels login --channel zalouser`
    - 用 Zalo 手机应用扫描终端中的二维码。
 3. 启用渠道：
 
@@ -71,9 +71,9 @@ Gateway 网关机器必须在 `PATH` 中有可用的 `zca` 二进制文件。
 使用目录 CLI 发现联系人/群组及其 ID：
 
 ```bash
-IronCliw directory self --channel zalouser
-IronCliw directory peers list --channel zalouser --query "name"
-IronCliw directory groups list --channel zalouser --query "work"
+ironcliw directory self --channel zalouser
+ironcliw directory peers list --channel zalouser --query "name"
+ironcliw directory groups list --channel zalouser --query "work"
 ```
 
 ## 限制
@@ -88,8 +88,8 @@ IronCliw directory groups list --channel zalouser --query "work"
 
 通过以下方式批准：
 
-- `IronCliw pairing list zalouser`
-- `IronCliw pairing approve zalouser <code>`
+- `ironcliw pairing list zalouser`
+- `ironcliw pairing approve zalouser <code>`
 
 ## 群组访问（可选）
 
@@ -143,5 +143,5 @@ IronCliw directory groups list --channel zalouser --query "work"
 
 **登录不保持：**
 
-- `IronCliw channels status --probe`
-- 重新登录：`IronCliw channels logout --channel zalouser && IronCliw channels login --channel zalouser`
+- `ironcliw channels status --probe`
+- 重新登录：`ironcliw channels logout --channel zalouser && ironcliw channels login --channel zalouser`

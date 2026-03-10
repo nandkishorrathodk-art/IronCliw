@@ -26,13 +26,13 @@ x-i18n:
 1. 查看已加载的内容：
 
 ```bash
-IronCliw plugins list
+ironcliw plugins list
 ```
 
 2. 安装官方插件（例如：Voice Call）：
 
 ```bash
-IronCliw plugins install @IronCliw/voice-call
+ironcliw plugins install @ironcliw/voice-call
 ```
 
 3. 重启 Gateway 网关，然后在 `plugins.entries.<id>.config` 下配置。
@@ -41,15 +41,15 @@ IronCliw plugins install @IronCliw/voice-call
 
 ## 可用插件（官方）
 
-- 从 2026.1.15 起 Microsoft Teams 仅作为插件提供；如果使用 Teams，请安装 `@IronCliw/msteams`。
+- 从 2026.1.15 起 Microsoft Teams 仅作为插件提供；如果使用 Teams，请安装 `@ironcliw/msteams`。
 - Memory (Core) — 捆绑的记忆搜索插件（通过 `plugins.slots.memory` 默认启用）
 - Memory (LanceDB) — 捆绑的长期记忆插件（自动召回/捕获；设置 `plugins.slots.memory = "memory-lancedb"`）
-- [Voice Call](/plugins/voice-call) — `@IronCliw/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@IronCliw/zalouser`
-- [Matrix](/channels/matrix) — `@IronCliw/matrix`
-- [Nostr](/channels/nostr) — `@IronCliw/nostr`
-- [Zalo](/channels/zalo) — `@IronCliw/zalo`
-- [Microsoft Teams](/channels/msteams) — `@IronCliw/msteams`
+- [Voice Call](/plugins/voice-call) — `@ironcliw/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@ironcliw/zalouser`
+- [Matrix](/channels/matrix) — `@ironcliw/matrix`
+- [Nostr](/channels/nostr) — `@ironcliw/nostr`
+- [Zalo](/channels/zalo) — `@ironcliw/zalo`
+- [Microsoft Teams](/channels/msteams) — `@ironcliw/msteams`
 - Google Antigravity OAuth（提供商认证）— 作为 `google-antigravity-auth` 捆绑（默认禁用）
 - Gemini CLI OAuth（提供商认证）— 作为 `google-gemini-cli-auth` 捆绑（默认禁用）
 - Qwen OAuth（提供商认证）— 作为 `qwen-portal-auth` 捆绑（默认禁用）
@@ -98,32 +98,32 @@ IronCliw 按顺序扫描：
 
 2. 工作区扩展
 
-- `<workspace>/.IronCliw/extensions/*.ts`
-- `<workspace>/.IronCliw/extensions/*/index.ts`
+- `<workspace>/.ironcliw/extensions/*.ts`
+- `<workspace>/.ironcliw/extensions/*/index.ts`
 
 3. 全局扩展
 
-- `~/.IronCliw/extensions/*.ts`
-- `~/.IronCliw/extensions/*/index.ts`
+- `~/.ironcliw/extensions/*.ts`
+- `~/.ironcliw/extensions/*/index.ts`
 
 4. 捆绑扩展（随 IronCliw 一起发布，**默认禁用**）
 
-- `<IronCliw>/extensions/*`
+- `<ironcliw>/extensions/*`
 
-捆绑插件必须通过 `plugins.entries.<id>.enabled` 或 `IronCliw plugins enable <id>` 显式启用。已安装的插件默认启用，但可以用相同方式禁用。
+捆绑插件必须通过 `plugins.entries.<id>.enabled` 或 `ironcliw plugins enable <id>` 显式启用。已安装的插件默认启用，但可以用相同方式禁用。
 
-每个插件必须在其根目录中包含 `IronCliw.plugin.json` 文件。如果路径指向文件，则插件根目录是文件的目录，必须包含清单。
+每个插件必须在其根目录中包含 `ironcliw.plugin.json` 文件。如果路径指向文件，则插件根目录是文件的目录，必须包含清单。
 
 如果多个插件解析到相同的 id，上述顺序中的第一个匹配项获胜，较低优先级的副本被忽略。
 
 ### 包集合
 
-插件目录可以包含带有 `IronCliw.extensions` 的 `package.json`：
+插件目录可以包含带有 `ironcliw.extensions` 的 `package.json`：
 
 ```json
 {
   "name": "my-pack",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"]
   }
 }
@@ -135,14 +135,14 @@ IronCliw 按顺序扫描：
 
 ### 渠道目录元数据
 
-渠道插件可以通过 `IronCliw.channel` 广播新手引导元数据，通过 `IronCliw.install` 广播安装提示。这使核心目录保持无数据。
+渠道插件可以通过 `ironcliw.channel` 广播新手引导元数据，通过 `ironcliw.install` 广播安装提示。这使核心目录保持无数据。
 
 示例：
 
 ```json
 {
-  "name": "@IronCliw/nextcloud-talk",
-  "IronCliw": {
+  "name": "@ironcliw/nextcloud-talk",
+  "ironcliw": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -155,7 +155,7 @@ IronCliw 按顺序扫描：
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@IronCliw/nextcloud-talk",
+      "npmSpec": "@ironcliw/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -165,11 +165,11 @@ IronCliw 按顺序扫描：
 
 IronCliw 还可以合并**外部渠道目录**（例如，MPM 注册表导出）。将 JSON 文件放在以下位置之一：
 
-- `~/.IronCliw/mpm/plugins.json`
-- `~/.IronCliw/mpm/catalog.json`
-- `~/.IronCliw/plugins/catalog.json`
+- `~/.ironcliw/mpm/plugins.json`
+- `~/.ironcliw/mpm/catalog.json`
+- `~/.ironcliw/plugins/catalog.json`
 
-或将 `IronCliw_PLUGIN_CATALOG_PATHS`（或 `IronCliw_MPM_CATALOG_PATHS`）指向一个或多个 JSON 文件（逗号/分号/`PATH` 分隔）。每个文件应包含 `{ "entries": [ { "name": "@scope/pkg", "IronCliw": { "channel": {...}, "install": {...} } } ] }`。
+或将 `IRONCLIW_PLUGIN_CATALOG_PATHS`（或 `IRONCLIW_MPM_CATALOG_PATHS`）指向一个或多个 JSON 文件（逗号/分号/`PATH` 分隔）。每个文件应包含 `{ "entries": [ { "name": "@scope/pkg", "ironcliw": { "channel": {...}, "install": {...} } } ] }`。
 
 ## 插件 ID
 
@@ -210,7 +210,7 @@ IronCliw 还可以合并**外部渠道目录**（例如，MPM 注册表导出）
 
 - `entries`、`allow`、`deny` 或 `slots` 中的未知插件 id 是**错误**。
 - 未知的 `channels.<id>` 键是**错误**，除非插件清单声明了渠道 id。
-- 插件配置使用嵌入在 `IronCliw.plugin.json`（`configSchema`）中的 JSON Schema 进行验证。
+- 插件配置使用嵌入在 `ironcliw.plugin.json`（`configSchema`）中的 JSON Schema 进行验证。
 - 如果插件被禁用，其配置会保留并发出**警告**。
 
 ## 插件槽位（独占类别）
@@ -264,24 +264,24 @@ IronCliw 在运行时根据发现的插件增强 `uiHints`：
 ## CLI
 
 ```bash
-IronCliw plugins list
-IronCliw plugins info <id>
-IronCliw plugins install <path>                 # copy a local file/dir into ~/.IronCliw/extensions/<id>
-IronCliw plugins install ./extensions/voice-call # relative path ok
-IronCliw plugins install ./plugin.tgz           # install from a local tarball
-IronCliw plugins install ./plugin.zip           # install from a local zip
-IronCliw plugins install -l ./extensions/voice-call # link (no copy) for dev
-IronCliw plugins install @IronCliw/voice-call # install from npm
-IronCliw plugins update <id>
-IronCliw plugins update --all
-IronCliw plugins enable <id>
-IronCliw plugins disable <id>
-IronCliw plugins doctor
+ironcliw plugins list
+ironcliw plugins info <id>
+ironcliw plugins install <path>                 # copy a local file/dir into ~/.ironcliw/extensions/<id>
+ironcliw plugins install ./extensions/voice-call # relative path ok
+ironcliw plugins install ./plugin.tgz           # install from a local tarball
+ironcliw plugins install ./plugin.zip           # install from a local zip
+ironcliw plugins install -l ./extensions/voice-call # link (no copy) for dev
+ironcliw plugins install @ironcliw/voice-call # install from npm
+ironcliw plugins update <id>
+ironcliw plugins update --all
+ironcliw plugins enable <id>
+ironcliw plugins disable <id>
+ironcliw plugins doctor
 ```
 
 `plugins update` 仅适用于在 `plugins.installs` 下跟踪的 npm 安装。
 
-插件也可以注册自己的顶级命令（例如：`IronCliw voicecall`）。
+插件也可以注册自己的顶级命令（例如：`ironcliw voicecall`）。
 
 ## 插件 API（概述）
 
@@ -297,7 +297,7 @@ IronCliw plugins doctor
 ### 示例
 
 ```
-import { registerPluginHooksFromDir } from "IronCliw/plugin-sdk";
+import { registerPluginHooksFromDir } from "ironcliw/plugin-sdk";
 
 export default function register(api) {
   registerPluginHooksFromDir(api, "./hooks");
@@ -308,8 +308,8 @@ export default function register(api) {
 
 - 钩子目录遵循正常的钩子结构（`HOOK.md` + `handler.ts`）。
 - 钩子资格规则仍然适用（操作系统/二进制文件/环境/配置要求）。
-- 插件管理的钩子在 `IronCliw hooks list` 中显示为 `plugin:<id>`。
-- 你不能通过 `IronCliw hooks` 启用/禁用插件管理的钩子；而是启用/禁用插件。
+- 插件管理的钩子在 `ironcliw hooks list` 中显示为 `plugin:<id>`。
+- 你不能通过 `ironcliw hooks` 启用/禁用插件管理的钩子；而是启用/禁用插件。
 
 ## 提供商插件（模型认证）
 
@@ -317,7 +317,7 @@ export default function register(api) {
 
 通过 `api.registerProvider(...)` 注册提供商。每个提供商暴露一个或多个认证方法（OAuth、API 密钥、设备码等）。这些方法驱动：
 
-- `IronCliw models auth login --provider <id> [--method <id>]`
+- `ironcliw models auth login --provider <id> [--method <id>]`
 
 示例：
 
@@ -599,14 +599,14 @@ export default function (api) {
 
 推荐的打包方式：
 
-- 主包：`IronCliw`（本仓库）
-- 插件：`@IronCliw/*` 下的独立 npm 包（例如：`@IronCliw/voice-call`）
+- 主包：`ironcliw`（本仓库）
+- 插件：`@ironcliw/*` 下的独立 npm 包（例如：`@ironcliw/voice-call`）
 
 发布契约：
 
-- 插件 `package.json` 必须包含带有一个或多个入口文件的 `IronCliw.extensions`。
+- 插件 `package.json` 必须包含带有一个或多个入口文件的 `ironcliw.extensions`。
 - 入口文件可以是 `.js` 或 `.ts`（jiti 在运行时加载 TS）。
-- `IronCliw plugins install <npm-spec>` 使用 `npm pack`，提取到 `~/.IronCliw/extensions/<id>/`，并在配置中启用它。
+- `ironcliw plugins install <npm-spec>` 使用 `npm pack`，提取到 `~/.ironcliw/extensions/<id>/`，并在配置中启用它。
 - 配置键稳定性：作用域包被规范化为 `plugins.entries.*` 的**无作用域** id。
 
 ## 示例插件：Voice Call
@@ -615,7 +615,7 @@ export default function (api) {
 
 - 源码：`extensions/voice-call`
 - Skills：`skills/voice-call`
-- CLI：`IronCliw voicecall start|status`
+- CLI：`ironcliw voicecall start|status`
 - 工具：`voice_call`
 - RPC：`voicecall.start`、`voicecall.status`
 - 配置（twilio）：`provider: "twilio"` + `twilio.accountSid/authToken/from`（可选 `statusCallbackUrl`、`twimlUrl`）
@@ -636,4 +636,4 @@ export default function (api) {
 插件可以（也应该）附带测试：
 
 - 仓库内插件可以在 `src/**` 下保留 Vitest 测试（例如：`src/plugins/voice-call.plugin.test.ts`）。
-- 单独发布的插件应运行自己的 CI（lint/构建/测试）并验证 `IronCliw.extensions` 指向构建的入口点（`dist/index.js`）。
+- 单独发布的插件应运行自己的 CI（lint/构建/测试）并验证 `ironcliw.extensions` 指向构建的入口点（`dist/index.js`）。

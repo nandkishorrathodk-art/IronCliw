@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 
-declare const __IronCliw_VERSION__: string | undefined;
-const CORE_PACKAGE_NAME = "IronCliw";
+declare const __IRONCLIW_VERSION__: string | undefined;
+const CORE_PACKAGE_NAME = "ironcliw";
 
 const PACKAGE_JSON_CANDIDATES = [
   "../package.json",
@@ -110,9 +110,9 @@ export function resolveRuntimeServiceVersion(
 
   return (
     firstNonEmpty(
-      env["IronCliw_VERSION"],
+      env["IRONCLIW_VERSION"],
       runtimeVersion,
-      env["IronCliw_SERVICE_VERSION"],
+      env["IRONCLIW_SERVICE_VERSION"],
       env["npm_package_version"],
     ) ?? fallback
   );
@@ -123,6 +123,6 @@ export function resolveRuntimeServiceVersion(
 // - Dev/npm builds: package.json.
 export const VERSION = resolveBinaryVersion({
   moduleUrl: import.meta.url,
-  injectedVersion: typeof __IronCliw_VERSION__ === "string" ? __IronCliw_VERSION__ : undefined,
-  bundledVersion: process.env.IronCliw_BUNDLED_VERSION,
+  injectedVersion: typeof __IRONCLIW_VERSION__ === "string" ? __IRONCLIW_VERSION__ : undefined,
+  bundledVersion: process.env.IRONCLIW_BUNDLED_VERSION,
 });

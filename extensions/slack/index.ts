@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/slack";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/slack";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/slack";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/slack";
 import { slackPlugin } from "./src/channel.js";
 import { setSlackRuntime } from "./src/runtime.js";
 

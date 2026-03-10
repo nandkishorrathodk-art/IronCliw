@@ -25,7 +25,7 @@ function buildSessionHeaderAndMessage() {
 const tempDirs: string[] = [];
 
 async function createTempSessionPath() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-session-repair-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-session-repair-"));
   tempDirs.push(dir);
   return { dir, file: path.join(dir, "session.jsonl") };
 }

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw dns` (wide-area discovery helpers)"
+summary: "CLI reference for `ironcliw dns` (wide-area discovery helpers)"
 read_when:
   - You want wide-area discovery (DNS-SD) via Tailscale + CoreDNS
-  - You’re setting up split DNS for a custom discovery domain (example: IronCliw.internal)
+  - You’re setting up split DNS for a custom discovery domain (example: ironcliw.internal)
 title: "dns"
 ---
 
-# `IronCliw dns`
+# `ironcliw dns`
 
 DNS helpers for wide-area discovery (Tailscale + CoreDNS). Currently focused on macOS + Homebrew CoreDNS.
 
@@ -18,6 +18,6 @@ Related:
 ## Setup
 
 ```bash
-IronCliw dns setup
-IronCliw dns setup --apply
+ironcliw dns setup
+ironcliw dns setup --apply
 ```

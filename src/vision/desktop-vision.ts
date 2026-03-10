@@ -62,7 +62,13 @@ export class DesktopVision {
   /**
    * Captures a specific region of the screen.
    */
-  async captureRegion(outputPath: string, x: number, y: number, width: number, height: number): Promise<string> {
+  async captureRegion(
+    outputPath: string,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ): Promise<string> {
     const absolutePath = path.resolve(outputPath);
     const outDir = path.dirname(absolutePath);
     const tmpDir = os.tmpdir();
@@ -84,7 +90,9 @@ export class DesktopVision {
 
     return new Promise((resolve, reject) => {
       const ps = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", psScript]);
-      ps.on("close", (code) => code === 0 ? resolve(absolutePath) : reject(new Error("Region capture failed")));
+      ps.on("close", (code) =>
+        code === 0 ? resolve(absolutePath) : reject(new Error("Region capture failed")),
+      );
       ps.on("error", (err) => reject(err));
     });
   }

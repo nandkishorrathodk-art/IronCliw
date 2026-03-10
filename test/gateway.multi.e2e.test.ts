@@ -48,7 +48,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake a",
             mode: "now",
           },
-          { "x-IronCliw-token": gwA.hookToken },
+          { "x-ironcliw-token": gwA.hookToken },
         ),
         postJson(
           `http://127.0.0.1:${gwB.port}/hooks/wake`,
@@ -56,7 +56,7 @@ describe("gateway multi-instance e2e", () => {
             text: "wake b",
             mode: "now",
           },
-          { "x-IronCliw-token": gwB.hookToken },
+          { "x-ironcliw-token": gwB.hookToken },
         ),
       ]);
       expect(hookResA.status).toBe(200);

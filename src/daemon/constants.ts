@@ -1,13 +1,13 @@
 // Default service labels (canonical + legacy compatibility)
-export const GATEWAY_LAUNCH_AGENT_LABEL = "ai.IronCliw.gateway";
-export const GATEWAY_SYSTEMD_SERVICE_NAME = "IronCliw-gateway";
+export const GATEWAY_LAUNCH_AGENT_LABEL = "ai.ironcliw.gateway";
+export const GATEWAY_SYSTEMD_SERVICE_NAME = "ironcliw-gateway";
 export const GATEWAY_WINDOWS_TASK_NAME = "IronCliw Gateway";
-export const GATEWAY_SERVICE_MARKER = "IronCliw";
+export const GATEWAY_SERVICE_MARKER = "ironcliw";
 export const GATEWAY_SERVICE_KIND = "gateway";
-export const NODE_LAUNCH_AGENT_LABEL = "ai.IronCliw.node";
-export const NODE_SYSTEMD_SERVICE_NAME = "IronCliw-node";
+export const NODE_LAUNCH_AGENT_LABEL = "ai.ironcliw.node";
+export const NODE_SYSTEMD_SERVICE_NAME = "ironcliw-node";
 export const NODE_WINDOWS_TASK_NAME = "IronCliw Node";
-export const NODE_SERVICE_MARKER = "IronCliw";
+export const NODE_SERVICE_MARKER = "ironcliw";
 export const NODE_SERVICE_KIND = "node";
 export const NODE_WINDOWS_TASK_SCRIPT_NAME = "node.cmd";
 export const LEGACY_GATEWAY_LAUNCH_AGENT_LABELS: string[] = [];
@@ -35,7 +35,7 @@ export function resolveGatewayLaunchAgentLabel(profile?: string): string {
   if (!normalized) {
     return GATEWAY_LAUNCH_AGENT_LABEL;
   }
-  return `ai.IronCliw.${normalized}`;
+  return `ai.ironcliw.${normalized}`;
 }
 
 export function resolveLegacyGatewayLaunchAgentLabels(profile?: string): string[] {
@@ -48,7 +48,7 @@ export function resolveGatewaySystemdServiceName(profile?: string): string {
   if (!suffix) {
     return GATEWAY_SYSTEMD_SERVICE_NAME;
   }
-  return `IronCliw-gateway${suffix}`;
+  return `ironcliw-gateway${suffix}`;
 }
 
 export function resolveGatewayWindowsTaskName(profile?: string): string {
@@ -86,8 +86,8 @@ export function resolveGatewayServiceDescription(params: {
   return (
     params.description ??
     formatGatewayServiceDescription({
-      profile: params.env.IronCliw_PROFILE,
-      version: params.environment?.IronCliw_SERVICE_VERSION ?? params.env.IronCliw_SERVICE_VERSION,
+      profile: params.env.IRONCLIW_PROFILE,
+      version: params.environment?.IRONCLIW_SERVICE_VERSION ?? params.env.IRONCLIW_SERVICE_VERSION,
     })
   );
 }

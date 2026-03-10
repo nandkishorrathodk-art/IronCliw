@@ -22,7 +22,7 @@ export function createRestrictedAgentSandboxConfig(params: {
       list: [
         {
           id: "restricted",
-          workspace: params.workspace ?? "~/IronCliw-restricted",
+          workspace: params.workspace ?? "~/ironcliw-restricted",
           sandbox: {
             mode: "all",
             scope: "agent",

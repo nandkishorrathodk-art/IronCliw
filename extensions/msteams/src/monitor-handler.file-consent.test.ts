@@ -1,4 +1,4 @@
-import type { IronCliwConfig, PluginRuntime, RuntimeEnv } from "IronCliw/plugin-sdk/msteams";
+import type { IronCliwConfig, PluginRuntime, RuntimeEnv } from "ironcliw/plugin-sdk/msteams";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import type { MSTeamsAdapter } from "./messenger.js";

@@ -11,7 +11,7 @@ title: "Getting Started"
 Goal: go from zero to a first working chat with minimal setup.
 
 <Info>
-Fastest chat: open the Control UI (no channel setup needed). Run `IronCliw dashboard`
+Fastest chat: open the Control UI (no channel setup needed). Run `ironcliw dashboard`
 and chat in the browser, or open `http://127.0.0.1:18789/` on the
 <Tooltip headline="Gateway host" tip="The machine running the IronCliw gateway service.">gateway host</Tooltip>.
 Docs: [Dashboard](/web/dashboard) and [Control UI](/web/control-ui).
@@ -32,7 +32,7 @@ Check your Node version with `node --version` if you are unsure.
     <Tabs>
       <Tab title="macOS/Linux">
         ```bash
-        curl -fsSL https://IronCliw.ai/install.sh | bash
+        curl -fsSL https://ironcliw.ai/install.sh | bash
         ```
         <img
   src="/assets/install-script.svg"
@@ -42,7 +42,7 @@ Check your Node version with `node --version` if you are unsure.
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://IronCliw.ai/install.ps1 | iex
+        iwr -useb https://ironcliw.ai/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -54,7 +54,7 @@ Check your Node version with `node --version` if you are unsure.
   </Step>
   <Step title="Run the onboarding wizard">
     ```bash
-    IronCliw onboard --install-daemon
+    ironcliw onboard --install-daemon
     ```
 
     The wizard configures auth, gateway settings, and optional channels.
@@ -65,13 +65,13 @@ Check your Node version with `node --version` if you are unsure.
     If you installed the service, it should already be running:
 
     ```bash
-    IronCliw gateway status
+    ironcliw gateway status
     ```
 
   </Step>
   <Step title="Open the Control UI">
     ```bash
-    IronCliw dashboard
+    ironcliw dashboard
     ```
   </Step>
 </Steps>
@@ -87,7 +87,7 @@ If the Control UI loads, your Gateway is ready for use.
     Useful for quick tests or troubleshooting.
 
     ```bash
-    IronCliw gateway --port 18789
+    ironcliw gateway --port 18789
     ```
 
   </Accordion>
@@ -95,7 +95,7 @@ If the Control UI loads, your Gateway is ready for use.
     Requires a configured channel.
 
     ```bash
-    IronCliw message send --target +15555550123 --message "Hello from IronCliw"
+    ironcliw message send --target +15555550123 --message "Hello from IronCliw"
     ```
 
   </Accordion>
@@ -105,9 +105,9 @@ If the Control UI loads, your Gateway is ready for use.
 
 If you run IronCliw as a service account or want custom config/state locations:
 
-- `IronCliw_HOME` sets the home directory used for internal path resolution.
-- `IronCliw_STATE_DIR` overrides the state directory.
-- `IronCliw_CONFIG_PATH` overrides the config file path.
+- `IRONCLIW_HOME` sets the home directory used for internal path resolution.
+- `IRONCLIW_STATE_DIR` overrides the state directory.
+- `IRONCLIW_CONFIG_PATH` overrides the config file path.
 
 Full environment variable reference: [Environment vars](/help/environment).
 

@@ -12,14 +12,14 @@ import { ATTR_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
 import type {
   DiagnosticEventPayload,
   IronCliwPluginService,
-} from "IronCliw/plugin-sdk/diagnostics-otel";
+} from "ironcliw/plugin-sdk/diagnostics-otel";
 import {
   onDiagnosticEvent,
   redactSensitiveText,
   registerLogTransport,
-} from "IronCliw/plugin-sdk/diagnostics-otel";
+} from "ironcliw/plugin-sdk/diagnostics-otel";
 
-const DEFAULT_SERVICE_NAME = "IronCliw";
+const DEFAULT_SERVICE_NAME = "ironcliw";
 
 function normalizeEndpoint(endpoint?: string): string | undefined {
   const trimmed = endpoint?.trim();
@@ -164,78 +164,78 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         FATAL: 21 as SeverityNumber,
       };
 
-      const meter = metrics.getMeter("IronCliw");
-      const tracer = trace.getTracer("IronCliw");
+      const meter = metrics.getMeter("ironcliw");
+      const tracer = trace.getTracer("ironcliw");
 
-      const tokensCounter = meter.createCounter("IronCliw.tokens", {
+      const tokensCounter = meter.createCounter("ironcliw.tokens", {
         unit: "1",
         description: "Token usage by type",
       });
-      const costCounter = meter.createCounter("IronCliw.cost.usd", {
+      const costCounter = meter.createCounter("ironcliw.cost.usd", {
         unit: "1",
         description: "Estimated model cost (USD)",
       });
-      const durationHistogram = meter.createHistogram("IronCliw.run.duration_ms", {
+      const durationHistogram = meter.createHistogram("ironcliw.run.duration_ms", {
         unit: "ms",
         description: "Agent run duration",
       });
-      const contextHistogram = meter.createHistogram("IronCliw.context.tokens", {
+      const contextHistogram = meter.createHistogram("ironcliw.context.tokens", {
         unit: "1",
         description: "Context window size and usage",
       });
-      const webhookReceivedCounter = meter.createCounter("IronCliw.webhook.received", {
+      const webhookReceivedCounter = meter.createCounter("ironcliw.webhook.received", {
         unit: "1",
         description: "Webhook requests received",
       });
-      const webhookErrorCounter = meter.createCounter("IronCliw.webhook.error", {
+      const webhookErrorCounter = meter.createCounter("ironcliw.webhook.error", {
         unit: "1",
         description: "Webhook processing errors",
       });
-      const webhookDurationHistogram = meter.createHistogram("IronCliw.webhook.duration_ms", {
+      const webhookDurationHistogram = meter.createHistogram("ironcliw.webhook.duration_ms", {
         unit: "ms",
         description: "Webhook processing duration",
       });
-      const messageQueuedCounter = meter.createCounter("IronCliw.message.queued", {
+      const messageQueuedCounter = meter.createCounter("ironcliw.message.queued", {
         unit: "1",
         description: "Messages queued for processing",
       });
-      const messageProcessedCounter = meter.createCounter("IronCliw.message.processed", {
+      const messageProcessedCounter = meter.createCounter("ironcliw.message.processed", {
         unit: "1",
         description: "Messages processed by outcome",
       });
-      const messageDurationHistogram = meter.createHistogram("IronCliw.message.duration_ms", {
+      const messageDurationHistogram = meter.createHistogram("ironcliw.message.duration_ms", {
         unit: "ms",
         description: "Message processing duration",
       });
-      const queueDepthHistogram = meter.createHistogram("IronCliw.queue.depth", {
+      const queueDepthHistogram = meter.createHistogram("ironcliw.queue.depth", {
         unit: "1",
         description: "Queue depth on enqueue/dequeue",
       });
-      const queueWaitHistogram = meter.createHistogram("IronCliw.queue.wait_ms", {
+      const queueWaitHistogram = meter.createHistogram("ironcliw.queue.wait_ms", {
         unit: "ms",
         description: "Queue wait time before execution",
       });
-      const laneEnqueueCounter = meter.createCounter("IronCliw.queue.lane.enqueue", {
+      const laneEnqueueCounter = meter.createCounter("ironcliw.queue.lane.enqueue", {
         unit: "1",
         description: "Command queue lane enqueue events",
       });
-      const laneDequeueCounter = meter.createCounter("IronCliw.queue.lane.dequeue", {
+      const laneDequeueCounter = meter.createCounter("ironcliw.queue.lane.dequeue", {
         unit: "1",
         description: "Command queue lane dequeue events",
       });
-      const sessionStateCounter = meter.createCounter("IronCliw.session.state", {
+      const sessionStateCounter = meter.createCounter("ironcliw.session.state", {
         unit: "1",
         description: "Session state transitions",
       });
-      const sessionStuckCounter = meter.createCounter("IronCliw.session.stuck", {
+      const sessionStuckCounter = meter.createCounter("ironcliw.session.stuck", {
         unit: "1",
         description: "Sessions stuck in processing",
       });
-      const sessionStuckAgeHistogram = meter.createHistogram("IronCliw.session.stuck_age_ms", {
+      const sessionStuckAgeHistogram = meter.createHistogram("ironcliw.session.stuck_age_ms", {
         unit: "ms",
         description: "Age of stuck sessions",
       });
-      const runAttemptCounter = meter.createCounter("IronCliw.run.attempt", {
+      const runAttemptCounter = meter.createCounter("ironcliw.run.attempt", {
         unit: "1",
         description: "Run attempts",
       });
@@ -255,7 +255,7 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
           resource,
           processors: [logProcessor],
         });
-        const otelLogger = logProvider.getLogger("IronCliw");
+        const otelLogger = logProvider.getLogger("ironcliw");
 
         stopLogTransport = registerLogTransport((logObj) => {
           try {
@@ -314,13 +314,13 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
             }
 
             const attributes: Record<string, string | number | boolean> = {
-              "IronCliw.log.level": logLevelName,
+              "ironcliw.log.level": logLevelName,
             };
             if (meta?.name) {
-              attributes["IronCliw.logger"] = meta.name;
+              attributes["ironcliw.logger"] = meta.name;
             }
             if (meta?.parentNames?.length) {
-              attributes["IronCliw.logger.parents"] = meta.parentNames.join(".");
+              attributes["ironcliw.logger.parents"] = meta.parentNames.join(".");
             }
             if (bindings) {
               for (const [key, value] of Object.entries(bindings)) {
@@ -329,14 +329,14 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
                   typeof value === "number" ||
                   typeof value === "boolean"
                 ) {
-                  attributes[`IronCliw.${key}`] = value;
+                  attributes[`ironcliw.${key}`] = value;
                 } else if (value != null) {
-                  attributes[`IronCliw.${key}`] = safeStringify(value);
+                  attributes[`ironcliw.${key}`] = safeStringify(value);
                 }
               }
             }
             if (numericArgs.length > 0) {
-              attributes["IronCliw.log.args"] = safeStringify(numericArgs);
+              attributes["ironcliw.log.args"] = safeStringify(numericArgs);
             }
             if (meta?.path?.filePath) {
               attributes["code.filepath"] = meta.path.filePath;
@@ -348,7 +348,7 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
               attributes["code.function"] = meta.path.method;
             }
             if (meta?.path?.filePathWithLine) {
-              attributes["IronCliw.code.location"] = meta.path.filePathWithLine;
+              attributes["ironcliw.code.location"] = meta.path.filePathWithLine;
             }
 
             // OTLP can leave the host boundary, so redact string fields before export.
@@ -381,29 +381,29 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
 
       const recordModelUsage = (evt: Extract<DiagnosticEventPayload, { type: "model.usage" }>) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.provider": evt.provider ?? "unknown",
-          "IronCliw.model": evt.model ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.provider": evt.provider ?? "unknown",
+          "ironcliw.model": evt.model ?? "unknown",
         };
 
         const usage = evt.usage;
         if (usage.input) {
-          tokensCounter.add(usage.input, { ...attrs, "IronCliw.token": "input" });
+          tokensCounter.add(usage.input, { ...attrs, "ironcliw.token": "input" });
         }
         if (usage.output) {
-          tokensCounter.add(usage.output, { ...attrs, "IronCliw.token": "output" });
+          tokensCounter.add(usage.output, { ...attrs, "ironcliw.token": "output" });
         }
         if (usage.cacheRead) {
-          tokensCounter.add(usage.cacheRead, { ...attrs, "IronCliw.token": "cache_read" });
+          tokensCounter.add(usage.cacheRead, { ...attrs, "ironcliw.token": "cache_read" });
         }
         if (usage.cacheWrite) {
-          tokensCounter.add(usage.cacheWrite, { ...attrs, "IronCliw.token": "cache_write" });
+          tokensCounter.add(usage.cacheWrite, { ...attrs, "ironcliw.token": "cache_write" });
         }
         if (usage.promptTokens) {
-          tokensCounter.add(usage.promptTokens, { ...attrs, "IronCliw.token": "prompt" });
+          tokensCounter.add(usage.promptTokens, { ...attrs, "ironcliw.token": "prompt" });
         }
         if (usage.total) {
-          tokensCounter.add(usage.total, { ...attrs, "IronCliw.token": "total" });
+          tokensCounter.add(usage.total, { ...attrs, "ironcliw.token": "total" });
         }
 
         if (evt.costUsd) {
@@ -415,13 +415,13 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         if (evt.context?.limit) {
           contextHistogram.record(evt.context.limit, {
             ...attrs,
-            "IronCliw.context": "limit",
+            "ironcliw.context": "limit",
           });
         }
         if (evt.context?.used) {
           contextHistogram.record(evt.context.used, {
             ...attrs,
-            "IronCliw.context": "used",
+            "ironcliw.context": "used",
           });
         }
 
@@ -430,16 +430,16 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         }
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "IronCliw.sessionKey": evt.sessionKey ?? "",
-          "IronCliw.sessionId": evt.sessionId ?? "",
-          "IronCliw.tokens.input": usage.input ?? 0,
-          "IronCliw.tokens.output": usage.output ?? 0,
-          "IronCliw.tokens.cache_read": usage.cacheRead ?? 0,
-          "IronCliw.tokens.cache_write": usage.cacheWrite ?? 0,
-          "IronCliw.tokens.total": usage.total ?? 0,
+          "ironcliw.sessionKey": evt.sessionKey ?? "",
+          "ironcliw.sessionId": evt.sessionId ?? "",
+          "ironcliw.tokens.input": usage.input ?? 0,
+          "ironcliw.tokens.output": usage.output ?? 0,
+          "ironcliw.tokens.cache_read": usage.cacheRead ?? 0,
+          "ironcliw.tokens.cache_write": usage.cacheWrite ?? 0,
+          "ironcliw.tokens.total": usage.total ?? 0,
         };
 
-        const span = spanWithDuration("IronCliw.model.usage", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("ironcliw.model.usage", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -447,8 +447,8 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.received" }>,
       ) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.webhook": evt.updateType ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.webhook": evt.updateType ?? "unknown",
         };
         webhookReceivedCounter.add(1, attrs);
       };
@@ -457,8 +457,8 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.processed" }>,
       ) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.webhook": evt.updateType ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.webhook": evt.updateType ?? "unknown",
         };
         if (typeof evt.durationMs === "number") {
           webhookDurationHistogram.record(evt.durationMs, attrs);
@@ -468,9 +468,9 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         if (evt.chatId !== undefined) {
-          spanAttrs["IronCliw.chatId"] = String(evt.chatId);
+          spanAttrs["ironcliw.chatId"] = String(evt.chatId);
         }
-        const span = spanWithDuration("IronCliw.webhook.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("ironcliw.webhook.processed", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -478,8 +478,8 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.error" }>,
       ) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.webhook": evt.updateType ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.webhook": evt.updateType ?? "unknown",
         };
         webhookErrorCounter.add(1, attrs);
         if (!tracesEnabled) {
@@ -488,12 +488,12 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         const redactedError = redactSensitiveText(evt.error);
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "IronCliw.error": redactedError,
+          "ironcliw.error": redactedError,
         };
         if (evt.chatId !== undefined) {
-          spanAttrs["IronCliw.chatId"] = String(evt.chatId);
+          spanAttrs["ironcliw.chatId"] = String(evt.chatId);
         }
-        const span = tracer.startSpan("IronCliw.webhook.error", {
+        const span = tracer.startSpan("ironcliw.webhook.error", {
           attributes: spanAttrs,
         });
         span.setStatus({ code: SpanStatusCode.ERROR, message: redactedError });
@@ -504,8 +504,8 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.queued" }>,
       ) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.source": evt.source ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.source": evt.source ?? "unknown",
         };
         messageQueuedCounter.add(1, attrs);
         if (typeof evt.queueDepth === "number") {
@@ -518,10 +518,10 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: { sessionKey?: string; sessionId?: string },
       ) => {
         if (evt.sessionKey) {
-          spanAttrs["IronCliw.sessionKey"] = evt.sessionKey;
+          spanAttrs["ironcliw.sessionKey"] = evt.sessionKey;
         }
         if (evt.sessionId) {
-          spanAttrs["IronCliw.sessionId"] = evt.sessionId;
+          spanAttrs["ironcliw.sessionId"] = evt.sessionId;
         }
       };
 
@@ -529,8 +529,8 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.processed" }>,
       ) => {
         const attrs = {
-          "IronCliw.channel": evt.channel ?? "unknown",
-          "IronCliw.outcome": evt.outcome ?? "unknown",
+          "ironcliw.channel": evt.channel ?? "unknown",
+          "ironcliw.outcome": evt.outcome ?? "unknown",
         };
         messageProcessedCounter.add(1, attrs);
         if (typeof evt.durationMs === "number") {
@@ -542,15 +542,15 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         const spanAttrs: Record<string, string | number> = { ...attrs };
         addSessionIdentityAttrs(spanAttrs, evt);
         if (evt.chatId !== undefined) {
-          spanAttrs["IronCliw.chatId"] = String(evt.chatId);
+          spanAttrs["ironcliw.chatId"] = String(evt.chatId);
         }
         if (evt.messageId !== undefined) {
-          spanAttrs["IronCliw.messageId"] = String(evt.messageId);
+          spanAttrs["ironcliw.messageId"] = String(evt.messageId);
         }
         if (evt.reason) {
-          spanAttrs["IronCliw.reason"] = redactSensitiveText(evt.reason);
+          spanAttrs["ironcliw.reason"] = redactSensitiveText(evt.reason);
         }
-        const span = spanWithDuration("IronCliw.message.processed", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("ironcliw.message.processed", spanAttrs, evt.durationMs);
         if (evt.outcome === "error" && evt.error) {
           span.setStatus({ code: SpanStatusCode.ERROR, message: redactSensitiveText(evt.error) });
         }
@@ -560,7 +560,7 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
       const recordLaneEnqueue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.enqueue" }>,
       ) => {
-        const attrs = { "IronCliw.lane": evt.lane };
+        const attrs = { "ironcliw.lane": evt.lane };
         laneEnqueueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
       };
@@ -568,7 +568,7 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
       const recordLaneDequeue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.dequeue" }>,
       ) => {
-        const attrs = { "IronCliw.lane": evt.lane };
+        const attrs = { "ironcliw.lane": evt.lane };
         laneDequeueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
         if (typeof evt.waitMs === "number") {
@@ -579,9 +579,9 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
       const recordSessionState = (
         evt: Extract<DiagnosticEventPayload, { type: "session.state" }>,
       ) => {
-        const attrs: Record<string, string> = { "IronCliw.state": evt.state };
+        const attrs: Record<string, string> = { "ironcliw.state": evt.state };
         if (evt.reason) {
-          attrs["IronCliw.reason"] = redactSensitiveText(evt.reason);
+          attrs["ironcliw.reason"] = redactSensitiveText(evt.reason);
         }
         sessionStateCounter.add(1, attrs);
       };
@@ -589,7 +589,7 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
       const recordSessionStuck = (
         evt: Extract<DiagnosticEventPayload, { type: "session.stuck" }>,
       ) => {
-        const attrs: Record<string, string> = { "IronCliw.state": evt.state };
+        const attrs: Record<string, string> = { "ironcliw.state": evt.state };
         sessionStuckCounter.add(1, attrs);
         if (typeof evt.ageMs === "number") {
           sessionStuckAgeHistogram.record(evt.ageMs, attrs);
@@ -599,21 +599,21 @@ export function createDiagnosticsOtelService(): IronCliwPluginService {
         }
         const spanAttrs: Record<string, string | number> = { ...attrs };
         addSessionIdentityAttrs(spanAttrs, evt);
-        spanAttrs["IronCliw.queueDepth"] = evt.queueDepth ?? 0;
-        spanAttrs["IronCliw.ageMs"] = evt.ageMs;
-        const span = tracer.startSpan("IronCliw.session.stuck", { attributes: spanAttrs });
+        spanAttrs["ironcliw.queueDepth"] = evt.queueDepth ?? 0;
+        spanAttrs["ironcliw.ageMs"] = evt.ageMs;
+        const span = tracer.startSpan("ironcliw.session.stuck", { attributes: spanAttrs });
         span.setStatus({ code: SpanStatusCode.ERROR, message: "session stuck" });
         span.end();
       };
 
       const recordRunAttempt = (evt: Extract<DiagnosticEventPayload, { type: "run.attempt" }>) => {
-        runAttemptCounter.add(1, { "IronCliw.attempt": evt.attempt });
+        runAttemptCounter.add(1, { "ironcliw.attempt": evt.attempt });
       };
 
       const recordHeartbeat = (
         evt: Extract<DiagnosticEventPayload, { type: "diagnostic.heartbeat" }>,
       ) => {
-        queueDepthHistogram.record(evt.queued, { "IronCliw.channel": "heartbeat" });
+        queueDepthHistogram.record(evt.queued, { "ironcliw.channel": "heartbeat" });
       };
 
       unsubscribe = onDiagnosticEvent((evt: DiagnosticEventPayload) => {

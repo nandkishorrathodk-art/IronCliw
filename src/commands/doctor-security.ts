@@ -2,23 +2,65 @@ import { listChannelPlugins } from "../channels/plugins/index.js";
 import type { ChannelId } from "../channels/plugins/types.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import type { IronCliwConfig, GatewayBindMode } from "../config/config.js";
+import type { AgentConfig } from "../config/types.agents.js";
+import { hasConfiguredSecretInput } from "../config/types.secrets.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { isLoopbackHost, resolveGatewayBindHost } from "../gateway/net.js";
 import { resolveDmAllowState } from "../security/dm-policy-shared.js";
 import { note } from "../terminal/note.js";
 import { resolveDefaultChannelAccountContext } from "./channel-account-context.js";
 
+function collectImplicitHeartbeatDirectPolicyWarnings(cfg: IronCliwConfig): string[] {
+  const warnings: string[] = [];
+
+  const maybeWarn = (params: {
+    label: string;
+    heartbeat: AgentConfig["heartbeat"] | undefined;
+    pathHint: string;
+  }) => {
+    const heartbeat = params.heartbeat;
+    if (!heartbeat || heartbeat.target === undefined || heartbeat.target === "none") {
+      return;
+    }
+    if (heartbeat.directPolicy !== undefined) {
+      return;
+    }
+    warnings.push(
+      `- ${params.label}: heartbeat delivery is configured while ${params.pathHint} is unset.`,
+      '  Heartbeat now allows direct/DM targets by default. Set it explicitly to "allow" or "block" to pin upgrade behavior.',
+    );
+  };
+
+  maybeWarn({
+    label: "Heartbeat defaults",
+    heartbeat: cfg.agents?.defaults?.heartbeat,
+    pathHint: "agents.defaults.heartbeat.directPolicy",
+  });
+
+  for (const agent of cfg.agents?.list ?? []) {
+    maybeWarn({
+      label: `Heartbeat agent "${agent.id}"`,
+      heartbeat: agent.heartbeat,
+      pathHint: `heartbeat.directPolicy for agent "${agent.id}"`,
+    });
+  }
+
+  return warnings;
+}
+
 export async function noteSecurityWarnings(cfg: IronCliwConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("IronCliw security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("ironcliw security audit --deep")}`;
 
   if (cfg.approvals?.exec?.enabled === false) {
     warnings.push(
       "- Note: approvals.exec.enabled=false disables approval forwarding only.",
-      "  Host exec gating still comes from ~/.IronCliw/exec-approvals.json.",
-      `  Check local policy with: ${formatCliCommand("IronCliw approvals get --gateway")}`,
+      "  Host exec gating still comes from ~/.ironcliw/exec-approvals.json.",
+      `  Check local policy with: ${formatCliCommand("ironcliw approvals get --gateway")}`,
     );
   }
+
+  warnings.push(...collectImplicitHeartbeatDirectPolicyWarnings(cfg));
 
   // ===========================================
   // GATEWAY NETWORK EXPOSURE CHECK
@@ -44,8 +86,12 @@ export async function noteSecurityWarnings(cfg: IronCliwConfig) {
   });
   const authToken = resolvedAuth.token?.trim() ?? "";
   const authPassword = resolvedAuth.password?.trim() ?? "";
-  const hasToken = authToken.length > 0;
-  const hasPassword = authPassword.length > 0;
+  const hasToken =
+    authToken.length > 0 ||
+    hasConfiguredSecretInput(cfg.gateway?.auth?.token, cfg.secrets?.defaults);
+  const hasPassword =
+    authPassword.length > 0 ||
+    hasConfiguredSecretInput(cfg.gateway?.auth?.password, cfg.secrets?.defaults);
   const hasSharedSecret =
     (resolvedAuth.mode === "token" && hasToken) ||
     (resolvedAuth.mode === "password" && hasPassword);
@@ -53,7 +99,7 @@ export async function noteSecurityWarnings(cfg: IronCliwConfig) {
   const saferRemoteAccessLines = [
     "  Safer remote access: keep bind loopback and use Tailscale Serve/Funnel or an SSH tunnel.",
     "  Example tunnel: ssh -N -L 18789:127.0.0.1:18789 user@gateway-host",
-    "  Docs: https://docs.IronCliw.ai/gateway/remote",
+    "  Docs: https://docs.ironcliw.ai/gateway/remote",
   ];
 
   if (isExposed) {
@@ -61,19 +107,19 @@ export async function noteSecurityWarnings(cfg: IronCliwConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("IronCliw configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("IronCliw config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("ironcliw configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("ironcliw config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("IronCliw doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("ironcliw doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "IronCliw config set gateway.auth.mode token",
+                "ironcliw config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("IronCliw config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("ironcliw config set gateway.bind loopback")}`,
         ...saferRemoteAccessLines,
         ...authFixLines,
       );
@@ -133,7 +179,7 @@ export async function noteSecurityWarnings(cfg: IronCliwConfig) {
     if (dmScope === "main" && isMultiUserDm) {
       warnings.push(
         `- ${params.label} DMs: multiple senders share the main session; run: ` +
-          formatCliCommand('IronCliw config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('ironcliw config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
       );
     }

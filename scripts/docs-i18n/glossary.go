@@ -27,4 +27,3 @@ func LoadGlossary(path string) ([]GlossaryEntry, error) {
 
 	return entries, nil
 }
-

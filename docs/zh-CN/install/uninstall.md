@@ -17,7 +17,7 @@ x-i18n:
 
 两种方式：
 
-- 如果 `IronCliw` 仍已安装，使用**简单方式**。
+- 如果 `ironcliw` 仍已安装，使用**简单方式**。
 - 如果 CLI 已删除但服务仍在运行，使用**手动服务移除**。
 
 ## 简单方式（CLI 仍已安装）
@@ -25,14 +25,14 @@ x-i18n:
 推荐：使用内置卸载程序：
 
 ```bash
-IronCliw uninstall
+ironcliw uninstall
 ```
 
 非交互式（自动化 / npx）：
 
 ```bash
-IronCliw uninstall --all --yes --non-interactive
-npx -y IronCliw uninstall --all --yes --non-interactive
+ironcliw uninstall --all --yes --non-interactive
+npx -y ironcliw uninstall --all --yes --non-interactive
 ```
 
 手动步骤（效果相同）：
@@ -40,35 +40,35 @@ npx -y IronCliw uninstall --all --yes --non-interactive
 1. 停止 Gateway 网关服务：
 
 ```bash
-IronCliw gateway stop
+ironcliw gateway stop
 ```
 
 2. 卸载 Gateway 网关服务（launchd/systemd/schtasks）：
 
 ```bash
-IronCliw gateway uninstall
+ironcliw gateway uninstall
 ```
 
 3. 删除状态 + 配置：
 
 ```bash
-rm -rf "${IronCliw_STATE_DIR:-$HOME/.IronCliw}"
+rm -rf "${IRONCLIW_STATE_DIR:-$HOME/.ironcliw}"
 ```
 
-如果你将 `IronCliw_CONFIG_PATH` 设置为状态目录外的自定义位置，也请删除该文件。
+如果你将 `IRONCLIW_CONFIG_PATH` 设置为状态目录外的自定义位置，也请删除该文件。
 
 4. 删除你的工作区（可选，移除智能体文件）：
 
 ```bash
-rm -rf ~/.IronCliw/workspace
+rm -rf ~/.ironcliw/workspace
 ```
 
 5. 移除 CLI 安装（选择你使用的那个）：
 
 ```bash
-npm rm -g IronCliw
-pnpm remove -g IronCliw
-bun remove -g IronCliw
+npm rm -g ironcliw
+pnpm remove -g ironcliw
+bun remove -g ironcliw
 ```
 
 6. 如果你安装了 macOS 应用：
@@ -79,31 +79,31 @@ rm -rf /Applications/IronCliw.app
 
 注意事项：
 
-- 如果你使用了配置文件（`--profile` / `IronCliw_PROFILE`），对每个状态目录重复步骤 3（默认为 `~/.IronCliw-<profile>`）。
+- 如果你使用了配置文件（`--profile` / `IRONCLIW_PROFILE`），对每个状态目录重复步骤 3（默认为 `~/.ironcliw-<profile>`）。
 - 在远程模式下，状态目录位于 **Gateway 网关主机**上，因此也需要在那里运行步骤 1-4。
 
 ## 手动服务移除（CLI 未安装）
 
-如果 Gateway 网关服务持续运行但 `IronCliw` 缺失，请使用此方法。
+如果 Gateway 网关服务持续运行但 `ironcliw` 缺失，请使用此方法。
 
 ### macOS（launchd）
 
-默认标签是 `bot.molt.gateway`（或 `bot.molt.<profile>`；旧版 `com.IronCliw.*` 可能仍然存在）：
+默认标签是 `bot.molt.gateway`（或 `bot.molt.<profile>`；旧版 `com.ironcliw.*` 可能仍然存在）：
 
 ```bash
 launchctl bootout gui/$UID/bot.molt.gateway
 rm -f ~/Library/LaunchAgents/bot.molt.gateway.plist
 ```
 
-如果你使用了配置文件，请将标签和 plist 名称替换为 `bot.molt.<profile>`。如果存在任何旧版 `com.IronCliw.*` plist，请将其移除。
+如果你使用了配置文件，请将标签和 plist 名称替换为 `bot.molt.<profile>`。如果存在任何旧版 `com.ironcliw.*` plist，请将其移除。
 
 ### Linux（systemd 用户单元）
 
-默认单元名称是 `IronCliw-gateway.service`（或 `IronCliw-gateway-<profile>.service`）：
+默认单元名称是 `ironcliw-gateway.service`（或 `ironcliw-gateway-<profile>.service`）：
 
 ```bash
-systemctl --user disable --now IronCliw-gateway.service
-rm -f ~/.config/systemd/user/IronCliw-gateway.service
+systemctl --user disable --now ironcliw-gateway.service
+rm -f ~/.config/systemd/user/ironcliw-gateway.service
 systemctl --user daemon-reload
 ```
 
@@ -114,21 +114,21 @@ systemctl --user daemon-reload
 
 ```powershell
 schtasks /Delete /F /TN "IronCliw Gateway"
-Remove-Item -Force "$env:USERPROFILE\.IronCliw\gateway.cmd"
+Remove-Item -Force "$env:USERPROFILE\.ironcliw\gateway.cmd"
 ```
 
-如果你使用了配置文件，请删除匹配的任务名称和 `~\.IronCliw-<profile>\gateway.cmd`。
+如果你使用了配置文件，请删除匹配的任务名称和 `~\.ironcliw-<profile>\gateway.cmd`。
 
 ## 普通安装 vs 源码检出
 
 ### 普通安装（install.sh / npm / pnpm / bun）
 
-如果你使用了 `https://IronCliw.ai/install.sh` 或 `install.ps1`，CLI 是通过 `npm install -g IronCliw@latest` 安装的。
-使用 `npm rm -g IronCliw` 移除（或 `pnpm remove -g` / `bun remove -g`，如果你是用那种方式安装的）。
+如果你使用了 `https://ironcliw.ai/install.sh` 或 `install.ps1`，CLI 是通过 `npm install -g ironcliw@latest` 安装的。
+使用 `npm rm -g ironcliw` 移除（或 `pnpm remove -g` / `bun remove -g`，如果你是用那种方式安装的）。
 
 ### 源码检出（git clone）
 
-如果你从仓库检出运行（`git clone` + `IronCliw ...` / `bun run IronCliw ...`）：
+如果你从仓库检出运行（`git clone` + `ironcliw ...` / `bun run ironcliw ...`）：
 
 1. 在删除仓库**之前**卸载 Gateway 网关服务（使用上面的简单方式或手动服务移除）。
 2. 删除仓库目录。

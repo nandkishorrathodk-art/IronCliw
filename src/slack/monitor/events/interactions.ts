@@ -11,7 +11,7 @@ import {
 } from "./interactions.modal.js";
 
 // Prefix for IronCliw-generated action IDs to scope our handler
-const IronCliw_ACTION_PREFIX = "IronCliw:";
+const IRONCLIW_ACTION_PREFIX = "ironcliw:";
 const SLACK_INTERACTION_EVENT_PREFIX = "Slack interaction: ";
 const REDACTED_INTERACTION_VALUE = "[redacted]";
 const SLACK_INTERACTION_EVENT_MAX_CHARS = 2400;
@@ -37,26 +37,7 @@ type SelectOption = {
   text?: { text?: string };
 };
 
-type InteractionSelectionFields = {
-  actionType?: string;
-  blockId?: string;
-  inputKind?: "text" | "number" | "email" | "url" | "rich_text";
-  value?: string;
-  selectedValues?: string[];
-  selectedUsers?: string[];
-  selectedChannels?: string[];
-  selectedConversations?: string[];
-  selectedLabels?: string[];
-  selectedDate?: string;
-  selectedTime?: string;
-  selectedDateTime?: number;
-  inputValue?: string;
-  inputNumber?: number;
-  inputEmail?: string;
-  inputUrl?: string;
-  richTextValue?: unknown;
-  richTextPreview?: string;
-};
+type InteractionSelectionFields = Partial<ModalInputSummary>;
 
 type InteractionSummary = InteractionSelectionFields & {
   interactionType?: "block_action" | "view_submission" | "view_closed";
@@ -342,16 +323,8 @@ function summarizeAction(
   let inputUrl: string | undefined;
   if (actionType === "url_text_input" && inputValue) {
     try {
-      const parsed = new URL(inputValue);
-      // Canonicalize but preserve original casing for the brand
-      inputUrl = parsed.toString();
-      if (inputValue.includes("IronCliw") && !inputUrl.includes("IronCliw")) {
-        // Simple heuristic: if user typed IronCliw, try to keep it in the display URL
-        inputUrl = inputValue;
-        if (!inputUrl.includes("://")) {
-          inputUrl = `https://${inputUrl}`;
-        }
-      }
+      // Normalize to a canonical URL string so downstream handlers do not need to reparse.
+      inputUrl = new URL(inputValue).toString();
     } catch {
       inputUrl = undefined;
     }
@@ -488,7 +461,7 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
   // Only matches action_ids that start with our prefix to avoid interfering
   // with other Slack integrations or future features
   ctx.app.action(
-    new RegExp(`^${IronCliw_ACTION_PREFIX}`),
+    new RegExp(`^${IRONCLIW_ACTION_PREFIX}`),
     async (args: SlackActionMiddlewareArgs) => {
       const { ack, body, action, respond } = args;
       const typedBody = body as unknown as {
@@ -579,6 +552,7 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
       const sessionKey = ctx.resolveSlackSystemEventSessionKey({
         channelId: channelId,
         channelType: auth.channelType,
+        senderId: userId,
       });
 
       // Build context key - only include defined values to avoid "unknown" noise
@@ -666,7 +640,7 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
   if (typeof ctx.app.view !== "function") {
     return;
   }
-  const modalMatcher = new RegExp(`^${IronCliw_ACTION_PREFIX}`);
+  const modalMatcher = new RegExp(`^${IRONCLIW_ACTION_PREFIX}`);
 
   // Handle IronCliw modal submissions with callback_ids scoped by our prefix.
   registerModalLifecycleHandler({

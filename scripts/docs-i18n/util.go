@@ -79,4 +79,3 @@ func fatal(err error) {
 	_, _ = io.WriteString(os.Stderr, err.Error()+"\n")
 	os.Exit(1)
 }
-

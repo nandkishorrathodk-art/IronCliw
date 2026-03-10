@@ -25,7 +25,7 @@ Remote mode supports two transports:
 ## Prereqs on the remote host
 
 1. Install Node + pnpm and build/install the IronCliw CLI (`pnpm install && pnpm build && pnpm link --global`).
-2. Ensure `IronCliw` is on PATH for non-interactive shells (symlink into `/usr/local/bin` or `/opt/homebrew/bin` if needed).
+2. Ensure `ironcliw` is on PATH for non-interactive shells (symlink into `/usr/local/bin` or `/opt/homebrew/bin` if needed).
 3. Open SSH with key auth. We recommend **Tailscale** IPs for stable reachability off-LAN.
 
 ## macOS app setup
@@ -38,8 +38,8 @@ Remote mode supports two transports:
    - **Gateway URL** (Direct only): `wss://gateway.example.ts.net` (or `ws://...` for local/LAN).
    - **Identity file** (advanced): path to your key.
    - **Project root** (advanced): remote checkout path used for commands.
-   - **CLI path** (advanced): optional path to a runnable `IronCliw` entrypoint/binary (auto-filled when advertised).
-3. Hit **Test remote**. Success indicates the remote `IronCliw status --json` runs correctly. Failures usually mean PATH/CLI issues; exit 127 means the CLI isn’t found remotely.
+   - **CLI path** (advanced): optional path to a runnable `ironcliw` entrypoint/binary (auto-filled when advertised).
+3. Hit **Test remote**. Success indicates the remote `ironcliw status --json` runs correctly. Failures usually mean PATH/CLI issues; exit 127 means the CLI isn’t found remotely.
 4. Health checks and Web Chat will now run through this SSH tunnel automatically.
 
 ## Web Chat
@@ -62,23 +62,23 @@ Remote mode supports two transports:
 
 ## WhatsApp login flow (remote)
 
-- Run `IronCliw channels login --verbose` **on the remote host**. Scan the QR with WhatsApp on your phone.
+- Run `ironcliw channels login --verbose` **on the remote host**. Scan the QR with WhatsApp on your phone.
 - Re-run login on that host if auth expires. Health check will surface link problems.
 
 ## Troubleshooting
 
-- **exit 127 / not found**: `IronCliw` isn’t on PATH for non-login shells. Add it to `/etc/paths`, your shell rc, or symlink into `/usr/local/bin`/`/opt/homebrew/bin`.
-- **Health probe failed**: check SSH reachability, PATH, and that Baileys is logged in (`IronCliw status --json`).
+- **exit 127 / not found**: `ironcliw` isn’t on PATH for non-login shells. Add it to `/etc/paths`, your shell rc, or symlink into `/usr/local/bin`/`/opt/homebrew/bin`.
+- **Health probe failed**: check SSH reachability, PATH, and that Baileys is logged in (`ironcliw status --json`).
 - **Web Chat stuck**: confirm the gateway is running on the remote host and the forwarded port matches the gateway WS port; the UI requires a healthy WS connection.
 - **Node IP shows 127.0.0.1**: expected with the SSH tunnel. Switch **Transport** to **Direct (ws/wss)** if you want the gateway to see the real client IP.
 - **Voice Wake**: trigger phrases are forwarded automatically in remote mode; no separate forwarder is needed.
 
 ## Notification sounds
 
-Pick sounds per notification from scripts with `IronCliw` and `node.invoke`, e.g.:
+Pick sounds per notification from scripts with `ironcliw` and `node.invoke`, e.g.:
 
 ```bash
-IronCliw nodes notify --node <id> --title "Ping" --body "Remote gateway ready" --sound Glass
+ironcliw nodes notify --node <id> --title "Ping" --body "Remote gateway ready" --sound Glass
 ```
 
 There is no global “default sound” toggle in the app anymore; callers choose a sound (or none) per request.

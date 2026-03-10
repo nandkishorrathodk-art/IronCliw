@@ -11,14 +11,14 @@ import {
 
 describe("applyAuthChoiceAnthropic", () => {
   const lifecycle = createAuthTestLifecycle([
-    "IronCliw_STATE_DIR",
-    "IronCliw_AGENT_DIR",
+    "IRONCLIW_STATE_DIR",
+    "IRONCLIW_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "ANTHROPIC_SETUP_TOKEN",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("IronCliw-anthropic-");
+    const env = await setupAuthTestEnv("ironcliw-anthropic-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }

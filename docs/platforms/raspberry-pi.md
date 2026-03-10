@@ -112,14 +112,14 @@ sudo sysctl -p
 ### Option A: Standard Install (Recommended)
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash
+curl -fsSL https://ironcliw.ai/install.sh | bash
 ```
 
 ### Option B: Hackable Install (For tinkering)
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 npm install
 npm run build
 npm link
@@ -130,7 +130,7 @@ The hackable install gives you direct access to logs and code — useful for deb
 ## 7) Run Onboarding
 
 ```bash
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -144,13 +144,13 @@ Follow the wizard:
 
 ```bash
 # Check status
-IronCliw status
+ironcliw status
 
 # Check service
-sudo systemctl status IronCliw
+sudo systemctl status ironcliw
 
 # View logs
-journalctl -u IronCliw -f
+journalctl -u ironcliw -f
 ```
 
 ## 9) Access the Dashboard
@@ -173,8 +173,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # Update config
-IronCliw config set gateway.bind tailnet
-sudo systemctl restart IronCliw
+ironcliw config set gateway.bind tailnet
+sudo systemctl restart ironcliw
 ```
 
 ---
@@ -197,10 +197,10 @@ See [Pi USB boot guide](https://www.raspberrypi.com/documentation/computers/rasp
 On lower-power Pi hosts, enable Node's module compile cache so repeated CLI runs are faster:
 
 ```bash
-grep -q 'NODE_COMPILE_CACHE=/var/tmp/IronCliw-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF'
-export NODE_COMPILE_CACHE=/var/tmp/IronCliw-compile-cache
-mkdir -p /var/tmp/IronCliw-compile-cache
-export IronCliw_NO_RESPAWN=1
+grep -q 'NODE_COMPILE_CACHE=/var/tmp/ironcliw-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF' # pragma: allowlist secret
+export NODE_COMPILE_CACHE=/var/tmp/ironcliw-compile-cache
+mkdir -p /var/tmp/ironcliw-compile-cache
+export IRONCLIW_NO_RESPAWN=1
 EOF
 source ~/.bashrc
 ```
@@ -209,7 +209,7 @@ Notes:
 
 - `NODE_COMPILE_CACHE` speeds up subsequent runs (`status`, `health`, `--help`).
 - `/var/tmp` survives reboots better than `/tmp`.
-- `IronCliw_NO_RESPAWN=1` avoids extra startup cost from CLI self-respawn.
+- `IRONCLIW_NO_RESPAWN=1` avoids extra startup cost from CLI self-respawn.
 - First run warms the cache; later runs benefit most.
 
 ### systemd startup tuning (optional)
@@ -218,13 +218,13 @@ If this Pi is mostly running IronCliw, add a service drop-in to reduce restart
 jitter and keep startup env stable:
 
 ```bash
-sudo systemctl edit IronCliw
+sudo systemctl edit ironcliw
 ```
 
 ```ini
 [Service]
-Environment=IronCliw_NO_RESPAWN=1
-Environment=NODE_COMPILE_CACHE=/var/tmp/IronCliw-compile-cache
+Environment=IRONCLIW_NO_RESPAWN=1
+Environment=NODE_COMPILE_CACHE=/var/tmp/ironcliw-compile-cache
 Restart=always
 RestartSec=2
 TimeoutStartSec=90
@@ -234,7 +234,7 @@ Then apply:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl restart IronCliw
+sudo systemctl restart ironcliw
 ```
 
 If possible, keep IronCliw state/cache on SSD-backed storage to avoid SD-card
@@ -322,13 +322,13 @@ The onboarding wizard sets this up, but to verify:
 
 ```bash
 # Check service is enabled
-sudo systemctl is-enabled IronCliw
+sudo systemctl is-enabled ironcliw
 
 # Enable if not
-sudo systemctl enable IronCliw
+sudo systemctl enable ironcliw
 
 # Start on boot
-sudo systemctl start IronCliw
+sudo systemctl start ironcliw
 ```
 
 ---
@@ -355,12 +355,12 @@ free -h
 
 ```bash
 # Check logs
-journalctl -u IronCliw --no-pager -n 100
+journalctl -u ironcliw --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/IronCliw  # if using hackable install
+cd ~/ironcliw  # if using hackable install
 npm run build
-sudo systemctl restart IronCliw
+sudo systemctl restart ironcliw
 ```
 
 ### ARM Binary Issues

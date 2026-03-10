@@ -11,7 +11,7 @@ vi.mock("../plugins/tools.js", () => ({
   resolvePluginTools: resolvePluginToolsMock,
 }));
 
-import { createIronCliwTools } from "./IronCliw-tools.js";
+import { createIronCliwTools } from "./ironcliw-tools.js";
 
 describe("createIronCliwTools plugin context", () => {
   it("forwards trusted requester sender identity to plugin tool context", () => {

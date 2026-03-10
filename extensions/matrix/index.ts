@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/matrix";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/matrix";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/matrix";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/matrix";
 import { matrixPlugin } from "./src/channel.js";
 import { ensureMatrixCryptoRuntime } from "./src/matrix/deps.js";
 import { setMatrixRuntime } from "./src/runtime.js";

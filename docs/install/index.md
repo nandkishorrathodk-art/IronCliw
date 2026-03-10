@@ -38,12 +38,12 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
     <Tabs>
       <Tab title="macOS / Linux / WSL2">
         ```bash
-        curl -fsSL https://IronCliw.ai/install.sh | bash
+        curl -fsSL https://ironcliw.ai/install.sh | bash
         ```
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        iwr -useb https://IronCliw.ai/install.ps1 | iex
+        iwr -useb https://ironcliw.ai/install.ps1 | iex
         ```
       </Tab>
     </Tabs>
@@ -55,12 +55,12 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
     <Tabs>
       <Tab title="macOS / Linux / WSL2">
         ```bash
-        curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --no-onboard
+        curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --no-onboard
         ```
       </Tab>
       <Tab title="Windows (PowerShell)">
         ```powershell
-        & ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+        & ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
         ```
       </Tab>
     </Tabs>
@@ -75,15 +75,15 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
     <Tabs>
       <Tab title="npm">
         ```bash
-        npm install -g IronCliw@latest
-        IronCliw onboard --install-daemon
+        npm install -g ironcliw@latest
+        ironcliw onboard --install-daemon
         ```
 
         <Accordion title="sharp build errors?">
           If you have libvips installed globally (common on macOS via Homebrew) and `sharp` fails, force prebuilt binaries:
 
           ```bash
-          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g IronCliw@latest
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g ironcliw@latest
           ```
 
           If you see `sharp: Please add node-gyp to your dependencies`, either install build tooling (macOS: Xcode CLT + `npm install -g node-gyp`) or use the env var above.
@@ -91,9 +91,9 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
       </Tab>
       <Tab title="pnpm">
         ```bash
-        pnpm add -g IronCliw@latest
-        pnpm approve-builds -g        # approve IronCliw, node-llama-cpp, sharp, etc.
-        IronCliw onboard --install-daemon
+        pnpm add -g ironcliw@latest
+        pnpm approve-builds -g        # approve ironcliw, node-llama-cpp, sharp, etc.
+        ironcliw onboard --install-daemon
         ```
 
         <Note>
@@ -109,28 +109,28 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 
     <Steps>
       <Step title="Clone and build">
-        Clone the [IronCliw repo](https://github.com/IronCliw/IronCliw) and build:
+        Clone the [IronCliw repo](https://github.com/ironcliw/ironcliw) and build:
 
         ```bash
-        git clone https://github.com/IronCliw/IronCliw.git
-        cd IronCliw
+        git clone https://github.com/ironcliw/ironcliw.git
+        cd ironcliw
         pnpm install
         pnpm ui:build
         pnpm build
         ```
       </Step>
       <Step title="Link the CLI">
-        Make the `IronCliw` command available globally:
+        Make the `ironcliw` command available globally:
 
         ```bash
         pnpm link --global
         ```
 
-        Alternatively, skip the link and run commands via `pnpm IronCliw ...` from inside the repo.
+        Alternatively, skip the link and run commands via `pnpm ironcliw ...` from inside the repo.
       </Step>
       <Step title="Run onboarding">
         ```bash
-        IronCliw onboard --install-daemon
+        ironcliw onboard --install-daemon
         ```
       </Step>
     </Steps>
@@ -165,20 +165,20 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 Verify everything is working:
 
 ```bash
-IronCliw doctor         # check for config issues
-IronCliw status         # gateway status
-IronCliw dashboard      # open the browser UI
+ironcliw doctor         # check for config issues
+ironcliw status         # gateway status
+ironcliw dashboard      # open the browser UI
 ```
 
 If you need custom runtime paths, use:
 
-- `IronCliw_HOME` for home-directory based internal paths
-- `IronCliw_STATE_DIR` for mutable state location
-- `IronCliw_CONFIG_PATH` for config file location
+- `IRONCLIW_HOME` for home-directory based internal paths
+- `IRONCLIW_STATE_DIR` for mutable state location
+- `IRONCLIW_CONFIG_PATH` for config file location
 
 See [Environment vars](/help/environment) for precedence and full details.
 
-## Troubleshooting: `IronCliw` not found
+## Troubleshooting: `ironcliw` not found
 
 <Accordion title="PATH diagnosis and fix">
   Quick diagnosis:
@@ -190,7 +190,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `IronCliw`).
+If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `ironcliw`).
 
 Fix — add it to your shell startup file (`~/.zshrc` or `~/.bashrc`):
 

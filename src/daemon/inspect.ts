@@ -14,7 +14,7 @@ export type ExtraGatewayService = {
   label: string;
   detail: string;
   scope: "user" | "system";
-  marker?: "IronCliw" | "clawdbot" | "moltbot";
+  marker?: "ironcliw" | "clawdbot" | "moltbot";
   legacy?: boolean;
 };
 
@@ -22,12 +22,12 @@ export type FindExtraGatewayServicesOptions = {
   deep?: boolean;
 };
 
-const EXTRA_MARKERS = ["IronCliw", "clawdbot", "moltbot"] as const;
+const EXTRA_MARKERS = ["ironcliw", "clawdbot", "moltbot"] as const;
 
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
-  const profile = env.IronCliw_PROFILE;
+  const profile = env.IRONCLIW_PROFILE;
   switch (process.platform) {
     case "darwin": {
       const label = resolveGatewayLaunchAgentLabel(profile);
@@ -71,8 +71,8 @@ function detectMarker(content: string): Marker | null {
 
 function hasGatewayServiceMarker(content: string): boolean {
   const lower = content.toLowerCase();
-  const markerKeys = ["IronCliw_service_marker"];
-  const kindKeys = ["IronCliw_service_kind"];
+  const markerKeys = ["ironcliw_service_marker"];
+  const kindKeys = ["ironcliw_service_kind"];
   const markerValues = [GATEWAY_SERVICE_MARKER.toLowerCase()];
   const hasMarkerKey = markerKeys.some((key) => lower.includes(key));
   const hasKindKey = kindKeys.some((key) => lower.includes(key));
@@ -93,14 +93,14 @@ function isIronCliwGatewayLaunchdService(label: string, contents: string): boole
   if (!lowerContents.includes("gateway")) {
     return false;
   }
-  return label.startsWith("ai.IronCliw.");
+  return label.startsWith("ai.ironcliw.");
 }
 
 function isIronCliwGatewaySystemdService(name: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
-  if (!name.startsWith("IronCliw-gateway")) {
+  if (!name.startsWith("ironcliw-gateway")) {
     return false;
   }
   return contents.toLowerCase().includes("gateway");
@@ -112,7 +112,7 @@ function isIronCliwGatewayTaskName(name: string): boolean {
     return false;
   }
   const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-  return normalized === defaultName || normalized.startsWith("IronCliw gateway");
+  return normalized === defaultName || normalized.startsWith("ironcliw gateway");
 }
 
 function tryExtractPlistLabel(contents: string): string | null {
@@ -216,7 +216,7 @@ async function scanLaunchdDir(params: {
     if (isIgnoredLaunchdLabel(label)) {
       continue;
     }
-    if (marker === "IronCliw" && isIronCliwGatewayLaunchdService(label, contents)) {
+    if (marker === "ironcliw" && isIronCliwGatewayLaunchdService(label, contents)) {
       continue;
     }
     results.push({
@@ -225,7 +225,7 @@ async function scanLaunchdDir(params: {
       detail: `plist: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "IronCliw" || isLegacyLabel(label),
+      legacy: marker !== "ironcliw" || isLegacyLabel(label),
     });
   }
 
@@ -248,7 +248,7 @@ async function scanSystemdDir(params: {
     if (!marker) {
       continue;
     }
-    if (marker === "IronCliw" && isIronCliwGatewaySystemdService(name, contents)) {
+    if (marker === "ironcliw" && isIronCliwGatewaySystemdService(name, contents)) {
       continue;
     }
     results.push({
@@ -257,7 +257,7 @@ async function scanSystemdDir(params: {
       detail: `unit: ${fullPath}`,
       scope: params.scope,
       marker,
-      legacy: marker !== "IronCliw",
+      legacy: marker !== "ironcliw",
     });
   }
 
@@ -422,7 +422,7 @@ export async function findExtraGatewayServices(
         detail: task.taskToRun ? `task: ${name}, run: ${task.taskToRun}` : name,
         scope: "system",
         marker,
-        legacy: marker !== "IronCliw",
+        legacy: marker !== "ironcliw",
       });
     }
     return results;

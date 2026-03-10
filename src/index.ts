@@ -74,12 +74,6 @@ export {
 
 const isMain = isMainModule({
   currentFile: fileURLToPath(import.meta.url),
-  wrapperEntryPairs: [
-    { wrapperBasename: "IronCliw.mjs", entryBasename: "index.js" },
-    { wrapperBasename: "IronCliw.js", entryBasename: "index.js" },
-    { wrapperBasename: "ironcliw.mjs", entryBasename: "index.js" },
-    { wrapperBasename: "ironcliw.js", entryBasename: "index.js" },
-  ],
 });
 
 if (isMain) {
@@ -88,12 +82,12 @@ if (isMain) {
   installUnhandledRejectionHandler();
 
   process.on("uncaughtException", (error) => {
-    console.error("[IronCliw] Uncaught exception:", formatUncaughtError(error));
+    console.error("[ironcliw] Uncaught exception:", formatUncaughtError(error));
     process.exit(1);
   });
 
   void program.parseAsync(process.argv).catch((err) => {
-    console.error("[IronCliw] CLI failed:", formatUncaughtError(err));
+    console.error("[ironcliw] CLI failed:", formatUncaughtError(err));
     process.exit(1);
   });
 }

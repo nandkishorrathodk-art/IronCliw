@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw skills` (list/info/check) and skill eligibility"
+summary: "CLI reference for `ironcliw skills` (list/info/check) and skill eligibility"
 read_when:
   - You want to see which skills are available and ready to run
   - You want to debug missing binaries/env/config for skills
 title: "skills"
 ---
 
-# `IronCliw skills`
+# `ironcliw skills`
 
 Inspect skills (bundled + workspace + managed overrides) and see what’s eligible vs missing requirements.
 
@@ -19,8 +19,8 @@ Related:
 ## Commands
 
 ```bash
-IronCliw skills list
-IronCliw skills list --eligible
-IronCliw skills info <name>
-IronCliw skills check
+ironcliw skills list
+ironcliw skills list --eligible
+ironcliw skills info <name>
+ironcliw skills check
 ```

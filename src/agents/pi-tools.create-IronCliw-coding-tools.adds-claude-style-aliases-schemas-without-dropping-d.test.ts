@@ -18,7 +18,7 @@ describe("createIronCliwCodingTools", () => {
     const readTool = defaultTools.find((tool) => tool.name === "read");
     expect(readTool).toBeDefined();
 
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-read-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-read-"));
     try {
       const imagePath = path.join(tmpDir, "sample.png");
       await fs.writeFile(imagePath, tinyPngBuffer);
@@ -38,7 +38,7 @@ describe("createIronCliwCodingTools", () => {
       expect(image?.mimeType).toBe("image/png");
 
       const textPath = path.join(tmpDir, "sample.txt");
-      const contents = "Hello from IronCliw read tool.";
+      const contents = "Hello from ironcliw read tool.";
       await fs.writeFile(textPath, contents, "utf8");
 
       const textResult = await readTool?.execute("tool-2", {

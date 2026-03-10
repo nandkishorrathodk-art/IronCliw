@@ -3,18 +3,18 @@
 #
 # One-time setup (from repo root): ./setup-podman.sh
 # Then:
-#   ./scripts/run-IronCliw-podman.sh launch           # Start gateway
-#   ./scripts/run-IronCliw-podman.sh launch setup      # Onboarding wizard
+#   ./scripts/run-ironcliw-podman.sh launch           # Start gateway
+#   ./scripts/run-ironcliw-podman.sh launch setup      # Onboarding wizard
 #
-# As the IronCliw user (no repo needed):
-#   sudo -u IronCliw /home/IronCliw/run-IronCliw-podman.sh
-#   sudo -u IronCliw /home/IronCliw/run-IronCliw-podman.sh setup
+# As the ironcliw user (no repo needed):
+#   sudo -u ironcliw /home/ironcliw/run-ironcliw-podman.sh
+#   sudo -u ironcliw /home/ironcliw/run-ironcliw-podman.sh setup
 #
 # Legacy: "setup-host" delegates to ../setup-podman.sh
 
 set -euo pipefail
 
-IronCliw_USER="${IronCliw_PODMAN_USER:-IronCliw}"
+IRONCLIW_USER="${IRONCLIW_PODMAN_USER:-ironcliw}"
 
 resolve_user_home() {
   local user="$1"
@@ -31,9 +31,9 @@ resolve_user_home() {
   printf '%s' "$home"
 }
 
-IronCliw_HOME="$(resolve_user_home "$IronCliw_USER")"
-IronCliw_UID="$(id -u "$IronCliw_USER" 2>/dev/null || true)"
-LAUNCH_SCRIPT="$IronCliw_HOME/run-IronCliw-podman.sh"
+IRONCLIW_HOME="$(resolve_user_home "$IRONCLIW_USER")"
+IRONCLIW_UID="$(id -u "$IRONCLIW_USER" 2>/dev/null || true)"
+LAUNCH_SCRIPT="$IRONCLIW_HOME/run-ironcliw-podman.sh"
 
 # Legacy: setup-host → run setup-podman.sh
 if [[ "${1:-}" == "setup-host" ]]; then
@@ -47,39 +47,36 @@ if [[ "${1:-}" == "setup-host" ]]; then
   exit 1
 fi
 
-# --- Step 2: launch (from repo: re-exec as IronCliw in safe cwd; from IronCliw home: run container) ---
+# --- Step 2: launch (from repo: re-exec as ironcliw in safe cwd; from ironcliw home: run container) ---
 if [[ "${1:-}" == "launch" ]]; then
   shift
-  if [[ -n "${IronCliw_UID:-}" && "$(id -u)" -ne "$IronCliw_UID" ]]; then
-    # Exec as IronCliw with cwd=/tmp so a nologin user never inherits an invalid cwd.
-    exec sudo -u "$IronCliw_USER" env HOME="$IronCliw_HOME" PATH="$PATH" TERM="${TERM:-}" \
+  if [[ -n "${IRONCLIW_UID:-}" && "$(id -u)" -ne "$IRONCLIW_UID" ]]; then
+    # Exec as ironcliw with cwd=/tmp so a nologin user never inherits an invalid cwd.
+    exec sudo -u "$IRONCLIW_USER" env HOME="$IRONCLIW_HOME" PATH="$PATH" TERM="${TERM:-}" \
       bash -c 'cd /tmp && exec '"$LAUNCH_SCRIPT"' "$@"' _ "$@"
   fi
-  # Already IronCliw; fall through to container run (with remaining args, e.g. "setup")
+  # Already ironcliw; fall through to container run (with remaining args, e.g. "setup")
 fi
 
-# --- Container run (script in IronCliw home, run as IronCliw) ---
+# --- Container run (script in ironcliw home, run as ironcliw) ---
 EFFECTIVE_HOME="${HOME:-}"
-if [[ -n "${IronCliw_UID:-}" && "$(id -u)" -eq "$IronCliw_UID" ]]; then
-  EFFECTIVE_HOME="$IronCliw_HOME"
-  export HOME="$IronCliw_HOME"
+if [[ -n "${IRONCLIW_UID:-}" && "$(id -u)" -eq "$IRONCLIW_UID" ]]; then
+  EFFECTIVE_HOME="$IRONCLIW_HOME"
+  export HOME="$IRONCLIW_HOME"
 fi
 if [[ -z "${EFFECTIVE_HOME:-}" ]]; then
-  EFFECTIVE_HOME="${IronCliw_HOME:-/tmp}"
+  EFFECTIVE_HOME="${IRONCLIW_HOME:-/tmp}"
 fi
-CONFIG_DIR="${IronCliw_CONFIG_DIR:-$EFFECTIVE_HOME/.IronCliw}"
-ENV_FILE="${IronCliw_PODMAN_ENV:-$CONFIG_DIR/.env}"
-WORKSPACE_DIR="${IronCliw_WORKSPACE_DIR:-$CONFIG_DIR/workspace}"
-CONTAINER_NAME="${IronCliw_PODMAN_CONTAINER:-IronCliw}"
-IronCliw_IMAGE="${IronCliw_PODMAN_IMAGE:-IronCliw:local}"
-PODMAN_PULL="${IronCliw_PODMAN_PULL:-never}"
-HOST_GATEWAY_PORT="${IronCliw_PODMAN_GATEWAY_HOST_PORT:-${IronCliw_GATEWAY_PORT:-18789}}"
-HOST_BRIDGE_PORT="${IronCliw_PODMAN_BRIDGE_HOST_PORT:-${IronCliw_BRIDGE_PORT:-18790}}"
-# Keep Podman default local-only unless explicitly overridden.
-# Non-loopback binds require gateway.controlUi.allowedOrigins (security hardening).
-GATEWAY_BIND="${IronCliw_GATEWAY_BIND:-loopback}"
+CONFIG_DIR="${IRONCLIW_CONFIG_DIR:-$EFFECTIVE_HOME/.ironcliw}"
+ENV_FILE="${IRONCLIW_PODMAN_ENV:-$CONFIG_DIR/.env}"
+WORKSPACE_DIR="${IRONCLIW_WORKSPACE_DIR:-$CONFIG_DIR/workspace}"
+CONTAINER_NAME="${IRONCLIW_PODMAN_CONTAINER:-ironcliw}"
+IRONCLIW_IMAGE="${IRONCLIW_PODMAN_IMAGE:-ironcliw:local}"
+PODMAN_PULL="${IRONCLIW_PODMAN_PULL:-never}"
+HOST_GATEWAY_PORT="${IRONCLIW_PODMAN_GATEWAY_HOST_PORT:-${IRONCLIW_GATEWAY_PORT:-18789}}"
+HOST_BRIDGE_PORT="${IRONCLIW_PODMAN_BRIDGE_HOST_PORT:-${IRONCLIW_BRIDGE_PORT:-18790}}"
 
-# Safe cwd for podman (IronCliw is nologin; avoid inherited cwd from sudo)
+# Safe cwd for podman (ironcliw is nologin; avoid inherited cwd from sudo)
 cd "$EFFECTIVE_HOME" 2>/dev/null || cd /tmp 2>/dev/null || true
 
 RUN_SETUP=false
@@ -99,6 +96,11 @@ if [[ -f "$ENV_FILE" ]]; then
   source "$ENV_FILE" 2>/dev/null || true
   set +a
 fi
+
+# Keep Podman default local-only unless explicitly overridden.
+# Non-loopback binds require gateway.controlUi.allowedOrigins (security hardening).
+# NOTE: must be evaluated after sourcing ENV_FILE so IRONCLIW_GATEWAY_BIND set in .env takes effect.
+GATEWAY_BIND="${IRONCLIW_GATEWAY_BIND:-loopback}"
 
 upsert_env_var() {
   local file="$1"
@@ -136,27 +138,27 @@ PY
     od -An -N32 -tx1 /dev/urandom | tr -d " \n"
     return 0
   fi
-  echo "Missing dependency: need openssl or python3 (or od) to generate IronCliw_GATEWAY_TOKEN." >&2
+  echo "Missing dependency: need openssl or python3 (or od) to generate IRONCLIW_GATEWAY_TOKEN." >&2
   exit 1
 }
 
-if [[ -z "${IronCliw_GATEWAY_TOKEN:-}" ]]; then
-  export IronCliw_GATEWAY_TOKEN="$(generate_token_hex_32)"
+if [[ -z "${IRONCLIW_GATEWAY_TOKEN:-}" ]]; then
+  export IRONCLIW_GATEWAY_TOKEN="$(generate_token_hex_32)"
   mkdir -p "$(dirname "$ENV_FILE")"
-  upsert_env_var "$ENV_FILE" "IronCliw_GATEWAY_TOKEN" "$IronCliw_GATEWAY_TOKEN"
-  echo "Generated IronCliw_GATEWAY_TOKEN and wrote it to $ENV_FILE." >&2
+  upsert_env_var "$ENV_FILE" "IRONCLIW_GATEWAY_TOKEN" "$IRONCLIW_GATEWAY_TOKEN"
+  echo "Generated IRONCLIW_GATEWAY_TOKEN and wrote it to $ENV_FILE." >&2
 fi
 
 # The gateway refuses to start unless gateway.mode=local is set in config.
 # Keep this minimal; users can run the wizard later to configure channels/providers.
-CONFIG_JSON="$CONFIG_DIR/IronCliw.json"
+CONFIG_JSON="$CONFIG_DIR/ironcliw.json"
 if [[ ! -f "$CONFIG_JSON" ]]; then
   echo '{ gateway: { mode: "local" } }' >"$CONFIG_JSON"
   chmod 600 "$CONFIG_JSON" 2>/dev/null || true
   echo "Created $CONFIG_JSON (minimal gateway.mode=local)." >&2
 fi
 
-PODMAN_USERNS="${IronCliw_PODMAN_USERNS:-keep-id}"
+PODMAN_USERNS="${IRONCLIW_PODMAN_USERNS:-keep-id}"
 USERNS_ARGS=()
 RUN_USER_ARGS=()
 case "$PODMAN_USERNS" in
@@ -164,7 +166,7 @@ case "$PODMAN_USERNS" in
   keep-id) USERNS_ARGS=(--userns=keep-id) ;;
   host) USERNS_ARGS=(--userns=host) ;;
   *)
-    echo "Unsupported IronCliw_PODMAN_USERNS=$PODMAN_USERNS (expected: keep-id, auto, host)." >&2
+    echo "Unsupported IRONCLIW_PODMAN_USERNS=$PODMAN_USERNS (expected: keep-id, auto, host)." >&2
     exit 2
     ;;
 esac
@@ -175,22 +177,38 @@ if [[ "$PODMAN_USERNS" == "keep-id" ]]; then
   RUN_USER_ARGS=(--user "${RUN_UID}:${RUN_GID}")
   echo "Starting container as uid=${RUN_UID} gid=${RUN_GID} (must match owner of $CONFIG_DIR)" >&2
 else
-  echo "Starting container without --user (IronCliw_PODMAN_USERNS=$PODMAN_USERNS), mounts may require ownership fixes." >&2
+  echo "Starting container without --user (IRONCLIW_PODMAN_USERNS=$PODMAN_USERNS), mounts may require ownership fixes." >&2
 fi
 
 ENV_FILE_ARGS=()
 [[ -f "$ENV_FILE" ]] && ENV_FILE_ARGS+=(--env-file "$ENV_FILE")
+
+# On Linux with SELinux enforcing/permissive, add ,Z so Podman relabels the
+# bind-mounted directories and the container can access them.
+SELINUX_MOUNT_OPTS=""
+if [[ -z "${IRONCLIW_BIND_MOUNT_OPTIONS:-}" ]]; then
+  if [[ "$(uname -s 2>/dev/null)" == "Linux" ]] && command -v getenforce >/dev/null 2>&1; then
+    _selinux_mode="$(getenforce 2>/dev/null || true)"
+    if [[ "$_selinux_mode" == "Enforcing" || "$_selinux_mode" == "Permissive" ]]; then
+      SELINUX_MOUNT_OPTS=",Z"
+    fi
+  fi
+else
+  # Honour explicit override (e.g. IRONCLIW_BIND_MOUNT_OPTIONS=":Z" → strip leading colon for inline use).
+  SELINUX_MOUNT_OPTS="${IRONCLIW_BIND_MOUNT_OPTIONS#:}"
+  [[ -n "$SELINUX_MOUNT_OPTS" ]] && SELINUX_MOUNT_OPTS=",$SELINUX_MOUNT_OPTS"
+fi
 
 if [[ "$RUN_SETUP" == true ]]; then
   exec podman run --pull="$PODMAN_PULL" --rm -it \
     --init \
     "${USERNS_ARGS[@]}" "${RUN_USER_ARGS[@]}" \
     -e HOME=/home/node -e TERM=xterm-256color -e BROWSER=echo \
-    -e IronCliw_GATEWAY_TOKEN="$IronCliw_GATEWAY_TOKEN" \
-    -v "$CONFIG_DIR:/home/node/.IronCliw:rw" \
-    -v "$WORKSPACE_DIR:/home/node/.IronCliw/workspace:rw" \
+    -e IRONCLIW_GATEWAY_TOKEN="$IRONCLIW_GATEWAY_TOKEN" \
+    -v "$CONFIG_DIR:/home/node/.ironcliw:rw${SELINUX_MOUNT_OPTS}" \
+    -v "$WORKSPACE_DIR:/home/node/.ironcliw/workspace:rw${SELINUX_MOUNT_OPTS}" \
     "${ENV_FILE_ARGS[@]}" \
-    "$IronCliw_IMAGE" \
+    "$IRONCLIW_IMAGE" \
     node dist/index.js onboard "$@"
 fi
 
@@ -199,16 +217,15 @@ podman run --pull="$PODMAN_PULL" -d --replace \
   --init \
   "${USERNS_ARGS[@]}" "${RUN_USER_ARGS[@]}" \
   -e HOME=/home/node -e TERM=xterm-256color \
-  -e IronCliw_GATEWAY_TOKEN="$IronCliw_GATEWAY_TOKEN" \
+  -e IRONCLIW_GATEWAY_TOKEN="$IRONCLIW_GATEWAY_TOKEN" \
   "${ENV_FILE_ARGS[@]}" \
-  -v "$CONFIG_DIR:/home/node/.IronCliw:rw" \
-  -v "$WORKSPACE_DIR:/home/node/.IronCliw/workspace:rw" \
+  -v "$CONFIG_DIR:/home/node/.ironcliw:rw${SELINUX_MOUNT_OPTS}" \
+  -v "$WORKSPACE_DIR:/home/node/.ironcliw/workspace:rw${SELINUX_MOUNT_OPTS}" \
   -p "${HOST_GATEWAY_PORT}:18789" \
   -p "${HOST_BRIDGE_PORT}:18790" \
-  "$IronCliw_IMAGE" \
+  "$IRONCLIW_IMAGE" \
   node dist/index.js gateway --bind "$GATEWAY_BIND" --port 18789
 
 echo "Container $CONTAINER_NAME started. Dashboard: http://127.0.0.1:${HOST_GATEWAY_PORT}/"
 echo "Logs: podman logs -f $CONTAINER_NAME"
 echo "For auto-start/restarts, use: ./setup-podman.sh --quadlet (Quadlet + systemd user service)."
-

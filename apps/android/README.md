@@ -116,7 +116,7 @@ Use `adb reverse` so Android `localhost:18789` tunnels to your laptop `localhost
 Terminal A (gateway):
 
 ```bash
-pnpm IronCliw gateway --port 18789 --verbose
+pnpm ironcliw gateway --port 18789 --verbose
 ```
 
 Terminal B (USB tunnel):
@@ -138,14 +138,14 @@ This app is native Kotlin + Jetpack Compose.
 - For Compose UI edits: use Android Studio **Live Edit** on a debug build (works on physical devices; project `minSdk=31` already meets API requirement).
 - For many non-structural code/resource changes: use Android Studio **Apply Changes**.
 - For structural/native/manifest/Gradle changes: do full reinstall (`pnpm android:run`).
-- Canvas web content already supports live reload when loaded from Gateway `__IronCliw__/canvas/` (see `docs/platforms/android.md`).
+- Canvas web content already supports live reload when loaded from Gateway `__ironcliw__/canvas/` (see `docs/platforms/android.md`).
 
 ## Connect / Pair
 
 1) Start the gateway (on your main machine):
 
 ```bash
-pnpm IronCliw gateway --port 18789 --verbose
+pnpm ironcliw gateway --port 18789 --verbose
 ```
 
 2) In the Android app:
@@ -156,8 +156,8 @@ pnpm IronCliw gateway --port 18789 --verbose
 3) Approve pairing (on the gateway machine):
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
+ironcliw devices list
+ironcliw devices approve <requestId>
 ```
 
 More details: `docs/platforms/android.md`.
@@ -179,18 +179,18 @@ This suite assumes setup is already done manually. It does **not** install/run/p
 Pre-req checklist:
 
 1) Gateway is running and reachable from the Android app.
-2) Android app is connected to that gateway and `IronCliw nodes status` shows it as paired + connected.
+2) Android app is connected to that gateway and `ironcliw nodes status` shows it as paired + connected.
 3) App stays unlocked and in foreground for the whole run.
 4) Open the app **Screen** tab and keep it active during the run (canvas/A2UI commands require the canvas WebView attached there).
 5) Grant runtime permissions for capabilities you expect to pass (camera/mic/location/notification listener/location, etc.).
 6) No interactive system dialogs should be pending before test start.
-7) Canvas host is enabled and reachable from the device (do not run gateway with `IronCliw_SKIP_CANVAS_HOST=1`; startup logs should include `canvas host mounted at .../__IronCliw__/`).
+7) Canvas host is enabled and reachable from the device (do not run gateway with `IRONCLIW_SKIP_CANVAS_HOST=1`; startup logs should include `canvas host mounted at .../__ironcliw__/`).
 8) Local operator test client pairing is approved. If first run fails with `pairing required`, approve latest pending device pairing request, then rerun:
 9) For A2UI checks, keep the app on **Screen** tab; the node now auto-refreshes canvas capability once on first A2UI reachability failure (TTL-safe retry).
 
 ```bash
-IronCliw devices list
-IronCliw devices approve --latest
+ironcliw devices list
+ironcliw devices approve --latest
 ```
 
 Run:
@@ -201,22 +201,22 @@ pnpm android:test:integration
 
 Optional overrides:
 
-- `IronCliw_ANDROID_GATEWAY_URL=ws://...` (default: from your local IronCliw config)
-- `IronCliw_ANDROID_GATEWAY_TOKEN=...`
-- `IronCliw_ANDROID_GATEWAY_PASSWORD=...`
-- `IronCliw_ANDROID_NODE_ID=...` or `IronCliw_ANDROID_NODE_NAME=...`
+- `IRONCLIW_ANDROID_GATEWAY_URL=ws://...` (default: from your local IronCliw config)
+- `IRONCLIW_ANDROID_GATEWAY_TOKEN=...`
+- `IRONCLIW_ANDROID_GATEWAY_PASSWORD=...`
+- `IRONCLIW_ANDROID_NODE_ID=...` or `IRONCLIW_ANDROID_NODE_NAME=...`
 
 What it does:
 
 - Reads `node.describe` command list from the selected Android node.
 - Invokes advertised non-interactive commands.
 - Skips `screen.record` in this suite (Android requires interactive per-invocation screen-capture consent).
-- Asserts command contracts (success or expected deterministic error for safe-invalid calls like `sms.send`, `notifications.actions`, `app.update`).
+- Asserts command contracts (success or expected deterministic error for safe-invalid calls like `sms.send` and `notifications.actions`).
 
 Common failure quick-fixes:
 
 - `pairing required` before tests start:
-  - approve pending device pairing (`IronCliw devices approve --latest`) and rerun.
+  - approve pending device pairing (`ironcliw devices approve --latest`) and rerun.
 - `A2UI host not reachable` / `A2UI_HOST_NOT_CONFIGURED`:
   - ensure gateway canvas host is running and reachable, keep the app on the **Screen** tab. The app will auto-refresh canvas capability once; if it still fails, reconnect app and rerun.
 - `NODE_BACKGROUND_UNAVAILABLE: canvas unavailable`:

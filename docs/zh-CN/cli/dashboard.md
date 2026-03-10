@@ -2,7 +2,7 @@
 read_when:
   - 想要使用当前令牌打开控制界面
   - 想要打印 URL 而不启动浏览器
-summary: "`IronCliw dashboard` 的 CLI 参考（打开控制界面）"
+summary: "`ironcliw dashboard` 的 CLI 参考（打开控制界面）"
 title: dashboard
 x-i18n:
   generated_at: "2026-02-01T19:58:50Z"
@@ -13,11 +13,11 @@ x-i18n:
   workflow: 14
 ---
 
-# `IronCliw dashboard`
+# `ironcliw dashboard`
 
 使用当前认证信息打开控制界面。
 
 ```bash
-IronCliw dashboard
-IronCliw dashboard --no-open
+ironcliw dashboard
+ironcliw dashboard --no-open
 ```

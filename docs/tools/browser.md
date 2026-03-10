@@ -2,12 +2,12 @@
 summary: "Integrated browser control service + action commands"
 read_when:
   - Adding agent-controlled browser automation
-  - Debugging why IronCliw is interfering with your own Chrome
+  - Debugging why ironcliw is interfering with your own Chrome
   - Implementing browser settings + lifecycle in the macOS app
 title: "Browser (IronCliw-managed)"
 ---
 
-# Browser (IronCliw-managed)
+# Browser (ironcliw-managed)
 
 IronCliw can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
 It is isolated from your personal browser and is managed through a small local
@@ -16,17 +16,17 @@ control service inside the Gateway (loopback only).
 Beginner view:
 
 - Think of it as a **separate, agent-only browser**.
-- The `IronCliw` profile does **not** touch your personal browser profile.
+- The `ironcliw` profile does **not** touch your personal browser profile.
 - The agent can **open tabs, read pages, click, and type** in a safe lane.
 - The default `chrome` profile uses the **system default Chromium browser** via the
-  extension relay; switch to `IronCliw` for the isolated managed browser.
+  extension relay; switch to `ironcliw` for the isolated managed browser.
 
 ## What you get
 
-- A separate browser profile named **IronCliw** (orange accent by default).
+- A separate browser profile named **ironcliw** (orange accent by default).
 - Deterministic tab control (list/open/focus/close).
 - Agent actions (click/type/drag/select), snapshots, screenshots, PDFs.
-- Optional multi-profile support (`IronCliw`, `work`, `remote`, ...).
+- Optional multi-profile support (`ironcliw`, `work`, `remote`, ...).
 
 This browser is **not** your daily driver. It is a safe, isolated surface for
 agent automation and verification.
@@ -34,26 +34,26 @@ agent automation and verification.
 ## Quick start
 
 ```bash
-IronCliw browser --browser-profile IronCliw status
-IronCliw browser --browser-profile IronCliw start
-IronCliw browser --browser-profile IronCliw open https://example.com
-IronCliw browser --browser-profile IronCliw snapshot
+ironcliw browser --browser-profile ironcliw status
+ironcliw browser --browser-profile ironcliw start
+ironcliw browser --browser-profile ironcliw open https://example.com
+ironcliw browser --browser-profile ironcliw snapshot
 ```
 
 If you get “Browser disabled”, enable it in config (see below) and restart the
 Gateway.
 
-## Profiles: `IronCliw` vs `chrome`
+## Profiles: `ironcliw` vs `chrome`
 
-- `IronCliw`: managed, isolated browser (no extension required).
+- `ironcliw`: managed, isolated browser (no extension required).
 - `chrome`: extension relay to your **system browser** (requires the IronCliw
   extension to be attached to a tab).
 
-Set `browser.defaultProfile: "IronCliw"` if you want managed mode by default.
+Set `browser.defaultProfile: "ironcliw"` if you want managed mode by default.
 
 ## Configuration
 
-Browser settings live in `~/.IronCliw/IronCliw.json`.
+Browser settings live in `~/.ironcliw/ironcliw.json`.
 
 ```json5
 {
@@ -75,7 +75,7 @@ Browser settings live in `~/.IronCliw/IronCliw.json`.
     attachOnly: false,
     executablePath: "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
     profiles: {
-      IronCliw: { cdpPort: 18800, color: "#FF4500" },
+      ironcliw: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
     },
@@ -87,7 +87,7 @@ Notes:
 
 - The browser control service binds to loopback on a port derived from `gateway.port`
   (default: `18791`, which is gateway + 2). The relay uses the next port (`18792`).
-- If you override the Gateway port (`gateway.port` or `IronCliw_GATEWAY_PORT`),
+- If you override the Gateway port (`gateway.port` or `IRONCLIW_GATEWAY_PORT`),
   the derived browser ports shift to stay in the same “family”.
 - `cdpUrl` defaults to the relay port when unset.
 - `remoteCdpTimeoutMs` applies to remote (non-loopback) CDP reachability checks.
@@ -97,9 +97,9 @@ Notes:
 - `browser.ssrfPolicy.allowPrivateNetwork` remains supported as a legacy alias for compatibility.
 - `attachOnly: true` means “never launch a local browser; only attach if it is already running.”
 - `color` + per-profile `color` tint the browser UI so you can see which profile is active.
-- Default profile is `IronCliw` (IronCliw-managed standalone browser). Use `defaultProfile: "chrome"` to opt into the Chrome extension relay.
+- Default profile is `ironcliw` (IronCliw-managed standalone browser). Use `defaultProfile: "chrome"` to opt into the Chrome extension relay.
 - Auto-detect order: system default browser if Chromium-based; otherwise Chrome → Brave → Edge → Chromium → Chrome Canary.
-- Local `IronCliw` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
+- Local `ironcliw` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
 
 ## Use Brave (or another Chromium-based browser)
 
@@ -110,7 +110,7 @@ auto-detection:
 CLI example:
 
 ```bash
-IronCliw config set browser.executablePath "/usr/bin/google-chrome"
+ironcliw config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -196,6 +196,53 @@ Notes:
 - Replace `<BROWSERLESS_API_KEY>` with your real Browserless token.
 - Choose the region endpoint that matches your Browserless account (see their docs).
 
+## Direct WebSocket CDP providers
+
+Some hosted browser services expose a **direct WebSocket** endpoint rather than
+the standard HTTP-based CDP discovery (`/json/version`). IronCliw supports both:
+
+- **HTTP(S) endpoints** (e.g. Browserless) — IronCliw calls `/json/version` to
+  discover the WebSocket debugger URL, then connects.
+- **WebSocket endpoints** (`ws://` / `wss://`) — IronCliw connects directly,
+  skipping `/json/version`. Use this for services like
+  [Browserbase](https://www.browserbase.com) or any provider that hands you a
+  WebSocket URL.
+
+### Browserbase
+
+[Browserbase](https://www.browserbase.com) is a cloud platform for running
+headless browsers with built-in CAPTCHA solving, stealth mode, and residential
+proxies.
+
+```json5
+{
+  browser: {
+    enabled: true,
+    defaultProfile: "browserbase",
+    remoteCdpTimeoutMs: 3000,
+    remoteCdpHandshakeTimeoutMs: 5000,
+    profiles: {
+      browserbase: {
+        cdpUrl: "wss://connect.browserbase.com?apiKey=<BROWSERBASE_API_KEY>",
+        color: "#F97316",
+      },
+    },
+  },
+}
+```
+
+Notes:
+
+- [Sign up](https://www.browserbase.com/sign-up) and copy your **API Key**
+  from the [Overview dashboard](https://www.browserbase.com/overview).
+- Replace `<BROWSERBASE_API_KEY>` with your real Browserbase API key.
+- Browserbase auto-creates a browser session on WebSocket connect, so no
+  manual session creation step is needed.
+- The free tier allows one concurrent session and one browser hour per month.
+  See [pricing](https://www.browserbase.com/pricing) for paid plan limits.
+- See the [Browserbase docs](https://docs.browserbase.com) for full API
+  reference, SDK guides, and integration examples.
+
 ## Security
 
 Key ideas:
@@ -207,20 +254,20 @@ Key ideas:
 
 Remote CDP tips:
 
-- Prefer HTTPS endpoints and short-lived tokens where possible.
+- Prefer encrypted endpoints (HTTPS or WSS) and short-lived tokens where possible.
 - Avoid embedding long-lived tokens directly in config files.
 
 ## Profiles (multi-browser)
 
 IronCliw supports multiple named profiles (routing configs). Profiles can be:
 
-- **IronCliw-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
+- **ironcliw-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
 - **remote**: an explicit CDP URL (Chromium-based browser running elsewhere)
 - **extension relay**: your existing Chrome tab(s) via the local relay + Chrome extension
 
 Defaults:
 
-- The `IronCliw` profile is auto-created if missing.
+- The `ironcliw` profile is auto-created if missing.
 - The `chrome` profile is built-in for the Chrome extension relay (points at `http://127.0.0.1:18792` by default).
 - Local CDP ports allocate from **18800–18899** by default.
 - Deleting a profile moves its local data directory to Trash.
@@ -229,7 +276,7 @@ All control endpoints accept `?profile=<name>`; the CLI uses `--browser-profile`
 
 ## Chrome extension relay (use your existing Chrome)
 
-IronCliw can also drive **your existing Chrome tabs** (no separate “IronCliw” Chrome instance) via a local CDP relay + a Chrome extension.
+IronCliw can also drive **your existing Chrome tabs** (no separate “ironcliw” Chrome instance) via a local CDP relay + a Chrome extension.
 
 Full guide: [Chrome extension](/tools/chrome-extension)
 
@@ -255,22 +302,22 @@ Chrome extension relay takeover requires host browser control, so either:
 1. Load the extension (dev/unpacked):
 
 ```bash
-IronCliw browser extension install
+ironcliw browser extension install
 ```
 
 - Chrome → `chrome://extensions` → enable “Developer mode”
-- “Load unpacked” → select the directory printed by `IronCliw browser extension path`
+- “Load unpacked” → select the directory printed by `ironcliw browser extension path`
 - Pin the extension, then click it on the tab you want to control (badge shows `ON`).
 
 2. Use it:
 
-- CLI: `IronCliw browser --browser-profile chrome tabs`
+- CLI: `ironcliw browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 Optional: if you want a different name or relay port, create your own profile:
 
 ```bash
-IronCliw browser create-profile \
+ironcliw browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -281,6 +328,19 @@ Notes:
 
 - This mode relies on Playwright-on-CDP for most operations (screenshots/snapshots/actions).
 - Detach by clicking the extension icon again.
+- Leave the relay loopback-only by default. If the relay must be reachable from a different network namespace (for example Gateway in WSL2, Chrome on Windows), set `browser.relayBindHost` to an explicit bind address such as `0.0.0.0` while keeping the surrounding network private and authenticated.
+
+WSL2 / cross-namespace example:
+
+```json5
+{
+  browser: {
+    enabled: true,
+    relayBindHost: "0.0.0.0",
+    defaultProfile: "chrome",
+  },
+}
+```
 
 ## Isolation guarantees
 
@@ -328,13 +388,13 @@ All endpoints accept `?profile=<name>`.
 If gateway auth is configured, browser HTTP routes require auth too:
 
 - `Authorization: Bearer <gateway token>`
-- `x-IronCliw-password: <gateway password>` or HTTP Basic auth with that password
+- `x-ironcliw-password: <gateway password>` or HTTP Basic auth with that password
 
 ### Playwright requirement
 
 Some features (navigate/act/AI snapshot/role snapshot, element screenshots, PDF) require
 Playwright. If Playwright isn’t installed, those endpoints return a clear 501
-error. ARIA snapshots and basic screenshots still work for IronCliw-managed Chrome.
+error. ARIA snapshots and basic screenshots still work for ironcliw-managed Chrome.
 For the Chrome extension relay driver, ARIA snapshots and screenshots require Playwright.
 
 If you see `Playwright is not available in this gateway build`, install the full
@@ -347,13 +407,13 @@ If your Gateway runs in Docker, avoid `npx playwright` (npm override conflicts).
 Use the bundled CLI instead:
 
 ```bash
-docker compose run --rm IronCliw-cli \
+docker compose run --rm ironcliw-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
 To persist browser downloads, set `PLAYWRIGHT_BROWSERS_PATH` (for example,
 `/home/node/.cache/ms-playwright`) and make sure `/home/node` is persisted via
-`IronCliw_HOME_VOLUME` or a bind mount. See [Docker](/install/docker).
+`IRONCLIW_HOME_VOLUME` or a bind mount. See [Docker](/install/docker).
 
 ## How it works (internal)
 
@@ -375,95 +435,95 @@ All commands also accept `--json` for machine-readable output (stable payloads).
 
 Basics:
 
-- `IronCliw browser status`
-- `IronCliw browser start`
-- `IronCliw browser stop`
-- `IronCliw browser tabs`
-- `IronCliw browser tab`
-- `IronCliw browser tab new`
-- `IronCliw browser tab select 2`
-- `IronCliw browser tab close 2`
-- `IronCliw browser open https://example.com`
-- `IronCliw browser focus abcd1234`
-- `IronCliw browser close abcd1234`
+- `ironcliw browser status`
+- `ironcliw browser start`
+- `ironcliw browser stop`
+- `ironcliw browser tabs`
+- `ironcliw browser tab`
+- `ironcliw browser tab new`
+- `ironcliw browser tab select 2`
+- `ironcliw browser tab close 2`
+- `ironcliw browser open https://example.com`
+- `ironcliw browser focus abcd1234`
+- `ironcliw browser close abcd1234`
 
 Inspection:
 
-- `IronCliw browser screenshot`
-- `IronCliw browser screenshot --full-page`
-- `IronCliw browser screenshot --ref 12`
-- `IronCliw browser screenshot --ref e12`
-- `IronCliw browser snapshot`
-- `IronCliw browser snapshot --format aria --limit 200`
-- `IronCliw browser snapshot --interactive --compact --depth 6`
-- `IronCliw browser snapshot --efficient`
-- `IronCliw browser snapshot --labels`
-- `IronCliw browser snapshot --selector "#main" --interactive`
-- `IronCliw browser snapshot --frame "iframe#main" --interactive`
-- `IronCliw browser console --level error`
-- `IronCliw browser errors --clear`
-- `IronCliw browser requests --filter api --clear`
-- `IronCliw browser pdf`
-- `IronCliw browser responsebody "**/api" --max-chars 5000`
+- `ironcliw browser screenshot`
+- `ironcliw browser screenshot --full-page`
+- `ironcliw browser screenshot --ref 12`
+- `ironcliw browser screenshot --ref e12`
+- `ironcliw browser snapshot`
+- `ironcliw browser snapshot --format aria --limit 200`
+- `ironcliw browser snapshot --interactive --compact --depth 6`
+- `ironcliw browser snapshot --efficient`
+- `ironcliw browser snapshot --labels`
+- `ironcliw browser snapshot --selector "#main" --interactive`
+- `ironcliw browser snapshot --frame "iframe#main" --interactive`
+- `ironcliw browser console --level error`
+- `ironcliw browser errors --clear`
+- `ironcliw browser requests --filter api --clear`
+- `ironcliw browser pdf`
+- `ironcliw browser responsebody "**/api" --max-chars 5000`
 
 Actions:
 
-- `IronCliw browser navigate https://example.com`
-- `IronCliw browser resize 1280 720`
-- `IronCliw browser click 12 --double`
-- `IronCliw browser click e12 --double`
-- `IronCliw browser type 23 "hello" --submit`
-- `IronCliw browser press Enter`
-- `IronCliw browser hover 44`
-- `IronCliw browser scrollintoview e12`
-- `IronCliw browser drag 10 11`
-- `IronCliw browser select 9 OptionA OptionB`
-- `IronCliw browser download e12 report.pdf`
-- `IronCliw browser waitfordownload report.pdf`
-- `IronCliw browser upload /tmp/IronCliw/uploads/file.pdf`
-- `IronCliw browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `IronCliw browser dialog --accept`
-- `IronCliw browser wait --text "Done"`
-- `IronCliw browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `IronCliw browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `IronCliw browser highlight e12`
-- `IronCliw browser trace start`
-- `IronCliw browser trace stop`
+- `ironcliw browser navigate https://example.com`
+- `ironcliw browser resize 1280 720`
+- `ironcliw browser click 12 --double`
+- `ironcliw browser click e12 --double`
+- `ironcliw browser type 23 "hello" --submit`
+- `ironcliw browser press Enter`
+- `ironcliw browser hover 44`
+- `ironcliw browser scrollintoview e12`
+- `ironcliw browser drag 10 11`
+- `ironcliw browser select 9 OptionA OptionB`
+- `ironcliw browser download e12 report.pdf`
+- `ironcliw browser waitfordownload report.pdf`
+- `ironcliw browser upload /tmp/ironcliw/uploads/file.pdf`
+- `ironcliw browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `ironcliw browser dialog --accept`
+- `ironcliw browser wait --text "Done"`
+- `ironcliw browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `ironcliw browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `ironcliw browser highlight e12`
+- `ironcliw browser trace start`
+- `ironcliw browser trace stop`
 
 State:
 
-- `IronCliw browser cookies`
-- `IronCliw browser cookies set session abc123 --url "https://example.com"`
-- `IronCliw browser cookies clear`
-- `IronCliw browser storage local get`
-- `IronCliw browser storage local set theme dark`
-- `IronCliw browser storage session clear`
-- `IronCliw browser set offline on`
-- `IronCliw browser set headers --headers-json '{"X-Debug":"1"}'`
-- `IronCliw browser set credentials user pass`
-- `IronCliw browser set credentials --clear`
-- `IronCliw browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `IronCliw browser set geo --clear`
-- `IronCliw browser set media dark`
-- `IronCliw browser set timezone America/New_York`
-- `IronCliw browser set locale en-US`
-- `IronCliw browser set device "iPhone 14"`
+- `ironcliw browser cookies`
+- `ironcliw browser cookies set session abc123 --url "https://example.com"`
+- `ironcliw browser cookies clear`
+- `ironcliw browser storage local get`
+- `ironcliw browser storage local set theme dark`
+- `ironcliw browser storage session clear`
+- `ironcliw browser set offline on`
+- `ironcliw browser set headers --headers-json '{"X-Debug":"1"}'`
+- `ironcliw browser set credentials user pass`
+- `ironcliw browser set credentials --clear`
+- `ironcliw browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `ironcliw browser set geo --clear`
+- `ironcliw browser set media dark`
+- `ironcliw browser set timezone America/New_York`
+- `ironcliw browser set locale en-US`
+- `ironcliw browser set device "iPhone 14"`
 
 Notes:
 
 - `upload` and `dialog` are **arming** calls; run them before the click/press
   that triggers the chooser/dialog.
 - Download and trace output paths are constrained to IronCliw temp roots:
-  - traces: `/tmp/IronCliw` (fallback: `${os.tmpdir()}/IronCliw`)
-  - downloads: `/tmp/IronCliw/downloads` (fallback: `${os.tmpdir()}/IronCliw/downloads`)
+  - traces: `/tmp/ironcliw` (fallback: `${os.tmpdir()}/ironcliw`)
+  - downloads: `/tmp/ironcliw/downloads` (fallback: `${os.tmpdir()}/ironcliw/downloads`)
 - Upload paths are constrained to an IronCliw temp uploads root:
-  - uploads: `/tmp/IronCliw/uploads` (fallback: `${os.tmpdir()}/IronCliw/uploads`)
+  - uploads: `/tmp/ironcliw/uploads` (fallback: `${os.tmpdir()}/ironcliw/uploads`)
 - `upload` can also set file inputs directly via `--input-ref` or `--element`.
 - `snapshot`:
   - `--format ai` (default when Playwright is installed): returns an AI snapshot with numeric refs (`aria-ref="<n>"`).
   - `--format aria`: returns the accessibility tree (no refs; inspection only).
   - `--efficient` (or `--mode efficient`): compact role snapshot preset (interactive + compact + depth + lower maxChars).
-  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-IronCliw-managed-browser)).
+  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-ironcliw-managed-browser)).
   - Role snapshot options (`--interactive`, `--compact`, `--depth`, `--selector`) force a role-based snapshot with refs like `ref=e12`.
   - `--frame "<iframe selector>"` scopes role snapshots to an iframe (pairs with role refs like `e12`).
   - `--interactive` outputs a flat, easy-to-pick list of interactive elements (best for driving actions).
@@ -475,14 +535,14 @@ Notes:
 
 IronCliw supports two “snapshot” styles:
 
-- **AI snapshot (numeric refs)**: `IronCliw browser snapshot` (default; `--format ai`)
+- **AI snapshot (numeric refs)**: `ironcliw browser snapshot` (default; `--format ai`)
   - Output: a text snapshot that includes numeric refs.
-  - Actions: `IronCliw browser click 12`, `IronCliw browser type 23 "hello"`.
+  - Actions: `ironcliw browser click 12`, `ironcliw browser type 23 "hello"`.
   - Internally, the ref is resolved via Playwright’s `aria-ref`.
 
-- **Role snapshot (role refs like `e12`)**: `IronCliw browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
+- **Role snapshot (role refs like `e12`)**: `ironcliw browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
   - Output: a role-based list/tree with `[ref=e12]` (and optional `[nth=1]`).
-  - Actions: `IronCliw browser click e12`, `IronCliw browser highlight e12`.
+  - Actions: `ironcliw browser click e12`, `ironcliw browser highlight e12`.
   - Internally, the ref is resolved via `getByRole(...)` (plus `nth()` for duplicates).
   - Add `--labels` to include a viewport screenshot with overlayed `e12` labels.
 
@@ -496,18 +556,18 @@ Ref behavior:
 You can wait on more than just time/text:
 
 - Wait for URL (globs supported by Playwright):
-  - `IronCliw browser wait --url "**/dash"`
+  - `ironcliw browser wait --url "**/dash"`
 - Wait for load state:
-  - `IronCliw browser wait --load networkidle`
+  - `ironcliw browser wait --load networkidle`
 - Wait for a JS predicate:
-  - `IronCliw browser wait --fn "window.ready===true"`
+  - `ironcliw browser wait --fn "window.ready===true"`
 - Wait for a selector to become visible:
-  - `IronCliw browser wait "#main"`
+  - `ironcliw browser wait "#main"`
 
 These can be combined:
 
 ```bash
-IronCliw browser wait "#main" \
+ironcliw browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -518,16 +578,16 @@ IronCliw browser wait "#main" \
 
 When an action fails (e.g. “not visible”, “strict mode violation”, “covered”):
 
-1. `IronCliw browser snapshot --interactive`
+1. `ironcliw browser snapshot --interactive`
 2. Use `click <ref>` / `type <ref>` (prefer role refs in interactive mode)
-3. If it still fails: `IronCliw browser highlight <ref>` to see what Playwright is targeting
+3. If it still fails: `ironcliw browser highlight <ref>` to see what Playwright is targeting
 4. If the page behaves oddly:
-   - `IronCliw browser errors --clear`
-   - `IronCliw browser requests --filter api --clear`
+   - `ironcliw browser errors --clear`
+   - `ironcliw browser requests --filter api --clear`
 5. For deep debugging: record a trace:
-   - `IronCliw browser trace start`
+   - `ironcliw browser trace start`
    - reproduce the issue
-   - `IronCliw browser trace stop` (prints `TRACE:<path>`)
+   - `ironcliw browser trace stop` (prints `TRACE:<path>`)
 
 ## JSON output
 
@@ -536,10 +596,10 @@ When an action fails (e.g. “not visible”, “strict mode violation”, “co
 Examples:
 
 ```bash
-IronCliw browser status --json
-IronCliw browser snapshot --interactive --json
-IronCliw browser requests --filter api --json
-IronCliw browser cookies --json
+ironcliw browser status --json
+ironcliw browser snapshot --interactive --json
+ironcliw browser requests --filter api --json
+ironcliw browser cookies --json
 ```
 
 Role snapshots in JSON include `refs` plus a small `stats` block (lines/chars/refs/interactive) so tools can reason about payload size and density.
@@ -562,8 +622,8 @@ These are useful for “make the site behave like X” workflows:
 
 ## Security & privacy
 
-- The IronCliw browser profile may contain logged-in sessions; treat it as sensitive.
-- `browser act kind=evaluate` / `IronCliw browser evaluate` and `wait --fn`
+- The ironcliw browser profile may contain logged-in sessions; treat it as sensitive.
+- `browser act kind=evaluate` / `ironcliw browser evaluate` and `wait --fn`
   execute arbitrary JavaScript in the page context. Prompt injection can steer
   this. Disable it with `browser.evaluateEnabled=false` if you do not need it.
 - For logins and anti-bot notes (X/Twitter, etc.), see [Browser login + X/Twitter posting](/tools/browser-login).
@@ -589,6 +649,9 @@ Strict-mode example (block private/internal destinations by default):
 For Linux-specific issues (especially snap Chromium), see
 [Browser troubleshooting](/tools/browser-linux-troubleshooting).
 
+For WSL2 Gateway + Windows Chrome split-host setups, see
+[WSL2 + Windows + remote Chrome CDP troubleshooting](/tools/browser-wsl2-windows-remote-cdp-troubleshooting).
+
 ## Agent tools + how control works
 
 The agent gets **one tool** for browser automation:
@@ -601,7 +664,7 @@ How it maps:
 - `browser act` uses the snapshot `ref` IDs to click/type/drag/select.
 - `browser screenshot` captures pixels (full page or element).
 - `browser` accepts:
-  - `profile` to choose a named browser profile (IronCliw, chrome, or remote CDP).
+  - `profile` to choose a named browser profile (ironcliw, chrome, or remote CDP).
   - `target` (`sandbox` | `host` | `node`) to select where the browser lives.
   - In sandboxed sessions, `target: "host"` requires `agents.defaults.sandbox.browser.allowHostControl=true`.
   - If `target` is omitted: sandboxed sessions default to `sandbox`, non-sandbox sessions default to `host`.

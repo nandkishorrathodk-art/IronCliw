@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it } from "vitest";
 import { startBrowserBridgeServer, stopBrowserBridgeServer } from "./bridge-server.js";
 import type { ResolvedBrowserConfig } from "./config.js";
 import {
-  DEFAULT_IronCliw_BROWSER_COLOR,
-  DEFAULT_IronCliw_BROWSER_PROFILE_NAME,
+  DEFAULT_IRONCLIW_BROWSER_COLOR,
+  DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 
 function buildResolvedConfig(): ResolvedBrowserConfig {
@@ -19,16 +19,16 @@ function buildResolvedConfig(): ResolvedBrowserConfig {
     remoteCdpTimeoutMs: 1500,
     remoteCdpHandshakeTimeoutMs: 3000,
     extraArgs: [],
-    color: DEFAULT_IronCliw_BROWSER_COLOR,
+    color: DEFAULT_IRONCLIW_BROWSER_COLOR,
     executablePath: undefined,
     headless: true,
     noSandbox: false,
     attachOnly: true,
-    defaultProfile: DEFAULT_IronCliw_BROWSER_PROFILE_NAME,
+    defaultProfile: DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME,
     profiles: {
-      [DEFAULT_IronCliw_BROWSER_PROFILE_NAME]: {
+      [DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME]: {
         cdpPort: 1,
-        color: DEFAULT_IronCliw_BROWSER_COLOR,
+        color: DEFAULT_IRONCLIW_BROWSER_COLOR,
       },
     },
   } as unknown as ResolvedBrowserConfig;
@@ -67,10 +67,10 @@ describe("startBrowserBridgeServer auth", () => {
     await expectAuthFlow({ authToken: "secret-token" }, { Authorization: "Bearer secret-token" });
   });
 
-  it("accepts x-IronCliw-password when authPassword is set", async () => {
+  it("accepts x-ironcliw-password when authPassword is set", async () => {
     await expectAuthFlow(
       { authPassword: "secret-password" },
-      { "x-IronCliw-password": "secret-password" },
+      { "x-ironcliw-password": "secret-password" },
     );
   });
 
@@ -90,7 +90,7 @@ describe("startBrowserBridgeServer auth", () => {
         if (token !== "valid-token") {
           return null;
         }
-        return { noVncPort: 45678, password: "Abc123xy" };
+        return { noVncPort: 45678, password: "Abc123xy" }; // pragma: allowlist secret
       },
     });
     servers.push({ stop: () => stopBrowserBridgeServer(bridge.server) });

@@ -30,13 +30,13 @@ export function registerBrowserCli(program: Command) {
           true,
         )}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/browser",
-          "docs.IronCliw.ai/cli/browser",
+          "docs.ironcliw.ai/cli/browser",
         )}\n`,
     )
     .action(() => {
       browser.outputHelp();
       defaultRuntime.error(
-        danger(`Missing subcommand. Try: "${formatCliCommand("IronCliw browser status")}"`),
+        danger(`Missing subcommand. Try: "${formatCliCommand("ironcliw browser status")}"`),
       );
       defaultRuntime.exit(1);
     });

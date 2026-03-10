@@ -39,10 +39,10 @@ import {
 import { startGatewayServer } from "./server.js";
 import { extractPayloadText } from "./test-helpers.agent-results.js";
 
-const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IronCliw_LIVE_TEST);
-const GATEWAY_LIVE = isTruthyEnvValue(process.env.IronCliw_LIVE_GATEWAY);
-const ZAI_FALLBACK = isTruthyEnvValue(process.env.IronCliw_LIVE_GATEWAY_ZAI_FALLBACK);
-const PROVIDERS = parseFilter(process.env.IronCliw_LIVE_GATEWAY_PROVIDERS);
+const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IRONCLIW_LIVE_TEST);
+const GATEWAY_LIVE = isTruthyEnvValue(process.env.IRONCLIW_LIVE_GATEWAY);
+const ZAI_FALLBACK = isTruthyEnvValue(process.env.IRONCLIW_LIVE_GATEWAY_ZAI_FALLBACK);
+const PROVIDERS = parseFilter(process.env.IRONCLIW_LIVE_GATEWAY_PROVIDERS);
 const THINKING_LEVEL = "high";
 const THINKING_TAG_RE = /<\s*\/?\s*(?:think(?:ing)?|thought|antthinking)\s*>/i;
 const FINAL_TAG_RE = /<\s*\/?\s*final\s*>/i;
@@ -52,7 +52,7 @@ const GATEWAY_LIVE_UNBOUNDED_TIMEOUT_MS = 60 * 60 * 1000;
 const GATEWAY_LIVE_MAX_TIMEOUT_MS = 2 * 60 * 60 * 1000;
 const GATEWAY_LIVE_PROBE_TIMEOUT_MS = Math.max(
   30_000,
-  toInt(process.env.IronCliw_LIVE_GATEWAY_STEP_TIMEOUT_MS, 90_000),
+  toInt(process.env.IRONCLIW_LIVE_GATEWAY_STEP_TIMEOUT_MS, 90_000),
 );
 const GATEWAY_LIVE_MAX_MODELS = resolveGatewayLiveMaxModels();
 const GATEWAY_LIVE_SUITE_TIMEOUT_MS = resolveGatewayLiveSuiteTimeoutMs(GATEWAY_LIVE_MAX_MODELS);
@@ -81,12 +81,12 @@ function toInt(value: string | undefined, fallback: number): number {
 }
 
 function resolveGatewayLiveMaxModels(): number {
-  const gatewayMax = toInt(process.env.IronCliw_LIVE_GATEWAY_MAX_MODELS, -1);
+  const gatewayMax = toInt(process.env.IRONCLIW_LIVE_GATEWAY_MAX_MODELS, -1);
   if (gatewayMax >= 0) {
     return gatewayMax;
   }
   // Reuse shared live-model cap when gateway-specific cap is not provided.
-  return Math.max(0, toInt(process.env.IronCliw_LIVE_MAX_MODELS, 0));
+  return Math.max(0, toInt(process.env.IRONCLIW_LIVE_MAX_MODELS, 0));
 }
 
 function resolveGatewayLiveSuiteTimeoutMs(maxModels: number): number {
@@ -636,26 +636,26 @@ function buildMinimaxProviderOverride(params: {
 
 async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
   const previous = {
-    configPath: process.env.IronCliw_CONFIG_PATH,
-    token: process.env.IronCliw_GATEWAY_TOKEN,
-    skipChannels: process.env.IronCliw_SKIP_CHANNELS,
-    skipGmail: process.env.IronCliw_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.IronCliw_SKIP_CRON,
-    skipCanvas: process.env.IronCliw_SKIP_CANVAS_HOST,
-    agentDir: process.env.IronCliw_AGENT_DIR,
+    configPath: process.env.IRONCLIW_CONFIG_PATH,
+    token: process.env.IRONCLIW_GATEWAY_TOKEN,
+    skipChannels: process.env.IRONCLIW_SKIP_CHANNELS,
+    skipGmail: process.env.IRONCLIW_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.IRONCLIW_SKIP_CRON,
+    skipCanvas: process.env.IRONCLIW_SKIP_CANVAS_HOST,
+    agentDir: process.env.IRONCLIW_AGENT_DIR,
     piAgentDir: process.env.PI_CODING_AGENT_DIR,
-    stateDir: process.env.IronCliw_STATE_DIR,
+    stateDir: process.env.IRONCLIW_STATE_DIR,
   };
   let tempAgentDir: string | undefined;
   let tempStateDir: string | undefined;
 
-  process.env.IronCliw_SKIP_CHANNELS = "1";
-  process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-  process.env.IronCliw_SKIP_CRON = "1";
-  process.env.IronCliw_SKIP_CANVAS_HOST = "1";
+  process.env.IRONCLIW_SKIP_CHANNELS = "1";
+  process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+  process.env.IRONCLIW_SKIP_CRON = "1";
+  process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
 
   const token = `test-${randomUUID()}`;
-  process.env.IronCliw_GATEWAY_TOKEN = token;
+  process.env.IRONCLIW_GATEWAY_TOKEN = token;
   const agentId = "dev";
 
   const hostAgentDir = resolveIronCliwAgentDir();
@@ -671,22 +671,22 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
     lastGood: hostStore.lastGood ? { ...hostStore.lastGood } : undefined,
     usageStats: hostStore.usageStats ? { ...hostStore.usageStats } : undefined,
   };
-  tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-live-state-"));
-  process.env.IronCliw_STATE_DIR = tempStateDir;
+  tempStateDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-live-state-"));
+  process.env.IRONCLIW_STATE_DIR = tempStateDir;
   tempAgentDir = path.join(tempStateDir, "agents", DEFAULT_AGENT_ID, "agent");
   saveAuthProfileStore(sanitizedStore, tempAgentDir);
   const tempSessionAgentDir = path.join(tempStateDir, "agents", agentId, "agent");
   if (tempSessionAgentDir !== tempAgentDir) {
     saveAuthProfileStore(sanitizedStore, tempSessionAgentDir);
   }
-  process.env.IronCliw_AGENT_DIR = tempAgentDir;
+  process.env.IRONCLIW_AGENT_DIR = tempAgentDir;
   process.env.PI_CODING_AGENT_DIR = tempAgentDir;
 
   const workspaceDir = resolveAgentWorkspaceDir(params.cfg, agentId);
   await fs.mkdir(workspaceDir, { recursive: true });
   const nonceA = randomUUID();
   const nonceB = randomUUID();
-  const toolProbePath = path.join(workspaceDir, `.IronCliw-live-tool-probe.${nonceA}.txt`);
+  const toolProbePath = path.join(workspaceDir, `.ironcliw-live-tool-probe.${nonceA}.txt`);
   await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
   const agentDir = resolveIronCliwAgentDir();
@@ -699,10 +699,10 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
     candidates: params.candidates,
     providerOverrides: params.providerOverrides,
   });
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-live-"));
-  const tempConfigPath = path.join(tempDir, "IronCliw.json");
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-live-"));
+  const tempConfigPath = path.join(tempDir, "ironcliw.json");
   await fs.writeFile(tempConfigPath, `${JSON.stringify(nextCfg, null, 2)}\n`);
-  process.env.IronCliw_CONFIG_PATH = tempConfigPath;
+  process.env.IRONCLIW_CONFIG_PATH = tempConfigPath;
 
   const liveProviders = nextCfg.models?.providers;
   if (liveProviders && Object.keys(liveProviders).length > 0) {
@@ -1013,6 +1013,7 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
                 shouldRetryExecReadProbe({
                   text: execReadText,
                   nonce: nonceC,
+                  provider: model.provider,
                   attempt: execReadAttempt,
                   maxAttempts: maxExecReadAttempts,
                 })
@@ -1299,15 +1300,15 @@ async function runGatewayModelSuite(params: GatewayModelSuiteParams) {
       await fs.rm(tempStateDir, { recursive: true, force: true });
     }
 
-    process.env.IronCliw_CONFIG_PATH = previous.configPath;
-    process.env.IronCliw_GATEWAY_TOKEN = previous.token;
-    process.env.IronCliw_SKIP_CHANNELS = previous.skipChannels;
-    process.env.IronCliw_SKIP_GMAIL_WATCHER = previous.skipGmail;
-    process.env.IronCliw_SKIP_CRON = previous.skipCron;
-    process.env.IronCliw_SKIP_CANVAS_HOST = previous.skipCanvas;
-    process.env.IronCliw_AGENT_DIR = previous.agentDir;
+    process.env.IRONCLIW_CONFIG_PATH = previous.configPath;
+    process.env.IRONCLIW_GATEWAY_TOKEN = previous.token;
+    process.env.IRONCLIW_SKIP_CHANNELS = previous.skipChannels;
+    process.env.IRONCLIW_SKIP_GMAIL_WATCHER = previous.skipGmail;
+    process.env.IRONCLIW_SKIP_CRON = previous.skipCron;
+    process.env.IRONCLIW_SKIP_CANVAS_HOST = previous.skipCanvas;
+    process.env.IRONCLIW_AGENT_DIR = previous.agentDir;
     process.env.PI_CODING_AGENT_DIR = previous.piAgentDir;
-    process.env.IronCliw_STATE_DIR = previous.stateDir;
+    process.env.IRONCLIW_STATE_DIR = previous.stateDir;
   }
 }
 
@@ -1326,7 +1327,7 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       const modelRegistry = discoverModels(authStorage, agentDir);
       const all = modelRegistry.getAll();
 
-      const rawModels = process.env.IronCliw_LIVE_GATEWAY_MODELS?.trim();
+      const rawModels = process.env.IRONCLIW_LIVE_GATEWAY_MODELS?.trim();
       const useModern = !rawModels || rawModels === "modern" || rawModels === "all";
       const useExplicit = Boolean(rawModels) && !useModern;
       const filter = useExplicit ? parseFilter(rawModels) : null;
@@ -1369,7 +1370,7 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       logProgress(`[all-models] selection=${useExplicit ? "explicit" : "modern"}`);
       if (selectedCandidates.length < candidates.length) {
         logProgress(
-          `[all-models] capped to ${selectedCandidates.length}/${candidates.length} via IronCliw_LIVE_GATEWAY_MAX_MODELS=${maxModels}`,
+          `[all-models] capped to ${selectedCandidates.length}/${candidates.length} via IRONCLIW_LIVE_GATEWAY_MAX_MODELS=${maxModels}`,
         );
       }
       const imageCandidates = selectedCandidates.filter((m) => m.input?.includes("image"));
@@ -1418,21 +1419,21 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       return;
     }
     const previous = {
-      configPath: process.env.IronCliw_CONFIG_PATH,
-      token: process.env.IronCliw_GATEWAY_TOKEN,
-      skipChannels: process.env.IronCliw_SKIP_CHANNELS,
-      skipGmail: process.env.IronCliw_SKIP_GMAIL_WATCHER,
-      skipCron: process.env.IronCliw_SKIP_CRON,
-      skipCanvas: process.env.IronCliw_SKIP_CANVAS_HOST,
+      configPath: process.env.IRONCLIW_CONFIG_PATH,
+      token: process.env.IRONCLIW_GATEWAY_TOKEN,
+      skipChannels: process.env.IRONCLIW_SKIP_CHANNELS,
+      skipGmail: process.env.IRONCLIW_SKIP_GMAIL_WATCHER,
+      skipCron: process.env.IRONCLIW_SKIP_CRON,
+      skipCanvas: process.env.IRONCLIW_SKIP_CANVAS_HOST,
     };
 
-    process.env.IronCliw_SKIP_CHANNELS = "1";
-    process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-    process.env.IronCliw_SKIP_CRON = "1";
-    process.env.IronCliw_SKIP_CANVAS_HOST = "1";
+    process.env.IRONCLIW_SKIP_CHANNELS = "1";
+    process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+    process.env.IRONCLIW_SKIP_CRON = "1";
+    process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
 
     const token = `test-${randomUUID()}`;
-    process.env.IronCliw_GATEWAY_TOKEN = token;
+    process.env.IRONCLIW_GATEWAY_TOKEN = token;
 
     const cfg = loadConfig();
     await ensureIronCliwModelsJson(cfg);
@@ -1458,7 +1459,7 @@ describeLive("gateway live (dev agent, profile keys)", () => {
     await fs.mkdir(workspaceDir, { recursive: true });
     const nonceA = randomUUID();
     const nonceB = randomUUID();
-    const toolProbePath = path.join(workspaceDir, `.IronCliw-live-zai-fallback.${nonceA}.txt`);
+    const toolProbePath = path.join(workspaceDir, `.ironcliw-live-zai-fallback.${nonceA}.txt`);
     await fs.writeFile(toolProbePath, `nonceA=${nonceA}\nnonceB=${nonceB}\n`);
 
     let server: Awaited<ReturnType<typeof startGatewayServer>> | undefined;
@@ -1589,12 +1590,12 @@ describeLive("gateway live (dev agent, profile keys)", () => {
       await server.close({ reason: "live test complete" });
       await fs.rm(toolProbePath, { force: true });
 
-      process.env.IronCliw_CONFIG_PATH = previous.configPath;
-      process.env.IronCliw_GATEWAY_TOKEN = previous.token;
-      process.env.IronCliw_SKIP_CHANNELS = previous.skipChannels;
-      process.env.IronCliw_SKIP_GMAIL_WATCHER = previous.skipGmail;
-      process.env.IronCliw_SKIP_CRON = previous.skipCron;
-      process.env.IronCliw_SKIP_CANVAS_HOST = previous.skipCanvas;
+      process.env.IRONCLIW_CONFIG_PATH = previous.configPath;
+      process.env.IRONCLIW_GATEWAY_TOKEN = previous.token;
+      process.env.IRONCLIW_SKIP_CHANNELS = previous.skipChannels;
+      process.env.IRONCLIW_SKIP_GMAIL_WATCHER = previous.skipGmail;
+      process.env.IRONCLIW_SKIP_CRON = previous.skipCron;
+      process.env.IRONCLIW_SKIP_CANVAS_HOST = previous.skipCanvas;
     }
   }, 180_000);
 });

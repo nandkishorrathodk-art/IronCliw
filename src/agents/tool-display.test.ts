@@ -94,14 +94,14 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command:
-            "set -euo pipefail\ngit -C /Users/adityasingh/.IronCliw/workspace status --short | head -n 3",
-          workdir: "/Users/adityasingh/.IronCliw/workspace",
+            "set -euo pipefail\ngit -C /Users/adityasingh/.ironcliw/workspace status --short | head -n 3",
+          workdir: "/Users/adityasingh/.ironcliw/workspace",
         },
       }),
     );
 
     expect(detail).toContain("check git status -> show first 3 lines");
-    expect(detail).toContain(".IronCliw/workspace)");
+    expect(detail).toContain(".ironcliw/workspace)");
   });
 
   it("moves cd path to context suffix and appends raw command", () => {
@@ -267,7 +267,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "python3 <<PY\nprint('x')\nPY",
-          workdir: "/Users/adityasingh/.IronCliw/workspace",
+          workdir: "/Users/adityasingh/.ironcliw/workspace",
         },
       }),
     );
@@ -276,7 +276,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node --check /tmp/test.js",
-          workdir: "/Users/adityasingh/.IronCliw/workspace",
+          workdir: "/Users/adityasingh/.ironcliw/workspace",
         },
       }),
     );
@@ -285,7 +285,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node -c /tmp/test.js",
-          workdir: "/Users/adityasingh/.IronCliw/workspace",
+          workdir: "/Users/adityasingh/.ironcliw/workspace",
         },
       }),
     );

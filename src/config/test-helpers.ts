@@ -3,11 +3,11 @@ import path from "node:path";
 import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.js";
 
 export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "IronCliw-config-" });
+  return withTempHomeBase(fn, { prefix: "ironcliw-config-" });
 }
 
 export async function writeIronCliwConfig(home: string, config: unknown): Promise<string> {
-  const configPath = path.join(home, ".IronCliw", "IronCliw.json");
+  const configPath = path.join(home, ".ironcliw", "ironcliw.json");
   await fs.mkdir(path.dirname(configPath), { recursive: true });
   await fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf-8");
   return configPath;

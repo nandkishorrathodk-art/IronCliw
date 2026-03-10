@@ -42,13 +42,13 @@ pnpm install
 如果你没有 Apple Developer ID 证书，脚本将自动使用 **ad-hoc 签名**（`-`）。
 
 有关开发运行模式、签名标志和 Team ID 故障排除，请参阅 macOS 应用 README：
-https://github.com/IronCliw/IronCliw/blob/main/apps/macos/README.md
+https://github.com/ironcliw/ironcliw/blob/main/apps/macos/README.md
 
 > **注意**：Ad-hoc 签名的应用可能会触发安全提示。如果应用立即崩溃并显示"Abort trap 6"，请参阅[故障排除](#troubleshooting)部分。
 
 ## 3. 安装 CLI
 
-macOS 应用期望全局安装 `IronCliw` CLI 来管理后台任务。
+macOS 应用期望全局安装 `ironcliw` CLI 来管理后台任务。
 
 **安装方法（推荐）：**
 
@@ -59,7 +59,7 @@ macOS 应用期望全局安装 `IronCliw` CLI 来管理后台任务。
 或者，手动安装：
 
 ```bash
-npm install -g IronCliw@<version>
+npm install -g ironcliw@<version>
 ```
 
 ## 故障排除
@@ -92,15 +92,15 @@ xcrun swift --version
    ```bash
    tccutil reset All bot.molt.mac.debug
    ```
-2. 如果这不起作用，在 [`scripts/package-mac-app.sh`](https://github.com/IronCliw/IronCliw/blob/main/scripts/package-mac-app.sh) 中临时更改 `BUNDLE_ID` 以强制 macOS 从"全新状态"开始。
+2. 如果这不起作用，在 [`scripts/package-mac-app.sh`](https://github.com/ironcliw/ironcliw/blob/main/scripts/package-mac-app.sh) 中临时更改 `BUNDLE_ID` 以强制 macOS 从"全新状态"开始。
 
 ### Gateway 网关无限期"Starting..."
 
 如果 Gateway 网关状态一直停留在"Starting..."，检查是否有僵尸进程占用端口：
 
 ```bash
-IronCliw gateway status
-IronCliw gateway stop
+ironcliw gateway status
+ironcliw gateway stop
 
 # 如果你没有使用 LaunchAgent（开发模式/手动运行），找到监听器：
 lsof -nP -iTCP:18789 -sTCP:LISTEN

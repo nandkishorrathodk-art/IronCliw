@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveIronCliwPackageRootSync } from "../../infra/IronCliw-root.js";
+import { resolveIronCliwPackageRootSync } from "../../infra/ironcliw-root.js";
 
 function looksLikeSkillsDir(dir: string): boolean {
   try {
@@ -36,7 +36,7 @@ export type BundledSkillsResolveOptions = {
 export function resolveBundledSkillsDir(
   opts: BundledSkillsResolveOptions = {},
 ): string | undefined {
-  const override = process.env.IronCliw_BUNDLED_SKILLS_DIR?.trim();
+  const override = process.env.IRONCLIW_BUNDLED_SKILLS_DIR?.trim();
   if (override) {
     return override;
   }

@@ -9,7 +9,7 @@ import { clearPluginDiscoveryCache, discoverIronCliwPlugins } from "./discovery.
 const tempDirs: string[] = [];
 
 function makeTempDir() {
-  const dir = path.join(os.tmpdir(), `IronCliw-plugins-${randomUUID()}`);
+  const dir = path.join(os.tmpdir(), `ironcliw-plugins-${randomUUID()}`);
   fs.mkdirSync(dir, { recursive: true });
   tempDirs.push(dir);
   return dir;
@@ -18,9 +18,9 @@ function makeTempDir() {
 async function withStateDir<T>(stateDir: string, fn: () => Promise<T>) {
   return await withEnvAsync(
     {
-      IronCliw_STATE_DIR: stateDir,
+      IRONCLIW_STATE_DIR: stateDir,
       CLAWDBOT_STATE_DIR: undefined,
-      IronCliw_BUNDLED_PLUGINS_DIR: "/nonexistent/bundled/plugins",
+      IRONCLIW_BUNDLED_PLUGINS_DIR: "/nonexistent/bundled/plugins",
     },
     fn,
   );
@@ -44,7 +44,7 @@ function writePluginPackageManifest(params: {
     path.join(params.packageDir, "package.json"),
     JSON.stringify({
       name: params.packageName,
-      IronCliw: { extensions: params.extensions },
+      ironcliw: { extensions: params.extensions },
     }),
     "utf-8",
   );
@@ -76,7 +76,7 @@ describe("discoverIronCliwPlugins", () => {
     fs.mkdirSync(globalExt, { recursive: true });
     fs.writeFileSync(path.join(globalExt, "alpha.ts"), "export default function () {}", "utf-8");
 
-    const workspaceExt = path.join(workspaceDir, ".IronCliw", "extensions");
+    const workspaceExt = path.join(workspaceDir, ".ironcliw", "extensions");
     fs.mkdirSync(workspaceExt, { recursive: true });
     fs.writeFileSync(path.join(workspaceExt, "beta.ts"), "export default function () {}", "utf-8");
 
@@ -158,7 +158,7 @@ describe("discoverIronCliwPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@IronCliw/voice-call",
+      packageName: "@ironcliw/voice-call",
       extensions: ["./src/index.ts"],
     });
     fs.writeFileSync(
@@ -182,7 +182,7 @@ describe("discoverIronCliwPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: packDir,
-      packageName: "@IronCliw/demo-plugin-dir",
+      packageName: "@ironcliw/demo-plugin-dir",
       extensions: ["./index.js"],
     });
     fs.writeFileSync(path.join(packDir, "index.js"), "module.exports = {}", "utf-8");
@@ -202,7 +202,7 @@ describe("discoverIronCliwPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@IronCliw/escape-pack",
+      packageName: "@ironcliw/escape-pack",
       extensions: ["../../outside.js"],
     });
     fs.writeFileSync(outside, "export default function () {}", "utf-8");
@@ -229,7 +229,7 @@ describe("discoverIronCliwPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@IronCliw/pack",
+      packageName: "@ironcliw/pack",
       extensions: ["./linked/escape.ts"],
     });
 
@@ -262,7 +262,7 @@ describe("discoverIronCliwPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@IronCliw/pack",
+      packageName: "@ironcliw/pack",
       extensions: ["./escape.ts"],
     });
 
@@ -289,8 +289,8 @@ describe("discoverIronCliwPlugins", () => {
     fs.writeFileSync(
       outsideManifest,
       JSON.stringify({
-        name: "@IronCliw/pack",
-        IronCliw: { extensions: ["./entry.ts"] },
+        name: "@ironcliw/pack",
+        ironcliw: { extensions: ["./entry.ts"] },
       }),
       "utf-8",
     );
@@ -361,7 +361,7 @@ describe("discoverIronCliwPlugins", () => {
 
     const first = await withEnvAsync(
       {
-        IronCliw_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        IRONCLIW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
       async () => withStateDir(stateDir, async () => discoverIronCliwPlugins({})),
     );
@@ -371,7 +371,7 @@ describe("discoverIronCliwPlugins", () => {
 
     const second = await withEnvAsync(
       {
-        IronCliw_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        IRONCLIW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
       async () => withStateDir(stateDir, async () => discoverIronCliwPlugins({})),
     );
@@ -381,7 +381,7 @@ describe("discoverIronCliwPlugins", () => {
 
     const third = await withEnvAsync(
       {
-        IronCliw_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        IRONCLIW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
       async () => withStateDir(stateDir, async () => discoverIronCliwPlugins({})),
     );

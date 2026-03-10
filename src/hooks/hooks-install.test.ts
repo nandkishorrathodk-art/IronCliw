@@ -13,7 +13,7 @@ import { loadInternalHooks } from "./loader.js";
 const tempDirs: string[] = [];
 
 async function makeTempDir() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-hooks-e2e-"));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-hooks-e2e-"));
   tempDirs.push(dir);
   return dir;
 }
@@ -49,7 +49,7 @@ describe("hooks install (e2e)", () => {
         {
           name: "@acme/hello-hooks",
           version: "0.0.0",
-          IronCliw: { hooks: ["./hooks/hello-hook"] },
+          ironcliw: { hooks: ["./hooks/hello-hook"] },
         },
         null,
         2,
@@ -63,7 +63,7 @@ describe("hooks install (e2e)", () => {
         "---",
         'name: "hello-hook"',
         'description: "Test hook"',
-        'metadata: {"IronCliw":{"events":["command:new"]}}',
+        'metadata: {"ironcliw":{"events":["command:new"]}}',
         "---",
         "",
         "# Hello Hook",

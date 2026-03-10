@@ -33,22 +33,22 @@ describe("control UI routing", () => {
   });
 
   it("infers nested base paths", async () => {
-    const app = mountApp("/apps/IronCliw/cron");
+    const app = mountApp("/apps/ironcliw/cron");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/apps/IronCliw");
+    expect(app.basePath).toBe("/apps/ironcliw");
     expect(app.tab).toBe("cron");
-    expect(window.location.pathname).toBe("/apps/IronCliw/cron");
+    expect(window.location.pathname).toBe("/apps/ironcliw/cron");
   });
 
   it("honors explicit base path overrides", async () => {
-    window.__IronCliw_CONTROL_UI_BASE_PATH__ = "/IronCliw";
-    const app = mountApp("/IronCliw/sessions");
+    window.__IRONCLIW_CONTROL_UI_BASE_PATH__ = "/ironcliw";
+    const app = mountApp("/ironcliw/sessions");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/IronCliw");
+    expect(app.basePath).toBe("/ironcliw");
     expect(app.tab).toBe("sessions");
-    expect(window.location.pathname).toBe("/IronCliw/sessions");
+    expect(window.location.pathname).toBe("/ironcliw/sessions");
   });
 
   it("updates the URL when clicking nav items", async () => {
@@ -151,6 +151,9 @@ describe("control UI routing", () => {
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
+    expect(JSON.parse(localStorage.getItem("ironcliw.control.settings.v1") ?? "{}").token).toBe(
+      undefined,
+    );
     expect(window.location.pathname).toBe("/ui/overview");
     expect(window.location.search).toBe("");
   });
@@ -166,13 +169,19 @@ describe("control UI routing", () => {
 
   it("hydrates token from URL params even when settings already set", async () => {
     localStorage.setItem(
-      "IronCliw.control.settings.v1",
-      JSON.stringify({ token: "existing-token" }),
+      "ironcliw.control.settings.v1",
+      JSON.stringify({ token: "existing-token", gatewayUrl: "wss://gateway.example/ironcliw" }),
     );
     const app = mountApp("/ui/overview?token=abc123");
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
+    expect(JSON.parse(localStorage.getItem("ironcliw.control.settings.v1") ?? "{}")).toMatchObject({
+      gatewayUrl: "wss://gateway.example/ironcliw",
+    });
+    expect(JSON.parse(localStorage.getItem("ironcliw.control.settings.v1") ?? "{}").token).toBe(
+      undefined,
+    );
     expect(window.location.pathname).toBe("/ui/overview");
     expect(window.location.search).toBe("");
   });
@@ -182,6 +191,9 @@ describe("control UI routing", () => {
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
+    expect(JSON.parse(localStorage.getItem("ironcliw.control.settings.v1") ?? "{}").token).toBe(
+      undefined,
+    );
     expect(window.location.pathname).toBe("/ui/overview");
     expect(window.location.hash).toBe("");
   });

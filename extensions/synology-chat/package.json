@@ -1,12 +1,12 @@
 {
-  "name": "@IronCliw/synology-chat",
-  "version": "2026.3.2",
+  "name": "@ironcliw/synology-chat",
+  "version": "2026.3.9",
   "description": "Synology Chat channel plugin for IronCliw",
   "type": "module",
   "dependencies": {
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -20,7 +20,7 @@
       "order": 90
     },
     "install": {
-      "npmSpec": "@IronCliw/synology-chat",
+      "npmSpec": "@ironcliw/synology-chat",
       "localPath": "extensions/synology-chat",
       "defaultChoice": "npm"
     }

@@ -1,30 +1,72 @@
 #!/usr/bin/env bash
-# One-time host setup for rootless IronCliw in Podman: creates the IronCliw
+# One-time host setup for rootless IronCliw in Podman: creates the ironcliw
 # user, builds the image, loads it into that user's Podman store, and installs
 # the launch script. Run from repo root with sudo capability.
 #
 # Usage: ./setup-podman.sh [--quadlet|--container]
 #   --quadlet   Install systemd Quadlet so the container runs as a user service
 #   --container Only install user + image + launch script; you start the container manually (default)
-#   Or set IronCliw_PODMAN_QUADLET=1 (or 0) to choose without a flag.
+#   Or set IRONCLIW_PODMAN_QUADLET=1 (or 0) to choose without a flag.
 #
 # After this, start the gateway manually:
-#   ./scripts/run-IronCliw-podman.sh launch
-#   ./scripts/run-IronCliw-podman.sh launch setup   # onboarding wizard
-# Or as the IronCliw user: sudo -u IronCliw /home/IronCliw/run-IronCliw-podman.sh
-# If you used --quadlet, you can also: sudo systemctl --machine IronCliw@ --user start IronCliw.service
+#   ./scripts/run-ironcliw-podman.sh launch
+#   ./scripts/run-ironcliw-podman.sh launch setup   # onboarding wizard
+# Or as the ironcliw user: sudo -u ironcliw /home/ironcliw/run-ironcliw-podman.sh
+# If you used --quadlet, you can also: sudo systemctl --machine ironcliw@ --user start ironcliw.service
 set -euo pipefail
 
-IronCliw_USER="${IronCliw_PODMAN_USER:-IronCliw}"
-REPO_PATH="${IronCliw_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
-RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-IronCliw-podman.sh"
-QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/IronCliw.container.in"
+IRONCLIW_USER="${IRONCLIW_PODMAN_USER:-ironcliw}"
+REPO_PATH="${IRONCLIW_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-ironcliw-podman.sh"
+QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/ironcliw.container.in"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
     echo "Missing dependency: $1" >&2
     exit 1
   fi
+}
+
+is_writable_dir() {
+  local dir="$1"
+  [[ -n "$dir" && -d "$dir" && ! -L "$dir" && -w "$dir" && -x "$dir" ]]
+}
+
+is_safe_tmp_base() {
+  local dir="$1"
+  local mode=""
+  local owner=""
+  is_writable_dir "$dir" || return 1
+  mode="$(stat -Lc '%a' "$dir" 2>/dev/null || true)"
+  if [[ -n "$mode" ]]; then
+    local perm=$((8#$mode))
+    if (( (perm & 0022) != 0 && (perm & 01000) == 0 )); then
+      return 1
+    fi
+  fi
+  if is_root; then
+    owner="$(stat -Lc '%u' "$dir" 2>/dev/null || true)"
+    if [[ -n "$owner" && "$owner" != "0" ]]; then
+      return 1
+    fi
+  fi
+  return 0
+}
+
+resolve_image_tmp_dir() {
+  if ! is_root && is_safe_tmp_base "${TMPDIR:-}"; then
+    printf '%s' "$TMPDIR"
+    return 0
+  fi
+  if is_safe_tmp_base "/var/tmp"; then
+    printf '%s' "/var/tmp"
+    return 0
+  fi
+  if is_safe_tmp_base "/tmp"; then
+    printf '%s' "/tmp"
+    return 0
+  fi
+  printf '%s' "/tmp"
 }
 
 is_root() { [[ "$(id -u)" -eq 0 ]]; }
@@ -38,22 +80,27 @@ run_root() {
 }
 
 run_as_user() {
+  # When switching users, the caller's cwd may be inaccessible to the target
+  # user (e.g. a private home dir). Wrap in a subshell that cd's to a
+  # world-traversable directory so sudo/runuser don't fail with "cannot chdir".
+  # TODO: replace with fully rootless podman build to eliminate the need for
+  # user-switching entirely.
   local user="$1"
   shift
   if command -v sudo >/dev/null 2>&1; then
-    sudo -u "$user" "$@"
+    ( cd /tmp 2>/dev/null || cd /; sudo -u "$user" "$@" )
   elif is_root && command -v runuser >/dev/null 2>&1; then
-    runuser -u "$user" -- "$@"
+    ( cd /tmp 2>/dev/null || cd /; runuser -u "$user" -- "$@" )
   else
     echo "Need sudo (or root+runuser) to run commands as $user." >&2
     exit 1
   fi
 }
 
-run_as_IronCliw() {
-  # Avoid root writes into $IronCliw_HOME (symlink/hardlink/TOCTOU footguns).
+run_as_ironcliw() {
+  # Avoid root writes into $IRONCLIW_HOME (symlink/hardlink/TOCTOU footguns).
   # Anything under the target user's home should be created/modified as that user.
-  run_as_user "$IronCliw_USER" env HOME="$IronCliw_HOME" "$@"
+  run_as_user "$IRONCLIW_USER" env HOME="$IRONCLIW_HOME" "$@"
 }
 
 escape_sed_replacement_pipe_delim() {
@@ -61,7 +108,7 @@ escape_sed_replacement_pipe_delim() {
   printf '%s' "$1" | sed -e 's/[\\&|]/\\&/g'
 }
 
-# Quadlet: opt-in via --quadlet or IronCliw_PODMAN_QUADLET=1
+# Quadlet: opt-in via --quadlet or IRONCLIW_PODMAN_QUADLET=1
 INSTALL_QUADLET=false
 for arg in "$@"; do
   case "$arg" in
@@ -69,8 +116,8 @@ for arg in "$@"; do
     --container) INSTALL_QUADLET=false ;;
   esac
 done
-if [[ -n "${IronCliw_PODMAN_QUADLET:-}" ]]; then
-  case "${IronCliw_PODMAN_QUADLET,,}" in
+if [[ -n "${IRONCLIW_PODMAN_QUADLET:-}" ]]; then
+  case "${IRONCLIW_PODMAN_QUADLET,,}" in
     1|yes|true)  INSTALL_QUADLET=true ;;
     0|no|false) INSTALL_QUADLET=false ;;
   esac
@@ -81,7 +128,7 @@ if ! is_root; then
   require_cmd sudo
 fi
 if [[ ! -f "$REPO_PATH/Dockerfile" ]]; then
-  echo "Dockerfile not found at $REPO_PATH. Set IronCliw_REPO_PATH to the repo root." >&2
+  echo "Dockerfile not found at $REPO_PATH. Set IRONCLIW_REPO_PATH to the repo root." >&2
   exit 1
 fi
 if [[ ! -f "$RUN_SCRIPT_SRC" ]]; then
@@ -106,7 +153,7 @@ PY
     od -An -N32 -tx1 /dev/urandom | tr -d " \n"
     return 0
   fi
-  echo "Missing dependency: need openssl or python3 (or od) to generate IronCliw_GATEWAY_TOKEN." >&2
+  echo "Missing dependency: need openssl or python3 (or od) to generate IRONCLIW_GATEWAY_TOKEN." >&2
   exit 1
 }
 
@@ -143,100 +190,109 @@ resolve_nologin_shell() {
   printf '%s' "/usr/sbin/nologin"
 }
 
-# Create IronCliw user (non-login, with home) if missing
-if ! user_exists "$IronCliw_USER"; then
+# Create ironcliw user (non-login, with home) if missing
+if ! user_exists "$IRONCLIW_USER"; then
   NOLOGIN_SHELL="$(resolve_nologin_shell)"
-  echo "Creating user $IronCliw_USER ($NOLOGIN_SHELL, with home)..."
+  echo "Creating user $IRONCLIW_USER ($NOLOGIN_SHELL, with home)..."
   if command -v useradd >/dev/null 2>&1; then
-    run_root useradd -m -s "$NOLOGIN_SHELL" "$IronCliw_USER"
+    run_root useradd -m -s "$NOLOGIN_SHELL" "$IRONCLIW_USER"
   elif command -v adduser >/dev/null 2>&1; then
     # Debian/Ubuntu: adduser supports --disabled-password/--gecos. Busybox adduser differs.
-    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$IronCliw_USER"
+    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$IRONCLIW_USER"
   else
-    echo "Neither useradd nor adduser found, cannot create user $IronCliw_USER." >&2
+    echo "Neither useradd nor adduser found, cannot create user $IRONCLIW_USER." >&2
     exit 1
   fi
 else
-  echo "User $IronCliw_USER already exists."
+  echo "User $IRONCLIW_USER already exists."
 fi
 
-IronCliw_HOME="$(resolve_user_home "$IronCliw_USER")"
-IronCliw_UID="$(id -u "$IronCliw_USER" 2>/dev/null || true)"
-IronCliw_CONFIG="$IronCliw_HOME/.IronCliw"
-LAUNCH_SCRIPT_DST="$IronCliw_HOME/run-IronCliw-podman.sh"
+IRONCLIW_HOME="$(resolve_user_home "$IRONCLIW_USER")"
+IRONCLIW_UID="$(id -u "$IRONCLIW_USER" 2>/dev/null || true)"
+IRONCLIW_CONFIG="$IRONCLIW_HOME/.ironcliw"
+LAUNCH_SCRIPT_DST="$IRONCLIW_HOME/run-ironcliw-podman.sh"
 
 # Prefer systemd user services (Quadlet) for production. Enable lingering early so rootless Podman can run
 # without an interactive login.
 if command -v loginctl &>/dev/null; then
-  run_root loginctl enable-linger "$IronCliw_USER" 2>/dev/null || true
+  run_root loginctl enable-linger "$IRONCLIW_USER" 2>/dev/null || true
 fi
-if [[ -n "${IronCliw_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
-  run_root systemctl start "user@${IronCliw_UID}.service" 2>/dev/null || true
+if [[ -n "${IRONCLIW_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
+  run_root systemctl start "user@${IRONCLIW_UID}.service" 2>/dev/null || true
 fi
 
 # Rootless Podman needs subuid/subgid for the run user
-if ! grep -q "^${IronCliw_USER}:" /etc/subuid 2>/dev/null; then
-  echo "Warning: $IronCliw_USER has no subuid range. Rootless Podman may fail." >&2
-  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $IronCliw_USER:100000:65536" >&2
+if ! grep -q "^${IRONCLIW_USER}:" /etc/subuid 2>/dev/null; then
+  echo "Warning: $IRONCLIW_USER has no subuid range. Rootless Podman may fail." >&2
+  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $IRONCLIW_USER:100000:65536" >&2
 fi
 
-echo "Creating $IronCliw_CONFIG and workspace..."
-run_as_IronCliw mkdir -p "$IronCliw_CONFIG/workspace"
-run_as_IronCliw chmod 700 "$IronCliw_CONFIG" "$IronCliw_CONFIG/workspace" 2>/dev/null || true
+echo "Creating $IRONCLIW_CONFIG and workspace..."
+run_as_ironcliw mkdir -p "$IRONCLIW_CONFIG/workspace"
+run_as_ironcliw chmod 700 "$IRONCLIW_CONFIG" "$IRONCLIW_CONFIG/workspace" 2>/dev/null || true
 
-ENV_FILE="$IronCliw_CONFIG/.env"
-if run_as_IronCliw test -f "$ENV_FILE"; then
-  if ! run_as_IronCliw grep -q '^IronCliw_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
+ENV_FILE="$IRONCLIW_CONFIG/.env"
+if run_as_ironcliw test -f "$ENV_FILE"; then
+  if ! run_as_ironcliw grep -q '^IRONCLIW_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
     TOKEN="$(generate_token_hex_32)"
-    printf 'IronCliw_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_IronCliw tee -a "$ENV_FILE" >/dev/null
-    echo "Added IronCliw_GATEWAY_TOKEN to $ENV_FILE."
+    printf 'IRONCLIW_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_ironcliw tee -a "$ENV_FILE" >/dev/null
+    echo "Added IRONCLIW_GATEWAY_TOKEN to $ENV_FILE."
   fi
-  run_as_IronCliw chmod 600 "$ENV_FILE" 2>/dev/null || true
+  run_as_ironcliw chmod 600 "$ENV_FILE" 2>/dev/null || true
 else
   TOKEN="$(generate_token_hex_32)"
-  printf 'IronCliw_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_IronCliw tee "$ENV_FILE" >/dev/null
-  run_as_IronCliw chmod 600 "$ENV_FILE" 2>/dev/null || true
+  printf 'IRONCLIW_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_ironcliw tee "$ENV_FILE" >/dev/null
+  run_as_ironcliw chmod 600 "$ENV_FILE" 2>/dev/null || true
   echo "Created $ENV_FILE with new token."
 fi
 
 # The gateway refuses to start unless gateway.mode=local is set in config.
 # Make first-run non-interactive; users can run the wizard later to configure channels/providers.
-IronCliw_JSON="$IronCliw_CONFIG/IronCliw.json"
-if ! run_as_IronCliw test -f "$IronCliw_JSON"; then
-  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_IronCliw tee "$IronCliw_JSON" >/dev/null
-  run_as_IronCliw chmod 600 "$IronCliw_JSON" 2>/dev/null || true
-  echo "Created $IronCliw_JSON (minimal gateway.mode=local)."
+IRONCLIW_JSON="$IRONCLIW_CONFIG/ironcliw.json"
+if ! run_as_ironcliw test -f "$IRONCLIW_JSON"; then
+  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_ironcliw tee "$IRONCLIW_JSON" >/dev/null
+  run_as_ironcliw chmod 600 "$IRONCLIW_JSON" 2>/dev/null || true
+  echo "Created $IRONCLIW_JSON (minimal gateway.mode=local)."
 fi
 
 echo "Building image from $REPO_PATH..."
-podman build -t IronCliw:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
+BUILD_ARGS=()
+[[ -n "${IRONCLIW_DOCKER_APT_PACKAGES:-}" ]] && BUILD_ARGS+=(--build-arg "IRONCLIW_DOCKER_APT_PACKAGES=${IRONCLIW_DOCKER_APT_PACKAGES}")
+[[ -n "${IRONCLIW_EXTENSIONS:-}" ]] && BUILD_ARGS+=(--build-arg "IRONCLIW_EXTENSIONS=${IRONCLIW_EXTENSIONS}")
+podman build ${BUILD_ARGS[@]+"${BUILD_ARGS[@]}"} -t ironcliw:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
 
-echo "Loading image into $IronCliw_USER's Podman store..."
-TMP_IMAGE="$(mktemp -p /tmp IronCliw-image.XXXXXX.tar)"
-trap 'rm -f "$TMP_IMAGE"' EXIT
-podman save IronCliw:local -o "$TMP_IMAGE"
-chmod 644 "$TMP_IMAGE"
-(cd /tmp && run_as_user "$IronCliw_USER" env HOME="$IronCliw_HOME" podman load -i "$TMP_IMAGE")
-rm -f "$TMP_IMAGE"
+echo "Loading image into $IRONCLIW_USER's Podman store..."
+TMP_IMAGE_DIR="$(resolve_image_tmp_dir)"
+echo "Using temporary image dir: $TMP_IMAGE_DIR"
+TMP_STAGE_DIR="$(mktemp -d -p "$TMP_IMAGE_DIR" ironcliw-image.XXXXXX)"
+TMP_IMAGE="$TMP_STAGE_DIR/image.tar"
+chmod 700 "$TMP_STAGE_DIR"
+trap 'rm -rf "$TMP_STAGE_DIR"' EXIT
+podman save ironcliw:local -o "$TMP_IMAGE"
+chmod 600 "$TMP_IMAGE"
+# Stream the image into the target user's podman load so private temp directories
+# do not need to be traversable by $IRONCLIW_USER.
+cat "$TMP_IMAGE" | run_as_user "$IRONCLIW_USER" env HOME="$IRONCLIW_HOME" podman load
+rm -rf "$TMP_STAGE_DIR"
 trap - EXIT
 
 echo "Copying launch script to $LAUNCH_SCRIPT_DST..."
-run_root cat "$RUN_SCRIPT_SRC" | run_as_IronCliw tee "$LAUNCH_SCRIPT_DST" >/dev/null
-run_as_IronCliw chmod 755 "$LAUNCH_SCRIPT_DST"
+run_root cat "$RUN_SCRIPT_SRC" | run_as_ironcliw tee "$LAUNCH_SCRIPT_DST" >/dev/null
+run_as_ironcliw chmod 755 "$LAUNCH_SCRIPT_DST"
 
-# Optionally install systemd quadlet for IronCliw user (rootless Podman + systemd)
-QUADLET_DIR="$IronCliw_HOME/.config/containers/systemd"
+# Optionally install systemd quadlet for ironcliw user (rootless Podman + systemd)
+QUADLET_DIR="$IRONCLIW_HOME/.config/containers/systemd"
 if [[ "$INSTALL_QUADLET" == true && -f "$QUADLET_TEMPLATE" ]]; then
-  echo "Installing systemd quadlet for $IronCliw_USER..."
-  run_as_IronCliw mkdir -p "$QUADLET_DIR"
-  IronCliw_HOME_SED="$(escape_sed_replacement_pipe_delim "$IronCliw_HOME")"
-  sed "s|{{IronCliw_HOME}}|$IronCliw_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_IronCliw tee "$QUADLET_DIR/IronCliw.container" >/dev/null
-  run_as_IronCliw chmod 700 "$IronCliw_HOME/.config" "$IronCliw_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
-  run_as_IronCliw chmod 600 "$QUADLET_DIR/IronCliw.container" 2>/dev/null || true
+  echo "Installing systemd quadlet for $IRONCLIW_USER..."
+  run_as_ironcliw mkdir -p "$QUADLET_DIR"
+  IRONCLIW_HOME_SED="$(escape_sed_replacement_pipe_delim "$IRONCLIW_HOME")"
+  sed "s|{{IRONCLIW_HOME}}|$IRONCLIW_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_ironcliw tee "$QUADLET_DIR/ironcliw.container" >/dev/null
+  run_as_ironcliw chmod 700 "$IRONCLIW_HOME/.config" "$IRONCLIW_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
+  run_as_ironcliw chmod 600 "$QUADLET_DIR/ironcliw.container" 2>/dev/null || true
   if command -v systemctl &>/dev/null; then
-    run_root systemctl --machine "${IronCliw_USER}@" --user daemon-reload 2>/dev/null || true
-    run_root systemctl --machine "${IronCliw_USER}@" --user enable IronCliw.service 2>/dev/null || true
-    run_root systemctl --machine "${IronCliw_USER}@" --user start IronCliw.service 2>/dev/null || true
+    run_root systemctl --machine "${IRONCLIW_USER}@" --user daemon-reload 2>/dev/null || true
+    run_root systemctl --machine "${IRONCLIW_USER}@" --user enable ironcliw.service 2>/dev/null || true
+    run_root systemctl --machine "${IRONCLIW_USER}@" --user start ironcliw.service 2>/dev/null || true
   fi
 fi
 
@@ -244,13 +300,13 @@ echo ""
 echo "Setup complete. Start the gateway:"
 echo "  $RUN_SCRIPT_SRC launch"
 echo "  $RUN_SCRIPT_SRC launch setup   # onboarding wizard"
-echo "Or as $IronCliw_USER (e.g. from cron):"
-echo "  sudo -u $IronCliw_USER $LAUNCH_SCRIPT_DST"
-echo "  sudo -u $IronCliw_USER $LAUNCH_SCRIPT_DST setup"
+echo "Or as $IRONCLIW_USER (e.g. from cron):"
+echo "  sudo -u $IRONCLIW_USER $LAUNCH_SCRIPT_DST"
+echo "  sudo -u $IRONCLIW_USER $LAUNCH_SCRIPT_DST setup"
 if [[ "$INSTALL_QUADLET" == true ]]; then
   echo "Or use systemd (quadlet):"
-  echo "  sudo systemctl --machine ${IronCliw_USER}@ --user start IronCliw.service"
-  echo "  sudo systemctl --machine ${IronCliw_USER}@ --user status IronCliw.service"
+  echo "  sudo systemctl --machine ${IRONCLIW_USER}@ --user start ironcliw.service"
+  echo "  sudo systemctl --machine ${IRONCLIW_USER}@ --user status ironcliw.service"
 else
   echo "To install systemd quadlet later: $0 --quadlet"
 fi

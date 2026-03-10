@@ -13,13 +13,15 @@ The [Vercel AI Gateway](https://vercel.com/ai-gateway) provides a unified API to
 - Provider: `vercel-ai-gateway`
 - Auth: `AI_GATEWAY_API_KEY`
 - API: Anthropic Messages compatible
+- IronCliw auto-discovers the Gateway `/v1/models` catalog, so `/models vercel-ai-gateway`
+  includes current model refs such as `vercel-ai-gateway/openai/gpt-5.4`.
 
 ## Quick start
 
 1. Set the API key (recommended: store it for the Gateway):
 
 ```bash
-IronCliw onboard --auth-choice ai-gateway-api-key
+ironcliw onboard --auth-choice ai-gateway-api-key
 ```
 
 2. Set a default model:
@@ -37,7 +39,7 @@ IronCliw onboard --auth-choice ai-gateway-api-key
 ## Non-interactive example
 
 ```bash
-IronCliw onboard --non-interactive \
+ironcliw onboard --non-interactive \
   --mode local \
   --auth-choice ai-gateway-api-key \
   --ai-gateway-api-key "$AI_GATEWAY_API_KEY"
@@ -46,7 +48,7 @@ IronCliw onboard --non-interactive \
 ## Environment note
 
 If the Gateway runs as a daemon (launchd/systemd), make sure `AI_GATEWAY_API_KEY`
-is available to that process (for example, in `~/.IronCliw/.env` or via
+is available to that process (for example, in `~/.ironcliw/.env` or via
 `env.shellEnv`).
 
 ## Model ID shorthand

@@ -1,4 +1,4 @@
-import type { IronCliwPluginConfigSchema } from "IronCliw/plugin-sdk/diffs";
+import type { IronCliwPluginConfigSchema } from "ironcliw/plugin-sdk/diffs";
 import {
   DIFF_IMAGE_QUALITY_PRESETS,
   DIFF_INDICATORS,

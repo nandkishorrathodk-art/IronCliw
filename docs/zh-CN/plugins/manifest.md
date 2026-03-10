@@ -13,9 +13,9 @@ x-i18n:
   workflow: 15
 ---
 
-# 插件清单（IronCliw.plugin.json）
+# 插件清单（ironcliw.plugin.json）
 
-每个插件都**必须**在**插件根目录**下提供一个 `IronCliw.plugin.json` 文件。IronCliw 使用此清单来**在不执行插件代码的情况下**验证配置。缺失或无效的清单将被视为插件错误，并阻止配置验证。
+每个插件都**必须**在**插件根目录**下提供一个 `ironcliw.plugin.json` 文件。IronCliw 使用此清单来**在不执行插件代码的情况下**验证配置。缺失或无效的清单将被视为插件错误，并阻止配置验证。
 
 参阅完整的插件系统指南：[插件](/tools/plugin)。
 

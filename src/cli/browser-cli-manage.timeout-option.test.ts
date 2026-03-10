@@ -15,7 +15,7 @@ const mocks = vi.hoisted(() => {
             pid: 1,
             cdpPort: 18800,
             chosenBrowser: "chrome",
-            userDataDir: "/tmp/IronCliw",
+            userDataDir: "/tmp/ironcliw",
             color: "blue",
             headless: true,
             attachOnly: false,

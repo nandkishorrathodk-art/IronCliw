@@ -12,11 +12,11 @@ describe("secrets configure plan helpers", () => {
   it("builds configure candidates from supported configure targets", () => {
     const config = {
       talk: {
-        apiKey: "plain",
+        apiKey: "plain", // pragma: allowlist secret
       },
       channels: {
         telegram: {
-          botToken: "token",
+          botToken: "token", // pragma: allowlist secret
         },
       },
     } as IronCliwConfig;
@@ -125,7 +125,7 @@ describe("secrets configure plan helpers", () => {
           existingRef: {
             source: "env",
             provider: "default",
-            id: "OPENAI_API_KEY",
+            id: "OPENAI_API_KEY", // pragma: allowlist secret
           },
         }),
       ]),
@@ -139,15 +139,15 @@ describe("secrets configure plan helpers", () => {
           provider: "elevenlabs",
           providers: {
             elevenlabs: {
-              apiKey: "demo-talk-key",
+              apiKey: "demo-talk-key", // pragma: allowlist secret
             },
           },
-          apiKey: "demo-talk-key",
+          apiKey: "demo-talk-key", // pragma: allowlist secret
         },
       } as IronCliwConfig,
       authoredIronCliwConfig: {
         talk: {
-          apiKey: "demo-talk-key",
+          apiKey: "demo-talk-key", // pragma: allowlist secret
         },
       } as IronCliwConfig,
     });
@@ -169,7 +169,7 @@ describe("secrets configure plan helpers", () => {
           path: "talk.apiKey",
           pathSegments: ["talk", "apiKey"],
           label: "talk.apiKey",
-          configFile: "IronCliw.json" as const,
+          configFile: "ironcliw.json" as const,
           expectedResolvedValue: "string" as const,
           ref: {
             source: "env" as const,

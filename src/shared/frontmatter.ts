@@ -137,3 +137,18 @@ export function parseIronCliwManifestInstallBase(
   }
   return spec;
 }
+
+export function applyIronCliwManifestInstallCommonFields<
+  T extends { id?: string; label?: string; bins?: string[] },
+>(spec: T, parsed: Pick<ParsedIronCliwManifestInstallBase, "id" | "label" | "bins">): T {
+  if (parsed.id) {
+    spec.id = parsed.id;
+  }
+  if (parsed.label) {
+    spec.label = parsed.label;
+  }
+  if (parsed.bins) {
+    spec.bins = parsed.bins;
+  }
+  return spec;
+}

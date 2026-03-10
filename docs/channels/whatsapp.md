@@ -44,13 +44,13 @@ Status: production-ready via WhatsApp Web (Baileys). Gateway owns linked session
   <Step title="Link WhatsApp (QR)">
 
 ```bash
-IronCliw channels login --channel whatsapp
+ironcliw channels login --channel whatsapp
 ```
 
     For a specific account:
 
 ```bash
-IronCliw channels login --channel whatsapp --account work
+ironcliw channels login --channel whatsapp --account work
 ```
 
   </Step>
@@ -58,7 +58,7 @@ IronCliw channels login --channel whatsapp --account work
   <Step title="Start the gateway">
 
 ```bash
-IronCliw gateway
+ironcliw gateway
 ```
 
   </Step>
@@ -66,8 +66,8 @@ IronCliw gateway
   <Step title="Approve first pairing request (if using pairing mode)">
 
 ```bash
-IronCliw pairing list whatsapp
-IronCliw pairing approve whatsapp <CODE>
+ironcliw pairing list whatsapp
+ironcliw pairing approve whatsapp <CODE>
 ```
 
     Pairing requests expire after 1 hour. Pending requests are capped at 3 per channel.
@@ -205,7 +205,7 @@ When the linked self number is also present in `allowFrom`, WhatsApp self-chat s
 
 - skip read receipts for self-chat turns
 - ignore mention-JID auto-trigger behavior that would otherwise ping yourself
-- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[IronCliw]`
+- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[ironcliw]`
 
 ## Message normalization and context
 
@@ -308,7 +308,8 @@ When the linked self number is also present in `allowFrom`, WhatsApp self-chat s
 
   <Accordion title="Media size limits and fallback behavior">
     - inbound media save cap: `channels.whatsapp.mediaMaxMb` (default `50`)
-    - outbound media cap for auto-replies: `agents.defaults.mediaMaxMb` (default `5MB`)
+    - outbound media send cap: `channels.whatsapp.mediaMaxMb` (default `50`)
+    - per-account overrides use `channels.whatsapp.accounts.<accountId>.mediaMaxMb`
     - images are auto-optimized (resize/quality sweep) to fit limits
     - on media send failure, first-item fallback sends text warning instead of dropping the response silently
   </Accordion>
@@ -349,13 +350,13 @@ Behavior notes:
   </Accordion>
 
   <Accordion title="Credential paths and legacy compatibility">
-    - current auth path: `~/.IronCliw/credentials/whatsapp/<accountId>/creds.json`
+    - current auth path: `~/.ironcliw/credentials/whatsapp/<accountId>/creds.json`
     - backup file: `creds.json.bak`
-    - legacy default auth in `~/.IronCliw/credentials/` is still recognized/migrated for default-account flows
+    - legacy default auth in `~/.ironcliw/credentials/` is still recognized/migrated for default-account flows
   </Accordion>
 
   <Accordion title="Logout behavior">
-    `IronCliw channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
+    `ironcliw channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
 
     In legacy auth directories, `oauth.json` is preserved while Baileys auth files are removed.
 
@@ -379,8 +380,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    IronCliw channels login --channel whatsapp
-    IronCliw channels status
+    ironcliw channels login --channel whatsapp
+    ironcliw channels status
     ```
 
   </Accordion>
@@ -391,8 +392,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    IronCliw doctor
-    IronCliw logs --follow
+    ironcliw doctor
+    ironcliw logs --follow
     ```
 
     If needed, re-link with `channels login`.
@@ -413,7 +414,7 @@ Behavior notes:
     - `groupAllowFrom` / `allowFrom`
     - `groups` allowlist entries
     - mention gating (`requireMention` + mention patterns)
-    - duplicate keys in `IronCliw.json` (JSON5): later entries override earlier ones, so keep a single `groupPolicy` per scope
+    - duplicate keys in `ironcliw.json` (JSON5): later entries override earlier ones, so keep a single `groupPolicy` per scope
 
   </Accordion>
 

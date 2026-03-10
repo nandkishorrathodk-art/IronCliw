@@ -17,7 +17,7 @@ Synthetic exposes Anthropic-compatible endpoints. IronCliw registers it as the
 2. Run onboarding:
 
 ```bash
-IronCliw onboard --auth-choice synthetic-api-key
+ironcliw onboard --auth-choice synthetic-api-key
 ```
 
 The default model is set to:

@@ -14,13 +14,13 @@ function withNodeServiceEnv(
 ): Record<string, string | undefined> {
   return {
     ...env,
-    IronCliw_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-    IronCliw_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-    IronCliw_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-    IronCliw_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-    IronCliw_LOG_PREFIX: "node",
-    IronCliw_SERVICE_MARKER: NODE_SERVICE_MARKER,
-    IronCliw_SERVICE_KIND: NODE_SERVICE_KIND,
+    IRONCLIW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+    IRONCLIW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+    IRONCLIW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+    IRONCLIW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+    IRONCLIW_LOG_PREFIX: "node",
+    IRONCLIW_SERVICE_MARKER: NODE_SERVICE_MARKER,
+    IRONCLIW_SERVICE_KIND: NODE_SERVICE_KIND,
   };
 }
 
@@ -30,13 +30,13 @@ function withNodeInstallEnv(args: GatewayServiceInstallArgs): GatewayServiceInst
     env: withNodeServiceEnv(args.env),
     environment: {
       ...args.environment,
-      IronCliw_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-      IronCliw_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-      IronCliw_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-      IronCliw_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-      IronCliw_LOG_PREFIX: "node",
-      IronCliw_SERVICE_MARKER: NODE_SERVICE_MARKER,
-      IronCliw_SERVICE_KIND: NODE_SERVICE_KIND,
+      IRONCLIW_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+      IRONCLIW_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+      IRONCLIW_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+      IRONCLIW_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+      IRONCLIW_LOG_PREFIX: "node",
+      IRONCLIW_SERVICE_MARKER: NODE_SERVICE_MARKER,
+      IRONCLIW_SERVICE_KIND: NODE_SERVICE_KIND,
     },
   };
 }

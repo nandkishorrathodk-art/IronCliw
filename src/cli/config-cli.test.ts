@@ -4,7 +4,7 @@ import type { ConfigFileSnapshot, IronCliwConfig } from "../config/types.js";
 
 /**
  * Test for issue #6070:
- * `IronCliw config set/unset` must update snapshot.resolved (user config after $include/${ENV},
+ * `ironcliw config set/unset` must update snapshot.resolved (user config after $include/${ENV},
  * but before runtime defaults), so runtime defaults don't leak into the written config.
  */
 
@@ -39,7 +39,7 @@ function buildSnapshot(params: {
   config: IronCliwConfig;
 }): ConfigFileSnapshot {
   return {
-    path: "/tmp/IronCliw.json",
+    path: "/tmp/ironcliw.json",
     exists: true,
     raw: JSON.stringify(params.resolved),
     parsed: params.resolved,
@@ -77,7 +77,7 @@ function makeInvalidSnapshot(params: {
   path?: string;
 }): ConfigFileSnapshot {
   return {
-    path: params.path ?? "/tmp/custom-IronCliw.json",
+    path: params.path ?? "/tmp/custom-ironcliw.json",
     exists: true,
     raw: "{}",
     parsed: {},
@@ -197,7 +197,7 @@ describe("config cli", () => {
         baseUrl: "http://127.0.0.1:11434",
         api: "ollama",
         models: [],
-        apiKey: "ollama-local",
+        apiKey: "ollama-local", // pragma: allowlist secret
       });
     });
   });
@@ -215,7 +215,7 @@ describe("config cli", () => {
 
       await runConfigCommand(["config", "get", "gateway.auth.token"]);
 
-      expect(mockLog).toHaveBeenCalledWith("__IronCliw_REDACTED__");
+      expect(mockLog).toHaveBeenCalledWith("__IRONCLIW_REDACTED__");
     });
   });
 
@@ -263,7 +263,7 @@ describe("config cli", () => {
 
       const payload = await runValidateJsonAndGetPayload();
       expect(payload.valid).toBe(false);
-      expect(payload.path).toBe("/tmp/custom-IronCliw.json");
+      expect(payload.path).toBe("/tmp/custom-ironcliw.json");
       expect(payload.issues).toEqual([{ path: "gateway.bind", message: "Invalid enum value" }]);
       expect(mockError).not.toHaveBeenCalled();
     });
@@ -284,7 +284,7 @@ describe("config cli", () => {
 
       const payload = await runValidateJsonAndGetPayload();
       expect(payload.valid).toBe(false);
-      expect(payload.path).toBe("/tmp/custom-IronCliw.json");
+      expect(payload.path).toBe("/tmp/custom-ironcliw.json");
       expect(payload.issues).toEqual([
         {
           path: "update.channel",
@@ -297,7 +297,7 @@ describe("config cli", () => {
 
     it("prints file-not-found and exits 1 when config file is missing", async () => {
       setSnapshotOnce({
-        path: "/tmp/IronCliw.json",
+        path: "/tmp/ironcliw.json",
         exists: false,
         raw: null,
         parsed: {},
@@ -427,19 +427,19 @@ describe("config cli", () => {
 
       await runConfigCommand(["config", "file"]);
 
-      expect(mockLog).toHaveBeenCalledWith("/tmp/IronCliw.json");
+      expect(mockLog).toHaveBeenCalledWith("/tmp/ironcliw.json");
       expect(mockWriteConfigFile).not.toHaveBeenCalled();
     });
 
     it("handles config file path with home directory", async () => {
       const resolved: IronCliwConfig = { gateway: { port: 18789 } };
       const snapshot = buildSnapshot({ resolved, config: resolved });
-      snapshot.path = "/home/user/.IronCliw/IronCliw.json";
+      snapshot.path = "/home/user/.ironcliw/ironcliw.json";
       mockReadConfigFileSnapshot.mockResolvedValueOnce(snapshot);
 
       await runConfigCommand(["config", "file"]);
 
-      expect(mockLog).toHaveBeenCalledWith("/home/user/.IronCliw/IronCliw.json");
+      expect(mockLog).toHaveBeenCalledWith("/home/user/.ironcliw/ironcliw.json");
     });
   });
 });

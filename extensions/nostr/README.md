@@ -1,4 +1,4 @@
-# @IronCliw/nostr
+# @ironcliw/nostr
 
 Nostr DM channel plugin for IronCliw using NIP-04 encrypted direct messages.
 
@@ -13,7 +13,7 @@ This extension adds Nostr as a messaging channel to IronCliw. It enables your bo
 ## Installation
 
 ```bash
-IronCliw plugins install @IronCliw/nostr
+ironcliw plugins install @ironcliw/nostr
 ```
 
 ## Quick Setup
@@ -90,7 +90,7 @@ IronCliw plugins install @IronCliw/nostr
 # Using strfry
 docker run -p 7777:7777 ghcr.io/hoytech/strfry
 
-# Configure IronCliw to use local relay
+# Configure ironcliw to use local relay
 "relays": ["ws://localhost:7777"]
 ```
 

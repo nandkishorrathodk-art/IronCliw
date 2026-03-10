@@ -46,7 +46,7 @@ describe("media server", () => {
   }
 
   beforeAll(async () => {
-    MEDIA_DIR = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-media-test-"));
+    MEDIA_DIR = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-media-test-"));
     server = await startMediaServer(0, 1_000);
     port = (server.address() as AddressInfo).port;
   });
@@ -93,22 +93,11 @@ describe("media server", () => {
       setup: async () => {
         const target = path.join(process.cwd(), "package.json"); // outside MEDIA_DIR
         const link = path.join(MEDIA_DIR, "link-out");
-        try {
-          await fs.symlink(target, link);
-        } catch (err) {
-          if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
-            return { skipOnWindows: true };
-          }
-          throw err;
-        }
-        return { skipOnWindows: false };
+        await fs.symlink(target, link);
       },
     },
   ] as const)("$testName", async (testCase) => {
-    const setupResult = await testCase.setup?.();
-    if (setupResult?.skipOnWindows) {
-      return;
-    }
+    await testCase.setup?.();
     const res = await fetch(mediaUrl(testCase.mediaPath));
     expect(res.status).toBe(400);
     expect(await res.text()).toBe("invalid path");

@@ -27,16 +27,16 @@ IronCliw 在两个地方记录日志：
 
 默认情况下，Gateway 网关在以下位置写入滚动日志文件：
 
-`/tmp/IronCliw/IronCliw-YYYY-MM-DD.log`
+`/tmp/ironcliw/ironcliw-YYYY-MM-DD.log`
 
 日期使用 Gateway 网关主机的本地时区。
 
-你可以在 `~/.IronCliw/IronCliw.json` 中覆盖此设置：
+你可以在 `~/.ironcliw/ironcliw.json` 中覆盖此设置：
 
 ```json
 {
   "logging": {
-    "file": "/path/to/IronCliw.log"
+    "file": "/path/to/ironcliw.log"
   }
 }
 ```
@@ -48,7 +48,7 @@ IronCliw 在两个地方记录日志：
 使用 CLI 通过 RPC 跟踪 Gateway 网关日志文件：
 
 ```bash
-IronCliw logs --follow
+ironcliw logs --follow
 ```
 
 输出模式：
@@ -69,7 +69,7 @@ IronCliw logs --follow
 如果 Gateway 网关无法访问，CLI 会打印一个简短提示运行：
 
 ```bash
-IronCliw doctor
+ironcliw doctor
 ```
 
 ### 控制 UI（Web）
@@ -82,7 +82,7 @@ IronCliw doctor
 要过滤渠道活动（WhatsApp/Telegram 等），使用：
 
 ```bash
-IronCliw channels logs --channel whatsapp
+ironcliw channels logs --channel whatsapp
 ```
 
 ## 日志格式
@@ -103,13 +103,13 @@ IronCliw channels logs --channel whatsapp
 
 ## 配置日志
 
-所有日志配置都在 `~/.IronCliw/IronCliw.json` 的 `logging` 下。
+所有日志配置都在 `~/.ironcliw/ironcliw.json` 的 `logging` 下。
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/IronCliw/IronCliw-YYYY-MM-DD.log",
+    "file": "/tmp/ironcliw/ironcliw-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -211,7 +211,7 @@ IronCliw channels logs --channel whatsapp
 环境变量覆盖（一次性）：
 
 ```
-IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
+IRONCLIW_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 注意：
@@ -240,7 +240,7 @@ IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "IronCliw-gateway",
+      "serviceName": "ironcliw-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -253,7 +253,7 @@ IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
 
 注意：
 
-- 你也可以使用 `IronCliw plugins enable diagnostics-otel` 启用插件。
+- 你也可以使用 `ironcliw plugins enable diagnostics-otel` 启用插件。
 - `protocol` 目前仅支持 `http/protobuf`。`grpc` 被忽略。
 - 指标包括令牌使用、成本、上下文大小、运行持续时间和消息流计数器/直方图（webhooks、队列、会话状态、队列深度/等待）。
 - 追踪/指标可以通过 `traces` / `metrics` 切换（默认：开启）。启用时，追踪包括模型使用 span 加上 webhook/消息处理 span。
@@ -264,45 +264,45 @@ IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
 
 模型使用：
 
-- `IronCliw.tokens`（计数器，属性：`IronCliw.token`、`IronCliw.channel`、`IronCliw.provider`、`IronCliw.model`）
-- `IronCliw.cost.usd`（计数器，属性：`IronCliw.channel`、`IronCliw.provider`、`IronCliw.model`）
-- `IronCliw.run.duration_ms`（直方图，属性：`IronCliw.channel`、`IronCliw.provider`、`IronCliw.model`）
-- `IronCliw.context.tokens`（直方图，属性：`IronCliw.context`、`IronCliw.channel`、`IronCliw.provider`、`IronCliw.model`）
+- `ironcliw.tokens`（计数器，属性：`ironcliw.token`、`ironcliw.channel`、`ironcliw.provider`、`ironcliw.model`）
+- `ironcliw.cost.usd`（计数器，属性：`ironcliw.channel`、`ironcliw.provider`、`ironcliw.model`）
+- `ironcliw.run.duration_ms`（直方图，属性：`ironcliw.channel`、`ironcliw.provider`、`ironcliw.model`）
+- `ironcliw.context.tokens`（直方图，属性：`ironcliw.context`、`ironcliw.channel`、`ironcliw.provider`、`ironcliw.model`）
 
 消息流：
 
-- `IronCliw.webhook.received`（计数器，属性：`IronCliw.channel`、`IronCliw.webhook`）
-- `IronCliw.webhook.error`（计数器，属性：`IronCliw.channel`、`IronCliw.webhook`）
-- `IronCliw.webhook.duration_ms`（直方图，属性：`IronCliw.channel`、`IronCliw.webhook`）
-- `IronCliw.message.queued`（计数器，属性：`IronCliw.channel`、`IronCliw.source`）
-- `IronCliw.message.processed`（计数器，属性：`IronCliw.channel`、`IronCliw.outcome`）
-- `IronCliw.message.duration_ms`（直方图，属性：`IronCliw.channel`、`IronCliw.outcome`）
+- `ironcliw.webhook.received`（计数器，属性：`ironcliw.channel`、`ironcliw.webhook`）
+- `ironcliw.webhook.error`（计数器，属性：`ironcliw.channel`、`ironcliw.webhook`）
+- `ironcliw.webhook.duration_ms`（直方图，属性：`ironcliw.channel`、`ironcliw.webhook`）
+- `ironcliw.message.queued`（计数器，属性：`ironcliw.channel`、`ironcliw.source`）
+- `ironcliw.message.processed`（计数器，属性：`ironcliw.channel`、`ironcliw.outcome`）
+- `ironcliw.message.duration_ms`（直方图，属性：`ironcliw.channel`、`ironcliw.outcome`）
 
 队列 + 会话：
 
-- `IronCliw.queue.lane.enqueue`（计数器，属性：`IronCliw.lane`）
-- `IronCliw.queue.lane.dequeue`（计数器，属性：`IronCliw.lane`）
-- `IronCliw.queue.depth`（直方图，属性：`IronCliw.lane` 或 `IronCliw.channel=heartbeat`）
-- `IronCliw.queue.wait_ms`（直方图，属性：`IronCliw.lane`）
-- `IronCliw.session.state`（计数器，属性：`IronCliw.state`、`IronCliw.reason`）
-- `IronCliw.session.stuck`（计数器，属性：`IronCliw.state`）
-- `IronCliw.session.stuck_age_ms`（直方图，属性：`IronCliw.state`）
-- `IronCliw.run.attempt`（计数器，属性：`IronCliw.attempt`）
+- `ironcliw.queue.lane.enqueue`（计数器，属性：`ironcliw.lane`）
+- `ironcliw.queue.lane.dequeue`（计数器，属性：`ironcliw.lane`）
+- `ironcliw.queue.depth`（直方图，属性：`ironcliw.lane` 或 `ironcliw.channel=heartbeat`）
+- `ironcliw.queue.wait_ms`（直方图，属性：`ironcliw.lane`）
+- `ironcliw.session.state`（计数器，属性：`ironcliw.state`、`ironcliw.reason`）
+- `ironcliw.session.stuck`（计数器，属性：`ironcliw.state`）
+- `ironcliw.session.stuck_age_ms`（直方图，属性：`ironcliw.state`）
+- `ironcliw.run.attempt`（计数器，属性：`ironcliw.attempt`）
 
 ### 导出的 span（名称 + 关键属性）
 
-- `IronCliw.model.usage`
-  - `IronCliw.channel`、`IronCliw.provider`、`IronCliw.model`
-  - `IronCliw.sessionKey`、`IronCliw.sessionId`
-  - `IronCliw.tokens.*`（input/output/cache_read/cache_write/total）
-- `IronCliw.webhook.processed`
-  - `IronCliw.channel`、`IronCliw.webhook`、`IronCliw.chatId`
-- `IronCliw.webhook.error`
-  - `IronCliw.channel`、`IronCliw.webhook`、`IronCliw.chatId`、`IronCliw.error`
-- `IronCliw.message.processed`
-  - `IronCliw.channel`、`IronCliw.outcome`、`IronCliw.chatId`、`IronCliw.messageId`、`IronCliw.sessionKey`、`IronCliw.sessionId`、`IronCliw.reason`
-- `IronCliw.session.stuck`
-  - `IronCliw.state`、`IronCliw.ageMs`、`IronCliw.queueDepth`、`IronCliw.sessionKey`、`IronCliw.sessionId`
+- `ironcliw.model.usage`
+  - `ironcliw.channel`、`ironcliw.provider`、`ironcliw.model`
+  - `ironcliw.sessionKey`、`ironcliw.sessionId`
+  - `ironcliw.tokens.*`（input/output/cache_read/cache_write/total）
+- `ironcliw.webhook.processed`
+  - `ironcliw.channel`、`ironcliw.webhook`、`ironcliw.chatId`
+- `ironcliw.webhook.error`
+  - `ironcliw.channel`、`ironcliw.webhook`、`ironcliw.chatId`、`ironcliw.error`
+- `ironcliw.message.processed`
+  - `ironcliw.channel`、`ironcliw.outcome`、`ironcliw.chatId`、`ironcliw.messageId`、`ironcliw.sessionKey`、`ironcliw.sessionId`、`ironcliw.reason`
+- `ironcliw.session.stuck`
+  - `ironcliw.state`、`ironcliw.ageMs`、`ironcliw.queueDepth`、`ironcliw.sessionKey`、`ironcliw.sessionId`
 
 ### 采样 + 刷新
 
@@ -324,6 +324,6 @@ IronCliw_DIAGNOSTICS=telegram.http,telegram.payload
 
 ## 故障排除提示
 
-- **Gateway 网关无法访问？** 先运行 `IronCliw doctor`。
+- **Gateway 网关无法访问？** 先运行 `ironcliw doctor`。
 - **日志为空？** 检查 Gateway 网关是否正在运行并写入 `logging.file` 中的文件路径。
 - **需要更多细节？** 将 `logging.level` 设置为 `debug` 或 `trace` 并重试。

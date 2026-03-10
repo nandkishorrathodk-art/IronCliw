@@ -1,47 +1,35 @@
 <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#080B0F"/>
-    </linearGradient>
-    <linearGradient id="claw-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="iron-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00E5FF"/>
-      <stop offset="100%" stop-color="#00B8D9"/>
+      <stop offset="100%" stop-color="#0077AA"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <linearGradient id="iron-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B0C4D8"/>
+      <stop offset="100%" stop-color="#607080"/>
+    </linearGradient>
   </defs>
-
-  <!-- Background rounded square -->
-  <rect width="120" height="120" rx="22" fill="url(#bg-grad)"/>
-
-  <!-- Robotic arm shaft (vertical) -->
-  <rect x="52" y="18" width="16" height="48" rx="5" fill="url(#claw-grad)" filter="url(#glow)" opacity="0.9"/>
-
-  <!-- Joint circle -->
-  <circle cx="60" cy="64" r="10" fill="#080B0F" stroke="url(#claw-grad)" stroke-width="2.5" filter="url(#glow)"/>
-  <circle cx="60" cy="64" r="4" fill="url(#claw-grad)"/>
-
-  <!-- Left claw finger -->
-  <path d="M60 72 L35 100 L42 104 L64 78 Z" fill="url(#claw-grad)" rx="3" filter="url(#glow)" opacity="0.95"/>
-
-  <!-- Right claw finger -->
-  <path d="M60 72 L85 100 L78 104 L56 78 Z" fill="url(#claw-grad)" rx="3" filter="url(#glow)" opacity="0.95"/>
-
-  <!-- Left claw tip accent -->
-  <circle cx="38" cy="103" r="3.5" fill="#00E5FF" filter="url(#glow)"/>
-
-  <!-- Right claw tip accent -->
-  <circle cx="82" cy="103" r="3.5" fill="#00E5FF" filter="url(#glow)"/>
-
-  <!-- Top grip flange -->
-  <rect x="44" y="16" width="32" height="8" rx="4" fill="#B0BEC5" opacity="0.6"/>
-
-  <!-- Cyan electric glow line on arm -->
-  <rect x="57" y="20" width="6" height="40" rx="3" fill="#00E5FF" opacity="0.25"/>
+  <!-- Upper arm -->
+  <rect x="45" y="10" width="30" height="28" rx="6" fill="url(#iron-body)" stroke="#00E5FF" stroke-width="1.5"/>
+  <!-- Elbow joint -->
+  <circle cx="60" cy="42" r="10" fill="url(#iron-gradient)" opacity="0.9"/>
+  <!-- Lower arm -->
+  <rect x="42" y="50" width="36" height="30" rx="6" fill="url(#iron-body)" stroke="#00E5FF" stroke-width="1.5"/>
+  <!-- Wrist joint -->
+  <rect x="48" y="78" width="24" height="8" rx="3" fill="url(#iron-gradient)"/>
+  <!-- Claw/gripper left -->
+  <path d="M48 88 C35 90 30 100 35 108 C40 112 48 108 50 100 L50 88 Z" fill="url(#iron-body)" stroke="#00E5FF" stroke-width="1.5"/>
+  <!-- Claw/gripper right -->
+  <path d="M72 88 C85 90 90 100 85 108 C80 112 72 108 70 100 L70 88 Z" fill="url(#iron-body)" stroke="#00E5FF" stroke-width="1.5"/>
+  <!-- Palm -->
+  <rect x="48" y="84" width="24" height="12" rx="3" fill="url(#iron-gradient)" opacity="0.85"/>
+  <!-- Hydraulic detail left -->
+  <rect x="50" y="22" width="4" height="14" rx="2" fill="#00E5FF" opacity="0.7"/>
+  <!-- Hydraulic detail right -->
+  <rect x="66" y="22" width="4" height="14" rx="2" fill="#00E5FF" opacity="0.7"/>
+  <!-- Shoulder bolt -->
+  <circle cx="60" cy="15" r="5" fill="url(#iron-gradient)"/>
+  <!-- Eye / sensor -->
+  <circle cx="60" cy="58" r="5" fill="#050810"/>
+  <circle cx="60" cy="58" r="2.5" fill="#00E5FF"/>
 </svg>

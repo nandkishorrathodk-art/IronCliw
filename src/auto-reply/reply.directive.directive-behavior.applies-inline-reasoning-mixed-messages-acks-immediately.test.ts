@@ -239,7 +239,7 @@ describe("directive behavior", () => {
 
       const unsupportedModelTexts = await runThinkingDirective(home, "openai/gpt-4.1-mini");
       expect(unsupportedModelTexts).toContain(
-        'Thinking level "xhigh" is only supported for openai/gpt-5.2, openai-codex/gpt-5.3-codex, openai-codex/gpt-5.3-codex-spark, openai-codex/gpt-5.2-codex, openai-codex/gpt-5.1-codex, github-copilot/gpt-5.2-codex or github-copilot/gpt-5.2.',
+        'Thinking level "xhigh" is only supported for openai/gpt-5.4, openai/gpt-5.4-pro, openai/gpt-5.2, openai-codex/gpt-5.4, openai-codex/gpt-5.3-codex, openai-codex/gpt-5.3-codex-spark, openai-codex/gpt-5.2-codex, openai-codex/gpt-5.1-codex, github-copilot/gpt-5.2-codex or github-copilot/gpt-5.2.',
       );
       expect(runEmbeddedPiAgent).not.toHaveBeenCalled();
     });
@@ -273,7 +273,7 @@ describe("directive behavior", () => {
   });
   it("treats skill commands as reserved for model aliases", async () => {
     await withTempHome(async (home) => {
-      const workspace = path.join(home, "IronCliw");
+      const workspace = path.join(home, "ironcliw");
       await writeSkill({
         workspaceDir: workspace,
         name: "demo-skill",

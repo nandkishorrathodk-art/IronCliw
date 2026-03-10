@@ -6,7 +6,7 @@ import {
   resetSessionsSpawnConfigOverride,
   setSessionsSpawnConfigOverride,
   setupSessionsSpawnGatewayMock,
-} from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./ironcliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const MAIN_SESSION_KEY = "agent:test:main";

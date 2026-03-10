@@ -144,9 +144,9 @@ if (candidatePids.length > 0) {
 const includePattern = /codex|claude/i;
 
 const excludePatterns = [
-  /IronCliw-gateway/i,
+  /ironcliw-gateway/i,
   /signal-cli/i,
-  /node_modules\/\.bin\/IronCliw/i,
+  /node_modules\/\.bin\/ironcliw/i,
   /recover-orphaned-processes\.sh/i,
 ];
 
@@ -189,4 +189,3 @@ process.stdout.write(
   }) + "\n",
 );
 NODE
-

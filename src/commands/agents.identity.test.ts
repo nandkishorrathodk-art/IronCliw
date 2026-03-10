@@ -23,7 +23,7 @@ type ConfigWritePayload = {
 };
 
 async function createIdentityWorkspace(subdir = "work") {
-  const root = await makeTempWorkspace("IronCliw-identity-");
+  const root = await makeTempWorkspace("ironcliw-identity-");
   const workspace = path.join(root, subdir);
   await fs.mkdir(workspace, { recursive: true });
   return { root, workspace };
@@ -63,7 +63,7 @@ describe("agents set-identity command", () => {
       "- Name: IronCliw",
       "- Creature: helpful sloth",
       "- Emoji: :)",
-      "- Avatar: avatars/IronCliw.png",
+      "- Avatar: avatars/ironcliw.png",
       "",
     ]);
 
@@ -86,7 +86,7 @@ describe("agents set-identity command", () => {
       name: "IronCliw",
       theme: "helpful sloth",
       emoji: ":)",
-      avatar: "avatars/IronCliw.png",
+      avatar: "avatars/ironcliw.png",
     });
   });
 
@@ -119,7 +119,7 @@ describe("agents set-identity command", () => {
       "- Name: IronCliw",
       "- Theme: iron grip",
       "- Emoji: :)",
-      "- Avatar: avatars/IronCliw.png",
+      "- Avatar: avatars/ironcliw.png",
       "",
     ]);
 

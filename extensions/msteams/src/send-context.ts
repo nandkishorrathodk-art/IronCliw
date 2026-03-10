@@ -2,7 +2,7 @@ import {
   resolveChannelMediaMaxBytes,
   type IronCliwConfig,
   type PluginRuntime,
-} from "IronCliw/plugin-sdk/msteams";
+} from "ironcliw/plugin-sdk/msteams";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import type {

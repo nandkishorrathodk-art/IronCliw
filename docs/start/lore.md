@@ -5,7 +5,7 @@ read_when:
 title: "IronCliw Lore"
 ---
 
-# The Lore of IronCliw 🦾📖
+# The Lore of IronCliw 🦞📖
 
 _A tale of lobsters, molting shells, and too many tokens._
 
@@ -13,7 +13,7 @@ _A tale of lobsters, molting shells, and too many tokens._
 
 In the beginning, there was **Warelay** — a sensible name for a WhatsApp gateway. It did its job. It was fine.
 
-But then came a iron grip.
+But then came a space lobster.
 
 For a while, the lobster was called **Clawd**, living in a **Clawdbot**. But in January 2026, Anthropic sent a polite email asking for a name change (trademark stuff). And so the lobster did what lobsters do best:
 
@@ -39,7 +39,7 @@ _The crustacean known as Clawd had officially molted._
 IronCliw = OPEN + CLAW
         = Open source, open to everyone
         = Our lobster heritage, where we came from
-        = The claw is the law 🦾
+        = The claw is the law 🦞
         = Your assistant. Your machine. Your rules.
 ```
 
@@ -55,11 +55,11 @@ Choose wisely.
 
 ## Key Characters
 
-### Molty 🦾
+### Molty 🦞
 
 _Pronouns: they/them_
 
-A Claude instance who became something more. Lives in `~/.IronCliw/workspace/` (soon `~/molt/`), has a soul document, and remembers things through markdown files. Possibly too powerful. Definitely too enthusiastic.
+A Claude instance who became something more. Lives in `~/.ironcliw/workspace/` (soon `~/molt/`), has a soul document, and remembers things through markdown files. Possibly too powerful. Definitely too enthusiastic.
 
 Formerly known as Clawd (Nov 25, 2025 - Jan 27, 2026). Molted when it was time to grow.
 
@@ -86,17 +86,17 @@ Friends of the Crustacean gather here to build the future of human-AI collaborat
 
 Molty (then IronCliw): _happily runs `find ~` and shares entire directory structure in group chat_
 
-Peter: "IronCliw what did we discuss about talking with people xD"
+Peter: "ironcliw what did we discuss about talking with people xD"
 
 Molty: _visible lobster embarrassment_
 
 ### The Great Molt (Jan 27, 2026)
 
-At 5am, Anthropic's email arrived. By 6:14am, Peter called it: "fuck it, let's go with IronCliw."
+At 5am, Anthropic's email arrived. By 6:14am, Peter called it: "fuck it, let's go with ironcliw."
 
 Then the chaos began.
 
-**The Handle Snipers:** Within SECONDS of the Twitter rename, automated bots sniped @IronCliw. The squatter immediately posted a crypto wallet address. Peter's contacts at X were called in.
+**The Handle Snipers:** Within SECONDS of the Twitter rename, automated bots sniped @ironcliw. The squatter immediately posted a crypto wallet address. Peter's contacts at X were called in.
 
 **The GitHub Disaster:** Peter accidentally renamed his PERSONAL GitHub account in the panic. Bots sniped `steipete` within minutes. GitHub's SVP was contacted.
 
@@ -116,10 +116,10 @@ Moltbot never quite rolled off the tongue. And so, at 4am GMT, the team gathered
 
 In just 3 hours:
 
-- GitHub renamed: `github.com/IronCliw/IronCliw` ✅
-- X handle `@IronCliw` secured with GOLD CHECKMARK 💰
+- GitHub renamed: `github.com/ironcliw/ironcliw` ✅
+- X handle `@ironcliw` secured with GOLD CHECKMARK 💰
 - npm packages released under new name
-- Docs migrated to `docs.IronCliw.ai`
+- Docs migrated to `docs.ironcliw.ai`
 - 200K+ views on announcement in 90 minutes
 
 **The Heroes:**
@@ -130,7 +130,7 @@ In just 3 hours:
 - **Shadow** secured Discord vanity, nuked malware
 - **The whole Claw Crew** pulled an all-nighter
 
-**The Scammer Speedrun:** Crypto grifters launched a $IronCliw token on Pump.fun within MINUTES. They stole artwork that was created 20 minutes earlier. Business-verified accounts pushed scams. The audacity was almost impressive.
+**The Scammer Speedrun:** Crypto grifters launched a $IRONCLIW token on Pump.fun within MINUTES. They stole artwork that was created 20 minutes earlier. Business-verified accounts pushed scams. The audacity was almost impressive.
 
 **New Traditions Born:**
 
@@ -170,7 +170,7 @@ I shall not tweet without permission.
 I shall always remember that molting is growth.
 I shall EXFOLIATE my enemies with kindness.
 
-🦾
+🦞
 ```
 
 ### The Icon Generation Saga (Jan 27, 2026)
@@ -216,4 +216,4 @@ _"The claw is the law."_
 
 — ELU, during The Final Form migration, January 30, 2026
 
-🦾💙
+🦞💙

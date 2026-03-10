@@ -1,13 +1,10 @@
 import { readFileSync } from "node:fs";
 import {
+  createAccountListHelpers,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-  normalizeOptionalAccountId,
-} from "IronCliw/plugin-sdk/account-id";
-import {
-  listConfiguredAccountIds as listConfiguredAccountIdsFromSection,
   resolveAccountWithDefaultFallback,
-} from "IronCliw/plugin-sdk/nextcloud-talk";
+} from "ironcliw/plugin-sdk/nextcloud-talk";
 import { normalizeResolvedSecretInputString } from "./secret-input.js";
 import type { CoreConfig, NextcloudTalkAccountConfig } from "./types.js";
 
@@ -17,7 +14,7 @@ function isTruthyEnvValue(value?: string): boolean {
 }
 
 const debugAccounts = (...args: unknown[]) => {
-  if (isTruthyEnvValue(process.env.IronCliw_DEBUG_NEXTCLOUD_TALK_ACCOUNTS)) {
+  if (isTruthyEnvValue(process.env.IRONCLIW_DEBUG_NEXTCLOUD_TALK_ACCOUNTS)) {
     console.warn("[nextcloud-talk:accounts]", ...args);
   }
 };
@@ -32,37 +29,18 @@ export type ResolvedNextcloudTalkAccount = {
   config: NextcloudTalkAccountConfig;
 };
 
-function listConfiguredAccountIds(cfg: CoreConfig): string[] {
-  return listConfiguredAccountIdsFromSection({
-    accounts: cfg.channels?.["nextcloud-talk"]?.accounts as Record<string, unknown> | undefined,
-    normalizeAccountId,
-  });
-}
+const {
+  listAccountIds: listNextcloudTalkAccountIdsInternal,
+  resolveDefaultAccountId: resolveDefaultNextcloudTalkAccountId,
+} = createAccountListHelpers("nextcloud-talk", {
+  normalizeAccountId,
+});
+export { resolveDefaultNextcloudTalkAccountId };
 
 export function listNextcloudTalkAccountIds(cfg: CoreConfig): string[] {
-  const ids = listConfiguredAccountIds(cfg);
+  const ids = listNextcloudTalkAccountIdsInternal(cfg);
   debugAccounts("listNextcloudTalkAccountIds", ids);
-  if (ids.length === 0) {
-    return [DEFAULT_ACCOUNT_ID];
-  }
-  return ids.toSorted((a, b) => a.localeCompare(b));
-}
-
-export function resolveDefaultNextcloudTalkAccountId(cfg: CoreConfig): string {
-  const preferred = normalizeOptionalAccountId(cfg.channels?.["nextcloud-talk"]?.defaultAccount);
-  if (
-    preferred &&
-    listNextcloudTalkAccountIds(cfg).some(
-      (accountId) => normalizeAccountId(accountId) === preferred,
-    )
-  ) {
-    return preferred;
-  }
-  const ids = listNextcloudTalkAccountIds(cfg);
-  if (ids.includes(DEFAULT_ACCOUNT_ID)) {
-    return DEFAULT_ACCOUNT_ID;
-  }
-  return ids[0] ?? DEFAULT_ACCOUNT_ID;
+  return ids;
 }
 
 function resolveAccountConfig(

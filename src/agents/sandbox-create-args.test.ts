@@ -8,8 +8,8 @@ describe("buildSandboxCreateArgs", () => {
     binds?: string[],
   ): SandboxDockerConfig {
     return {
-      image: "IronCliw-sandbox:bookworm-slim",
-      containerPrefix: "IronCliw-sbx-",
+      image: "ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "ironcliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: false,
       tmpfs: [],
@@ -39,8 +39,8 @@ describe("buildSandboxCreateArgs", () => {
 
   it("includes hardening and resource flags", () => {
     const cfg: SandboxDockerConfig = {
-      image: "IronCliw-sandbox:bookworm-slim",
-      containerPrefix: "IronCliw-sbx-",
+      image: "ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "ironcliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: true,
       tmpfs: ["/tmp"],
@@ -58,32 +58,32 @@ describe("buildSandboxCreateArgs", () => {
         core: "0",
       },
       seccompProfile: "/tmp/seccomp.json",
-      apparmorProfile: "IronCliw-sandbox",
+      apparmorProfile: "ironcliw-sandbox",
       dns: ["1.1.1.1"],
       extraHosts: ["internal.service:10.0.0.5"],
     };
 
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-test",
+      name: "ironcliw-sbx-test",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
-      labels: { "IronCliw.sandboxBrowser": "1" },
+      labels: { "ironcliw.sandboxBrowser": "1" },
     });
 
     expect(args).toEqual(
       expect.arrayContaining([
         "create",
         "--name",
-        "IronCliw-sbx-test",
+        "ironcliw-sbx-test",
         "--label",
-        "IronCliw.sandbox=1",
+        "ironcliw.sandbox=1",
         "--label",
-        "IronCliw.sessionKey=main",
+        "ironcliw.sessionKey=main",
         "--label",
-        "IronCliw.createdAtMs=1700000000000",
+        "ironcliw.createdAtMs=1700000000000",
         "--label",
-        "IronCliw.sandboxBrowser=1",
+        "ironcliw.sandboxBrowser=1",
         "--read-only",
         "--tmpfs",
         "/tmp",
@@ -98,7 +98,7 @@ describe("buildSandboxCreateArgs", () => {
         "--security-opt",
         "seccomp=/tmp/seccomp.json",
         "--security-opt",
-        "apparmor=IronCliw-sandbox",
+        "apparmor=ironcliw-sandbox",
         "--dns",
         "1.1.1.1",
         "--add-host",
@@ -131,8 +131,8 @@ describe("buildSandboxCreateArgs", () => {
 
   it("emits -v flags for safe custom binds", () => {
     const cfg: SandboxDockerConfig = {
-      image: "IronCliw-sandbox:bookworm-slim",
-      containerPrefix: "IronCliw-sbx-",
+      image: "ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "ironcliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: false,
       tmpfs: [],
@@ -142,7 +142,7 @@ describe("buildSandboxCreateArgs", () => {
     };
 
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-binds",
+      name: "ironcliw-sbx-binds",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
@@ -165,37 +165,37 @@ describe("buildSandboxCreateArgs", () => {
   it.each([
     {
       name: "dangerous Docker socket bind mounts",
-      containerName: "IronCliw-sbx-dangerous",
+      containerName: "ironcliw-sbx-dangerous",
       cfg: createSandboxConfig({}, ["/var/run/docker.sock:/var/run/docker.sock"]),
       expected: /blocked path/,
     },
     {
       name: "dangerous parent bind mounts",
-      containerName: "IronCliw-sbx-dangerous-parent",
+      containerName: "ironcliw-sbx-dangerous-parent",
       cfg: createSandboxConfig({}, ["/run:/run"]),
       expected: /blocked path/,
     },
     {
       name: "network host mode",
-      containerName: "IronCliw-sbx-host",
+      containerName: "ironcliw-sbx-host",
       cfg: createSandboxConfig({ network: "host" }),
       expected: /network mode "host" is blocked/,
     },
     {
       name: "network container namespace join",
-      containerName: "IronCliw-sbx-container-network",
+      containerName: "ironcliw-sbx-container-network",
       cfg: createSandboxConfig({ network: "container:peer" }),
       expected: /network mode "container:peer" is blocked by default/,
     },
     {
       name: "seccomp unconfined",
-      containerName: "IronCliw-sbx-seccomp",
+      containerName: "ironcliw-sbx-seccomp",
       cfg: createSandboxConfig({ seccompProfile: "unconfined" }),
       expected: /seccomp profile "unconfined" is blocked/,
     },
     {
       name: "apparmor unconfined",
-      containerName: "IronCliw-sbx-apparmor",
+      containerName: "ironcliw-sbx-apparmor",
       cfg: createSandboxConfig({ apparmorProfile: "unconfined" }),
       expected: /apparmor profile "unconfined" is blocked/,
     },
@@ -205,8 +205,8 @@ describe("buildSandboxCreateArgs", () => {
 
   it("omits -v flags when binds is empty or undefined", () => {
     const cfg: SandboxDockerConfig = {
-      image: "IronCliw-sandbox:bookworm-slim",
-      containerPrefix: "IronCliw-sbx-",
+      image: "ironcliw-sandbox:bookworm-slim",
+      containerPrefix: "ironcliw-sbx-",
       workdir: "/workspace",
       readOnlyRoot: false,
       tmpfs: [],
@@ -216,7 +216,7 @@ describe("buildSandboxCreateArgs", () => {
     };
 
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-no-binds",
+      name: "ironcliw-sbx-no-binds",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
@@ -239,7 +239,7 @@ describe("buildSandboxCreateArgs", () => {
     const cfg = createSandboxConfig({}, ["/opt/external:/data:rw"]);
     expect(() =>
       buildSandboxCreateArgs({
-        name: "IronCliw-sbx-outside-roots",
+        name: "ironcliw-sbx-outside-roots",
         cfg,
         scopeKey: "main",
         createdAtMs: 1700000000000,
@@ -251,7 +251,7 @@ describe("buildSandboxCreateArgs", () => {
   it("allows bind sources outside runtime allowlist with explicit override", () => {
     const cfg = createSandboxConfig({}, ["/opt/external:/data:rw"]);
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-outside-roots-override",
+      name: "ironcliw-sbx-outside-roots-override",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
@@ -263,13 +263,13 @@ describe("buildSandboxCreateArgs", () => {
 
   it("blocks reserved /workspace target bind mounts by default", () => {
     const cfg = createSandboxConfig({}, ["/tmp/override:/workspace:rw"]);
-    expectBuildToThrow("IronCliw-sbx-reserved-target", cfg, /reserved container path/);
+    expectBuildToThrow("ironcliw-sbx-reserved-target", cfg, /reserved container path/);
   });
 
   it("allows reserved /workspace target bind mounts with explicit dangerous override", () => {
     const cfg = createSandboxConfig({}, ["/tmp/override:/workspace:rw"]);
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-reserved-target-override",
+      name: "ironcliw-sbx-reserved-target-override",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,
@@ -284,7 +284,7 @@ describe("buildSandboxCreateArgs", () => {
       dangerouslyAllowContainerNamespaceJoin: true,
     });
     const args = buildSandboxCreateArgs({
-      name: "IronCliw-sbx-container-network-override",
+      name: "ironcliw-sbx-container-network-override",
       cfg,
       scopeKey: "main",
       createdAtMs: 1700000000000,

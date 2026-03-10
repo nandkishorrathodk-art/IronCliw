@@ -77,8 +77,8 @@ export function registerDefaultAuthTokenSuite(): void {
 
     test("closes silent handshakes after timeout", async () => {
       vi.useRealTimers();
-      const prevHandshakeTimeout = process.env.IronCliw_TEST_HANDSHAKE_TIMEOUT_MS;
-      process.env.IronCliw_TEST_HANDSHAKE_TIMEOUT_MS = "20";
+      const prevHandshakeTimeout = process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS;
+      process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS = "20";
       try {
         const ws = await openWs(port);
         const handshakeTimeoutMs = getHandshakeTimeoutMs();
@@ -86,15 +86,15 @@ export function registerDefaultAuthTokenSuite(): void {
         expect(closed).toBe(true);
       } finally {
         if (prevHandshakeTimeout === undefined) {
-          delete process.env.IronCliw_TEST_HANDSHAKE_TIMEOUT_MS;
+          delete process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS;
         } else {
-          process.env.IronCliw_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
+          process.env.IRONCLIW_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
         }
       }
     });
 
     test("connect (req) handshake returns hello-ok payload", async () => {
-      const { CONFIG_PATH, STATE_DIR } = await import("../config/config.js");
+      const { STATE_DIR, createConfigIO } = await import("../config/config.js");
       const ws = await openWs(port);
 
       const res = await connectReq(ws);
@@ -106,7 +106,7 @@ export function registerDefaultAuthTokenSuite(): void {
           }
         | undefined;
       expect(payload?.type).toBe("hello-ok");
-      expect(payload?.snapshot?.configPath).toBe(CONFIG_PATH);
+      expect(payload?.snapshot?.configPath).toBe(createConfigIO().configPath);
       expect(payload?.snapshot?.stateDir).toBe(STATE_DIR);
 
       ws.close();
@@ -117,24 +117,24 @@ export function registerDefaultAuthTokenSuite(): void {
       for (const testCase of [
         {
           env: {
-            IronCliw_VERSION: " ",
-            IronCliw_SERVICE_VERSION: "2.4.6-service",
+            IRONCLIW_VERSION: " ",
+            IRONCLIW_SERVICE_VERSION: "2.4.6-service",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: VERSION,
         },
         {
           env: {
-            IronCliw_VERSION: "9.9.9-cli",
-            IronCliw_SERVICE_VERSION: "2.4.6-service",
+            IRONCLIW_VERSION: "9.9.9-cli",
+            IRONCLIW_SERVICE_VERSION: "2.4.6-service",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: "9.9.9-cli",
         },
         {
           env: {
-            IronCliw_VERSION: " ",
-            IronCliw_SERVICE_VERSION: "\t",
+            IRONCLIW_VERSION: " ",
+            IRONCLIW_SERVICE_VERSION: "\t",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: VERSION,
@@ -227,7 +227,7 @@ export function registerDefaultAuthTokenSuite(): void {
         scopes: [],
         clientId: GATEWAY_CLIENT_NAMES.TEST,
         clientMode: GATEWAY_CLIENT_MODES.TEST,
-        identityPath: path.join(os.tmpdir(), `IronCliw-test-device-${randomUUID()}.json`),
+        identityPath: path.join(os.tmpdir(), `ironcliw-test-device-${randomUUID()}.json`),
         nonce,
       });
 

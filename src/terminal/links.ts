@@ -1,6 +1,6 @@
 import { formatTerminalLink } from "../utils.js";
 
-export const DOCS_ROOT = "https://docs.IronCliw.ai";
+export const DOCS_ROOT = "https://docs.ironcliw.ai";
 
 export function formatDocsLink(
   path: string,

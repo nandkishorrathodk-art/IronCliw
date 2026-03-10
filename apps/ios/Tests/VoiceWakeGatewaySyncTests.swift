@@ -4,9 +4,9 @@ import Testing
 
 @Suite struct VoiceWakeGatewaySyncTests {
     @Test func decodeGatewayTriggersFromJSONSanitizes() {
-        let payload = #"{"triggers":[" IronCliw  ","", "computer"]}"#
+        let payload = #"{"triggers":[" ironcliw  ","", "computer"]}"#
         let triggers = VoiceWakePreferences.decodeGatewayTriggers(from: payload)
-        #expect(triggers == ["IronCliw", "computer"])
+        #expect(triggers == ["ironcliw", "computer"])
     }
 
     @Test func decodeGatewayTriggersFromJSONFallsBackWhenEmpty() {

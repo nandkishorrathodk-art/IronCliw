@@ -1,6 +1,6 @@
 import type { IronCliwConfig } from "../config/config.js";
 
-const DIAGNOSTICS_ENV = "IronCliw_DIAGNOSTICS";
+const DIAGNOSTICS_ENV = "IRONCLIW_DIAGNOSTICS";
 
 function normalizeFlag(value: string): string {
   return value.trim().toLowerCase();

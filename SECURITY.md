@@ -6,16 +6,16 @@ If you believe you've found a security issue in IronCliw, please report it priva
 
 Report vulnerabilities directly to the repository where the issue lives:
 
-- **Core CLI and gateway** — [IronCliw/IronCliw](https://github.com/IronCliw/IronCliw)
-- **macOS desktop app** — [IronCliw/IronCliw](https://github.com/IronCliw/IronCliw) (apps/macos)
-- **iOS app** — [IronCliw/IronCliw](https://github.com/IronCliw/IronCliw) (apps/ios)
-- **Android app** — [IronCliw/IronCliw](https://github.com/IronCliw/IronCliw) (apps/android)
-- **ClawHub** — [IronCliw/clawhub](https://github.com/IronCliw/clawhub)
-- **Trust and threat model** — [IronCliw/trust](https://github.com/IronCliw/trust)
+- **Core CLI and gateway** — [ironcliw/ironcliw](https://github.com/ironcliw/ironcliw)
+- **macOS desktop app** — [ironcliw/ironcliw](https://github.com/ironcliw/ironcliw) (apps/macos)
+- **iOS app** — [ironcliw/ironcliw](https://github.com/ironcliw/ironcliw) (apps/ios)
+- **Android app** — [ironcliw/ironcliw](https://github.com/ironcliw/ironcliw) (apps/android)
+- **ClawHub** — [ironcliw/clawhub](https://github.com/ironcliw/clawhub)
+- **Trust and threat model** — [ironcliw/trust](https://github.com/ironcliw/trust)
 
-For issues that don't fit a specific repo, or if you're unsure, email **[security@IronCliw.ai](mailto:security@IronCliw.ai)** and we'll route it.
+For issues that don't fit a specific repo, or if you're unsure, email **[security@ironcliw.ai](mailto:security@ironcliw.ai)** and we'll route it.
 
-For full reporting instructions see our [Trust page](https://trust.IronCliw.ai).
+For full reporting instructions see our [Trust page](https://trust.ironcliw.ai).
 
 ### Required in Reports
 
@@ -51,6 +51,7 @@ These are frequently reported but are typically closed with no code change:
 
 - Prompt-injection-only chains without a boundary bypass (prompt injection is out of scope).
 - Operator-intended local features (for example TUI local `!` shell) presented as remote injection.
+- Reports that treat explicit operator-control surfaces (for example `canvas.eval`, browser evaluate/script execution, or direct `node.invoke` execution primitives) as vulnerabilities without demonstrating an auth/policy/sandbox boundary bypass. These capabilities are intentional when enabled and are trusted-operator features, not standalone security bugs.
 - Authorized user-triggered local actions presented as privilege escalation. Example: an allowlisted/owner sender running `/export-session /absolute/path.html` to write on the host. In this trust model, authorized user actions are trusted host actions unless you demonstrate an auth/sandbox/boundary bypass.
 - Reports that only show a malicious plugin executing privileged actions after a trusted operator installs/enables it.
 - Reports that assume per-user multi-tenant authorization on a shared gateway host/config.
@@ -114,11 +115,12 @@ Plugins/extensions are part of IronCliw's trusted computing base for a gateway.
 - Using IronCliw in ways that the docs recommend not to
 - Deployments where mutually untrusted/adversarial operators share one gateway host and config (for example, reports expecting per-operator isolation for `sessions.list`, `sessions.preview`, `chat.history`, or similar control-plane reads)
 - Prompt-injection-only attacks (without a policy/auth/sandbox boundary bypass)
-- Reports that require write access to trusted local state (`~/.IronCliw`, workspace files like `MEMORY.md` / `memory/*.md`)
+- Reports that require write access to trusted local state (`~/.ironcliw`, workspace files like `MEMORY.md` / `memory/*.md`)
 - Reports where exploitability depends on attacker-controlled pre-existing symlink/hardlink filesystem state in trusted local paths (for example extraction/install target trees) unless a separate untrusted boundary bypass is shown that creates that state.
 - Reports whose only claim is sandbox/workspace read expansion through trusted local skill/workspace symlink state (for example `skills/*/SKILL.md` symlink chains) unless a separate untrusted boundary bypass is shown that creates/controls that state.
 - Reports whose only claim is post-approval executable identity drift on a trusted host via same-path file replacement/rewrite unless a separate untrusted boundary bypass is shown for that host write primitive.
 - Reports where the only demonstrated impact is an already-authorized sender intentionally invoking a local-action command (for example `/export-session` writing to an absolute host path) without bypassing auth, sandbox, or another documented boundary
+- Reports whose only claim is use of an explicit trusted-operator control surface (for example `canvas.eval`, browser evaluate/script execution, or direct `node.invoke` execution) without demonstrating an auth, policy, allowlist, approval, or sandbox bypass.
 - Reports where the only claim is that a trusted-installed/enabled plugin can execute with gateway/host privileges (documented trust model behavior).
 - Any report whose only claim is that an operator-enabled `dangerous*`/`dangerously*` config option weakens defaults (these are explicit break-glass tradeoffs by design)
 - Reports that depend on trusted operator-supplied configuration values to trigger availability impact (for example custom regex patterns). These may still be fixed as defense-in-depth hardening, but are not security-boundary bypasses.
@@ -132,7 +134,7 @@ Plugins/extensions are part of IronCliw's trusted computing base for a gateway.
 IronCliw security guidance assumes:
 
 - The host where IronCliw runs is within a trusted OS/admin boundary.
-- Anyone who can modify `~/.IronCliw` state/config (including `IronCliw.json`) is effectively a trusted operator.
+- Anyone who can modify `~/.ironcliw` state/config (including `ironcliw.json`) is effectively a trusted operator.
 - A single Gateway shared by mutually untrusted people is **not a recommended setup**. Use separate gateways (or at minimum separate OS users/hosts) per trust boundary.
 - Authenticated Gateway callers are treated as trusted operators. Session identifiers (for example `sessionKey`) are routing controls, not per-user authorization boundaries.
 - Multiple gateway instances can run on one machine, but the recommended model is clean per-user isolation (prefer one host/VPS per user).
@@ -187,8 +189,8 @@ Plugins/extensions are loaded **in-process** with the Gateway and are treated as
 
 IronCliw uses a dedicated temp root for local media handoff and sandbox-adjacent temp artifacts:
 
-- Preferred temp root: `/tmp/IronCliw` (when available and safe on the host).
-- Fallback temp root: `os.tmpdir()/IronCliw` (or `IronCliw-<uid>` on multi-user hosts).
+- Preferred temp root: `/tmp/ironcliw` (when available and safe on the host).
+- Fallback temp root: `os.tmpdir()/ironcliw` (or `ironcliw-<uid>` on multi-user hosts).
 
 Security boundary notes:
 
@@ -196,15 +198,15 @@ Security boundary notes:
 - Arbitrary host tmp paths are not treated as trusted media roots.
 - Plugin/extension code should use IronCliw temp helpers (`resolvePreferredIronCliwTmpDir`, `buildRandomTempFilePath`, `withTempDownloadPath`) rather than raw `os.tmpdir()` defaults when handling media files.
 - Enforcement reference points:
-  - temp root resolver: `src/infra/tmp-IronCliw-dir.ts`
+  - temp root resolver: `src/infra/tmp-ironcliw-dir.ts`
   - SDK temp helpers: `src/plugin-sdk/temp-path.ts`
   - messaging/channel tmp guardrail: `scripts/check-no-random-messaging-tmp.mjs`
 
 ## Operational Guidance
 
-For threat model + hardening guidance (including `IronCliw security audit --deep` and `--fix`), see:
+For threat model + hardening guidance (including `ironcliw security audit --deep` and `--fix`), see:
 
-- `https://docs.IronCliw.ai/gateway/security`
+- `https://docs.ironcliw.ai/gateway/security`
 
 ### Tool filesystem hardening
 
@@ -226,18 +228,18 @@ IronCliw's web interface (Gateway Control UI + HTTP endpoints) is intended for *
 
 - Recommended: keep the Gateway **loopback-only** (`127.0.0.1` / `::1`).
   - Config: `gateway.bind="loopback"` (default).
-  - CLI: `IronCliw gateway run --bind loopback`.
+  - CLI: `ironcliw gateway run --bind loopback`.
 - `gateway.controlUi.dangerouslyDisableDeviceAuth` is intended for localhost-only break-glass use.
   - IronCliw keeps deployment flexibility by design and does not hard-forbid non-local setups.
-  - Non-local and other risky configurations are surfaced by `IronCliw security audit` as dangerous findings.
+  - Non-local and other risky configurations are surfaced by `ironcliw security audit` as dangerous findings.
   - This operator-selected tradeoff is by design and not, by itself, a security vulnerability.
 - Canvas host note: network-visible canvas is **intentional** for trusted node scenarios (LAN/tailnet).
   - Expected setup: non-loopback bind + Gateway auth (token/password/trusted-proxy) + firewall/tailnet controls.
-  - Expected routes: `/__IronCliw__/canvas/`, `/__IronCliw__/a2ui/`.
+  - Expected routes: `/__ironcliw__/canvas/`, `/__ironcliw__/a2ui/`.
   - This deployment model alone is not a security vulnerability.
 - Do **not** expose it to the public internet (no direct bind to `0.0.0.0`, no public reverse proxy). It is not hardened for public exposure.
 - If you need remote access, prefer an SSH tunnel or Tailscale serve/funnel (so the Gateway still binds to loopback), plus strong Gateway auth.
-- The Gateway HTTP surface includes the canvas host (`/__IronCliw__/canvas/`, `/__IronCliw__/a2ui/`). Treat canvas content as sensitive/untrusted and avoid exposing it beyond loopback unless you understand the risk.
+- The Gateway HTTP surface includes the canvas host (`/__ironcliw__/canvas/`, `/__ironcliw__/a2ui/`). Treat canvas content as sensitive/untrusted and avoid exposing it beyond loopback unless you understand the risk.
 
 ## Runtime Requirements
 
@@ -266,8 +268,8 @@ Example secure Docker run:
 
 ```bash
 docker run --read-only --cap-drop=ALL \
-  -v IronCliw-data:/app/data \
-  IronCliw/IronCliw:latest
+  -v ironcliw-data:/app/data \
+  ironcliw/ironcliw:latest
 ```
 
 ## Security Scanning

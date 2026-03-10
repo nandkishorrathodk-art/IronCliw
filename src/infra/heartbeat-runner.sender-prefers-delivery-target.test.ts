@@ -55,7 +55,7 @@ describe("runHeartbeatOnce", () => {
 
         expect(sendSlack).toHaveBeenCalled();
       },
-      { prefix: "IronCliw-hb-" },
+      { prefix: "ironcliw-hb-" },
     );
   });
 });

@@ -100,7 +100,7 @@ Example:
 ```json5
 {
   agents: {
-    list: [{ id: "support", name: "Support", workspace: "~/.IronCliw/workspace-support" }],
+    list: [{ id: "support", name: "Support", workspace: "~/.ironcliw/workspace-support" }],
   },
   bindings: [
     { match: { channel: "slack", teamId: "T123" }, agentId: "support" },
@@ -111,9 +111,9 @@ Example:
 
 ## Session storage
 
-Session stores live under the state directory (default `~/.IronCliw`):
+Session stores live under the state directory (default `~/.ironcliw`):
 
-- `~/.IronCliw/agents/<agentId>/sessions/sessions.json`
+- `~/.ironcliw/agents/<agentId>/sessions/sessions.json`
 - JSONL transcripts live alongside the store
 
 You can override the store path via `session.store` and `{agentId}` templating.

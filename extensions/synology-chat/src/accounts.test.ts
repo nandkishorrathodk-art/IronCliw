@@ -11,7 +11,7 @@ beforeEach(() => {
   delete process.env.SYNOLOGY_NAS_HOST;
   delete process.env.SYNOLOGY_ALLOWED_USER_IDS;
   delete process.env.SYNOLOGY_RATE_LIMIT;
-  delete process.env.IronCliw_BOT_NAME;
+  delete process.env.IRONCLIW_BOT_NAME;
 });
 
 describe("listAccountIds", () => {
@@ -75,7 +75,7 @@ describe("resolveAccount", () => {
     process.env.SYNOLOGY_CHAT_TOKEN = "env-tok";
     process.env.SYNOLOGY_CHAT_INCOMING_URL = "https://nas/incoming";
     process.env.SYNOLOGY_NAS_HOST = "192.0.2.1";
-    process.env.IronCliw_BOT_NAME = "TestBot";
+    process.env.IRONCLIW_BOT_NAME = "TestBot";
 
     const cfg = { channels: { "synology-chat": {} } };
     const account = resolveAccount(cfg);
@@ -129,5 +129,19 @@ describe("resolveAccount", () => {
     };
     const account = resolveAccount(cfg);
     expect(account.allowedUserIds).toEqual(["u1", "u2"]);
+  });
+
+  it("respects SYNOLOGY_RATE_LIMIT=0 instead of defaulting to 30", () => {
+    process.env.SYNOLOGY_RATE_LIMIT = "0";
+    const cfg = { channels: { "synology-chat": {} } };
+    const account = resolveAccount(cfg);
+    expect(account.rateLimitPerMinute).toBe(0);
+  });
+
+  it("falls back to 30 for malformed SYNOLOGY_RATE_LIMIT values", () => {
+    process.env.SYNOLOGY_RATE_LIMIT = "0abc";
+    const cfg = { channels: { "synology-chat": {} } };
+    const account = resolveAccount(cfg);
+    expect(account.rateLimitPerMinute).toBe(30);
   });
 });

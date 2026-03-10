@@ -91,7 +91,7 @@ x-i18n:
 ## 示例：Lobster 工作流步骤
 
 ```lobster
-IronCliw.invoke --tool llm-task --action json --args-json '{
+ironcliw.invoke --tool llm-task --action json --args-json '{
   "prompt": "Given the input email, return intent and draft.",
   "input": {
     "subject": "Hello",

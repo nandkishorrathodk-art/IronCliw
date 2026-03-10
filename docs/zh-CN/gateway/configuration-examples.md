@@ -24,12 +24,12 @@ x-i18n:
 
 ```json5
 {
-  agent: { workspace: "~/.IronCliw/workspace" },
+  agent: { workspace: "~/.ironcliw/workspace" },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
 
-保存到 `~/.IronCliw/IronCliw.json`，你就可以从该号码私信机器人了。
+保存到 `~/.ironcliw/ironcliw.json`，你就可以从该号码私信机器人了。
 
 ### 推荐的入门配置
 
@@ -38,10 +38,10 @@ x-i18n:
   identity: {
     name: "Clawd",
     theme: "helpful assistant",
-    emoji: "🦾",
+    emoji: "🦞",
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: { primary: "anthropic/claude-sonnet-4-5" },
   },
   channels: {
@@ -96,7 +96,7 @@ x-i18n:
   // 日志
   logging: {
     level: "info",
-    file: "/tmp/IronCliw/IronCliw.log",
+    file: "/tmp/ironcliw/ironcliw.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -104,7 +104,7 @@ x-i18n:
 
   // 消息格式
   messages: {
-    messagePrefix: "[IronCliw]",
+    messagePrefix: "[ironcliw]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -113,7 +113,7 @@ x-i18n:
   // 路由 + 队列
   routing: {
     groupChat: {
-      mentionPatterns: ["@IronCliw", "IronCliw"],
+      mentionPatterns: ["@ironcliw", "ironcliw"],
       historyLimit: 50,
     },
     queue: {
@@ -166,7 +166,7 @@ x-i18n:
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.IronCliw/agents/default/sessions/sessions.json",
+    store: "~/.ironcliw/agents/default/sessions/sessions.json",
     typingIntervalSeconds: 5,
     sendPolicy: {
       default: "allow",
@@ -199,7 +199,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["steipete"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-IronCliw",
+          slug: "friends-of-ironcliw",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -219,7 +219,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "IronCliw",
+        name: "ironcliw",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -229,7 +229,7 @@ x-i18n:
   // 智能体运行时
   agents: {
     defaults: {
-      workspace: "~/.IronCliw/workspace",
+      workspace: "~/.ironcliw/workspace",
       userTimezone: "America/Chicago",
       model: {
         primary: "anthropic/claude-sonnet-4-5",
@@ -282,9 +282,9 @@ x-i18n:
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.IronCliw/sandboxes",
+        workspaceRoot: "~/.ironcliw/sandboxes",
         docker: {
-          image: "IronCliw-sandbox:bookworm-slim",
+          image: "ironcliw-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -349,7 +349,7 @@ x-i18n:
   // Cron 作业
   cron: {
     enabled: true,
-    store: "~/.IronCliw/cron/cron.json",
+    store: "~/.ironcliw/cron/cron.json",
     maxConcurrentRuns: 2,
   },
 
@@ -359,7 +359,7 @@ x-i18n:
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.IronCliw/hooks",
+    transformsDir: "~/.ironcliw/hooks",
     mappings: [
       {
         id: "gmail-hook",
@@ -379,7 +379,7 @@ x-i18n:
       },
     ],
     gmail: {
-      account: "IronCliw@gmail.com",
+      account: "ironcliw@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -398,7 +398,7 @@ x-i18n:
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/IronCliw" },
+    controlUi: { enabled: true, basePath: "/ironcliw" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -436,7 +436,7 @@ x-i18n:
 
 ```json5
 {
-  agent: { workspace: "~/.IronCliw/workspace" },
+  agent: { workspace: "~/.ironcliw/workspace" },
   channels: {
     whatsapp: { allowFrom: ["+15555550123"] },
     telegram: {
@@ -474,7 +474,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: {
       primary: "anthropic/claude-sonnet-4-5",
       fallbacks: ["anthropic/claude-opus-4-5"],
@@ -513,7 +513,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: {
       primary: "anthropic/claude-opus-4-5",
       fallbacks: ["minimax/MiniMax-M2.1"],
@@ -531,7 +531,7 @@ x-i18n:
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-IronCliw",
+    workspace: "~/work-ironcliw",
     elevated: { enabled: false },
   },
   channels: {
@@ -552,7 +552,7 @@ x-i18n:
 ```json5
 {
   agent: {
-    workspace: "~/.IronCliw/workspace",
+    workspace: "~/.ironcliw/workspace",
     model: { primary: "lmstudio/minimax-m2.1-gs32" },
   },
   models: {

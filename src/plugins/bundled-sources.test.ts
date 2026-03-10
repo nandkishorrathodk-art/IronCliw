@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { findBundledPluginSource, resolveBundledPluginSources } from "./bundled-sources.js";
+import {
+  findBundledPluginSource,
+  findBundledPluginSourceInMap,
+  resolveBundledPluginSources,
+} from "./bundled-sources.js";
 
 const discoverIronCliwPluginsMock = vi.fn();
 const loadPluginManifestMock = vi.fn();
@@ -24,26 +28,26 @@ describe("bundled plugin sources", () => {
         {
           origin: "global",
           rootDir: "/global/feishu",
-          packageName: "@IronCliw/feishu",
-          packageManifest: { install: { npmSpec: "@IronCliw/feishu" } },
+          packageName: "@ironcliw/feishu",
+          packageManifest: { install: { npmSpec: "@ironcliw/feishu" } },
         },
         {
           origin: "bundled",
           rootDir: "/app/extensions/feishu",
-          packageName: "@IronCliw/feishu",
-          packageManifest: { install: { npmSpec: "@IronCliw/feishu" } },
+          packageName: "@ironcliw/feishu",
+          packageManifest: { install: { npmSpec: "@ironcliw/feishu" } },
         },
         {
           origin: "bundled",
           rootDir: "/app/extensions/feishu-dup",
-          packageName: "@IronCliw/feishu",
-          packageManifest: { install: { npmSpec: "@IronCliw/feishu" } },
+          packageName: "@ironcliw/feishu",
+          packageManifest: { install: { npmSpec: "@ironcliw/feishu" } },
         },
         {
           origin: "bundled",
           rootDir: "/app/extensions/msteams",
-          packageName: "@IronCliw/msteams",
-          packageManifest: { install: { npmSpec: "@IronCliw/msteams" } },
+          packageName: "@ironcliw/msteams",
+          packageManifest: { install: { npmSpec: "@ironcliw/msteams" } },
         },
       ],
       diagnostics: [],
@@ -59,7 +63,7 @@ describe("bundled plugin sources", () => {
       return {
         ok: false,
         error: "invalid manifest",
-        manifestPath: `${rootDir}/IronCliw.plugin.json`,
+        manifestPath: `${rootDir}/ironcliw.plugin.json`,
       };
     });
 
@@ -69,7 +73,7 @@ describe("bundled plugin sources", () => {
     expect(map.get("feishu")).toEqual({
       pluginId: "feishu",
       localPath: "/app/extensions/feishu",
-      npmSpec: "@IronCliw/feishu",
+      npmSpec: "@ironcliw/feishu",
     });
   });
 
@@ -79,8 +83,8 @@ describe("bundled plugin sources", () => {
         {
           origin: "bundled",
           rootDir: "/app/extensions/feishu",
-          packageName: "@IronCliw/feishu",
-          packageManifest: { install: { npmSpec: "@IronCliw/feishu" } },
+          packageName: "@ironcliw/feishu",
+          packageManifest: { install: { npmSpec: "@ironcliw/feishu" } },
         },
       ],
       diagnostics: [],
@@ -88,10 +92,10 @@ describe("bundled plugin sources", () => {
     loadPluginManifestMock.mockReturnValue({ ok: true, manifest: { id: "feishu" } });
 
     const resolved = findBundledPluginSource({
-      lookup: { kind: "npmSpec", value: "@IronCliw/feishu" },
+      lookup: { kind: "npmSpec", value: "@ironcliw/feishu" },
     });
     const missing = findBundledPluginSource({
-      lookup: { kind: "npmSpec", value: "@IronCliw/not-found" },
+      lookup: { kind: "npmSpec", value: "@ironcliw/not-found" },
     });
 
     expect(resolved?.pluginId).toBe("feishu");
@@ -105,8 +109,8 @@ describe("bundled plugin sources", () => {
         {
           origin: "bundled",
           rootDir: "/app/extensions/diffs",
-          packageName: "@IronCliw/diffs",
-          packageManifest: { install: { npmSpec: "@IronCliw/diffs" } },
+          packageName: "@ironcliw/diffs",
+          packageManifest: { install: { npmSpec: "@ironcliw/diffs" } },
         },
       ],
       diagnostics: [],
@@ -123,5 +127,35 @@ describe("bundled plugin sources", () => {
     expect(resolved?.pluginId).toBe("diffs");
     expect(resolved?.localPath).toBe("/app/extensions/diffs");
     expect(missing).toBeUndefined();
+  });
+
+  it("reuses a pre-resolved bundled map for repeated lookups", () => {
+    const bundled = new Map([
+      [
+        "feishu",
+        {
+          pluginId: "feishu",
+          localPath: "/app/extensions/feishu",
+          npmSpec: "@ironcliw/feishu",
+        },
+      ],
+    ]);
+
+    expect(
+      findBundledPluginSourceInMap({
+        bundled,
+        lookup: { kind: "pluginId", value: "feishu" },
+      }),
+    ).toEqual({
+      pluginId: "feishu",
+      localPath: "/app/extensions/feishu",
+      npmSpec: "@ironcliw/feishu",
+    });
+    expect(
+      findBundledPluginSourceInMap({
+        bundled,
+        lookup: { kind: "npmSpec", value: "@ironcliw/feishu" },
+      })?.pluginId,
+    ).toBe("feishu");
   });
 });

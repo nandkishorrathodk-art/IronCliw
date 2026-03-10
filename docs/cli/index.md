@@ -1,5 +1,5 @@
 ---
-summary: "IronCliw CLI reference for `IronCliw` commands, subcommands, and options"
+summary: "IronCliw CLI reference for `ironcliw` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -19,6 +19,7 @@ This page describes the current CLI behavior. If commands change, update this do
 - [`completion`](/cli/completion)
 - [`doctor`](/cli/doctor)
 - [`dashboard`](/cli/dashboard)
+- [`backup`](/cli/backup)
 - [`reset`](/cli/reset)
 - [`uninstall`](/cli/uninstall)
 - [`update`](/cli/update)
@@ -60,10 +61,10 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Global flags
 
-- `--dev`: isolate state under `~/.IronCliw-dev` and shift default ports.
-- `--profile <name>`: isolate state under `~/.IronCliw-<name>`.
+- `--dev`: isolate state under `~/.ironcliw-dev` and shift default ports.
+- `--profile <name>`: isolate state under `~/.ironcliw-<name>`.
 - `--no-color`: disable ANSI colors.
-- `--update`: shorthand for `IronCliw update` (source installs only).
+- `--update`: shorthand for `ironcliw update` (source installs only).
 - `-V`, `--version`, `-v`: print version and exit.
 
 ## Output styling
@@ -92,7 +93,7 @@ Palette source of truth: `src/terminal/palette.ts` (aka “lobster seam”).
 ## Command tree
 
 ```
-IronCliw [--dev] [--profile <name>] <command>
+ironcliw [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -103,6 +104,9 @@ IronCliw [--dev] [--profile <name>] <command>
   completion
   doctor
   dashboard
+  backup
+    create
+    verify
   security
     audit
   secrets
@@ -259,30 +263,30 @@ IronCliw [--dev] [--profile <name>] <command>
   tui
 ```
 
-Note: plugins can add additional top-level commands (for example `IronCliw voicecall`).
+Note: plugins can add additional top-level commands (for example `ironcliw voicecall`).
 
 ## Security
 
-- `IronCliw security audit` — audit config + local state for common security foot-guns.
-- `IronCliw security audit --deep` — best-effort live Gateway probe.
-- `IronCliw security audit --fix` — tighten safe defaults and chmod state/config.
+- `ironcliw security audit` — audit config + local state for common security foot-guns.
+- `ironcliw security audit --deep` — best-effort live Gateway probe.
+- `ironcliw security audit --fix` — tighten safe defaults and chmod state/config.
 
 ## Secrets
 
-- `IronCliw secrets reload` — re-resolve refs and atomically swap the runtime snapshot.
-- `IronCliw secrets audit` — scan for plaintext residues, unresolved refs, and precedence drift.
-- `IronCliw secrets configure` — interactive helper for provider setup + SecretRef mapping + preflight/apply.
-- `IronCliw secrets apply --from <plan.json>` — apply a previously generated plan (`--dry-run` supported).
+- `ironcliw secrets reload` — re-resolve refs and atomically swap the runtime snapshot.
+- `ironcliw secrets audit` — scan for plaintext residues, unresolved refs, and precedence drift.
+- `ironcliw secrets configure` — interactive helper for provider setup + SecretRef mapping + preflight/apply.
+- `ironcliw secrets apply --from <plan.json>` — apply a previously generated plan (`--dry-run` supported).
 
 ## Plugins
 
 Manage extensions and their config:
 
-- `IronCliw plugins list` — discover plugins (use `--json` for machine output).
-- `IronCliw plugins info <id>` — show details for a plugin.
-- `IronCliw plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
-- `IronCliw plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
-- `IronCliw plugins doctor` — report plugin load errors.
+- `ironcliw plugins list` — discover plugins (use `--json` for machine output).
+- `ironcliw plugins info <id>` — show details for a plugin.
+- `ironcliw plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
+- `ironcliw plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
+- `ironcliw plugins doctor` — report plugin load errors.
 
 Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
@@ -290,9 +294,9 @@ Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
 Vector search over `MEMORY.md` + `memory/*.md`:
 
-- `IronCliw memory status` — show index stats.
-- `IronCliw memory index` — reindex memory files.
-- `IronCliw memory search "<query>"` (or `--query "<query>"`) — semantic search over memory.
+- `ironcliw memory status` — show index stats.
+- `ironcliw memory index` — reindex memory files.
+- `ironcliw memory search "<query>"` (or `--query "<query>"`) — semantic search over memory.
 
 ## Chat slash commands
 
@@ -312,7 +316,7 @@ Initialize config + workspace.
 
 Options:
 
-- `--workspace <dir>`: agent workspace path (default `~/.IronCliw/workspace`).
+- `--workspace <dir>`: agent workspace path (default `~/.ironcliw/workspace`).
 - `--wizard`: run the onboarding wizard.
 - `--non-interactive`: run wizard without prompts.
 - `--mode <local|remote>`: wizard mode.
@@ -359,6 +363,7 @@ Options:
 - `--gateway-bind <loopback|lan|tailnet|auto|custom>`
 - `--gateway-auth <token|password>`
 - `--gateway-token <token>`
+- `--gateway-token-ref-env <name>` (non-interactive; store `gateway.auth.token` as an env SecretRef; requires that env var to be set; cannot be combined with `--gateway-token`)
 - `--gateway-password <password>`
 - `--remote-url <url>`
 - `--remote-token <token>`
@@ -380,7 +385,7 @@ Interactive configuration wizard (models, channels, skills, gateway).
 
 ### `config`
 
-Non-interactive config helpers (get/set/unset/file/validate). Running `IronCliw config` with no
+Non-interactive config helpers (get/set/unset/file/validate). Running `ironcliw config` with no
 subcommand launches the wizard.
 
 Subcommands:
@@ -412,8 +417,8 @@ Manage chat channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Matter
 Subcommands:
 
 - `channels list`: show configured channels and auth profiles.
-- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `IronCliw health` or `IronCliw status --deep` for gateway health probes).
-- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `IronCliw doctor`).
+- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `ironcliw health` or `ironcliw status --deep` for gateway health probes).
+- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `ironcliw doctor`).
 - `channels logs`: show recent channel logs from the gateway log file.
 - `channels add`: wizard-style setup when no flags are passed; flags switch to non-interactive mode.
   - When adding a non-default account to a channel still using single-account top-level config, IronCliw moves account-scoped values into `channels.<channel>.accounts.default` before writing the new account.
@@ -455,11 +460,11 @@ More detail: [/concepts/oauth](/concepts/oauth)
 Examples:
 
 ```bash
-IronCliw channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-IronCliw channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-IronCliw channels remove --channel discord --account work --delete
-IronCliw channels status --probe
-IronCliw status --deep
+ironcliw channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+ironcliw channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+ironcliw channels remove --channel discord --account work --delete
+ironcliw channels status --probe
+ironcliw status --deep
 ```
 
 ### `skills`
@@ -543,8 +548,8 @@ Subcommands:
 
 Examples:
 
-- `IronCliw message send --target +15555550123 --message "Hi"`
-- `IronCliw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `ironcliw message send --target +15555550123 --message "Hi"`
+- `ironcliw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -664,7 +669,7 @@ IronCliw can surface provider usage/quota when OAuth/API creds are available.
 Surfaces:
 
 - `/status` (adds a short provider usage line when available)
-- `IronCliw status --usage` (prints full provider breakdown)
+- `ironcliw status --usage` (prints full provider breakdown)
 - macOS menu bar (Usage section under Context)
 
 Notes:
@@ -744,6 +749,7 @@ Options:
 - `--token <token>`
 - `--auth <token|password>`
 - `--password <password>`
+- `--password-file <path>`
 - `--tailscale <off|serve|funnel>`
 - `--tailscale-reset-on-exit`
 - `--allow-unconfigured`
@@ -776,6 +782,7 @@ Notes:
 - `gateway status` supports `--no-probe`, `--deep`, and `--json` for scripting.
 - `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named IronCliw services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
+- On Linux systemd installs, status token-drift checks include both `Environment=` and `EnvironmentFile=` unit sources.
 - `gateway install|uninstall|start|stop|restart` support `--json` for scripting (default output stays human-friendly).
 - `gateway install` defaults to Node runtime; bun is **not recommended** (WhatsApp/Telegram bugs).
 - `gateway install` options: `--port`, `--runtime`, `--token`, `--force`, `--json`.
@@ -792,11 +799,11 @@ Notes:
 Examples:
 
 ```bash
-IronCliw logs --follow
-IronCliw logs --limit 200
-IronCliw logs --plain
-IronCliw logs --json
-IronCliw logs --no-color
+ironcliw logs --follow
+ironcliw logs --limit 200
+ironcliw logs --plain
+ironcliw logs --json
+ironcliw logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -832,8 +839,8 @@ Anthropic setup-token (supported):
 
 ```bash
 claude setup-token
-IronCliw models auth setup-token --provider anthropic
-IronCliw models status
+ironcliw models auth setup-token --provider anthropic
+ironcliw models status
 ```
 
 Policy note: this is technical compatibility. Anthropic has blocked some
@@ -842,7 +849,7 @@ terms before relying on setup-token in production.
 
 ### `models` (root)
 
-`IronCliw models` is an alias for `models status`.
+`ironcliw models` is an alias for `models status`.
 
 Root options:
 
@@ -998,7 +1005,7 @@ All `cron` commands accept `--url`, `--token`, `--timeout`, `--expect-final`.
 ## Node host
 
 `node` runs a **headless node host** or manages it as a background service. See
-[`IronCliw node`](/cli/node).
+[`ironcliw node`](/cli/node).
 
 Subcommands:
 
@@ -1008,6 +1015,11 @@ Subcommands:
 - `node uninstall`
 - `node stop`
 - `node restart`
+
+Auth notes:
+
+- `node` resolves gateway auth from env/config (no `--token`/`--password` flags): `IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD`, then `gateway.auth.*`, with remote-mode support via `gateway.remote.*`.
+- Legacy `CLAWDBOT_GATEWAY_*` env vars are intentionally ignored for node-host auth resolution.
 
 ## Nodes
 
@@ -1053,7 +1065,7 @@ Location:
 
 ## Browser
 
-Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`IronCliw browser`](/cli/browser) and the [Browser tool](/tools/browser).
+Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`ironcliw browser`](/cli/browser) and the [Browser tool](/tools/browser).
 
 Common options:
 

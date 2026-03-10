@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INSTALL_URL="${IronCliw_INSTALL_URL:-https://IronCliw.bot/install.sh}"
-SMOKE_PREVIOUS_VERSION="${IronCliw_INSTALL_SMOKE_PREVIOUS:-}"
-SKIP_PREVIOUS="${IronCliw_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
-DEFAULT_PACKAGE="IronCliw"
-PACKAGE_NAME="${IronCliw_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+INSTALL_URL="${IRONCLIW_INSTALL_URL:-https://ironcliw.bot/install.sh}"
+SMOKE_PREVIOUS_VERSION="${IRONCLIW_INSTALL_SMOKE_PREVIOUS:-}"
+SKIP_PREVIOUS="${IRONCLIW_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
+DEFAULT_PACKAGE="ironcliw"
+PACKAGE_NAME="${IRONCLIW_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # shellcheck source=../install-sh-common/cli-verify.sh
@@ -45,7 +45,7 @@ fi
 echo "package=$PACKAGE_NAME latest=$LATEST_VERSION previous=$PREVIOUS_VERSION"
 
 if [[ "$SKIP_PREVIOUS" == "1" ]]; then
-  echo "==> Skip preinstall previous (IronCliw_INSTALL_SMOKE_SKIP_PREVIOUS=1)"
+  echo "==> Skip preinstall previous (IRONCLIW_INSTALL_SMOKE_SKIP_PREVIOUS=1)"
 else
   echo "==> Preinstall previous (forces installer upgrade path)"
   npm install -g "${PACKAGE_NAME}@${PREVIOUS_VERSION}"
@@ -55,10 +55,9 @@ echo "==> Run official installer one-liner"
 curl -fsSL "$INSTALL_URL" | bash
 
 echo "==> Verify installed version"
-if [[ -n "${IronCliw_INSTALL_LATEST_OUT:-}" ]]; then
-  printf "%s" "$LATEST_VERSION" > "${IronCliw_INSTALL_LATEST_OUT:-}"
+if [[ -n "${IRONCLIW_INSTALL_LATEST_OUT:-}" ]]; then
+  printf "%s" "$LATEST_VERSION" > "${IRONCLIW_INSTALL_LATEST_OUT:-}"
 fi
 verify_installed_cli "$PACKAGE_NAME" "$LATEST_VERSION"
 
 echo "OK"
-

@@ -52,6 +52,7 @@ export type ChannelSetupAdapter = {
 export type ChannelConfigAdapter<ResolvedAccount> = {
   listAccountIds: (cfg: IronCliwConfig) => string[];
   resolveAccount: (cfg: IronCliwConfig, accountId?: string | null) => ResolvedAccount;
+  inspectAccount?: (cfg: IronCliwConfig, accountId?: string | null) => unknown;
   defaultAccountId?: (cfg: IronCliwConfig) => string;
   setAccountEnabled?: (params: {
     cfg: IronCliwConfig;
@@ -232,7 +233,7 @@ export type ChannelGatewayContext<ResolvedAccount = unknown> = {
    * - External plugins should check for undefined before using
    *
    * @since Plugin SDK 2026.2.19
-   * @see {@link https://docs.IronCliw.ai/plugins/developing-plugins | Plugin SDK documentation}
+   * @see {@link https://docs.ironcliw.ai/plugins/developing-plugins | Plugin SDK documentation}
    */
   channelRuntime?: PluginRuntime["channel"];
 };

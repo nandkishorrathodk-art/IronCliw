@@ -114,7 +114,10 @@ export function createTypingController(params: {
 
   const typingLoop = createTypingKeepaliveLoop({
     intervalMs: typingIntervalMs,
-    onTick: triggerTyping,
+    onTick: async () => {
+      refreshTypingTtl();
+      await triggerTyping();
+    },
   });
 
   const ensureStart = async () => {

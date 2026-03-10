@@ -28,13 +28,13 @@ title: "Strict Config Validation"
 - `plugins.entries.<id>.config` must be validated by the plugin’s schema.
   - If a plugin lacks a schema, **reject plugin load** and surface a clear error.
 - Unknown `channels.<id>` keys are errors unless a plugin manifest declares the channel id.
-- Plugin manifests (`IronCliw.plugin.json`) are required for all plugins.
+- Plugin manifests (`ironcliw.plugin.json`) are required for all plugins.
 
 ## Plugin schema enforcement
 
 - Each plugin provides a strict JSON Schema for its config (inline in the manifest).
 - Plugin load flow:
-  1. Resolve plugin manifest + schema (`IronCliw.plugin.json`).
+  1. Resolve plugin manifest + schema (`ironcliw.plugin.json`).
   2. Validate config against the schema.
   3. If missing schema or invalid config: block plugin load, record error.
 - Error message includes:
@@ -48,8 +48,8 @@ title: "Strict Config Validation"
 - Doctor runs **every time** config is loaded (dry-run by default).
 - If config invalid:
   - Print a summary + actionable errors.
-  - Instruct: `IronCliw doctor --fix`.
-- `IronCliw doctor --fix`:
+  - Instruct: `ironcliw doctor --fix`.
+- `ironcliw doctor --fix`:
   - Applies migrations.
   - Removes unknown keys.
   - Writes updated config.
@@ -58,14 +58,14 @@ title: "Strict Config Validation"
 
 Allowed (diagnostic-only):
 
-- `IronCliw doctor`
-- `IronCliw logs`
-- `IronCliw health`
-- `IronCliw help`
-- `IronCliw status`
-- `IronCliw gateway status`
+- `ironcliw doctor`
+- `ironcliw logs`
+- `ironcliw health`
+- `ironcliw help`
+- `ironcliw status`
+- `ironcliw gateway status`
 
-Everything else must hard-fail with: “Config invalid. Run `IronCliw doctor --fix`.”
+Everything else must hard-fail with: “Config invalid. Run `ironcliw doctor --fix`.”
 
 ## Error UX format
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_IMAGE="${BASE_IMAGE:-IronCliw-sandbox:bookworm-slim}"
-TARGET_IMAGE="${TARGET_IMAGE:-IronCliw-sandbox-common:bookworm-slim}"
+BASE_IMAGE="${BASE_IMAGE:-ironcliw-sandbox:bookworm-slim}"
+TARGET_IMAGE="${TARGET_IMAGE:-ironcliw-sandbox-common:bookworm-slim}"
 PACKAGES="${PACKAGES:-curl wget jq coreutils grep nodejs npm python3 git ca-certificates golang-go rustc cargo unzip pkg-config libasound2-dev build-essential file}"
 INSTALL_PNPM="${INSTALL_PNPM:-1}"
 INSTALL_BUN="${INSTALL_BUN:-1}"
@@ -10,6 +10,9 @@ BUN_INSTALL_DIR="${BUN_INSTALL_DIR:-/opt/bun}"
 INSTALL_BREW="${INSTALL_BREW:-1}"
 BREW_INSTALL_DIR="${BREW_INSTALL_DIR:-/home/linuxbrew/.linuxbrew}"
 FINAL_USER="${FINAL_USER:-sandbox}"
+IRONCLIW_DOCKER_BUILD_USE_BUILDX="${IRONCLIW_DOCKER_BUILD_USE_BUILDX:-0}"
+IRONCLIW_DOCKER_BUILD_CACHE_FROM="${IRONCLIW_DOCKER_BUILD_CACHE_FROM:-}"
+IRONCLIW_DOCKER_BUILD_CACHE_TO="${IRONCLIW_DOCKER_BUILD_CACHE_TO:-}"
 
 if ! docker image inspect "${BASE_IMAGE}" >/dev/null 2>&1; then
   echo "Base image missing: ${BASE_IMAGE}"
@@ -19,7 +22,18 @@ fi
 
 echo "Building ${TARGET_IMAGE} with: ${PACKAGES}"
 
-docker build \
+build_cmd=(docker build)
+if [ "${IRONCLIW_DOCKER_BUILD_USE_BUILDX}" = "1" ]; then
+  build_cmd=(docker buildx build --load)
+  if [ -n "${IRONCLIW_DOCKER_BUILD_CACHE_FROM}" ]; then
+    build_cmd+=(--cache-from "${IRONCLIW_DOCKER_BUILD_CACHE_FROM}")
+  fi
+  if [ -n "${IRONCLIW_DOCKER_BUILD_CACHE_TO}" ]; then
+    build_cmd+=(--cache-to "${IRONCLIW_DOCKER_BUILD_CACHE_TO}")
+  fi
+fi
+
+"${build_cmd[@]}" \
   -t "${TARGET_IMAGE}" \
   -f Dockerfile.sandbox-common \
   --build-arg BASE_IMAGE="${BASE_IMAGE}" \
@@ -36,6 +50,5 @@ cat <<NOTE
 Built ${TARGET_IMAGE}.
 To use it, set agents.defaults.sandbox.docker.image to "${TARGET_IMAGE}" and restart.
 If you want a clean re-create, remove old sandbox containers:
-  docker rm -f \$(docker ps -aq --filter label=IronCliw.sandbox=1)
+  docker rm -f \$(docker ps -aq --filter label=ironcliw.sandbox=1)
 NOTE
-

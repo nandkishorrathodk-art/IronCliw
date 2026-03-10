@@ -1,12 +1,13 @@
 import path from "node:path";
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/diffs";
-import { resolvePreferredIronCliwTmpDir } from "IronCliw/plugin-sdk/diffs";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/diffs";
+import { resolvePreferredIronCliwTmpDir } from "ironcliw/plugin-sdk/diffs";
 import {
   diffsPluginConfigSchema,
   resolveDiffsPluginDefaults,
   resolveDiffsPluginSecurity,
 } from "./src/config.js";
 import { createDiffsHttpHandler } from "./src/http.js";
+import { DIFFS_AGENT_GUIDANCE } from "./src/prompt-guidance.js";
 import { DiffArtifactStore } from "./src/store.js";
 import { createDiffsTool } from "./src/tool.js";
 
@@ -19,7 +20,7 @@ const plugin = {
     const defaults = resolveDiffsPluginDefaults(api.pluginConfig);
     const security = resolveDiffsPluginSecurity(api.pluginConfig);
     const store = new DiffArtifactStore({
-      rootDir: path.join(resolvePreferredIronCliwTmpDir(), "IronCliw-diffs"),
+      rootDir: path.join(resolvePreferredIronCliwTmpDir(), "ironcliw-diffs"),
       logger: api.logger,
     });
 
@@ -34,6 +35,9 @@ const plugin = {
         allowRemoteViewer: security.allowRemoteViewer,
       }),
     });
+    api.on("before_prompt_build", async () => ({
+      prependSystemContext: DIFFS_AGENT_GUIDANCE,
+    }));
   },
 };
 

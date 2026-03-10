@@ -19,17 +19,20 @@
 .chat-sidebar {
   flex: 1;
   min-width: 300px;
-  border-left: 1px solid var(--border);
+  border-left: 1px solid rgba(0, 229, 255, 0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: slide-in 200ms ease-out;
+  animation: sidebar-slide-in 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(5, 7, 10, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-@keyframes slide-in {
+@keyframes sidebar-slide-in {
   from {
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(24px);
   }
   to {
     opacity: 1;
@@ -42,7 +45,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--panel);
+  background: transparent;
 }
 
 .sidebar-header {
@@ -50,12 +53,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   flex-shrink: 0;
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--panel);
+  background: rgba(5, 7, 10, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Smaller close button for sidebar */

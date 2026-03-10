@@ -124,7 +124,7 @@ function resolveHighWaterBytes(
 }
 
 /**
- * Resolve maintenance settings from IronCliw.json (`session.maintenance`).
+ * Resolve maintenance settings from ironcliw.json (`session.maintenance`).
  * Falls back to built-in defaults when config is missing or unset.
  */
 export function resolveMaintenanceConfig(): ResolvedSessionMaintenanceConfig {

@@ -55,7 +55,7 @@ sudo install -m 644 -o root -g wheel /tmp/bot.molt.plist /Library/Preferences/Lo
 ```
 
 - 无需重启；logd 会很快检测到该文件，但只有新的日志行才会包含隐私负载。
-- 使用现有的辅助脚本查看更丰富的输出，例如 `./scripts/ironlog.sh --category WebChat --last 5m`。
+- 使用现有的辅助脚本查看更丰富的输出，例如 `./scripts/clawlog.sh --category WebChat --last 5m`。
 
 ## 调试后禁用
 

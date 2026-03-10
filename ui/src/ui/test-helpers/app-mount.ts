@@ -14,13 +14,13 @@ export function mountApp(pathname: string) {
 
 export function registerAppMountHooks() {
   beforeEach(() => {
-    window.__IronCliw_CONTROL_UI_BASE_PATH__ = undefined;
+    window.__IRONCLIW_CONTROL_UI_BASE_PATH__ = undefined;
     localStorage.clear();
     document.body.innerHTML = "";
   });
 
   afterEach(() => {
-    window.__IronCliw_CONTROL_UI_BASE_PATH__ = undefined;
+    window.__IRONCLIW_CONTROL_UI_BASE_PATH__ = undefined;
     localStorage.clear();
     document.body.innerHTML = "";
   });

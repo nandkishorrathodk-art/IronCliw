@@ -12,11 +12,11 @@ import { IronCliwSchema } from "./zod-schema.js";
 describe("$schema key in config (#14998)", () => {
   it("accepts config with $schema string", () => {
     const result = IronCliwSchema.safeParse({
-      $schema: "https://IronCliw.ai/config.json",
+      $schema: "https://ironcliw.ai/config.json",
     });
     expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.$schema).toBe("https://IronCliw.ai/config.json");
+      expect(result.data.$schema).toBe("https://ironcliw.ai/config.json");
     }
   });
 
@@ -28,6 +28,19 @@ describe("$schema key in config (#14998)", () => {
   it("rejects non-string $schema", () => {
     const result = IronCliwSchema.safeParse({ $schema: 123 });
     expect(result.success).toBe(false);
+  });
+});
+
+describe("plugins.slots.contextEngine", () => {
+  it("accepts a contextEngine slot id", () => {
+    const result = IronCliwSchema.safeParse({
+      plugins: {
+        slots: {
+          contextEngine: "my-context-engine",
+        },
+      },
+    });
+    expect(result.success).toBe(true);
   });
 });
 
@@ -45,6 +58,38 @@ describe("ui.seamColor", () => {
   it("rejects invalid hex length", () => {
     const res = validateConfigObject({ ui: { seamColor: "#FF4500FF" } });
     expect(res.ok).toBe(false);
+  });
+});
+
+describe("plugins.entries.*.hooks.allowPromptInjection", () => {
+  it("accepts boolean values", () => {
+    const result = IronCliwSchema.safeParse({
+      plugins: {
+        entries: {
+          "voice-call": {
+            hooks: {
+              allowPromptInjection: false,
+            },
+          },
+        },
+      },
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects non-boolean values", () => {
+    const result = IronCliwSchema.safeParse({
+      plugins: {
+        entries: {
+          "voice-call": {
+            hooks: {
+              allowPromptInjection: "no",
+            },
+          },
+        },
+      },
+    });
+    expect(result.success).toBe(false);
   });
 });
 
@@ -213,7 +258,7 @@ describe("cron webhook schema", () => {
         retry: {
           maxAttempts: 5,
           backoffMs: [60000, 120000, 300000],
-          retryOn: ["rate_limit", "network"],
+          retryOn: ["rate_limit", "overloaded", "network"],
         },
       },
     });
@@ -332,11 +377,11 @@ describe("config strict validation", () => {
   it("does not mark resolved-only gateway.bind aliases as auto-migratable legacy", async () => {
     await withTempHome(async (home) => {
       await writeIronCliwConfig(home, {
-        gateway: { bind: "${IronCliw_BIND}" },
+        gateway: { bind: "${IRONCLIW_BIND}" },
       });
 
-      const prev = process.env.IronCliw_BIND;
-      process.env.IronCliw_BIND = "0.0.0.0";
+      const prev = process.env.IRONCLIW_BIND;
+      process.env.IRONCLIW_BIND = "0.0.0.0";
       try {
         const snap = await readConfigFileSnapshot();
         expect(snap.valid).toBe(false);
@@ -344,9 +389,9 @@ describe("config strict validation", () => {
         expect(snap.issues.some((issue) => issue.path === "gateway.bind")).toBe(true);
       } finally {
         if (prev === undefined) {
-          delete process.env.IronCliw_BIND;
+          delete process.env.IRONCLIW_BIND;
         } else {
-          process.env.IronCliw_BIND = prev;
+          process.env.IRONCLIW_BIND = prev;
         }
       }
     });

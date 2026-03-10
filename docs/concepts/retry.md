@@ -38,7 +38,7 @@ title: "Retry Policy"
 
 ## Configuration
 
-Set retry policy per provider in `~/.IronCliw/IronCliw.json`:
+Set retry policy per provider in `~/.ironcliw/ironcliw.json`:
 
 ```json5
 {

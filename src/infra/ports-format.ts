@@ -2,11 +2,10 @@ import { formatCliCommand } from "../cli/command-format.js";
 import type { PortListener, PortListenerKind, PortUsage } from "./ports-types.js";
 
 export function classifyPortListener(listener: PortListener, port: number): PortListenerKind {
-  const commandLine = `${listener.commandLine ?? ""} ${listener.command ?? ""}`.trim();
-  if (/IronCliw/i.test(commandLine)) {
+  const raw = `${listener.commandLine ?? ""} ${listener.command ?? ""}`.trim().toLowerCase();
+  if (raw.includes("ironcliw")) {
     return "gateway";
   }
-  const raw = commandLine.toLowerCase();
   if (raw.includes("ssh")) {
     const portToken = String(port);
     const tunnelPattern = new RegExp(
@@ -28,7 +27,7 @@ export function buildPortHints(listeners: PortListener[], port: number): string[
   const hints: string[] = [];
   if (kinds.has("gateway")) {
     hints.push(
-      `Gateway already running locally. Stop it (${formatCliCommand("IronCliw gateway stop")}) or use a different port.`,
+      `Gateway already running locally. Stop it (${formatCliCommand("ironcliw gateway stop")}) or use a different port.`,
     );
   }
   if (kinds.has("ssh")) {

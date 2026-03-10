@@ -15,7 +15,7 @@ export async function setupInternalHooks(
       "Hooks let you automate actions when agent commands are issued.",
       "Example: Save session context to memory when you issue /new or /reset.",
       "",
-      "Learn more: https://docs.IronCliw.ai/automation/hooks",
+      "Learn more: https://docs.ironcliw.ai/automation/hooks",
     ].join("\n"),
     "Hooks",
   );
@@ -74,9 +74,9 @@ export async function setupInternalHooks(
       `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
       "",
       "You can manage hooks later with:",
-      `  ${formatCliCommand("IronCliw hooks list")}`,
-      `  ${formatCliCommand("IronCliw hooks enable <name>")}`,
-      `  ${formatCliCommand("IronCliw hooks disable <name>")}`,
+      `  ${formatCliCommand("ironcliw hooks list")}`,
+      `  ${formatCliCommand("ironcliw hooks enable <name>")}`,
+      `  ${formatCliCommand("ironcliw hooks disable <name>")}`,
     ].join("\n"),
     "Hooks Configured",
   );

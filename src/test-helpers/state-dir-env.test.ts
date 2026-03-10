@@ -9,19 +9,19 @@ import {
 } from "./state-dir-env.js";
 
 type EnvSnapshot = {
-  IronCliw?: string;
+  ironcliw?: string;
   legacy?: string;
 };
 
 function snapshotCurrentStateDirVars(): EnvSnapshot {
   return {
-    IronCliw: process.env.IronCliw_STATE_DIR,
+    ironcliw: process.env.IRONCLIW_STATE_DIR,
     legacy: process.env.CLAWDBOT_STATE_DIR,
   };
 }
 
 function expectStateDirVars(snapshot: EnvSnapshot) {
-  expect(process.env.IronCliw_STATE_DIR).toBe(snapshot.IronCliw);
+  expect(process.env.IRONCLIW_STATE_DIR).toBe(snapshot.ironcliw);
   expect(process.env.CLAWDBOT_STATE_DIR).toBe(snapshot.legacy);
 }
 
@@ -40,12 +40,12 @@ async function expectStateDirEnvRestored(params: {
 }
 
 describe("state-dir-env helpers", () => {
-  it("set/snapshot/restore round-trips IronCliw_STATE_DIR", () => {
+  it("set/snapshot/restore round-trips IRONCLIW_STATE_DIR", () => {
     const prev = snapshotCurrentStateDirVars();
     const snapshot = snapshotStateDirEnv();
 
-    setStateDirEnv("/tmp/IronCliw-state-dir-test");
-    expect(process.env.IronCliw_STATE_DIR).toBe("/tmp/IronCliw-state-dir-test");
+    setStateDirEnv("/tmp/ironcliw-state-dir-test");
+    expect(process.env.IRONCLIW_STATE_DIR).toBe("/tmp/ironcliw-state-dir-test");
     expect(process.env.CLAWDBOT_STATE_DIR).toBeUndefined();
 
     restoreStateDirEnv(snapshot);
@@ -57,10 +57,10 @@ describe("state-dir-env helpers", () => {
 
     let capturedTempRoot = "";
     let capturedStateDir = "";
-    await withStateDirEnv("IronCliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
+    await withStateDirEnv("ironcliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
       capturedTempRoot = tempRoot;
       capturedStateDir = stateDir;
-      expect(process.env.IronCliw_STATE_DIR).toBe(stateDir);
+      expect(process.env.IRONCLIW_STATE_DIR).toBe(stateDir);
       expect(process.env.CLAWDBOT_STATE_DIR).toBeUndefined();
       await fs.writeFile(path.join(stateDir, "probe.txt"), "ok", "utf8");
     });
@@ -74,7 +74,7 @@ describe("state-dir-env helpers", () => {
     let capturedTempRoot = "";
     let capturedStateDir = "";
     await expect(
-      withStateDirEnv("IronCliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
+      withStateDirEnv("ironcliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
         capturedTempRoot = tempRoot;
         capturedStateDir = stateDir;
         throw new Error("boom");
@@ -86,17 +86,17 @@ describe("state-dir-env helpers", () => {
 
   it("withStateDirEnv restores both env vars when legacy var was previously set", async () => {
     const testSnapshot = snapshotStateDirEnv();
-    process.env.IronCliw_STATE_DIR = "/tmp/original-IronCliw";
+    process.env.IRONCLIW_STATE_DIR = "/tmp/original-ironcliw";
     process.env.CLAWDBOT_STATE_DIR = "/tmp/original-legacy";
     const prev = snapshotCurrentStateDirVars();
 
     let capturedTempRoot = "";
     let capturedStateDir = "";
     try {
-      await withStateDirEnv("IronCliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
+      await withStateDirEnv("ironcliw-state-dir-env-", async ({ tempRoot, stateDir }) => {
         capturedTempRoot = tempRoot;
         capturedStateDir = stateDir;
-        expect(process.env.IronCliw_STATE_DIR).toBe(stateDir);
+        expect(process.env.IRONCLIW_STATE_DIR).toBe(stateDir);
         expect(process.env.CLAWDBOT_STATE_DIR).toBeUndefined();
       });
 

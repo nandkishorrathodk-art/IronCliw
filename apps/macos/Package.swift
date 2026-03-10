@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "IronCliwIPC", targets: ["IronCliwIPC"]),
         .library(name: "IronCliwDiscovery", targets: ["IronCliwDiscovery"]),
         .executable(name: "IronCliw", targets: ["IronCliw"]),
-        .executable(name: "IronCliw-mac", targets: ["IronCliwMacCLI"]),
+        .executable(name: "ironcliw-mac", targets: ["IronCliwMacCLI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/orchetect/MenuBarExtraAccess", exact: "1.2.2"),

@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { readJsonFileWithFallback, writeJsonFileAtomically } from "IronCliw/plugin-sdk/msteams";
+import { readJsonFileWithFallback, writeJsonFileAtomically } from "ironcliw/plugin-sdk/msteams";
 import { withFileLock as withPathLock } from "./file-lock.js";
 
 const STORE_LOCK_OPTIONS = {

@@ -1,6 +1,6 @@
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { IronCliwConfig, ConfigFileSnapshot } from "../config/types.IronCliw.js";
+import type { IronCliwConfig, ConfigFileSnapshot } from "../config/types.ironcliw.js";
 import type { UpdateRunResult } from "../infra/update-runner.js";
 import { withEnvAsync } from "../test-utils/env.js";
 
@@ -36,7 +36,7 @@ vi.mock("../infra/update-runner.js", () => ({
   runGatewayUpdate: vi.fn(),
 }));
 
-vi.mock("../infra/IronCliw-root.js", () => ({
+vi.mock("../infra/ironcliw-root.js", () => ({
   resolveIronCliwPackageRoot: vi.fn(),
 }));
 
@@ -136,7 +136,7 @@ vi.mock("../runtime.js", () => ({
 }));
 
 const { runGatewayUpdate } = await import("../infra/update-runner.js");
-const { resolveIronCliwPackageRoot } = await import("../infra/IronCliw-root.js");
+const { resolveIronCliwPackageRoot } = await import("../infra/ironcliw-root.js");
 const { readConfigFileSnapshot, writeConfigFile } = await import("../config/config.js");
 const { checkUpdateStatus, fetchNpmTagVersion, resolveNpmChannelTag } =
   await import("../infra/update-check.js");
@@ -147,7 +147,7 @@ const { defaultRuntime } = await import("../runtime.js");
 const { updateCommand, updateStatusCommand, updateWizardCommand } = await import("./update-cli.js");
 
 describe("update-cli", () => {
-  const fixtureRoot = "/tmp/IronCliw-update-tests";
+  const fixtureRoot = "/tmp/ironcliw-update-tests";
   let fixtureCount = 0;
 
   const createCaseDir = (prefix: string) => {
@@ -158,7 +158,7 @@ describe("update-cli", () => {
 
   const baseConfig = {} as IronCliwConfig;
   const baseSnapshot: ConfigFileSnapshot = {
-    path: "/tmp/IronCliw-config.json",
+    path: "/tmp/ironcliw-config.json",
     exists: true,
     raw: "{}",
     parsed: {},
@@ -235,7 +235,7 @@ describe("update-cli", () => {
   };
 
   const setupNonInteractiveDowngrade = async () => {
-    const tempDir = createCaseDir("IronCliw-update");
+    const tempDir = createCaseDir("ironcliw-update");
     setTty(false);
     readPackageVersion.mockResolvedValue("2.0.0");
 
@@ -301,7 +301,7 @@ describe("update-cli", () => {
       killed: false,
       termination: "exit",
     });
-    readPackageName.mockResolvedValue("IronCliw");
+    readPackageName.mockResolvedValue("ironcliw");
     readPackageVersion.mockResolvedValue("1.0.0");
     resolveGlobalManager.mockResolvedValue("npm");
     serviceLoaded.mockResolvedValue(false);
@@ -310,12 +310,12 @@ describe("update-cli", () => {
       pid: 4242,
       state: "running",
     });
-    prepareRestartScript.mockResolvedValue("/tmp/IronCliw-restart-test.sh");
+    prepareRestartScript.mockResolvedValue("/tmp/ironcliw-restart-test.sh");
     runRestartScript.mockResolvedValue(undefined);
     inspectPortUsage.mockResolvedValue({
       port: 18789,
       status: "busy",
-      listeners: [{ pid: 4242, command: "IronCliw-gateway" }],
+      listeners: [{ pid: 4242, command: "ironcliw-gateway" }],
       hints: [],
     });
     classifyPortListener.mockReturnValue("gateway");
@@ -393,7 +393,7 @@ describe("update-cli", () => {
       mode: "npm" as const,
       options: { yes: true },
       prepare: async () => {
-        const tempDir = createCaseDir("IronCliw-update");
+        const tempDir = createCaseDir("ironcliw-update");
         mockPackageInstallStatus(tempDir);
       },
       expectedChannel: "stable" as const,
@@ -425,7 +425,7 @@ describe("update-cli", () => {
   });
 
   it("falls back to latest when beta tag is older than release", async () => {
-    const tempDir = createCaseDir("IronCliw-update");
+    const tempDir = createCaseDir("ironcliw-update");
 
     mockPackageInstallStatus(tempDir);
     vi.mocked(readConfigFileSnapshot).mockResolvedValue({
@@ -449,7 +449,7 @@ describe("update-cli", () => {
   });
 
   it("honors --tag override", async () => {
-    const tempDir = createCaseDir("IronCliw-update");
+    const tempDir = createCaseDir("ironcliw-update");
 
     vi.mocked(resolveIronCliwPackageRoot).mockResolvedValue(tempDir);
     vi.mocked(runGatewayUpdate).mockResolvedValue(
@@ -522,7 +522,7 @@ describe("update-cli", () => {
   });
 
   it("updateCommand refreshes service env from updated install root when available", async () => {
-    const root = createCaseDir("IronCliw-updated-root");
+    const root = createCaseDir("ironcliw-updated-root");
     const entryPath = path.join(root, "dist", "entry.js");
     pathExists.mockImplementation(async (candidate: string) => candidate === entryPath);
 
@@ -567,7 +567,7 @@ describe("update-cli", () => {
   it("updateCommand continues after doctor sub-step and clears update flag", async () => {
     const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0);
     try {
-      await withEnvAsync({ IronCliw_UPDATE_IN_PROGRESS: undefined }, async () => {
+      await withEnvAsync({ IRONCLIW_UPDATE_IN_PROGRESS: undefined }, async () => {
         vi.mocked(runGatewayUpdate).mockResolvedValue(makeOkUpdateResult());
         vi.mocked(runDaemonRestart).mockResolvedValue(true);
         vi.mocked(doctorCommand).mockResolvedValue(undefined);
@@ -579,7 +579,7 @@ describe("update-cli", () => {
           defaultRuntime,
           expect.objectContaining({ nonInteractive: true }),
         );
-        expect(process.env.IronCliw_UPDATE_IN_PROGRESS).toBeUndefined();
+        expect(process.env.IRONCLIW_UPDATE_IN_PROGRESS).toBeUndefined();
 
         const logLines = vi.mocked(defaultRuntime.log).mock.calls.map((call) => String(call[0]));
         expect(
@@ -694,8 +694,8 @@ describe("update-cli", () => {
   });
 
   it("updateWizardCommand offers dev checkout and forwards selections", async () => {
-    const tempDir = createCaseDir("IronCliw-update-wizard");
-    await withEnvAsync({ IronCliw_GIT_DIR: tempDir }, async () => {
+    const tempDir = createCaseDir("ironcliw-update-wizard");
+    await withEnvAsync({ IRONCLIW_GIT_DIR: tempDir }, async () => {
       setTty(true);
 
       vi.mocked(checkUpdateStatus).mockResolvedValue({

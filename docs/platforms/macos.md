@@ -21,12 +21,12 @@ capabilities to the agent as a node.
 - Exposes macOS‑only tools (Canvas, Camera, Screen Recording, `system.run`).
 - Starts the local node host service in **remote** mode (launchd), and stops it in **local** mode.
 - Optionally hosts **PeekabooBridge** for UI automation.
-- Installs the global CLI (`IronCliw`) via npm/pnpm on request (bun not recommended for the Gateway runtime).
+- Installs the global CLI (`ironcliw`) via npm/pnpm on request (bun not recommended for the Gateway runtime).
 
 ## Local vs remote mode
 
 - **Local** (default): the app attaches to a running local Gateway if present;
-  otherwise it enables the launchd service via `IronCliw gateway install`.
+  otherwise it enables the launchd service via `ironcliw gateway install`.
 - **Remote**: the app connects to a Gateway over SSH/Tailscale and never starts
   a local process.
   The app starts the local **node host service** so the remote Gateway can reach this Mac.
@@ -34,18 +34,18 @@ capabilities to the agent as a node.
 
 ## Launchd control
 
-The app manages a per‑user LaunchAgent labeled `ai.IronCliw.gateway`
-(or `ai.IronCliw.<profile>` when using `--profile`/`IronCliw_PROFILE`; legacy `com.IronCliw.*` still unloads).
+The app manages a per‑user LaunchAgent labeled `ai.ironcliw.gateway`
+(or `ai.ironcliw.<profile>` when using `--profile`/`IRONCLIW_PROFILE`; legacy `com.ironcliw.*` still unloads).
 
 ```bash
-launchctl kickstart -k gui/$UID/ai.IronCliw.gateway
-launchctl bootout gui/$UID/ai.IronCliw.gateway
+launchctl kickstart -k gui/$UID/ai.ironcliw.gateway
+launchctl bootout gui/$UID/ai.ironcliw.gateway
 ```
 
-Replace the label with `ai.IronCliw.<profile>` when running a named profile.
+Replace the label with `ai.ironcliw.<profile>` when running a named profile.
 
 If the LaunchAgent isn’t installed, enable it from the app or run
-`IronCliw gateway install`.
+`ironcliw gateway install`.
 
 ## Node capabilities (mac)
 
@@ -78,7 +78,7 @@ Gateway -> Node Service (WS)
 Security + ask + allowlist are stored locally on the Mac in:
 
 ```
-~/.IronCliw/exec-approvals.json
+~/.ironcliw/exec-approvals.json
 ```
 
 Example:
@@ -111,14 +111,14 @@ Notes:
 
 ## Deep links
 
-The app registers the `IronCliw://` URL scheme for local actions.
+The app registers the `ironcliw://` URL scheme for local actions.
 
-### `IronCliw://agent`
+### `ironcliw://agent`
 
 Triggers a Gateway `agent` request.
 
 ```bash
-open 'IronCliw://agent?message=Hello%20from%20deep%20link'
+open 'ironcliw://agent?message=Hello%20from%20deep%20link'
 ```
 
 Query parameters:
@@ -152,10 +152,10 @@ sessions and credentials.
 Prefer a local non-synced state path such as:
 
 ```bash
-IronCliw_STATE_DIR=~/.IronCliw
+IRONCLIW_STATE_DIR=~/.ironcliw
 ```
 
-If `IronCliw doctor` detects state under:
+If `ironcliw doctor` detects state under:
 
 - `~/Library/Mobile Documents/com~apple~CloudDocs/...`
 - `~/Library/CloudStorage/...`
@@ -175,8 +175,8 @@ logic that the macOS app uses, without launching the app.
 
 ```bash
 cd apps/macos
-swift run IronCliw-mac connect --json
-swift run IronCliw-mac discover --timeout 3000 --json
+swift run ironcliw-mac connect --json
+swift run ironcliw-mac discover --timeout 3000 --json
 ```
 
 Connect options:
@@ -193,7 +193,7 @@ Discovery options:
 - `--timeout <ms>`: overall discovery window (default: `2000`)
 - `--json`: structured output for diffing
 
-Tip: compare against `IronCliw gateway discover --json` to see whether the
+Tip: compare against `ironcliw gateway discover --json` to see whether the
 macOS app’s discovery pipeline (NWBrowser + tailnet DNS‑SD fallback) differs from
 the Node CLI’s `dns-sd` based discovery.
 

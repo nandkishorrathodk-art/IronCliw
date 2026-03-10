@@ -8,7 +8,7 @@ vi.mock("./models-config.js", () => ({
 }));
 
 vi.mock("./agent-paths.js", () => ({
-  resolveIronCliwAgentDir: () => "/tmp/IronCliw",
+  resolveIronCliwAgentDir: () => "/tmp/ironcliw",
 }));
 
 export function installModelCatalogTestHooks() {

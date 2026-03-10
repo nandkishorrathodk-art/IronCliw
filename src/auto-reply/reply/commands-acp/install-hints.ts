@@ -15,9 +15,9 @@ export function resolveAcpInstallCommandHint(cfg: IronCliwConfig): string {
   if (backendId === "acpx") {
     const localPath = path.resolve(process.cwd(), "extensions/acpx");
     if (existsSync(localPath)) {
-      return `IronCliw plugins install ${localPath}`;
+      return `ironcliw plugins install ${localPath}`;
     }
-    return "IronCliw plugins install acpx";
+    return "ironcliw plugins install acpx";
   }
   return `Install and enable the plugin that provides ACP backend "${backendId}".`;
 }

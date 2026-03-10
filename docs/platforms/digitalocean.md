@@ -71,16 +71,16 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
 # Install IronCliw
-curl -fsSL https://IronCliw.ai/install.sh | bash
+curl -fsSL https://ironcliw.ai/install.sh | bash
 
 # Verify
-IronCliw --version
+ironcliw --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -94,13 +94,13 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-IronCliw status
+ironcliw status
 
 # Check service
-systemctl --user status IronCliw-gateway.service
+systemctl --user status ironcliw-gateway.service
 
 # View logs
-journalctl --user -u IronCliw-gateway.service -f
+journalctl --user -u ironcliw-gateway.service -f
 ```
 
 ## 6) Access the Dashboard
@@ -124,8 +124,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-IronCliw config set gateway.tailscale.mode serve
-IronCliw gateway restart
+ironcliw config set gateway.tailscale.mode serve
+ironcliw gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -138,8 +138,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-IronCliw config set gateway.bind tailnet
-IronCliw gateway restart
+ironcliw config set gateway.bind tailnet
+ironcliw gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -149,14 +149,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-IronCliw pairing list telegram
-IronCliw pairing approve telegram <CODE>
+ironcliw pairing list telegram
+ironcliw pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-IronCliw channels login whatsapp
+ironcliw channels login whatsapp
 # Scan QR code
 ```
 
@@ -198,13 +198,13 @@ htop
 
 All state lives in:
 
-- `~/.IronCliw/` — config, credentials, session data
-- `~/.IronCliw/workspace/` — workspace (SOUL.md, memory, etc.)
+- `~/.ironcliw/` — config, credentials, session data
+- `~/.ironcliw/workspace/` — workspace (SOUL.md, memory, etc.)
 
 These survive reboots. Back them up periodically:
 
 ```bash
-tar -czvf IronCliw-backup.tar.gz ~/.IronCliw ~/.IronCliw/workspace
+tar -czvf ironcliw-backup.tar.gz ~/.ironcliw ~/.ironcliw/workspace
 ```
 
 ---
@@ -234,9 +234,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-IronCliw gateway status
-IronCliw doctor --non-interactive
-journalctl -u IronCliw --no-pager -n 50
+ironcliw gateway status
+ironcliw doctor --non-interactive
+journalctl -u ironcliw --no-pager -n 50
 ```
 
 ### Port already in use

@@ -211,21 +211,21 @@ describe("startAcpSpawnParentStreamRelay", () => {
 
   it("resolves ACP spawn stream log path from session metadata", () => {
     readAcpSessionEntryMock.mockReturnValue({
-      storePath: "/tmp/IronCliw/agents/codex/sessions/sessions.json",
+      storePath: "/tmp/ironcliw/agents/codex/sessions/sessions.json",
       entry: {
         sessionId: "sess-123",
-        sessionFile: "/tmp/IronCliw/agents/codex/sessions/sess-123.jsonl",
+        sessionFile: "/tmp/ironcliw/agents/codex/sessions/sess-123.jsonl",
       },
     });
     resolveSessionFilePathMock.mockReturnValue(
-      "/tmp/IronCliw/agents/codex/sessions/sess-123.jsonl",
+      "/tmp/ironcliw/agents/codex/sessions/sess-123.jsonl",
     );
 
     const resolved = resolveAcpSpawnStreamLogPath({
       childSessionKey: "agent:codex:acp:child-1",
     });
 
-    expect(resolved).toBe("/tmp/IronCliw/agents/codex/sessions/sess-123.acp-stream.jsonl");
+    expect(resolved).toBe("/tmp/ironcliw/agents/codex/sessions/sess-123.acp-stream.jsonl");
     expect(readAcpSessionEntryMock).toHaveBeenCalledWith({
       sessionKey: "agent:codex:acp:child-1",
     });
@@ -235,7 +235,7 @@ describe("startAcpSpawnParentStreamRelay", () => {
         sessionId: "sess-123",
       }),
       expect.objectContaining({
-        storePath: "/tmp/IronCliw/agents/codex/sessions/sessions.json",
+        storePath: "/tmp/ironcliw/agents/codex/sessions/sessions.json",
       }),
     );
   });

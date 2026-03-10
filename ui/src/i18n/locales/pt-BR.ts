@@ -48,7 +48,7 @@ export const pt_BR: TranslationMap = {
     skills: "Gerenciar disponibilidade de habilidades e injeção de chaves de API.",
     nodes: "Dispositivos pareados, capacidades e exposição de comandos.",
     chat: "Sessão de chat direta com o gateway para intervenções rápidas.",
-    config: "Editar ~/.IronCliw/IronCliw.json com segurança.",
+    config: "Editar ~/.ironcliw/ironcliw.json com segurança.",
     debug: "Snapshots do gateway, eventos e chamadas RPC manuais.",
     logs: "Acompanhamento ao vivo dos logs de arquivo do gateway.",
   },
@@ -101,7 +101,7 @@ export const pt_BR: TranslationMap = {
     pairing: {
       hint: "Este dispositivo precisa de aprovação de pareamento do host do gateway.",
       mobileHint:
-        "No celular? Copie a URL completa (incluindo #token=...) executando IronCliw dashboard --no-open no desktop.",
+        "No celular? Copie a URL completa (incluindo #token=...) executando ironcliw dashboard --no-open no desktop.",
     },
     insecure: {
       hint: "Esta página é HTTP, então o navegador bloqueia a identidade do dispositivo. Use HTTPS (Tailscale Serve) ou abra {url} no host do gateway.",
@@ -124,5 +124,6 @@ export const pt_BR: TranslationMap = {
     zhTW: "繁體中文 (Chinês Tradicional)",
     ptBR: "Português (Português Brasileiro)",
     de: "Deutsch (Alemão)",
+    es: "Español (Espanhol)",
   },
 };

@@ -22,11 +22,11 @@ vi.mock("../web/session.js", () => ({
 
 import { getReplyFromConfig } from "./reply.js";
 
-const { withTempHome } = createTempHomeHarness({ prefix: "IronCliw-rawbody-" });
+const { withTempHome } = createTempHomeHarness({ prefix: "ironcliw-rawbody-" });
 
 describe("RawBody directive parsing", () => {
   beforeEach(() => {
-    vi.stubEnv("IronCliw_TEST_FAST", "1");
+    vi.stubEnv("IRONCLIW_TEST_FAST", "1");
     runEmbeddedPiAgentMock.mockClear();
     agentMocks.loadModelCatalog.mockClear();
     agentMocks.loadModelCatalog.mockResolvedValue([

@@ -25,10 +25,10 @@ IronCliw 有三个相关（但不同）的控制：
 使用检查器查看 IronCliw *实际*在做什么：
 
 ```bash
-IronCliw sandbox explain
-IronCliw sandbox explain --session agent:main:main
-IronCliw sandbox explain --agent work
-IronCliw sandbox explain --json
+ironcliw sandbox explain
+ironcliw sandbox explain --session agent:main:main
+ironcliw sandbox explain --agent work
+ironcliw sandbox explain --json
 ```
 
 它会打印：
@@ -100,7 +100,7 @@ IronCliw sandbox explain --json
 - `group:automation`：`cron`、`gateway`
 - `group:messaging`：`message`
 - `group:nodes`：`nodes`
-- `group:IronCliw`：所有内置 IronCliw 工具（不包括提供商插件）
+- `group:ironcliw`：所有内置 IronCliw 工具（不包括提供商插件）
 
 ## 提权：仅限 exec 的"在主机上运行"
 

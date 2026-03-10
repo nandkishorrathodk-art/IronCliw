@@ -15,11 +15,11 @@ Use this page when a channel connects but behavior is wrong.
 Run these in order first:
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 Healthy baseline:
@@ -34,9 +34,9 @@ Healthy baseline:
 
 | Symptom                         | Fastest check                                       | Fix                                                     |
 | ------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
-| Connected but no DM replies     | `IronCliw pairing list whatsapp`                    | Approve sender or switch DM policy/allowlist.           |
+| Connected but no DM replies     | `ironcliw pairing list whatsapp`                    | Approve sender or switch DM policy/allowlist.           |
 | Group messages ignored          | Check `requireMention` + mention patterns in config | Mention the bot or relax mention policy for that group. |
-| Random disconnect/relogin loops | `IronCliw channels status --probe` + logs           | Re-login and verify credentials directory is healthy.   |
+| Random disconnect/relogin loops | `ironcliw channels status --probe` + logs           | Re-login and verify credentials directory is healthy.   |
 
 Full troubleshooting: [/channels/whatsapp#troubleshooting-quick](/channels/whatsapp#troubleshooting-quick)
 
@@ -46,10 +46,10 @@ Full troubleshooting: [/channels/whatsapp#troubleshooting-quick](/channels/whats
 
 | Symptom                           | Fastest check                                   | Fix                                                                         |
 | --------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------- |
-| `/start` but no usable reply flow | `IronCliw pairing list telegram`                | Approve pairing or change DM policy.                                        |
+| `/start` but no usable reply flow | `ironcliw pairing list telegram`                | Approve pairing or change DM policy.                                        |
 | Bot online but group stays silent | Verify mention requirement and bot privacy mode | Disable privacy mode for group visibility or mention bot.                   |
 | Send failures with network errors | Inspect logs for Telegram API call failures     | Fix DNS/IPv6/proxy routing to `api.telegram.org`.                           |
-| Upgraded and allowlist blocks you | `IronCliw security audit` and config allowlists | Run `IronCliw doctor --fix` or replace `@username` with numeric sender IDs. |
+| Upgraded and allowlist blocks you | `ironcliw security audit` and config allowlists | Run `ironcliw doctor --fix` or replace `@username` with numeric sender IDs. |
 
 Full troubleshooting: [/channels/telegram#troubleshooting](/channels/telegram#troubleshooting)
 
@@ -59,9 +59,9 @@ Full troubleshooting: [/channels/telegram#troubleshooting](/channels/telegram#tr
 
 | Symptom                         | Fastest check                       | Fix                                                       |
 | ------------------------------- | ----------------------------------- | --------------------------------------------------------- |
-| Bot online but no guild replies | `IronCliw channels status --probe`  | Allow guild/channel and verify message content intent.    |
+| Bot online but no guild replies | `ironcliw channels status --probe`  | Allow guild/channel and verify message content intent.    |
 | Group messages ignored          | Check logs for mention gating drops | Mention bot or set guild/channel `requireMention: false`. |
-| DM replies missing              | `IronCliw pairing list discord`     | Approve DM pairing or adjust DM policy.                   |
+| DM replies missing              | `ironcliw pairing list discord`     | Approve DM pairing or adjust DM policy.                   |
 
 Full troubleshooting: [/channels/discord#troubleshooting](/channels/discord#troubleshooting)
 
@@ -71,8 +71,8 @@ Full troubleshooting: [/channels/discord#troubleshooting](/channels/discord#trou
 
 | Symptom                                | Fastest check                             | Fix                                               |
 | -------------------------------------- | ----------------------------------------- | ------------------------------------------------- |
-| Socket mode connected but no responses | `IronCliw channels status --probe`        | Verify app token + bot token and required scopes. |
-| DMs blocked                            | `IronCliw pairing list slack`             | Approve pairing or relax DM policy.               |
+| Socket mode connected but no responses | `ironcliw channels status --probe`        | Verify app token + bot token and required scopes. |
+| DMs blocked                            | `ironcliw pairing list slack`             | Approve pairing or relax DM policy.               |
 | Channel message ignored                | Check `groupPolicy` and channel allowlist | Allow the channel or switch policy to `open`.     |
 
 Full troubleshooting: [/channels/slack#troubleshooting](/channels/slack#troubleshooting)
@@ -85,7 +85,7 @@ Full troubleshooting: [/channels/slack#troubleshooting](/channels/slack#troubles
 | -------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------- |
 | No inbound events                | Verify webhook/server reachability and app permissions                  | Fix webhook URL or BlueBubbles server state.          |
 | Can send but no receive on macOS | Check macOS privacy permissions for Messages automation                 | Re-grant TCC permissions and restart channel process. |
-| DM sender blocked                | `IronCliw pairing list imessage` or `IronCliw pairing list bluebubbles` | Approve pairing or update allowlist.                  |
+| DM sender blocked                | `ironcliw pairing list imessage` or `ironcliw pairing list bluebubbles` | Approve pairing or update allowlist.                  |
 
 Full troubleshooting:
 
@@ -98,8 +98,8 @@ Full troubleshooting:
 
 | Symptom                         | Fastest check                              | Fix                                                      |
 | ------------------------------- | ------------------------------------------ | -------------------------------------------------------- |
-| Daemon reachable but bot silent | `IronCliw channels status --probe`         | Verify `signal-cli` daemon URL/account and receive mode. |
-| DM blocked                      | `IronCliw pairing list signal`             | Approve sender or adjust DM policy.                      |
+| Daemon reachable but bot silent | `ironcliw channels status --probe`         | Verify `signal-cli` daemon URL/account and receive mode. |
+| DM blocked                      | `ironcliw pairing list signal`             | Approve sender or adjust DM policy.                      |
 | Group replies do not trigger    | Check group allowlist and mention patterns | Add sender/group or loosen gating.                       |
 
 Full troubleshooting: [/channels/signal#troubleshooting](/channels/signal#troubleshooting)
@@ -110,8 +110,8 @@ Full troubleshooting: [/channels/signal#troubleshooting](/channels/signal#troubl
 
 | Symptom                             | Fastest check                                | Fix                                             |
 | ----------------------------------- | -------------------------------------------- | ----------------------------------------------- |
-| Logged in but ignores room messages | `IronCliw channels status --probe`           | Check `groupPolicy` and room allowlist.         |
-| DMs do not process                  | `IronCliw pairing list matrix`               | Approve sender or adjust DM policy.             |
+| Logged in but ignores room messages | `ironcliw channels status --probe`           | Check `groupPolicy` and room allowlist.         |
+| DMs do not process                  | `ironcliw pairing list matrix`               | Approve sender or adjust DM policy.             |
 | Encrypted rooms fail                | Verify crypto module and encryption settings | Enable encryption support and rejoin/sync room. |
 
 Full troubleshooting: [/channels/matrix#troubleshooting](/channels/matrix#troubleshooting)

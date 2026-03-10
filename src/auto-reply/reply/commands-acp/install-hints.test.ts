@@ -22,9 +22,9 @@ afterEach(() => {
 describe("ACP install hints", () => {
   it("prefers explicit runtime install command", () => {
     const cfg = withAcpConfig({
-      runtime: { installCommand: "pnpm IronCliw plugins install acpx" },
+      runtime: { installCommand: "pnpm ironcliw plugins install acpx" },
     });
-    expect(resolveAcpInstallCommandHint(cfg)).toBe("pnpm IronCliw plugins install acpx");
+    expect(resolveAcpInstallCommandHint(cfg)).toBe("pnpm ironcliw plugins install acpx");
   });
 
   it("uses local acpx extension path when present", () => {
@@ -35,7 +35,7 @@ describe("ACP install hints", () => {
 
     const cfg = withAcpConfig({ backend: "acpx" });
     const hint = resolveAcpInstallCommandHint(cfg);
-    expect(hint).toContain("IronCliw plugins install ");
+    expect(hint).toContain("ironcliw plugins install ");
     expect(hint).toContain(path.join("extensions", "acpx"));
   });
 
@@ -45,7 +45,7 @@ describe("ACP install hints", () => {
     process.chdir(tempRoot);
 
     const cfg = withAcpConfig({ backend: "acpx" });
-    expect(resolveAcpInstallCommandHint(cfg)).toBe("IronCliw plugins install acpx");
+    expect(resolveAcpInstallCommandHint(cfg)).toBe("ironcliw plugins install acpx");
   });
 
   it("returns generic plugin hint for non-acpx backend", () => {

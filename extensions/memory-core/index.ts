@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/memory-core";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/memory-core";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/memory-core";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/memory-core";
 
 const memoryCorePlugin = {
   id: "memory-core",

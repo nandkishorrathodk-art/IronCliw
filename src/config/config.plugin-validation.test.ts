@@ -25,7 +25,7 @@ async function writePluginFixture(params: {
     manifest.channels = params.channels;
   }
   await fs.writeFile(
-    path.join(params.dir, "IronCliw.plugin.json"),
+    path.join(params.dir, "ironcliw.plugin.json"),
     JSON.stringify(manifest, null, 2),
     "utf-8",
   );
@@ -37,15 +37,16 @@ describe("config plugin validation", () => {
   let badPluginDir = "";
   let enumPluginDir = "";
   let bluebubblesPluginDir = "";
+  let voiceCallSchemaPluginDir = "";
   const envSnapshot = {
-    IronCliw_STATE_DIR: process.env.IronCliw_STATE_DIR,
-    IronCliw_PLUGIN_MANIFEST_CACHE_MS: process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS,
+    IRONCLIW_STATE_DIR: process.env.IRONCLIW_STATE_DIR,
+    IRONCLIW_PLUGIN_MANIFEST_CACHE_MS: process.env.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS,
   };
 
   const validateInSuite = (raw: unknown) => validateConfigObjectWithPlugins(raw);
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-config-plugin-validation-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-config-plugin-validation-"));
     suiteHome = path.join(fixtureRoot, "home");
     await fs.mkdir(suiteHome, { recursive: true });
     badPluginDir = path.join(suiteHome, "bad-plugin");
@@ -83,15 +84,33 @@ describe("config plugin validation", () => {
       channels: ["bluebubbles"],
       schema: { type: "object" },
     });
-    process.env.IronCliw_STATE_DIR = path.join(suiteHome, ".IronCliw");
-    process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS = "10000";
+    voiceCallSchemaPluginDir = path.join(suiteHome, "voice-call-schema-plugin");
+    const voiceCallManifestPath = path.join(
+      process.cwd(),
+      "extensions",
+      "voice-call",
+      "ironcliw.plugin.json",
+    );
+    const voiceCallManifest = JSON.parse(await fs.readFile(voiceCallManifestPath, "utf-8")) as {
+      configSchema?: Record<string, unknown>;
+    };
+    if (!voiceCallManifest.configSchema) {
+      throw new Error("voice-call manifest missing configSchema");
+    }
+    await writePluginFixture({
+      dir: voiceCallSchemaPluginDir,
+      id: "voice-call-schema-fixture",
+      schema: voiceCallManifest.configSchema,
+    });
+    process.env.IRONCLIW_STATE_DIR = path.join(suiteHome, ".ironcliw");
+    process.env.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS = "10000";
     clearPluginManifestRegistryCache();
     // Warm the plugin manifest cache once so path-based validations can reuse
     // parsed manifests across test cases.
     validateInSuite({
       plugins: {
         enabled: false,
-        load: { paths: [badPluginDir, bluebubblesPluginDir] },
+        load: { paths: [badPluginDir, bluebubblesPluginDir, voiceCallSchemaPluginDir] },
       },
     });
   });
@@ -99,15 +118,15 @@ describe("config plugin validation", () => {
   afterAll(async () => {
     await fs.rm(fixtureRoot, { recursive: true, force: true });
     clearPluginManifestRegistryCache();
-    if (envSnapshot.IronCliw_STATE_DIR === undefined) {
-      delete process.env.IronCliw_STATE_DIR;
+    if (envSnapshot.IRONCLIW_STATE_DIR === undefined) {
+      delete process.env.IRONCLIW_STATE_DIR;
     } else {
-      process.env.IronCliw_STATE_DIR = envSnapshot.IronCliw_STATE_DIR;
+      process.env.IRONCLIW_STATE_DIR = envSnapshot.IRONCLIW_STATE_DIR;
     }
-    if (envSnapshot.IronCliw_PLUGIN_MANIFEST_CACHE_MS === undefined) {
-      delete process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS;
+    if (envSnapshot.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS === undefined) {
+      delete process.env.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS;
     } else {
-      process.env.IronCliw_PLUGIN_MANIFEST_CACHE_MS = envSnapshot.IronCliw_PLUGIN_MANIFEST_CACHE_MS;
+      process.env.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS = envSnapshot.IRONCLIW_PLUGIN_MANIFEST_CACHE_MS;
     }
   });
 
@@ -227,6 +246,37 @@ describe("config plugin validation", () => {
       expect(issue?.allowedValues).toEqual(["markdown", "html"]);
       expect(issue?.allowedValuesHiddenCount).toBe(0);
     }
+  });
+
+  it("accepts voice-call webhookSecurity and streaming guard config fields", async () => {
+    const res = validateInSuite({
+      agents: { list: [{ id: "pi" }] },
+      plugins: {
+        enabled: true,
+        load: { paths: [voiceCallSchemaPluginDir] },
+        entries: {
+          "voice-call-schema-fixture": {
+            config: {
+              provider: "twilio",
+              webhookSecurity: {
+                allowedHosts: ["voice.example.com"],
+                trustForwardingHeaders: false,
+                trustedProxyIPs: ["127.0.0.1"],
+              },
+              streaming: {
+                enabled: true,
+                preStartTimeoutMs: 5000,
+                maxPendingConnections: 16,
+                maxPendingConnectionsPerIp: 4,
+                maxConnections: 64,
+              },
+              staleCallReaperSeconds: 180,
+            },
+          },
+        },
+      },
+    });
+    expect(res.ok).toBe(true);
   });
 
   it("accepts known plugin ids and valid channel/heartbeat enums", async () => {

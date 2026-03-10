@@ -1,4 +1,4 @@
-import type { AcpRuntimeEvent, AcpSessionUpdateTag } from "IronCliw/plugin-sdk/acpx";
+import type { AcpRuntimeEvent, AcpSessionUpdateTag } from "ironcliw/plugin-sdk/acpx";
 import {
   asOptionalBoolean,
   asOptionalString,

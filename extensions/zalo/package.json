@@ -1,13 +1,13 @@
 {
-  "name": "@IronCliw/zalo",
-  "version": "2026.3.2",
+  "name": "@ironcliw/zalo",
+  "version": "2026.3.9",
   "description": "IronCliw Zalo channel plugin",
   "type": "module",
   "dependencies": {
     "undici": "7.22.0",
     "zod": "^4.3.6"
   },
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@IronCliw/zalo",
+      "npmSpec": "@ironcliw/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }

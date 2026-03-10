@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `IronCliw update` (safe-ish source update + gateway auto-restart)"
+summary: "CLI reference for `ironcliw update` (safe-ish source update + gateway auto-restart)"
 read_when:
   - You want to update a source checkout safely
   - You need to understand `--update` shorthand behavior
 title: "update"
 ---
 
-# `IronCliw update`
+# `ironcliw update`
 
 Safely update IronCliw and switch between stable/beta/dev channels.
 
@@ -15,16 +15,16 @@ If you installed via **npm/pnpm** (global install, no git metadata), updates hap
 ## Usage
 
 ```bash
-IronCliw update
-IronCliw update status
-IronCliw update wizard
-IronCliw update --channel beta
-IronCliw update --channel dev
-IronCliw update --tag beta
-IronCliw update --dry-run
-IronCliw update --no-restart
-IronCliw update --json
-IronCliw --update
+ironcliw update
+ironcliw update status
+ironcliw update wizard
+ironcliw update --channel beta
+ironcliw update --channel dev
+ironcliw update --tag beta
+ironcliw update --dry-run
+ironcliw update --no-restart
+ironcliw update --json
+ironcliw --update
 ```
 
 ## Options
@@ -43,9 +43,9 @@ Note: downgrades require confirmation because older versions can break configura
 Show the active update channel + git tag/branch/SHA (for source checkouts), plus update availability.
 
 ```bash
-IronCliw update status
-IronCliw update status --json
-IronCliw update status --timeout 10
+ironcliw update status
+ironcliw update status --json
+ironcliw update status --timeout 10
 ```
 
 Options:
@@ -64,7 +64,7 @@ offers to create one.
 When you switch channels explicitly (`--channel ...`), IronCliw also keeps the
 install method aligned:
 
-- `dev` → ensures a git checkout (default: `~/IronCliw`, override with `IronCliw_GIT_DIR`),
+- `dev` → ensures a git checkout (default: `~/ironcliw`, override with `IRONCLIW_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` → installs from npm using the matching dist-tag.
 
@@ -87,16 +87,16 @@ High-level:
 5. Rebases onto the selected commit (dev only).
 6. Installs deps (pnpm preferred; npm fallback).
 7. Builds + builds the Control UI.
-8. Runs `IronCliw doctor` as the final “safe update” check.
+8. Runs `ironcliw doctor` as the final “safe update” check.
 9. Syncs plugins to the active channel (dev uses bundled extensions; stable/beta uses npm) and updates npm-installed plugins.
 
 ## `--update` shorthand
 
-`IronCliw --update` rewrites to `IronCliw update` (useful for shells and launcher scripts).
+`ironcliw --update` rewrites to `ironcliw update` (useful for shells and launcher scripts).
 
 ## See also
 
-- `IronCliw doctor` (offers to run update first on git checkouts)
+- `ironcliw doctor` (offers to run update first on git checkouts)
 - [Development channels](/install/development-channels)
 - [Updating](/install/updating)
 - [CLI reference](/cli)

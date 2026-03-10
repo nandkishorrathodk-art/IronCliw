@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/feishu";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/feishu";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/feishu";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/feishu";
 import { registerFeishuBitableTools } from "./src/bitable.js";
 import { feishuPlugin } from "./src/channel.js";
 import { registerFeishuChatTools } from "./src/chat.js";

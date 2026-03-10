@@ -104,7 +104,7 @@ function createWorkSetupCommandConfig(scope: "agent" | "shared"): IronCliwConfig
       list: [
         {
           id: "work",
-          workspace: "~/IronCliw-work",
+          workspace: "~/ironcliw-work",
           sandbox: {
             mode: "all",
             scope,
@@ -141,13 +141,13 @@ describe("Agent-specific sandbox config", () => {
           sandbox: {
             mode: "all",
             scope: "agent",
-            workspaceRoot: "~/.IronCliw/sandboxes",
+            workspaceRoot: "~/.ironcliw/sandboxes",
           },
         },
         list: [
           {
             id: "isolated",
-            workspace: "~/IronCliw-isolated",
+            workspace: "~/ironcliw-isolated",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -176,14 +176,14 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "main",
-            workspace: "~/IronCliw",
+            workspace: "~/ironcliw",
             sandbox: {
               mode: "off",
             },
           },
           {
             id: "family",
-            workspace: "~/IronCliw-family",
+            workspace: "~/ironcliw-family",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -243,7 +243,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "main",
-            workspace: "~/IronCliw",
+            workspace: "~/ironcliw",
           },
         ],
       },
@@ -293,7 +293,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             sandbox: {
               mode: "all",
               scope: "agent",
@@ -326,7 +326,7 @@ describe("Agent-specific sandbox config", () => {
             list: [
               {
                 id: "main",
-                workspace: "~/IronCliw",
+                workspace: "~/ironcliw",
                 sandbox: {
                   mode: "off",
                 },
@@ -351,7 +351,7 @@ describe("Agent-specific sandbox config", () => {
             list: [
               {
                 id: "family",
-                workspace: "~/IronCliw-family",
+                workspace: "~/ironcliw-family",
                 sandbox: {
                   mode: "all",
                   scope: "agent",
@@ -387,7 +387,7 @@ describe("Agent-specific sandbox config", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             sandbox: {
               mode: "all",
               scope: "agent",

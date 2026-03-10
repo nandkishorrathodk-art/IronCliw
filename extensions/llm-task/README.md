@@ -4,7 +4,7 @@ Adds an **optional** agent tool `llm-task` for running **JSON-only** LLM tasks
 (drafting, summarizing, classifying) with optional JSON Schema validation.
 
 Designed to be called from workflow engines (for example, Lobster via
-`IronCliw.invoke --each`) without adding new IronCliw code per workflow.
+`ironcliw.invoke --each`) without adding new IronCliw code per workflow.
 
 ## Enable
 
@@ -94,4 +94,4 @@ It is intended to ship as a **bundled** IronCliw extension (like `lobster`) and
 be enabled via `plugins.entries` + tool allowlists.
 
 It is **not** currently designed to be copied into
-`~/.IronCliw/extensions` as a standalone plugin directory.
+`~/.ironcliw/extensions` as a standalone plugin directory.

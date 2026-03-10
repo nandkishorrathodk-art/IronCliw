@@ -99,7 +99,7 @@ describe("gateway server chat", () => {
   };
 
   const withMainSessionStore = async <T>(run: (dir: string) => Promise<T>): Promise<T> => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
     try {
       testState.sessionStorePath = path.join(dir, "sessions.json");
       await writeSessionStore({
@@ -139,6 +139,36 @@ describe("gateway server chat", () => {
     expect(res.ok).toBe(true);
     expect(res.payload?.status).toBe("ok");
     expect(res.payload?.startedAt).toBe(startedAt);
+  };
+
+  const mockBlockedChatReply = () => {
+    let releaseBlockedReply: (() => void) | undefined;
+    const blockedReply = new Promise<void>((resolve) => {
+      releaseBlockedReply = resolve;
+    });
+    const replySpy = vi.mocked(getReplyFromConfig);
+    replySpy.mockImplementationOnce(async (_ctx, opts) => {
+      await new Promise<void>((resolve) => {
+        let settled = false;
+        const finish = () => {
+          if (settled) {
+            return;
+          }
+          settled = true;
+          resolve();
+        };
+        void blockedReply.then(finish);
+        if (opts?.abortSignal?.aborted) {
+          finish();
+          return;
+        }
+        opts?.abortSignal?.addEventListener("abort", finish, { once: true });
+      });
+      return undefined;
+    });
+    return () => {
+      releaseBlockedReply?.();
+    };
   };
 
   test("sanitizes inbound chat.send message text and rejects null bytes", async () => {
@@ -226,7 +256,7 @@ describe("gateway server chat", () => {
       expect(sessionRes.ok).toBe(true);
       expect(sessionRes.payload?.runId).toBe("idem-session-key-1");
 
-      const sendPolicyDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+      const sendPolicyDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
       tempDirs.push(sendPolicyDir);
       testState.sessionStorePath = path.join(sendPolicyDir, "sessions.json");
       testState.sessionConfig = {
@@ -265,7 +295,7 @@ describe("gateway server chat", () => {
       testState.sessionStorePath = undefined;
       testState.sessionConfig = undefined;
 
-      const agentBlockedDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+      const agentBlockedDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
       tempDirs.push(agentBlockedDir);
       testState.sessionStorePath = path.join(agentBlockedDir, "sessions.json");
       testState.sessionConfig = {
@@ -359,7 +389,7 @@ describe("gateway server chat", () => {
       expect(imgOnlyRes.ok).toBe(true);
       expect(imgOnlyRes.payload?.runId).toBeDefined();
 
-      const historyDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+      const historyDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
       tempDirs.push(historyDir);
       testState.sessionStorePath = path.join(historyDir, "sessions.json");
       await writeSessionStore({
@@ -467,7 +497,7 @@ describe("gateway server chat", () => {
   });
 
   test("agent.wait resolves chat.send runs that finish without lifecycle events", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
     try {
       testState.sessionStorePath = path.join(dir, "sessions.json");
       await writeSessionStore({
@@ -501,7 +531,7 @@ describe("gateway server chat", () => {
   });
 
   test("agent.wait ignores stale chat dedupe when an agent run with the same runId is in flight", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
     let resolveAgentRun: (() => void) | undefined;
     const blockedAgentRun = new Promise<void>((resolve) => {
       resolveAgentRun = resolve;
@@ -585,30 +615,7 @@ describe("gateway server chat", () => {
       expect(seedWaitRes.ok).toBe(true);
       expect(seedWaitRes.payload?.status).toBe("ok");
 
-      let releaseBlockedReply: (() => void) | undefined;
-      const blockedReply = new Promise<void>((resolve) => {
-        releaseBlockedReply = resolve;
-      });
-      const replySpy = vi.mocked(getReplyFromConfig);
-      replySpy.mockImplementationOnce(async (_ctx, opts) => {
-        await new Promise<void>((resolve) => {
-          let settled = false;
-          const finish = () => {
-            if (settled) {
-              return;
-            }
-            settled = true;
-            resolve();
-          };
-          void blockedReply.then(finish);
-          if (opts?.abortSignal?.aborted) {
-            finish();
-            return;
-          }
-          opts?.abortSignal?.addEventListener("abort", finish, { once: true });
-        });
-        return undefined;
-      });
+      const releaseBlockedReply = mockBlockedChatReply();
 
       try {
         const chatRes = await rpcReq(ws, "chat.send", {
@@ -631,7 +638,7 @@ describe("gateway server chat", () => {
         });
         expect(abortRes.ok).toBe(true);
       } finally {
-        releaseBlockedReply?.();
+        releaseBlockedReply();
       }
     });
   });
@@ -639,30 +646,7 @@ describe("gateway server chat", () => {
   test("agent.wait keeps lifecycle wait active while same-runId chat.send is active", async () => {
     await withMainSessionStore(async () => {
       const runId = "idem-wait-chat-active-with-agent-lifecycle";
-      let releaseBlockedReply: (() => void) | undefined;
-      const blockedReply = new Promise<void>((resolve) => {
-        releaseBlockedReply = resolve;
-      });
-      const replySpy = vi.mocked(getReplyFromConfig);
-      replySpy.mockImplementationOnce(async (_ctx, opts) => {
-        await new Promise<void>((resolve) => {
-          let settled = false;
-          const finish = () => {
-            if (settled) {
-              return;
-            }
-            settled = true;
-            resolve();
-          };
-          void blockedReply.then(finish);
-          if (opts?.abortSignal?.aborted) {
-            finish();
-            return;
-          }
-          opts?.abortSignal?.addEventListener("abort", finish, { once: true });
-        });
-        return undefined;
-      });
+      const releaseBlockedReply = mockBlockedChatReply();
 
       try {
         const chatRes = await rpcReq(ws, "chat.send", {
@@ -700,13 +684,13 @@ describe("gateway server chat", () => {
         });
         expect(abortRes.ok).toBe(true);
       } finally {
-        releaseBlockedReply?.();
+        releaseBlockedReply();
       }
     });
   });
 
   test("agent events include sessionKey and agent.wait covers lifecycle flows", async () => {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gw-"));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gw-"));
     testState.sessionStorePath = path.join(dir, "sessions.json");
     await writeSessionStore({
       entries: {

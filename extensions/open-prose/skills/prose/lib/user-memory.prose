@@ -91,4 +91,3 @@ elif **mode is reflect**:
 
 else:
   throw "Unknown mode: {mode}. Use: teach, query, or reflect"
-

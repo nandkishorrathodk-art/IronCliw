@@ -18,4 +18,3 @@ session "Run tests to verify the refactoring preserved behavior. If tests fail, 
 
 # Document changes
 session "Update any documentation affected by the refactoring. Add comments explaining non-obvious design decisions."
-

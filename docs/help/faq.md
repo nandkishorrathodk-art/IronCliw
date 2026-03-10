@@ -14,7 +14,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 
 - [Quick start and first-run setup]
   - [Im stuck what's the fastest way to get unstuck?](#im-stuck-whats-the-fastest-way-to-get-unstuck)
-  - [What's the recommended way to install and set up IronCliw?](#whats-the-recommended-way-to-install-and-set-up-IronCliw)
+  - [What's the recommended way to install and set up IronCliw?](#whats-the-recommended-way-to-install-and-set-up-ironcliw)
   - [How do I open the dashboard after onboarding?](#how-do-i-open-the-dashboard-after-onboarding)
   - [How do I authenticate the dashboard (token) on localhost vs remote?](#how-do-i-authenticate-the-dashboard-token-on-localhost-vs-remote)
   - [What runtime do I need?](#what-runtime-do-i-need)
@@ -23,19 +23,19 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [It is stuck on "wake up my friend" / onboarding will not hatch. What now?](#it-is-stuck-on-wake-up-my-friend-onboarding-will-not-hatch-what-now)
   - [Can I migrate my setup to a new machine (Mac mini) without redoing onboarding?](#can-i-migrate-my-setup-to-a-new-machine-mac-mini-without-redoing-onboarding)
   - [Where do I see what is new in the latest version?](#where-do-i-see-what-is-new-in-the-latest-version)
-  - [I can't access docs.IronCliw.ai (SSL error). What now?](#i-cant-access-docsIronCliwai-ssl-error-what-now)
+  - [I can't access docs.ironcliw.ai (SSL error). What now?](#i-cant-access-docsironcliwai-ssl-error-what-now)
   - [What's the difference between stable and beta?](#whats-the-difference-between-stable-and-beta)
   - [How do I install the beta version, and what's the difference between beta and dev?](#how-do-i-install-the-beta-version-and-whats-the-difference-between-beta-and-dev)
   - [How do I try the latest bits?](#how-do-i-try-the-latest-bits)
   - [How long does install and onboarding usually take?](#how-long-does-install-and-onboarding-usually-take)
   - [Installer stuck? How do I get more feedback?](#installer-stuck-how-do-i-get-more-feedback)
-  - [Windows install says git not found or IronCliw not recognized](#windows-install-says-git-not-found-or-IronCliw-not-recognized)
+  - [Windows install says git not found or ironcliw not recognized](#windows-install-says-git-not-found-or-ironcliw-not-recognized)
   - [Windows exec output shows garbled Chinese text what should I do](#windows-exec-output-shows-garbled-chinese-text-what-should-i-do)
   - [The docs didn't answer my question - how do I get a better answer?](#the-docs-didnt-answer-my-question-how-do-i-get-a-better-answer)
-  - [How do I install IronCliw on Linux?](#how-do-i-install-IronCliw-on-linux)
-  - [How do I install IronCliw on a VPS?](#how-do-i-install-IronCliw-on-a-vps)
+  - [How do I install IronCliw on Linux?](#how-do-i-install-ironcliw-on-linux)
+  - [How do I install IronCliw on a VPS?](#how-do-i-install-ironcliw-on-a-vps)
   - [Where are the cloud/VPS install guides?](#where-are-the-cloudvps-install-guides)
-  - [Can I ask IronCliw to update itself?](#can-i-ask-IronCliw-to-update-itself)
+  - [Can I ask IronCliw to update itself?](#can-i-ask-ironcliw-to-update-itself)
   - [What does the onboarding wizard actually do?](#what-does-the-onboarding-wizard-actually-do)
   - [Do I need a Claude or OpenAI subscription to run this?](#do-i-need-a-claude-or-openai-subscription-to-run-this)
   - [Can I use Claude Max subscription without an API key](#can-i-use-claude-max-subscription-without-an-api-key)
@@ -51,24 +51,24 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I keep hosted model traffic in a specific region?](#how-do-i-keep-hosted-model-traffic-in-a-specific-region)
   - [Do I have to buy a Mac Mini to install this?](#do-i-have-to-buy-a-mac-mini-to-install-this)
   - [Do I need a Mac mini for iMessage support?](#do-i-need-a-mac-mini-for-imessage-support)
-  - [If I buy a Mac mini to run IronCliw, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-IronCliw-can-i-connect-it-to-my-macbook-pro)
+  - [If I buy a Mac mini to run IronCliw, can I connect it to my MacBook Pro?](#if-i-buy-a-mac-mini-to-run-ironcliw-can-i-connect-it-to-my-macbook-pro)
   - [Can I use Bun?](#can-i-use-bun)
   - [Telegram: what goes in `allowFrom`?](#telegram-what-goes-in-allowfrom)
-  - [Can multiple people use one WhatsApp number with different IronCliw instances?](#can-multiple-people-use-one-whatsapp-number-with-different-IronCliw-instances)
+  - [Can multiple people use one WhatsApp number with different IronCliw instances?](#can-multiple-people-use-one-whatsapp-number-with-different-ironcliw-instances)
   - [Can I run a "fast chat" agent and an "Opus for coding" agent?](#can-i-run-a-fast-chat-agent-and-an-opus-for-coding-agent)
   - [Does Homebrew work on Linux?](#does-homebrew-work-on-linux)
   - [What's the difference between the hackable (git) install and npm install?](#whats-the-difference-between-the-hackable-git-install-and-npm-install)
   - [Can I switch between npm and git installs later?](#can-i-switch-between-npm-and-git-installs-later)
   - [Should I run the Gateway on my laptop or a VPS?](#should-i-run-the-gateway-on-my-laptop-or-a-vps)
-  - [How important is it to run IronCliw on a dedicated machine?](#how-important-is-it-to-run-IronCliw-on-a-dedicated-machine)
+  - [How important is it to run IronCliw on a dedicated machine?](#how-important-is-it-to-run-ironcliw-on-a-dedicated-machine)
   - [What are the minimum VPS requirements and recommended OS?](#what-are-the-minimum-vps-requirements-and-recommended-os)
-  - [Can I run IronCliw in a VM and what are the requirements](#can-i-run-IronCliw-in-a-vm-and-what-are-the-requirements)
-- [What is IronCliw?](#what-is-IronCliw)
-  - [What is IronCliw, in one paragraph?](#what-is-IronCliw-in-one-paragraph)
+  - [Can I run IronCliw in a VM and what are the requirements](#can-i-run-ironcliw-in-a-vm-and-what-are-the-requirements)
+- [What is IronCliw?](#what-is-ironcliw)
+  - [What is IronCliw, in one paragraph?](#what-is-ironcliw-in-one-paragraph)
   - [What's the value proposition?](#whats-the-value-proposition)
   - [I just set it up what should I do first](#i-just-set-it-up-what-should-i-do-first)
-  - [What are the top five everyday use cases for IronCliw](#what-are-the-top-five-everyday-use-cases-for-IronCliw)
-  - [Can IronCliw help with lead gen outreach ads and blogs for a SaaS](#can-IronCliw-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
+  - [What are the top five everyday use cases for IronCliw](#what-are-the-top-five-everyday-use-cases-for-ironcliw)
+  - [Can IronCliw help with lead gen outreach ads and blogs for a SaaS](#can-ironcliw-help-with-lead-gen-outreach-ads-and-blogs-for-a-saas)
   - [What are the advantages vs Claude Code for web development?](#what-are-the-advantages-vs-claude-code-for-web-development)
 - [Skills and automation](#skills-and-automation)
   - [How do I customize skills without keeping the repo dirty?](#how-do-i-customize-skills-without-keeping-the-repo-dirty)
@@ -77,7 +77,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [The bot freezes while doing heavy work. How do I offload that?](#the-bot-freezes-while-doing-heavy-work-how-do-i-offload-that)
   - [Cron or reminders do not fire. What should I check?](#cron-or-reminders-do-not-fire-what-should-i-check)
   - [How do I install skills on Linux?](#how-do-i-install-skills-on-linux)
-  - [Can IronCliw run tasks on a schedule or continuously in the background?](#can-IronCliw-run-tasks-on-a-schedule-or-continuously-in-the-background)
+  - [Can IronCliw run tasks on a schedule or continuously in the background?](#can-ironcliw-run-tasks-on-a-schedule-or-continuously-in-the-background)
   - [Can I run Apple macOS-only skills from Linux?](#can-i-run-apple-macos-only-skills-from-linux)
   - [Do you have a Notion or HeyGen integration?](#do-you-have-a-notion-or-heygen-integration)
   - [How do I install the Chrome extension for browser takeover?](#how-do-i-install-the-chrome-extension-for-browser-takeover)
@@ -89,11 +89,11 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [Does memory persist forever? What are the limits?](#does-memory-persist-forever-what-are-the-limits)
   - [Does semantic memory search require an OpenAI API key?](#does-semantic-memory-search-require-an-openai-api-key)
 - [Where things live on disk](#where-things-live-on-disk)
-  - [Is all data used with IronCliw saved locally?](#is-all-data-used-with-IronCliw-saved-locally)
-  - [Where does IronCliw store its data?](#where-does-IronCliw-store-its-data)
+  - [Is all data used with IronCliw saved locally?](#is-all-data-used-with-ironcliw-saved-locally)
+  - [Where does IronCliw store its data?](#where-does-ironcliw-store-its-data)
   - [Where should AGENTS.md / SOUL.md / USER.md / MEMORY.md live?](#where-should-agentsmd-soulmd-usermd-memorymd-live)
   - [What's the recommended backup strategy?](#whats-the-recommended-backup-strategy)
-  - [How do I completely uninstall IronCliw?](#how-do-i-completely-uninstall-IronCliw)
+  - [How do I completely uninstall IronCliw?](#how-do-i-completely-uninstall-ironcliw)
   - [Can agents work outside the workspace?](#can-agents-work-outside-the-workspace)
   - [I'm in remote mode - where is the session store?](#im-in-remote-mode-where-is-the-session-store)
 - [Config basics](#config-basics)
@@ -105,13 +105,13 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I enable web search (and web fetch)?](#how-do-i-enable-web-search-and-web-fetch)
   - [config.apply wiped my config. How do I recover and avoid this?](#configapply-wiped-my-config-how-do-i-recover-and-avoid-this)
   - [How do I run a central Gateway with specialized workers across devices?](#how-do-i-run-a-central-gateway-with-specialized-workers-across-devices)
-  - [Can the IronCliw browser run headless?](#can-the-IronCliw-browser-run-headless)
+  - [Can the IronCliw browser run headless?](#can-the-ironcliw-browser-run-headless)
   - [How do I use Brave for browser control?](#how-do-i-use-brave-for-browser-control)
 - [Remote gateways and nodes](#remote-gateways-and-nodes)
   - [How do commands propagate between Telegram, the gateway, and nodes?](#how-do-commands-propagate-between-telegram-the-gateway-and-nodes)
   - [How can my agent access my computer if the Gateway is hosted remotely?](#how-can-my-agent-access-my-computer-if-the-gateway-is-hosted-remotely)
   - [Tailscale is connected but I get no replies. What now?](#tailscale-is-connected-but-i-get-no-replies-what-now)
-  - [Can two IronCliw instances talk to each other (local + VPS)?](#can-two-IronCliw-instances-talk-to-each-other-local-vps)
+  - [Can two IronCliw instances talk to each other (local + VPS)?](#can-two-ironcliw-instances-talk-to-each-other-local-vps)
   - [Do I need separate VPSes for multiple agents](#do-i-need-separate-vpses-for-multiple-agents)
   - [Is there a benefit to using a node on my personal laptop instead of SSH from a VPS?](#is-there-a-benefit-to-using-a-node-on-my-personal-laptop-instead-of-ssh-from-a-vps)
   - [Do nodes run a gateway service?](#do-nodes-run-a-gateway-service)
@@ -121,21 +121,21 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [How do I connect a Mac node to a remote Gateway (Tailscale Serve)?](#how-do-i-connect-a-mac-node-to-a-remote-gateway-tailscale-serve)
   - [Should I install on a second laptop or just add a node?](#should-i-install-on-a-second-laptop-or-just-add-a-node)
 - [Env vars and .env loading](#env-vars-and-env-loading)
-  - [How does IronCliw load environment variables?](#how-does-IronCliw-load-environment-variables)
+  - [How does IronCliw load environment variables?](#how-does-ironcliw-load-environment-variables)
   - ["I started the Gateway via the service and my env vars disappeared." What now?](#i-started-the-gateway-via-the-service-and-my-env-vars-disappeared-what-now)
   - [I set `COPILOT_GITHUB_TOKEN`, but models status shows "Shell env: off." Why?](#i-set-copilotgithubtoken-but-models-status-shows-shell-env-off-why)
 - [Sessions and multiple chats](#sessions-and-multiple-chats)
   - [How do I start a fresh conversation?](#how-do-i-start-a-fresh-conversation)
   - [Do sessions reset automatically if I never send `/new`?](#do-sessions-reset-automatically-if-i-never-send-new)
-  - [Is there a way to make a team of IronCliw instances one CEO and many agents](#is-there-a-way-to-make-a-team-of-IronCliw-instances-one-ceo-and-many-agents)
+  - [Is there a way to make a team of IronCliw instances one CEO and many agents](#is-there-a-way-to-make-a-team-of-ironcliw-instances-one-ceo-and-many-agents)
   - [Why did context get truncated mid-task? How do I prevent it?](#why-did-context-get-truncated-midtask-how-do-i-prevent-it)
-  - [How do I completely reset IronCliw but keep it installed?](#how-do-i-completely-reset-IronCliw-but-keep-it-installed)
+  - [How do I completely reset IronCliw but keep it installed?](#how-do-i-completely-reset-ironcliw-but-keep-it-installed)
   - [I'm getting "context too large" errors - how do I reset or compact?](#im-getting-context-too-large-errors-how-do-i-reset-or-compact)
   - [Why am I seeing "LLM request rejected: messages.content.tool_use.input field required"?](#why-am-i-seeing-llm-request-rejected-messagescontenttool_useinput-field-required)
   - [Why am I getting heartbeat messages every 30 minutes?](#why-am-i-getting-heartbeat-messages-every-30-minutes)
   - [Do I need to add a "bot account" to a WhatsApp group?](#do-i-need-to-add-a-bot-account-to-a-whatsapp-group)
   - [How do I get the JID of a WhatsApp group?](#how-do-i-get-the-jid-of-a-whatsapp-group)
-  - [Why doesn't IronCliw reply in a group?](#why-doesnt-IronCliw-reply-in-a-group)
+  - [Why doesn't IronCliw reply in a group?](#why-doesnt-ironcliw-reply-in-a-group)
   - [Do groups/threads share context with DMs?](#do-groupsthreads-share-context-with-dms)
   - [How many workspaces and agents can I create?](#how-many-workspaces-and-agents-can-i-create)
   - [Can I run multiple bots or chats at the same time (Slack), and how should I set that up?](#can-i-run-multiple-bots-or-chats-at-the-same-time-slack-and-how-should-i-set-that-up)
@@ -144,7 +144,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [What model do you recommend?](#what-model-do-you-recommend)
   - [How do I switch models without wiping my config?](#how-do-i-switch-models-without-wiping-my-config)
   - [Can I use self-hosted models (llama.cpp, vLLM, Ollama)?](#can-i-use-selfhosted-models-llamacpp-vllm-ollama)
-  - [What do IronCliw, Flawd, and Krill use for models?](#what-do-IronCliw-flawd-and-krill-use-for-models)
+  - [What do IronCliw, Flawd, and Krill use for models?](#what-do-ironcliw-flawd-and-krill-use-for-models)
   - [How do I switch models on the fly (without restarting)?](#how-do-i-switch-models-on-the-fly-without-restarting)
   - [Can I use GPT 5.2 for daily tasks and Codex 5.3 for coding](#can-i-use-gpt-52-for-daily-tasks-and-codex-53-for-coding)
   - [Why do I see "Model … is not allowed" and then no reply?](#why-do-i-see-model-is-not-allowed-and-then-no-reply)
@@ -165,10 +165,10 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
   - [OAuth vs API key: what's the difference?](#oauth-vs-api-key-whats-the-difference)
 - [Gateway: ports, "already running", and remote mode](#gateway-ports-already-running-and-remote-mode)
   - [What port does the Gateway use?](#what-port-does-the-gateway-use)
-  - [Why does `IronCliw gateway status` say `Runtime: running` but `RPC probe: failed`?](#why-does-IronCliw-gateway-status-say-runtime-running-but-rpc-probe-failed)
-  - [Why does `IronCliw gateway status` show `Config (cli)` and `Config (service)` different?](#why-does-IronCliw-gateway-status-show-config-cli-and-config-service-different)
+  - [Why does `ironcliw gateway status` say `Runtime: running` but `RPC probe: failed`?](#why-does-ironcliw-gateway-status-say-runtime-running-but-rpc-probe-failed)
+  - [Why does `ironcliw gateway status` show `Config (cli)` and `Config (service)` different?](#why-does-ironcliw-gateway-status-show-config-cli-and-config-service-different)
   - [What does "another gateway instance is already listening" mean?](#what-does-another-gateway-instance-is-already-listening-mean)
-  - [How do I run IronCliw in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-IronCliw-in-remote-mode-client-connects-to-a-gateway-elsewhere)
+  - [How do I run IronCliw in remote mode (client connects to a Gateway elsewhere)?](#how-do-i-run-ironcliw-in-remote-mode-client-connects-to-a-gateway-elsewhere)
   - [The Control UI says "unauthorized" (or keeps reconnecting). What now?](#the-control-ui-says-unauthorized-or-keeps-reconnecting-what-now)
   - [I set `gateway.bind: "tailnet"` but it can't bind / nothing listens](#i-set-gatewaybind-tailnet-but-it-cant-bind-nothing-listens)
   - [Can I run multiple Gateways on the same host?](#can-i-run-multiple-gateways-on-the-same-host)
@@ -176,18 +176,18 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 - [Logging and debugging](#logging-and-debugging)
   - [Where are logs?](#where-are-logs)
   - [How do I start/stop/restart the Gateway service?](#how-do-i-startstoprestart-the-gateway-service)
-  - [I closed my terminal on Windows - how do I restart IronCliw?](#i-closed-my-terminal-on-windows-how-do-i-restart-IronCliw)
+  - [I closed my terminal on Windows - how do I restart IronCliw?](#i-closed-my-terminal-on-windows-how-do-i-restart-ironcliw)
   - [The Gateway is up but replies never arrive. What should I check?](#the-gateway-is-up-but-replies-never-arrive-what-should-i-check)
   - ["Disconnected from gateway: no reason" - what now?](#disconnected-from-gateway-no-reason-what-now)
   - [Telegram setMyCommands fails with network errors. What should I check?](#telegram-setmycommands-fails-with-network-errors-what-should-i-check)
   - [TUI shows no output. What should I check?](#tui-shows-no-output-what-should-i-check)
   - [How do I completely stop then start the Gateway?](#how-do-i-completely-stop-then-start-the-gateway)
-  - [ELI5: `IronCliw gateway restart` vs `IronCliw gateway`](#eli5-IronCliw-gateway-restart-vs-IronCliw-gateway)
+  - [ELI5: `ironcliw gateway restart` vs `ironcliw gateway`](#eli5-ironcliw-gateway-restart-vs-ironcliw-gateway)
   - [What's the fastest way to get more details when something fails?](#whats-the-fastest-way-to-get-more-details-when-something-fails)
 - [Media and attachments](#media-and-attachments)
   - [My skill generated an image/PDF, but nothing was sent](#my-skill-generated-an-imagepdf-but-nothing-was-sent)
 - [Security and access control](#security-and-access-control)
-  - [Is it safe to expose IronCliw to inbound DMs?](#is-it-safe-to-expose-IronCliw-to-inbound-dms)
+  - [Is it safe to expose IronCliw to inbound DMs?](#is-it-safe-to-expose-ironcliw-to-inbound-dms)
   - [Is prompt injection only a concern for public bots?](#is-prompt-injection-only-a-concern-for-public-bots)
   - [Should my bot have its own email GitHub account or phone number](#should-my-bot-have-its-own-email-github-account-or-phone-number)
   - [Can I give it autonomy over my text messages and is that safe](#can-i-give-it-autonomy-over-my-text-messages-and-is-that-safe)
@@ -205,7 +205,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 1. **Quick status (first check)**
 
    ```bash
-   IronCliw status
+   ironcliw status
    ```
 
    Fast local summary: OS + update, gateway/service reachability, agents/sessions, provider config + runtime issues (when gateway is reachable).
@@ -213,7 +213,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 2. **Pasteable report (safe to share)**
 
    ```bash
-   IronCliw status --all
+   ironcliw status --all
    ```
 
    Read-only diagnosis with log tail (tokens redacted).
@@ -221,7 +221,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 3. **Daemon + port state**
 
    ```bash
-   IronCliw gateway status
+   ironcliw gateway status
    ```
 
    Shows supervisor runtime vs RPC reachability, the probe target URL, and which config the service likely used.
@@ -229,7 +229,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 4. **Deep probes**
 
    ```bash
-   IronCliw status --deep
+   ironcliw status --deep
    ```
 
    Runs gateway health checks + provider probes (requires a reachable gateway). See [Health](/gateway/health).
@@ -237,13 +237,13 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 5. **Tail the latest log**
 
    ```bash
-   IronCliw logs --follow
+   ironcliw logs --follow
    ```
 
    If RPC is down, fall back to:
 
    ```bash
-   tail -f "$(ls -t /tmp/IronCliw/IronCliw-*.log | head -1)"
+   tail -f "$(ls -t /tmp/ironcliw/ironcliw-*.log | head -1)"
    ```
 
    File logs are separate from service logs; see [Logging](/logging) and [Troubleshooting](/gateway/troubleshooting).
@@ -251,7 +251,7 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 6. **Run the doctor (repairs)**
 
    ```bash
-   IronCliw doctor
+   ironcliw doctor
    ```
 
    Repairs/migrates config/state + runs health checks. See [Doctor](/gateway/doctor).
@@ -259,8 +259,8 @@ Quick answers plus deeper troubleshooting for real-world setups (local dev, VPS,
 7. **Gateway snapshot**
 
    ```bash
-   IronCliw health --json
-   IronCliw health --verbose   # shows the target URL + config path on errors
+   ironcliw health --json
+   ironcliw health --verbose   # shows the target URL + config path on errors
    ```
 
    Asks the running gateway for a full snapshot (WS-only). See [Health](/gateway/health).
@@ -281,7 +281,7 @@ setup (PATH, services, permissions, auth files). Give them the **full source che
 the hackable (git) install:
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --install-method git
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --install-method git
 ```
 
 This installs IronCliw **from a git checkout**, so the agent can read the code + docs and
@@ -292,25 +292,25 @@ Tip: ask the agent to **plan and supervise** the fix (step-by-step), then execut
 necessary commands. That keeps changes small and easier to audit.
 
 If you discover a real bug or fix, please file a GitHub issue or send a PR:
-[https://github.com/IronCliw/IronCliw/issues](https://github.com/IronCliw/IronCliw/issues)
-[https://github.com/IronCliw/IronCliw/pulls](https://github.com/IronCliw/IronCliw/pulls)
+[https://github.com/ironcliw/ironcliw/issues](https://github.com/ironcliw/ironcliw/issues)
+[https://github.com/ironcliw/ironcliw/pulls](https://github.com/ironcliw/ironcliw/pulls)
 
 Start with these commands (share outputs when asking for help):
 
 ```bash
-IronCliw status
-IronCliw models status
-IronCliw doctor
+ironcliw status
+ironcliw models status
+ironcliw doctor
 ```
 
 What they do:
 
-- `IronCliw status`: quick snapshot of gateway/agent health + basic config.
-- `IronCliw models status`: checks provider auth + model availability.
-- `IronCliw doctor`: validates and repairs common config/state issues.
+- `ironcliw status`: quick snapshot of gateway/agent health + basic config.
+- `ironcliw models status`: checks provider auth + model availability.
+- `ironcliw doctor`: validates and repairs common config/state issues.
 
-Other useful CLI checks: `IronCliw status --all`, `IronCliw logs --follow`,
-`IronCliw gateway status`, `IronCliw health --verbose`.
+Other useful CLI checks: `ironcliw status --all`, `ironcliw logs --follow`,
+`ironcliw gateway status`, `ironcliw health --verbose`.
 
 Quick debug loop: [First 60 seconds if something's broken](#first-60-seconds-if-somethings-broken).
 Install docs: [Install](/install), [Installer flags](/install/installer), [Updating](/install/updating).
@@ -320,8 +320,8 @@ Install docs: [Install](/install), [Installer flags](/install/installer), [Updat
 The repo recommends running from source and using the onboarding wizard:
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash
-IronCliw onboard --install-daemon
+curl -fsSL https://ironcliw.ai/install.sh | bash
+ironcliw onboard --install-daemon
 ```
 
 The wizard can also build UI assets automatically. After onboarding, you typically run the Gateway on port **18789**.
@@ -329,15 +329,15 @@ The wizard can also build UI assets automatically. After onboarding, you typical
 From source (contributors/dev):
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm build
 pnpm ui:build # auto-installs UI deps on first run
-IronCliw onboard
+ironcliw onboard
 ```
 
-If you don't have a global install yet, run it via `pnpm IronCliw onboard`.
+If you don't have a global install yet, run it via `pnpm ironcliw onboard`.
 
 ### How do I open the dashboard after onboarding
 
@@ -348,13 +348,13 @@ The wizard opens your browser with a clean (non-tokenized) dashboard URL right a
 **Localhost (same machine):**
 
 - Open `http://127.0.0.1:18789/`.
-- If it asks for auth, paste the token from `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`) into Control UI settings.
-- Retrieve it from the gateway host: `IronCliw config get gateway.auth.token` (or generate one: `IronCliw doctor --generate-gateway-token`).
+- If it asks for auth, paste the token from `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`) into Control UI settings.
+- Retrieve it from the gateway host: `ironcliw config get gateway.auth.token` (or generate one: `ironcliw doctor --generate-gateway-token`).
 
 **Not on localhost:**
 
-- **Tailscale Serve** (recommended): keep bind loopback, run `IronCliw gateway --tailscale serve`, open `https://<magicdns>/`. If `gateway.auth.allowTailscale` is `true`, identity headers satisfy Control UI/WebSocket auth (no token, assumes trusted gateway host); HTTP APIs still require token/password.
-- **Tailnet bind**: run `IronCliw gateway --bind tailnet --token "<token>"`, open `http://<tailscale-ip>:18789/`, paste token in dashboard settings.
+- **Tailscale Serve** (recommended): keep bind loopback, run `ironcliw gateway --tailscale serve`, open `https://<magicdns>/`. If `gateway.auth.allowTailscale` is `true`, identity headers satisfy Control UI/WebSocket auth (no token, assumes trusted gateway host); HTTP APIs still require token/password.
+- **Tailnet bind**: run `ironcliw gateway --bind tailnet --token "<token>"`, open `http://<tailscale-ip>:18789/`, paste token in dashboard settings.
 - **SSH tunnel**: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/` and paste the token in Control UI settings.
 
 See [Dashboard](/web/dashboard) and [Web surfaces](/web) for bind modes and auth details.
@@ -394,21 +394,21 @@ and tokens stay at 0, the agent never ran.
 1. Restart the Gateway:
 
 ```bash
-IronCliw gateway restart
+ironcliw gateway restart
 ```
 
 2. Check status + auth:
 
 ```bash
-IronCliw status
-IronCliw models status
-IronCliw logs --follow
+ironcliw status
+ironcliw models status
+ironcliw logs --follow
 ```
 
 3. If it still hangs, run:
 
 ```bash
-IronCliw doctor
+ironcliw doctor
 ```
 
 If the Gateway is remote, ensure the tunnel/Tailscale connection is up and that the UI
@@ -421,39 +421,39 @@ keeps your bot "exactly the same" (memory, session history, auth, and channel
 state) as long as you copy **both** locations:
 
 1. Install IronCliw on the new machine.
-2. Copy `$IronCliw_STATE_DIR` (default: `~/.IronCliw`) from the old machine.
-3. Copy your workspace (default: `~/.IronCliw/workspace`).
-4. Run `IronCliw doctor` and restart the Gateway service.
+2. Copy `$IRONCLIW_STATE_DIR` (default: `~/.ironcliw`) from the old machine.
+3. Copy your workspace (default: `~/.ironcliw/workspace`).
+4. Run `ironcliw doctor` and restart the Gateway service.
 
 That preserves config, auth profiles, WhatsApp creds, sessions, and memory. If you're in
 remote mode, remember the gateway host owns the session store and workspace.
 
 **Important:** if you only commit/push your workspace to GitHub, you're backing
 up **memory + bootstrap files**, but **not** session history or auth. Those live
-under `~/.IronCliw/` (for example `~/.IronCliw/agents/<agentId>/sessions/`).
+under `~/.ironcliw/` (for example `~/.ironcliw/agents/<agentId>/sessions/`).
 
-Related: [Migrating](/install/migrating), [Where things live on disk](/help/faq#where-does-IronCliw-store-its-data),
+Related: [Migrating](/install/migrating), [Where things live on disk](/help/faq#where-does-ironcliw-store-its-data),
 [Agent workspace](/concepts/agent-workspace), [Doctor](/gateway/doctor),
 [Remote mode](/gateway/remote).
 
 ### Where do I see what is new in the latest version
 
 Check the GitHub changelog:
-[https://github.com/IronCliw/IronCliw/blob/main/CHANGELOG.md](https://github.com/IronCliw/IronCliw/blob/main/CHANGELOG.md)
+[https://github.com/ironcliw/ironcliw/blob/main/CHANGELOG.md](https://github.com/ironcliw/ironcliw/blob/main/CHANGELOG.md)
 
 Newest entries are at the top. If the top section is marked **Unreleased**, the next dated
 section is the latest shipped version. Entries are grouped by **Highlights**, **Changes**, and
 **Fixes** (plus docs/other sections when needed).
 
-### I can't access docs.IronCliw.ai SSL error What now
+### I can't access docs.ironcliw.ai SSL error What now
 
-Some Comcast/Xfinity connections incorrectly block `docs.IronCliw.ai` via Xfinity
-Advanced Security. Disable it or allowlist `docs.IronCliw.ai`, then retry. More
-detail: [Troubleshooting](/help/troubleshooting#docsIronCliwai-shows-an-ssl-error-comcastxfinity).
+Some Comcast/Xfinity connections incorrectly block `docs.ironcliw.ai` via Xfinity
+Advanced Security. Disable it or allowlist `docs.ironcliw.ai`, then retry. More
+detail: [Troubleshooting](/help/troubleshooting#docsironcliwai-shows-an-ssl-error-comcastxfinity).
 Please help us unblock it by reporting here: [https://spa.xfinity.com/check_url_status](https://spa.xfinity.com/check_url_status).
 
 If you still can't reach the site, the docs are mirrored on GitHub:
-[https://github.com/IronCliw/IronCliw/tree/main/docs](https://github.com/IronCliw/IronCliw/tree/main/docs)
+[https://github.com/ironcliw/ironcliw/tree/main/docs](https://github.com/ironcliw/ironcliw/tree/main/docs)
 
 ### What's the difference between stable and beta
 
@@ -467,7 +467,7 @@ that same version to `latest`**. That's why beta and stable can point at the
 **same version**.
 
 See what changed:
-[https://github.com/IronCliw/IronCliw/blob/main/CHANGELOG.md](https://github.com/IronCliw/IronCliw/blob/main/CHANGELOG.md)
+[https://github.com/ironcliw/ironcliw/blob/main/CHANGELOG.md](https://github.com/ironcliw/ironcliw/blob/main/CHANGELOG.md)
 
 ### How do I install the beta version and what's the difference between beta and dev
 
@@ -477,15 +477,15 @@ See what changed:
 One-liners (macOS/Linux):
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --beta
+curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --beta
 ```
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://IronCliw.ai/install.sh | bash -s -- --install-method git
+curl -fsSL --proto '=https' --tlsv1.2 https://ironcliw.ai/install.sh | bash -s -- --install-method git
 ```
 
 Windows installer (PowerShell):
-[https://IronCliw.ai/install.ps1](https://IronCliw.ai/install.ps1)
+[https://ironcliw.ai/install.ps1](https://ironcliw.ai/install.ps1)
 
 More detail: [Development channels](/install/development-channels) and [Installer flags](/install/installer).
 
@@ -506,7 +506,7 @@ Two options:
 1. **Dev channel (git checkout):**
 
 ```bash
-IronCliw update --channel dev
+ironcliw update --channel dev
 ```
 
 This switches to the `main` branch and updates from source.
@@ -514,7 +514,7 @@ This switches to the `main` branch and updates from source.
 2. **Hackable install (from the installer site):**
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --install-method git
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --install-method git
 ```
 
 That gives you a local repo you can edit, then update via git.
@@ -522,8 +522,8 @@ That gives you a local repo you can edit, then update via git.
 If you prefer a clean clone manually, use:
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm build
 ```
@@ -536,19 +536,19 @@ Docs: [Update](/cli/update), [Development channels](/install/development-channel
 Re-run the installer with **verbose output**:
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --verbose
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --verbose
 ```
 
 Beta install with verbose:
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --beta --verbose
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --beta --verbose
 ```
 
 For a hackable (git) install:
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --install-method git --verbose
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --install-method git --verbose
 ```
 
 Windows (PowerShell) equivalent:
@@ -556,13 +556,13 @@ Windows (PowerShell) equivalent:
 ```powershell
 # install.ps1 has no dedicated -Verbose flag yet.
 Set-PSDebug -Trace 1
-& ([scriptblock]::Create((iwr -useb https://IronCliw.ai/install.ps1))) -NoOnboard
+& ([scriptblock]::Create((iwr -useb https://ironcliw.ai/install.ps1))) -NoOnboard
 Set-PSDebug -Trace 0
 ```
 
 More options: [Installer flags](/install/installer).
 
-### Windows install says git not found or IronCliw not recognized
+### Windows install says git not found or ironcliw not recognized
 
 Two common Windows issues:
 
@@ -571,7 +571,7 @@ Two common Windows issues:
 - Install **Git for Windows** and make sure `git` is on your PATH.
 - Close and reopen PowerShell, then re-run the installer.
 
-**2) IronCliw is not recognized after install**
+**2) ironcliw is not recognized after install**
 
 - Your npm global bin folder is not on PATH.
 - Check the path:
@@ -607,12 +607,12 @@ $OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 Then restart the Gateway and retry your command:
 
 ```powershell
-IronCliw gateway restart
+ironcliw gateway restart
 ```
 
 If you still reproduce this on latest IronCliw, track/report it in:
 
-- [Issue #30640](https://github.com/IronCliw/IronCliw/issues/30640)
+- [Issue #30640](https://github.com/ironcliw/ironcliw/issues/30640)
 
 ### The docs didn't answer my question how do I get a better answer
 
@@ -620,7 +620,7 @@ Use the **hackable (git) install** so you have the full source and docs locally,
 your bot (or Claude/Codex) _from that folder_ so it can read the repo and answer precisely.
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash -s -- --install-method git
+curl -fsSL https://ironcliw.ai/install.sh | bash -s -- --install-method git
 ```
 
 More detail: [Install](/install) and [Installer flags](/install/installer).
@@ -669,25 +669,25 @@ can prompt for confirmation. Safer: run updates from a shell as the operator.
 Use the CLI:
 
 ```bash
-IronCliw update
-IronCliw update status
-IronCliw update --channel stable|beta|dev
-IronCliw update --tag <dist-tag|version>
-IronCliw update --no-restart
+ironcliw update
+ironcliw update status
+ironcliw update --channel stable|beta|dev
+ironcliw update --tag <dist-tag|version>
+ironcliw update --no-restart
 ```
 
 If you must automate from an agent:
 
 ```bash
-IronCliw update --yes --no-restart
-IronCliw gateway restart
+ironcliw update --yes --no-restart
+ironcliw gateway restart
 ```
 
 Docs: [Update](/cli/update), [Updating](/install/updating).
 
 ### What does the onboarding wizard actually do
 
-`IronCliw onboard` is the recommended setup path. In **local mode** it walks you through:
+`ironcliw onboard` is the recommended setup path. In **local mode** it walks you through:
 
 - **Model/auth setup** (provider OAuth/setup-token flows and API keys supported, plus local model options such as LM Studio)
 - **Workspace** location + bootstrap files
@@ -723,7 +723,7 @@ If you want the clearest and safest supported path for production, use an Anthro
 
 ### How does Anthropic setuptoken auth work
 
-`claude setup-token` generates a **token string** via the Claude Code CLI (it is not available in the web console). You can run it on **any machine**. Choose **Anthropic token (paste setup-token)** in the wizard or paste it with `IronCliw models auth paste-token --provider anthropic`. The token is stored as an auth profile for the **anthropic** provider and used like an API key (no auto-refresh). More detail: [OAuth](/concepts/oauth).
+`claude setup-token` generates a **token string** via the Claude Code CLI (it is not available in the web console). You can run it on **any machine**. Choose **Anthropic token (paste setup-token)** in the wizard or paste it with `ironcliw models auth paste-token --provider anthropic`. The token is stored as an auth profile for the **anthropic** provider and used like an API key (no auto-refresh). More detail: [OAuth](/concepts/oauth).
 
 ### Where do I find an Anthropic setuptoken
 
@@ -733,7 +733,7 @@ It is **not** in the Anthropic Console. The setup-token is generated by the **Cl
 claude setup-token
 ```
 
-Copy the token it prints, then choose **Anthropic token (paste setup-token)** in the wizard. If you want to run it on the gateway host, use `IronCliw models auth setup-token --provider anthropic`. If you ran `claude setup-token` elsewhere, paste it on the gateway host with `IronCliw models auth paste-token --provider anthropic`. See [Anthropic](/providers/anthropic).
+Copy the token it prints, then choose **Anthropic token (paste setup-token)** in the wizard. If you want to run it on the gateway host, use `ironcliw models auth setup-token --provider anthropic`. If you ran `claude setup-token` elsewhere, paste it on the gateway host with `ironcliw models auth paste-token --provider anthropic`. See [Anthropic](/providers/anthropic).
 
 ### Do you support Claude subscription auth (Claude Pro or Max)
 
@@ -767,7 +767,7 @@ Yes - via pi-ai's **Amazon Bedrock (Converse)** provider with **manual config**.
 
 ### How does Codex auth work
 
-IronCliw supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.3-codex` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
+IronCliw supports **OpenAI Code (Codex)** via OAuth (ChatGPT sign-in). The wizard can run the OAuth flow and will set the default model to `openai-codex/gpt-5.4` when appropriate. See [Model providers](/concepts/model-providers) and [Wizard](/start/wizard).
 
 ### Do you support OpenAI subscription auth Codex OAuth
 
@@ -779,12 +779,12 @@ See [OAuth](/concepts/oauth), [Model providers](/concepts/model-providers), and 
 
 ### How do I set up Gemini CLI OAuth
 
-Gemini CLI uses a **plugin auth flow**, not a client id or secret in `IronCliw.json`.
+Gemini CLI uses a **plugin auth flow**, not a client id or secret in `ironcliw.json`.
 
 Steps:
 
-1. Enable the plugin: `IronCliw plugins enable google-gemini-cli-auth`
-2. Login: `IronCliw models auth login --provider google-gemini-cli --set-default`
+1. Enable the plugin: `ironcliw plugins enable google-gemini-cli-auth`
+2. Login: `ironcliw models auth login --provider google-gemini-cli --set-default`
 
 This stores OAuth tokens in auth profiles on the gateway host. Details: [Model providers](/concepts/model-providers).
 
@@ -828,7 +828,7 @@ Common pattern:
 
 - Gateway on the Mac mini (always-on).
 - MacBook Pro runs the macOS app or a node host and pairs to the Gateway.
-- Use `IronCliw nodes status` / `IronCliw nodes list` to see it.
+- Use `ironcliw nodes status` / `ironcliw nodes list` to see it.
 
 Docs: [Nodes](/nodes), [Nodes CLI](/cli/nodes).
 
@@ -848,7 +848,7 @@ The onboarding wizard accepts `@username` input and resolves it to a numeric ID,
 
 Safer (no third-party bot):
 
-- DM your bot, then run `IronCliw logs --follow` and read `from.id`.
+- DM your bot, then run `ironcliw logs --follow` and read `from.id`.
 
 Official Bot API:
 
@@ -895,25 +895,25 @@ Docs: [Getting started](/start/getting-started), [Updating](/install/updating).
 
 Yes. Install the other flavor, then run Doctor so the gateway service points at the new entrypoint.
 This **does not delete your data** - it only changes the IronCliw code install. Your state
-(`~/.IronCliw`) and workspace (`~/.IronCliw/workspace`) stay untouched.
+(`~/.ironcliw`) and workspace (`~/.ironcliw/workspace`) stay untouched.
 
 From npm → git:
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm build
-IronCliw doctor
-IronCliw gateway restart
+ironcliw doctor
+ironcliw gateway restart
 ```
 
 From git → npm:
 
 ```bash
-npm install -g IronCliw@latest
-IronCliw doctor
-IronCliw gateway restart
+npm install -g ironcliw@latest
+ironcliw doctor
+ironcliw gateway restart
 ```
 
 Doctor detects a gateway service entrypoint mismatch and offers to rewrite the service config to match the current install (use `--repair` in automation).
@@ -1051,17 +1051,17 @@ Advantages:
 - **Always-on Gateway** (run on a VPS, interact from anywhere)
 - **Nodes** for local browser/screen/camera/exec
 
-Showcase: [https://IronCliw.ai/showcase](https://IronCliw.ai/showcase)
+Showcase: [https://ironcliw.ai/showcase](https://ironcliw.ai/showcase)
 
 ## Skills and automation
 
 ### How do I customize skills without keeping the repo dirty
 
-Use managed overrides instead of editing the repo copy. Put your changes in `~/.IronCliw/skills/<name>/SKILL.md` (or add a folder via `skills.load.extraDirs` in `~/.IronCliw/IronCliw.json`). Precedence is `<workspace>/skills` > `~/.IronCliw/skills` > bundled, so managed overrides win without touching git. Only upstream-worthy edits should live in the repo and go out as PRs.
+Use managed overrides instead of editing the repo copy. Put your changes in `~/.ironcliw/skills/<name>/SKILL.md` (or add a folder via `skills.load.extraDirs` in `~/.ironcliw/ironcliw.json`). Precedence is `<workspace>/skills` > `~/.ironcliw/skills` > bundled, so managed overrides win without touching git. Only upstream-worthy edits should live in the repo and go out as PRs.
 
 ### Can I load skills from a custom folder
 
-Yes. Add extra directories via `skills.load.extraDirs` in `~/.IronCliw/IronCliw.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.IronCliw/skills` → bundled → `skills.load.extraDirs`. `clawhub` installs into `./skills` by default, which IronCliw treats as `<workspace>/skills`.
+Yes. Add extra directories via `skills.load.extraDirs` in `~/.ironcliw/ironcliw.json` (lowest precedence). Default precedence remains: `<workspace>/skills` → `~/.ironcliw/skills` → bundled → `skills.load.extraDirs`. `clawhub` installs into `./skills` by default, which IronCliw treats as `<workspace>/skills`.
 
 ### How can I use different models for different tasks
 
@@ -1113,15 +1113,15 @@ scheduled jobs will not run.
 
 Checklist:
 
-- Confirm cron is enabled (`cron.enabled`) and `IronCliw_SKIP_CRON` is not set.
+- Confirm cron is enabled (`cron.enabled`) and `IRONCLIW_SKIP_CRON` is not set.
 - Check the Gateway is running 24/7 (no sleep/restarts).
 - Verify timezone settings for the job (`--tz` vs host timezone).
 
 Debug:
 
 ```bash
-IronCliw cron run <jobId> --force
-IronCliw cron runs --id <jobId> --limit 50
+ironcliw cron run <jobId> --force
+ironcliw cron runs --id <jobId> --limit 50
 ```
 
 Docs: [Cron jobs](/automation/cron-jobs), [Cron vs Heartbeat](/automation/cron-vs-heartbeat).
@@ -1154,12 +1154,12 @@ Docs: [Cron jobs](/automation/cron-jobs), [Cron vs Heartbeat](/automation/cron-v
 
 ### Can I run Apple macOS-only skills from Linux?
 
-Not directly. macOS skills are gated by `metadata.IronCliw.os` plus required binaries, and skills only appear in the system prompt when they are eligible on the **Gateway host**. On Linux, `darwin`-only skills (like `apple-notes`, `apple-reminders`, `things-mac`) will not load unless you override the gating.
+Not directly. macOS skills are gated by `metadata.ironcliw.os` plus required binaries, and skills only appear in the system prompt when they are eligible on the **Gateway host**. On Linux, `darwin`-only skills (like `apple-notes`, `apple-reminders`, `things-mac`) will not load unless you override the gating.
 
 You have three supported patterns:
 
 **Option A - run the Gateway on a Mac (simplest).**
-Run the Gateway where the macOS binaries exist, then connect from Linux in [remote mode](#how-do-i-run-IronCliw-in-remote-mode-client-connects-to-a-gateway-elsewhere) or over Tailscale. The skills load normally because the Gateway host is macOS.
+Run the Gateway where the macOS binaries exist, then connect from Linux in [remote mode](#how-do-i-run-ironcliw-in-remote-mode-client-connects-to-a-gateway-elsewhere) or over Tailscale. The skills load normally because the Gateway host is macOS.
 
 **Option B - use a macOS node (no SSH).**
 Run the Gateway on Linux, pair a macOS node (menubar app), and set **Node Run Commands** to "Always Ask" or "Always Allow" on the Mac. IronCliw can treat macOS-only skills as eligible when the required binaries exist on the node. The agent runs those skills via the `nodes` tool. If you choose "Always Ask", approving "Always Allow" in the prompt adds that command to the allowlist.
@@ -1176,13 +1176,13 @@ Keep the Gateway on Linux, but make the required CLI binaries resolve to SSH wra
    ```
 
 2. Put the wrapper on `PATH` on the Linux host (for example `~/bin/memo`).
-3. Override the skill metadata (workspace or `~/.IronCliw/skills`) to allow Linux:
+3. Override the skill metadata (workspace or `~/.ironcliw/skills`) to allow Linux:
 
    ```markdown
    ---
    name: apple-notes
    description: Manage Apple Notes via the memo CLI on macOS.
-   metadata: { "IronCliw": { "os": ["darwin", "linux"], "requires": { "bins": ["memo"] } } }
+   metadata: { "ironcliw": { "os": ["darwin", "linux"], "requires": { "bins": ["memo"] } } }
    ---
    ```
 
@@ -1212,15 +1212,15 @@ clawhub install <skill-slug>
 clawhub update --all
 ```
 
-ClawHub installs into `./skills` under your current directory (or falls back to your configured IronCliw workspace); IronCliw treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.IronCliw/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawHub](/tools/clawhub).
+ClawHub installs into `./skills` under your current directory (or falls back to your configured IronCliw workspace); IronCliw treats that as `<workspace>/skills` on the next session. For shared skills across agents, place them in `~/.ironcliw/skills/<name>/SKILL.md`. Some skills expect binaries installed via Homebrew; on Linux that means Linuxbrew (see the Homebrew Linux FAQ entry above). See [Skills](/tools/skills) and [ClawHub](/tools/clawhub).
 
 ### How do I install the Chrome extension for browser takeover
 
 Use the built-in installer, then load the unpacked extension in Chrome:
 
 ```bash
-IronCliw browser extension install
-IronCliw browser extension path
+ironcliw browser extension install
+ironcliw browser extension path
 ```
 
 Then Chrome → `chrome://extensions` → enable "Developer mode" → "Load unpacked" → pick that folder.
@@ -1242,8 +1242,8 @@ Yes. See [Sandboxing](/gateway/sandboxing). For Docker-specific setup (full gate
 The default image is security-first and runs as the `node` user, so it does not
 include system packages, Homebrew, or bundled browsers. For a fuller setup:
 
-- Persist `/home/node` with `IronCliw_HOME_VOLUME` so caches survive.
-- Bake system deps into the image with `IronCliw_DOCKER_APT_PACKAGES`.
+- Persist `/home/node` with `IRONCLIW_HOME_VOLUME` so caches survive.
+- Bake system deps into the image with `IRONCLIW_DOCKER_APT_PACKAGES`.
 - Install Playwright browsers via the bundled CLI:
   `node /app/node_modules/playwright-core/cli.js install chromium`
 - Set `PLAYWRIGHT_BROWSERS_PATH` and ensure the path is persisted.
@@ -1324,7 +1324,7 @@ Docs: [Memory](/concepts/memory), [Context](/concepts/context).
 No - **IronCliw's state is local**, but **external services still see what you send them**.
 
 - **Local by default:** sessions, memory files, config, and workspace live on the Gateway host
-  (`~/.IronCliw` + your workspace directory).
+  (`~/.ironcliw` + your workspace directory).
 - **Remote by necessity:** messages you send to model providers (Anthropic/OpenAI/etc.) go to
   their APIs, and chat platforms (WhatsApp/Telegram/Slack/etc.) store message data on their
   servers.
@@ -1335,38 +1335,38 @@ Related: [Agent workspace](/concepts/agent-workspace), [Memory](/concepts/memory
 
 ### Where does IronCliw store its data
 
-Everything lives under `$IronCliw_STATE_DIR` (default: `~/.IronCliw`):
+Everything lives under `$IRONCLIW_STATE_DIR` (default: `~/.ironcliw`):
 
 | Path                                                            | Purpose                                                            |
 | --------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `$IronCliw_STATE_DIR/IronCliw.json`                             | Main config (JSON5)                                                |
-| `$IronCliw_STATE_DIR/credentials/oauth.json`                    | Legacy OAuth import (copied into auth profiles on first use)       |
-| `$IronCliw_STATE_DIR/agents/<agentId>/agent/auth-profiles.json` | Auth profiles (OAuth, API keys, and optional `keyRef`/`tokenRef`)  |
-| `$IronCliw_STATE_DIR/secrets.json`                              | Optional file-backed secret payload for `file` SecretRef providers |
-| `$IronCliw_STATE_DIR/agents/<agentId>/agent/auth.json`          | Legacy compatibility file (static `api_key` entries scrubbed)      |
-| `$IronCliw_STATE_DIR/credentials/`                              | Provider state (e.g. `whatsapp/<accountId>/creds.json`)            |
-| `$IronCliw_STATE_DIR/agents/`                                   | Per-agent state (agentDir + sessions)                              |
-| `$IronCliw_STATE_DIR/agents/<agentId>/sessions/`                | Conversation history & state (per agent)                           |
-| `$IronCliw_STATE_DIR/agents/<agentId>/sessions/sessions.json`   | Session metadata (per agent)                                       |
+| `$IRONCLIW_STATE_DIR/ironcliw.json`                             | Main config (JSON5)                                                |
+| `$IRONCLIW_STATE_DIR/credentials/oauth.json`                    | Legacy OAuth import (copied into auth profiles on first use)       |
+| `$IRONCLIW_STATE_DIR/agents/<agentId>/agent/auth-profiles.json` | Auth profiles (OAuth, API keys, and optional `keyRef`/`tokenRef`)  |
+| `$IRONCLIW_STATE_DIR/secrets.json`                              | Optional file-backed secret payload for `file` SecretRef providers |
+| `$IRONCLIW_STATE_DIR/agents/<agentId>/agent/auth.json`          | Legacy compatibility file (static `api_key` entries scrubbed)      |
+| `$IRONCLIW_STATE_DIR/credentials/`                              | Provider state (e.g. `whatsapp/<accountId>/creds.json`)            |
+| `$IRONCLIW_STATE_DIR/agents/`                                   | Per-agent state (agentDir + sessions)                              |
+| `$IRONCLIW_STATE_DIR/agents/<agentId>/sessions/`                | Conversation history & state (per agent)                           |
+| `$IRONCLIW_STATE_DIR/agents/<agentId>/sessions/sessions.json`   | Session metadata (per agent)                                       |
 
-Legacy single-agent path: `~/.IronCliw/agent/*` (migrated by `IronCliw doctor`).
+Legacy single-agent path: `~/.ironcliw/agent/*` (migrated by `ironcliw doctor`).
 
-Your **workspace** (AGENTS.md, memory files, skills, etc.) is separate and configured via `agents.defaults.workspace` (default: `~/.IronCliw/workspace`).
+Your **workspace** (AGENTS.md, memory files, skills, etc.) is separate and configured via `agents.defaults.workspace` (default: `~/.ironcliw/workspace`).
 
 ### Where should AGENTSmd SOULmd USERmd MEMORYmd live
 
-These files live in the **agent workspace**, not `~/.IronCliw`.
+These files live in the **agent workspace**, not `~/.ironcliw`.
 
 - **Workspace (per agent)**: `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`,
   `MEMORY.md` (or `memory.md`), `memory/YYYY-MM-DD.md`, optional `HEARTBEAT.md`.
-- **State dir (`~/.IronCliw`)**: config, credentials, auth profiles, sessions, logs,
-  and shared skills (`~/.IronCliw/skills`).
+- **State dir (`~/.ironcliw`)**: config, credentials, auth profiles, sessions, logs,
+  and shared skills (`~/.ironcliw/skills`).
 
-Default workspace is `~/.IronCliw/workspace`, configurable via:
+Default workspace is `~/.ironcliw/workspace`, configurable via:
 
 ```json5
 {
-  agents: { defaults: { workspace: "~/.IronCliw/workspace" } },
+  agents: { defaults: { workspace: "~/.ironcliw/workspace" } },
 }
 ```
 
@@ -1385,7 +1385,7 @@ Put your **agent workspace** in a **private** git repo and back it up somewhere
 private (for example GitHub private). This captures memory + AGENTS/SOUL/USER
 files, and lets you restore the assistant's "mind" later.
 
-Do **not** commit anything under `~/.IronCliw` (credentials, sessions, tokens, or encrypted secrets payloads).
+Do **not** commit anything under `~/.ironcliw` (credentials, sessions, tokens, or encrypted secrets payloads).
 If you need a full restore, back up both the workspace and the state directory
 separately (see the migration question above).
 
@@ -1425,17 +1425,17 @@ Session state is owned by the **gateway host**. If you're in remote mode, the se
 
 ### What format is the config Where is it
 
-IronCliw reads an optional **JSON5** config from `$IronCliw_CONFIG_PATH` (default: `~/.IronCliw/IronCliw.json`):
+IronCliw reads an optional **JSON5** config from `$IRONCLIW_CONFIG_PATH` (default: `~/.ironcliw/ironcliw.json`):
 
 ```
-$IronCliw_CONFIG_PATH
+$IRONCLIW_CONFIG_PATH
 ```
 
-If the file is missing, it uses safe-ish defaults (including a default workspace of `~/.IronCliw/workspace`).
+If the file is missing, it uses safe-ish defaults (including a default workspace of `~/.ironcliw/workspace`).
 
 ### I set gatewaybind lan or tailnet and now nothing listens the UI says unauthorized
 
-Non-loopback binds **require auth**. Configure `gateway.auth.mode` + `gateway.auth.token` (or use `IronCliw_GATEWAY_TOKEN`).
+Non-loopback binds **require auth**. Configure `gateway.auth.mode` + `gateway.auth.token` (or use `IRONCLIW_GATEWAY_TOKEN`).
 
 ```json5
 {
@@ -1459,7 +1459,7 @@ Notes:
 
 IronCliw enforces token auth by default, including loopback. If no token is configured, gateway startup auto-generates one and saves it to `gateway.auth.token`, so **local WS clients must authenticate**. This blocks other local processes from calling the Gateway.
 
-If you **really** want open loopback, set `gateway.auth.mode: "none"` explicitly in your config. Doctor can generate a token for you any time: `IronCliw doctor --generate-gateway-token`.
+If you **really** want open loopback, set `gateway.auth.mode: "none"` explicitly in your config. Doctor can generate a token for you any time: `ironcliw doctor --generate-gateway-token`.
 
 ### Do I have to restart after changing config
 
@@ -1485,12 +1485,12 @@ Set `cli.banner.taglineMode` in config:
 - `off`: hides tagline text but keeps the banner title/version line.
 - `default`: uses `All your chats, one IronCliw.` every time.
 - `random`: rotating funny/seasonal taglines (default behavior).
-- If you want no banner at all, set env `IronCliw_HIDE_BANNER=1`.
+- If you want no banner at all, set env `IRONCLIW_HIDE_BANNER=1`.
 
 ### How do I enable web search and web fetch
 
 `web_fetch` works without an API key. `web_search` requires a Brave Search API
-key. **Recommended:** run `IronCliw configure --section web` to store it in
+key. **Recommended:** run `ironcliw configure --section web` to store it in
 `tools.web.search.apiKey`. Environment alternative: set `BRAVE_API_KEY` for the
 Gateway process.
 
@@ -1515,7 +1515,7 @@ Notes:
 
 - If you use allowlists, add `web_search`/`web_fetch` or `group:web`.
 - `web_fetch` is enabled by default (unless explicitly disabled).
-- Daemons read env vars from `~/.IronCliw/.env` (or the service environment).
+- Daemons read env vars from `~/.ironcliw/.env` (or the service environment).
 
 Docs: [Web tools](/tools/web).
 
@@ -1585,8 +1585,8 @@ Typical setup:
 5. Approve the node on the Gateway:
 
    ```bash
-   IronCliw devices list
-   IronCliw devices approve <requestId>
+   ironcliw devices list
+   ironcliw devices approve <requestId>
    ```
 
 No separate TCP bridge is required; nodes connect over the Gateway WebSocket.
@@ -1600,9 +1600,9 @@ Docs: [Nodes](/nodes), [Gateway protocol](/gateway/protocol), [macOS remote mode
 
 Check the basics:
 
-- Gateway is running: `IronCliw gateway status`
-- Gateway health: `IronCliw status`
-- Channel health: `IronCliw channels status`
+- Gateway is running: `ironcliw gateway status`
+- Gateway health: `ironcliw status`
+- Channel health: `ironcliw channels status`
 
 Then verify auth and routing:
 
@@ -1621,14 +1621,14 @@ reliable ways:
 Have Bot A send a message to Bot B, then let Bot B reply as usual.
 
 **CLI bridge (generic):** run a script that calls the other Gateway with
-`IronCliw agent --message ... --deliver`, targeting a chat where the other bot
+`ironcliw agent --message ... --deliver`, targeting a chat where the other bot
 listens. If one bot is on a remote VPS, point your CLI at that remote Gateway
 via SSH/Tailscale (see [Remote access](/gateway/remote)).
 
 Example pattern (run from a machine that can reach the target Gateway):
 
 ```bash
-IronCliw agent --message "Hello from local bot" --deliver --channel telegram --reply-to <chat-id>
+ironcliw agent --message "Hello from local bot" --deliver --channel telegram --reply-to <chat-id>
 ```
 
 Tip: add a guardrail so the two bots do not loop endlessly (mention-only, channel
@@ -1693,15 +1693,15 @@ else is removed.
 
 Recover:
 
-- Restore from backup (git or a copied `~/.IronCliw/IronCliw.json`).
-- If you have no backup, re-run `IronCliw doctor` and reconfigure channels/models.
+- Restore from backup (git or a copied `~/.ironcliw/ironcliw.json`).
+- If you have no backup, re-run `ironcliw doctor` and reconfigure channels/models.
 - If this was unexpected, file a bug and include your last known config or any backup.
 - A local coding agent can often reconstruct a working config from logs or history.
 
 Avoid it:
 
-- Use `IronCliw config set` for small changes.
-- Use `IronCliw configure` for interactive edits.
+- Use `ironcliw config set` for small changes.
+- Use `ironcliw configure` for interactive edits.
 
 Docs: [Config](/cli/config), [Configure](/cli/configure), [Doctor](/gateway/doctor).
 
@@ -1709,7 +1709,7 @@ Docs: [Config](/cli/config), [Configure](/cli/configure), [Doctor](/gateway/doct
 
 ```json5
 {
-  agents: { defaults: { workspace: "~/.IronCliw/workspace" } },
+  agents: { defaults: { workspace: "~/.ironcliw/workspace" } },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
@@ -1738,7 +1738,7 @@ Minimal steps:
 If you want the Control UI without SSH, use Tailscale Serve on the VPS:
 
 ```bash
-IronCliw gateway --tailscale serve
+ironcliw gateway --tailscale serve
 ```
 
 This keeps the gateway bound to loopback and exposes HTTPS via Tailscale. See [Tailscale](/gateway/tailscale).
@@ -1755,8 +1755,8 @@ Recommended setup:
 3. **Approve the node** on the gateway:
 
    ```bash
-   IronCliw devices list
-   IronCliw devices approve <requestId>
+   ironcliw devices list
+   ironcliw devices approve <requestId>
    ```
 
 Docs: [Gateway protocol](/gateway/protocol), [Discovery](/gateway/discovery), [macOS remote mode](/platforms/mac/remote).
@@ -1768,7 +1768,7 @@ Docs: [Gateway protocol](/gateway/protocol), [Discovery](/gateway/discovery), [m
 IronCliw reads env vars from the parent process (shell, launchd/systemd, CI, etc.) and additionally loads:
 
 - `.env` from the current working directory
-- a global fallback `.env` from `~/.IronCliw/.env` (aka `$IronCliw_STATE_DIR/.env`)
+- a global fallback `.env` from `~/.ironcliw/.env` (aka `$IRONCLIW_STATE_DIR/.env`)
 
 Neither `.env` file overrides existing env vars.
 
@@ -1789,7 +1789,7 @@ See [/environment](/help/environment) for full precedence and sources.
 
 Two common fixes:
 
-1. Put the missing keys in `~/.IronCliw/.env` so they're picked up even when the service doesn't inherit your shell env.
+1. Put the missing keys in `~/.ironcliw/.env` so they're picked up even when the service doesn't inherit your shell env.
 2. Enable shell import (opt-in convenience):
 
 ```json5
@@ -1804,18 +1804,18 @@ Two common fixes:
 ```
 
 This runs your login shell and imports only missing expected keys (never overrides). Env var equivalents:
-`IronCliw_LOAD_SHELL_ENV=1`, `IronCliw_SHELL_ENV_TIMEOUT_MS=15000`.
+`IRONCLIW_LOAD_SHELL_ENV=1`, `IRONCLIW_SHELL_ENV_TIMEOUT_MS=15000`.
 
 ### I set COPILOTGITHUBTOKEN but models status shows Shell env off Why
 
-`IronCliw models status` reports whether **shell env import** is enabled. "Shell env: off"
+`ironcliw models status` reports whether **shell env import** is enabled. "Shell env: off"
 does **not** mean your env vars are missing - it just means IronCliw won't load
 your login shell automatically.
 
 If the Gateway runs as a service (launchd/systemd), it won't inherit your shell
 environment. Fix by doing one of these:
 
-1. Put the token in `~/.IronCliw/.env`:
+1. Put the token in `~/.ironcliw/.env`:
 
    ```
    COPILOT_GITHUB_TOKEN=...
@@ -1827,7 +1827,7 @@ environment. Fix by doing one of these:
 Then restart the gateway and recheck:
 
 ```bash
-IronCliw models status
+ironcliw models status
 ```
 
 Copilot tokens are read from `COPILOT_GITHUB_TOKEN` (also `GH_TOKEN` / `GITHUB_TOKEN`).
@@ -1883,26 +1883,26 @@ What helps:
 Use the reset command:
 
 ```bash
-IronCliw reset
+ironcliw reset
 ```
 
 Non-interactive full reset:
 
 ```bash
-IronCliw reset --scope full --yes --non-interactive
+ironcliw reset --scope full --yes --non-interactive
 ```
 
 Then re-run onboarding:
 
 ```bash
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
 Notes:
 
 - The onboarding wizard also offers **Reset** if it sees an existing config. See [Wizard](/start/wizard).
-- If you used profiles (`--profile` / `IronCliw_PROFILE`), reset each state dir (defaults are `~/.IronCliw-<profile>`).
-- Dev reset: `IronCliw gateway --dev --reset` (dev-only; wipes dev config + credentials + sessions + workspace).
+- If you used profiles (`--profile` / `IRONCLIW_PROFILE`), reset each state dir (defaults are `~/.ironcliw-<profile>`).
+- Dev reset: `ironcliw gateway --dev --reset` (dev-only; wipes dev config + credentials + sessions + workspace).
 
 ### Im getting context too large errors how do I reset or compact
 
@@ -1983,7 +1983,7 @@ If you want only **you** to be able to trigger group replies:
 Option 1 (fastest): tail logs and send a test message in the group:
 
 ```bash
-IronCliw logs --follow --json
+ironcliw logs --follow --json
 ```
 
 Look for `chatId` (or `from`) ending in `@g.us`, like:
@@ -1992,7 +1992,7 @@ Look for `chatId` (or `from`) ending in `@g.us`, like:
 Option 2 (if already configured/allowlisted): list groups from config:
 
 ```bash
-IronCliw directory groups list --channel whatsapp
+ironcliw directory groups list --channel whatsapp
 ```
 
 Docs: [WhatsApp](/channels/whatsapp), [Directory](/cli/directory), [Logs](/cli/logs).
@@ -2014,7 +2014,7 @@ Direct chats collapse to the main session by default. Groups/channels have their
 
 No hard limits. Dozens (even hundreds) are fine, but watch for:
 
-- **Disk growth:** sessions + transcripts live under `~/.IronCliw/agents/<agentId>/sessions/`.
+- **Disk growth:** sessions + transcripts live under `~/.ironcliw/agents/<agentId>/sessions/`.
 - **Token cost:** more agents means more concurrent model usage.
 - **Ops overhead:** per-agent auth profiles, workspaces, and channel routing.
 
@@ -2022,7 +2022,7 @@ Tips:
 
 - Keep one **active** workspace per agent (`agents.defaults.workspace`).
 - Prune old sessions (delete JSONL or store entries) if disk grows.
-- Use `IronCliw doctor` to spot stray workspaces and profile mismatches.
+- Use `ironcliw doctor` to spot stray workspaces and profile mismatches.
 
 ### Can I run multiple bots or chats at the same time Slack and how should I set that up
 
@@ -2094,19 +2094,19 @@ Use **model commands** or edit only the **model** fields. Avoid full config repl
 Safe options:
 
 - `/model` in chat (quick, per-session)
-- `IronCliw models set ...` (updates just model config)
-- `IronCliw configure --section model` (interactive)
-- edit `agents.defaults.model` in `~/.IronCliw/IronCliw.json`
+- `ironcliw models set ...` (updates just model config)
+- `ironcliw configure --section model` (interactive)
+- edit `agents.defaults.model` in `~/.ironcliw/ironcliw.json`
 
 Avoid `config.apply` with a partial object unless you intend to replace the whole config.
-If you did overwrite config, restore from backup or re-run `IronCliw doctor` to repair.
+If you did overwrite config, restore from backup or re-run `ironcliw doctor` to repair.
 
 Docs: [Models](/concepts/models), [Configure](/cli/configure), [Config](/cli/config), [Doctor](/gateway/doctor).
 
 ### What do IronCliw, Flawd, and Krill use for models
 
 - These deployments can differ and may change over time; there is no fixed provider recommendation.
-- Check the current runtime setting on each gateway with `IronCliw models status`.
+- Check the current runtime setting on each gateway with `ironcliw models status`.
 - For security-sensitive/tool-enabled agents, use the strongest latest-generation model available.
 
 ### How do I switch models on the fly without restarting
@@ -2156,8 +2156,8 @@ Use `/model status` to confirm which auth profile is active.
 
 Yes. Set one as default and switch as needed:
 
-- **Quick switch (per session):** `/model gpt-5.2` for daily tasks, `/model gpt-5.3-codex` for coding.
-- **Default + switch:** set `agents.defaults.model.primary` to `openai/gpt-5.2`, then switch to `openai-codex/gpt-5.3-codex` when coding (or the other way around).
+- **Quick switch (per session):** `/model gpt-5.2` for daily tasks, `/model openai-codex/gpt-5.4` for coding with Codex OAuth.
+- **Default + switch:** set `agents.defaults.model.primary` to `openai/gpt-5.2`, then switch to `openai-codex/gpt-5.4` when coding (or the other way around).
 - **Sub-agents:** route coding tasks to sub-agents with a different default model.
 
 See [Models](/concepts/models) and [Slash commands](/tools/slash-commands).
@@ -2186,11 +2186,11 @@ Fix checklist:
 2. Make sure MiniMax is configured (wizard or JSON), or that a MiniMax API key
    exists in env/auth profiles so the provider can be injected.
 3. Use the exact model id (case-sensitive): `minimax/MiniMax-M2.5` or
-   `minimax/MiniMax-M2.5-highspeed` (legacy: `minimax/MiniMax-M2.5-Lightning`).
+   `minimax/MiniMax-M2.5-highspeed`.
 4. Run:
 
    ```bash
-   IronCliw models list
+   ironcliw models list
    ```
 
    and pick from the list (or `/model list` in chat).
@@ -2238,11 +2238,12 @@ Docs: [Models](/concepts/models), [Multi-Agent Routing](/concepts/multi-agent), 
 Yes. IronCliw ships a few default shorthands (only applied when the model exists in `agents.defaults.models`):
 
 - `opus` → `anthropic/claude-opus-4-6`
-- `sonnet` → `anthropic/claude-sonnet-4-5`
-- `gpt` → `openai/gpt-5.2`
+- `sonnet` → `anthropic/claude-sonnet-4-6`
+- `gpt` → `openai/gpt-5.4`
 - `gpt-mini` → `openai/gpt-5-mini`
-- `gemini` → `google/gemini-3-pro-preview`
+- `gemini` → `google/gemini-3.1-pro-preview`
 - `gemini-flash` → `google/gemini-3-flash-preview`
+- `gemini-flash-lite` → `google/gemini-3.1-flash-lite-preview`
 
 If you set your own alias with the same name, your value wins.
 
@@ -2305,12 +2306,12 @@ This usually means the **new agent** has an empty auth store. Auth is per-agent 
 stored in:
 
 ```
-~/.IronCliw/agents/<agentId>/agent/auth-profiles.json
+~/.ironcliw/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Fix options:
 
-- Run `IronCliw agents add <id>` and configure auth during the wizard.
+- Run `ironcliw agents add <id>` and configure auth during the wizard.
 - Or copy `auth-profiles.json` from the main agent's `agentDir` into the new agent's `agentDir`.
 
 Do **not** reuse `agentDir` across agents; it causes auth/session collisions.
@@ -2337,14 +2338,14 @@ It means the system attempted to use the auth profile ID `anthropic:default`, bu
 ### Fix checklist for No credentials found for profile anthropicdefault
 
 - **Confirm where auth profiles live** (new vs legacy paths)
-  - Current: `~/.IronCliw/agents/<agentId>/agent/auth-profiles.json`
-  - Legacy: `~/.IronCliw/agent/*` (migrated by `IronCliw doctor`)
+  - Current: `~/.ironcliw/agents/<agentId>/agent/auth-profiles.json`
+  - Legacy: `~/.ironcliw/agent/*` (migrated by `ironcliw doctor`)
 - **Confirm your env var is loaded by the Gateway**
-  - If you set `ANTHROPIC_API_KEY` in your shell but run the Gateway via systemd/launchd, it may not inherit it. Put it in `~/.IronCliw/.env` or enable `env.shellEnv`.
+  - If you set `ANTHROPIC_API_KEY` in your shell but run the Gateway via systemd/launchd, it may not inherit it. Put it in `~/.ironcliw/.env` or enable `env.shellEnv`.
 - **Make sure you're editing the correct agent**
   - Multi-agent setups mean there can be multiple `auth-profiles.json` files.
 - **Sanity-check model/auth status**
-  - Use `IronCliw models status` to see configured models and whether providers are authenticated.
+  - Use `ironcliw models status` to see configured models and whether providers are authenticated.
 
 **Fix checklist for No credentials found for profile anthropic**
 
@@ -2352,14 +2353,14 @@ This means the run is pinned to an Anthropic auth profile, but the Gateway
 can't find it in its auth store.
 
 - **Use a setup-token**
-  - Run `claude setup-token`, then paste it with `IronCliw models auth setup-token --provider anthropic`.
-  - If the token was created on another machine, use `IronCliw models auth paste-token --provider anthropic`.
+  - Run `claude setup-token`, then paste it with `ironcliw models auth setup-token --provider anthropic`.
+  - If the token was created on another machine, use `ironcliw models auth paste-token --provider anthropic`.
 - **If you want to use an API key instead**
-  - Put `ANTHROPIC_API_KEY` in `~/.IronCliw/.env` on the **gateway host**.
+  - Put `ANTHROPIC_API_KEY` in `~/.ironcliw/.env` on the **gateway host**.
   - Clear any pinned order that forces a missing profile:
 
     ```bash
-    IronCliw models auth order clear --provider anthropic
+    ironcliw models auth order clear --provider anthropic
     ```
 
 - **Confirm you're running commands on the gateway host**
@@ -2387,7 +2388,7 @@ Related: [/concepts/oauth](/concepts/oauth) (OAuth flows, token storage, multi-a
 An auth profile is a named credential record (OAuth or API key) tied to a provider. Profiles live in:
 
 ```
-~/.IronCliw/agents/<agentId>/agent/auth-profiles.json
+~/.ironcliw/agents/<agentId>/agent/auth-profiles.json
 ```
 
 ### What are typical profile IDs
@@ -2402,28 +2403,28 @@ IronCliw uses provider-prefixed IDs like:
 
 Yes. Config supports optional metadata for profiles and an ordering per provider (`auth.order.<provider>`). This does **not** store secrets; it maps IDs to provider/mode and sets rotation order.
 
-IronCliw may temporarily skip a profile if it's in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `IronCliw models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
+IronCliw may temporarily skip a profile if it's in a short **cooldown** (rate limits/timeouts/auth failures) or a longer **disabled** state (billing/insufficient credits). To inspect this, run `ironcliw models status --json` and check `auth.unusableProfiles`. Tuning: `auth.cooldowns.billingBackoffHours*`.
 
 You can also set a **per-agent** order override (stored in that agent's `auth-profiles.json`) via the CLI:
 
 ```bash
 # Defaults to the configured default agent (omit --agent)
-IronCliw models auth order get --provider anthropic
+ironcliw models auth order get --provider anthropic
 
 # Lock rotation to a single profile (only try this one)
-IronCliw models auth order set --provider anthropic anthropic:default
+ironcliw models auth order set --provider anthropic anthropic:default
 
 # Or set an explicit order (fallback within provider)
-IronCliw models auth order set --provider anthropic anthropic:work anthropic:default
+ironcliw models auth order set --provider anthropic anthropic:work anthropic:default
 
 # Clear override (fall back to config auth.order / round-robin)
-IronCliw models auth order clear --provider anthropic
+ironcliw models auth order clear --provider anthropic
 ```
 
 To target a specific agent:
 
 ```bash
-IronCliw models auth order set --provider anthropic --agent main anthropic:default
+ironcliw models auth order set --provider anthropic --agent main anthropic:default
 ```
 
 ### OAuth vs API key what's the difference
@@ -2444,27 +2445,27 @@ The wizard explicitly supports Anthropic setup-token and OpenAI Codex OAuth and 
 Precedence:
 
 ```
---port > IronCliw_GATEWAY_PORT > gateway.port > default 18789
+--port > IRONCLIW_GATEWAY_PORT > gateway.port > default 18789
 ```
 
-### Why does IronCliw gateway status say Runtime running but RPC probe failed
+### Why does ironcliw gateway status say Runtime running but RPC probe failed
 
 Because "running" is the **supervisor's** view (launchd/systemd/schtasks). The RPC probe is the CLI actually connecting to the gateway WebSocket and calling `status`.
 
-Use `IronCliw gateway status` and trust these lines:
+Use `ironcliw gateway status` and trust these lines:
 
 - `Probe target:` (the URL the probe actually used)
 - `Listening:` (what's actually bound on the port)
 - `Last gateway error:` (common root cause when the process is alive but the port isn't listening)
 
-### Why does IronCliw gateway status show Config cli and Config service different
+### Why does ironcliw gateway status show Config cli and Config service different
 
-You're editing one config file while the service is running another (often a `--profile` / `IronCliw_STATE_DIR` mismatch).
+You're editing one config file while the service is running another (often a `--profile` / `IRONCLIW_STATE_DIR` mismatch).
 
 Fix:
 
 ```bash
-IronCliw gateway install --force
+ironcliw gateway install --force
 ```
 
 Run that from the same `--profile` / environment you want the service to use.
@@ -2473,7 +2474,7 @@ Run that from the same `--profile` / environment you want the service to use.
 
 IronCliw enforces a runtime lock by binding the WebSocket listener immediately on startup (default `ws://127.0.0.1:18789`). If the bind fails with `EADDRINUSE`, it throws `GatewayLockError` indicating another instance is already listening.
 
-Fix: stop the other instance, free the port, or run with `IronCliw gateway --port <port>`.
+Fix: stop the other instance, free the port, or run with `ironcliw gateway --port <port>`.
 
 ### How do I run IronCliw in remote mode client connects to a Gateway elsewhere
 
@@ -2494,7 +2495,7 @@ Set `gateway.mode: "remote"` and point to a remote WebSocket URL, optionally wit
 
 Notes:
 
-- `IronCliw gateway` only starts when `gateway.mode` is `local` (or you pass the override flag).
+- `ironcliw gateway` only starts when `gateway.mode` is `local` (or you pass the override flag).
 - The macOS app watches the config file and switches modes live when these values change.
 
 ### The Control UI says unauthorized or keeps reconnecting What now
@@ -2503,16 +2504,16 @@ Your gateway is running with auth enabled (`gateway.auth.*`), but the UI is not 
 
 Facts (from code):
 
-- The Control UI stores the token in browser localStorage key `IronCliw.control.settings.v1`.
+- The Control UI keeps the token in memory for the current tab; it no longer persists gateway tokens in browser localStorage.
 
 Fix:
 
-- Fastest: `IronCliw dashboard` (prints + copies the dashboard URL, tries to open; shows SSH hint if headless).
-- If you don't have a token yet: `IronCliw doctor --generate-gateway-token`.
+- Fastest: `ironcliw dashboard` (prints + copies the dashboard URL, tries to open; shows SSH hint if headless).
+- If you don't have a token yet: `ironcliw doctor --generate-gateway-token`.
 - If remote, tunnel first: `ssh -N -L 18789:127.0.0.1:18789 user@host` then open `http://127.0.0.1:18789/`.
-- Set `gateway.auth.token` (or `IronCliw_GATEWAY_TOKEN`) on the gateway host.
+- Set `gateway.auth.token` (or `IRONCLIW_GATEWAY_TOKEN`) on the gateway host.
 - In the Control UI settings, paste the same token.
-- Still stuck? Run `IronCliw status --all` and follow [Troubleshooting](/gateway/troubleshooting). See [Dashboard](/web/dashboard) for auth details.
+- Still stuck? Run `ironcliw status --all` and follow [Troubleshooting](/gateway/troubleshooting). See [Dashboard](/web/dashboard) for auth details.
 
 ### I set gatewaybind tailnet but it can't bind nothing listens
 
@@ -2531,18 +2532,18 @@ Usually no - one Gateway can run multiple messaging channels and agents. Use mul
 
 Yes, but you must isolate:
 
-- `IronCliw_CONFIG_PATH` (per-instance config)
-- `IronCliw_STATE_DIR` (per-instance state)
+- `IRONCLIW_CONFIG_PATH` (per-instance config)
+- `IRONCLIW_STATE_DIR` (per-instance state)
 - `agents.defaults.workspace` (workspace isolation)
 - `gateway.port` (unique ports)
 
 Quick setup (recommended):
 
-- Use `IronCliw --profile <name> …` per instance (auto-creates `~/.IronCliw-<name>`).
+- Use `ironcliw --profile <name> …` per instance (auto-creates `~/.ironcliw-<name>`).
 - Set a unique `gateway.port` in each profile config (or pass `--port` for manual runs).
-- Install a per-profile service: `IronCliw --profile <name> gateway install`.
+- Install a per-profile service: `ironcliw --profile <name> gateway install`.
 
-Profiles also suffix service names (`ai.IronCliw.<profile>`; legacy `com.IronCliw.*`, `IronCliw-gateway-<profile>.service`, `IronCliw Gateway (<profile>)`).
+Profiles also suffix service names (`ai.ironcliw.<profile>`; legacy `com.ironcliw.*`, `ironcliw-gateway-<profile>.service`, `IronCliw Gateway (<profile>)`).
 Full guide: [Multiple gateways](/gateway/multiple-gateways).
 
 ### What does invalid handshake code 1008 mean
@@ -2566,7 +2567,7 @@ Quick fixes:
 If you're using the CLI or TUI, the URL should look like:
 
 ```
-IronCliw tui --url ws://<host>:18789 --token <token>
+ironcliw tui --url ws://<host>:18789 --token <token>
 ```
 
 Protocol details: [Gateway protocol](/gateway/protocol).
@@ -2578,7 +2579,7 @@ Protocol details: [Gateway protocol](/gateway/protocol).
 File logs (structured):
 
 ```
-/tmp/IronCliw/IronCliw-YYYY-MM-DD.log
+/tmp/ironcliw/ironcliw-YYYY-MM-DD.log
 ```
 
 You can set a stable path via `logging.file`. File log level is controlled by `logging.level`. Console verbosity is controlled by `--verbose` and `logging.consoleLevel`.
@@ -2586,13 +2587,13 @@ You can set a stable path via `logging.file`. File log level is controlled by `l
 Fastest log tail:
 
 ```bash
-IronCliw logs --follow
+ironcliw logs --follow
 ```
 
 Service/supervisor logs (when the gateway runs via launchd/systemd):
 
-- macOS: `$IronCliw_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.IronCliw/logs/...`; profiles use `~/.IronCliw-<profile>/logs/...`)
-- Linux: `journalctl --user -u IronCliw-gateway[-<profile>].service -n 200 --no-pager`
+- macOS: `$IRONCLIW_STATE_DIR/logs/gateway.log` and `gateway.err.log` (default: `~/.ironcliw/logs/...`; profiles use `~/.ironcliw-<profile>/logs/...`)
+- Linux: `journalctl --user -u ironcliw-gateway[-<profile>].service -n 200 --no-pager`
 - Windows: `schtasks /Query /TN "IronCliw Gateway (<profile>)" /V /FO LIST`
 
 See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
@@ -2602,11 +2603,11 @@ See [Troubleshooting](/gateway/troubleshooting#log-locations) for more.
 Use the gateway helpers:
 
 ```bash
-IronCliw gateway status
-IronCliw gateway restart
+ironcliw gateway status
+ironcliw gateway restart
 ```
 
-If you run the gateway manually, `IronCliw gateway --force` can reclaim the port. See [Gateway](/gateway).
+If you run the gateway manually, `ironcliw gateway --force` can reclaim the port. See [Gateway](/gateway).
 
 ### I closed my terminal on Windows how do I restart IronCliw
 
@@ -2618,14 +2619,14 @@ Open PowerShell, enter WSL, then restart:
 
 ```powershell
 wsl
-IronCliw gateway status
-IronCliw gateway restart
+ironcliw gateway status
+ironcliw gateway restart
 ```
 
 If you never installed the service, start it in the foreground:
 
 ```bash
-IronCliw gateway run
+ironcliw gateway run
 ```
 
 **2) Native Windows (not recommended):** the Gateway runs directly in Windows.
@@ -2633,14 +2634,14 @@ IronCliw gateway run
 Open PowerShell and run:
 
 ```powershell
-IronCliw gateway status
-IronCliw gateway restart
+ironcliw gateway status
+ironcliw gateway restart
 ```
 
 If you run it manually (no service), use:
 
 ```powershell
-IronCliw gateway run
+ironcliw gateway run
 ```
 
 Docs: [Windows (WSL2)](/platforms/windows), [Gateway service runbook](/gateway).
@@ -2650,10 +2651,10 @@ Docs: [Windows (WSL2)](/platforms/windows), [Gateway service runbook](/gateway).
 Start with a quick health sweep:
 
 ```bash
-IronCliw status
-IronCliw models status
-IronCliw channels status
-IronCliw logs --follow
+ironcliw status
+ironcliw models status
+ironcliw channels status
+ironcliw logs --follow
 ```
 
 Common causes:
@@ -2671,15 +2672,15 @@ Docs: [Channels](/channels), [Troubleshooting](/gateway/troubleshooting), [Remot
 
 This usually means the UI lost the WebSocket connection. Check:
 
-1. Is the Gateway running? `IronCliw gateway status`
-2. Is the Gateway healthy? `IronCliw status`
-3. Does the UI have the right token? `IronCliw dashboard`
+1. Is the Gateway running? `ironcliw gateway status`
+2. Is the Gateway healthy? `ironcliw status`
+3. Does the UI have the right token? `ironcliw dashboard`
 4. If remote, is the tunnel/Tailscale link up?
 
 Then tail logs:
 
 ```bash
-IronCliw logs --follow
+ironcliw logs --follow
 ```
 
 Docs: [Dashboard](/web/dashboard), [Remote access](/gateway/remote), [Troubleshooting](/gateway/troubleshooting).
@@ -2689,8 +2690,8 @@ Docs: [Dashboard](/web/dashboard), [Remote access](/gateway/remote), [Troublesho
 Start with logs and channel status:
 
 ```bash
-IronCliw channels status
-IronCliw channels logs --channel telegram
+ironcliw channels status
+ironcliw channels logs --channel telegram
 ```
 
 If you are on a VPS or behind a proxy, confirm outbound HTTPS is allowed and DNS works.
@@ -2703,9 +2704,9 @@ Docs: [Telegram](/channels/telegram), [Channel troubleshooting](/channels/troubl
 First confirm the Gateway is reachable and the agent can run:
 
 ```bash
-IronCliw status
-IronCliw models status
-IronCliw logs --follow
+ironcliw status
+ironcliw models status
+ironcliw logs --follow
 ```
 
 In the TUI, use `/status` to see the current state. If you expect replies in a chat
@@ -2718,8 +2719,8 @@ Docs: [TUI](/web/tui), [Slash commands](/tools/slash-commands).
 If you installed the service:
 
 ```bash
-IronCliw gateway stop
-IronCliw gateway start
+ironcliw gateway stop
+ironcliw gateway start
 ```
 
 This stops/starts the **supervised service** (launchd on macOS, systemd on Linux).
@@ -2728,17 +2729,17 @@ Use this when the Gateway runs in the background as a daemon.
 If you're running in the foreground, stop with Ctrl-C, then:
 
 ```bash
-IronCliw gateway run
+ironcliw gateway run
 ```
 
 Docs: [Gateway service runbook](/gateway).
 
-### ELI5 IronCliw gateway restart vs IronCliw gateway
+### ELI5 ironcliw gateway restart vs ironcliw gateway
 
-- `IronCliw gateway restart`: restarts the **background service** (launchd/systemd).
-- `IronCliw gateway`: runs the gateway **in the foreground** for this terminal session.
+- `ironcliw gateway restart`: restarts the **background service** (launchd/systemd).
+- `ironcliw gateway`: runs the gateway **in the foreground** for this terminal session.
 
-If you installed the service, use the gateway commands. Use `IronCliw gateway` when
+If you installed the service, use the gateway commands. Use `ironcliw gateway` when
 you want a one-off, foreground run.
 
 ### What's the fastest way to get more details when something fails
@@ -2749,12 +2750,12 @@ Start the Gateway with `--verbose` to get more console detail. Then inspect the 
 
 ### My skill generated an imagePDF but nothing was sent
 
-Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [IronCliw assistant setup](/start/IronCliw) and [Agent send](/tools/agent-send).
+Outbound attachments from the agent must include a `MEDIA:<path-or-url>` line (on its own line). See [IronCliw assistant setup](/start/ironcliw) and [Agent send](/tools/agent-send).
 
 CLI sending:
 
 ```bash
-IronCliw message send --target +15555550123 --message "Here you go" --media /path/to/file.png
+ironcliw message send --target +15555550123 --message "Here you go" --media /path/to/file.png
 ```
 
 Also check:
@@ -2772,11 +2773,11 @@ Treat inbound DMs as untrusted input. Defaults are designed to reduce risk:
 
 - Default behavior on DM-capable channels is **pairing**:
   - Unknown senders receive a pairing code; the bot does not process their message.
-  - Approve with: `IronCliw pairing approve --channel <channel> [--account <id>] <code>`
-  - Pending requests are capped at **3 per channel**; check `IronCliw pairing list --channel <channel> [--account <id>]` if a code didn't arrive.
+  - Approve with: `ironcliw pairing approve --channel <channel> [--account <id>] <code>`
+  - Pending requests are capped at **3 per channel**; check `ironcliw pairing list --channel <channel> [--account <id>]` if a code didn't arrive.
 - Opening DMs publicly requires explicit opt-in (`dmPolicy: "open"` and allowlist `"*"`).
 
-Run `IronCliw doctor` to surface risky DM policies.
+Run `ironcliw doctor` to surface risky DM policies.
 
 ### Is prompt injection only a concern for public bots
 
@@ -2831,7 +2832,7 @@ Pairing codes are sent **only** when an unknown sender messages the bot and
 Check pending requests:
 
 ```bash
-IronCliw pairing list telegram
+ironcliw pairing list telegram
 ```
 
 If you want immediate access, allowlist your sender id or set `dmPolicy: "open"`
@@ -2844,13 +2845,13 @@ No. Default WhatsApp DM policy is **pairing**. Unknown senders only get a pairin
 Approve pairing with:
 
 ```bash
-IronCliw pairing approve whatsapp <code>
+ironcliw pairing approve whatsapp <code>
 ```
 
 List pending requests:
 
 ```bash
-IronCliw pairing list whatsapp
+ironcliw pairing list whatsapp
 ```
 
 Wizard phone number prompt: it's used to set your **allowlist/owner** so your own DMs are permitted. It's not used for auto-sending. If you run on your personal WhatsApp number, use that number and enable `channels.whatsapp.selfChatMode`.
@@ -2887,8 +2888,8 @@ stop run
 stop current run
 stop agent
 stop the agent
-stop IronCliw
-IronCliw stop
+stop ironcliw
+ironcliw stop
 stop don't do anything
 stop do not do anything
 stop doing anything
@@ -2960,4 +2961,4 @@ You can add options like `debounce:2s cap:25 drop:summarize` for followup modes.
 
 ---
 
-Still stuck? Ask in [Discord](https://discord.com/invite/clawd) or open a [GitHub discussion](https://github.com/IronCliw/IronCliw/discussions).
+Still stuck? Ask in [Discord](https://discord.com/invite/clawd) or open a [GitHub discussion](https://github.com/ironcliw/ironcliw/discussions).

@@ -17,4 +17,3 @@ parallel:
 # Combine all research
 session "Write comprehensive research summary"
   context: { history, current, future }
-

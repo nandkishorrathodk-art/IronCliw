@@ -75,7 +75,7 @@ export function formatElevatedUnavailableText(params: {
   }
   if (params.sessionKey) {
     lines.push(
-      `See: ${formatCliCommand(`IronCliw sandbox explain --session ${params.sessionKey}`)}`,
+      `See: ${formatCliCommand(`ironcliw sandbox explain --session ${params.sessionKey}`)}`,
     );
   }
   return lines.join("\n");

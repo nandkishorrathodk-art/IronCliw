@@ -11,15 +11,15 @@ import {
 
 describe("volcengine/byteplus auth choice", () => {
   const lifecycle = createAuthTestLifecycle([
-    "IronCliw_STATE_DIR",
-    "IronCliw_AGENT_DIR",
+    "IRONCLIW_STATE_DIR",
+    "IRONCLIW_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "VOLCANO_ENGINE_API_KEY",
     "BYTEPLUS_API_KEY",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("IronCliw-volc-byte-");
+    const env = await setupAuthTestEnv("ironcliw-volc-byte-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }
@@ -52,7 +52,7 @@ describe("volcengine/byteplus auth choice", () => {
       defaultSelect?: string;
       confirmResult?: boolean;
       textValue?: string;
-      secretInputMode?: "ref";
+      secretInputMode?: "ref"; // pragma: allowlist secret
     },
   ) {
     const agentDir = await setupTempState();

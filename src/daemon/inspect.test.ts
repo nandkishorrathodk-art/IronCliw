@@ -44,12 +44,12 @@ describe("findExtraGatewayServices (win32)", () => {
     expect(result).toEqual([]);
   });
 
-  it("collects only non-IronCliw marker tasks from schtasks output", async () => {
+  it("collects only non-ironcliw marker tasks from schtasks output", async () => {
     execSchtasksMock.mockResolvedValueOnce({
       code: 0,
       stdout: [
         "TaskName: IronCliw Gateway",
-        "Task To Run: C:\\Program Files\\IronCliw\\IronCliw.exe gateway run",
+        "Task To Run: C:\\Program Files\\IronCliw\\ironcliw.exe gateway run",
         "",
         "TaskName: Clawdbot Legacy",
         "Task To Run: C:\\clawdbot\\clawdbot.exe run",

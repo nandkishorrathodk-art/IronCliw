@@ -4,8 +4,8 @@ import {
   isHttpsUrlAllowedByHostnameSuffixAllowlist,
   isPrivateIpAddress,
   normalizeHostnameSuffixAllowlist,
-} from "IronCliw/plugin-sdk/msteams";
-import type { SsrFPolicy } from "IronCliw/plugin-sdk/msteams";
+} from "ironcliw/plugin-sdk/msteams";
+import type { SsrFPolicy } from "ironcliw/plugin-sdk/msteams";
 import type { MSTeamsAttachmentLike } from "./types.js";
 
 type InlineImageCandidate =

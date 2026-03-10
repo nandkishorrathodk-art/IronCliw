@@ -26,7 +26,7 @@ IronCliw features that can generate provider usage or paid API calls.
 
 **CLI usage windows (provider quotas)**
 
-- `IronCliw status --usage` and `IronCliw channels list` show provider **usage windows**
+- `ironcliw status --usage` and `ironcliw channels list` show provider **usage windows**
   (quota snapshots, not per-message costs).
 
 See [Token use & costs](/reference/token-use) for details and examples.
@@ -75,12 +75,20 @@ You can keep it local with `memorySearch.provider = "local"` (no API usage).
 
 See [Memory](/concepts/memory).
 
-### 4) Web search tool (Brave / Perplexity via OpenRouter)
+### 4) Web search tool
 
-`web_search` uses API keys and may incur usage charges:
+`web_search` uses API keys and may incur usage charges depending on your provider:
 
 - **Brave Search API**: `BRAVE_API_KEY` or `tools.web.search.apiKey`
-- **Perplexity** (via OpenRouter): `PERPLEXITY_API_KEY` or `OPENROUTER_API_KEY`
+- **Gemini (Google Search)**: `GEMINI_API_KEY`
+- **Grok (xAI)**: `XAI_API_KEY`
+- **Kimi (Moonshot)**: `KIMI_API_KEY` or `MOONSHOT_API_KEY`
+- **Perplexity Search API**: `PERPLEXITY_API_KEY`
+
+**Brave Search free credit:** Each Brave plan includes $5/month in renewing
+free credit. The Search plan costs $5 per 1,000 requests, so the credit covers
+1,000 requests/month at no charge. Set your usage limit in the Brave dashboard
+to avoid unexpected charges.
 
 See [Web tools](/tools/web).
 
@@ -99,8 +107,8 @@ See [Web tools](/tools/web).
 Some status commands call **provider usage endpoints** to display quota windows or auth health.
 These are typically low-volume calls but still hit provider APIs:
 
-- `IronCliw status --usage`
-- `IronCliw models status --json`
+- `ironcliw status --usage`
+- `ironcliw models status --json`
 
 See [Models CLI](/cli/models).
 
@@ -113,7 +121,7 @@ See [Session management + compaction](/reference/session-management-compaction).
 
 ### 8) Model scan / probe
 
-`IronCliw models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
+`ironcliw models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
 probing is enabled.
 
 See [Models CLI](/cli/models).

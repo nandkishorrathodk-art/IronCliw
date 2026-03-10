@@ -4,7 +4,7 @@ import type {
   DmPolicy,
   GroupPolicy,
   SecretInput,
-} from "IronCliw/plugin-sdk/nextcloud-talk";
+} from "ironcliw/plugin-sdk/nextcloud-talk";
 
 export type { DmPolicy, GroupPolicy };
 

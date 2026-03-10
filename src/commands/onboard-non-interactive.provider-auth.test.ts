@@ -42,6 +42,11 @@ let upsertAuthProfile: typeof import("../agents/auth-profiles.js").upsertAuthPro
 type ProviderAuthConfigSnapshot = {
   auth?: { profiles?: Record<string, { provider?: string; mode?: string }> };
   agents?: { defaults?: { model?: { primary?: string } } };
+  talk?: {
+    provider?: string;
+    apiKey?: string | { source?: string; id?: string };
+    providers?: Record<string, { apiKey?: string | { source?: string; id?: string } }>;
+  };
   models?: {
     providers?: Record<
       string,
@@ -76,23 +81,23 @@ async function withOnboardEnv(
   run: (ctx: OnboardEnv) => Promise<void>,
 ): Promise<void> {
   const tempHome = await makeTempWorkspace(prefix);
-  const configPath = path.join(tempHome, "IronCliw.json");
+  const configPath = path.join(tempHome, "ironcliw.json");
   const runtime = createThrowingRuntime();
 
   try {
     await withEnvAsync(
       {
         HOME: tempHome,
-        IronCliw_STATE_DIR: tempHome,
-        IronCliw_CONFIG_PATH: configPath,
-        IronCliw_SKIP_CHANNELS: "1",
-        IronCliw_SKIP_GMAIL_WATCHER: "1",
-        IronCliw_SKIP_CRON: "1",
-        IronCliw_SKIP_CANVAS_HOST: "1",
-        IronCliw_GATEWAY_TOKEN: undefined,
-        IronCliw_GATEWAY_PASSWORD: undefined,
+        IRONCLIW_STATE_DIR: tempHome,
+        IRONCLIW_CONFIG_PATH: configPath,
+        IRONCLIW_SKIP_CHANNELS: "1",
+        IRONCLIW_SKIP_GMAIL_WATCHER: "1",
+        IRONCLIW_SKIP_CRON: "1",
+        IRONCLIW_SKIP_CANVAS_HOST: "1",
+        IRONCLIW_GATEWAY_TOKEN: undefined,
+        IRONCLIW_GATEWAY_PASSWORD: undefined,
         CUSTOM_API_KEY: undefined,
-        IronCliw_DISABLE_CONFIG_CACHE: "1",
+        IRONCLIW_DISABLE_CONFIG_CACHE: "1",
       },
       async () => {
         await run({ configPath, runtime });
@@ -181,10 +186,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores MiniMax API key and uses global baseUrl by default", async () => {
-    await withOnboardEnv("IronCliw-onboard-minimax-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-minimax-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "minimax-api",
-        minimaxApiKey: "sk-minimax-test",
+        minimaxApiKey: "sk-minimax-test", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["minimax:default"]?.provider).toBe("minimax");
@@ -200,10 +205,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("supports MiniMax CN API endpoint auth choice", async () => {
-    await withOnboardEnv("IronCliw-onboard-minimax-cn-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-minimax-cn-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "minimax-api-key-cn",
-        minimaxApiKey: "sk-minimax-test",
+        minimaxApiKey: "sk-minimax-test", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["minimax-cn:default"]?.provider).toBe("minimax-cn");
@@ -219,10 +224,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores Z.AI API key and uses global baseUrl by default", async () => {
-    await withOnboardEnv("IronCliw-onboard-zai-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-zai-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "zai-api-key",
-        zaiApiKey: "zai-test-key",
+        zaiApiKey: "zai-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["zai:default"]?.provider).toBe("zai");
@@ -234,10 +239,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("supports Z.AI CN coding endpoint auth choice", async () => {
-    await withOnboardEnv("IronCliw-onboard-zai-cn-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-zai-cn-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "zai-coding-cn",
-        zaiApiKey: "zai-test-key",
+        zaiApiKey: "zai-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.models?.providers?.zai?.baseUrl).toBe(
@@ -247,7 +252,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores xAI API key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-xai-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-xai-", async (env) => {
       const rawKey = "xai-test-\r\nkey";
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "xai-api-key",
@@ -262,9 +267,9 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers Mistral auth choice from --mistral-api-key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-mistral-infer-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-mistral-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
-        mistralApiKey: "mistral-test-key",
+        mistralApiKey: "mistral-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["mistral:default"]?.provider).toBe("mistral");
@@ -279,10 +284,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores Volcano Engine API key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-volcengine-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-volcengine-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "volcengine-api-key",
-        volcengineApiKey: "volcengine-test-key",
+        volcengineApiKey: "volcengine-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.agents?.defaults?.model?.primary).toBe("volcengine-plan/ark-code-latest");
@@ -290,9 +295,9 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers BytePlus auth choice from --byteplus-api-key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-byteplus-infer-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-byteplus-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
-        byteplusApiKey: "byteplus-test-key",
+        byteplusApiKey: "byteplus-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.agents?.defaults?.model?.primary).toBe("byteplus-plan/ark-code-latest");
@@ -300,10 +305,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores Vercel AI Gateway API key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-ai-gateway-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-ai-gateway-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "ai-gateway-api-key",
-        aiGatewayApiKey: "gateway-test-key",
+        aiGatewayApiKey: "gateway-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["vercel-ai-gateway:default"]?.provider).toBe("vercel-ai-gateway");
@@ -320,7 +325,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores token auth profile", async () => {
-    await withOnboardEnv("IronCliw-onboard-token-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("ironcliw-onboard-token-", async ({ configPath, runtime }) => {
       const cleanToken = `sk-ant-oat01-${"a".repeat(80)}`;
       const token = `${cleanToken.slice(0, 30)}\r${cleanToken.slice(30)}`;
 
@@ -347,20 +352,52 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores OpenAI API key and sets OpenAI default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-openai-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-openai-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "openai-api-key",
-        openaiApiKey: "sk-openai-test",
+        openaiApiKey: "sk-openai-test", // pragma: allowlist secret
       });
 
       expect(cfg.agents?.defaults?.model?.primary).toBe(OPENAI_DEFAULT_MODEL);
     });
   });
 
+  it("does not persist talk fallback secrets when OpenAI ref onboarding starts from an empty config", async () => {
+    await withOnboardEnv("ironcliw-onboard-openai-ref-no-talk-leak-", async (env) => {
+      await withEnvAsync(
+        {
+          OPENAI_API_KEY: "sk-openai-env-key", // pragma: allowlist secret
+          ELEVENLABS_API_KEY: "elevenlabs-env-key", // pragma: allowlist secret
+        },
+        async () => {
+          const cfg = await runOnboardingAndReadConfig(env, {
+            authChoice: "openai-api-key",
+            secretInputMode: "ref", // pragma: allowlist secret
+          });
+
+          expect(cfg.agents?.defaults?.model?.primary).toBe(OPENAI_DEFAULT_MODEL);
+          expect(cfg.talk).toBeUndefined();
+
+          const store = ensureAuthProfileStore();
+          const profile = store.profiles["openai:default"];
+          expect(profile?.type).toBe("api_key");
+          if (profile?.type === "api_key") {
+            expect(profile.key).toBeUndefined();
+            expect(profile.keyRef).toEqual({
+              source: "env",
+              provider: "default",
+              id: "OPENAI_API_KEY",
+            });
+          }
+        },
+      );
+    });
+  });
+
   it.each([
     {
       name: "anthropic",
-      prefix: "IronCliw-onboard-ref-flag-anthropic-",
+      prefix: "ironcliw-onboard-ref-flag-anthropic-",
       authChoice: "apiKey",
       optionKey: "anthropicApiKey",
       flagName: "--anthropic-api-key",
@@ -368,7 +405,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "openai",
-      prefix: "IronCliw-onboard-ref-flag-openai-",
+      prefix: "ironcliw-onboard-ref-flag-openai-",
       authChoice: "openai-api-key",
       optionKey: "openaiApiKey",
       flagName: "--openai-api-key",
@@ -376,7 +413,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "openrouter",
-      prefix: "IronCliw-onboard-ref-flag-openrouter-",
+      prefix: "ironcliw-onboard-ref-flag-openrouter-",
       authChoice: "openrouter-api-key",
       optionKey: "openrouterApiKey",
       flagName: "--openrouter-api-key",
@@ -384,7 +421,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "xai",
-      prefix: "IronCliw-onboard-ref-flag-xai-",
+      prefix: "ironcliw-onboard-ref-flag-xai-",
       authChoice: "xai-api-key",
       optionKey: "xaiApiKey",
       flagName: "--xai-api-key",
@@ -392,7 +429,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "volcengine",
-      prefix: "IronCliw-onboard-ref-flag-volcengine-",
+      prefix: "ironcliw-onboard-ref-flag-volcengine-",
       authChoice: "volcengine-api-key",
       optionKey: "volcengineApiKey",
       flagName: "--volcengine-api-key",
@@ -400,7 +437,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "byteplus",
-      prefix: "IronCliw-onboard-ref-flag-byteplus-",
+      prefix: "ironcliw-onboard-ref-flag-byteplus-",
       authChoice: "byteplus-api-key",
       optionKey: "byteplusApiKey",
       flagName: "--byteplus-api-key",
@@ -410,10 +447,10 @@ describe("onboard (non-interactive): provider auth", () => {
     "fails fast for $name when --secret-input-mode ref uses explicit key without env and does not leak the key",
     async ({ prefix, authChoice, optionKey, flagName, envVar }) => {
       await withOnboardEnv(prefix, async ({ runtime }) => {
-        const providedSecret = `${envVar.toLowerCase()}-should-not-leak`;
+        const providedSecret = `${envVar.toLowerCase()}-should-not-leak`; // pragma: allowlist secret
         const options: Record<string, unknown> = {
           authChoice,
-          secretInputMode: "ref",
+          secretInputMode: "ref", // pragma: allowlist secret
           [optionKey]: providedSecret,
           skipSkills: true,
         };
@@ -443,16 +480,16 @@ describe("onboard (non-interactive): provider auth", () => {
   );
 
   it("stores the detected env alias as keyRef for opencode ref mode", async () => {
-    await withOnboardEnv("IronCliw-onboard-ref-opencode-alias-", async ({ runtime }) => {
+    await withOnboardEnv("ironcliw-onboard-ref-opencode-alias-", async ({ runtime }) => {
       await withEnvAsync(
         {
           OPENCODE_API_KEY: undefined,
-          OPENCODE_ZEN_API_KEY: "opencode-zen-env-key",
+          OPENCODE_ZEN_API_KEY: "opencode-zen-env-key", // pragma: allowlist secret
         },
         async () => {
           await runNonInteractiveOnboardingWithDefaults(runtime, {
             authChoice: "opencode-zen",
-            secretInputMode: "ref",
+            secretInputMode: "ref", // pragma: allowlist secret
             skipSkills: true,
           });
 
@@ -473,7 +510,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("rejects vLLM auth choice in non-interactive mode", async () => {
-    await withOnboardEnv("IronCliw-onboard-vllm-non-interactive-", async ({ runtime }) => {
+    await withOnboardEnv("ironcliw-onboard-vllm-non-interactive-", async ({ runtime }) => {
       await expect(
         runNonInteractiveOnboardingWithDefaults(runtime, {
           authChoice: "vllm",
@@ -484,10 +521,10 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores LiteLLM API key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-litellm-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-litellm-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "litellm-api-key",
-        litellmApiKey: "litellm-test-key",
+        litellmApiKey: "litellm-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["litellm:default"]?.provider).toBe("litellm");
@@ -504,14 +541,14 @@ describe("onboard (non-interactive): provider auth", () => {
   it.each([
     {
       name: "stores Cloudflare AI Gateway API key and metadata",
-      prefix: "IronCliw-onboard-cf-gateway-",
+      prefix: "ironcliw-onboard-cf-gateway-",
       options: {
         authChoice: "cloudflare-ai-gateway-api-key",
       },
     },
     {
       name: "infers Cloudflare auth choice from API key flags",
-      prefix: "IronCliw-onboard-cf-gateway-infer-",
+      prefix: "ironcliw-onboard-cf-gateway-infer-",
       options: {},
     },
   ])("$name", async ({ prefix, options }) => {
@@ -519,7 +556,7 @@ describe("onboard (non-interactive): provider auth", () => {
       await runNonInteractiveOnboardingWithDefaults(runtime, {
         cloudflareAiGatewayAccountId: "cf-account-id",
         cloudflareAiGatewayGatewayId: "cf-gateway-id",
-        cloudflareAiGatewayApiKey: "cf-gateway-test-key",
+        cloudflareAiGatewayApiKey: "cf-gateway-test-key", // pragma: allowlist secret
         skipSkills: true,
         ...options,
       });
@@ -541,9 +578,9 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers Together auth choice from --together-api-key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-together-infer-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-together-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
-        togetherApiKey: "together-test-key",
+        togetherApiKey: "together-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["together:default"]?.provider).toBe("together");
@@ -558,9 +595,9 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers QIANFAN auth choice from --qianfan-api-key and sets default model", async () => {
-    await withOnboardEnv("IronCliw-onboard-qianfan-infer-", async (env) => {
+    await withOnboardEnv("ironcliw-onboard-qianfan-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
-        qianfanApiKey: "qianfan-test-key",
+        qianfanApiKey: "qianfan-test-key", // pragma: allowlist secret
       });
 
       expect(cfg.auth?.profiles?.["qianfan:default"]?.provider).toBe("qianfan");
@@ -575,11 +612,11 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("configures a custom provider from non-interactive flags", async () => {
-    await withOnboardEnv("IronCliw-onboard-custom-provider-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("ironcliw-onboard-custom-provider-", async ({ configPath, runtime }) => {
       await runNonInteractiveOnboardingWithDefaults(runtime, {
         authChoice: "custom-api-key",
         customBaseUrl: "https://llm.example.com/v1",
-        customApiKey: "custom-test-key",
+        customApiKey: "custom-test-key", // pragma: allowlist secret
         customModelId: "foo-large",
         customCompatibility: "anthropic",
         skipSkills: true,
@@ -598,12 +635,12 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("infers custom provider auth choice from custom flags", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-infer-",
+      "ironcliw-onboard-custom-provider-infer-",
       async ({ configPath, runtime }) => {
         await runNonInteractiveOnboardingWithDefaults(runtime, {
           customBaseUrl: "https://models.custom.local/v1",
           customModelId: "local-large",
-          customApiKey: "custom-test-key",
+          customApiKey: "custom-test-key", // pragma: allowlist secret
           skipSkills: true,
         });
 
@@ -622,9 +659,9 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses CUSTOM_API_KEY env fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-env-fallback-",
+      "ironcliw-onboard-custom-provider-env-fallback-",
       async ({ configPath, runtime }) => {
-        process.env.CUSTOM_API_KEY = "custom-env-key";
+        process.env.CUSTOM_API_KEY = "custom-env-key"; // pragma: allowlist secret
         await runCustomLocalNonInteractive(runtime);
         expect(await readCustomLocalProviderApiKey(configPath)).toBe("custom-env-key");
       },
@@ -633,11 +670,11 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("stores CUSTOM_API_KEY env ref for non-interactive custom provider auth in ref mode", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-env-ref-",
+      "ironcliw-onboard-custom-provider-env-ref-",
       async ({ configPath, runtime }) => {
-        process.env.CUSTOM_API_KEY = "custom-env-key";
+        process.env.CUSTOM_API_KEY = "custom-env-key"; // pragma: allowlist secret
         await runCustomLocalNonInteractive(runtime, {
-          secretInputMode: "ref",
+          secretInputMode: "ref", // pragma: allowlist secret
         });
         expect(await readCustomLocalProviderApiKeyInput(configPath)).toEqual({
           source: "env",
@@ -649,13 +686,13 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("fails fast for custom provider ref mode when --custom-api-key is set but CUSTOM_API_KEY env is missing", async () => {
-    await withOnboardEnv("IronCliw-onboard-custom-provider-ref-flag-", async ({ runtime }) => {
-      const providedSecret = "custom-inline-key-should-not-leak";
+    await withOnboardEnv("ironcliw-onboard-custom-provider-ref-flag-", async ({ runtime }) => {
+      const providedSecret = "custom-inline-key-should-not-leak"; // pragma: allowlist secret
       await withEnvAsync({ CUSTOM_API_KEY: undefined }, async () => {
         let thrown: Error | undefined;
         try {
           await runCustomLocalNonInteractive(runtime, {
-            secretInputMode: "ref",
+            secretInputMode: "ref", // pragma: allowlist secret
             customApiKey: providedSecret,
           });
         } catch (error) {
@@ -676,7 +713,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses matching profile fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-profile-fallback-",
+      "ironcliw-onboard-custom-provider-profile-fallback-",
       async ({ configPath, runtime }) => {
         upsertAuthProfile({
           profileId: `${CUSTOM_LOCAL_PROVIDER_ID}:default`,
@@ -694,7 +731,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails custom provider auth when compatibility is invalid", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-invalid-compat-",
+      "ironcliw-onboard-custom-provider-invalid-compat-",
       async ({ runtime }) => {
         await expect(
           runNonInteractiveOnboardingWithDefaults(runtime, {
@@ -710,7 +747,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("fails custom provider auth when explicit provider id is invalid", async () => {
-    await withOnboardEnv("IronCliw-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
+    await withOnboardEnv("ironcliw-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
       await expect(
         runNonInteractiveOnboardingWithDefaults(runtime, {
           authChoice: "custom-api-key",
@@ -727,11 +764,11 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails inferred custom auth when required flags are incomplete", async () => {
     await withOnboardEnv(
-      "IronCliw-onboard-custom-provider-missing-required-",
+      "ironcliw-onboard-custom-provider-missing-required-",
       async ({ runtime }) => {
         await expect(
           runNonInteractiveOnboardingWithDefaults(runtime, {
-            customApiKey: "custom-test-key",
+            customApiKey: "custom-test-key", // pragma: allowlist secret
             skipSkills: true,
           }),
         ).rejects.toThrow('Auth choice "custom-api-key" requires a base URL and model ID.');

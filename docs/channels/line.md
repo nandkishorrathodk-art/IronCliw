@@ -22,13 +22,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-IronCliw plugins install @IronCliw/line
+ironcliw plugins install @ironcliw/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-IronCliw plugins install ./extensions/line
+ironcliw plugins install ./extensions/line
 ```
 
 ## Setup
@@ -111,8 +111,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-IronCliw pairing list line
-IronCliw pairing approve line <CODE>
+ironcliw pairing list line
+ironcliw pairing approve line <CODE>
 ```
 
 Allowlists and policies:

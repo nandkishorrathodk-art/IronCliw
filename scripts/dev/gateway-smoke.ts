@@ -1,14 +1,14 @@
 import { createArgReader, createGatewayWsClient, resolveGatewayUrl } from "./gateway-ws-client.ts";
 
 const { get: getArg } = createArgReader();
-const urlRaw = getArg("--url") ?? process.env.IronCliw_GATEWAY_URL;
-const token = getArg("--token") ?? process.env.IronCliw_GATEWAY_TOKEN;
+const urlRaw = getArg("--url") ?? process.env.IRONCLIW_GATEWAY_URL;
+const token = getArg("--token") ?? process.env.IRONCLIW_GATEWAY_TOKEN;
 
 if (!urlRaw || !token) {
   // eslint-disable-next-line no-console
   console.error(
     "Usage: bun scripts/dev/gateway-smoke.ts --url <wss://host[:port]> --token <gateway.auth.token>\n" +
-      "Or set env: IronCliw_GATEWAY_URL / IronCliw_GATEWAY_TOKEN",
+      "Or set env: IRONCLIW_GATEWAY_URL / IRONCLIW_GATEWAY_TOKEN",
   );
   process.exit(1);
 }
@@ -32,12 +32,12 @@ async function main() {
     minProtocol: 3,
     maxProtocol: 3,
     client: {
-      id: "IronCliw-ios",
-      displayName: "IronCliw gateway smoke test",
+      id: "ironcliw-ios",
+      displayName: "ironcliw gateway smoke test",
       version: "dev",
       platform: "dev",
       mode: "ui",
-      instanceId: "IronCliw-dev-smoke",
+      instanceId: "ironcliw-dev-smoke",
     },
     locale: "en-US",
     userAgent: "gateway-smoke",

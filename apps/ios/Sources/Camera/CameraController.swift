@@ -104,9 +104,9 @@ actor CameraController {
         }
 
         let movURL = FileManager().temporaryDirectory
-            .appendingPathComponent("IronCliw-camera-\(UUID().uuidString).mov")
+            .appendingPathComponent("ironcliw-camera-\(UUID().uuidString).mov")
         let mp4URL = FileManager().temporaryDirectory
-            .appendingPathComponent("IronCliw-camera-\(UUID().uuidString).mp4")
+            .appendingPathComponent("ironcliw-camera-\(UUID().uuidString).mp4")
         defer {
             try? FileManager().removeItem(at: movURL)
             try? FileManager().removeItem(at: mp4URL)

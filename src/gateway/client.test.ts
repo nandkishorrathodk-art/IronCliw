@@ -123,7 +123,7 @@ function createClientWithIdentity(
 ) {
   const identity: DeviceIdentity = {
     deviceId,
-    privateKeyPem: "private-key",
+    privateKeyPem: "private-key", // pragma: allowlist secret
     publicKeyPem: "public-key",
   };
   return new GatewayClient({
@@ -143,14 +143,14 @@ function expectSecurityConnectError(
     }),
   );
   const error = onConnectError.mock.calls[0]?.[0] as Error;
-  expect(error.message).toContain("IronCliw doctor --fix");
+  expect(error.message).toContain("ironcliw doctor --fix");
   if (params?.expectTailscaleHint) {
     expect(error.message).toContain("Tailscale Serve/Funnel");
   }
 }
 
 describe("GatewayClient security checks", () => {
-  const envSnapshot = captureEnv(["IronCliw_ALLOW_INSECURE_PRIVATE_WS"]);
+  const envSnapshot = captureEnv(["IRONCLIW_ALLOW_INSECURE_PRIVATE_WS"]);
 
   beforeEach(() => {
     envSnapshot.restore();
@@ -214,11 +214,26 @@ describe("GatewayClient security checks", () => {
     client.stop();
   });
 
-  it("allows ws:// to private addresses only with IronCliw_ALLOW_INSECURE_PRIVATE_WS=1", () => {
-    process.env.IronCliw_ALLOW_INSECURE_PRIVATE_WS = "1";
+  it("allows ws:// to private addresses only with IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1", () => {
+    process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS = "1";
     const onConnectError = vi.fn();
     const client = new GatewayClient({
       url: "ws://192.168.1.100:18789",
+      onConnectError,
+    });
+
+    client.start();
+
+    expect(onConnectError).not.toHaveBeenCalled();
+    expect(wsInstances.length).toBe(1);
+    client.stop();
+  });
+
+  it("allows ws:// hostnames with IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1", () => {
+    process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS = "1";
+    const onConnectError = vi.fn();
+    const client = new GatewayClient({
+      url: "ws://ironcliw-gateway.ai:18789",
       onConnectError,
     });
 
@@ -314,7 +329,7 @@ describe("GatewayClient close handling", () => {
     const onClose = vi.fn();
     const identity: DeviceIdentity = {
       deviceId: "dev-5",
-      privateKeyPem: "private-key",
+      privateKeyPem: "private-key", // pragma: allowlist secret
       publicKeyPem: "public-key",
     };
     const client = new GatewayClient({
@@ -383,6 +398,26 @@ describe("GatewayClient connect auth payload", () => {
     expect(connectFrameFrom(ws)).toMatchObject({
       token: "shared-token",
     });
+    expect(connectFrameFrom(ws).deviceToken).toBeUndefined();
+    client.stop();
+  });
+
+  it("uses explicit shared password and does not inject stored device token", () => {
+    loadDeviceAuthTokenMock.mockReturnValue({ token: "stored-device-token" });
+    const client = new GatewayClient({
+      url: "ws://127.0.0.1:18789",
+      password: "shared-password", // pragma: allowlist secret
+    });
+
+    client.start();
+    const ws = getLatestWs();
+    ws.emitOpen();
+    emitConnectChallenge(ws);
+
+    expect(connectFrameFrom(ws)).toMatchObject({
+      password: "shared-password", // pragma: allowlist secret
+    });
+    expect(connectFrameFrom(ws).token).toBeUndefined();
     expect(connectFrameFrom(ws).deviceToken).toBeUndefined();
     client.stop();
   });

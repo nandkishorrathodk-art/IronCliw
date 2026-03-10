@@ -11,7 +11,7 @@ Deploy IronCliw on Render using Infrastructure as Code. The included `render.yam
 
 ## Deploy with a Render Blueprint
 
-[Deploy to Render](https://render.com/deploy?repo=https://github.com/IronCliw/IronCliw)
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/ironcliw/ironcliw)
 
 Clicking this link will:
 
@@ -29,7 +29,7 @@ repository configures everything needed to run IronCliw:
 ```yaml
 services:
   - type: web
-    name: IronCliw
+    name: ironcliw
     runtime: docker
     plan: starter
     healthCheckPath: /health
@@ -38,14 +38,14 @@ services:
         value: "8080"
       - key: SETUP_PASSWORD
         sync: false # prompts during deploy
-      - key: IronCliw_STATE_DIR
-        value: /data/.IronCliw
-      - key: IronCliw_WORKSPACE_DIR
+      - key: IRONCLIW_STATE_DIR
+        value: /data/.ironcliw
+      - key: IRONCLIW_WORKSPACE_DIR
         value: /data/workspace
-      - key: IronCliw_GATEWAY_TOKEN
+      - key: IRONCLIW_GATEWAY_TOKEN
         generateValue: true # auto-generates a secure token
     disk:
-      name: IronCliw-data
+      name: ironcliw-data
       mountPath: /data
       sizeGB: 1
 ```
@@ -83,7 +83,7 @@ The Blueprint defaults to `starter`. To use free tier, change `plan: free` in yo
 
 ### Access the Control UI
 
-The web dashboard is available at `https://<your-service>.onrender.com/IronCliw`.
+The web dashboard is available at `https://<your-service>.onrender.com/ironcliw`.
 
 ## Render Dashboard features
 

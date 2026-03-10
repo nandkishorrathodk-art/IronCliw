@@ -1,8 +1,7 @@
 import "./isolated-agent.mocks.js";
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadModelCatalog } from "../agents/model-catalog.js";
 import { runEmbeddedPiAgent } from "../agents/pi-embedded.js";
 import type { CliDeps } from "../cli/deps.js";
@@ -10,72 +9,11 @@ import { runCronIsolatedAgentTurn } from "./isolated-agent.js";
 import {
   makeCfg,
   makeJob,
+  withTempCronHome as withTempHome,
   writeSessionStore,
   writeSessionStoreEntries,
 } from "./isolated-agent.test-harness.js";
 import type { CronJob } from "./types.js";
-
-type HomeEnvSnapshot = {
-  HOME: string | undefined;
-  USERPROFILE: string | undefined;
-  HOMEDRIVE: string | undefined;
-  HOMEPATH: string | undefined;
-  IronCliw_HOME: string | undefined;
-  IronCliw_STATE_DIR: string | undefined;
-};
-
-let suiteTempHomeRoot = "";
-let suiteTempHomeCaseId = 0;
-
-function snapshotHomeEnv(): HomeEnvSnapshot {
-  return {
-    HOME: process.env.HOME,
-    USERPROFILE: process.env.USERPROFILE,
-    HOMEDRIVE: process.env.HOMEDRIVE,
-    HOMEPATH: process.env.HOMEPATH,
-    IronCliw_HOME: process.env.IronCliw_HOME,
-    IronCliw_STATE_DIR: process.env.IronCliw_STATE_DIR,
-  };
-}
-
-function restoreHomeEnv(snapshot: HomeEnvSnapshot) {
-  const restoreValue = (key: keyof HomeEnvSnapshot) => {
-    const value = snapshot[key];
-    if (value === undefined) {
-      delete process.env[key];
-    } else {
-      process.env[key] = value;
-    }
-  };
-  restoreValue("HOME");
-  restoreValue("USERPROFILE");
-  restoreValue("HOMEDRIVE");
-  restoreValue("HOMEPATH");
-  restoreValue("IronCliw_HOME");
-  restoreValue("IronCliw_STATE_DIR");
-}
-
-async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  const home = path.join(suiteTempHomeRoot, `case-${suiteTempHomeCaseId++}`);
-  await fs.mkdir(path.join(home, ".IronCliw", "agents", "main", "sessions"), { recursive: true });
-  const snapshot = snapshotHomeEnv();
-  process.env.HOME = home;
-  process.env.USERPROFILE = home;
-  delete process.env.IronCliw_HOME;
-  process.env.IronCliw_STATE_DIR = path.join(home, ".IronCliw");
-  if (process.platform === "win32") {
-    const parsed = path.parse(home);
-    if (parsed.root) {
-      process.env.HOMEDRIVE = parsed.root.replace(/[\\/]+$/, "");
-      process.env.HOMEPATH = home.slice(process.env.HOMEDRIVE.length) || "\\";
-    }
-  }
-  try {
-    return await fn(home);
-  } finally {
-    restoreHomeEnv(snapshot);
-  }
-}
 
 function makeDeps(): CliDeps {
   return {
@@ -224,19 +162,6 @@ async function runStoredOverrideAndExpectModel(params: {
 }
 
 describe("runCronIsolatedAgentTurn", () => {
-  beforeAll(async () => {
-    suiteTempHomeRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-cron-turn-suite-"));
-  });
-
-  afterAll(async () => {
-    if (!suiteTempHomeRoot) {
-      return;
-    }
-    await fs.rm(suiteTempHomeRoot, { recursive: true, force: true });
-    suiteTempHomeRoot = "";
-    suiteTempHomeCaseId = 0;
-  });
-
   beforeEach(() => {
     vi.mocked(runEmbeddedPiAgent).mockClear();
     vi.mocked(loadModelCatalog).mockResolvedValue([]);
@@ -338,7 +263,7 @@ describe("runCronIsolatedAgentTurn", () => {
       const call = vi.mocked(runEmbeddedPiAgent).mock.calls.at(-1)?.[0] as {
         agentDir?: string;
       };
-      expect(call?.agentDir).toBe(path.join(home, ".IronCliw", "agents", "main", "agent"));
+      expect(call?.agentDir).toBe(path.join(home, ".ironcliw", "agents", "main", "agent"));
     });
   });
 
@@ -354,7 +279,7 @@ describe("runCronIsolatedAgentTurn", () => {
       const lines = call?.prompt?.split("\n") ?? [];
       expect(lines[0]).toContain("[cron:job-1");
       expect(lines[0]).toContain("do it");
-      expect(lines[1]).toMatch(/^Current time: .+ \(.+\)$/);
+      expect(lines[1]).toMatch(/^Current time: .+ \(.+\) \/ \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC$/);
     });
   });
 
@@ -366,7 +291,7 @@ describe("runCronIsolatedAgentTurn", () => {
 
       const cfg = makeCfg(
         home,
-        path.join(home, ".IronCliw", "agents", "{agentId}", "sessions", "sessions.json"),
+        path.join(home, ".ironcliw", "agents", "{agentId}", "sessions", "sessions.json"),
         {
           agents: {
             defaults: { workspace: path.join(home, "default-workspace") },

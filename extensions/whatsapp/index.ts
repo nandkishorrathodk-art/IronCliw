@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/whatsapp";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/whatsapp";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/whatsapp";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/whatsapp";
 import { whatsappPlugin } from "./src/channel.js";
 import { setWhatsAppRuntime } from "./src/runtime.js";
 

@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { triggerIronCliwRestart } from "./restart.js";
-import { hasSupervisorHint } from "./supervisor-markers.js";
+import { detectRespawnSupervisor } from "./supervisor-markers.js";
 
 type RespawnMode = "spawned" | "supervised" | "disabled" | "failed";
 
@@ -18,33 +18,40 @@ function isTruthy(value: string | undefined): boolean {
   return normalized === "1" || normalized === "true" || normalized === "yes" || normalized === "on";
 }
 
-function isLikelySupervisedProcess(env: NodeJS.ProcessEnv = process.env): boolean {
-  return hasSupervisorHint(env);
-}
-
 /**
  * Attempt to restart this process with a fresh PID.
- * - supervised environments (launchd/systemd): caller should exit and let supervisor restart
- * - IronCliw_NO_RESPAWN=1: caller should keep in-process restart behavior (tests/dev)
+ * - supervised environments (launchd/systemd/schtasks): caller should exit and let supervisor restart
+ * - IRONCLIW_NO_RESPAWN=1: caller should keep in-process restart behavior (tests/dev)
  * - otherwise: spawn detached child with current argv/execArgv, then caller exits
  */
 export function restartGatewayProcessWithFreshPid(): GatewayRespawnResult {
-  if (isTruthy(process.env.IronCliw_NO_RESPAWN)) {
+  if (isTruthy(process.env.IRONCLIW_NO_RESPAWN)) {
     return { mode: "disabled" };
   }
-  if (isLikelySupervisedProcess(process.env)) {
-    // On macOS under launchd, actively kickstart the supervised service to
-    // bypass ThrottleInterval delays for intentional restarts.
-    if (process.platform === "darwin" && process.env.IronCliw_LAUNCHD_LABEL?.trim()) {
+  const supervisor = detectRespawnSupervisor(process.env);
+  if (supervisor) {
+    // launchd: exit(0) is sufficient — KeepAlive=true restarts the service.
+    // Self-issued `kickstart -k` races with launchd's bootout state machine
+    // and can leave the LaunchAgent permanently unloaded.
+    // See: https://github.com/ironcliw/ironcliw/issues/39760
+    if (supervisor === "schtasks") {
       const restart = triggerIronCliwRestart();
       if (!restart.ok) {
         return {
           mode: "failed",
-          detail: restart.detail ?? "launchctl kickstart failed",
+          detail: restart.detail ?? `${restart.method} restart failed`,
         };
       }
     }
     return { mode: "supervised" };
+  }
+  if (process.platform === "win32") {
+    // Detached respawn is unsafe on Windows without an identified Scheduled Task:
+    // the child becomes orphaned if the original process exits.
+    return {
+      mode: "disabled",
+      detail: "win32: detached respawn unsupported without Scheduled Task markers",
+    };
   }
 
   try {

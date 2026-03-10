@@ -5,7 +5,7 @@ const { TEST_STATE_DIR, SANDBOX_REGISTRY_PATH, SANDBOX_BROWSER_REGISTRY_PATH } =
   const path = require("node:path");
   const { mkdtempSync } = require("node:fs");
   const { tmpdir } = require("node:os");
-  const baseDir = mkdtempSync(path.join(tmpdir(), "IronCliw-sandbox-registry-"));
+  const baseDir = mkdtempSync(path.join(tmpdir(), "ironcliw-sandbox-registry-"));
 
   return {
     TEST_STATE_DIR: baseDir,
@@ -142,7 +142,7 @@ function browserEntry(
     sessionKey: "agent:main",
     createdAtMs: 1,
     lastUsedAtMs: 1,
-    image: "IronCliw-browser:test",
+    image: "ironcliw-browser:test",
     cdpPort: 9222,
     ...overrides,
   };
@@ -154,7 +154,7 @@ function containerEntry(overrides: Partial<SandboxRegistryEntry> = {}): SandboxR
     sessionKey: "agent:main",
     createdAtMs: 1,
     lastUsedAtMs: 1,
-    image: "IronCliw-sandbox:test",
+    image: "ironcliw-sandbox:test",
     ...overrides,
   };
 }

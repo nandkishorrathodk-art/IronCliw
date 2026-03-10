@@ -8,7 +8,7 @@ import {
   extensionForMime,
   extractOriginalFilename,
   getFileExtension,
-} from "IronCliw/plugin-sdk/msteams";
+} from "ironcliw/plugin-sdk/msteams";
 
 /**
  * Detect MIME type from URL extension or data URL.

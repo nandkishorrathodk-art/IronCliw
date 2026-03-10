@@ -20,8 +20,8 @@ export type GatewayServerHarness = {
 };
 
 export async function startGatewayServerHarness(): Promise<GatewayServerHarness> {
-  const envSnapshot = captureEnv(["IronCliw_GATEWAY_TOKEN"]);
-  delete process.env.IronCliw_GATEWAY_TOKEN;
+  const envSnapshot = captureEnv(["IRONCLIW_GATEWAY_TOKEN"]);
+  delete process.env.IRONCLIW_GATEWAY_TOKEN;
   const port = await getFreePort();
   const server = await startGatewayServer(port);
 

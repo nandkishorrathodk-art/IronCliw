@@ -16,6 +16,60 @@ function evaluate(config: IronCliwConfig, env: NodeJS.ProcessEnv = EMPTY_ENV) {
 }
 
 describe("evaluateGatewayAuthSurfaceStates", () => {
+  it("marks gateway.auth.token active when token mode is explicit", () => {
+    const states = evaluate({
+      gateway: {
+        auth: {
+          mode: "token",
+          token: envRef("GW_AUTH_TOKEN"),
+        },
+      },
+    } as IronCliwConfig);
+
+    expect(states["gateway.auth.token"]).toMatchObject({
+      hasSecretRef: true,
+      active: true,
+      reason: 'gateway.auth.mode is "token".',
+    });
+  });
+
+  it("marks gateway.auth.token inactive when env token is configured", () => {
+    const states = evaluate(
+      {
+        gateway: {
+          auth: {
+            mode: "token",
+            token: envRef("GW_AUTH_TOKEN"),
+          },
+        },
+      } as IronCliwConfig,
+      { IRONCLIW_GATEWAY_TOKEN: "env-token" } as NodeJS.ProcessEnv,
+    );
+
+    expect(states["gateway.auth.token"]).toMatchObject({
+      hasSecretRef: true,
+      active: false,
+      reason: "gateway token env var is configured.",
+    });
+  });
+
+  it("marks gateway.auth.token inactive when password mode is explicit", () => {
+    const states = evaluate({
+      gateway: {
+        auth: {
+          mode: "password",
+          token: envRef("GW_AUTH_TOKEN"),
+        },
+      },
+    } as IronCliwConfig);
+
+    expect(states["gateway.auth.token"]).toMatchObject({
+      hasSecretRef: true,
+      active: false,
+      reason: 'gateway.auth.mode is "password".',
+    });
+  });
+
   it("marks gateway.auth.password active when password mode is explicit", () => {
     const states = evaluate({
       gateway: {
@@ -42,7 +96,7 @@ describe("evaluateGatewayAuthSurfaceStates", () => {
           },
         },
       } as IronCliwConfig,
-      { IronCliw_GATEWAY_TOKEN: "env-token" } as NodeJS.ProcessEnv,
+      { IRONCLIW_GATEWAY_TOKEN: "env-token" } as NodeJS.ProcessEnv,
     );
 
     expect(states["gateway.auth.password"]).toMatchObject({

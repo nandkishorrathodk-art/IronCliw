@@ -130,13 +130,13 @@ export async function maybeRemoveDeprecatedCliAuthProfiles(
   const lines = ["Deprecated external CLI auth profiles detected (no longer supported):"];
   if (deprecated.has(CLAUDE_CLI_PROFILE_ID)) {
     lines.push(
-      `- ${CLAUDE_CLI_PROFILE_ID} (Anthropic): use setup-token → ${formatCliCommand("IronCliw models auth setup-token")}`,
+      `- ${CLAUDE_CLI_PROFILE_ID} (Anthropic): use setup-token → ${formatCliCommand("ironcliw models auth setup-token")}`,
     );
   }
   if (deprecated.has(CODEX_CLI_PROFILE_ID)) {
     lines.push(
       `- ${CODEX_CLI_PROFILE_ID} (OpenAI Codex): use OAuth → ${formatCliCommand(
-        "IronCliw models auth login --provider openai-codex",
+        "ironcliw models auth login --provider openai-codex",
       )}`,
     );
   }
@@ -228,16 +228,16 @@ function formatAuthIssueHint(issue: AuthIssue): string | null {
     return "Invalid token expires metadata. Set a future Unix ms timestamp or remove expires.";
   }
   if (issue.provider === "anthropic" && issue.profileId === CLAUDE_CLI_PROFILE_ID) {
-    return `Deprecated profile. Use ${formatCliCommand("IronCliw models auth setup-token")} or ${formatCliCommand(
-      "IronCliw configure",
+    return `Deprecated profile. Use ${formatCliCommand("ironcliw models auth setup-token")} or ${formatCliCommand(
+      "ironcliw configure",
     )}.`;
   }
   if (issue.provider === "openai-codex" && issue.profileId === CODEX_CLI_PROFILE_ID) {
     return `Deprecated profile. Use ${formatCliCommand(
-      "IronCliw models auth login --provider openai-codex",
-    )} or ${formatCliCommand("IronCliw configure")}.`;
+      "ironcliw models auth login --provider openai-codex",
+    )} or ${formatCliCommand("ironcliw configure")}.`;
   }
-  return `Re-auth via \`${formatCliCommand("IronCliw configure")}\` or \`${formatCliCommand("IronCliw onboard")}\`.`;
+  return `Re-auth via \`${formatCliCommand("ironcliw configure")}\` or \`${formatCliCommand("ironcliw onboard")}\`.`;
 }
 
 function formatAuthIssueLine(issue: AuthIssue): string {

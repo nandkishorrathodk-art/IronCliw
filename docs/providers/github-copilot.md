@@ -2,7 +2,7 @@
 summary: "Sign in to GitHub Copilot from IronCliw using the device flow"
 read_when:
   - You want to use GitHub Copilot as a model provider
-  - You need the `IronCliw models auth login-github-copilot` flow
+  - You need the `ironcliw models auth login-github-copilot` flow
 title: "GitHub Copilot"
 ---
 
@@ -36,7 +36,7 @@ profile.
 ## CLI setup
 
 ```bash
-IronCliw models auth login-github-copilot
+ironcliw models auth login-github-copilot
 ```
 
 You'll be prompted to visit a URL and enter a one-time code. Keep the terminal
@@ -45,14 +45,14 @@ open until it completes.
 ### Optional flags
 
 ```bash
-IronCliw models auth login-github-copilot --profile-id github-copilot:work
-IronCliw models auth login-github-copilot --yes
+ironcliw models auth login-github-copilot --profile-id github-copilot:work
+ironcliw models auth login-github-copilot --yes
 ```
 
 ## Set a default model
 
 ```bash
-IronCliw models set github-copilot/gpt-4o
+ironcliw models set github-copilot/gpt-4o
 ```
 
 ### Config snippet

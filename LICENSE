@@ -1,9 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Nandkishor Rathod (Windows Port)
-
-This project is a Windows port of the original "Clawd" (IronCliw) agent system.
-Original architecture inspired by: Claude (AI) / Peter Steinberger.
+Copyright (c) 2025 Peter Steinberger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-ATTRIBUTION NOTICE:
-This software is a derivative work based on the "Clawd" (IronCliw) framework.
-Original creator: Claude / Peter Steinberger.
-Windows port and IronCliw-AI modifications: Nandkishor Rathod
-
-Significant modifications include:
-- Native Windows Integration (C# Bridge)
-- Advanced Bug Bounty Automation Engine
-- IronCliw Branding & Core UI Overhaul

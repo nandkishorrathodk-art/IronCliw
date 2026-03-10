@@ -1,3 +1,4 @@
+import { withPluginRuntimeGatewayRequestScope } from "../plugins/runtime/gateway-request-scope.js";
 import { formatControlPlaneActor, resolveControlPlaneActor } from "./control-plane-audit.js";
 import { consumeControlPlaneWriteBudget } from "./control-plane-rate-limit.js";
 import { ADMIN_SCOPE, authorizeOperatorScopesForMethod } from "./method-scopes.js";
@@ -31,22 +32,7 @@ import { updateHandlers } from "./server-methods/update.js";
 import { usageHandlers } from "./server-methods/usage.js";
 import { voicewakeHandlers } from "./server-methods/voicewake.js";
 import { webHandlers } from "./server-methods/web.js";
-import { visionHandlers } from "./server-methods/vision.js";
 import { wizardHandlers } from "./server-methods/wizard.js";
-import { desktopHandlers } from "./server-methods/desktop.js";
-import { ParallelExecutor, Task } from "../muscle/parallel-executor.js";
-import { AuditLogger } from "../security/audit-logger.js";
-import { RateLimiter } from "../security/rate-limiter.js";
-import { PluginManager } from "../plugins/plugin-manager.js";
-
-let auditLogger: AuditLogger;
-export function setAuditLogger(instance: AuditLogger) {
-  auditLogger = instance;
-}
-
-const globalRateLimiter = new RateLimiter();
-const pluginManager = new PluginManager();
-void pluginManager.discoverAndLoad();
 
 const CONTROL_PLANE_WRITE_METHODS = new Set(["config.apply", "config.patch", "update.run"]);
 function authorizeGatewayMethod(method: string, client: GatewayRequestOptions["client"]) {
@@ -85,7 +71,6 @@ export const coreGatewayHandlers: GatewayRequestHandlers = {
   ...healthHandlers,
   ...channelsHandlers,
   ...chatHandlers,
-  ...visionHandlers,
   ...cronHandlers,
   ...deviceHandlers,
   ...doctorHandlers,
@@ -108,77 +93,17 @@ export const coreGatewayHandlers: GatewayRequestHandlers = {
   ...agentHandlers,
   ...agentsHandlers,
   ...browserHandlers,
-  ...desktopHandlers,
-  "execution.parallel": async ({ params, respond, context }) => {
-    const { tasks: taskConfigs } = params as { tasks: Array<{ id: string, command: string, dependencies?: string[] }> };
-    if (!Array.isArray(taskConfigs)) {
-      respond(false, undefined, errorShape(ErrorCodes.INVALID_REQUEST, "tasks must be an array"));
-      return;
-    }
-
-    const executor = new ParallelExecutor();
-    const tasks: Task[] = taskConfigs.map(tc => ({
-      id: tc.id,
-      execute: async () => {
-        // Find the appropriate handler for the command
-        const [method, ...args] = tc.command.split(" ");
-        const handler = coreGatewayHandlers[method];
-        if (!handler) {throw new Error(`Unknown method in parallel task: ${method}`);}
-        
-        return new Promise((resolve, reject) => {
-          void handler({
-            req: { id: tc.id, method, params: { args } },
-            params: { args },
-            respond: (success, result, error) => {
-              if (success) {resolve(result);}
-              else {reject(error);}
-            },
-            context,
-          });
-        });
-      },
-      dependencies: tc.dependencies
-    }));
-
-    executor.addTasks(tasks);
-    const result = await executor.executeAll();
-    respond(true, result);
-  }
 };
 
 export async function handleGatewayRequest(
   opts: GatewayRequestOptions & { extraHandlers?: GatewayRequestHandlers },
 ): Promise<void> {
   const { req, respond, client, isWebchatConnect, context } = opts;
-
-  // Global Rate Limiting
-  const clientId = client?.connect?.id ?? "anonymous";
-  if (!globalRateLimiter.consume(clientId)) {
-    respond(false, undefined, errorShape(ErrorCodes.UNAVAILABLE, "Rate limit exceeded (Phase 2 Security)"));
-    return;
-  }
-
-  const startTime = Date.now();
   const authError = authorizeGatewayMethod(req.method, client);
   if (authError) {
-    await auditLogger.log({
-      user: clientId,
-      action: req.method,
-      target: "gateway",
-      status: "denied",
-      metadata: { error: authError.message }
-    });
     respond(false, undefined, authError);
     return;
   }
-
-  // Plugin Command Hook (Phase 3)
-  const pluginIntercept = await pluginManager.hookCommand(req.method);
-  if (pluginIntercept) {
-    respond(true, { pluginResponse: pluginIntercept });
-    return;
-  }
-
   if (CONTROL_PLANE_WRITE_METHODS.has(req.method)) {
     const budget = consumeControlPlaneWriteBudget({ client });
     if (!budget.allowed) {
@@ -214,26 +139,17 @@ export async function handleGatewayRequest(
     );
     return;
   }
-  
-  const wrappedRespond = async (success: boolean, result?: unknown, error?: unknown) => {
-    const duration = Date.now() - startTime;
-    await auditLogger.log({
-      user: clientId,
-      action: req.method,
-      target: "gateway",
-      status: success ? "success" : "failed",
-      durationMs: duration,
-      metadata: { error: error?.message }
+  const invokeHandler = () =>
+    handler({
+      req,
+      params: (req.params ?? {}) as Record<string, unknown>,
+      client,
+      isWebchatConnect,
+      respond,
+      context,
     });
-    respond(success, result, error);
-  };
-
-  await handler({
-    req,
-    params: (req.params ?? {}) as Record<string, unknown>,
-    client,
-    isWebchatConnect,
-    respond: wrappedRespond,
-    context,
-  });
+  // All handlers run inside a request scope so that plugin runtime
+  // subagent methods (e.g. context engine tools spawning sub-agents
+  // during tool execution) can dispatch back into the gateway.
+  await withPluginRuntimeGatewayRequestScope({ context, isWebchatConnect }, invokeHandler);
 }

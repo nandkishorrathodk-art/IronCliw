@@ -57,7 +57,7 @@ const DEFAULT_CATALOG_PATHS = [
   path.join(CONFIG_DIR, "plugins", "catalog.json"),
 ];
 
-const ENV_CATALOG_PATHS = ["IronCliw_PLUGIN_CATALOG_PATHS", "IronCliw_MPM_CATALOG_PATHS"];
+const ENV_CATALOG_PATHS = ["IRONCLIW_PLUGIN_CATALOG_PATHS", "IRONCLIW_MPM_CATALOG_PATHS"];
 
 type ManifestKey = typeof MANIFEST_KEY;
 

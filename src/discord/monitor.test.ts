@@ -115,7 +115,7 @@ describe("DiscordMessageListener", () => {
     expect(handlerResolved).toBe(true);
   });
 
-  it("queues subsequent events until prior message handling completes", async () => {
+  it("dispatches subsequent events concurrently without blocking on prior handler", async () => {
     const first = createDeferred();
     const second = createDeferred();
     let runCount = 0;
@@ -142,12 +142,12 @@ describe("DiscordMessageListener", () => {
       ),
     ).resolves.toBeUndefined();
 
-    expect(handler).toHaveBeenCalledTimes(1);
-    first.resolve();
+    // Both handlers are dispatched concurrently (fire-and-forget).
     await vi.waitFor(() => {
       expect(handler).toHaveBeenCalledTimes(2);
     });
 
+    first.resolve();
     second.resolve();
     await Promise.resolve();
   });
@@ -171,48 +171,34 @@ describe("DiscordMessageListener", () => {
     });
   });
 
-  it("logs slow handlers after the threshold", async () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(0);
+  it("does not apply its own slow-listener logging (owned by inbound worker)", async () => {
+    const deferred = createDeferred();
+    const handler = vi.fn(() => deferred.promise);
+    const logger = {
+      warn: vi.fn(),
+      error: vi.fn(),
+    } as unknown as ReturnType<typeof import("../logging/subsystem.js").createSubsystemLogger>;
+    const listener = new DiscordMessageListener(handler, logger);
 
-    try {
-      const deferred = createDeferred();
-      const handler = vi.fn(() => deferred.promise);
-      const logger = {
-        warn: vi.fn(),
-        error: vi.fn(),
-      } as unknown as ReturnType<typeof import("../logging/subsystem.js").createSubsystemLogger>;
-      const listener = new DiscordMessageListener(handler, logger);
+    const handlePromise = listener.handle(
+      {} as unknown as import("./monitor/listeners.js").DiscordMessageEvent,
+      {} as unknown as import("@buape/carbon").Client,
+    );
+    await expect(handlePromise).resolves.toBeUndefined();
 
-      // handle() should release immediately.
-      const handlePromise = listener.handle(
-        {} as unknown as import("./monitor/listeners.js").DiscordMessageEvent,
-        {} as unknown as import("@buape/carbon").Client,
-      );
-      await expect(handlePromise).resolves.toBeUndefined();
-      expect(logger.warn).not.toHaveBeenCalled();
-
-      // Advance wall clock past the slow listener threshold.
-      vi.setSystemTime(31_000);
-
-      // Release the background handler and allow slow-log finalizer to run.
-      deferred.resolve();
-      await vi.waitFor(() => {
-        expect(logger.warn).toHaveBeenCalled();
-      });
-      const warnMock = logger.warn as unknown as { mock: { calls: unknown[][] } };
-      const [, meta] = warnMock.mock.calls[0] ?? [];
-      const durationMs = (meta as { durationMs?: number } | undefined)?.durationMs;
-      expect(durationMs).toBeGreaterThanOrEqual(30_000);
-    } finally {
-      vi.useRealTimers();
-    }
+    deferred.resolve();
+    await vi.waitFor(() => {
+      expect(handler).toHaveBeenCalledOnce();
+    });
+    // The listener no longer wraps handlers with slow-listener logging;
+    // that responsibility moved to the inbound worker.
+    expect(logger.warn).not.toHaveBeenCalled();
   });
 });
 
 describe("discord allowlist helpers", () => {
   it("normalizes slugs", () => {
-    expect(normalizeDiscordSlug("Friends of IronCliw")).toBe("friends-of-IronCliw");
+    expect(normalizeDiscordSlug("Friends of IronCliw")).toBe("friends-of-ironcliw");
     expect(normalizeDiscordSlug("#General")).toBe("general");
     expect(normalizeDiscordSlug("Dev__Chat")).toBe("dev-chat");
   });
@@ -228,10 +214,10 @@ describe("discord allowlist helpers", () => {
     }
     expect(allowListMatches(allow, { id: "123" })).toBe(true);
     expect(allowListMatches(allow, { name: "steipete" })).toBe(false);
-    expect(allowListMatches(allow, { name: "friends-of-IronCliw" })).toBe(false);
+    expect(allowListMatches(allow, { name: "friends-of-ironcliw" })).toBe(false);
     expect(allowListMatches(allow, { name: "steipete" }, { allowNameMatching: true })).toBe(true);
     expect(
-      allowListMatches(allow, { name: "friends-of-IronCliw" }, { allowNameMatching: true }),
+      allowListMatches(allow, { name: "friends-of-ironcliw" }, { allowNameMatching: true }),
     ).toBe(true);
     expect(allowListMatches(allow, { name: "other" })).toBe(false);
   });
@@ -250,26 +236,26 @@ describe("discord allowlist helpers", () => {
 describe("discord guild/channel resolution", () => {
   it("resolves guild entry by id", () => {
     const guildEntries = makeEntries({
-      "123": { slug: "friends-of-IronCliw" },
+      "123": { slug: "friends-of-ironcliw" },
     });
     const resolved = resolveDiscordGuildEntry({
       guild: fakeGuild("123", "Friends of IronCliw"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-IronCliw");
+    expect(resolved?.slug).toBe("friends-of-ironcliw");
   });
 
   it("resolves guild entry by slug key", () => {
     const guildEntries = makeEntries({
-      "friends-of-IronCliw": { slug: "friends-of-IronCliw" },
+      "friends-of-ironcliw": { slug: "friends-of-ironcliw" },
     });
     const resolved = resolveDiscordGuildEntry({
       guild: fakeGuild("123", "Friends of IronCliw"),
       guildEntries,
     });
     expect(resolved?.id).toBe("123");
-    expect(resolved?.slug).toBe("friends-of-IronCliw");
+    expect(resolved?.slug).toBe("friends-of-ironcliw");
   });
 
   it("falls back to wildcard guild entry", () => {
@@ -625,15 +611,15 @@ describe("discord group DM gating", () => {
   it("matches group DM allowlist", () => {
     expect(
       resolveGroupDmAllow({
-        channels: ["IronCliw-dm"],
+        channels: ["ironcliw-dm"],
         channelId: "1",
         channelName: "IronCliw DM",
-        channelSlug: "IronCliw-dm",
+        channelSlug: "ironcliw-dm",
       }),
     ).toBe(true);
     expect(
       resolveGroupDmAllow({
-        channels: ["IronCliw-dm"],
+        channels: ["ironcliw-dm"],
         channelId: "1",
         channelName: "Other",
         channelSlug: "other",

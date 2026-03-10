@@ -1,4 +1,4 @@
-import type { SsrFPolicy } from "IronCliw/plugin-sdk/tlon";
+import type { SsrFPolicy } from "ironcliw/plugin-sdk/tlon";
 import { validateUrbitBaseUrl } from "./base-url.js";
 import { UrbitUrlError } from "./errors.js";
 

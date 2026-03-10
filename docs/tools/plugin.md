@@ -22,17 +22,21 @@ Fast path:
 1. See what’s already loaded:
 
 ```bash
-IronCliw plugins list
+ironcliw plugins list
 ```
 
 2. Install an official plugin (example: Voice Call):
 
 ```bash
-IronCliw plugins install @IronCliw/voice-call
+ironcliw plugins install @ironcliw/voice-call
 ```
 
-Npm specs are **registry-only** (package name + optional version/tag). Git/URL/file
-specs are rejected.
+Npm specs are **registry-only** (package name + optional **exact version** or
+**dist-tag**). Git/URL/file specs and semver ranges are rejected.
+
+Bare specs and `@latest` stay on the stable track. If npm resolves either of
+those to a prerelease, IronCliw stops and asks you to opt in explicitly with a
+prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 3. Restart the Gateway, then configure under `plugins.entries.<id>.config`.
 
@@ -41,15 +45,15 @@ Looking for third-party listings? See [Community plugins](/plugins/community).
 
 ## Available plugins (official)
 
-- Microsoft Teams is plugin-only as of 2026.1.15; install `@IronCliw/msteams` if you use Teams.
+- Microsoft Teams is plugin-only as of 2026.1.15; install `@ironcliw/msteams` if you use Teams.
 - Memory (Core) — bundled memory search plugin (enabled by default via `plugins.slots.memory`)
 - Memory (LanceDB) — bundled long-term memory plugin (auto-recall/capture; set `plugins.slots.memory = "memory-lancedb"`)
-- [Voice Call](/plugins/voice-call) — `@IronCliw/voice-call`
-- [Zalo Personal](/plugins/zalouser) — `@IronCliw/zalouser`
-- [Matrix](/channels/matrix) — `@IronCliw/matrix`
-- [Nostr](/channels/nostr) — `@IronCliw/nostr`
-- [Zalo](/channels/zalo) — `@IronCliw/zalo`
-- [Microsoft Teams](/channels/msteams) — `@IronCliw/msteams`
+- [Voice Call](/plugins/voice-call) — `@ironcliw/voice-call`
+- [Zalo Personal](/plugins/zalouser) — `@ironcliw/zalouser`
+- [Matrix](/channels/matrix) — `@ironcliw/matrix`
+- [Nostr](/channels/nostr) — `@ironcliw/nostr`
+- [Zalo](/channels/zalo) — `@ironcliw/zalo`
+- [Microsoft Teams](/channels/msteams) — `@ironcliw/msteams`
 - Google Antigravity OAuth (provider auth) — bundled as `google-antigravity-auth` (disabled by default)
 - Gemini CLI OAuth (provider auth) — bundled as `google-gemini-cli-auth` (disabled by default)
 - Qwen OAuth (provider auth) — bundled as `qwen-portal-auth` (disabled by default)
@@ -62,10 +66,11 @@ Schema instead. See [Plugin manifest](/plugins/manifest).
 Plugins can register:
 
 - Gateway RPC methods
-- Gateway HTTP handlers
+- Gateway HTTP routes
 - Agent tools
 - CLI commands
 - Background services
+- Context engines
 - Optional config validation
 - **Skills** (by listing `skills` directories in the plugin manifest)
 - **Auto-reply commands** (execute without invoking the AI agent)
@@ -106,55 +111,119 @@ Notes:
 - Uses core media-understanding audio configuration (`tools.media.audio`) and provider fallback order.
 - Returns `{ text: undefined }` when no transcription output is produced (for example skipped/unsupported input).
 
+## Gateway HTTP routes
+
+Plugins can expose HTTP endpoints with `api.registerHttpRoute(...)`.
+
+```ts
+api.registerHttpRoute({
+  path: "/acme/webhook",
+  auth: "plugin",
+  match: "exact",
+  handler: async (_req, res) => {
+    res.statusCode = 200;
+    res.end("ok");
+    return true;
+  },
+});
+```
+
+Route fields:
+
+- `path`: route path under the gateway HTTP server.
+- `auth`: required. Use `"gateway"` to require normal gateway auth, or `"plugin"` for plugin-managed auth/webhook verification.
+- `match`: optional. `"exact"` (default) or `"prefix"`.
+- `replaceExisting`: optional. Allows the same plugin to replace its own existing route registration.
+- `handler`: return `true` when the route handled the request.
+
+Notes:
+
+- `api.registerHttpHandler(...)` is obsolete. Use `api.registerHttpRoute(...)`.
+- Plugin routes must declare `auth` explicitly.
+- Exact `path + match` conflicts are rejected unless `replaceExisting: true`, and one plugin cannot replace another plugin's route.
+- Overlapping routes with different `auth` levels are rejected. Keep `exact`/`prefix` fallthrough chains on the same auth level only.
+
 ## Plugin SDK import paths
 
-Use SDK subpaths instead of the monolithic `IronCliw/plugin-sdk` import when
+Use SDK subpaths instead of the monolithic `ironcliw/plugin-sdk` import when
 authoring plugins:
 
-- `IronCliw/plugin-sdk/core` for generic plugin APIs, provider auth types, and shared helpers.
-- `IronCliw/plugin-sdk/compat` for bundled/internal plugin code that needs broader shared runtime helpers than `core`.
-- `IronCliw/plugin-sdk/telegram` for Telegram channel plugins.
-- `IronCliw/plugin-sdk/discord` for Discord channel plugins.
-- `IronCliw/plugin-sdk/slack` for Slack channel plugins.
-- `IronCliw/plugin-sdk/signal` for Signal channel plugins.
-- `IronCliw/plugin-sdk/imessage` for iMessage channel plugins.
-- `IronCliw/plugin-sdk/whatsapp` for WhatsApp channel plugins.
-- `IronCliw/plugin-sdk/line` for LINE channel plugins.
-- `IronCliw/plugin-sdk/msteams` for the bundled Microsoft Teams plugin surface.
+- `ironcliw/plugin-sdk/core` for generic plugin APIs, provider auth types, and shared helpers.
+- `ironcliw/plugin-sdk/compat` for bundled/internal plugin code that needs broader shared runtime helpers than `core`.
+- `ironcliw/plugin-sdk/telegram` for Telegram channel plugins.
+- `ironcliw/plugin-sdk/discord` for Discord channel plugins.
+- `ironcliw/plugin-sdk/slack` for Slack channel plugins.
+- `ironcliw/plugin-sdk/signal` for Signal channel plugins.
+- `ironcliw/plugin-sdk/imessage` for iMessage channel plugins.
+- `ironcliw/plugin-sdk/whatsapp` for WhatsApp channel plugins.
+- `ironcliw/plugin-sdk/line` for LINE channel plugins.
+- `ironcliw/plugin-sdk/msteams` for the bundled Microsoft Teams plugin surface.
 - Bundled extension-specific subpaths are also available:
-  `IronCliw/plugin-sdk/acpx`, `IronCliw/plugin-sdk/bluebubbles`,
-  `IronCliw/plugin-sdk/copilot-proxy`, `IronCliw/plugin-sdk/device-pair`,
-  `IronCliw/plugin-sdk/diagnostics-otel`, `IronCliw/plugin-sdk/diffs`,
-  `IronCliw/plugin-sdk/feishu`,
-  `IronCliw/plugin-sdk/google-gemini-cli-auth`, `IronCliw/plugin-sdk/googlechat`,
-  `IronCliw/plugin-sdk/irc`, `IronCliw/plugin-sdk/llm-task`,
-  `IronCliw/plugin-sdk/lobster`, `IronCliw/plugin-sdk/matrix`,
-  `IronCliw/plugin-sdk/mattermost`, `IronCliw/plugin-sdk/memory-core`,
-  `IronCliw/plugin-sdk/memory-lancedb`,
-  `IronCliw/plugin-sdk/minimax-portal-auth`,
-  `IronCliw/plugin-sdk/nextcloud-talk`, `IronCliw/plugin-sdk/nostr`,
-  `IronCliw/plugin-sdk/open-prose`, `IronCliw/plugin-sdk/phone-control`,
-  `IronCliw/plugin-sdk/qwen-portal-auth`, `IronCliw/plugin-sdk/synology-chat`,
-  `IronCliw/plugin-sdk/talk-voice`, `IronCliw/plugin-sdk/test-utils`,
-  `IronCliw/plugin-sdk/thread-ownership`, `IronCliw/plugin-sdk/tlon`,
-  `IronCliw/plugin-sdk/twitch`, `IronCliw/plugin-sdk/voice-call`,
-  `IronCliw/plugin-sdk/zalo`, and `IronCliw/plugin-sdk/zalouser`.
+  `ironcliw/plugin-sdk/acpx`, `ironcliw/plugin-sdk/bluebubbles`,
+  `ironcliw/plugin-sdk/copilot-proxy`, `ironcliw/plugin-sdk/device-pair`,
+  `ironcliw/plugin-sdk/diagnostics-otel`, `ironcliw/plugin-sdk/diffs`,
+  `ironcliw/plugin-sdk/feishu`,
+  `ironcliw/plugin-sdk/google-gemini-cli-auth`, `ironcliw/plugin-sdk/googlechat`,
+  `ironcliw/plugin-sdk/irc`, `ironcliw/plugin-sdk/llm-task`,
+  `ironcliw/plugin-sdk/lobster`, `ironcliw/plugin-sdk/matrix`,
+  `ironcliw/plugin-sdk/mattermost`, `ironcliw/plugin-sdk/memory-core`,
+  `ironcliw/plugin-sdk/memory-lancedb`,
+  `ironcliw/plugin-sdk/minimax-portal-auth`,
+  `ironcliw/plugin-sdk/nextcloud-talk`, `ironcliw/plugin-sdk/nostr`,
+  `ironcliw/plugin-sdk/open-prose`, `ironcliw/plugin-sdk/phone-control`,
+  `ironcliw/plugin-sdk/qwen-portal-auth`, `ironcliw/plugin-sdk/synology-chat`,
+  `ironcliw/plugin-sdk/talk-voice`, `ironcliw/plugin-sdk/test-utils`,
+  `ironcliw/plugin-sdk/thread-ownership`, `ironcliw/plugin-sdk/tlon`,
+  `ironcliw/plugin-sdk/twitch`, `ironcliw/plugin-sdk/voice-call`,
+  `ironcliw/plugin-sdk/zalo`, and `ironcliw/plugin-sdk/zalouser`.
 
 Compatibility note:
 
-- `IronCliw/plugin-sdk` remains supported for existing external plugins.
+- `ironcliw/plugin-sdk` remains supported for existing external plugins.
 - New and migrated bundled plugins should use channel or extension-specific
   subpaths; use `core` for generic surfaces and `compat` only when broader
   shared helpers are required.
+
+## Read-only channel inspection
+
+If your plugin registers a channel, prefer implementing
+`plugin.config.inspectAccount(cfg, accountId)` alongside `resolveAccount(...)`.
+
+Why:
+
+- `resolveAccount(...)` is the runtime path. It is allowed to assume credentials
+  are fully materialized and can fail fast when required secrets are missing.
+- Read-only command paths such as `ironcliw status`, `ironcliw status --all`,
+  `ironcliw channels status`, `ironcliw channels resolve`, and doctor/config
+  repair flows should not need to materialize runtime credentials just to
+  describe configuration.
+
+Recommended `inspectAccount(...)` behavior:
+
+- Return descriptive account state only.
+- Preserve `enabled` and `configured`.
+- Include credential source/status fields when relevant, such as:
+  - `tokenSource`, `tokenStatus`
+  - `botTokenSource`, `botTokenStatus`
+  - `appTokenSource`, `appTokenStatus`
+  - `signingSecretSource`, `signingSecretStatus`
+- You do not need to return raw token values just to report read-only
+  availability. Returning `tokenStatus: "available"` (and the matching source
+  field) is enough for status-style commands.
+- Use `configured_unavailable` when a credential is configured via SecretRef but
+  unavailable in the current command path.
+
+This lets read-only commands report “configured but unavailable in this command
+path” instead of crashing or misreporting the account as not configured.
 
 Performance note:
 
 - Plugin discovery and manifest metadata use short in-process caches to reduce
   bursty startup/reload work.
-- Set `IronCliw_DISABLE_PLUGIN_DISCOVERY_CACHE=1` or
-  `IronCliw_DISABLE_PLUGIN_MANIFEST_CACHE=1` to disable these caches.
-- Tune cache windows with `IronCliw_PLUGIN_DISCOVERY_CACHE_MS` and
-  `IronCliw_PLUGIN_MANIFEST_CACHE_MS`.
+- Set `IRONCLIW_DISABLE_PLUGIN_DISCOVERY_CACHE=1` or
+  `IRONCLIW_DISABLE_PLUGIN_MANIFEST_CACHE=1` to disable these caches.
+- Tune cache windows with `IRONCLIW_PLUGIN_DISCOVERY_CACHE_MS` and
+  `IRONCLIW_PLUGIN_MANIFEST_CACHE_MS`.
 
 ## Discovery & precedence
 
@@ -166,20 +235,20 @@ IronCliw scans, in order:
 
 2. Workspace extensions
 
-- `<workspace>/.IronCliw/extensions/*.ts`
-- `<workspace>/.IronCliw/extensions/*/index.ts`
+- `<workspace>/.ironcliw/extensions/*.ts`
+- `<workspace>/.ironcliw/extensions/*/index.ts`
 
 3. Global extensions
 
-- `~/.IronCliw/extensions/*.ts`
-- `~/.IronCliw/extensions/*/index.ts`
+- `~/.ironcliw/extensions/*.ts`
+- `~/.ironcliw/extensions/*/index.ts`
 
 4. Bundled extensions (shipped with IronCliw, mostly disabled by default)
 
-- `<IronCliw>/extensions/*`
+- `<ironcliw>/extensions/*`
 
 Most bundled plugins must be enabled explicitly via
-`plugins.entries.<id>.enabled` or `IronCliw plugins enable <id>`.
+`plugins.entries.<id>.enabled` or `ironcliw plugins enable <id>`.
 
 Default-on bundled plugin exceptions:
 
@@ -199,7 +268,7 @@ Hardening notes:
   - path ownership is suspicious for non-bundled plugins (POSIX owner is neither current uid nor root).
 - Loaded non-bundled plugins without install/load-path provenance emit a warning so you can pin trust (`plugins.allow`) or install tracking (`plugins.installs`).
 
-Each plugin must include a `IronCliw.plugin.json` file in its root. If a path
+Each plugin must include a `ironcliw.plugin.json` file in its root. If a path
 points at a file, the plugin root is the file's directory and must contain the
 manifest.
 
@@ -208,12 +277,12 @@ wins and lower-precedence copies are ignored.
 
 ### Package packs
 
-A plugin directory may include a `package.json` with `IronCliw.extensions`:
+A plugin directory may include a `package.json` with `ironcliw.extensions`:
 
 ```json
 {
   "name": "my-pack",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"]
   }
 }
@@ -225,25 +294,25 @@ becomes `name/<fileBase>`.
 If your plugin imports npm deps, install them in that directory so
 `node_modules` is available (`npm install` / `pnpm install`).
 
-Security guardrail: every `IronCliw.extensions` entry must stay inside the plugin
+Security guardrail: every `ironcliw.extensions` entry must stay inside the plugin
 directory after symlink resolution. Entries that escape the package directory are
 rejected.
 
-Security note: `IronCliw plugins install` installs plugin dependencies with
+Security note: `ironcliw plugins install` installs plugin dependencies with
 `npm install --ignore-scripts` (no lifecycle scripts). Keep plugin dependency
 trees "pure JS/TS" and avoid packages that require `postinstall` builds.
 
 ### Channel catalog metadata
 
-Channel plugins can advertise onboarding metadata via `IronCliw.channel` and
-install hints via `IronCliw.install`. This keeps the core catalog data-free.
+Channel plugins can advertise onboarding metadata via `ironcliw.channel` and
+install hints via `ironcliw.install`. This keeps the core catalog data-free.
 
 Example:
 
 ```json
 {
-  "name": "@IronCliw/nextcloud-talk",
-  "IronCliw": {
+  "name": "@ironcliw/nextcloud-talk",
+  "ironcliw": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -256,7 +325,7 @@ Example:
       "aliases": ["nc-talk", "nc"]
     },
     "install": {
-      "npmSpec": "@IronCliw/nextcloud-talk",
+      "npmSpec": "@ironcliw/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }
@@ -267,13 +336,13 @@ Example:
 IronCliw can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
 
-- `~/.IronCliw/mpm/plugins.json`
-- `~/.IronCliw/mpm/catalog.json`
-- `~/.IronCliw/plugins/catalog.json`
+- `~/.ironcliw/mpm/plugins.json`
+- `~/.ironcliw/mpm/catalog.json`
+- `~/.ironcliw/plugins/catalog.json`
 
-Or point `IronCliw_PLUGIN_CATALOG_PATHS` (or `IronCliw_MPM_CATALOG_PATHS`) at
+Or point `IRONCLIW_PLUGIN_CATALOG_PATHS` (or `IRONCLIW_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
-contain `{ "entries": [ { "name": "@scope/pkg", "IronCliw": { "channel": {...}, "install": {...} } } ] }`.
+contain `{ "entries": [ { "name": "@scope/pkg", "ironcliw": { "channel": {...}, "install": {...} } } ] }`.
 
 ## Plugin IDs
 
@@ -307,6 +376,7 @@ Fields:
 - `allow`: allowlist (optional)
 - `deny`: denylist (optional; deny wins)
 - `load.paths`: extra plugin files/dirs
+- `slots`: exclusive slot selectors such as `memory` and `contextEngine`
 - `entries.<id>`: per‑plugin toggles + config
 
 Config changes **require a gateway restart**.
@@ -317,7 +387,7 @@ Validation rules (strict):
 - Unknown `channels.<id>` keys are **errors** unless a plugin manifest declares
   the channel id.
 - Plugin config is validated using the JSON Schema embedded in
-  `IronCliw.plugin.json` (`configSchema`).
+  `ironcliw.plugin.json` (`configSchema`).
 - If a plugin is disabled, its config is preserved and a **warning** is emitted.
 
 ## Plugin slots (exclusive categories)
@@ -330,13 +400,29 @@ Some plugin categories are **exclusive** (only one active at a time). Use
   plugins: {
     slots: {
       memory: "memory-core", // or "none" to disable memory plugins
+      contextEngine: "legacy", // or a plugin id such as "lossless-claw"
     },
   },
 }
 ```
 
-If multiple plugins declare `kind: "memory"`, only the selected one loads. Others
-are disabled with diagnostics.
+Supported exclusive slots:
+
+- `memory`: active memory plugin (`"none"` disables memory plugins)
+- `contextEngine`: active context engine plugin (`"legacy"` is the built-in default)
+
+If multiple plugins declare `kind: "memory"` or `kind: "context-engine"`, only
+the selected plugin loads for that slot. Others are disabled with diagnostics.
+
+### Context engine plugins
+
+Context engine plugins own session context orchestration for ingest, assembly,
+and compaction. Register them from your plugin with
+`api.registerContextEngine(id, factory)`, then select the active engine with
+`plugins.slots.contextEngine`.
+
+Use this when your plugin needs to replace or extend the default context
+pipeline rather than just add memory search or hooks.
 
 ## Control UI (schema + labels)
 
@@ -374,26 +460,26 @@ Example:
 ## CLI
 
 ```bash
-IronCliw plugins list
-IronCliw plugins info <id>
-IronCliw plugins install <path>                 # copy a local file/dir into ~/.IronCliw/extensions/<id>
-IronCliw plugins install ./extensions/voice-call # relative path ok
-IronCliw plugins install ./plugin.tgz           # install from a local tarball
-IronCliw plugins install ./plugin.zip           # install from a local zip
-IronCliw plugins install -l ./extensions/voice-call # link (no copy) for dev
-IronCliw plugins install @IronCliw/voice-call # install from npm
-IronCliw plugins install @IronCliw/voice-call --pin # store exact resolved name@version
-IronCliw plugins update <id>
-IronCliw plugins update --all
-IronCliw plugins enable <id>
-IronCliw plugins disable <id>
-IronCliw plugins doctor
+ironcliw plugins list
+ironcliw plugins info <id>
+ironcliw plugins install <path>                 # copy a local file/dir into ~/.ironcliw/extensions/<id>
+ironcliw plugins install ./extensions/voice-call # relative path ok
+ironcliw plugins install ./plugin.tgz           # install from a local tarball
+ironcliw plugins install ./plugin.zip           # install from a local zip
+ironcliw plugins install -l ./extensions/voice-call # link (no copy) for dev
+ironcliw plugins install @ironcliw/voice-call # install from npm
+ironcliw plugins install @ironcliw/voice-call --pin # store exact resolved name@version
+ironcliw plugins update <id>
+ironcliw plugins update --all
+ironcliw plugins enable <id>
+ironcliw plugins disable <id>
+ironcliw plugins doctor
 ```
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
 If stored integrity metadata changes between updates, IronCliw warns and asks for confirmation (use global `--yes` to bypass prompts).
 
-Plugins may also register their own top‑level commands (example: `IronCliw voicecall`).
+Plugins may also register their own top‑level commands (example: `ironcliw voicecall`).
 
 ## Plugin API (overview)
 
@@ -401,6 +487,37 @@ Plugins export either:
 
 - A function: `(api) => { ... }`
 - An object: `{ id, name, configSchema, register(api) { ... } }`
+
+Context engine plugins can also register a runtime-owned context manager:
+
+```ts
+export default function (api) {
+  api.registerContextEngine("lossless-claw", () => ({
+    info: { id: "lossless-claw", name: "Lossless Claw", ownsCompaction: true },
+    async ingest() {
+      return { ingested: true };
+    },
+    async assemble({ messages }) {
+      return { messages, estimatedTokens: 0 };
+    },
+    async compact() {
+      return { ok: true, compacted: false };
+    },
+  }));
+}
+```
+
+Then enable it in config:
+
+```json5
+{
+  plugins: {
+    slots: {
+      contextEngine: "lossless-claw",
+    },
+  },
+}
+```
 
 ## Plugin hooks
 
@@ -428,8 +545,61 @@ Notes:
 
 - Register hooks explicitly via `api.registerHook(...)`.
 - Hook eligibility rules still apply (OS/bins/env/config requirements).
-- Plugin-managed hooks show up in `IronCliw hooks list` with `plugin:<id>`.
-- You cannot enable/disable plugin-managed hooks via `IronCliw hooks`; enable/disable the plugin instead.
+- Plugin-managed hooks show up in `ironcliw hooks list` with `plugin:<id>`.
+- You cannot enable/disable plugin-managed hooks via `ironcliw hooks`; enable/disable the plugin instead.
+
+### Agent lifecycle hooks (`api.on`)
+
+For typed runtime lifecycle hooks, use `api.on(...)`:
+
+```ts
+export default function register(api) {
+  api.on(
+    "before_prompt_build",
+    (event, ctx) => {
+      return {
+        prependSystemContext: "Follow company style guide.",
+      };
+    },
+    { priority: 10 },
+  );
+}
+```
+
+Important hooks for prompt construction:
+
+- `before_model_resolve`: runs before session load (`messages` are not available). Use this to deterministically override `modelOverride` or `providerOverride`.
+- `before_prompt_build`: runs after session load (`messages` are available). Use this to shape prompt input.
+- `before_agent_start`: legacy compatibility hook. Prefer the two explicit hooks above.
+
+Core-enforced hook policy:
+
+- Operators can disable prompt mutation hooks per plugin via `plugins.entries.<id>.hooks.allowPromptInjection: false`.
+- When disabled, IronCliw blocks `before_prompt_build` and ignores prompt-mutating fields returned from legacy `before_agent_start` while preserving legacy `modelOverride` and `providerOverride`.
+
+`before_prompt_build` result fields:
+
+- `prependContext`: prepends text to the user prompt for this run. Best for turn-specific or dynamic content.
+- `systemPrompt`: full system prompt override.
+- `prependSystemContext`: prepends text to the current system prompt.
+- `appendSystemContext`: appends text to the current system prompt.
+
+Prompt build order in embedded runtime:
+
+1. Apply `prependContext` to the user prompt.
+2. Apply `systemPrompt` override when provided.
+3. Apply `prependSystemContext + current system prompt + appendSystemContext`.
+
+Merge and precedence notes:
+
+- Hook handlers run by priority (higher first).
+- For merged context fields, values are concatenated in execution order.
+- `before_prompt_build` values are applied before legacy `before_agent_start` fallback values.
+
+Migration guidance:
+
+- Move static guidance from `prependContext` to `prependSystemContext` (or `appendSystemContext`) so providers can cache stable system-prefix content.
+- Keep `prependContext` for per-turn dynamic context that should stay tied to the user message.
 
 ## Provider plugins (model auth)
 
@@ -439,7 +609,7 @@ API-key setup inside IronCliw (no external scripts needed).
 Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). These methods power:
 
-- `IronCliw models auth login --provider <id> [--method <id>]`
+- `ironcliw models auth login --provider <id> [--method <id>]`
 
 Example:
 
@@ -693,6 +863,7 @@ Command handler context:
 Command options:
 
 - `name`: Command name (without the leading `/`)
+- `nativeNames`: Optional native-command aliases for slash/menu surfaces. Use `default` for all native providers, or provider-specific keys like `discord`
 - `description`: Help text shown in command lists
 - `acceptsArgs`: Whether the command accepts arguments (default: false). If false and arguments are provided, the command won't match and the message falls through to other handlers
 - `requireAuth`: Whether to require authorized sender (default: true)
@@ -751,14 +922,14 @@ it’s present in your workspace/managed skills locations.
 
 Recommended packaging:
 
-- Main package: `IronCliw` (this repo)
-- Plugins: separate npm packages under `@IronCliw/*` (example: `@IronCliw/voice-call`)
+- Main package: `ironcliw` (this repo)
+- Plugins: separate npm packages under `@ironcliw/*` (example: `@ironcliw/voice-call`)
 
 Publishing contract:
 
-- Plugin `package.json` must include `IronCliw.extensions` with one or more entry files.
+- Plugin `package.json` must include `ironcliw.extensions` with one or more entry files.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `IronCliw plugins install <npm-spec>` uses `npm pack`, extracts into `~/.IronCliw/extensions/<id>/`, and enables it in config.
+- `ironcliw plugins install <npm-spec>` uses `npm pack`, extracts into `~/.ironcliw/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call
@@ -767,7 +938,7 @@ This repo includes a voice‑call plugin (Twilio or log fallback):
 
 - Source: `extensions/voice-call`
 - Skill: `skills/voice-call`
-- CLI: `IronCliw voicecall start|status`
+- CLI: `ironcliw voicecall start|status`
 - Tool: `voice_call`
 - RPC: `voicecall.start`, `voicecall.status`
 - Config (twilio): `provider: "twilio"` + `twilio.accountSid/authToken/from` (optional `statusCallbackUrl`, `twimlUrl`)
@@ -788,4 +959,4 @@ Plugins run in-process with the Gateway. Treat them as trusted code:
 Plugins can (and should) ship tests:
 
 - In-repo plugins can keep Vitest tests under `src/**` (example: `src/plugins/voice-call.plugin.test.ts`).
-- Separately published plugins should run their own CI (lint/build/test) and validate `IronCliw.extensions` points at the built entrypoint (`dist/index.js`).
+- Separately published plugins should run their own CI (lint/build/test) and validate `ironcliw.extensions` points at the built entrypoint (`dist/index.js`).

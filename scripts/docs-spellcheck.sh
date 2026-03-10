@@ -42,4 +42,3 @@ fi
 
 echo "codespell unavailable: install codespell or python3" >&2
 exit 1
-

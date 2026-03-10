@@ -177,30 +177,30 @@ describe("gateway hot reload", () => {
   let prevOpenAiApiKey: string | undefined;
 
   beforeEach(() => {
-    prevSkipChannels = process.env.IronCliw_SKIP_CHANNELS;
-    prevSkipGmail = process.env.IronCliw_SKIP_GMAIL_WATCHER;
-    prevSkipProviders = process.env.IronCliw_SKIP_PROVIDERS;
+    prevSkipChannels = process.env.IRONCLIW_SKIP_CHANNELS;
+    prevSkipGmail = process.env.IRONCLIW_SKIP_GMAIL_WATCHER;
+    prevSkipProviders = process.env.IRONCLIW_SKIP_PROVIDERS;
     prevOpenAiApiKey = process.env.OPENAI_API_KEY;
-    process.env.IronCliw_SKIP_CHANNELS = "0";
-    delete process.env.IronCliw_SKIP_GMAIL_WATCHER;
-    delete process.env.IronCliw_SKIP_PROVIDERS;
+    process.env.IRONCLIW_SKIP_CHANNELS = "0";
+    delete process.env.IRONCLIW_SKIP_GMAIL_WATCHER;
+    delete process.env.IRONCLIW_SKIP_PROVIDERS;
   });
 
   afterEach(() => {
     if (prevSkipChannels === undefined) {
-      delete process.env.IronCliw_SKIP_CHANNELS;
+      delete process.env.IRONCLIW_SKIP_CHANNELS;
     } else {
-      process.env.IronCliw_SKIP_CHANNELS = prevSkipChannels;
+      process.env.IRONCLIW_SKIP_CHANNELS = prevSkipChannels;
     }
     if (prevSkipGmail === undefined) {
-      delete process.env.IronCliw_SKIP_GMAIL_WATCHER;
+      delete process.env.IRONCLIW_SKIP_GMAIL_WATCHER;
     } else {
-      process.env.IronCliw_SKIP_GMAIL_WATCHER = prevSkipGmail;
+      process.env.IRONCLIW_SKIP_GMAIL_WATCHER = prevSkipGmail;
     }
     if (prevSkipProviders === undefined) {
-      delete process.env.IronCliw_SKIP_PROVIDERS;
+      delete process.env.IRONCLIW_SKIP_PROVIDERS;
     } else {
-      process.env.IronCliw_SKIP_PROVIDERS = prevSkipProviders;
+      process.env.IRONCLIW_SKIP_PROVIDERS = prevSkipProviders;
     }
     if (prevOpenAiApiKey === undefined) {
       delete process.env.OPENAI_API_KEY;
@@ -210,9 +210,9 @@ describe("gateway hot reload", () => {
   });
 
   async function writeEnvRefConfig() {
-    const configPath = process.env.IronCliw_CONFIG_PATH;
+    const configPath = process.env.IRONCLIW_CONFIG_PATH;
     if (!configPath) {
-      throw new Error("IronCliw_CONFIG_PATH is not set");
+      throw new Error("IRONCLIW_CONFIG_PATH is not set");
     }
     await fs.writeFile(
       configPath,
@@ -236,9 +236,9 @@ describe("gateway hot reload", () => {
   }
 
   async function writeDisabledSurfaceRefConfig() {
-    const configPath = process.env.IronCliw_CONFIG_PATH;
+    const configPath = process.env.IRONCLIW_CONFIG_PATH;
     if (!configPath) {
-      throw new Error("IronCliw_CONFIG_PATH is not set");
+      throw new Error("IRONCLIW_CONFIG_PATH is not set");
     }
     await fs.writeFile(
       configPath,
@@ -270,10 +270,38 @@ describe("gateway hot reload", () => {
     );
   }
 
+  async function writeGatewayTokenRefConfig() {
+    const configPath = process.env.IRONCLIW_CONFIG_PATH;
+    if (!configPath) {
+      throw new Error("IRONCLIW_CONFIG_PATH is not set");
+    }
+    await fs.writeFile(
+      configPath,
+      `${JSON.stringify(
+        {
+          secrets: {
+            providers: {
+              default: { source: "env" },
+            },
+          },
+          gateway: {
+            auth: {
+              mode: "token",
+              token: { source: "env", provider: "default", id: "MISSING_STARTUP_GW_TOKEN" },
+            },
+          },
+        },
+        null,
+        2,
+      )}\n`,
+      "utf8",
+    );
+  }
+
   async function writeAuthProfileEnvRefStore() {
-    const stateDir = process.env.IronCliw_STATE_DIR;
+    const stateDir = process.env.IRONCLIW_STATE_DIR;
     if (!stateDir) {
-      throw new Error("IronCliw_STATE_DIR is not set");
+      throw new Error("IRONCLIW_STATE_DIR is not set");
     }
     const authStorePath = path.join(stateDir, "agents", "main", "agent", "auth-profiles.json");
     await fs.mkdir(path.dirname(authStorePath), { recursive: true });
@@ -286,7 +314,7 @@ describe("gateway hot reload", () => {
             missing: {
               type: "api_key",
               provider: "openai",
-              keyRef: { source: "env", provider: "default", id: "MISSING_IronCliw_AUTH_REF" },
+              keyRef: { source: "env", provider: "default", id: "MISSING_IRONCLIW_AUTH_REF" },
             },
           },
           selectedProfileId: "missing",
@@ -301,7 +329,7 @@ describe("gateway hot reload", () => {
   }
 
   async function removeMainAuthProfileStore() {
-    const stateDir = process.env.IronCliw_STATE_DIR;
+    const stateDir = process.env.IRONCLIW_STATE_DIR;
     if (!stateDir) {
       return;
     }
@@ -429,12 +457,27 @@ describe("gateway hot reload", () => {
     await expect(withGatewayServer(async () => {})).resolves.toBeUndefined();
   });
 
+  it("honors startup auth overrides before secret preflight gating", async () => {
+    await writeGatewayTokenRefConfig();
+    delete process.env.MISSING_STARTUP_GW_TOKEN;
+    await expect(
+      withGatewayServer(async () => {}, {
+        serverOptions: {
+          auth: {
+            mode: "password",
+            password: "override-password", // pragma: allowlist secret
+          },
+        },
+      }),
+    ).resolves.toBeUndefined();
+  });
+
   it("fails startup when auth-profile secret refs are unresolved", async () => {
     await writeAuthProfileEnvRefStore();
-    delete process.env.MISSING_IronCliw_AUTH_REF;
+    delete process.env.MISSING_IRONCLIW_AUTH_REF;
     try {
       await expect(withGatewayServer(async () => {})).rejects.toThrow(
-        'Environment variable "MISSING_IronCliw_AUTH_REF" is missing or empty.',
+        'Environment variable "MISSING_IRONCLIW_AUTH_REF" is missing or empty.',
       );
     } finally {
       await removeMainAuthProfileStore();
@@ -443,7 +486,7 @@ describe("gateway hot reload", () => {
 
   it("emits one-shot degraded and recovered system events during secret reload transitions", async () => {
     await writeEnvRefConfig();
-    process.env.OPENAI_API_KEY = "sk-startup";
+    process.env.OPENAI_API_KEY = "sk-startup"; // pragma: allowlist secret
 
     await withGatewayServer(async () => {
       const onHotReload = hoisted.getOnHotReload();
@@ -488,7 +531,7 @@ describe("gateway hot reload", () => {
       );
       expect(drainSystemEvents(sessionKey)).toEqual([]);
 
-      process.env.OPENAI_API_KEY = "sk-recovered";
+      process.env.OPENAI_API_KEY = "sk-recovered"; // pragma: allowlist secret
       await expect(onHotReload?.(plan, nextConfig)).resolves.toBeUndefined();
       const recoveredEvents = drainSystemEvents(sessionKey);
       expect(recoveredEvents.some((event) => event.includes("[SECRETS_RELOADER_RECOVERED]"))).toBe(
@@ -499,7 +542,7 @@ describe("gateway hot reload", () => {
 
   it("serves secrets.reload immediately after startup without race failures", async () => {
     await writeEnvRefConfig();
-    process.env.OPENAI_API_KEY = "sk-startup";
+    process.env.OPENAI_API_KEY = "sk-startup"; // pragma: allowlist secret
     const { server, ws } = await startServerWithClient();
     try {
       await connectOk(ws);

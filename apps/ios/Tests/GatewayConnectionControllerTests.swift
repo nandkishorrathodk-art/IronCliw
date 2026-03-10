@@ -71,15 +71,15 @@ import UIKit
     }
 
     @Test @MainActor func loadLastConnectionReadsSavedValues() {
-        let prior = KeychainStore.loadString(service: "ai.IronCliw.gateway", account: "lastConnection")
+        let prior = KeychainStore.loadString(service: "ai.ironcliw.gateway", account: "lastConnection")
         defer {
             if let prior {
-                _ = KeychainStore.saveString(prior, service: "ai.IronCliw.gateway", account: "lastConnection")
+                _ = KeychainStore.saveString(prior, service: "ai.ironcliw.gateway", account: "lastConnection")
             } else {
-                _ = KeychainStore.delete(service: "ai.IronCliw.gateway", account: "lastConnection")
+                _ = KeychainStore.delete(service: "ai.ironcliw.gateway", account: "lastConnection")
             }
         }
-        _ = KeychainStore.delete(service: "ai.IronCliw.gateway", account: "lastConnection")
+        _ = KeychainStore.delete(service: "ai.ironcliw.gateway", account: "lastConnection")
 
         GatewaySettingsStore.saveLastGatewayConnectionManual(
             host: "gateway.example.com",
@@ -91,15 +91,15 @@ import UIKit
     }
 
     @Test @MainActor func loadLastConnectionReturnsNilForInvalidData() {
-        let prior = KeychainStore.loadString(service: "ai.IronCliw.gateway", account: "lastConnection")
+        let prior = KeychainStore.loadString(service: "ai.ironcliw.gateway", account: "lastConnection")
         defer {
             if let prior {
-                _ = KeychainStore.saveString(prior, service: "ai.IronCliw.gateway", account: "lastConnection")
+                _ = KeychainStore.saveString(prior, service: "ai.ironcliw.gateway", account: "lastConnection")
             } else {
-                _ = KeychainStore.delete(service: "ai.IronCliw.gateway", account: "lastConnection")
+                _ = KeychainStore.delete(service: "ai.ironcliw.gateway", account: "lastConnection")
             }
         }
-        _ = KeychainStore.delete(service: "ai.IronCliw.gateway", account: "lastConnection")
+        _ = KeychainStore.delete(service: "ai.ironcliw.gateway", account: "lastConnection")
 
         // Plant legacy UserDefaults with invalid host/port to exercise migration + validation.
         withUserDefaults([

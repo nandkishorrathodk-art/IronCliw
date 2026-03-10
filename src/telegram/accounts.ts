@@ -31,7 +31,7 @@ function formatDebugArg(value: unknown): string {
 }
 
 const debugAccounts = (...args: unknown[]) => {
-  if (isTruthyEnvValue(process.env.IronCliw_DEBUG_TELEGRAM_ACCOUNTS)) {
+  if (isTruthyEnvValue(process.env.IRONCLIW_DEBUG_TELEGRAM_ACCOUNTS)) {
     const parts = args.map((arg) => formatDebugArg(arg));
     log.warn(parts.join(" ").trim());
   }
@@ -97,7 +97,7 @@ export function resolveDefaultTelegramAccountId(cfg: IronCliwConfig): string {
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
-function resolveAccountConfig(
+export function resolveTelegramAccountConfig(
   cfg: IronCliwConfig,
   accountId: string,
 ): TelegramAccountConfig | undefined {
@@ -105,7 +105,10 @@ function resolveAccountConfig(
   return resolveAccountEntry(cfg.channels?.telegram?.accounts, normalized);
 }
 
-function mergeTelegramAccountConfig(cfg: IronCliwConfig, accountId: string): TelegramAccountConfig {
+export function mergeTelegramAccountConfig(
+  cfg: IronCliwConfig,
+  accountId: string,
+): TelegramAccountConfig {
   const {
     accounts: _ignored,
     defaultAccount: _ignoredDefaultAccount,
@@ -115,7 +118,7 @@ function mergeTelegramAccountConfig(cfg: IronCliwConfig, accountId: string): Tel
     accounts?: unknown;
     defaultAccount?: unknown;
   };
-  const account = resolveAccountConfig(cfg, accountId) ?? {};
+  const account = resolveTelegramAccountConfig(cfg, accountId) ?? {};
 
   // In multi-account setups, channel-level `groups` must NOT be inherited by
   // accounts that don't have their own `groups` config.  A bot that is not a
@@ -123,7 +126,7 @@ function mergeTelegramAccountConfig(cfg: IronCliwConfig, accountId: string): Tel
   // this failure disrupts message delivery for *all* accounts.
   // Single-account setups keep backward compat: channel-level groups still
   // applies when the account has no override.
-  // See: https://github.com/IronCliw/IronCliw/issues/30673
+  // See: https://github.com/ironcliw/ironcliw/issues/30673
   const configuredAccountIds = Object.keys(cfg.channels?.telegram?.accounts ?? {});
   const isMultiAccount = configuredAccountIds.length > 1;
   const groups = account.groups ?? (isMultiAccount ? undefined : channelGroups);
@@ -138,8 +141,26 @@ export function createTelegramActionGate(params: {
   const accountId = normalizeAccountId(params.accountId);
   return createAccountActionGate({
     baseActions: params.cfg.channels?.telegram?.actions,
-    accountActions: resolveAccountConfig(params.cfg, accountId)?.actions,
+    accountActions: resolveTelegramAccountConfig(params.cfg, accountId)?.actions,
   });
+}
+
+export type TelegramPollActionGateState = {
+  sendMessageEnabled: boolean;
+  pollEnabled: boolean;
+  enabled: boolean;
+};
+
+export function resolveTelegramPollActionGateState(
+  isActionEnabled: (key: keyof TelegramActionConfig, defaultValue?: boolean) => boolean,
+): TelegramPollActionGateState {
+  const sendMessageEnabled = isActionEnabled("sendMessage");
+  const pollEnabled = isActionEnabled("poll");
+  return {
+    sendMessageEnabled,
+    pollEnabled,
+    enabled: sendMessageEnabled && pollEnabled,
+  };
 }
 
 export function resolveTelegramAccount(params: {

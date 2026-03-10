@@ -22,13 +22,13 @@ Matrix ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-IronCliw plugins install @IronCliw/matrix
+ironcliw plugins install @ironcliw/matrix
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-IronCliw plugins install ./extensions/matrix
+ironcliw plugins install ./extensions/matrix
 ```
 
 If you choose Matrix during configure/onboarding and a git checkout is detected,
@@ -39,8 +39,8 @@ Details: [Plugins](/tools/plugin)
 ## Setup
 
 1. Install the Matrix plugin:
-   - From npm: `IronCliw plugins install @IronCliw/matrix`
-   - From a local checkout: `IronCliw plugins install ./extensions/matrix`
+   - From npm: `ironcliw plugins install @ironcliw/matrix`
+   - From a local checkout: `ironcliw plugins install ./extensions/matrix`
 2. Create a Matrix account on a homeserver:
    - Browse hosting options at [https://matrix.org/ecosystem/hosting/](https://matrix.org/ecosystem/hosting/)
    - Or host it yourself.
@@ -63,7 +63,7 @@ Details: [Plugins](/tools/plugin)
 
    - Replace `matrix.example.org` with your homeserver URL.
    - Or set `channels.matrix.userId` + `channels.matrix.password`: IronCliw calls the same
-     login endpoint, stores the access token in `~/.IronCliw/credentials/matrix/credentials.json`,
+     login endpoint, stores the access token in `~/.ironcliw/credentials/matrix/credentials.json`,
      and reuses it on next start.
 
 4. Configure credentials:
@@ -126,7 +126,7 @@ Enable with `channels.matrix.encryption: true`:
   `node node_modules/@matrix-org/matrix-sdk-crypto-nodejs/download-lib.js`.
 
 Crypto state is stored per account + access token in
-`~/.IronCliw/matrix/accounts/<account>/<homeserver>__<user>/<token-hash>/crypto/`
+`~/.ironcliw/matrix/accounts/<account>/<homeserver>__<user>/<token-hash>/crypto/`
 (SQLite database). Sync state lives alongside it in `bot-storage.json`.
 If the access token (device) changes, a new store is created and the bot must be
 re-verified for encrypted rooms.
@@ -186,8 +186,8 @@ Notes:
 
 - Default: `channels.matrix.dm.policy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `IronCliw pairing list matrix`
-  - `IronCliw pairing approve matrix <CODE>`
+  - `ironcliw pairing list matrix`
+  - `ironcliw pairing approve matrix <CODE>`
 - Public DMs: `channels.matrix.dm.policy="open"` plus `channels.matrix.dm.allowFrom=["*"]`.
 - `channels.matrix.dm.allowFrom` accepts full Matrix user IDs (example: `@user:server`). The wizard resolves display names to user IDs when directory search finds a single exact match.
 - Do not use display names or bare localparts (example: `"Alice"` or `"alice"`). They are ambiguous and are ignored for allowlist matching. Use full `@user:server` IDs.
@@ -250,17 +250,17 @@ Notes:
 Run this ladder first:
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
-IronCliw channels status --probe
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
+ironcliw channels status --probe
 ```
 
 Then confirm DM pairing state if needed:
 
 ```bash
-IronCliw pairing list matrix
+ironcliw pairing list matrix
 ```
 
 Common failures:

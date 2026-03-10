@@ -85,7 +85,7 @@ describe("heartbeat transcript pruning", () => {
         }
         expect(finalSize).toBeGreaterThanOrEqual(originalSize);
       },
-      { prefix: "IronCliw-hb-prune-" },
+      { prefix: "ironcliw-hb-prune-" },
     );
   }
 

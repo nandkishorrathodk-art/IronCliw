@@ -8,7 +8,7 @@ import { resolveSandboxContext } from "./sandbox/context.js";
 import { writeSkill } from "./skills.e2e-test-helpers.js";
 
 vi.mock("./sandbox/docker.js", () => ({
-  ensureSandboxContainer: vi.fn(async () => "IronCliw-sbx-test"),
+  ensureSandboxContainer: vi.fn(async () => "ironcliw-sbx-test"),
 }));
 
 vi.mock("./sandbox/browser.js", () => ({
@@ -31,12 +31,12 @@ describe("sandbox skill mirroring", () => {
   });
 
   const runContext = async (workspaceAccess: "none" | "ro") => {
-    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-bundled-skills-"));
+    const bundledDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-bundled-skills-"));
     await fs.mkdir(bundledDir, { recursive: true });
 
-    process.env.IronCliw_BUNDLED_SKILLS_DIR = bundledDir;
+    process.env.IRONCLIW_BUNDLED_SKILLS_DIR = bundledDir;
 
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-workspace-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-workspace-"));
     await writeSkill({
       dir: path.join(workspaceDir, "skills", "demo-skill"),
       name: "demo-skill",

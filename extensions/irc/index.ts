@@ -1,5 +1,5 @@
-import type { ChannelPlugin, IronCliwPluginApi } from "IronCliw/plugin-sdk/irc";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/irc";
+import type { ChannelPlugin, IronCliwPluginApi } from "ironcliw/plugin-sdk/irc";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/irc";
 import { ircPlugin } from "./src/channel.js";
 import { setIrcRuntime } from "./src/runtime.js";
 

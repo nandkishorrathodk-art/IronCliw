@@ -1,5 +1,5 @@
-import { DEFAULT_ACCOUNT_ID } from "IronCliw/plugin-sdk/account-id";
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/zalouser";
+import { DEFAULT_ACCOUNT_ID } from "ironcliw/plugin-sdk/account-id";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/zalouser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getZcaUserInfo,

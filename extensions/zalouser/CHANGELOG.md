@@ -1,5 +1,35 @@
 # Changelog
 
+## 2026.3.9
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.8-beta.1
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.8
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.7
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
+## 2026.3.3
+
+### Changes
+
+- Version alignment with core IronCliw release numbers.
+
 ## 2026.3.2
 
 ### Changes
@@ -8,7 +38,7 @@
 
 ### Breaking
 
-- **BREAKING:** Removed the old external CLI-based backend (`zca`/`openzca`/`zca-cli`) from runtime flow. Existing setups that depended on external CLI binaries should re-login with `IronCliw channels login --channel zalouser` after upgrading.
+- **BREAKING:** Removed the old external CLI-based backend (`zca`/`openzca`/`zca-cli`) from runtime flow. Existing setups that depended on external CLI binaries should re-login with `ironcliw channels login --channel zalouser` after upgrading.
 
 ## 2026.3.1
 

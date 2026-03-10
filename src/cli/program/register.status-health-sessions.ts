@@ -55,21 +55,21 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw status", "Show channel health + session summary."],
-          ["IronCliw status --all", "Full diagnosis (read-only)."],
-          ["IronCliw status --json", "Machine-readable output."],
-          ["IronCliw status --usage", "Show model provider usage/quota snapshots."],
+          ["ironcliw status", "Show channel health + session summary."],
+          ["ironcliw status --all", "Full diagnosis (read-only)."],
+          ["ironcliw status --json", "Machine-readable output."],
+          ["ironcliw status --usage", "Show model provider usage/quota snapshots."],
           [
-            "IronCliw status --deep",
+            "ironcliw status --deep",
             "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
           ],
-          ["IronCliw status --deep --timeout 5000", "Tighten probe timeout."],
+          ["ironcliw status --deep --timeout 5000", "Tighten probe timeout."],
         ])}`,
     )
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status", "docs.IronCliw.ai/cli/status")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status", "docs.ironcliw.ai/cli/status")}\n`,
     )
     .action(async (opts) => {
       await runWithVerboseAndTimeout(opts, async ({ verbose, timeoutMs }) => {
@@ -97,7 +97,7 @@ export function registerStatusHealthSessionsCommands(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/health", "docs.IronCliw.ai/cli/health")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/health", "docs.ironcliw.ai/cli/health")}\n`,
     )
     .action(async (opts) => {
       await runWithVerboseAndTimeout(opts, async ({ verbose, timeoutMs }) => {
@@ -125,12 +125,12 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw sessions", "List all sessions."],
-          ["IronCliw sessions --agent work", "List sessions for one agent."],
-          ["IronCliw sessions --all-agents", "Aggregate sessions across agents."],
-          ["IronCliw sessions --active 120", "Only last 2 hours."],
-          ["IronCliw sessions --json", "Machine-readable output."],
-          ["IronCliw sessions --store ./tmp/sessions.json", "Use a specific session store."],
+          ["ironcliw sessions", "List all sessions."],
+          ["ironcliw sessions --agent work", "List sessions for one agent."],
+          ["ironcliw sessions --all-agents", "Aggregate sessions across agents."],
+          ["ironcliw sessions --active 120", "Only last 2 hours."],
+          ["ironcliw sessions --json", "Machine-readable output."],
+          ["ironcliw sessions --store ./tmp/sessions.json", "Use a specific session store."],
         ])}\n\n${theme.muted(
           "Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to cap the window and show %.",
         )}`,
@@ -138,7 +138,7 @@ export function registerStatusHealthSessionsCommands(program: Command) {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sessions", "docs.IronCliw.ai/cli/sessions")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sessions", "docs.ironcliw.ai/cli/sessions")}\n`,
     )
     .action(async (opts) => {
       setVerbose(Boolean(opts.verbose));
@@ -174,16 +174,16 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw sessions cleanup --dry-run", "Preview stale/cap cleanup."],
+          ["ironcliw sessions cleanup --dry-run", "Preview stale/cap cleanup."],
           [
-            "IronCliw sessions cleanup --dry-run --fix-missing",
+            "ironcliw sessions cleanup --dry-run --fix-missing",
             "Also preview pruning entries with missing transcript files.",
           ],
-          ["IronCliw sessions cleanup --enforce", "Apply maintenance now."],
-          ["IronCliw sessions cleanup --agent work --dry-run", "Preview one agent store."],
-          ["IronCliw sessions cleanup --all-agents --dry-run", "Preview all agent stores."],
+          ["ironcliw sessions cleanup --enforce", "Apply maintenance now."],
+          ["ironcliw sessions cleanup --agent work --dry-run", "Preview one agent store."],
+          ["ironcliw sessions cleanup --all-agents --dry-run", "Preview all agent stores."],
           [
-            "IronCliw sessions cleanup --enforce --store ./tmp/sessions.json",
+            "ironcliw sessions cleanup --enforce --store ./tmp/sessions.json",
             "Use a specific store.",
           ],
         ])}`,

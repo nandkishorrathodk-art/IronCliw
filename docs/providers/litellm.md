@@ -22,7 +22,7 @@ read_when:
 ### Via onboarding
 
 ```bash
-IronCliw onboard --auth-choice litellm-api-key
+ironcliw onboard --auth-choice litellm-api-key
 ```
 
 ### Manual setup
@@ -39,7 +39,7 @@ litellm --model claude-opus-4-6
 ```bash
 export LITELLM_API_KEY="your-litellm-key"
 
-IronCliw
+ironcliw
 ```
 
 That's it. IronCliw now routes through LiteLLM.
@@ -100,7 +100,7 @@ curl -X POST "http://localhost:4000/key/generate" \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "key_alias": "IronCliw",
+    "key_alias": "ironcliw",
     "max_budget": 50.00,
     "budget_duration": "monthly"
   }'

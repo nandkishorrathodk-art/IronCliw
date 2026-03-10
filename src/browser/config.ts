@@ -8,11 +8,11 @@ import {
 import { isLoopbackHost } from "../gateway/net.js";
 import type { SsrFPolicy } from "../infra/net/ssrf.js";
 import {
-  DEFAULT_IronCliw_BROWSER_COLOR,
-  DEFAULT_IronCliw_BROWSER_ENABLED,
+  DEFAULT_IRONCLIW_BROWSER_COLOR,
+  DEFAULT_IRONCLIW_BROWSER_ENABLED,
   DEFAULT_BROWSER_EVALUATE_ENABLED,
   DEFAULT_BROWSER_DEFAULT_PROFILE_NAME,
-  DEFAULT_IronCliw_BROWSER_PROFILE_NAME,
+  DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME,
 } from "./constants.js";
 import { CDP_PORT_RANGE_START, getUsedPorts } from "./profiles.js";
 
@@ -36,6 +36,7 @@ export type ResolvedBrowserConfig = {
   profiles: Record<string, BrowserProfileConfig>;
   ssrfPolicy?: SsrFPolicy;
   extraArgs: string[];
+  relayBindHost?: string;
 };
 
 export type ResolvedBrowserProfile = {
@@ -45,18 +46,18 @@ export type ResolvedBrowserProfile = {
   cdpHost: string;
   cdpIsLoopback: boolean;
   color: string;
-  driver: "IronCliw" | "extension";
+  driver: "ironcliw" | "extension";
   attachOnly: boolean;
 };
 
 function normalizeHexColor(raw: string | undefined) {
   const value = (raw ?? "").trim();
   if (!value) {
-    return DEFAULT_IronCliw_BROWSER_COLOR;
+    return DEFAULT_IRONCLIW_BROWSER_COLOR;
   }
   const normalized = value.startsWith("#") ? value : `#${value}`;
   if (!/^#[0-9a-fA-F]{6}$/.test(normalized)) {
-    return DEFAULT_IronCliw_BROWSER_COLOR;
+    return DEFAULT_IRONCLIW_BROWSER_COLOR;
   }
   return normalized.toUpperCase();
 }
@@ -129,14 +130,16 @@ function resolveBrowserSsrFPolicy(cfg: BrowserConfig | undefined): SsrFPolicy | 
 export function parseHttpUrl(raw: string, label: string) {
   const trimmed = raw.trim();
   const parsed = new URL(trimmed);
-  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-    throw new Error(`${label} must be http(s), got: ${parsed.protocol.replace(":", "")}`);
+  const allowed = ["http:", "https:", "ws:", "wss:"];
+  if (!allowed.includes(parsed.protocol)) {
+    throw new Error(`${label} must be http(s) or ws(s), got: ${parsed.protocol.replace(":", "")}`);
   }
 
+  const isSecure = parsed.protocol === "https:" || parsed.protocol === "wss:";
   const port =
     parsed.port && Number.parseInt(parsed.port, 10) > 0
       ? Number.parseInt(parsed.port, 10)
-      : parsed.protocol === "https:"
+      : isSecure
         ? 443
         : 80;
 
@@ -152,7 +155,7 @@ export function parseHttpUrl(raw: string, label: string) {
 }
 
 /**
- * Ensure the default "IronCliw" profile exists in the profiles map.
+ * Ensure the default "ironcliw" profile exists in the profiles map.
  * Auto-creates it with the legacy CDP port (from browser.cdpUrl) or first port if missing.
  */
 function ensureDefaultProfile(
@@ -160,12 +163,17 @@ function ensureDefaultProfile(
   defaultColor: string,
   legacyCdpPort?: number,
   derivedDefaultCdpPort?: number,
+  legacyCdpUrl?: string,
 ): Record<string, BrowserProfileConfig> {
   const result = { ...profiles };
-  if (!result[DEFAULT_IronCliw_BROWSER_PROFILE_NAME]) {
-    result[DEFAULT_IronCliw_BROWSER_PROFILE_NAME] = {
+  if (!result[DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME]) {
+    result[DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME] = {
       cdpPort: legacyCdpPort ?? derivedDefaultCdpPort ?? CDP_PORT_RANGE_START,
       color: defaultColor,
+      // Preserve the full cdpUrl for ws/wss endpoints so resolveProfile()
+      // doesn't reconstruct from cdpProtocol/cdpHost/cdpPort (which drops
+      // the WebSocket protocol and query params like API keys).
+      ...(legacyCdpUrl ? { cdpUrl: legacyCdpUrl } : {}),
     };
   }
   return result;
@@ -190,7 +198,7 @@ function ensureDefaultChromeExtensionProfile(
     return result;
   }
   // Avoid adding the built-in profile if the derived relay port is already used by another profile
-  // (legacy single-profile configs may use controlPort+1 for IronCliw/IronCliw CDP).
+  // (legacy single-profile configs may use controlPort+1 for ironcliw/ironcliw CDP).
   if (getUsedPorts(result).has(relayPort)) {
     return result;
   }
@@ -205,7 +213,7 @@ export function resolveBrowserConfig(
   cfg: BrowserConfig | undefined,
   rootConfig?: IronCliwConfig,
 ): ResolvedBrowserConfig {
-  const enabled = cfg?.enabled ?? DEFAULT_IronCliw_BROWSER_ENABLED;
+  const enabled = cfg?.enabled ?? DEFAULT_IRONCLIW_BROWSER_ENABLED;
   const evaluateEnabled = cfg?.evaluateEnabled ?? DEFAULT_BROWSER_EVALUATE_ENABLED;
   const gatewayPort = resolveGatewayPort(rootConfig);
   const controlPort = deriveDefaultBrowserControlPort(gatewayPort ?? DEFAULT_BROWSER_CONTROL_PORT);
@@ -258,8 +266,16 @@ export function resolveBrowserConfig(
   const defaultProfileFromConfig = cfg?.defaultProfile?.trim() || undefined;
   // Use legacy cdpUrl port for backward compatibility when no profiles configured
   const legacyCdpPort = rawCdpUrl ? cdpInfo.port : undefined;
+  const isWsUrl = cdpInfo.parsed.protocol === "ws:" || cdpInfo.parsed.protocol === "wss:";
+  const legacyCdpUrl = rawCdpUrl && isWsUrl ? cdpInfo.normalized : undefined;
   const profiles = ensureDefaultChromeExtensionProfile(
-    ensureDefaultProfile(cfg?.profiles, defaultColor, legacyCdpPort, cdpPortRangeStart),
+    ensureDefaultProfile(
+      cfg?.profiles,
+      defaultColor,
+      legacyCdpPort,
+      cdpPortRangeStart,
+      legacyCdpUrl,
+    ),
     controlPort,
   );
   const cdpProtocol = cdpInfo.parsed.protocol === "https:" ? "https" : "http";
@@ -268,14 +284,15 @@ export function resolveBrowserConfig(
     defaultProfileFromConfig ??
     (profiles[DEFAULT_BROWSER_DEFAULT_PROFILE_NAME]
       ? DEFAULT_BROWSER_DEFAULT_PROFILE_NAME
-      : profiles[DEFAULT_IronCliw_BROWSER_PROFILE_NAME]
-        ? DEFAULT_IronCliw_BROWSER_PROFILE_NAME
+      : profiles[DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME]
+        ? DEFAULT_IRONCLIW_BROWSER_PROFILE_NAME
         : "chrome");
 
   const extraArgs = Array.isArray(cfg?.extraArgs)
     ? cfg.extraArgs.filter((a): a is string => typeof a === "string" && a.trim().length > 0)
     : [];
   const ssrfPolicy = resolveBrowserSsrFPolicy(cfg);
+  const relayBindHost = cfg?.relayBindHost?.trim() || undefined;
 
   return {
     enabled,
@@ -297,6 +314,7 @@ export function resolveBrowserConfig(
     profiles,
     ssrfPolicy,
     extraArgs,
+    relayBindHost,
   };
 }
 
@@ -317,7 +335,7 @@ export function resolveProfile(
   let cdpHost = resolved.cdpHost;
   let cdpPort = profile.cdpPort ?? 0;
   let cdpUrl = "";
-  const driver = profile.driver === "extension" ? "extension" : "IronCliw";
+  const driver = profile.driver === "extension" ? "extension" : "ironcliw";
 
   if (rawProfileUrl) {
     const parsed = parseHttpUrl(rawProfileUrl, `browser.profiles.${profileName}.cdpUrl`);

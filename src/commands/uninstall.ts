@@ -1,5 +1,6 @@
 import path from "node:path";
 import { cancel, confirm, isCancel, multiselect } from "@clack/prompts";
+import { formatCliCommand } from "../cli/command-format.js";
 import { isNixMode } from "../config/config.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -92,6 +93,10 @@ async function removeMacApp(runtime: RuntimeEnv, dryRun?: boolean) {
   });
 }
 
+function logBackupRecommendation(runtime: RuntimeEnv) {
+  runtime.log(`Recommended first: ${formatCliCommand("ironcliw backup create")}`);
+}
+
 export async function uninstallCommand(runtime: RuntimeEnv, opts: UninstallOptions) {
   const { scopes, hadExplicit } = buildScopeSelection(opts);
   const interactive = !opts.nonInteractive;
@@ -115,7 +120,7 @@ export async function uninstallCommand(runtime: RuntimeEnv, opts: UninstallOptio
           label: "Gateway service",
           hint: "launchd / systemd / schtasks",
         },
-        { value: "state", label: "State + config", hint: "~/.IronCliw" },
+        { value: "state", label: "State + config", hint: "~/.ironcliw" },
         { value: "workspace", label: "Workspace", hint: "agent files" },
         {
           value: "app",
@@ -154,6 +159,10 @@ export async function uninstallCommand(runtime: RuntimeEnv, opts: UninstallOptio
   const dryRun = Boolean(opts.dryRun);
   const { stateDir, configPath, oauthDir, configInsideState, oauthInsideState, workspaceDirs } =
     resolveCleanupPlanFromDisk();
+
+  if (scopes.has("state") || scopes.has("workspace")) {
+    logBackupRecommendation(runtime);
+  }
 
   if (scopes.has("service")) {
     if (dryRun) {

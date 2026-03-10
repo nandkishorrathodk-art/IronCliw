@@ -54,15 +54,15 @@
   opacity: 0.7;
 }
 
+/* Chat divider (e.g., compaction marker) */
 .chat-divider {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 20px 8px;
-  color: rgba(0, 229, 255, 0.4);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  margin: 18px 8px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   user-select: none;
 }
@@ -70,56 +70,60 @@
 .chat-divider__line {
   flex: 1 1 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(0, 229, 255, 0.12), transparent);
+  background: var(--border);
+  opacity: 0.9;
 }
 
 .chat-divider__label {
-  padding: 3px 12px;
-  border: 1px solid rgba(0, 229, 255, 0.15);
+  padding: 2px 10px;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(0, 229, 255, 0.04);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.02);
 }
 
+/* Avatar Styles - Premium Glass */
 .chat-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  background: rgba(14, 18, 28, 0.9);
-  border: 1px solid rgba(0, 229, 255, 0.1);
+  background: var(--panel-strong);
+  border: 1px solid var(--glass-border);
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   flex-shrink: 0;
   align-self: flex-end;
   margin-bottom: 4px;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 200ms ease-out;
 }
 
 .chat-avatar.user {
-  background: rgba(0, 229, 255, 0.1);
-  border-color: rgba(0, 229, 255, 0.25);
+  background: rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.3);
   color: var(--accent);
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.12);
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .chat-avatar.assistant {
-  background: rgba(136, 153, 187, 0.08);
-  border-color: rgba(136, 153, 187, 0.2);
-  color: var(--accent-steel);
+  background: rgba(139, 155, 180, 0.1);
+  border-color: rgba(139, 155, 180, 0.2);
+  color: var(--accent-2);
 }
 
 .chat-avatar.other {
-  background: rgba(136, 153, 187, 0.08);
-  border-color: rgba(136, 153, 187, 0.15);
-  color: var(--accent-steel);
+  background: var(--secondary);
+  border-color: var(--glass-border);
+  color: var(--muted);
 }
 
 .chat-avatar.tool {
-  background: rgba(0, 229, 255, 0.05);
-  border-color: rgba(0, 229, 255, 0.15);
-  color: var(--accent);
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: var(--ok);
 }
 
 /* Image avatar support */
@@ -129,21 +133,23 @@ img.chat-avatar {
   object-position: center;
 }
 
-/* Premium Chat Bubble */
+/* Premium Glass Bubble Design */
 .chat-bubble {
   position: relative;
   display: inline-block;
-  border: 1px solid rgba(0, 229, 255, 0.07);
-  background: rgba(14, 18, 28, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-lg);
   padding: 10px 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(0, 229, 255, 0.04);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition:
-    background 150ms ease-out,
-    border-color 150ms ease-out,
-    box-shadow 150ms ease-out;
+    background 200ms ease-out,
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out;
   max-width: 100%;
   word-wrap: break-word;
 }
@@ -259,52 +265,84 @@ img.chat-avatar {
 }
 
 .chat-bubble:hover {
-  background: rgba(18, 24, 38, 0.85);
-  border-color: rgba(0, 229, 255, 0.12);
+  background: rgba(20, 25, 35, 0.6);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* User bubbles: premium cyan gradient */
+/* User bubbles - cyan gradient glass */
 .chat-group.user .chat-bubble {
   background: rgba(0, 229, 255, 0.08);
-  border-color: rgba(0, 229, 255, 0.18);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 229, 255, 0.06), inset 0 1px 0 rgba(0, 229, 255, 0.08);
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow:
+    0 2px 12px rgba(0, 229, 255, 0.08),
+    inset 0 1px 0 rgba(0, 229, 255, 0.1);
+}
+
+:root[data-theme="light"] .chat-group.user .chat-bubble {
+  border-color: rgba(0, 180, 210, 0.35);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 180, 210, 0.15);
 }
 
 .chat-group.user .chat-bubble:hover {
   background: rgba(0, 229, 255, 0.12);
-  border-color: rgba(0, 229, 255, 0.28);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 32px rgba(0, 229, 255, 0.1);
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow:
+    0 4px 20px rgba(0, 229, 255, 0.12),
+    inset 0 1px 0 rgba(0, 229, 255, 0.15);
 }
 
-/* Streaming animation - cyan pulse */
+/* Streaming animation - cyan glow pulse */
 .chat-bubble.streaming {
-  animation: pulsing-border 1.5s ease-out infinite;
+  animation: iron-stream 2s ease-in-out infinite;
 }
 
-@keyframes pulsing-border {
-
+@keyframes iron-stream {
   0%,
   100% {
-    border-color: rgba(0, 229, 255, 0.07);
+    border-color: var(--glass-border);
+    box-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
-
   50% {
-    border-color: rgba(0, 229, 255, 0.35);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.12);
+    border-color: rgba(0, 229, 255, 0.5);
+    box-shadow:
+      0 0 20px rgba(0, 229, 255, 0.15),
+      0 2px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(0, 229, 255, 0.1);
   }
 }
 
-/* Fade-in animation for new messages */
+/* Fade-in + slide-up animation for new messages */
 .chat-bubble.fade-in {
-  animation: fade-in 200ms ease-out;
+  animation: iron-appear 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes fade-in {
+@keyframes iron-appear {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(8px) scale(0.98);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
+/* Group entrance animation */
+.chat-group {
+  animation: group-appear 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes group-appear {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);

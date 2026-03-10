@@ -8,7 +8,7 @@
  * - Account ID normalization
  */
 
-import type { IronCliwConfig } from "IronCliw/plugin-sdk/twitch";
+import type { IronCliwConfig } from "ironcliw/plugin-sdk/twitch";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveTwitchToken, type TwitchTokenSource } from "./token.js";
 
@@ -47,7 +47,7 @@ describe("token", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    delete process.env.IronCliw_TWITCH_ACCESS_TOKEN;
+    delete process.env.IRONCLIW_TWITCH_ACCESS_TOKEN;
   });
 
   describe("resolveTwitchToken", () => {
@@ -66,7 +66,7 @@ describe("token", () => {
     });
 
     it("should prioritize config token over env var (simplified config)", () => {
-      process.env.IronCliw_TWITCH_ACCESS_TOKEN = "oauth:env-token";
+      process.env.IRONCLIW_TWITCH_ACCESS_TOKEN = "oauth:env-token";
 
       const result = resolveTwitchToken(mockSimplifiedConfig, { accountId: "default" });
 
@@ -76,7 +76,7 @@ describe("token", () => {
     });
 
     it("should use env var when config token is empty (simplified config)", () => {
-      process.env.IronCliw_TWITCH_ACCESS_TOKEN = "oauth:env-token";
+      process.env.IRONCLIW_TWITCH_ACCESS_TOKEN = "oauth:env-token";
 
       const configWithEmptyToken = {
         channels: {
@@ -110,7 +110,7 @@ describe("token", () => {
     });
 
     it("should not use env var for non-default accounts (multi-account)", () => {
-      process.env.IronCliw_TWITCH_ACCESS_TOKEN = "oauth:env-token";
+      process.env.IRONCLIW_TWITCH_ACCESS_TOKEN = "oauth:env-token";
 
       const configWithoutToken = {
         channels: {

@@ -22,7 +22,7 @@ IronCliw 的 Gateway 网关可以提供兼容 OpenResponses 的 `POST /v1/respon
 - `POST /v1/responses`
 - 与 Gateway 网关相同的端口（WS + HTTP 多路复用）：`http://<gateway-host>:<port>/v1/responses`
 
-底层实现中，请求作为正常的 Gateway 网关智能体运行执行（与 `IronCliw agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
+底层实现中，请求作为正常的 Gateway 网关智能体运行执行（与 `ironcliw agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
 
 ## 认证
 
@@ -32,23 +32,23 @@ IronCliw 的 Gateway 网关可以提供兼容 OpenResponses 的 `POST /v1/respon
 
 说明：
 
-- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `IronCliw_GATEWAY_TOKEN`）。
-- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `IronCliw_GATEWAY_PASSWORD`）。
+- 当 `gateway.auth.mode="token"` 时，使用 `gateway.auth.token`（或 `IRONCLIW_GATEWAY_TOKEN`）。
+- 当 `gateway.auth.mode="password"` 时，使用 `gateway.auth.password`（或 `IRONCLIW_GATEWAY_PASSWORD`）。
 
 ## 选择智能体
 
 无需自定义头：在 OpenResponses `model` 字段中编码智能体 id：
 
-- `model: "IronCliw:<agentId>"`（示例：`"IronCliw:main"`、`"IronCliw:beta"`）
+- `model: "ironcliw:<agentId>"`（示例：`"ironcliw:main"`、`"ironcliw:beta"`）
 - `model: "agent:<agentId>"`（别名）
 
 或通过头指定特定的 IronCliw 智能体：
 
-- `x-IronCliw-agent-id: <agentId>`（默认：`main`）
+- `x-ironcliw-agent-id: <agentId>`（默认：`main`）
 
 高级：
 
-- `x-IronCliw-session-key: <sessionKey>` 完全控制会话路由。
+- `x-ironcliw-session-key: <sessionKey>` 完全控制会话路由。
 
 ## 启用端点
 
@@ -295,9 +295,9 @@ URL 获取默认值：
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-IronCliw-agent-id: main' \
+  -H 'x-ironcliw-agent-id: main' \
   -d '{
-    "model": "IronCliw",
+    "model": "ironcliw",
     "input": "hi"
   }'
 ```
@@ -308,9 +308,9 @@ curl -sS http://127.0.0.1:18789/v1/responses \
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-IronCliw-agent-id: main' \
+  -H 'x-ironcliw-agent-id: main' \
   -d '{
-    "model": "IronCliw",
+    "model": "ironcliw",
     "stream": true,
     "input": "hi"
   }'

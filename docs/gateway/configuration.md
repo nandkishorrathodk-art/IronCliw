@@ -9,7 +9,7 @@ title: "Configuration"
 
 # Configuration
 
-IronCliw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.IronCliw/IronCliw.json`.
+IronCliw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.ironcliw/ironcliw.json`.
 
 If the file is missing, IronCliw uses safe defaults. Common reasons to add a config:
 
@@ -20,15 +20,15 @@ If the file is missing, IronCliw uses safe defaults. Common reasons to add a con
 See the [full reference](/gateway/configuration-reference) for every available field.
 
 <Tip>
-**New to configuration?** Start with `IronCliw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
+**New to configuration?** Start with `ironcliw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
 </Tip>
 
 ## Minimal config
 
 ```json5
-// ~/.IronCliw/IronCliw.json
+// ~/.ironcliw/ironcliw.json
 {
-  agents: { defaults: { workspace: "~/.IronCliw/workspace" } },
+  agents: { defaults: { workspace: "~/.ironcliw/workspace" } },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
@@ -38,15 +38,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 <Tabs>
   <Tab title="Interactive wizard">
     ```bash
-    IronCliw onboard       # full setup wizard
-    IronCliw configure     # config wizard
+    ironcliw onboard       # full setup wizard
+    ironcliw configure     # config wizard
     ```
   </Tab>
   <Tab title="CLI (one-liners)">
     ```bash
-    IronCliw config get agents.defaults.workspace
-    IronCliw config set agents.defaults.heartbeat.every "2h"
-    IronCliw config unset tools.web.search.apiKey
+    ironcliw config get agents.defaults.workspace
+    ironcliw config set agents.defaults.heartbeat.every "2h"
+    ironcliw config unset tools.web.search.apiKey
     ```
   </Tab>
   <Tab title="Control UI">
@@ -54,7 +54,7 @@ See the [full reference](/gateway/configuration-reference) for every available f
     The Control UI renders a form from the config schema, with a **Raw JSON** editor as an escape hatch.
   </Tab>
   <Tab title="Direct edit">
-    Edit `~/.IronCliw/IronCliw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
+    Edit `~/.ironcliw/ironcliw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
   </Tab>
 </Tabs>
 
@@ -67,9 +67,9 @@ IronCliw only accepts configurations that fully match the schema. Unknown keys, 
 When validation fails:
 
 - The Gateway does not boot
-- Only diagnostic commands work (`IronCliw doctor`, `IronCliw logs`, `IronCliw health`, `IronCliw status`)
-- Run `IronCliw doctor` to see exact issues
-- Run `IronCliw doctor --fix` (or `--yes`) to apply repairs
+- Only diagnostic commands work (`ironcliw doctor`, `ironcliw logs`, `ironcliw health`, `ironcliw status`)
+- Run `ironcliw doctor` to see exact issues
+- Run `ironcliw doctor --fix` (or `--yes`) to apply repairs
 
 ## Common tasks
 
@@ -156,7 +156,7 @@ When validation fails:
           {
             id: "main",
             groupChat: {
-              mentionPatterns: ["@IronCliw", "IronCliw"],
+              mentionPatterns: ["@ironcliw", "ironcliw"],
             },
           },
         ],
@@ -307,8 +307,8 @@ When validation fails:
     {
       agents: {
         list: [
-          { id: "home", default: true, workspace: "~/.IronCliw/workspace-home" },
-          { id: "work", workspace: "~/.IronCliw/workspace-work" },
+          { id: "home", default: true, workspace: "~/.ironcliw/workspace-home" },
+          { id: "work", workspace: "~/.ironcliw/workspace-work" },
         ],
       },
       bindings: [
@@ -326,7 +326,7 @@ When validation fails:
     Use `$include` to organize large configs:
 
     ```json5
-    // ~/.IronCliw/IronCliw.json
+    // ~/.ironcliw/ironcliw.json
     {
       gateway: { port: 18789 },
       agents: { $include: "./agents.json5" },
@@ -348,7 +348,7 @@ When validation fails:
 
 ## Config hot reload
 
-The Gateway watches `~/.IronCliw/IronCliw.json` and applies changes automatically — no manual restart needed for most settings.
+The Gateway watches `~/.ironcliw/ironcliw.json` and applies changes automatically — no manual restart needed for most settings.
 
 ### Reload modes
 
@@ -397,7 +397,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Validates + writes the full config and restarts the Gateway in one step.
 
     <Warning>
-    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `IronCliw config set` for single keys.
+    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `ironcliw config set` for single keys.
     </Warning>
 
     Params:
@@ -411,9 +411,9 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart requests are coalesced while one is already pending/in-flight, and a 30-second cooldown applies between restart cycles.
 
     ```bash
-    IronCliw gateway call config.get --params '{}'  # capture payload.hash
-    IronCliw gateway call config.apply --params '{
-      "raw": "{ agents: { defaults: { workspace: \"~/.IronCliw/workspace\" } } }",
+    ironcliw gateway call config.get --params '{}'  # capture payload.hash
+    ironcliw gateway call config.apply --params '{
+      "raw": "{ agents: { defaults: { workspace: \"~/.ironcliw/workspace\" } } }",
       "baseHash": "<hash>",
       "sessionKey": "agent:main:whatsapp:dm:+15555550123"
     }'
@@ -437,7 +437,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart behavior matches `config.apply`: coalesced pending restarts plus a 30-second cooldown between restart cycles.
 
     ```bash
-    IronCliw gateway call config.patch --params '{
+    ironcliw gateway call config.patch --params '{
       "raw": "{ channels: { telegram: { groups: { \"*\": { requireMention: false } } } } }",
       "baseHash": "<hash>"
     }'
@@ -451,7 +451,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
 IronCliw reads env vars from the parent process plus:
 
 - `.env` from the current working directory (if present)
-- `~/.IronCliw/.env` (global fallback)
+- `~/.ironcliw/.env` (global fallback)
 
 Neither file overrides existing env vars. You can also set inline env vars in config:
 
@@ -475,7 +475,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 }
 ```
 
-Env var equivalent: `IronCliw_LOAD_SHELL_ENV=1`
+Env var equivalent: `IRONCLIW_LOAD_SHELL_ENV=1`
 </Accordion>
 
 <Accordion title="Env var substitution in config values">
@@ -483,7 +483,7 @@ Env var equivalent: `IronCliw_LOAD_SHELL_ENV=1`
 
 ```json5
 {
-  gateway: { auth: { token: "${IronCliw_GATEWAY_TOKEN}" } },
+  gateway: { auth: { token: "${IRONCLIW_GATEWAY_TOKEN}" } },
   models: { providers: { custom: { apiKey: "${CUSTOM_API_KEY}" } } },
 }
 ```

@@ -1,31 +1,31 @@
 ---
-summary: "CLI reference for `IronCliw completion` (generate/install shell completion scripts)"
+summary: "CLI reference for `ironcliw completion` (generate/install shell completion scripts)"
 read_when:
   - You want shell completions for zsh/bash/fish/PowerShell
   - You need to cache completion scripts under IronCliw state
 title: "completion"
 ---
 
-# `IronCliw completion`
+# `ironcliw completion`
 
 Generate shell completion scripts and optionally install them into your shell profile.
 
 ## Usage
 
 ```bash
-IronCliw completion
-IronCliw completion --shell zsh
-IronCliw completion --install
-IronCliw completion --shell fish --install
-IronCliw completion --write-state
-IronCliw completion --shell bash --write-state
+ironcliw completion
+ironcliw completion --shell zsh
+ironcliw completion --install
+ironcliw completion --shell fish --install
+ironcliw completion --write-state
+ironcliw completion --shell bash --write-state
 ```
 
 ## Options
 
 - `-s, --shell <shell>`: shell target (`zsh`, `bash`, `powershell`, `fish`; default: `zsh`)
 - `-i, --install`: install completion by adding a source line to your shell profile
-- `--write-state`: write completion script(s) to `$IronCliw_STATE_DIR/completions` without printing to stdout
+- `--write-state`: write completion script(s) to `$IRONCLIW_STATE_DIR/completions` without printing to stdout
 - `-y, --yes`: skip install confirmation prompts
 
 ## Notes

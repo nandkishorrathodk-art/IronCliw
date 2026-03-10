@@ -33,8 +33,10 @@ const PLUGIN_REQUIRED_COMMANDS = new Set([
   "agents",
   "configure",
   "onboard",
+  "status",
+  "health",
 ]);
-const CONFIG_GUARD_BYPASS_COMMANDS = new Set(["doctor", "completion", "secrets"]);
+const CONFIG_GUARD_BYPASS_COMMANDS = new Set(["backup", "doctor", "completion", "secrets"]);
 const JSON_PARSE_ONLY_COMMANDS = new Set(["config set"]);
 let configGuardModulePromise: Promise<typeof import("./config-guard.js")> | undefined;
 let pluginRegistryModulePromise: Promise<typeof import("../plugin-registry.js")> | undefined;
@@ -105,7 +107,7 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     }
     const commandPath = getCommandPathWithRootOptions(argv, 2);
     const hideBanner =
-      isTruthyEnvValue(process.env.IronCliw_HIDE_BANNER) ||
+      isTruthyEnvValue(process.env.IRONCLIW_HIDE_BANNER) ||
       commandPath[0] === "update" ||
       commandPath[0] === "completion" ||
       (commandPath[0] === "plugins" && commandPath[1] === "update");
@@ -116,7 +118,7 @@ export function registerPreActionHooks(program: Command, programVersion: string)
     setVerbose(verbose);
     const cliLogLevel = getCliLogLevel(actionCommand);
     if (cliLogLevel) {
-      process.env.IronCliw_LOG_LEVEL = cliLogLevel;
+      process.env.IRONCLIW_LOG_LEVEL = cliLogLevel;
     }
     if (!verbose) {
       process.env.NODE_NO_WARNINGS ??= "1";

@@ -13,7 +13,7 @@ IronCliw runs a single embedded agent runtime derived from **pi-mono**.
 
 IronCliw uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
 
-Recommended: use `IronCliw setup` to create `~/.IronCliw/IronCliw.json` if missing and initialize the workspace files.
+Recommended: use `ironcliw setup` to create `~/.ironcliw/ironcliw.json` if missing and initialize the workspace files.
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
 
@@ -36,7 +36,7 @@ On the first turn of a new session, IronCliw injects the contents of these files
 
 Blank files are skipped. Large files are trimmed and truncated with a marker so prompts stay lean (read the file for full content).
 
-If a file is missing, IronCliw injects a single “missing file” marker line (and `IronCliw setup` will create a safe default template).
+If a file is missing, IronCliw injects a single “missing file” marker line (and `ironcliw setup` will create a safe default template).
 
 `BOOTSTRAP.md` is only created for a **brand new workspace** (no other bootstrap files present). If you delete it after completing the ritual, it should not be recreated on later restarts.
 
@@ -58,7 +58,7 @@ guidance for how _you_ want them used.
 IronCliw loads skills from three locations (workspace wins on name conflict):
 
 - Bundled (shipped with the install)
-- Managed/local: `~/.IronCliw/skills`
+- Managed/local: `~/.ironcliw/skills`
 - Workspace: `<workspace>/skills`
 
 Skills can be gated by config/env (see `skills` in [Gateway configuration](/gateway/configuration)).
@@ -74,7 +74,7 @@ IronCliw reuses pieces of the pi-mono codebase (models/tools), but **session man
 
 Session transcripts are stored as JSONL at:
 
-- `~/.IronCliw/agents/<agentId>/sessions/<SessionId>.jsonl`
+- `~/.ironcliw/agents/<agentId>/sessions/<SessionId>.jsonl`
 
 The session ID is stable and chosen by IronCliw.
 Legacy Pi/Tau session folders are **not** read.
@@ -120,4 +120,4 @@ At minimum, set:
 
 ---
 
-_Next: [Group Chats](/channels/group-messages)_ 🦾
+_Next: [Group Chats](/channels/group-messages)_ 🦞

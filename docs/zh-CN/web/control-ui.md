@@ -18,7 +18,7 @@ x-i18n:
 控制 UI 是一个由 Gateway 网关提供服务的小型 **Vite + Lit** 单页应用：
 
 - 默认：`http://<host>:18789/`
-- 可选前缀：设置 `gateway.controlUi.basePath`（例如 `/IronCliw`）
+- 可选前缀：设置 `gateway.controlUi.basePath`（例如 `/ironcliw`）
 
 它**直接与同一端口上的 Gateway 网关 WebSocket** 通信。
 
@@ -28,7 +28,7 @@ x-i18n:
 
 - http://127.0.0.1:18789/（或 http://localhost:18789/）
 
-如果页面加载失败，请先启动 Gateway 网关：`IronCliw gateway`。
+如果页面加载失败，请先启动 Gateway 网关：`ironcliw gateway`。
 
 认证在 WebSocket 握手期间通过以下方式提供：
 
@@ -47,13 +47,13 @@ x-i18n:
 
 ```bash
 # 列出待处理的请求
-IronCliw devices list
+ironcliw devices list
 
 # 按请求 ID 批准
-IronCliw devices approve <requestId>
+ironcliw devices approve <requestId>
 ```
 
-一旦批准，设备会被记住，除非你使用 `IronCliw devices revoke --device <id> --role <role>` 撤销它，否则不需要重新批准。参见 [Devices CLI](/cli/devices) 了解 token 轮换和撤销。
+一旦批准，设备会被记住，除非你使用 `ironcliw devices revoke --device <id> --role <role>` 撤销它，否则不需要重新批准。参见 [Devices CLI](/cli/devices) 了解 token 轮换和撤销。
 
 **注意：**
 
@@ -72,7 +72,7 @@ IronCliw devices approve <requestId>
 - Skills：状态、启用/禁用、安装、API 密钥更新（`skills.*`）
 - 节点：列表 + 能力（`node.list`）
 - 执行批准：编辑 Gateway 网关或节点允许列表 + `exec host=gateway/node` 的询问策略（`exec.approvals.*`）
-- 配置：查看/编辑 `~/.IronCliw/IronCliw.json`（`config.get`、`config.set`）
+- 配置：查看/编辑 `~/.ironcliw/ironcliw.json`（`config.get`、`config.set`）
 - 配置：应用 + 带验证的重启（`config.apply`）并唤醒上次活动的会话
 - 配置写入包含基础哈希保护，以防止覆盖并发编辑
 - 配置 schema + 表单渲染（`config.schema`，包括插件 + 渠道 schema）；原始 JSON 编辑器仍然可用
@@ -97,7 +97,7 @@ IronCliw devices approve <requestId>
 保持 Gateway 网关在 loopback 上，让 Tailscale Serve 用 HTTPS 代理它：
 
 ```bash
-IronCliw gateway --tailscale serve
+ironcliw gateway --tailscale serve
 ```
 
 打开：
@@ -109,7 +109,7 @@ IronCliw gateway --tailscale serve
 ### 绑定到 tailnet + token
 
 ```bash
-IronCliw gateway --bind tailnet --token "$(openssl rand -hex 32)"
+ironcliw gateway --bind tailnet --token "$(openssl rand -hex 32)"
 ```
 
 然后打开：
@@ -154,7 +154,7 @@ pnpm ui:build # 首次运行时自动安装 UI 依赖
 可选的绝对基础路径（当你想要固定的资源 URL 时）：
 
 ```bash
-IronCliw_CONTROL_UI_BASE_PATH=/IronCliw/ pnpm ui:build
+IRONCLIW_CONTROL_UI_BASE_PATH=/ironcliw/ pnpm ui:build
 ```
 
 用于本地开发（单独的开发服务器）：

@@ -2,7 +2,7 @@
  * Test script for shell completion installation feature.
  *
  * This script simulates the shell completion prompt that appears during
- * `IronCliw update`. Use it to verify the completion installation flow
+ * `ironcliw update`. Use it to verify the completion installation flow
  * without running a full update.
  *
  * Run from repo root:
@@ -34,7 +34,7 @@ import {
 import { stylePromptMessage } from "../src/terminal/prompt-style.js";
 import { theme } from "../src/terminal/theme.js";
 
-const CLI_NAME = "IronCliw";
+const CLI_NAME = "ironcliw";
 
 interface Options {
   checkOnly: boolean;
@@ -67,7 +67,7 @@ function printHelp(): void {
 ${theme.heading("Shell Completion Test Script")}
 
 This script simulates the shell completion checks that run during
-\`IronCliw update\`, \`IronCliw doctor\`, and \`IronCliw onboard\`.
+\`ironcliw update\`, \`ironcliw doctor\`, and \`ironcliw onboard\`.
 
 ${theme.heading("Usage (run from repo root):")}
   node --import tsx scripts/test-shell-completion.ts [options]
@@ -198,7 +198,7 @@ async function main() {
   });
 
   if (isCancel(shouldInstall) || !shouldInstall) {
-    console.log(theme.muted(`Skipped. Run \`IronCliw completion --install\` later to enable.`));
+    console.log(theme.muted(`Skipped. Run \`ironcliw completion --install\` later to enable.`));
     return;
   }
 

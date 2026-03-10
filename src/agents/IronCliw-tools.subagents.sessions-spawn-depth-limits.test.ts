@@ -66,7 +66,7 @@ describe("sessions_spawn depth + child limits", () => {
     callGatewayMock.mockClear();
     storeTemplatePath = path.join(
       os.tmpdir(),
-      `IronCliw-subagent-depth-${Date.now()}-${Math.random().toString(16).slice(2)}-{agentId}.json`,
+      `ironcliw-subagent-depth-${Date.now()}-${Math.random().toString(16).slice(2)}-{agentId}.json`,
     );
     configOverride = {
       session: createPerSenderSessionConfig({ store: storeTemplatePath }),

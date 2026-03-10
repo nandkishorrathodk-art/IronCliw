@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { createIronCliwTools } from "../agents/IronCliw-tools.js";
+import { createIronCliwTools } from "../agents/ironcliw-tools.js";
 import {
   resolveEffectiveToolPolicy,
   resolveGroupToolPolicy,
@@ -210,11 +210,11 @@ export async function handleToolsInvokeHttpRequest(
 
   // Resolve message channel/account hints (optional headers) for policy inheritance.
   const messageChannel = normalizeMessageChannel(
-    getHeader(req, "x-IronCliw-message-channel") ?? "",
+    getHeader(req, "x-ironcliw-message-channel") ?? "",
   );
-  const accountId = getHeader(req, "x-IronCliw-account-id")?.trim() || undefined;
-  const agentTo = getHeader(req, "x-IronCliw-message-to")?.trim() || undefined;
-  const agentThreadId = getHeader(req, "x-IronCliw-thread-id")?.trim() || undefined;
+  const accountId = getHeader(req, "x-ironcliw-account-id")?.trim() || undefined;
+  const agentTo = getHeader(req, "x-ironcliw-message-to")?.trim() || undefined;
+  const agentThreadId = getHeader(req, "x-ironcliw-thread-id")?.trim() || undefined;
 
   const {
     agentId,
@@ -252,6 +252,8 @@ export async function handleToolsInvokeHttpRequest(
     agentAccountId: accountId,
     agentTo,
     agentThreadId,
+    // HTTP callers consume tool output directly; preserve raw media invoke payloads.
+    allowMediaInvokeCommands: true,
     config: cfg,
     pluginToolAllowlist: collectExplicitAllowlist([
       profilePolicy,

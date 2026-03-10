@@ -5,7 +5,7 @@ import type {
   IronCliwPluginApi,
   IronCliwPluginCommandDefinition,
   PluginCommandContext,
-} from "IronCliw/plugin-sdk/phone-control";
+} from "ironcliw/plugin-sdk/phone-control";
 import { describe, expect, it, vi } from "vitest";
 import registerPhoneControl from "./index.js";
 
@@ -39,6 +39,7 @@ function createApi(params: {
     registerCli() {},
     registerService() {},
     registerProvider() {},
+    registerContextEngine() {},
     registerCommand: params.registerCommand,
     resolvePath(input: string) {
       return input;
@@ -59,7 +60,7 @@ function createCommandContext(args: string): PluginCommandContext {
 
 describe("phone-control plugin", () => {
   it("arms sms.send as part of the writes group", async () => {
-    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-phone-control-test-"));
+    const stateDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-phone-control-test-"));
     try {
       let config: Record<string, unknown> = {
         gateway: {

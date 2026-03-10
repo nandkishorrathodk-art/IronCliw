@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ai.IronCliw.android.benchmark"
+    namespace = "ai.ironcliw.app.benchmark"
     compileSdk = 36
 
     defaultConfig {

@@ -1,5 +1,6 @@
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
+import fs from "node:fs";
 import process from "node:process";
 import { describe, expect, it, vi } from "vitest";
 import { attachChildProcessBridge } from "./child-process-bridge.js";
@@ -19,17 +20,17 @@ describe("runCommandWithTimeout", () => {
     const resolved = resolveCommandEnv({
       argv: ["node", "script.js"],
       baseEnv: {
-        IronCliw_BASE_ENV: "base",
-        IronCliw_TO_REMOVE: undefined,
+        IRONCLIW_BASE_ENV: "base",
+        IRONCLIW_TO_REMOVE: undefined,
       },
       env: {
-        IronCliw_TEST_ENV: "ok",
+        IRONCLIW_TEST_ENV: "ok",
       },
     });
 
-    expect(resolved.IronCliw_BASE_ENV).toBe("base");
-    expect(resolved.IronCliw_TEST_ENV).toBe("ok");
-    expect(resolved.IronCliw_TO_REMOVE).toBeUndefined();
+    expect(resolved.IRONCLIW_BASE_ENV).toBe("base");
+    expect(resolved.IRONCLIW_TEST_ENV).toBe("ok");
+    expect(resolved.IRONCLIW_TO_REMOVE).toBeUndefined();
   });
 
   it("suppresses npm fund prompts for npm argv", async () => {
@@ -75,6 +76,20 @@ describe("runCommandWithTimeout", () => {
       const result = await runCommandWithTimeout(["npm", "--version"], { timeoutMs: 10_000 });
       expect(result.code).toBe(0);
       expect(result.stdout.trim()).toMatch(/^\d+\.\d+\.\d+$/);
+    },
+  );
+
+  it.runIf(process.platform === "win32")(
+    "falls back to npm.cmd when npm-cli.js is unavailable",
+    async () => {
+      const existsSpy = vi.spyOn(fs, "existsSync").mockReturnValue(false);
+      try {
+        const result = await runCommandWithTimeout(["npm", "--version"], { timeoutMs: 10_000 });
+        expect(result.code).toBe(0);
+        expect(result.stdout.trim()).toMatch(/^\d+\.\d+\.\d+$/);
+      } finally {
+        existsSpy.mockRestore();
+      }
     },
   );
 });

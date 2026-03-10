@@ -1,9 +1,10 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveBrowserConfig } from "./config.js";
+import { resolveBrowserConfig, resolveProfile } from "./config.js";
 import {
   refreshResolvedBrowserConfigFromDisk,
   resolveBrowserProfileWithHotReload,
 } from "./resolved-config-refresh.js";
+import type { BrowserServerState } from "./server-context.types.js";
 
 let cfgProfiles: Record<string, { cdpPort?: number; cdpUrl?: string; color?: string }> = {};
 
@@ -16,7 +17,7 @@ function buildConfig() {
       enabled: true,
       color: "#FF4500",
       headless: true,
-      defaultProfile: "IronCliw",
+      defaultProfile: "ironcliw",
       profiles: { ...cfgProfiles },
     },
   };
@@ -49,13 +50,13 @@ describe("server-context hot-reload profiles", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     cfgProfiles = {
-      IronCliw: { cdpPort: 18800, color: "#FF4500" },
+      ironcliw: { cdpPort: 18800, color: "#FF4500" },
     };
     cachedConfig = null; // Clear simulated cache
   });
 
   it("forProfile hot-reloads newly added profiles from config", async () => {
-    // Start with only IronCliw profile
+    // Start with only ironcliw profile
     // 1. Prime the cache by calling loadConfig() first
     const cfg = loadConfig();
     const resolved = resolveBrowserConfig(cfg.browser, cfg);
@@ -78,7 +79,7 @@ describe("server-context hot-reload profiles", () => {
       }),
     ).toBeNull();
 
-    // 2. Simulate adding a new profile to config (like user editing IronCliw.json)
+    // 2. Simulate adding a new profile to config (like user editing ironcliw.json)
     cfgProfiles.desktop = { cdpUrl: "http://127.0.0.1:9222", color: "#0066CC" };
 
     // 3. Verify without clearConfigCache, loadConfig() still returns stale cached value
@@ -134,16 +135,16 @@ describe("server-context hot-reload profiles", () => {
       profiles: new Map(),
     };
 
-    cfgProfiles.IronCliw = { cdpPort: 19999, color: "#FF4500" };
+    cfgProfiles.ironcliw = { cdpPort: 19999, color: "#FF4500" };
     cachedConfig = null;
 
     const after = resolveBrowserProfileWithHotReload({
       current: state,
       refreshConfigFromDisk: true,
-      name: "IronCliw",
+      name: "ironcliw",
     });
     expect(after?.cdpPort).toBe(19999);
-    expect(state.resolved.profiles.IronCliw?.cdpPort).toBe(19999);
+    expect(state.resolved.profiles.ironcliw?.cdpPort).toBe(19999);
   });
 
   it("listProfiles refreshes config before enumerating profiles", async () => {
@@ -165,5 +166,43 @@ describe("server-context hot-reload profiles", () => {
       mode: "cached",
     });
     expect(Object.keys(state.resolved.profiles)).toContain("desktop");
+  });
+
+  it("marks existing runtime state for reconcile when profile invariants change", async () => {
+    const cfg = loadConfig();
+    const resolved = resolveBrowserConfig(cfg.browser, cfg);
+    const ironcliwProfile = resolveProfile(resolved, "ironcliw");
+    expect(ironcliwProfile).toBeTruthy();
+    const state: BrowserServerState = {
+      server: null,
+      port: 18791,
+      resolved,
+      profiles: new Map([
+        [
+          "ironcliw",
+          {
+            profile: ironcliwProfile!,
+            running: { pid: 123 } as never,
+            lastTargetId: "tab-1",
+            reconcile: null,
+          },
+        ],
+      ]),
+    };
+
+    cfgProfiles.ironcliw = { cdpPort: 19999, color: "#FF4500" };
+    cachedConfig = null;
+
+    refreshResolvedBrowserConfigFromDisk({
+      current: state,
+      refreshConfigFromDisk: true,
+      mode: "cached",
+    });
+
+    const runtime = state.profiles.get("ironcliw");
+    expect(runtime).toBeTruthy();
+    expect(runtime?.profile.cdpPort).toBe(19999);
+    expect(runtime?.lastTargetId).toBeNull();
+    expect(runtime?.reconcile?.reason).toContain("cdpPort");
   });
 });

@@ -22,7 +22,7 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
 - Start the IronCliw Gateway in Docker
-- Persist `~/.IronCliw` + `~/.IronCliw/workspace` on the host (survives restarts/rebuilds)
+- Persist `~/.ironcliw` + `~/.ironcliw/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -89,8 +89,8 @@ All steps can be done via the web UI at [https://console.cloud.google.com](https
 **CLI:**
 
 ```bash
-gcloud projects create my-IronCliw-project --name="IronCliw Gateway"
-gcloud config set project my-IronCliw-project
+gcloud projects create my-ironcliw-project --name="IronCliw Gateway"
+gcloud config set project my-ironcliw-project
 ```
 
 Enable billing at [https://console.cloud.google.com/billing](https://console.cloud.google.com/billing) (required for Compute Engine).
@@ -123,7 +123,7 @@ gcloud services enable compute.googleapis.com
 **CLI:**
 
 ```bash
-gcloud compute instances create IronCliw-gateway \
+gcloud compute instances create ironcliw-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small \
   --boot-disk-size=20GB \
@@ -134,7 +134,7 @@ gcloud compute instances create IronCliw-gateway \
 **Console:**
 
 1. Go to Compute Engine > VM instances > Create instance
-2. Name: `IronCliw-gateway`
+2. Name: `ironcliw-gateway`
 3. Region: `us-central1`, Zone: `us-central1-a`
 4. Machine type: `e2-small`
 5. Boot disk: Debian 12, 20GB
@@ -147,7 +147,7 @@ gcloud compute instances create IronCliw-gateway \
 **CLI:**
 
 ```bash
-gcloud compute ssh IronCliw-gateway --zone=us-central1-a
+gcloud compute ssh ironcliw-gateway --zone=us-central1-a
 ```
 
 **Console:**
@@ -176,7 +176,7 @@ exit
 Then SSH back in:
 
 ```bash
-gcloud compute ssh IronCliw-gateway --zone=us-central1-a
+gcloud compute ssh ironcliw-gateway --zone=us-central1-a
 ```
 
 Verify:
@@ -191,8 +191,8 @@ docker compose version
 ## 6) Clone the IronCliw repository
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -205,8 +205,8 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p ~/.IronCliw
-mkdir -p ~/.IronCliw/workspace
+mkdir -p ~/.ironcliw
+mkdir -p ~/.ironcliw/workspace
 ```
 
 ---
@@ -216,16 +216,16 @@ mkdir -p ~/.IronCliw/workspace
 Create `.env` in the repository root.
 
 ```bash
-IronCliw_IMAGE=IronCliw:latest
-IronCliw_GATEWAY_TOKEN=change-me-now
-IronCliw_GATEWAY_BIND=lan
-IronCliw_GATEWAY_PORT=18789
+IRONCLIW_IMAGE=ironcliw:latest
+IRONCLIW_GATEWAY_TOKEN=change-me-now
+IRONCLIW_GATEWAY_BIND=lan
+IRONCLIW_GATEWAY_PORT=18789
 
-IronCliw_CONFIG_DIR=/home/$USER/.IronCliw
-IronCliw_WORKSPACE_DIR=/home/$USER/.IronCliw/workspace
+IRONCLIW_CONFIG_DIR=/home/$USER/.ironcliw
+IRONCLIW_WORKSPACE_DIR=/home/$USER/.ironcliw/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.IronCliw
+XDG_CONFIG_HOME=/home/node/.ironcliw
 ```
 
 Generate strong secrets:
@@ -244,8 +244,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  IronCliw-gateway:
-    image: ${IronCliw_IMAGE}
+  ironcliw-gateway:
+    image: ${IRONCLIW_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -254,28 +254,28 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - IronCliw_GATEWAY_BIND=${IronCliw_GATEWAY_BIND}
-      - IronCliw_GATEWAY_PORT=${IronCliw_GATEWAY_PORT}
-      - IronCliw_GATEWAY_TOKEN=${IronCliw_GATEWAY_TOKEN}
+      - IRONCLIW_GATEWAY_BIND=${IRONCLIW_GATEWAY_BIND}
+      - IRONCLIW_GATEWAY_PORT=${IRONCLIW_GATEWAY_PORT}
+      - IRONCLIW_GATEWAY_TOKEN=${IRONCLIW_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${IronCliw_CONFIG_DIR}:/home/node/.IronCliw
-      - ${IronCliw_WORKSPACE_DIR}:/home/node/.IronCliw/workspace
+      - ${IRONCLIW_CONFIG_DIR}:/home/node/.ironcliw
+      - ${IRONCLIW_WORKSPACE_DIR}:/home/node/.ironcliw/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VM; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${IronCliw_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${IRONCLIW_GATEWAY_PORT}:18789"
     command:
       [
         "node",
         "dist/index.js",
         "gateway",
         "--bind",
-        "${IronCliw_GATEWAY_BIND}",
+        "${IRONCLIW_GATEWAY_BIND}",
         "--port",
-        "${IronCliw_GATEWAY_PORT}",
+        "${IRONCLIW_GATEWAY_PORT}",
       ]
 ```
 
@@ -348,15 +348,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d IronCliw-gateway
+docker compose up -d ironcliw-gateway
 ```
 
 If build fails with `Killed` / `exit code 137` during `pnpm install --frozen-lockfile`, the VM is out of memory. Use `e2-small` minimum, or `e2-medium` for more reliable first builds.
 
-When binding to LAN (`IronCliw_GATEWAY_BIND=lan`), configure a trusted browser origin before continuing:
+When binding to LAN (`IRONCLIW_GATEWAY_BIND=lan`), configure a trusted browser origin before continuing:
 
 ```bash
-docker compose run --rm IronCliw-cli config set gateway.controlUi.allowedOrigins '["http://127.0.0.1:18789"]' --strict-json
+docker compose run --rm ironcliw-cli config set gateway.controlUi.allowedOrigins '["http://127.0.0.1:18789"]' --strict-json
 ```
 
 If you changed the gateway port, replace `18789` with your configured port.
@@ -364,9 +364,9 @@ If you changed the gateway port, replace `18789` with your configured port.
 Verify binaries:
 
 ```bash
-docker compose exec IronCliw-gateway which gog
-docker compose exec IronCliw-gateway which goplaces
-docker compose exec IronCliw-gateway which wacli
+docker compose exec ironcliw-gateway which gog
+docker compose exec ironcliw-gateway which goplaces
+docker compose exec ironcliw-gateway which wacli
 ```
 
 Expected output:
@@ -382,7 +382,7 @@ Expected output:
 ## 12) Verify Gateway
 
 ```bash
-docker compose logs -f IronCliw-gateway
+docker compose logs -f ironcliw-gateway
 ```
 
 Success:
@@ -398,7 +398,7 @@ Success:
 Create an SSH tunnel to forward the Gateway port:
 
 ```bash
-gcloud compute ssh IronCliw-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
+gcloud compute ssh ironcliw-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:18789
 ```
 
 Open in your browser:
@@ -408,7 +408,7 @@ Open in your browser:
 Fetch a fresh tokenized dashboard link:
 
 ```bash
-docker compose run --rm IronCliw-cli dashboard --no-open
+docker compose run --rm ironcliw-cli dashboard --no-open
 ```
 
 Paste the token from that URL.
@@ -416,8 +416,8 @@ Paste the token from that URL.
 If Control UI shows `unauthorized` or `disconnected (1008): pairing required`, approve the browser device:
 
 ```bash
-docker compose run --rm IronCliw-cli devices list
-docker compose run --rm IronCliw-cli devices approve <requestId>
+docker compose run --rm ironcliw-cli devices list
+docker compose run --rm ironcliw-cli devices approve <requestId>
 ```
 
 ---
@@ -429,12 +429,12 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component           | Location                          | Persistence mechanism  | Notes                            |
 | ------------------- | --------------------------------- | ---------------------- | -------------------------------- |
-| Gateway config      | `/home/node/.IronCliw/`           | Host volume mount      | Includes `IronCliw.json`, tokens |
-| Model auth profiles | `/home/node/.IronCliw/`           | Host volume mount      | OAuth tokens, API keys           |
-| Skill configs       | `/home/node/.IronCliw/skills/`    | Host volume mount      | Skill-level state                |
-| Agent workspace     | `/home/node/.IronCliw/workspace/` | Host volume mount      | Code and agent artifacts         |
-| WhatsApp session    | `/home/node/.IronCliw/`           | Host volume mount      | Preserves QR login               |
-| Gmail keyring       | `/home/node/.IronCliw/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
+| Gateway config      | `/home/node/.ironcliw/`           | Host volume mount      | Includes `ironcliw.json`, tokens |
+| Model auth profiles | `/home/node/.ironcliw/`           | Host volume mount      | OAuth tokens, API keys           |
+| Skill configs       | `/home/node/.ironcliw/skills/`    | Host volume mount      | Skill-level state                |
+| Agent workspace     | `/home/node/.ironcliw/workspace/` | Host volume mount      | Code and agent artifacts         |
+| WhatsApp session    | `/home/node/.ironcliw/`           | Host volume mount      | Preserves QR login               |
+| Gmail keyring       | `/home/node/.ironcliw/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD`  |
 | External binaries   | `/usr/local/bin/`                 | Docker image           | Must be baked at build time      |
 | Node runtime        | Container filesystem              | Docker image           | Rebuilt every image build        |
 | OS packages         | Container filesystem              | Docker image           | Do not install at runtime        |
@@ -447,7 +447,7 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 To update IronCliw on the VM:
 
 ```bash
-cd ~/IronCliw
+cd ~/ironcliw
 git pull
 docker compose build
 docker compose up -d
@@ -477,15 +477,15 @@ If Docker build fails with `Killed` and `exit code 137`, the VM was OOM-killed. 
 
 ```bash
 # Stop the VM first
-gcloud compute instances stop IronCliw-gateway --zone=us-central1-a
+gcloud compute instances stop ironcliw-gateway --zone=us-central1-a
 
 # Change machine type
-gcloud compute instances set-machine-type IronCliw-gateway \
+gcloud compute instances set-machine-type ironcliw-gateway \
   --zone=us-central1-a \
   --machine-type=e2-small
 
 # Start the VM
-gcloud compute instances start IronCliw-gateway --zone=us-central1-a
+gcloud compute instances start ironcliw-gateway --zone=us-central1-a
 ```
 
 ---
@@ -499,15 +499,15 @@ For automation or CI/CD pipelines, create a dedicated service account with minim
 1. Create a service account:
 
    ```bash
-   gcloud iam service-accounts create IronCliw-deploy \
+   gcloud iam service-accounts create ironcliw-deploy \
      --display-name="IronCliw Deployment"
    ```
 
 2. Grant Compute Instance Admin role (or narrower custom role):
 
    ```bash
-   gcloud projects add-iam-policy-binding my-IronCliw-project \
-     --member="serviceAccount:IronCliw-deploy@my-IronCliw-project.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding my-ironcliw-project \
+     --member="serviceAccount:ironcliw-deploy@my-ironcliw-project.iam.gserviceaccount.com" \
      --role="roles/compute.instanceAdmin.v1"
    ```
 

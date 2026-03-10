@@ -54,7 +54,7 @@ describe("onboard-hooks", () => {
     eligible: boolean,
   ) => ({
     ...params,
-    source: "IronCliw-bundled" as const,
+    source: "ironcliw-bundled" as const,
     pluginId: undefined,
     homepage: undefined,
     always: false,
@@ -81,7 +81,7 @@ describe("onboard-hooks", () => {
 
   const createMockHookReport = (eligible = true): HookStatusReport => ({
     workspaceDir: "/mock/workspace",
-    managedHooksDir: "/mock/.IronCliw/hooks",
+    managedHooksDir: "/mock/.ironcliw/hooks",
     hooks: [
       createMockHook(
         {
@@ -230,7 +230,7 @@ describe("onboard-hooks", () => {
 
       // Second note should confirm configuration
       expect(noteCalls[1][0]).toContain("Enabled 1 hook: session-memory");
-      expect(noteCalls[1][0]).toMatch(/(?:IronCliw|IronCliw)( --profile isolated)? hooks list/);
+      expect(noteCalls[1][0]).toMatch(/(?:ironcliw|ironcliw)( --profile isolated)? hooks list/);
     });
   });
 });

@@ -14,7 +14,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-IronCliw plugins enable qwen-portal-auth
+ironcliw plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -22,7 +22,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-IronCliw models auth login --provider qwen-portal --set-default
+ironcliw models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -36,7 +36,7 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-IronCliw models set qwen-portal/coder-model
+ironcliw models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login

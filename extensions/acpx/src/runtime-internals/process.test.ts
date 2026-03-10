@@ -22,7 +22,7 @@ function winRuntime(env: NodeJS.ProcessEnv) {
 }
 
 async function createTempDir(): Promise<string> {
-  const dir = await mkdtemp(path.join(tmpdir(), "IronCliw-acpx-process-test-"));
+  const dir = await mkdtemp(path.join(tmpdir(), "ironcliw-acpx-process-test-"));
   tempDirs.push(dir);
   return dir;
 }

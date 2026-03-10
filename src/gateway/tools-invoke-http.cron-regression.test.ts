@@ -34,7 +34,7 @@ vi.mock("../plugins/tools.js", () => ({
   getPluginToolMeta: noPluginToolMeta,
 }));
 
-vi.mock("../agents/IronCliw-tools.js", () => {
+vi.mock("../agents/ironcliw-tools.js", () => {
   const tools = [
     {
       name: "cron",

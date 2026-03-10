@@ -5,7 +5,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { captureEnv } from "../test-utils/env.js";
 import type { UpdateCheckResult } from "./update-check.js";
 
-vi.mock("./IronCliw-root.js", () => ({
+vi.mock("./ironcliw-root.js", () => ({
   resolveIronCliwPackageRoot: vi.fn(),
 }));
 
@@ -45,7 +45,7 @@ describe("update-startup", () => {
   let tempDir: string;
   let envSnapshot: ReturnType<typeof captureEnv>;
 
-  let resolveIronCliwPackageRoot: (typeof import("./IronCliw-root.js"))["resolveIronCliwPackageRoot"];
+  let resolveIronCliwPackageRoot: (typeof import("./ironcliw-root.js"))["resolveIronCliwPackageRoot"];
   let checkUpdateStatus: (typeof import("./update-check.js"))["checkUpdateStatus"];
   let resolveNpmChannelTag: (typeof import("./update-check.js"))["resolveNpmChannelTag"];
   let runCommandWithTimeout: (typeof import("../process/exec.js"))["runCommandWithTimeout"];
@@ -56,7 +56,7 @@ describe("update-startup", () => {
   let loaded = false;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-update-check-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-update-check-suite-"));
   });
 
   beforeEach(async () => {
@@ -64,8 +64,8 @@ describe("update-startup", () => {
     vi.setSystemTime(new Date("2026-01-17T10:00:00Z"));
     tempDir = path.join(suiteRoot, `case-${++suiteCase}`);
     await fs.mkdir(tempDir);
-    envSnapshot = captureEnv(["IronCliw_STATE_DIR", "NODE_ENV", "VITEST"]);
-    process.env.IronCliw_STATE_DIR = tempDir;
+    envSnapshot = captureEnv(["IRONCLIW_STATE_DIR", "NODE_ENV", "VITEST"]);
+    process.env.IRONCLIW_STATE_DIR = tempDir;
 
     process.env.NODE_ENV = "test";
 
@@ -74,7 +74,7 @@ describe("update-startup", () => {
 
     // Perf: load mocked modules once (after timers/env are set up).
     if (!loaded) {
-      ({ resolveIronCliwPackageRoot } = await import("./IronCliw-root.js"));
+      ({ resolveIronCliwPackageRoot } = await import("./ironcliw-root.js"));
       ({ checkUpdateStatus, resolveNpmChannelTag } = await import("./update-check.js"));
       ({ runCommandWithTimeout } = await import("../process/exec.js"));
       ({
@@ -112,9 +112,9 @@ describe("update-startup", () => {
   }
 
   function mockPackageInstallStatus() {
-    vi.mocked(resolveIronCliwPackageRoot).mockResolvedValue("/opt/IronCliw");
+    vi.mocked(resolveIronCliwPackageRoot).mockResolvedValue("/opt/ironcliw");
     vi.mocked(checkUpdateStatus).mockResolvedValue({
-      root: "/opt/IronCliw",
+      root: "/opt/ironcliw",
       installKind: "package",
       packageManager: "npm",
     } satisfies UpdateCheckResult);
@@ -335,7 +335,7 @@ describe("update-startup", () => {
     expect(runAutoUpdate).toHaveBeenCalledWith({
       channel: "stable",
       timeoutMs: 45 * 60 * 1000,
-      root: "/opt/IronCliw",
+      root: "/opt/ironcliw",
     });
   });
 
@@ -352,7 +352,7 @@ describe("update-startup", () => {
     expect(runAutoUpdate).toHaveBeenCalledWith({
       channel: "beta",
       timeoutMs: 45 * 60 * 1000,
-      root: "/opt/IronCliw",
+      root: "/opt/ironcliw",
     });
   });
 
@@ -381,7 +381,7 @@ describe("update-startup", () => {
     });
 
     const originalArgv = process.argv.slice();
-    process.argv = [process.execPath, "/opt/IronCliw/dist/entry.js"];
+    process.argv = [process.execPath, "/opt/ironcliw/dist/entry.js"];
     try {
       await runAutoUpdateCheckWithDefaults({
         cfg: createBetaAutoUpdateConfig(),
@@ -393,7 +393,7 @@ describe("update-startup", () => {
     expect(runCommandWithTimeout).toHaveBeenCalledWith(
       [
         process.execPath,
-        "/opt/IronCliw/dist/entry.js",
+        "/opt/ironcliw/dist/entry.js",
         "update",
         "--yes",
         "--channel",
@@ -403,7 +403,7 @@ describe("update-startup", () => {
       expect.objectContaining({
         timeoutMs: 45 * 60 * 1000,
         env: expect.objectContaining({
-          IronCliw_AUTO_UPDATE: "1",
+          IRONCLIW_AUTO_UPDATE: "1",
         }),
       }),
     );

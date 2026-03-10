@@ -19,12 +19,12 @@ IronCliw treats **wake words as a single global list** owned by the **Gateway**.
 
 Wake words are stored on the gateway machine at:
 
-- `~/.IronCliw/settings/voicewake.json`
+- `~/.ironcliw/settings/voicewake.json`
 
 Shape:
 
 ```json
-{ "triggers": ["IronCliw", "claude", "computer"], "updatedAtMs": 1730000000000 }
+{ "triggers": ["ironcliw", "claude", "computer"], "updatedAtMs": 1730000000000 }
 ```
 
 ## Protocol

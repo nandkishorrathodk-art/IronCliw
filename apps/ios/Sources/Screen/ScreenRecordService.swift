@@ -56,7 +56,7 @@ final class ScreenRecordService: @unchecked Sendable {
             outPath: outPath)
 
         let state = CaptureState()
-        let recordQueue = DispatchQueue(label: "ai.IronCliw.screenrecord")
+        let recordQueue = DispatchQueue(label: "ai.ironcliw.screenrecord")
 
         try await self.startCapture(state: state, config: config, recordQueue: recordQueue)
         try await Task.sleep(nanoseconds: UInt64(config.durationMs) * 1_000_000)
@@ -106,7 +106,7 @@ final class ScreenRecordService: @unchecked Sendable {
             return URL(fileURLWithPath: outPath)
         }
         return FileManager().temporaryDirectory
-            .appendingPathComponent("IronCliw-screen-record-\(UUID().uuidString).mp4")
+            .appendingPathComponent("ironcliw-screen-record-\(UUID().uuidString).mp4")
     }
 
     private func startCapture(

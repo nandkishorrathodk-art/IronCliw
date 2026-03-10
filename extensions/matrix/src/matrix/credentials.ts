@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
 import { getMatrixRuntime } from "../runtime.js";
 
 export type MatrixStoredCredentials = {

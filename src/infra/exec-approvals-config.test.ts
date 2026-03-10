@@ -17,11 +17,11 @@ import {
 describe("exec approvals wildcard agent", () => {
   it("merges wildcard allowlist entries with agent entries", () => {
     const dir = makeTempDir();
-    const prevIronCliwHome = process.env.IronCliw_HOME;
+    const prevIronCliwHome = process.env.IRONCLIW_HOME;
 
     try {
-      process.env.IronCliw_HOME = dir;
-      const approvalsPath = path.join(dir, ".IronCliw", "exec-approvals.json");
+      process.env.IRONCLIW_HOME = dir;
+      const approvalsPath = path.join(dir, ".ironcliw", "exec-approvals.json");
       fs.mkdirSync(path.dirname(approvalsPath), { recursive: true });
       fs.writeFileSync(
         approvalsPath,
@@ -45,9 +45,9 @@ describe("exec approvals wildcard agent", () => {
       ]);
     } finally {
       if (prevIronCliwHome === undefined) {
-        delete process.env.IronCliw_HOME;
+        delete process.env.IRONCLIW_HOME;
       } else {
-        process.env.IronCliw_HOME = prevIronCliwHome;
+        process.env.IRONCLIW_HOME = prevIronCliwHome;
       }
     }
   });

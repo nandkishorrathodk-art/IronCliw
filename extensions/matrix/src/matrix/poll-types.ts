@@ -7,7 +7,7 @@
  * - m.poll.end - Closes a poll
  */
 
-import type { PollInput } from "IronCliw/plugin-sdk/matrix";
+import type { PollInput } from "ironcliw/plugin-sdk/matrix";
 
 export const M_POLL_START = "m.poll.start" as const;
 export const M_POLL_RESPONSE = "m.poll.response" as const;

@@ -26,8 +26,8 @@ describe("tailscale helpers", () => {
   let envSnapshot: ReturnType<typeof captureEnv>;
 
   beforeEach(() => {
-    envSnapshot = captureEnv(["IronCliw_TEST_TAILSCALE_BINARY"]);
-    process.env.IronCliw_TEST_TAILSCALE_BINARY = "tailscale";
+    envSnapshot = captureEnv(["IRONCLIW_TEST_TAILSCALE_BINARY"]);
+    process.env.IRONCLIW_TEST_TAILSCALE_BINARY = "tailscale";
   });
 
   afterEach(() => {

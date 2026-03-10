@@ -1,12 +1,12 @@
 import type { Mock } from "vitest";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { captureEnv } from "../test-utils/env.js";
 
 let envSnapshot: ReturnType<typeof captureEnv>;
 
 beforeAll(() => {
-  envSnapshot = captureEnv(["IronCliw_PROFILE"]);
-  process.env.IronCliw_PROFILE = "isolated";
+  envSnapshot = captureEnv(["IRONCLIW_PROFILE"]);
+  process.env.IRONCLIW_PROFILE = "isolated";
 });
 
 afterAll(() => {
@@ -146,6 +146,7 @@ async function withEnvVar<T>(key: string, value: string, run: () => Promise<T>):
 }
 
 const mocks = vi.hoisted(() => ({
+  loadConfig: vi.fn().mockReturnValue({ session: {} }),
   loadSessionStore: vi.fn().mockReturnValue({
     "+1000": createDefaultSessionStoreEntry(),
   }),
@@ -214,7 +215,7 @@ vi.mock("../memory/manager.js", () => ({
         files: 2,
         chunks: 3,
         dirty: false,
-        workspaceDir: "/tmp/IronCliw",
+        workspaceDir: "/tmp/ironcliw",
         dbPath: "/tmp/memory.sqlite",
         provider: "openai",
         model: "text-embedding-3-small",
@@ -305,8 +306,8 @@ vi.mock("../gateway/session-utils.js", async (importOriginal) => {
     listAgentsForGateway: mocks.listAgentsForGateway,
   };
 });
-vi.mock("../infra/IronCliw-root.js", () => ({
-  resolveIronCliwPackageRoot: vi.fn().mockResolvedValue("/tmp/IronCliw"),
+vi.mock("../infra/ironcliw-root.js", () => ({
+  resolveIronCliwPackageRoot: vi.fn().mockResolvedValue("/tmp/ironcliw"),
 }));
 vi.mock("../infra/os-summary.js", () => ({
   resolveOsSummary: () => ({
@@ -318,11 +319,11 @@ vi.mock("../infra/os-summary.js", () => ({
 }));
 vi.mock("../infra/update-check.js", () => ({
   checkUpdateStatus: vi.fn().mockResolvedValue({
-    root: "/tmp/IronCliw",
+    root: "/tmp/ironcliw",
     installKind: "git",
     packageManager: "pnpm",
     git: {
-      root: "/tmp/IronCliw",
+      root: "/tmp/ironcliw",
       branch: "main",
       upstream: "origin/main",
       dirty: false,
@@ -333,8 +334,8 @@ vi.mock("../infra/update-check.js", () => ({
     deps: {
       manager: "pnpm",
       status: "ok",
-      lockfilePath: "/tmp/IronCliw/pnpm-lock.yaml",
-      markerPath: "/tmp/IronCliw/node_modules/.modules.yaml",
+      lockfilePath: "/tmp/ironcliw/pnpm-lock.yaml",
+      markerPath: "/tmp/ironcliw/node_modules/.modules.yaml",
     },
     registry: { latestVersion: "0.0.0" },
   }),
@@ -345,7 +346,7 @@ vi.mock("../config/config.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../config/config.js")>();
   return {
     ...actual,
-    loadConfig: () => ({ session: {} }),
+    loadConfig: mocks.loadConfig,
   };
 });
 vi.mock("../daemon/service.js", () => ({
@@ -357,7 +358,7 @@ vi.mock("../daemon/service.js", () => ({
     readRuntime: async () => ({ status: "running", pid: 1234 }),
     readCommand: async () => ({
       programArguments: ["node", "dist/entry.js", "gateway"],
-      sourcePath: "/tmp/Library/LaunchAgents/ai.IronCliw.gateway.plist",
+      sourcePath: "/tmp/Library/LaunchAgents/ai.ironcliw.gateway.plist",
     }),
   }),
 }));
@@ -370,7 +371,7 @@ vi.mock("../daemon/node-service.js", () => ({
     readRuntime: async () => ({ status: "running", pid: 4321 }),
     readCommand: async () => ({
       programArguments: ["node", "dist/entry.js", "node-host"],
-      sourcePath: "/tmp/Library/LaunchAgents/ai.IronCliw.node.plist",
+      sourcePath: "/tmp/Library/LaunchAgents/ai.ironcliw.node.plist",
     }),
   }),
 }));
@@ -389,6 +390,11 @@ const runtime = {
 const runtimeLogMock = runtime.log as Mock<(...args: unknown[]) => void>;
 
 describe("statusCommand", () => {
+  afterEach(() => {
+    mocks.loadConfig.mockReset();
+    mocks.loadConfig.mockReturnValue({ session: {} });
+  });
+
   it("prints JSON when requested", async () => {
     await statusCommand({ json: true }, runtime as never);
     const payload = JSON.parse(String(runtimeLogMock.mock.calls[0]?.[0]));
@@ -460,14 +466,14 @@ describe("statusCommand", () => {
     expect(
       logs.some(
         (line) =>
-          line.includes("IronCliw status --all") ||
-          line.includes("IronCliw --profile isolated status --all"),
+          line.includes("ironcliw status --all") ||
+          line.includes("ironcliw --profile isolated status --all"),
       ),
     ).toBe(true);
   });
 
   it("shows gateway auth when reachable", async () => {
-    await withEnvVar("IronCliw_GATEWAY_TOKEN", "abcd1234", async () => {
+    await withEnvVar("IRONCLIW_GATEWAY_TOKEN", "abcd1234", async () => {
       mockProbeGatewayResult({
         ok: true,
         connectLatencyMs: 123,
@@ -479,6 +485,28 @@ describe("statusCommand", () => {
       const logs = await runStatusAndGetLogs();
       expect(logs.some((l: string) => l.includes("auth token"))).toBe(true);
     });
+  });
+
+  it("warns instead of crashing when gateway auth SecretRef is unresolved for probe auth", async () => {
+    mocks.loadConfig.mockReturnValue({
+      session: {},
+      gateway: {
+        auth: {
+          mode: "token",
+          token: { source: "env", provider: "default", id: "MISSING_GATEWAY_TOKEN" },
+        },
+      },
+      secrets: {
+        providers: {
+          default: { source: "env" },
+        },
+      },
+    });
+
+    await statusCommand({ json: true }, runtime as never);
+    const payload = JSON.parse(String(runtimeLogMock.mock.calls.at(-1)?.[0]));
+    expect(payload.gateway.error).toContain("gateway.auth.token");
+    expect(payload.gateway.error).toContain("SecretRef");
   });
 
   it("surfaces channel runtime errors from the gateway", async () => {

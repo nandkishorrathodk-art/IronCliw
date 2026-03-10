@@ -52,7 +52,7 @@ describe("memory watcher config", () => {
   });
 
   it("watches markdown globs and ignores dependency directories", async () => {
-    workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-memory-watch-"));
+    workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-memory-watch-"));
     extraDir = path.join(workspaceDir, "extra");
     await fs.mkdir(path.join(workspaceDir, "memory"), { recursive: true });
     await fs.mkdir(extraDir, { recursive: true });

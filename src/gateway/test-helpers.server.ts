@@ -46,16 +46,16 @@ async function getServerModule() {
 const GATEWAY_TEST_ENV_KEYS = [
   "HOME",
   "USERPROFILE",
-  "IronCliw_STATE_DIR",
-  "IronCliw_CONFIG_PATH",
-  "IronCliw_SKIP_BROWSER_CONTROL_SERVER",
-  "IronCliw_SKIP_GMAIL_WATCHER",
-  "IronCliw_SKIP_CANVAS_HOST",
-  "IronCliw_BUNDLED_PLUGINS_DIR",
-  "IronCliw_SKIP_CHANNELS",
-  "IronCliw_SKIP_PROVIDERS",
-  "IronCliw_SKIP_CRON",
-  "IronCliw_TEST_MINIMAL_GATEWAY",
+  "IRONCLIW_STATE_DIR",
+  "IRONCLIW_CONFIG_PATH",
+  "IRONCLIW_SKIP_BROWSER_CONTROL_SERVER",
+  "IRONCLIW_SKIP_GMAIL_WATCHER",
+  "IRONCLIW_SKIP_CANVAS_HOST",
+  "IRONCLIW_BUNDLED_PLUGINS_DIR",
+  "IRONCLIW_SKIP_CHANNELS",
+  "IRONCLIW_SKIP_PROVIDERS",
+  "IRONCLIW_SKIP_CRON",
+  "IRONCLIW_TEST_MINIMAL_GATEWAY",
 ] as const;
 
 let gatewayEnvSnapshot: ReturnType<typeof captureEnv> | undefined;
@@ -93,24 +93,24 @@ export async function writeSessionStore(params: {
 
 async function setupGatewayTestHome() {
   gatewayEnvSnapshot = captureEnv([...GATEWAY_TEST_ENV_KEYS]);
-  tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-gateway-home-"));
+  tempHome = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-gateway-home-"));
   process.env.HOME = tempHome;
   process.env.USERPROFILE = tempHome;
-  process.env.IronCliw_STATE_DIR = path.join(tempHome, ".IronCliw");
-  delete process.env.IronCliw_CONFIG_PATH;
+  process.env.IRONCLIW_STATE_DIR = path.join(tempHome, ".ironcliw");
+  delete process.env.IRONCLIW_CONFIG_PATH;
 }
 
 function applyGatewaySkipEnv() {
-  process.env.IronCliw_SKIP_BROWSER_CONTROL_SERVER = "1";
-  process.env.IronCliw_SKIP_GMAIL_WATCHER = "1";
-  process.env.IronCliw_SKIP_CANVAS_HOST = "1";
-  process.env.IronCliw_SKIP_CHANNELS = "1";
-  process.env.IronCliw_SKIP_PROVIDERS = "1";
-  process.env.IronCliw_SKIP_CRON = "1";
-  process.env.IronCliw_TEST_MINIMAL_GATEWAY = "1";
-  process.env.IronCliw_BUNDLED_PLUGINS_DIR = tempHome
-    ? path.join(tempHome, "IronCliw-test-no-bundled-extensions")
-    : "IronCliw-test-no-bundled-extensions";
+  process.env.IRONCLIW_SKIP_BROWSER_CONTROL_SERVER = "1";
+  process.env.IRONCLIW_SKIP_GMAIL_WATCHER = "1";
+  process.env.IRONCLIW_SKIP_CANVAS_HOST = "1";
+  process.env.IRONCLIW_SKIP_CHANNELS = "1";
+  process.env.IRONCLIW_SKIP_PROVIDERS = "1";
+  process.env.IRONCLIW_SKIP_CRON = "1";
+  process.env.IRONCLIW_TEST_MINIMAL_GATEWAY = "1";
+  process.env.IRONCLIW_BUNDLED_PLUGINS_DIR = tempHome
+    ? path.join(tempHome, "ironcliw-test-no-bundled-extensions")
+    : "ironcliw-test-no-bundled-extensions";
 }
 
 async function resetGatewayTestState(options: { uniqueConfigRoot: boolean }) {
@@ -122,13 +122,13 @@ async function resetGatewayTestState(options: { uniqueConfigRoot: boolean }) {
   }
   applyGatewaySkipEnv();
   if (options.uniqueConfigRoot) {
-    const suiteRoot = path.join(tempHome, ".IronCliw-test-suite");
+    const suiteRoot = path.join(tempHome, ".ironcliw-test-suite");
     await fs.mkdir(suiteRoot, { recursive: true });
     tempConfigRoot = path.join(suiteRoot, `case-${suiteConfigRootSeq++}`);
     await fs.rm(tempConfigRoot, { recursive: true, force: true });
     await fs.mkdir(tempConfigRoot, { recursive: true });
   } else {
-    tempConfigRoot = path.join(tempHome, ".IronCliw-test");
+    tempConfigRoot = path.join(tempHome, ".ironcliw-test");
     await fs.rm(tempConfigRoot, { recursive: true, force: true });
     await fs.mkdir(tempConfigRoot, { recursive: true });
   }
@@ -250,8 +250,8 @@ type GatewayTestMessage = {
   [key: string]: unknown;
 };
 
-const CONNECT_CHALLENGE_NONCE_KEY = "__IronCliwTestConnectChallengeNonce";
-const CONNECT_CHALLENGE_TRACKED_KEY = "__IronCliwTestConnectChallengeTracked";
+const CONNECT_CHALLENGE_NONCE_KEY = "__ironcliwTestConnectChallengeNonce";
+const CONNECT_CHALLENGE_TRACKED_KEY = "__ironcliwTestConnectChallengeTracked";
 type TrackedWs = WebSocket & Record<string, unknown>;
 
 export function getTrackedConnectChallengeNonce(ws: WebSocket): string | undefined {
@@ -339,6 +339,46 @@ async function startGatewayServerWithRetries(params: {
   throw new Error("failed to start gateway server after retries");
 }
 
+async function waitForWebSocketOpen(ws: WebSocket, timeoutMs = 10_000): Promise<void> {
+  await new Promise<void>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("timeout waiting for ws open")), timeoutMs);
+    const cleanup = () => {
+      clearTimeout(timer);
+      ws.off("open", onOpen);
+      ws.off("error", onError);
+      ws.off("close", onClose);
+    };
+    const onOpen = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = (err: unknown) => {
+      cleanup();
+      reject(err instanceof Error ? err : new Error(String(err)));
+    };
+    const onClose = (code: number, reason: Buffer) => {
+      cleanup();
+      reject(new Error(`closed ${code}: ${reason.toString()}`));
+    };
+    ws.once("open", onOpen);
+    ws.once("error", onError);
+    ws.once("close", onClose);
+  });
+}
+
+async function openTrackedWebSocket(params: {
+  port: number;
+  headers?: Record<string, string>;
+}): Promise<WebSocket> {
+  const ws = new WebSocket(
+    `ws://127.0.0.1:${params.port}`,
+    params.headers ? { headers: params.headers } : undefined,
+  );
+  trackConnectChallengeNonce(ws);
+  await waitForWebSocketOpen(ws);
+  return ws;
+}
+
 export async function withGatewayServer<T>(
   fn: (ctx: { port: number; server: Awaited<ReturnType<typeof startGatewayServer>> }) => Promise<T>,
   opts?: { port?: number; serverOptions?: GatewayServerOptions },
@@ -371,33 +411,10 @@ export async function createGatewaySuiteHarness(opts?: {
     port: started.port,
     server: started.server,
     openWs: async (headers?: Record<string, string>) => {
-      const ws = new WebSocket(`ws://127.0.0.1:${started.port}`, headers ? { headers } : undefined);
-      trackConnectChallengeNonce(ws);
-      await new Promise<void>((resolve, reject) => {
-        const timer = setTimeout(() => reject(new Error("timeout waiting for ws open")), 10_000);
-        const cleanup = () => {
-          clearTimeout(timer);
-          ws.off("open", onOpen);
-          ws.off("error", onError);
-          ws.off("close", onClose);
-        };
-        const onOpen = () => {
-          cleanup();
-          resolve();
-        };
-        const onError = (err: unknown) => {
-          cleanup();
-          reject(err instanceof Error ? err : new Error(String(err)));
-        };
-        const onClose = (code: number, reason: Buffer) => {
-          cleanup();
-          reject(new Error(`closed ${code}: ${reason.toString()}`));
-        };
-        ws.once("open", onOpen);
-        ws.once("error", onError);
-        ws.once("close", onClose);
+      return await openTrackedWebSocket({
+        port: started.port,
+        headers,
       });
-      return ws;
     },
     close: async () => {
       await started.server.close();
@@ -411,8 +428,8 @@ export async function startServerWithClient(
 ) {
   const { wsHeaders, ...gatewayOpts } = opts ?? {};
   let port = await getFreePort();
-  const envSnapshot = captureEnv(["IronCliw_GATEWAY_TOKEN"]);
-  const prev = process.env.IronCliw_GATEWAY_TOKEN;
+  const envSnapshot = captureEnv(["IRONCLIW_GATEWAY_TOKEN"]);
+  const prev = process.env.IRONCLIW_GATEWAY_TOKEN;
   if (typeof token === "string") {
     testState.gatewayAuth = { mode: "token", token };
   }
@@ -422,44 +439,16 @@ export async function startServerWithClient(
       ? (testState.gatewayAuth as { token?: string }).token
       : undefined);
   if (fallbackToken === undefined) {
-    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
   } else {
-    process.env.IronCliw_GATEWAY_TOKEN = fallbackToken;
+    process.env.IRONCLIW_GATEWAY_TOKEN = fallbackToken;
   }
 
   const started = await startGatewayServerWithRetries({ port, opts: gatewayOpts });
   port = started.port;
   const server = started.server;
 
-  const ws = new WebSocket(
-    `ws://127.0.0.1:${port}`,
-    wsHeaders ? { headers: wsHeaders } : undefined,
-  );
-  trackConnectChallengeNonce(ws);
-  await new Promise<void>((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error("timeout waiting for ws open")), 10_000);
-    const cleanup = () => {
-      clearTimeout(timer);
-      ws.off("open", onOpen);
-      ws.off("error", onError);
-      ws.off("close", onClose);
-    };
-    const onOpen = () => {
-      cleanup();
-      resolve();
-    };
-    const onError = (err: unknown) => {
-      cleanup();
-      reject(err instanceof Error ? err : new Error(String(err)));
-    };
-    const onClose = (code: number, reason: Buffer) => {
-      cleanup();
-      reject(new Error(`closed ${code}: ${reason.toString()}`));
-    };
-    ws.once("open", onOpen);
-    ws.once("error", onError);
-    ws.once("close", onClose);
-  });
+  const ws = await openTrackedWebSocket({ port, headers: wsHeaders });
   return { server, ws, port, prevToken: prev, envSnapshot };
 }
 
@@ -491,7 +480,7 @@ function resolveDefaultTestDeviceIdentityPath(params: {
     `${params.clientId}-${params.clientMode}-${params.platform}-${params.deviceFamily ?? "none"}-${params.role}`
       .replace(/[^a-zA-Z0-9._-]+/g, "_")
       .toLowerCase();
-  const suiteRoot = process.env.IronCliw_STATE_DIR ?? process.env.HOME ?? os.tmpdir();
+  const suiteRoot = process.env.IRONCLIW_STATE_DIR ?? process.env.HOME ?? os.tmpdir();
   return path.join(suiteRoot, "test-device-identities", `${safe}.json`);
 }
 
@@ -571,13 +560,13 @@ export async function connectReq(
       ? undefined
       : typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
         ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-        : process.env.IronCliw_GATEWAY_TOKEN;
+        : process.env.IRONCLIW_GATEWAY_TOKEN;
   const defaultPassword =
     opts?.skipDefaultAuth === true
       ? undefined
       : typeof (testState.gatewayAuth as { password?: unknown } | undefined)?.password === "string"
         ? ((testState.gatewayAuth as { password?: string }).password ?? undefined)
-        : process.env.IronCliw_GATEWAY_PASSWORD;
+        : process.env.IRONCLIW_GATEWAY_PASSWORD;
   const token = opts?.token ?? defaultToken;
   const deviceToken = opts?.deviceToken?.trim() || undefined;
   const password = opts?.password ?? defaultPassword;

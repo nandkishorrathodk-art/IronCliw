@@ -33,4 +33,3 @@ let research = topics | pmap:
 # Final synthesis
 session "Create an executive summary combining all research findings"
   context: research
-

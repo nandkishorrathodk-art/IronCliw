@@ -9,8 +9,7 @@
   flex-direction: column;
   flex: 1 1 0;
   height: 100%;
-  min-height: 0;
-  /* Allow flex shrinking */
+  min-height: 0; /* Allow flex shrinking */
   overflow: hidden;
   background: transparent !important;
   border: none !important;
@@ -50,14 +49,12 @@
 
 /* Chat thread - scrollable middle section, transparent */
 .chat-thread {
-  flex: 1 1 0;
-  /* Grow, shrink, and use 0 base for proper scrolling */
+  flex: 1 1 0; /* Grow, shrink, and use 0 base for proper scrolling */
   overflow-y: auto;
   overflow-x: hidden;
   padding: 12px 4px;
   margin: 0 -4px;
-  min-height: 0;
-  /* Allow shrinking for flex scroll behavior */
+  min-height: 0; /* Allow shrinking for flex scroll behavior */
   border-radius: 12px;
   background: transparent;
 }
@@ -103,26 +100,27 @@
   stroke-linejoin: round;
 }
 
+/* New messages indicator - floating pill with cyan glow */
 .chat-new-messages {
   align-self: center;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 16px;
+  padding: 6px 16px;
   margin: 8px auto;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: 13px;
+  font-weight: 500;
   font-family: var(--font-body);
   color: var(--accent);
   background: rgba(0, 229, 255, 0.08);
-  border: 1px solid rgba(0, 229, 255, 0.25);
+  border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
   z-index: 10;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.1);
   transition:
     background 150ms ease-out,
     border-color 150ms ease-out,
@@ -130,9 +128,9 @@
 }
 
 .chat-new-messages:hover {
-  background: rgba(0, 229, 255, 0.15);
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 0 32px rgba(0, 229, 255, 0.2);
+  background: rgba(0, 229, 255, 0.14);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.2);
 }
 
 .chat-new-messages svg {
@@ -146,6 +144,7 @@
   flex-shrink: 0;
 }
 
+/* Chat compose - sticky at bottom, premium glass */
 .chat-compose {
   position: sticky;
   bottom: 0;
@@ -154,12 +153,15 @@
   flex-direction: column;
   gap: 12px;
   margin-top: auto;
-  padding: 16px 4px 6px;
-  /* Gradient fade from transparent to deep dark */
-  background: linear-gradient(to bottom,
-      transparent,
-      rgba(8, 11, 15, 0.7) 18%,
-      rgba(8, 11, 15, 0.98) 50%);
+  padding: 16px 4px 8px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(5, 7, 10, 0.6) 15%,
+    rgba(5, 7, 10, 0.95) 45%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 10;
 }
 
@@ -174,8 +176,7 @@
   border: 1px solid var(--border);
   width: fit-content;
   max-width: 100%;
-  align-self: flex-start;
-  /* Don't stretch in flex column parent */
+  align-self: flex-start; /* Don't stretch in flex column parent */
 }
 
 .chat-attachment {
@@ -291,43 +292,24 @@
 }
 
 /* Hide the "Message" label - keep textarea only */
-.chat-compose__field>span {
+.chat-compose__field > span {
   display: none;
 }
 
 /* Override .field textarea min-height (180px) from components.css */
 .chat-compose .chat-compose__field textarea {
   width: 100%;
-  height: 44px;
-  min-height: 44px;
-  max-height: 160px;
-  padding: 11px 14px;
-  border-radius: 12px;
+  height: 40px;
+  min-height: 40px;
+  max-height: 150px;
+  padding: 9px 12px;
+  border-radius: 8px;
   overflow-y: auto;
   resize: none;
   white-space: pre-wrap;
   font-family: var(--font-body);
   font-size: 14px;
-  line-height: 1.5;
-  /* Glassy premium input */
-  background: rgba(14, 18, 28, 0.85);
-  border: 1px solid rgba(0, 229, 255, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--text-strong);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease,
-    background 150ms ease;
-}
-
-.chat-compose .chat-compose__field textarea:focus {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow:
-    0 0 0 1px rgba(0, 229, 255, 0.15),
-    0 0 24px rgba(0, 229, 255, 0.08);
-  background: rgba(14, 18, 28, 0.95);
-  outline: none;
+  line-height: 1.45;
 }
 
 .chat-compose__field textarea:disabled {
@@ -353,8 +335,6 @@
   box-sizing: border-box;
 }
 
-/* Voice input styles removed */
-
 /* Chat controls - moved to content-header area, left aligned */
 .chat-controls {
   display: flex;
@@ -376,29 +356,33 @@
   font-size: 13px;
 }
 
+/* Icon button style */
 .btn--icon {
   padding: 8px !important;
-  min-width: 38px;
-  height: 38px;
+  min-width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 229, 255, 0.1);
-  background: rgba(0, 229, 255, 0.04);
-  backdrop-filter: blur(8px);
-  border-radius: var(--radius-md);
-  transition:
-    background 150ms ease,
-    border-color 150ms ease,
-    box-shadow 150ms ease,
-    transform 150ms ease;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Controls separator */
+.chat-controls__separator {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 18px;
+  margin: 0 8px;
+  font-weight: 300;
+}
+
+:root[data-theme="light"] .chat-controls__separator {
+  color: rgba(16, 24, 40, 0.3);
 }
 
 .btn--icon:hover {
-  background: rgba(0, 229, 255, 0.1);
-  border-color: rgba(0, 229, 255, 0.3);
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.1);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Light theme icon button overrides */

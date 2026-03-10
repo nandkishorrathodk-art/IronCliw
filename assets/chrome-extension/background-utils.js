@@ -23,7 +23,7 @@ export async function deriveRelayToken(gatewayToken, port) {
   const sig = await crypto.subtle.sign(
     "HMAC",
     key,
-    enc.encode(`IronCliw-extension-relay-v1:${port}`),
+    enc.encode(`ironcliw-extension-relay-v1:${port}`),
   );
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -45,4 +45,20 @@ export function isRetryableReconnectError(err) {
     return false;
   }
   return true;
+}
+
+export function isMissingTabError(err) {
+  const message = (err instanceof Error ? err.message : String(err || "")).toLowerCase();
+  return (
+    message.includes("no tab with id") ||
+    message.includes("no tab with given id") ||
+    message.includes("tab not found")
+  );
+}
+
+export function isLastRemainingTab(allTabs, tabIdToClose) {
+  if (!Array.isArray(allTabs)) {
+    return true;
+  }
+  return allTabs.filter((tab) => tab && tab.id !== tabIdToClose).length === 0;
 }

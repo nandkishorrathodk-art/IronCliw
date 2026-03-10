@@ -1,4 +1,4 @@
-import type { AnyAgentTool, IronCliwPluginApi } from "IronCliw/plugin-sdk/feishu";
+import type { AnyAgentTool, IronCliwPluginApi } from "ironcliw/plugin-sdk/feishu";
 
 type ToolContextLike = {
   agentAccountId?: string;

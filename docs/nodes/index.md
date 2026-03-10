@@ -13,7 +13,7 @@ A **node** is a companion device (macOS/iOS/Android/headless) that connects to t
 
 Legacy transport: [Bridge protocol](/gateway/bridge-protocol) (TCP JSONL; deprecated/removed for current nodes).
 
-macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `IronCliw nodes …` works against this Mac).
+macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `ironcliw nodes …` works against this Mac).
 
 Notes:
 
@@ -29,17 +29,17 @@ creates a device pairing request for `role: node`. Approve via the devices CLI (
 Quick CLI:
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
-IronCliw devices reject <requestId>
-IronCliw nodes status
-IronCliw nodes describe --node <idOrNameOrIp>
+ironcliw devices list
+ironcliw devices approve <requestId>
+ironcliw devices reject <requestId>
+ironcliw nodes status
+ironcliw nodes describe --node <idOrNameOrIp>
 ```
 
 Notes:
 
 - `nodes status` marks a node as **paired** when its device pairing role includes `node`.
-- `node.pair.*` (CLI: `IronCliw nodes pending/approve/reject`) is a separate gateway-owned
+- `node.pair.*` (CLI: `ironcliw nodes pending/approve/reject`) is a separate gateway-owned
   node pairing store; it does **not** gate the WS `connect` handshake.
 
 ## Remote node host (system.run)
@@ -52,14 +52,14 @@ forwards `exec` calls to the **node host** when `host=node` is selected.
 
 - **Gateway host**: receives messages, runs the model, routes tool calls.
 - **Node host**: executes `system.run`/`system.which` on the node machine.
-- **Approvals**: enforced on the node host via `~/.IronCliw/exec-approvals.json`.
+- **Approvals**: enforced on the node host via `~/.ironcliw/exec-approvals.json`.
 
 ### Start a node host (foreground)
 
 On the node machine:
 
 ```bash
-IronCliw node run --host <gateway-host> --port 18789 --display-name "Build Node"
+ironcliw node run --host <gateway-host> --port 18789 --display-name "Build Node"
 ```
 
 ### Remote gateway via SSH tunnel (loopback bind)
@@ -75,20 +75,22 @@ Example (node host -> gateway host):
 ssh -N -L 18790:127.0.0.1:18789 user@gateway-host
 
 # Terminal B: export the gateway token and connect through the tunnel
-export IronCliw_GATEWAY_TOKEN="<gateway-token>"
-IronCliw node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
+export IRONCLIW_GATEWAY_TOKEN="<gateway-token>"
+ironcliw node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
 ```
 
 Notes:
 
-- The token is `gateway.auth.token` from the gateway config (`~/.IronCliw/IronCliw.json` on the gateway host).
-- `IronCliw node run` reads `IronCliw_GATEWAY_TOKEN` for auth.
+- `ironcliw node run` supports token or password auth.
+- Env vars are preferred: `IRONCLIW_GATEWAY_TOKEN` / `IRONCLIW_GATEWAY_PASSWORD`.
+- Config fallback is `gateway.auth.token` / `gateway.auth.password`; in remote mode, `gateway.remote.token` / `gateway.remote.password` are also eligible.
+- Legacy `CLAWDBOT_GATEWAY_*` env vars are intentionally ignored by node-host auth resolution.
 
 ### Start a node host (service)
 
 ```bash
-IronCliw node install --host <gateway-host> --port 18789 --display-name "Build Node"
-IronCliw node restart
+ironcliw node install --host <gateway-host> --port 18789 --display-name "Build Node"
+ironcliw node restart
 ```
 
 ### Pair + name
@@ -96,35 +98,35 @@ IronCliw node restart
 On the gateway host:
 
 ```bash
-IronCliw devices list
-IronCliw devices approve <requestId>
-IronCliw nodes status
+ironcliw devices list
+ironcliw devices approve <requestId>
+ironcliw nodes status
 ```
 
 Naming options:
 
-- `--display-name` on `IronCliw node run` / `IronCliw node install` (persists in `~/.IronCliw/node.json` on the node).
-- `IronCliw nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
+- `--display-name` on `ironcliw node run` / `ironcliw node install` (persists in `~/.ironcliw/node.json` on the node).
+- `ironcliw nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
 
 ### Allowlist the commands
 
 Exec approvals are **per node host**. Add allowlist entries from the gateway:
 
 ```bash
-IronCliw approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
-IronCliw approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
+ironcliw approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
+ironcliw approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
 ```
 
-Approvals live on the node host at `~/.IronCliw/exec-approvals.json`.
+Approvals live on the node host at `~/.ironcliw/exec-approvals.json`.
 
 ### Point exec at the node
 
 Configure defaults (gateway config):
 
 ```bash
-IronCliw config set tools.exec.host node
-IronCliw config set tools.exec.security allowlist
-IronCliw config set tools.exec.node "<id-or-name>"
+ironcliw config set tools.exec.host node
+ironcliw config set tools.exec.security allowlist
+ironcliw config set tools.exec.node "<id-or-name>"
 ```
 
 Or per session:
@@ -147,7 +149,7 @@ Related:
 Low-level (raw RPC):
 
 ```bash
-IronCliw nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
+ironcliw nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
 ```
 
 Higher-level helpers exist for the common “give the agent a MEDIA attachment” workflows.
@@ -159,17 +161,17 @@ If the node is showing the Canvas (WebView), `canvas.snapshot` returns `{ format
 CLI helper (writes to a temp file and prints `MEDIA:<path>`):
 
 ```bash
-IronCliw nodes canvas snapshot --node <idOrNameOrIp> --format png
-IronCliw nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
+ironcliw nodes canvas snapshot --node <idOrNameOrIp> --format png
+ironcliw nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
 ```
 
 ### Canvas controls
 
 ```bash
-IronCliw nodes canvas present --node <idOrNameOrIp> --target https://example.com
-IronCliw nodes canvas hide --node <idOrNameOrIp>
-IronCliw nodes canvas navigate https://example.com --node <idOrNameOrIp>
-IronCliw nodes canvas eval --node <idOrNameOrIp> --js "document.title"
+ironcliw nodes canvas present --node <idOrNameOrIp> --target https://example.com
+ironcliw nodes canvas hide --node <idOrNameOrIp>
+ironcliw nodes canvas navigate https://example.com --node <idOrNameOrIp>
+ironcliw nodes canvas eval --node <idOrNameOrIp> --js "document.title"
 ```
 
 Notes:
@@ -180,9 +182,9 @@ Notes:
 ### A2UI (Canvas)
 
 ```bash
-IronCliw nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
-IronCliw nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
-IronCliw nodes canvas a2ui reset --node <idOrNameOrIp>
+ironcliw nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
+ironcliw nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
+ironcliw nodes canvas a2ui reset --node <idOrNameOrIp>
 ```
 
 Notes:
@@ -194,16 +196,16 @@ Notes:
 Photos (`jpg`):
 
 ```bash
-IronCliw nodes camera list --node <idOrNameOrIp>
-IronCliw nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
-IronCliw nodes camera snap --node <idOrNameOrIp> --facing front
+ironcliw nodes camera list --node <idOrNameOrIp>
+ironcliw nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
+ironcliw nodes camera snap --node <idOrNameOrIp> --facing front
 ```
 
 Video clips (`mp4`):
 
 ```bash
-IronCliw nodes camera clip --node <idOrNameOrIp> --duration 10s
-IronCliw nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
+ironcliw nodes camera clip --node <idOrNameOrIp> --duration 10s
+ironcliw nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
 ```
 
 Notes:
@@ -214,19 +216,18 @@ Notes:
 
 ## Screen recordings (nodes)
 
-Nodes expose `screen.record` (mp4). Example:
+Supported nodes expose `screen.record` (mp4). Example:
 
 ```bash
-IronCliw nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
-IronCliw nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
+ironcliw nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
+ironcliw nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
 ```
 
 Notes:
 
-- `screen.record` requires the node app to be foregrounded.
-- Android will show the system screen-capture prompt before recording.
+- `screen.record` availability depends on node platform.
 - Screen recordings are clamped to `<= 60s`.
-- `--no-audio` disables microphone capture (supported on iOS/Android; macOS uses system capture audio).
+- `--no-audio` disables microphone capture on supported platforms.
 - Use `--screen <index>` to select a display when multiple screens are available.
 
 ## Location (nodes)
@@ -236,8 +237,8 @@ Nodes expose `location.get` when Location is enabled in settings.
 CLI helper:
 
 ```bash
-IronCliw nodes location get --node <idOrNameOrIp>
-IronCliw nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
+ironcliw nodes location get --node <idOrNameOrIp>
+ironcliw nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
 ```
 
 Notes:
@@ -253,7 +254,7 @@ Android nodes can expose `sms.send` when the user grants **SMS** permission and 
 Low-level invoke:
 
 ```bash
-IronCliw nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from IronCliw"}'
+ironcliw nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from IronCliw"}'
 ```
 
 Notes:
@@ -273,20 +274,18 @@ Available families:
 - `contacts.search`, `contacts.add`
 - `calendar.events`, `calendar.add`
 - `motion.activity`, `motion.pedometer`
-- `app.update`
 
 Example invokes:
 
 ```bash
-IronCliw nodes invoke --node <idOrNameOrIp> --command device.status --params '{}'
-IronCliw nodes invoke --node <idOrNameOrIp> --command notifications.list --params '{}'
-IronCliw nodes invoke --node <idOrNameOrIp> --command photos.latest --params '{"limit":1}'
+ironcliw nodes invoke --node <idOrNameOrIp> --command device.status --params '{}'
+ironcliw nodes invoke --node <idOrNameOrIp> --command notifications.list --params '{}'
+ironcliw nodes invoke --node <idOrNameOrIp> --command photos.latest --params '{"limit":1}'
 ```
 
 Notes:
 
 - Motion commands are capability-gated by available sensors.
-- `app.update` is permission + policy gated by the node runtime.
 
 ## System commands (node host / mac node)
 
@@ -296,8 +295,8 @@ The headless node host exposes `system.run`, `system.which`, and `system.execApp
 Examples:
 
 ```bash
-IronCliw nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
-IronCliw nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
+ironcliw nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
+ironcliw nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
 ```
 
 Notes:
@@ -313,7 +312,7 @@ Notes:
 - Node hosts ignore `PATH` overrides and strip dangerous startup/shell keys (`DYLD_*`, `LD_*`, `NODE_OPTIONS`, `PYTHON*`, `PERL*`, `RUBYOPT`, `SHELLOPTS`, `PS4`). If you need extra PATH entries, configure the node host service environment (or install tools in standard locations) instead of passing `PATH` via `--env`.
 - On macOS node mode, `system.run` is gated by exec approvals in the macOS app (Settings → Exec approvals).
   Ask/allowlist/full behave the same as the headless node host; denied prompts return `SYSTEM_RUN_DENIED`.
-- On headless node host, `system.run` is gated by exec approvals (`~/.IronCliw/exec-approvals.json`).
+- On headless node host, `system.run` is gated by exec approvals (`~/.ironcliw/exec-approvals.json`).
 
 ## Exec node binding
 
@@ -323,21 +322,21 @@ This sets the default node for `exec host=node` (and can be overridden per agent
 Global default:
 
 ```bash
-IronCliw config set tools.exec.node "node-id-or-name"
+ironcliw config set tools.exec.node "node-id-or-name"
 ```
 
 Per-agent override:
 
 ```bash
-IronCliw config get agents.list
-IronCliw config set agents.list[0].tools.exec.node "node-id-or-name"
+ironcliw config get agents.list
+ironcliw config set agents.list[0].tools.exec.node "node-id-or-name"
 ```
 
 Unset to allow any node:
 
 ```bash
-IronCliw config unset tools.exec.node
-IronCliw config unset agents.list[0].tools.exec.node
+ironcliw config unset tools.exec.node
+ironcliw config unset agents.list[0].tools.exec.node
 ```
 
 ## Permissions map
@@ -353,21 +352,21 @@ or for running a minimal node alongside a server.
 Start it:
 
 ```bash
-IronCliw node run --host <gateway-host> --port 18789
+ironcliw node run --host <gateway-host> --port 18789
 ```
 
 Notes:
 
 - Pairing is still required (the Gateway will show a device pairing prompt).
-- The node host stores its node id, token, display name, and gateway connection info in `~/.IronCliw/node.json`.
-- Exec approvals are enforced locally via `~/.IronCliw/exec-approvals.json`
+- The node host stores its node id, token, display name, and gateway connection info in `~/.ironcliw/node.json`.
+- Exec approvals are enforced locally via `~/.ironcliw/exec-approvals.json`
   (see [Exec approvals](/tools/exec-approvals)).
 - On macOS, the headless node host executes `system.run` locally by default. Set
-  `IronCliw_NODE_EXEC_HOST=app` to route `system.run` through the companion app exec host; add
-  `IronCliw_NODE_EXEC_FALLBACK=0` to require the app host and fail closed if it is unavailable.
+  `IRONCLIW_NODE_EXEC_HOST=app` to route `system.run` through the companion app exec host; add
+  `IRONCLIW_NODE_EXEC_FALLBACK=0` to require the app host and fail closed if it is unavailable.
 - Add `--tls` / `--tls-fingerprint` when the Gateway WS uses TLS.
 
 ## Mac node mode
 
-- The macOS menubar app connects to the Gateway WS server as a node (so `IronCliw nodes …` works against this Mac).
+- The macOS menubar app connects to the Gateway WS server as a node (so `ironcliw nodes …` works against this Mac).
 - In remote mode, the app opens an SSH tunnel for the Gateway port and connects to `localhost`.

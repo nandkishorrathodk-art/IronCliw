@@ -54,7 +54,7 @@ Client → Gateway:
     "permissions": {},
     "auth": { "token": "…" },
     "locale": "en-US",
-    "userAgent": "IronCliw-cli/1.2.3",
+    "userAgent": "ironcliw-cli/1.2.3",
     "device": {
       "id": "device_fingerprint",
       "publicKey": "…",
@@ -112,7 +112,7 @@ When a device token is issued, `hello-ok` also includes:
     "permissions": { "camera.capture": true, "screen.record": false },
     "auth": { "token": "…" },
     "locale": "en-US",
-    "userAgent": "IronCliw-ios/1.2.3",
+    "userAgent": "ironcliw-ios/1.2.3",
     "device": {
       "id": "device_fingerprint",
       "publicKey": "…",
@@ -148,6 +148,10 @@ Common scopes:
 - `operator.admin`
 - `operator.approvals`
 - `operator.pairing`
+
+Method scope is only the first gate. Some slash commands reached through
+`chat.send` apply stricter command-level checks on top. For example, persistent
+`/config set` and `/config unset` writes require `operator.admin`.
 
 ### Caps/commands/permissions (node)
 
@@ -195,7 +199,7 @@ The Gateway treats these as **claims** and enforces server-side allowlists.
 
 ## Auth
 
-- If `IronCliw_GATEWAY_TOKEN` (or `--token`) is set, `connect.params.auth.token`
+- If `IRONCLIW_GATEWAY_TOKEN` (or `--token`) is set, `connect.params.auth.token`
   must match or the socket is closed.
 - After pairing, the Gateway issues a **device token** scoped to the connection
   role + scopes. It is returned in `hello-ok.auth.deviceToken` and should be

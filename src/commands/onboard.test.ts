@@ -22,7 +22,7 @@ vi.mock("../config/config.js", () => ({
 }));
 
 vi.mock("./onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "~/.IronCliw/workspace",
+  DEFAULT_WORKSPACE: "~/.ironcliw/workspace",
   handleReset: mocks.handleReset,
 }));
 
@@ -47,7 +47,7 @@ describe("onboardCommand", () => {
 
     await onboardCommand(
       {
-        secretInputMode: "invalid" as never,
+        secretInputMode: "invalid" as never, // pragma: allowlist secret
       },
       runtime,
     );
@@ -85,7 +85,7 @@ describe("onboardCommand", () => {
       config: {
         agents: {
           defaults: {
-            workspace: "/tmp/IronCliw-custom-workspace",
+            workspace: "/tmp/ironcliw-custom-workspace",
           },
         },
       },
@@ -100,7 +100,7 @@ describe("onboardCommand", () => {
 
     expect(mocks.handleReset).toHaveBeenCalledWith(
       "config+creds+sessions",
-      path.resolve("/tmp/IronCliw-custom-workspace"),
+      path.resolve("/tmp/ironcliw-custom-workspace"),
       runtime,
     );
   });

@@ -112,4 +112,3 @@ elif **style issues were found**:
     context: style
 else:
   session "All checks passed - ready for review"
-

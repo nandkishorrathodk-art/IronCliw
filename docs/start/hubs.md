@@ -26,7 +26,7 @@ Use these hubs to discover every page, including deep dives and reference docs t
 - [Docs directory](/start/docs-directory)
 - [Configuration](/gateway/configuration)
 - [Configuration examples](/gateway/configuration-examples)
-- [IronCliw assistant](/start/IronCliw)
+- [IronCliw assistant](/start/ironcliw)
 - [Showcase](/start/showcase)
 - [Lore](/start/lore)
 

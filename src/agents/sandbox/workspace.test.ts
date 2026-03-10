@@ -8,7 +8,7 @@ import { ensureSandboxWorkspace } from "./workspace.js";
 const tempRoots: string[] = [];
 
 async function makeTempRoot(): Promise<string> {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sandbox-workspace-"));
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sandbox-workspace-"));
   tempRoots.push(root);
   return root;
 }

@@ -68,13 +68,14 @@ export function createGatewayBroadcaster(params: { clients: Set<GatewayWsClient>
     }
     const isTargeted = Boolean(targetConnIds);
     const eventSeq = isTargeted ? undefined : ++seq;
-    const frame = JSON.stringify({
+    const frameStr = JSON.stringify({
       type: "event",
       event,
       payload,
       seq: eventSeq,
       stateVersion: opts?.stateVersion,
     });
+    const frameBuf = Buffer.from(frameStr, "utf8");
     if (shouldLogWs()) {
       const logMeta: Record<string, unknown> = {
         event,
@@ -110,7 +111,7 @@ export function createGatewayBroadcaster(params: { clients: Set<GatewayWsClient>
         continue;
       }
       try {
-        c.socket.send(frame);
+        c.socket.send(frameBuf);
       } catch {
         /* ignore */
       }

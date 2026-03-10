@@ -76,16 +76,16 @@ export function registerChannelsCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw channels list", "List configured channels and auth profiles."],
-          ["IronCliw channels status --probe", "Run channel status checks and probes."],
+          ["ironcliw channels list", "List configured channels and auth profiles."],
+          ["ironcliw channels status --probe", "Run channel status checks and probes."],
           [
-            "IronCliw channels add --channel telegram --token <token>",
+            "ironcliw channels add --channel telegram --token <token>",
             "Add or update a channel account non-interactively.",
           ],
-          ["IronCliw channels login --channel whatsapp", "Link a WhatsApp Web account."],
+          ["ironcliw channels login --channel whatsapp", "Link a WhatsApp Web account."],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/channels",
-          "docs.IronCliw.ai/cli/channels",
+          "docs.ironcliw.ai/cli/channels",
         )}\n`,
     );
 

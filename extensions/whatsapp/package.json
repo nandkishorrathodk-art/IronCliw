@@ -1,10 +1,10 @@
 {
-  "name": "@IronCliw/whatsapp",
-  "version": "2026.3.2",
+  "name": "@ironcliw/whatsapp",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw WhatsApp channel plugin",
   "type": "module",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

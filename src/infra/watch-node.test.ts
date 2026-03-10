@@ -24,7 +24,7 @@ describe("watch-node script", () => {
 
     const runPromise = runWatchMain({
       args: ["gateway", "--force"],
-      cwd: "/tmp/IronCliw",
+      cwd: "/tmp/ironcliw",
       env: { PATH: "/usr/bin" },
       now: () => 1700000000000,
       process: fakeProcess,
@@ -46,13 +46,13 @@ describe("watch-node script", () => {
         "--force",
       ],
       expect.objectContaining({
-        cwd: "/tmp/IronCliw",
+        cwd: "/tmp/ironcliw",
         stdio: "inherit",
         env: expect.objectContaining({
           PATH: "/usr/bin",
-          IronCliw_WATCH_MODE: "1",
-          IronCliw_WATCH_SESSION: "1700000000000-4242",
-          IronCliw_WATCH_COMMAND: "gateway --force",
+          IRONCLIW_WATCH_MODE: "1",
+          IRONCLIW_WATCH_SESSION: "1700000000000-4242",
+          IRONCLIW_WATCH_COMMAND: "gateway --force",
         }),
       }),
     );

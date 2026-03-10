@@ -42,6 +42,6 @@ export function formatAuthDoctorHint(params: {
     }`,
     `- auth store oauth profiles: ${storeOauthProfiles || "(none)"}`,
     `- suggested profile: ${suggested}`,
-    `Fix: run "${formatCliCommand("IronCliw doctor --yes")}"`,
+    `Fix: run "${formatCliCommand("ironcliw doctor --yes")}"`,
   ].join("\n");
 }

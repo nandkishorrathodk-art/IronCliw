@@ -70,19 +70,19 @@ export function registerDirectoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["IronCliw directory self --channel slack", "Show the connected account identity."],
+          ["ironcliw directory self --channel slack", "Show the connected account identity."],
           [
-            'IronCliw directory peers list --channel slack --query "alice"',
+            'ironcliw directory peers list --channel slack --query "alice"',
             "Search contact/user IDs by name.",
           ],
-          ["IronCliw directory groups list --channel discord", "List available groups/channels."],
+          ["ironcliw directory groups list --channel discord", "List available groups/channels."],
           [
-            "IronCliw directory groups members --channel discord --group-id <id>",
+            "ironcliw directory groups members --channel discord --group-id <id>",
             "List members for a specific group.",
           ],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/directory",
-          "docs.IronCliw.ai/cli/directory",
+          "docs.ironcliw.ai/cli/directory",
         )}\n`,
     )
     .action(() => {

@@ -5,7 +5,7 @@ how it maps ACP sessions to Gateway sessions, and how IDEs should invoke it.
 
 ## Overview
 
-`IronCliw acp` exposes an ACP agent over stdio and forwards prompts to a running
+`ironcliw acp` exposes an ACP agent over stdio and forwards prompts to a running
 IronCliw Gateway over WebSocket. It keeps ACP session ids mapped to Gateway
 session keys so IDEs can reconnect to the same agent transcript or reset it on
 request.
@@ -26,19 +26,19 @@ Quick steps:
 
 1. Run a Gateway (local or remote).
 2. Configure the Gateway target (`gateway.remote.url` + auth) or pass flags.
-3. Point the IDE to run `IronCliw acp` over stdio.
+3. Point the IDE to run `ironcliw acp` over stdio.
 
 Example config:
 
 ```bash
-IronCliw config set gateway.remote.url wss://gateway-host:18789
-IronCliw config set gateway.remote.token <token>
+ironcliw config set gateway.remote.url wss://gateway-host:18789
+ironcliw config set gateway.remote.token <token>
 ```
 
 Example run:
 
 ```bash
-IronCliw acp --url wss://gateway-host:18789 --token <token>
+ironcliw acp --url wss://gateway-host:18789 --token <token>
 ```
 
 ## Selecting agents
@@ -48,9 +48,9 @@ ACP does not pick agents directly. It routes by the Gateway session key.
 Use agent-scoped session keys to target a specific agent:
 
 ```bash
-IronCliw acp --session agent:main:main
-IronCliw acp --session agent:design:main
-IronCliw acp --session agent:qa:bug-123
+ironcliw acp --session agent:main:main
+ironcliw acp --session agent:design:main
+ironcliw acp --session agent:qa:bug-123
 ```
 
 Each ACP session maps to a single Gateway session key. One agent can have many
@@ -66,7 +66,7 @@ Add a custom ACP agent in `~/.config/zed/settings.json`:
   "agent_servers": {
     "IronCliw ACP": {
       "type": "custom",
-      "command": "IronCliw",
+      "command": "ironcliw",
       "args": ["acp"],
       "env": {}
     }
@@ -81,7 +81,7 @@ To target a specific Gateway or agent:
   "agent_servers": {
     "IronCliw ACP": {
       "type": "custom",
-      "command": "IronCliw",
+      "command": "ironcliw",
       "args": [
         "acp",
         "--url",
@@ -101,7 +101,7 @@ In Zed, open the Agent panel and select “IronCliw ACP” to start a thread.
 
 ## Execution Model
 
-- ACP client spawns `IronCliw acp` and speaks ACP messages over stdio.
+- ACP client spawns `ironcliw acp` and speaks ACP messages over stdio.
 - The bridge connects to the Gateway using existing auth config (or CLI flags).
 - ACP `prompt` translates to Gateway `chat.send`.
 - Gateway streaming events are translated back into ACP streaming events.
@@ -118,9 +118,9 @@ You can override or reuse sessions in two ways:
 1. CLI defaults
 
 ```bash
-IronCliw acp --session agent:main:main
-IronCliw acp --session-label "support inbox"
-IronCliw acp --reset-session
+ironcliw acp --session agent:main:main
+ironcliw acp --session-label "support inbox"
+ironcliw acp --reset-session
 ```
 
 2. ACP metadata per session
@@ -167,7 +167,7 @@ updates. Terminal Gateway states map to ACP `done` with stop reasons:
 
 ## Auth + Gateway Discovery
 
-`IronCliw acp` resolves the Gateway URL and auth from CLI flags or config:
+`ironcliw acp` resolves the Gateway URL and auth from CLI flags or config:
 
 - `--url` / `--token` / `--password` take precedence.
 - Otherwise use configured `gateway.remote.*` settings.

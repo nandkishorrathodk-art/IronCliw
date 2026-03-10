@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { PassThrough } from "node:stream";
-import type { IronCliwConfig, RuntimeEnv } from "IronCliw/plugin-sdk/mattermost";
+import type { IronCliwConfig, RuntimeEnv } from "ironcliw/plugin-sdk/mattermost";
 import { describe, expect, it } from "vitest";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import { createSlashCommandHttpHandler } from "./slash-http.js";

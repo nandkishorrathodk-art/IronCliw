@@ -56,7 +56,7 @@ function createBundledSkill(params: {
   return {
     name: params.name,
     description: params.description,
-    source: "IronCliw-bundled",
+    source: "ironcliw-bundled",
     bundled: true,
     filePath: `/tmp/skills/${params.name}`,
     baseDir: `/tmp/skills/${params.name}`,

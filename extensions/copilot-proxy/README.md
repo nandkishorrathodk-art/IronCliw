@@ -7,7 +7,7 @@ Provider plugin for the **Copilot Proxy** VS Code extension.
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-IronCliw plugins enable copilot-proxy
+ironcliw plugins enable copilot-proxy
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-IronCliw models auth login --provider copilot-proxy --set-default
+ironcliw models auth login --provider copilot-proxy --set-default
 ```
 
 ## Notes

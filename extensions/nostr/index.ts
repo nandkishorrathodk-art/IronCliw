@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/nostr";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/nostr";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/nostr";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/nostr";
 import { nostrPlugin } from "./src/channel.js";
 import type { NostrProfile } from "./src/config-schema.js";
 import { createNostrProfileHttpHandler } from "./src/nostr-profile-http.js";

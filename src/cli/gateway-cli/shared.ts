@@ -65,25 +65,25 @@ export function extractGatewayMiskeys(parsed: unknown): {
 }
 
 export function renderGatewayServiceStopHints(env: NodeJS.ProcessEnv = process.env): string[] {
-  const profile = env.IronCliw_PROFILE;
+  const profile = env.IRONCLIW_PROFILE;
   switch (process.platform) {
     case "darwin":
       return [
-        `Tip: ${formatCliCommand("IronCliw gateway stop")}`,
+        `Tip: ${formatCliCommand("ironcliw gateway stop")}`,
         `Or: launchctl bootout gui/$UID/${resolveGatewayLaunchAgentLabel(profile)}`,
       ];
     case "linux":
       return [
-        `Tip: ${formatCliCommand("IronCliw gateway stop")}`,
+        `Tip: ${formatCliCommand("ironcliw gateway stop")}`,
         `Or: systemctl --user stop ${resolveGatewaySystemdServiceName(profile)}.service`,
       ];
     case "win32":
       return [
-        `Tip: ${formatCliCommand("IronCliw gateway stop")}`,
+        `Tip: ${formatCliCommand("ironcliw gateway stop")}`,
         `Or: schtasks /End /TN "${resolveGatewayWindowsTaskName(profile)}"`,
       ];
     default:
-      return [`Tip: ${formatCliCommand("IronCliw gateway stop")}`];
+      return [`Tip: ${formatCliCommand("ironcliw gateway stop")}`];
   }
 }
 

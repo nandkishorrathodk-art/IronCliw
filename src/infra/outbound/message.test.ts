@@ -15,7 +15,7 @@ vi.mock("../../channels/plugins/index.js", () => ({
 
 vi.mock("../../agents/agent-scope.js", () => ({
   resolveDefaultAgentId: () => "main",
-  resolveAgentWorkspaceDir: () => "/tmp/IronCliw-test-workspace",
+  resolveAgentWorkspaceDir: () => "/tmp/ironcliw-test-workspace",
 }));
 
 vi.mock("../../config/plugin-auto-enable.js", () => ({

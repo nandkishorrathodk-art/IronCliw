@@ -4,7 +4,7 @@ description: Send WhatsApp messages to other people or search/sync WhatsApp hist
 homepage: https://wacli.sh
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "📱",
         "requires": { "bins": ["wacli"] },

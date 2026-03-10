@@ -240,7 +240,7 @@ export function inferBasePath() {
   if (typeof window === "undefined") {
     return "";
   }
-  const configured = window.__IronCliw_CONTROL_UI_BASE_PATH__;
+  const configured = window.__IRONCLIW_CONTROL_UI_BASE_PATH__;
   if (typeof configured === "string" && configured.trim()) {
     return normalizeBasePath(configured);
   }

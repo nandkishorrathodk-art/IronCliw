@@ -1,6 +1,6 @@
 import { listAgentIds, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolveStorePath } from "../config/sessions.js";
-import type { IronCliwConfig } from "../config/types.IronCliw.js";
+import type { IronCliwConfig } from "../config/types.ironcliw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import type { RuntimeEnv } from "../runtime.js";
 
@@ -61,7 +61,7 @@ export function resolveSessionStoreTargets(
     const requested = normalizeAgentId(opts.agent ?? "");
     if (!knownAgents.includes(requested)) {
       throw new Error(
-        `Unknown agent id "${opts.agent}". Use "IronCliw agents list" to see configured agents.`,
+        `Unknown agent id "${opts.agent}". Use "ironcliw agents list" to see configured agents.`,
       );
     }
     return [

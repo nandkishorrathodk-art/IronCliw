@@ -5,7 +5,7 @@ import type { AgentTool, AgentToolResult } from "@mariozechner/pi-agent-core";
 import { Type } from "@sinclair/typebox";
 import { describe, expect, it, vi } from "vitest";
 import "./test-helpers/fast-coding-tools.js";
-import { createIronCliwTools } from "./IronCliw-tools.js";
+import { createIronCliwTools } from "./ironcliw-tools.js";
 import { findUnsupportedSchemaKeywords } from "./pi-embedded-runner/google.js";
 import { __testing, createIronCliwCodingTools } from "./pi-tools.js";
 import { createIronCliwReadTool, createSandboxedReadTool } from "./pi-tools.read.js";
@@ -339,7 +339,7 @@ describe("createIronCliwCodingTools", () => {
   });
 
   it("uses stored spawnDepth to apply leaf tool policy for flat depth-2 session keys", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-depth-policy-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-depth-policy-"));
     const storeTemplate = path.join(tmpDir, "sessions-{agentId}.json");
     const storePath = storeTemplate.replaceAll("{agentId}", "main");
     await fs.writeFile(
@@ -455,8 +455,8 @@ describe("createIronCliwCodingTools", () => {
     }
   });
   it("applies sandbox path guards to file_path alias", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-sbx-"));
-    const outsidePath = path.join(os.tmpdir(), "IronCliw-outside.txt");
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-sbx-"));
+    const outsidePath = path.join(os.tmpdir(), "ironcliw-outside.txt");
     await fs.writeFile(outsidePath, "outside", "utf8");
     try {
       const readTool = createSandboxedReadTool({
@@ -473,7 +473,7 @@ describe("createIronCliwCodingTools", () => {
   });
 
   it("auto-pages read output across chunks when context window budget allows", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-read-autopage-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-read-autopage-"));
     const filePath = path.join(tmpDir, "big.txt");
     const lines = Array.from(
       { length: 5000 },
@@ -498,7 +498,7 @@ describe("createIronCliwCodingTools", () => {
   });
 
   it("adds capped continuation guidance when aggregated read output reaches budget", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-read-cap-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-read-cap-"));
     const filePath = path.join(tmpDir, "huge.txt");
     const lines = Array.from(
       { length: 8000 },

@@ -1,12 +1,12 @@
 import os from "node:os";
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/device-pair";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/device-pair";
 import {
   approveDevicePairing,
   listDevicePairing,
   resolveGatewayBindUrl,
   runPluginCommandWithTimeout,
   resolveTailnetHostWithRunner,
-} from "IronCliw/plugin-sdk/device-pair";
+} from "ironcliw/plugin-sdk/device-pair";
 import qrcode from "qrcode-terminal";
 import {
   armPairNotifyOnce,
@@ -88,7 +88,7 @@ function parsePositiveInteger(raw: string | undefined): number | null {
 
 function resolveGatewayPort(cfg: IronCliwPluginApi["config"]): number {
   const envPort =
-    parsePositiveInteger(process.env.IronCliw_GATEWAY_PORT?.trim()) ??
+    parsePositiveInteger(process.env.IRONCLIW_GATEWAY_PORT?.trim()) ??
     parsePositiveInteger(process.env.CLAWDBOT_GATEWAY_PORT?.trim());
   if (envPort) {
     return envPort;
@@ -191,13 +191,13 @@ function resolveAuth(cfg: IronCliwPluginApi["config"]): ResolveAuthResult {
   const mode = cfg.gateway?.auth?.mode;
   const token =
     pickFirstDefined([
-      process.env.IronCliw_GATEWAY_TOKEN,
+      process.env.IRONCLIW_GATEWAY_TOKEN,
       process.env.CLAWDBOT_GATEWAY_TOKEN,
       cfg.gateway?.auth?.token,
     ]) ?? undefined;
   const password =
     pickFirstDefined([
-      process.env.IronCliw_GATEWAY_PASSWORD,
+      process.env.IRONCLIW_GATEWAY_PASSWORD,
       process.env.CLAWDBOT_GATEWAY_PASSWORD,
       cfg.gateway?.auth?.password,
     ]) ?? undefined;

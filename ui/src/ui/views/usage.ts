@@ -511,7 +511,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `IronCliw-usage-sessions-${exportStamp}.csv`,
+                      `ironcliw-usage-sessions-${exportStamp}.csv`,
                       buildSessionsCsv(filteredSessions),
                       "text/csv",
                     )}
@@ -523,7 +523,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `IronCliw-usage-daily-${exportStamp}.csv`,
+                      `ironcliw-usage-daily-${exportStamp}.csv`,
                       buildDailyCsv(filteredDaily),
                       "text/csv",
                     )}
@@ -535,7 +535,7 @@ export function renderUsage(props: UsageProps) {
                   class="usage-export-item"
                   @click=${() =>
                     downloadTextFile(
-                      `IronCliw-usage-${exportStamp}.json`,
+                      `ironcliw-usage-${exportStamp}.json`,
                       JSON.stringify(
                         {
                           totals: displayTotals,

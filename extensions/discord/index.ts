@@ -1,5 +1,5 @@
-import type { IronCliwPluginApi } from "IronCliw/plugin-sdk/discord";
-import { emptyPluginConfigSchema } from "IronCliw/plugin-sdk/discord";
+import type { IronCliwPluginApi } from "ironcliw/plugin-sdk/discord";
+import { emptyPluginConfigSchema } from "ironcliw/plugin-sdk/discord";
 import { discordPlugin } from "./src/channel.js";
 import { setDiscordRuntime } from "./src/runtime.js";
 import { registerDiscordSubagentHooks } from "./src/subagent-hooks.js";

@@ -85,7 +85,7 @@ describe("canvas host", () => {
   };
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-canvas-fixtures-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-canvas-fixtures-"));
   });
 
   afterAll(async () => {
@@ -96,8 +96,8 @@ describe("canvas host", () => {
     const out = injectCanvasLiveReload("<html><body>Hello</body></html>");
     expect(out).toContain(CANVAS_WS_PATH);
     expect(out).toContain("location.reload");
-    expect(out).toContain("IronCliwCanvasA2UIAction");
-    expect(out).toContain("IronCliwSendUserAction");
+    expect(out).toContain("ironcliwCanvasA2UIAction");
+    expect(out).toContain("ironcliwSendUserAction");
   });
 
   it("creates a default index.html when missing", async () => {
@@ -109,7 +109,7 @@ describe("canvas host", () => {
       const { res, html } = await fetchCanvasHtml(server.port);
       expect(res.status).toBe(200);
       expect(html).toContain("Interactive test page");
-      expect(html).toContain("IronCliwSendUserAction");
+      expect(html).toContain("ironcliwSendUserAction");
       expect(html).toContain(CANVAS_WS_PATH);
     } finally {
       await server.close();
@@ -271,35 +271,28 @@ describe("canvas host", () => {
     try {
       await fs.stat(bundlePath);
     } catch {
-      await fs.writeFile(bundlePath, "window.IronCliwA2UI = {};", "utf8");
+      await fs.writeFile(bundlePath, "window.ironcliwA2UI = {};", "utf8");
       createdBundle = true;
     }
 
-    try {
-      await fs.symlink(path.join(process.cwd(), "package.json"), linkPath);
-      createdLink = true;
-    } catch (err) {
-      if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
-        return;
-      }
-      throw err;
-    }
+    await fs.symlink(path.join(process.cwd(), "package.json"), linkPath);
+    createdLink = true;
 
     const server = await startFixtureCanvasHost(dir);
 
     try {
-      const res = await fetch(`http://127.0.0.1:${server.port}/__IronCliw__/a2ui/`);
+      const res = await fetch(`http://127.0.0.1:${server.port}/__ironcliw__/a2ui/`);
       const html = await res.text();
       expect(res.status).toBe(200);
-      expect(html).toContain("IronCliw-a2ui-host");
-      expect(html).toContain("IronCliwCanvasA2UIAction");
+      expect(html).toContain("ironcliw-a2ui-host");
+      expect(html).toContain("ironcliwCanvasA2UIAction");
 
       const bundleRes = await fetch(
-        `http://127.0.0.1:${server.port}/__IronCliw__/a2ui/a2ui.bundle.js`,
+        `http://127.0.0.1:${server.port}/__ironcliw__/a2ui/a2ui.bundle.js`,
       );
       const js = await bundleRes.text();
       expect(bundleRes.status).toBe(200);
-      expect(js).toContain("IronCliwA2UI");
+      expect(js).toContain("ironcliwA2UI");
       const traversalRes = await fetch(
         `http://127.0.0.1:${server.port}${A2UI_PATH}/%2e%2e%2fpackage.json`,
       );

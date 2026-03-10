@@ -9,10 +9,10 @@ import { buildGatewayConnectionDetails } from "./call.js";
 import { GatewayClient } from "./client.js";
 import { resolveGatewayCredentialsFromConfig } from "./credentials.js";
 
-const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IronCliw_LIVE_TEST);
-const LIVE_ANDROID_NODE = isTruthyEnvValue(process.env.IronCliw_LIVE_ANDROID_NODE);
+const LIVE = isTruthyEnvValue(process.env.LIVE) || isTruthyEnvValue(process.env.IRONCLIW_LIVE_TEST);
+const LIVE_ANDROID_NODE = isTruthyEnvValue(process.env.IRONCLIW_LIVE_ANDROID_NODE);
 const describeLive = LIVE && LIVE_ANDROID_NODE ? describe : describe.skip;
-const SKIPPED_INTERACTIVE_COMMANDS = new Set<string>(["screen.record"]);
+const SKIPPED_INTERACTIVE_COMMANDS = new Set<string>();
 
 type CommandOutcome = "success" | "error";
 
@@ -119,15 +119,6 @@ const COMMAND_PROFILES: Record<string, CommandProfile> = {
     buildParams: () => ({}),
     timeoutMs: 30_000,
     outcome: "success",
-  },
-  "screen.record": {
-    buildParams: () => ({ durationMs: 1500, fps: 8, includeAudio: false }),
-    timeoutMs: 60_000,
-    outcome: "success",
-    onSuccess: (payload) => {
-      const obj = assertObjectPayload("screen.record", payload);
-      expect(readString(obj.base64)).not.toBeNull();
-    },
   },
   "camera.list": {
     buildParams: () => ({}),
@@ -240,23 +231,17 @@ const COMMAND_PROFILES: Record<string, CommandProfile> = {
       expect(readString(obj.diagnostics)).not.toBeNull();
     },
   },
-  "app.update": {
-    buildParams: () => ({}),
-    timeoutMs: 20_000,
-    outcome: "error",
-    allowedErrorCodes: ["INVALID_REQUEST"],
-  },
 };
 
 function resolveGatewayConnection() {
   const cfg = loadConfig();
-  const urlOverride = readString(process.env.IronCliw_ANDROID_GATEWAY_URL);
+  const urlOverride = readString(process.env.IRONCLIW_ANDROID_GATEWAY_URL);
   const details = buildGatewayConnectionDetails({
     config: cfg,
     ...(urlOverride ? { url: urlOverride } : {}),
   });
-  const tokenOverride = readString(process.env.IronCliw_ANDROID_GATEWAY_TOKEN);
-  const passwordOverride = readString(process.env.IronCliw_ANDROID_GATEWAY_PASSWORD);
+  const tokenOverride = readString(process.env.IRONCLIW_ANDROID_GATEWAY_TOKEN);
+  const passwordOverride = readString(process.env.IRONCLIW_ANDROID_GATEWAY_PASSWORD);
   const creds = resolveGatewayCredentialsFromConfig({
     cfg,
     explicitAuth: {
@@ -323,22 +308,22 @@ function isAndroidNode(node: NodeListNode): boolean {
 }
 
 function selectTargetNode(nodes: NodeListNode[]): NodeListNode {
-  const nodeIdOverride = readString(process.env.IronCliw_ANDROID_NODE_ID);
+  const nodeIdOverride = readString(process.env.IRONCLIW_ANDROID_NODE_ID);
   if (nodeIdOverride) {
     const match = nodes.find((node) => node.nodeId === nodeIdOverride);
     if (!match) {
-      throw new Error(`IronCliw_ANDROID_NODE_ID not found in node.list: ${nodeIdOverride}`);
+      throw new Error(`IRONCLIW_ANDROID_NODE_ID not found in node.list: ${nodeIdOverride}`);
     }
     return match;
   }
 
-  const nodeNameOverride = readString(process.env.IronCliw_ANDROID_NODE_NAME)?.toLowerCase();
+  const nodeNameOverride = readString(process.env.IRONCLIW_ANDROID_NODE_NAME)?.toLowerCase();
   if (nodeNameOverride) {
     const match = nodes.find(
       (node) => readString(node.displayName)?.toLowerCase() === nodeNameOverride,
     );
     if (!match) {
-      throw new Error(`IronCliw_ANDROID_NODE_NAME not found in node.list: ${nodeNameOverride}`);
+      throw new Error(`IRONCLIW_ANDROID_NODE_NAME not found in node.list: ${nodeNameOverride}`);
     }
     return match;
   }
@@ -453,7 +438,7 @@ describeLive("android node capability integration (preconditioned)", () => {
         [
           `selected node is not ready (nodeId=${nodeId}, connected=${String(target.connected)}, paired=${String(target.paired)})`,
           pendingHint,
-          "precondition: open app, keep foreground, ensure pairing approved (`IronCliw nodes pending` / `IronCliw nodes approve <requestId>`)",
+          "precondition: open app, keep foreground, ensure pairing approved (`ironcliw nodes pending` / `ironcliw nodes approve <requestId>`)",
         ].join("\n"),
       );
     }

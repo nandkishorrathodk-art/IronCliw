@@ -31,9 +31,9 @@ IronCliw 提供三个更新渠道：
 Git checkout：
 
 ```bash
-IronCliw update --channel stable
-IronCliw update --channel beta
-IronCliw update --channel dev
+ironcliw update --channel stable
+ironcliw update --channel beta
+ironcliw update --channel dev
 ```
 
 - `stable`/`beta` 检出最新匹配的标签（通常是同一个标签）。
@@ -42,16 +42,16 @@ IronCliw update --channel dev
 npm/pnpm 全局安装：
 
 ```bash
-IronCliw update --channel stable
-IronCliw update --channel beta
-IronCliw update --channel dev
+ironcliw update --channel stable
+ironcliw update --channel beta
+ironcliw update --channel dev
 ```
 
 这会通过相应的 npm dist-tag（`latest`、`beta`、`dev`）进行更新。
 
 当你使用 `--channel` **显式**切换渠道时，IronCliw 还会对齐安装方式：
 
-- `dev` 确保有一个 git checkout（默认 `~/IronCliw`，可通过 `IronCliw_GIT_DIR` 覆盖），
+- `dev` 确保有一个 git checkout（默认 `~/ironcliw`，可通过 `IRONCLIW_GIT_DIR` 覆盖），
   更新它，并从该 checkout 安装全局 CLI。
 - `stable`/`beta` 使用匹配的 dist-tag 从 npm 安装。
 
@@ -59,7 +59,7 @@ IronCliw update --channel dev
 
 ## 插件和渠道
 
-当你使用 `IronCliw update` 切换渠道时，IronCliw 还会同步插件来源：
+当你使用 `ironcliw update` 切换渠道时，IronCliw 还会同步插件来源：
 
 - `dev` 优先使用 git checkout 中的内置插件。
 - `stable` 和 `beta` 恢复 npm 安装的插件包。

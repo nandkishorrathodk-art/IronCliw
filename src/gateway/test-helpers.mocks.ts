@@ -197,12 +197,12 @@ export const resetTestPluginRegistry = () => {
 };
 
 const testConfigRoot = {
-  value: path.join(os.tmpdir(), `IronCliw-gateway-test-${process.pid}-${crypto.randomUUID()}`),
+  value: path.join(os.tmpdir(), `ironcliw-gateway-test-${process.pid}-${crypto.randomUUID()}`),
 };
 
 export const setTestConfigRoot = (root: string) => {
   testConfigRoot.value = root;
-  process.env.IronCliw_CONFIG_PATH = path.join(root, "IronCliw.json");
+  process.env.IRONCLIW_CONFIG_PATH = path.join(root, "ironcliw.json");
 };
 
 export const testTailnetIPv4 = hoisted.testTailnetIPv4;
@@ -295,7 +295,7 @@ vi.mock("../config/sessions.js", async () => {
 
 vi.mock("../config/config.js", async () => {
   const actual = await vi.importActual<typeof import("../config/config.js")>("../config/config.js");
-  const resolveConfigPath = () => path.join(testConfigRoot.value, "IronCliw.json");
+  const resolveConfigPath = () => path.join(testConfigRoot.value, "ironcliw.json");
   const hashConfigRaw = (raw: string | null) =>
     crypto
       .createHash("sha256")
@@ -413,7 +413,7 @@ vi.mock("../config/config.js", async () => {
           : {};
       const defaults = {
         model: { primary: "anthropic/claude-opus-4-6" },
-        workspace: path.join(os.tmpdir(), "IronCliw-gateway-test"),
+        workspace: path.join(os.tmpdir(), "ironcliw-gateway-test"),
         ...fileDefaults,
         ...testState.agentConfig,
       };
@@ -608,7 +608,7 @@ vi.mock("../plugins/loader.js", async () => {
   };
 });
 
-process.env.IronCliw_SKIP_CHANNELS = "1";
-process.env.IronCliw_SKIP_CRON = "1";
-process.env.IronCliw_SKIP_CHANNELS = "1";
-process.env.IronCliw_SKIP_CRON = "1";
+process.env.IRONCLIW_SKIP_CHANNELS = "1";
+process.env.IRONCLIW_SKIP_CRON = "1";
+process.env.IRONCLIW_SKIP_CHANNELS = "1";
+process.env.IRONCLIW_SKIP_CRON = "1";

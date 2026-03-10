@@ -301,7 +301,7 @@ export async function fetchNpmTagVersion(params: {
   const tag = params.tag;
   try {
     const res = await fetchWithTimeout(
-      `https://registry.npmjs.org/IronCliw/${encodeURIComponent(tag)}`,
+      `https://registry.npmjs.org/ironcliw/${encodeURIComponent(tag)}`,
       {},
       Math.max(250, timeoutMs),
     );

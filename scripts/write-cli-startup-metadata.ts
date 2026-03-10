@@ -47,7 +47,7 @@ function readBundledChannelCatalogIds(): string[] {
     try {
       const raw = readFileSync(packageJsonPath, "utf8");
       const parsed = JSON.parse(raw) as {
-        IronCliw?: {
+        ironcliw?: {
           channel?: {
             id?: unknown;
             order?: unknown;
@@ -55,12 +55,12 @@ function readBundledChannelCatalogIds(): string[] {
           };
         };
       };
-      const id = parsed.IronCliw?.channel?.id;
+      const id = parsed.ironcliw?.channel?.id;
       if (typeof id !== "string" || !id.trim()) {
         continue;
       }
-      const orderRaw = parsed.IronCliw?.channel?.order;
-      const labelRaw = parsed.IronCliw?.channel?.label;
+      const orderRaw = parsed.ironcliw?.channel?.order;
+      const labelRaw = parsed.ironcliw?.channel?.label;
       entries.push({
         id: id.trim(),
         order: typeof orderRaw === "number" ? orderRaw : 999,

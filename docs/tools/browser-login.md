@@ -10,7 +10,7 @@ title: "Browser Login"
 
 ## Manual login (recommended)
 
-When a site requires login, **sign in manually** in the **host** browser profile (the IronCliw browser).
+When a site requires login, **sign in manually** in the **host** browser profile (the ironcliw browser).
 
 Do **not** give the model your credentials. Automated logins often trigger anti‑bot defenses and can lock the account.
 
@@ -18,7 +18,7 @@ Back to the main browser docs: [Browser](/tools/browser).
 
 ## Which Chrome profile is used?
 
-IronCliw controls a **dedicated Chrome profile** (named `IronCliw`, orange‑tinted UI). This is separate from your daily browser profile.
+IronCliw controls a **dedicated Chrome profile** (named `ironcliw`, orange‑tinted UI). This is separate from your daily browser profile.
 
 Two easy ways to access it:
 
@@ -26,11 +26,11 @@ Two easy ways to access it:
 2. **Open it via CLI**:
 
 ```bash
-IronCliw browser start
-IronCliw browser open https://x.com
+ironcliw browser start
+ironcliw browser open https://x.com
 ```
 
-If you have multiple profiles, pass `--browser-profile <name>` (the default is `IronCliw`).
+If you have multiple profiles, pass `--browser-profile <name>` (the default is `ironcliw`).
 
 ## X/Twitter: recommended flow
 
@@ -61,7 +61,7 @@ If the agent is sandboxed, the browser tool defaults to the sandbox. To allow ho
 Then target the host browser:
 
 ```bash
-IronCliw browser open https://x.com --browser-profile IronCliw --target host
+ironcliw browser open https://x.com --browser-profile ironcliw --target host
 ```
 
 Or disable sandboxing for the agent that posts updates.

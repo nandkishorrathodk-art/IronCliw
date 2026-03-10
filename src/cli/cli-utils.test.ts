@@ -21,8 +21,8 @@ describe("waitForever", () => {
 describe("shouldSkipRespawnForArgv", () => {
   it("skips respawn for help/version calls", () => {
     const cases = [
-      ["node", "IronCliw", "--help"],
-      ["node", "IronCliw", "-V"],
+      ["node", "ironcliw", "--help"],
+      ["node", "ironcliw", "-V"],
     ] as const;
     for (const argv of cases) {
       expect(shouldSkipRespawnForArgv([...argv]), argv.join(" ")).toBe(true);
@@ -30,7 +30,7 @@ describe("shouldSkipRespawnForArgv", () => {
   });
 
   it("keeps respawn path for normal commands", () => {
-    expect(shouldSkipRespawnForArgv(["node", "IronCliw", "status"])).toBe(false);
+    expect(shouldSkipRespawnForArgv(["node", "ironcliw", "status"])).toBe(false);
   });
 });
 
@@ -55,10 +55,10 @@ describe("dns cli", () => {
     try {
       const program = new Command();
       registerDnsCli(program);
-      await program.parseAsync(["dns", "setup", "--domain", "IronCliw.internal"], { from: "user" });
+      await program.parseAsync(["dns", "setup", "--domain", "ironcliw.internal"], { from: "user" });
       const output = log.mock.calls.map((call) => call.join(" ")).join("\\n");
       expect(output).toContain("DNS setup");
-      expect(output).toContain("IronCliw.internal");
+      expect(output).toContain("ironcliw.internal");
     } finally {
       log.mockRestore();
     }

@@ -34,7 +34,7 @@ vi.mock("./pw-session.js", () => {
 
 vi.mock("./paths.js", () => {
   return {
-    DEFAULT_UPLOAD_DIR: "/tmp/IronCliw/uploads",
+    DEFAULT_UPLOAD_DIR: "/tmp/ironcliw/uploads",
     resolveStrictExistingPathsWithinRoot,
   };
 });
@@ -64,7 +64,7 @@ describe("setInputFilesViaPlaywright", () => {
     locator = null;
     resolveStrictExistingPathsWithinRoot.mockResolvedValue({
       ok: true,
-      paths: ["/private/tmp/IronCliw/uploads/ok.txt"],
+      paths: ["/private/tmp/ironcliw/uploads/ok.txt"],
     });
   });
 
@@ -75,16 +75,16 @@ describe("setInputFilesViaPlaywright", () => {
       cdpUrl: "http://127.0.0.1:18792",
       targetId: "T1",
       inputRef: "e7",
-      paths: ["/tmp/IronCliw/uploads/ok.txt"],
+      paths: ["/tmp/ironcliw/uploads/ok.txt"],
     });
 
     expect(resolveStrictExistingPathsWithinRoot).toHaveBeenCalledWith({
-      rootDir: "/tmp/IronCliw/uploads",
-      requestedPaths: ["/tmp/IronCliw/uploads/ok.txt"],
-      scopeLabel: "uploads directory (/tmp/IronCliw/uploads)",
+      rootDir: "/tmp/ironcliw/uploads",
+      requestedPaths: ["/tmp/ironcliw/uploads/ok.txt"],
+      scopeLabel: "uploads directory (/tmp/ironcliw/uploads)",
     });
     expect(refLocator).toHaveBeenCalledWith(page, "e7");
-    expect(setInputFiles).toHaveBeenCalledWith(["/private/tmp/IronCliw/uploads/ok.txt"]);
+    expect(setInputFiles).toHaveBeenCalledWith(["/private/tmp/ironcliw/uploads/ok.txt"]);
   });
 
   it("throws and skips setInputFiles when use-time validation fails", async () => {
@@ -100,7 +100,7 @@ describe("setInputFilesViaPlaywright", () => {
         cdpUrl: "http://127.0.0.1:18792",
         targetId: "T1",
         element: "input[type=file]",
-        paths: ["/tmp/IronCliw/uploads/missing.txt"],
+        paths: ["/tmp/ironcliw/uploads/missing.txt"],
       }),
     ).rejects.toThrow("Invalid path: must stay within uploads directory");
 

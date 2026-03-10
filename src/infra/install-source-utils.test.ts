@@ -9,7 +9,7 @@ import {
 } from "./install-source-utils.js";
 
 const runCommandWithTimeoutMock = vi.fn();
-const TEMP_DIR_PREFIX = "IronCliw-install-source-utils-";
+const TEMP_DIR_PREFIX = "ironcliw-install-source-utils-";
 
 vi.mock("../process/exec.js", () => ({
   runCommandWithTimeout: (...args: unknown[]) => runCommandWithTimeoutMock(...args),
@@ -57,8 +57,8 @@ async function runPack(spec: string, cwd: string, timeoutMs = 1000) {
 }
 
 async function expectPackFallsBackToDetectedArchive(params: { stdout: string }) {
-  const cwd = await createTempDir("IronCliw-install-source-utils-");
-  const archivePath = path.join(cwd, "IronCliw-plugin-1.2.3.tgz");
+  const cwd = await createTempDir("ironcliw-install-source-utils-");
+  const archivePath = path.join(cwd, "ironcliw-plugin-1.2.3.tgz");
   await fs.writeFile(archivePath, "", "utf-8");
   runCommandWithTimeoutMock.mockResolvedValue({
     stdout: params.stdout,
@@ -69,7 +69,7 @@ async function expectPackFallsBackToDetectedArchive(params: { stdout: string }) 
   });
 
   const result = await packNpmSpecToArchive({
-    spec: "IronCliw-plugin@1.2.3",
+    spec: "ironcliw-plugin@1.2.3",
     timeoutMs: 5000,
     cwd,
   });
@@ -100,7 +100,7 @@ describe("withTempDir", () => {
     let observedDir = "";
     const markerFile = "marker.txt";
 
-    const value = await withTempDir("IronCliw-install-source-utils-", async (tmpDir) => {
+    const value = await withTempDir("ironcliw-install-source-utils-", async (tmpDir) => {
       observedDir = tmpDir;
       await fs.writeFile(path.join(tmpDir, markerFile), "ok", "utf-8");
       await expect(fs.stat(path.join(tmpDir, markerFile))).resolves.toBeDefined();
@@ -114,7 +114,7 @@ describe("withTempDir", () => {
 
 describe("resolveArchiveSourcePath", () => {
   it("returns not found error for missing archive paths", async () => {
-    const result = await resolveArchiveSourcePath("/tmp/does-not-exist-IronCliw-archive.tgz");
+    const result = await resolveArchiveSourcePath("/tmp/does-not-exist-ironcliw-archive.tgz");
     expect(result.ok).toBe(false);
     if (!result.ok) {
       expect(result.error).toContain("archive not found");
@@ -148,36 +148,36 @@ describe("resolveArchiveSourcePath", () => {
 describe("packNpmSpecToArchive", () => {
   it("packs spec and returns archive path using JSON output metadata", async () => {
     const cwd = await createFixtureDir();
-    const archivePath = path.join(cwd, "IronCliw-plugin-1.2.3.tgz");
+    const archivePath = path.join(cwd, "ironcliw-plugin-1.2.3.tgz");
     await fs.writeFile(archivePath, "", "utf-8");
     mockPackCommandResult({
       stdout: JSON.stringify([
         {
-          id: "IronCliw-plugin@1.2.3",
-          name: "IronCliw-plugin",
+          id: "ironcliw-plugin@1.2.3",
+          name: "ironcliw-plugin",
           version: "1.2.3",
-          filename: "IronCliw-plugin-1.2.3.tgz",
+          filename: "ironcliw-plugin-1.2.3.tgz",
           integrity: "sha512-test-integrity",
           shasum: "abc123",
         },
       ]),
     });
 
-    const result = await runPack("IronCliw-plugin@1.2.3", cwd);
+    const result = await runPack("ironcliw-plugin@1.2.3", cwd);
 
     expect(result).toEqual({
       ok: true,
       archivePath,
       metadata: {
-        name: "IronCliw-plugin",
+        name: "ironcliw-plugin",
         version: "1.2.3",
-        resolvedSpec: "IronCliw-plugin@1.2.3",
+        resolvedSpec: "ironcliw-plugin@1.2.3",
         integrity: "sha512-test-integrity",
         shasum: "abc123",
       },
     });
     expect(runCommandWithTimeoutMock).toHaveBeenCalledWith(
-      ["npm", "pack", "IronCliw-plugin@1.2.3", "--ignore-scripts", "--json"],
+      ["npm", "pack", "ironcliw-plugin@1.2.3", "--ignore-scripts", "--json"],
       expect.objectContaining({
         cwd,
         timeoutMs: 300_000,
@@ -187,13 +187,13 @@ describe("packNpmSpecToArchive", () => {
 
   it("falls back to parsing final stdout line when npm json output is unavailable", async () => {
     const cwd = await createFixtureDir();
-    const expectedArchivePath = path.join(cwd, "IronCliw-plugin-1.2.3.tgz");
+    const expectedArchivePath = path.join(cwd, "ironcliw-plugin-1.2.3.tgz");
     await fs.writeFile(expectedArchivePath, "", "utf-8");
     mockPackCommandResult({
-      stdout: "npm notice created package\nIronCliw-plugin-1.2.3.tgz\n",
+      stdout: "npm notice created package\nironcliw-plugin-1.2.3.tgz\n",
     });
 
-    const result = await runPack("IronCliw-plugin@1.2.3", cwd);
+    const result = await runPack("ironcliw-plugin@1.2.3", cwd);
 
     expect(result).toEqual({
       ok: true,
@@ -231,17 +231,17 @@ describe("packNpmSpecToArchive", () => {
     const cwd = await createFixtureDir();
     mockPackCommandResult({
       stdout: "",
-      stderr: "npm error code E404\nnpm error 404  '@IronCliw/whatsapp@*' is not in this registry.",
+      stderr: "npm error code E404\nnpm error 404  '@ironcliw/whatsapp@*' is not in this registry.",
       code: 1,
     });
 
-    const result = await runPack("@IronCliw/whatsapp", cwd);
+    const result = await runPack("@ironcliw/whatsapp", cwd);
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
       expect(result.error).toContain("Package not found on npm");
-      expect(result.error).toContain("@IronCliw/whatsapp");
-      expect(result.error).toContain("docs.IronCliw.ai/tools/plugin");
+      expect(result.error).toContain("@ironcliw/whatsapp");
+      expect(result.error).toContain("docs.ironcliw.ai/tools/plugin");
     }
   });
 
@@ -251,7 +251,7 @@ describe("packNpmSpecToArchive", () => {
       stdout: " \n\n",
     });
 
-    const result = await runPack("IronCliw-plugin@1.2.3", cwd, 5000);
+    const result = await runPack("ironcliw-plugin@1.2.3", cwd, 5000);
 
     expect(result).toEqual({
       ok: false,
@@ -261,24 +261,24 @@ describe("packNpmSpecToArchive", () => {
 
   it("parses scoped metadata from id-only json output even with npm notice prefix", async () => {
     const cwd = await createFixtureDir();
-    await fs.writeFile(path.join(cwd, "IronCliw-plugin-demo-2.0.0.tgz"), "", "utf-8");
+    await fs.writeFile(path.join(cwd, "ironcliw-plugin-demo-2.0.0.tgz"), "", "utf-8");
     mockPackCommandResult({
       stdout:
         "npm notice creating package\n" +
         JSON.stringify([
           {
-            id: "@IronCliw/plugin-demo@2.0.0",
-            filename: "IronCliw-plugin-demo-2.0.0.tgz",
+            id: "@ironcliw/plugin-demo@2.0.0",
+            filename: "ironcliw-plugin-demo-2.0.0.tgz",
           },
         ]),
     });
 
-    const result = await runPack("@IronCliw/plugin-demo@2.0.0", cwd);
+    const result = await runPack("@ironcliw/plugin-demo@2.0.0", cwd);
     expect(result).toEqual({
       ok: true,
-      archivePath: path.join(cwd, "IronCliw-plugin-demo-2.0.0.tgz"),
+      archivePath: path.join(cwd, "ironcliw-plugin-demo-2.0.0.tgz"),
       metadata: {
-        resolvedSpec: "@IronCliw/plugin-demo@2.0.0",
+        resolvedSpec: "@ironcliw/plugin-demo@2.0.0",
       },
     });
   });

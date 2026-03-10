@@ -1,4 +1,4 @@
-# @IronCliw/diffs
+# @ironcliw/diffs
 
 Read-only diff viewer plugin for **IronCliw** agents.
 
@@ -16,7 +16,7 @@ The tool can return:
 - `details.filePath`: a local rendered artifact path when file rendering is requested
 - `details.fileFormat`: the rendered file format (`png` or `pdf`)
 
-When the plugin is enabled, it also ships a companion skill from `skills/` that guides when to use `diffs`. This guidance is delivered through normal skill loading, not unconditional prompt-hook injection on every turn.
+When the plugin is enabled, it also ships a companion skill from `skills/` and prepends stable tool-usage guidance into system-prompt space via `before_prompt_build`. The hook uses `prependSystemContext`, so the guidance stays out of user-prompt space while still being available every turn.
 
 This means an agent can:
 
@@ -69,7 +69,7 @@ Input safety limits:
 
 ## Plugin Defaults
 
-Set plugin-wide defaults in `~/.IronCliw/IronCliw.json`:
+Set plugin-wide defaults in `~/.ironcliw/ironcliw.json`:
 
 ```json5
 {
@@ -173,7 +173,7 @@ diff --git a/src/example.ts b/src/example.ts
 ## Notes
 
 - The viewer is hosted locally through the gateway under `/plugins/diffs/...`.
-- Artifacts are ephemeral and stored in the plugin temp subfolder (`$TMPDIR/IronCliw-diffs`).
+- Artifacts are ephemeral and stored in the plugin temp subfolder (`$TMPDIR/ironcliw-diffs`).
 - Default viewer URLs use loopback (`127.0.0.1`) unless you set `baseUrl` (or use `gateway.bind=custom` + `gateway.customBindHost`).
 - Remote viewer misses are throttled to reduce token-guess abuse.
 - PNG or PDF rendering requires a Chromium-compatible browser. Set `browser.executablePath` if auto-detection is not enough.

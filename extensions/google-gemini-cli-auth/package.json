@@ -1,10 +1,10 @@
 {
-  "name": "@IronCliw/google-gemini-cli-auth",
-  "version": "2026.3.2",
+  "name": "@ironcliw/google-gemini-cli-auth",
+  "version": "2026.3.9",
   "private": true,
   "description": "IronCliw Gemini CLI OAuth provider plugin",
   "type": "module",
-  "IronCliw": {
+  "ironcliw": {
     "extensions": [
       "./index.ts"
     ]

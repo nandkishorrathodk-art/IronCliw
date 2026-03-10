@@ -43,7 +43,7 @@ export function clearPluginDiscoveryCache(): void {
 }
 
 function resolveDiscoveryCacheMs(env: NodeJS.ProcessEnv): number {
-  const raw = env.IronCliw_PLUGIN_DISCOVERY_CACHE_MS?.trim();
+  const raw = env.IRONCLIW_PLUGIN_DISCOVERY_CACHE_MS?.trim();
   if (raw === "" || raw === "0") {
     return 0;
   }
@@ -58,7 +58,7 @@ function resolveDiscoveryCacheMs(env: NodeJS.ProcessEnv): number {
 }
 
 function shouldUseDiscoveryCache(env: NodeJS.ProcessEnv): boolean {
-  const disabled = env.IronCliw_DISABLE_PLUGIN_DISCOVERY_CACHE?.trim();
+  const disabled = env.IRONCLIW_DISABLE_PLUGIN_DISCOVERY_CACHE?.trim();
   if (disabled) {
     return false;
   }
@@ -308,7 +308,7 @@ function deriveIdHint(params: {
   }
 
   // Prefer the unscoped name so config keys stay stable even when the npm
-  // package is scoped (example: @IronCliw/voice-call -> voice-call).
+  // package is scoped (example: @ironcliw/voice-call -> voice-call).
   const unscoped = rawPackageName.includes("/")
     ? (rawPackageName.split("/").pop() ?? rawPackageName)
     : rawPackageName;
@@ -662,7 +662,7 @@ export function discoverIronCliwPlugins(params: {
   }
   if (workspaceDir) {
     const workspaceRoot = resolveUserPath(workspaceDir);
-    const workspaceExtDirs = [path.join(workspaceRoot, ".IronCliw", "extensions")];
+    const workspaceExtDirs = [path.join(workspaceRoot, ".ironcliw", "extensions")];
     for (const dir of workspaceExtDirs) {
       discoverInDirectory({
         dir,

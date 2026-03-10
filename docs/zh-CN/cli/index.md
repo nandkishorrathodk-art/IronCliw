@@ -2,7 +2,7 @@
 read_when:
   - 添加或修改 CLI 命令或选项
   - 为新命令界面编写文档
-summary: IronCliw `IronCliw` 命令、子命令和选项的 CLI 参考
+summary: IronCliw `ironcliw` 命令、子命令和选项的 CLI 参考
 title: CLI 参考
 x-i18n:
   generated_at: "2026-02-03T07:47:54Z"
@@ -61,10 +61,10 @@ x-i18n:
 
 ## 全局标志
 
-- `--dev`：将状态隔离到 `~/.IronCliw-dev` 下并调整默认端口。
-- `--profile <name>`：将状态隔离到 `~/.IronCliw-<name>` 下。
+- `--dev`：将状态隔离到 `~/.ironcliw-dev` 下并调整默认端口。
+- `--profile <name>`：将状态隔离到 `~/.ironcliw-<name>` 下。
 - `--no-color`：禁用 ANSI 颜色。
-- `--update`：`IronCliw update` 的简写（仅限源码安装）。
+- `--update`：`ironcliw update` 的简写（仅限源码安装）。
 - `-V`、`--version`、`-v`：打印版本并退出。
 
 ## 输出样式
@@ -93,7 +93,7 @@ IronCliw 在 CLI 输出中使用龙虾调色板。
 ## 命令树
 
 ```
-IronCliw [--dev] [--profile <name>] <command>
+ironcliw [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -244,23 +244,23 @@ IronCliw [--dev] [--profile <name>] <command>
   tui
 ```
 
-注意：插件可以添加额外的顶级命令（例如 `IronCliw voicecall`）。
+注意：插件可以添加额外的顶级命令（例如 `ironcliw voicecall`）。
 
 ## 安全
 
-- `IronCliw security audit` — 审计配置 + 本地状态中常见的安全隐患。
-- `IronCliw security audit --deep` — 尽力进行实时 Gateway 网关探测。
-- `IronCliw security audit --fix` — 收紧安全默认值并 chmod 状态/配置。
+- `ironcliw security audit` — 审计配置 + 本地状态中常见的安全隐患。
+- `ironcliw security audit --deep` — 尽力进行实时 Gateway 网关探测。
+- `ironcliw security audit --fix` — 收紧安全默认值并 chmod 状态/配置。
 
 ## 插件
 
 管理扩展及其配置：
 
-- `IronCliw plugins list` — 发现插件（使用 `--json` 获取机器可读输出）。
-- `IronCliw plugins info <id>` — 显示插件详情。
-- `IronCliw plugins install <path|.tgz|npm-spec>` — 安装插件（或将插件路径添加到 `plugins.load.paths`）。
-- `IronCliw plugins enable <id>` / `disable <id>` — 切换 `plugins.entries.<id>.enabled`。
-- `IronCliw plugins doctor` — 报告插件加载错误。
+- `ironcliw plugins list` — 发现插件（使用 `--json` 获取机器可读输出）。
+- `ironcliw plugins info <id>` — 显示插件详情。
+- `ironcliw plugins install <path|.tgz|npm-spec>` — 安装插件（或将插件路径添加到 `plugins.load.paths`）。
+- `ironcliw plugins enable <id>` / `disable <id>` — 切换 `plugins.entries.<id>.enabled`。
+- `ironcliw plugins doctor` — 报告插件加载错误。
 
 大多数插件更改需要重启 Gateway 网关。参见 [/plugin](/tools/plugin)。
 
@@ -268,9 +268,9 @@ IronCliw [--dev] [--profile <name>] <command>
 
 对 `MEMORY.md` + `memory/*.md` 进行向量搜索：
 
-- `IronCliw memory status` — 显示索引统计。
-- `IronCliw memory index` — 重新索引记忆文件。
-- `IronCliw memory search "<query>"` — 对记忆进行语义搜索。
+- `ironcliw memory status` — 显示索引统计。
+- `ironcliw memory index` — 重新索引记忆文件。
+- `ironcliw memory search "<query>"` — 对记忆进行语义搜索。
 
 ## 聊天斜杠命令
 
@@ -290,7 +290,7 @@ IronCliw [--dev] [--profile <name>] <command>
 
 选项：
 
-- `--workspace <dir>`：智能体工作区路径（默认 `~/.IronCliw/workspace`）。
+- `--workspace <dir>`：智能体工作区路径（默认 `~/.ironcliw/workspace`）。
 - `--wizard`：运行新手引导向导。
 - `--non-interactive`：无提示运行向导。
 - `--mode <local|remote>`：向导模式。
@@ -350,7 +350,7 @@ IronCliw [--dev] [--profile <name>] <command>
 
 ### `config`
 
-非交互式配置辅助工具（get/set/unset）。不带子命令运行 `IronCliw config` 会启动向导。
+非交互式配置辅助工具（get/set/unset）。不带子命令运行 `ironcliw config` 会启动向导。
 
 子命令：
 
@@ -378,8 +378,8 @@ IronCliw [--dev] [--profile <name>] <command>
 子命令：
 
 - `channels list`：显示已配置的渠道和认证配置文件。
-- `channels status`：检查 Gateway 网关可达性和渠道健康状况（`--probe` 运行额外检查；使用 `IronCliw health` 或 `IronCliw status --deep` 进行 Gateway 网关健康探测）。
-- 提示：`channels status` 在检测到常见配置错误时会打印带有建议修复的警告（然后指向 `IronCliw doctor`）。
+- `channels status`：检查 Gateway 网关可达性和渠道健康状况（`--probe` 运行额外检查；使用 `ironcliw health` 或 `ironcliw status --deep` 进行 Gateway 网关健康探测）。
+- 提示：`channels status` 在检测到常见配置错误时会打印带有建议修复的警告（然后指向 `ironcliw doctor`）。
 - `channels logs`：显示 Gateway 网关日志文件中最近的渠道日志。
 - `channels add`：不传标志时使用向导式设置；标志切换到非交互模式。
 - `channels remove`：默认禁用；传 `--delete` 可无提示删除配置条目。
@@ -419,11 +419,11 @@ IronCliw [--dev] [--profile <name>] <command>
 示例：
 
 ```bash
-IronCliw channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-IronCliw channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-IronCliw channels remove --channel discord --account work --delete
-IronCliw channels status --probe
-IronCliw status --deep
+ironcliw channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+ironcliw channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+ironcliw channels remove --channel discord --account work --delete
+ironcliw channels status --probe
+ironcliw status --deep
 ```
 
 ### `skills`
@@ -492,8 +492,8 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 
 示例：
 
-- `IronCliw message send --target +15555550123 --message "Hi"`
-- `IronCliw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `ironcliw message send --target +15555550123 --message "Hi"`
+- `ironcliw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -583,7 +583,7 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 显示位置：
 
 - `/status`（可用时添加简短的提供商用量行）
-- `IronCliw status --usage`（打印完整的提供商明细）
+- `ironcliw status --usage`（打印完整的提供商明细）
 - macOS 菜单栏（上下文下的用量部分）
 
 说明：
@@ -711,11 +711,11 @@ Gmail Pub/Sub 钩子设置 + 运行器。参见 [/automation/gmail-pubsub](/auto
 示例：
 
 ```bash
-IronCliw logs --follow
-IronCliw logs --limit 200
-IronCliw logs --plain
-IronCliw logs --json
-IronCliw logs --no-color
+ironcliw logs --follow
+ironcliw logs --limit 200
+ironcliw logs --plain
+ironcliw logs --json
+ironcliw logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -748,13 +748,13 @@ Gateway 网关 CLI 辅助工具（RPC 子命令使用 `--url`、`--token`、`--p
 
 ```bash
 claude setup-token
-IronCliw models auth setup-token --provider anthropic
-IronCliw models status
+ironcliw models auth setup-token --provider anthropic
+ironcliw models status
 ```
 
 ### `models`（根命令）
 
-`IronCliw models` 是 `models status` 的别名。
+`ironcliw models` 是 `models status` 的别名。
 
 根选项：
 
@@ -908,7 +908,7 @@ IronCliw models status
 
 ## 节点主机
 
-`node` 运行**无头节点主机**或将其作为后台服务管理。参见 [`IronCliw node`](/cli/node)。
+`node` 运行**无头节点主机**或将其作为后台服务管理。参见 [`ironcliw node`](/cli/node)。
 
 子命令：
 
@@ -963,7 +963,7 @@ IronCliw models status
 
 ## 浏览器
 
-浏览器控制 CLI（专用 Chrome/Brave/Edge/Chromium）。参见 [`IronCliw browser`](/cli/browser) 和[浏览器工具](/tools/browser)。
+浏览器控制 CLI（专用 Chrome/Brave/Edge/Chromium）。参见 [`ironcliw browser`](/cli/browser) 和[浏览器工具](/tools/browser)。
 
 通用选项：
 

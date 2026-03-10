@@ -8,7 +8,7 @@ import { expectReadWriteEditTools } from "./test-helpers/pi-tools-fs-helpers.js"
 
 describe("createIronCliwCodingTools", () => {
   it("accepts Claude Code parameter aliases for read/write/edit", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-alias-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-alias-"));
     try {
       const tools = createIronCliwCodingTools({ workspaceDir: tmpDir });
       const { readTool, writeTool, editTool } = expectReadWriteEditTools(tools);
@@ -40,7 +40,7 @@ describe("createIronCliwCodingTools", () => {
   });
 
   it("coerces structured content blocks for write", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-structured-write-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-structured-write-"));
     try {
       const tools = createIronCliwCodingTools({ workspaceDir: tmpDir });
       const writeTool = tools.find((tool) => tool.name === "write");
@@ -64,7 +64,7 @@ describe("createIronCliwCodingTools", () => {
   });
 
   it("coerces structured old/new text blocks for edit", async () => {
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-structured-edit-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-structured-edit-"));
     try {
       const filePath = path.join(tmpDir, "structured-edit.js");
       await fs.writeFile(filePath, "const value = 'old';\n", "utf8");

@@ -25,11 +25,11 @@ type AuthSyncFixture = {
 };
 
 async function withAuthSyncFixture(run: (fixture: AuthSyncFixture) => Promise<void>) {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-models-list-auth-sync-"));
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-models-list-auth-sync-"));
   try {
     const stateDir = path.join(root, "state");
     const agentDir = path.join(stateDir, "agents", "main", "agent");
-    const configPath = path.join(stateDir, "IronCliw.json");
+    const configPath = path.join(stateDir, "ironcliw.json");
     const authPath = path.join(agentDir, "auth.json");
 
     await fs.mkdir(agentDir, { recursive: true });
@@ -37,10 +37,10 @@ async function withAuthSyncFixture(run: (fixture: AuthSyncFixture) => Promise<vo
 
     await withEnvAsync(
       {
-        IronCliw_STATE_DIR: stateDir,
-        IronCliw_AGENT_DIR: agentDir,
+        IRONCLIW_STATE_DIR: stateDir,
+        IRONCLIW_AGENT_DIR: agentDir,
         PI_CODING_AGENT_DIR: agentDir,
-        IronCliw_CONFIG_PATH: configPath,
+        IRONCLIW_CONFIG_PATH: configPath,
         OPENROUTER_API_KEY: undefined,
       },
       async () => {

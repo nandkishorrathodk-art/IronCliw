@@ -4,19 +4,12 @@ description: Summarize or extract text/transcripts from URLs, podcasts, and loca
 homepage: https://summarize.sh
 metadata:
   {
-    "IronCliw":
+    "ironcliw":
       {
         "emoji": "🧾",
         "requires": { "bins": ["summarize"] },
         "install":
           [
-            {
-              "id": "node",
-              "kind": "node",
-              "package": "@steipete/summarize",
-              "bins": ["summarize"],
-              "label": "Install summarize (npm)",
-            },
             {
               "id": "brew",
               "kind": "brew",

@@ -4,8 +4,8 @@ import type { SandboxDockerConfig } from "./types.js";
 
 function createDockerConfig(overrides?: Partial<SandboxDockerConfig>): SandboxDockerConfig {
   return {
-    image: "IronCliw-sandbox:test",
-    containerPrefix: "IronCliw-sbx-",
+    image: "ironcliw-sandbox:test",
+    containerPrefix: "ironcliw-sbx-",
     workdir: "/workspace",
     readOnlyRoot: true,
     tmpfs: ["/tmp", "/var/tmp", "/run"],

@@ -21,13 +21,13 @@ Tlon ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-IronCliw plugins install @IronCliw/tlon
+ironcliw plugins install @ironcliw/tlon
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-IronCliw plugins install ./extensions/tlon
+ironcliw plugins install ./extensions/tlon
 ```
 
 Details: [Plugins](/tools/plugin)
@@ -197,7 +197,7 @@ Auto-accept group invites:
 
 ## Delivery targets (CLI/cron)
 
-Use these with `IronCliw message send` or cron delivery:
+Use these with `ironcliw message send` or cron delivery:
 
 - DM: `~sampel-palnet` or `dm/~sampel-palnet`
 - Group: `chat/~host-ship/channel` or `group:~host-ship/channel`
@@ -234,10 +234,10 @@ The skill is automatically available when the plugin is installed.
 Run this ladder first:
 
 ```bash
-IronCliw status
-IronCliw gateway status
-IronCliw logs --follow
-IronCliw doctor
+ironcliw status
+ironcliw gateway status
+ironcliw logs --follow
+ironcliw doctor
 ```
 
 Common failures:

@@ -21,12 +21,12 @@ IronCliw 需要 Node 22 或更新版本。
 <Tabs>
   <Tab title="npm">
     ```bash
-    npm install -g IronCliw@latest
+    npm install -g ironcliw@latest
     ```
   </Tab>
   <Tab title="pnpm">
     ```bash
-    pnpm add -g IronCliw@latest
+    pnpm add -g ironcliw@latest
     ```
   </Tab>
 </Tabs>
@@ -36,47 +36,47 @@ IronCliw 需要 Node 22 或更新版本。
 <Steps>
   <Step title="新手引导并安装服务">
     ```bash
-    IronCliw onboard --install-daemon
+    ironcliw onboard --install-daemon
     ```
   </Step>
   <Step title="配对 WhatsApp">
     ```bash
-    IronCliw channels login
+    ironcliw channels login
     ```
   </Step>
   <Step title="启动 Gateway 网关">
     ```bash
-    IronCliw gateway --port 18789
+    ironcliw gateway --port 18789
     ```
   </Step>
 </Steps>
 
-完成新手引导后，Gateway 网关将通过用户服务运行。你也可以使用 `IronCliw gateway` 手动启动。
+完成新手引导后，Gateway 网关将通过用户服务运行。你也可以使用 `ironcliw gateway` 手动启动。
 
 <Info>
 之后在 npm 安装和 git 安装之间切换非常简单。安装另一种方式后，运行
-`IronCliw doctor` 即可更新 Gateway 网关服务入口点。
+`ironcliw doctor` 即可更新 Gateway 网关服务入口点。
 </Info>
 
 ## 从源码安装（开发）
 
 ```bash
-git clone https://github.com/IronCliw/IronCliw.git
-cd IronCliw
+git clone https://github.com/ironcliw/ironcliw.git
+cd ironcliw
 pnpm install
 pnpm ui:build # 首次运行时会自动安装 UI 依赖
 pnpm build
-IronCliw onboard --install-daemon
+ironcliw onboard --install-daemon
 ```
 
-如果你还没有全局安装，可以在仓库目录中通过 `pnpm IronCliw ...` 运行新手引导。
+如果你还没有全局安装，可以在仓库目录中通过 `pnpm ironcliw ...` 运行新手引导。
 
 ## 多实例快速开始（可选）
 
 ```bash
-IronCliw_CONFIG_PATH=~/.IronCliw/a.json \
-IronCliw_STATE_DIR=~/.IronCliw-a \
-IronCliw gateway --port 19001
+IRONCLIW_CONFIG_PATH=~/.ironcliw/a.json \
+IRONCLIW_STATE_DIR=~/.ironcliw-a \
+ironcliw gateway --port 19001
 ```
 
 ## 发送测试消息
@@ -84,5 +84,5 @@ IronCliw gateway --port 19001
 需要一个正在运行的 Gateway 网关。
 
 ```bash
-IronCliw message send --target +15555550123 --message "Hello from IronCliw"
+ironcliw message send --target +15555550123 --message "Hello from IronCliw"
 ```

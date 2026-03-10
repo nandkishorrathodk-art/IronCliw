@@ -3,15 +3,15 @@ import {
   emptyPluginConfigSchema,
   type IronCliwPluginApi,
   type ProviderAuthContext,
-} from "IronCliw/plugin-sdk/google-gemini-cli-auth";
+} from "ironcliw/plugin-sdk/google-gemini-cli-auth";
 import { loginGeminiCliOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "google-gemini-cli";
 const PROVIDER_LABEL = "Gemini CLI OAuth";
-const DEFAULT_MODEL = "google-gemini-cli/gemini-3-pro-preview";
+const DEFAULT_MODEL = "google-gemini-cli/gemini-3.1-pro-preview";
 const ENV_VARS = [
-  "IronCliw_GEMINI_OAUTH_CLIENT_ID",
-  "IronCliw_GEMINI_OAUTH_CLIENT_SECRET",
+  "IRONCLIW_GEMINI_OAUTH_CLIENT_ID",
+  "IRONCLIW_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_ID",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];

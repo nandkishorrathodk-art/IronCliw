@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, vi } from "vitest";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
+import type { LegacyStateDetection } from "./doctor-state-migrations.js";
 
 let originalIsTTY: boolean | undefined;
 let originalStateDir: string | undefined;
@@ -41,7 +42,7 @@ function createCommandWithTimeoutResult() {
 
 function createLegacyConfigSnapshot() {
   return {
-    path: "/tmp/IronCliw.json",
+    path: "/tmp/ironcliw.json",
     exists: false,
     raw: null,
     parsed: {},
@@ -113,7 +114,7 @@ export const autoMigrateLegacyStateDir = vi.fn().mockResolvedValue({
 function createLegacyStateMigrationDetectionResult(params?: {
   hasLegacySessions?: boolean;
   preview?: string[];
-}) {
+}): LegacyStateDetection {
   return {
     targetAgentId: "main",
     targetMainKey: "main",
@@ -139,9 +140,8 @@ function createLegacyStateMigrationDetectionResult(params?: {
       hasLegacy: false,
     },
     pairingAllowFrom: {
-      legacyTelegramPath: "/tmp/oauth/telegram-allowFrom.json",
-      targetTelegramPath: "/tmp/oauth/telegram-default-allowFrom.json",
       hasLegacyTelegram: false,
+      copyPlans: [],
     },
     preview: params?.preview ?? [],
   };
@@ -157,7 +157,7 @@ export const runLegacyStateMigrations = vi.fn().mockResolvedValue({
 }) as unknown as MockFn;
 
 const DEFAULT_CONFIG_SNAPSHOT = {
-  path: "/tmp/IronCliw.json",
+  path: "/tmp/ironcliw.json",
   exists: true,
   raw: "{}",
   parsed: {},
@@ -187,7 +187,7 @@ vi.mock("../config/config.js", async (importOriginal) => {
   const actual = await importOriginal<typeof import("../config/config.js")>();
   return {
     ...actual,
-    CONFIG_PATH: "/tmp/IronCliw.json",
+    CONFIG_PATH: "/tmp/ironcliw.json",
     createConfigIO,
     readConfigFileSnapshot,
     writeConfigFile,
@@ -222,7 +222,7 @@ vi.mock("../process/exec.js", () => ({
   runCommandWithTimeout,
 }));
 
-vi.mock("../infra/IronCliw-root.js", () => ({
+vi.mock("../infra/ironcliw-root.js", () => ({
   resolveIronCliwPackageRoot,
 }));
 
@@ -396,11 +396,11 @@ beforeEach(() => {
 
   originalIsTTY = process.stdin.isTTY;
   setStdinTty(true);
-  originalStateDir = process.env.IronCliw_STATE_DIR;
-  originalUpdateInProgress = process.env.IronCliw_UPDATE_IN_PROGRESS;
-  process.env.IronCliw_UPDATE_IN_PROGRESS = "1";
-  tempStateDir = fs.mkdtempSync(path.join(os.tmpdir(), "IronCliw-doctor-state-"));
-  process.env.IronCliw_STATE_DIR = tempStateDir;
+  originalStateDir = process.env.IRONCLIW_STATE_DIR;
+  originalUpdateInProgress = process.env.IRONCLIW_UPDATE_IN_PROGRESS;
+  process.env.IRONCLIW_UPDATE_IN_PROGRESS = "1";
+  tempStateDir = fs.mkdtempSync(path.join(os.tmpdir(), "ironcliw-doctor-state-"));
+  process.env.IRONCLIW_STATE_DIR = tempStateDir;
   fs.mkdirSync(path.join(tempStateDir, "agents", "main", "sessions"), {
     recursive: true,
   });
@@ -410,14 +410,14 @@ beforeEach(() => {
 afterEach(() => {
   setStdinTty(originalIsTTY);
   if (originalStateDir === undefined) {
-    delete process.env.IronCliw_STATE_DIR;
+    delete process.env.IRONCLIW_STATE_DIR;
   } else {
-    process.env.IronCliw_STATE_DIR = originalStateDir;
+    process.env.IRONCLIW_STATE_DIR = originalStateDir;
   }
   if (originalUpdateInProgress === undefined) {
-    delete process.env.IronCliw_UPDATE_IN_PROGRESS;
+    delete process.env.IRONCLIW_UPDATE_IN_PROGRESS;
   } else {
-    process.env.IronCliw_UPDATE_IN_PROGRESS = originalUpdateInProgress;
+    process.env.IRONCLIW_UPDATE_IN_PROGRESS = originalUpdateInProgress;
   }
   if (tempStateDir) {
     fs.rmSync(tempStateDir, { recursive: true, force: true });

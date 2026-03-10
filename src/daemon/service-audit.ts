@@ -14,6 +14,7 @@ export type GatewayServiceCommand = {
   programArguments: string[];
   workingDirectory?: string;
   environment?: Record<string, string>;
+  environmentValueSources?: Record<string, "inline" | "file">;
   sourcePath?: string;
 } | null;
 
@@ -35,6 +36,7 @@ export const SERVICE_AUDIT_CODES = {
   gatewayPathMissing: "gateway-path-missing",
   gatewayPathMissingDirs: "gateway-path-missing-dirs",
   gatewayPathNonMinimal: "gateway-path-nonminimal",
+  gatewayTokenEmbedded: "gateway-token-embedded",
   gatewayTokenMismatch: "gateway-token-mismatch",
   gatewayRuntimeBun: "gateway-runtime-bun",
   gatewayRuntimeNodeVersionManager: "gateway-runtime-node-version-manager",
@@ -208,21 +210,37 @@ function auditGatewayToken(
   issues: ServiceConfigIssue[],
   expectedGatewayToken?: string,
 ) {
-  const expectedToken = expectedGatewayToken?.trim();
-  if (!expectedToken) {
+  const serviceToken = readEmbeddedGatewayToken(command);
+  if (!serviceToken) {
     return;
   }
-  const serviceToken = command?.environment?.IronCliw_GATEWAY_TOKEN?.trim();
-  if (serviceToken === expectedToken) {
+  issues.push({
+    code: SERVICE_AUDIT_CODES.gatewayTokenEmbedded,
+    message: "Gateway service embeds IRONCLIW_GATEWAY_TOKEN and should be reinstalled.",
+    detail: "Run `ironcliw gateway install --force` to remove embedded service token.",
+    level: "recommended",
+  });
+  const expectedToken = expectedGatewayToken?.trim();
+  if (!expectedToken || serviceToken === expectedToken) {
     return;
   }
   issues.push({
     code: SERVICE_AUDIT_CODES.gatewayTokenMismatch,
     message:
-      "Gateway service IronCliw_GATEWAY_TOKEN does not match gateway.auth.token in IronCliw.json",
-    detail: serviceToken ? "service token is stale" : "service token is missing",
+      "Gateway service IRONCLIW_GATEWAY_TOKEN does not match gateway.auth.token in ironcliw.json",
+    detail: "service token is stale",
     level: "recommended",
   });
+}
+
+export function readEmbeddedGatewayToken(command: GatewayServiceCommand): string | undefined {
+  if (!command) {
+    return undefined;
+  }
+  if (command.environmentValueSources?.IRONCLIW_GATEWAY_TOKEN === "file") {
+    return undefined;
+  }
+  return command.environment?.IRONCLIW_GATEWAY_TOKEN?.trim() || undefined;
 }
 
 function getPathModule(platform: NodeJS.Platform) {
@@ -360,20 +378,20 @@ export function checkTokenDrift(params: {
   serviceToken: string | undefined;
   configToken: string | undefined;
 }): ServiceConfigIssue | null {
-  const { serviceToken, configToken } = params;
+  const serviceToken = params.serviceToken?.trim() || undefined;
+  const configToken = params.configToken?.trim() || undefined;
 
-  // No drift if both are undefined/empty
-  if (!serviceToken && !configToken) {
+  // Tokenless service units are canonical; no drift to report.
+  if (!serviceToken) {
     return null;
   }
 
-  // Drift: config has token, service has different or no token
   if (configToken && serviceToken !== configToken) {
     return {
       code: SERVICE_AUDIT_CODES.gatewayTokenDrift,
       message:
         "Config token differs from service token. The daemon will use the old token after restart.",
-      detail: "Run `IronCliw gateway install --force` to sync the token.",
+      detail: "Run `ironcliw gateway install --force` to sync the token.",
       level: "recommended",
     };
   }

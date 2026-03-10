@@ -52,30 +52,30 @@ Or from within a running IronCliw session, trigger it via:
 
 ## Configuration Options
 
-| Option | Default | Description |
-|---|---|---|
-| `STT Provider` | auto | deepgram → openai-whisper → windows-sapi |
-| `TTS Provider` | auto | elevenlabs → openai-tts → edge-tts |
-| `Gateway URL` | `ws://127.0.0.1:18789` | IronCliw gateway endpoint |
-| `Max Recording` | 30 seconds | Maximum mic recording duration |
-| `Voice (ElevenLabs)` | Rachel | Warm, natural, professional voice |
-| `Voice (OpenAI)` | nova | Clear, warm tone |
-| `Voice (Edge TTS)` | en-US-JennyNeural | Natural Windows voice |
+| Option               | Default                | Description                              |
+| -------------------- | ---------------------- | ---------------------------------------- |
+| `STT Provider`       | auto                   | deepgram → openai-whisper → windows-sapi |
+| `TTS Provider`       | auto                   | elevenlabs → openai-tts → edge-tts       |
+| `Gateway URL`        | `ws://127.0.0.1:18789` | IronCliw gateway endpoint                |
+| `Max Recording`      | 30 seconds             | Maximum mic recording duration           |
+| `Voice (ElevenLabs)` | Rachel                 | Warm, natural, professional voice        |
+| `Voice (OpenAI)`     | nova                   | Clear, warm tone                         |
+| `Voice (Edge TTS)`   | en-US-JennyNeural      | Natural Windows voice                    |
 
 ## Voice Quality Comparison
 
-| Provider | Quality | Latency | Cost |
-|---|---|---|---|
-| ElevenLabs Turbo v2.5 | ⭐⭐⭐⭐⭐ | ~300ms | Paid |
-| OpenAI gpt-4o-mini-tts | ⭐⭐⭐⭐ | ~400ms | Paid |
-| Edge TTS (JennyNeural) | ⭐⭐⭐ | ~800ms | Free |
-| Windows SAPI | ⭐⭐ | ~200ms | Free, offline |
+| Provider               | Quality    | Latency | Cost          |
+| ---------------------- | ---------- | ------- | ------------- |
+| ElevenLabs Turbo v2.5  | ⭐⭐⭐⭐⭐ | ~300ms  | Paid          |
+| OpenAI gpt-4o-mini-tts | ⭐⭐⭐⭐   | ~400ms  | Paid          |
+| Edge TTS (JennyNeural) | ⭐⭐⭐     | ~800ms  | Free          |
+| Windows SAPI           | ⭐⭐       | ~200ms  | Free, offline |
 
 ## Recommended ElevenLabs Voices
 
-| Name | Style | Voice ID |
-|---|---|---|
-| Rachel | Warm, Professional | `21m00Tcm4TlvDq8ikWAM` |
-| Adam | Deep, Authoritative | `pNInz6obpgDQGcFmaJgB` |
-| Josh | Natural, Casual | `TxGEqnHWrfWFTfGW9XjX` |
-| Elli | Soft, Friendly | `MF3mGyEYCl7XYWbV9V6O` |
+| Name   | Style               | Voice ID               |
+| ------ | ------------------- | ---------------------- |
+| Rachel | Warm, Professional  | `21m00Tcm4TlvDq8ikWAM` |
+| Adam   | Deep, Authoritative | `pNInz6obpgDQGcFmaJgB` |
+| Josh   | Natural, Casual     | `TxGEqnHWrfWFTfGW9XjX` |
+| Elli   | Soft, Friendly      | `MF3mGyEYCl7XYWbV9V6O` |

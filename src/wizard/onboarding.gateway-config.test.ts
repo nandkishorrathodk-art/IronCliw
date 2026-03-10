@@ -28,9 +28,13 @@ describe("configureGatewayForOnboarding", () => {
   function createPrompter(params: { selectQueue: string[]; textQueue: Array<string | undefined> }) {
     const selectQueue = [...params.selectQueue];
     const textQueue = [...params.textQueue];
-    const select = vi.fn(
-      async (_params: WizardSelectParams<unknown>) => selectQueue.shift() as unknown,
-    ) as unknown as WizardPrompter["select"];
+    const select = vi.fn(async (params: WizardSelectParams<unknown>) => {
+      const next = selectQueue.shift();
+      if (next !== undefined) {
+        return next;
+      }
+      return params.initialValue ?? params.options[0]?.value;
+    }) as unknown as WizardPrompter["select"];
 
     return buildWizardPrompter({
       select,
@@ -93,9 +97,9 @@ describe("configureGatewayForOnboarding", () => {
     expect(result.nextConfig.gateway?.nodes?.denyCommands).toEqual(DEFAULT_DANGEROUS_NODE_COMMANDS);
   });
 
-  it("prefers IronCliw_GATEWAY_TOKEN during quickstart token setup", async () => {
-    const prevToken = process.env.IronCliw_GATEWAY_TOKEN;
-    process.env.IronCliw_GATEWAY_TOKEN = "token-from-env";
+  it("prefers IRONCLIW_GATEWAY_TOKEN during quickstart token setup", async () => {
+    const prevToken = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "token-from-env";
     mocks.randomToken.mockReturnValue("generated-token");
     mocks.randomToken.mockClear();
 
@@ -108,9 +112,9 @@ describe("configureGatewayForOnboarding", () => {
       expect(result.settings.gatewayToken).toBe("token-from-env");
     } finally {
       if (prevToken === undefined) {
-        delete process.env.IronCliw_GATEWAY_TOKEN;
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
       } else {
-        process.env.IronCliw_GATEWAY_TOKEN = prevToken;
+        process.env.IRONCLIW_GATEWAY_TOKEN = prevToken;
       }
     }
   });
@@ -140,12 +144,12 @@ describe("configureGatewayForOnboarding", () => {
   });
 
   it("honors secretInputMode=ref for gateway password prompts", async () => {
-    const previous = process.env.IronCliw_GATEWAY_PASSWORD;
-    process.env.IronCliw_GATEWAY_PASSWORD = "gateway-secret";
+    const previous = process.env.IRONCLIW_GATEWAY_PASSWORD;
+    process.env.IRONCLIW_GATEWAY_PASSWORD = "gateway-secret"; // pragma: allowlist secret
     try {
       const prompter = createPrompter({
         selectQueue: ["loopback", "password", "off", "env"],
-        textQueue: ["18789", "IronCliw_GATEWAY_PASSWORD"],
+        textQueue: ["18789", "IRONCLIW_GATEWAY_PASSWORD"],
       });
       const runtime = createRuntime();
 
@@ -155,7 +159,7 @@ describe("configureGatewayForOnboarding", () => {
         nextConfig: {},
         localPort: 18789,
         quickstartGateway: createQuickstartGateway("password"),
-        secretInputMode: "ref",
+        secretInputMode: "ref", // pragma: allowlist secret
         prompter,
         runtime,
       });
@@ -164,14 +168,95 @@ describe("configureGatewayForOnboarding", () => {
       expect(result.nextConfig.gateway?.auth?.password).toEqual({
         source: "env",
         provider: "default",
-        id: "IronCliw_GATEWAY_PASSWORD",
+        id: "IRONCLIW_GATEWAY_PASSWORD",
       });
     } finally {
       if (previous === undefined) {
-        delete process.env.IronCliw_GATEWAY_PASSWORD;
+        delete process.env.IRONCLIW_GATEWAY_PASSWORD;
       } else {
-        process.env.IronCliw_GATEWAY_PASSWORD = previous;
+        process.env.IRONCLIW_GATEWAY_PASSWORD = previous;
       }
     }
+  });
+
+  it("stores gateway token as SecretRef when secretInputMode=ref", async () => {
+    const previous = process.env.IRONCLIW_GATEWAY_TOKEN;
+    process.env.IRONCLIW_GATEWAY_TOKEN = "token-from-env";
+    try {
+      const prompter = createPrompter({
+        selectQueue: ["loopback", "token", "off", "env"],
+        textQueue: ["18789", "IRONCLIW_GATEWAY_TOKEN"],
+      });
+      const runtime = createRuntime();
+
+      const result = await configureGatewayForOnboarding({
+        flow: "advanced",
+        baseConfig: {},
+        nextConfig: {},
+        localPort: 18789,
+        quickstartGateway: createQuickstartGateway("token"),
+        secretInputMode: "ref", // pragma: allowlist secret
+        prompter,
+        runtime,
+      });
+
+      expect(result.nextConfig.gateway?.auth?.mode).toBe("token");
+      expect(result.nextConfig.gateway?.auth?.token).toEqual({
+        source: "env",
+        provider: "default",
+        id: "IRONCLIW_GATEWAY_TOKEN",
+      });
+      expect(result.settings.gatewayToken).toBe("token-from-env");
+    } finally {
+      if (previous === undefined) {
+        delete process.env.IRONCLIW_GATEWAY_TOKEN;
+      } else {
+        process.env.IRONCLIW_GATEWAY_TOKEN = previous;
+      }
+    }
+  });
+
+  it("resolves quickstart exec SecretRefs for gateway token bootstrap", async () => {
+    const quickstartGateway = {
+      ...createQuickstartGateway("token"),
+      token: {
+        source: "exec" as const,
+        provider: "gatewayTokens",
+        id: "gateway/auth/token",
+      },
+    };
+    const runtime = createRuntime();
+    const prompter = createPrompter({
+      selectQueue: [],
+      textQueue: [],
+    });
+
+    const result = await configureGatewayForOnboarding({
+      flow: "quickstart",
+      baseConfig: {},
+      nextConfig: {
+        secrets: {
+          providers: {
+            gatewayTokens: {
+              source: "exec",
+              command: process.execPath,
+              allowInsecurePath: true,
+              allowSymlinkCommand: true,
+              args: [
+                "-e",
+                "let input='';process.stdin.setEncoding('utf8');process.stdin.on('data',d=>input+=d);process.stdin.on('end',()=>{const req=JSON.parse(input||'{}');const values={};for(const id of req.ids||[]){values[id]='token-from-exec';}process.stdout.write(JSON.stringify({protocolVersion:1,values}));});",
+              ],
+            },
+          },
+        },
+      },
+      localPort: 18789,
+      quickstartGateway,
+      prompter,
+      runtime,
+    });
+
+    expect(result.nextConfig.gateway?.auth?.token).toEqual(quickstartGateway.token);
+    expect(result.settings.gatewayToken).toBe("token-from-exec");
   });
 });

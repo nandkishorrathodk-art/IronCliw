@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "IronCliw/plugin-sdk/zalouser";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "ironcliw/plugin-sdk/zalouser";
 
 type ZalouserAccountStatus = {
   accountId?: unknown;
@@ -50,7 +50,7 @@ export function collectZalouserStatusIssues(
         accountId,
         kind: "auth",
         message: "Not authenticated (no saved Zalo session).",
-        fix: "Run: IronCliw channels login --channel zalouser",
+        fix: "Run: ironcliw channels login --channel zalouser",
       });
       continue;
     }

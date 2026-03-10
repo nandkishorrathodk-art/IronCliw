@@ -21,7 +21,7 @@ x-i18n:
 
 ## 新手快速路径
 
-1. [https://exe.new/IronCliw](https://exe.new/IronCliw)
+1. [https://exe.new/ironcliw](https://exe.new/ironcliw)
 2. 根据需要填写你的认证密钥/令牌
 3. 点击 VM 旁边的"Agent"，然后等待...
 4. ???
@@ -37,7 +37,7 @@ x-i18n:
 Shelley，[exe.dev](https://exe.dev) 的智能体，可以使用我们的提示立即安装 IronCliw。使用的提示如下：
 
 ```
-Set up IronCliw (https://docs.IronCliw.ai/install) on this VM. Use the non-interactive and accept-risk flags for IronCliw onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "IronCliw devices list" and "IronCliw device approve <request id>". Make sure the dashboard shows that IronCliw's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up IronCliw (https://docs.ironcliw.ai/install) on this VM. Use the non-interactive and accept-risk flags for ironcliw onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "ironcliw devices list" and "ironcliw device approve <request id>". Make sure the dashboard shows that IronCliw's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## 手动安装
@@ -56,7 +56,7 @@ ssh exe.dev new
 ssh <vm-name>.exe.xyz
 ```
 
-提示：保持此 VM **有状态**。IronCliw 在 `~/.IronCliw/` 和 `~/.IronCliw/workspace/` 下存储状态。
+提示：保持此 VM **有状态**。IronCliw 在 `~/.ironcliw/` 和 `~/.ironcliw/workspace/` 下存储状态。
 
 ## 2) 安装先决条件（在 VM 上）
 
@@ -70,7 +70,7 @@ sudo apt-get install -y git curl jq ca-certificates openssl
 运行 IronCliw 安装脚本：
 
 ```bash
-curl -fsSL https://IronCliw.ai/install.sh | bash
+curl -fsSL https://ironcliw.ai/install.sh | bash
 ```
 
 ## 4) 设置 nginx 将 IronCliw 代理到端口 8000
@@ -109,7 +109,7 @@ server {
 
 ## 5) 访问 IronCliw 并授予权限
 
-访问 `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL`（参阅新手引导中的控制 UI 输出）。使用 `IronCliw devices list` 和 `IronCliw devices approve <requestId>` 批准设备。如有疑问，从浏览器使用 Shelley！
+访问 `https://<vm-name>.exe.xyz/?token=YOUR-TOKEN-FROM-TERMINAL`（参阅新手引导中的控制 UI 输出）。使用 `ironcliw devices list` 和 `ironcliw devices approve <requestId>` 批准设备。如有疑问，从浏览器使用 Shelley！
 
 ## 远程访问
 
@@ -118,10 +118,10 @@ server {
 ## 更新
 
 ```bash
-npm i -g IronCliw@latest
-IronCliw doctor
-IronCliw gateway restart
-IronCliw health
+npm i -g ironcliw@latest
+ironcliw doctor
+ironcliw gateway restart
+ironcliw health
 ```
 
 指南：[更新](/install/updating)

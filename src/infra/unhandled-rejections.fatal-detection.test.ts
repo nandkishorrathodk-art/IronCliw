@@ -60,7 +60,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
       }
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[IronCliw] FATAL unhandled rejection:",
+        "[ironcliw] FATAL unhandled rejection:",
         expect.stringContaining("Out of memory"),
       );
     });
@@ -78,7 +78,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
       }
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[IronCliw] CONFIGURATION ERROR - requires fix:",
+        "[ironcliw] CONFIGURATION ERROR - requires fix:",
         expect.stringContaining("Invalid config"),
       );
     });
@@ -86,7 +86,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
   describe("non-fatal errors", () => {
     it("does not exit on known transient network errors", () => {
-      const transientCases = [
+      const transientCases: unknown[] = [
         Object.assign(new TypeError("fetch failed"), {
           cause: { code: "UND_ERR_CONNECT_TIMEOUT", syscall: "connect" },
         }),
@@ -111,12 +111,17 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
         }),
       ];
 
+      // Wrapped fetch-failed (e.g. Discord: "Failed to get gateway information from Discord: fetch failed")
+      transientCases.push(
+        new Error("Failed to get gateway information from Discord: fetch failed"),
+      );
+
       for (const transientErr of transientCases) {
         expectExitCodeFromUnhandled(transientErr, []);
       }
 
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[IronCliw] Non-fatal unhandled rejection (continuing):",
+        "[ironcliw] Non-fatal unhandled rejection (continuing):",
         expect.stringContaining("fetch failed"),
       );
     });
@@ -126,7 +131,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expectExitCodeFromUnhandled(genericErr, [1]);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        "[IronCliw] Unhandled promise rejection:",
+        "[ironcliw] Unhandled promise rejection:",
         expect.stringContaining("Something went wrong"),
       );
     });
@@ -148,7 +153,7 @@ describe("installUnhandledRejectionHandler - fatal detection", () => {
 
       expectExitCodeFromUnhandled(abortErr, []);
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[IronCliw] Suppressed AbortError:",
+        "[ironcliw] Suppressed AbortError:",
         expect.stringContaining("This operation was aborted"),
       );
     });

@@ -1,4 +1,4 @@
-import { createDedupeCache } from "IronCliw/plugin-sdk/tlon";
+import { createDedupeCache } from "ironcliw/plugin-sdk/tlon";
 
 export type ProcessedMessageTracker = {
   mark: (id?: string | null) => boolean;

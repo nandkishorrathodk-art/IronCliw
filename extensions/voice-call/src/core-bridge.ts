@@ -90,7 +90,7 @@ function resolveIronCliwRoot(): string {
   if (coreRootCache) {
     return coreRootCache;
   }
-  const override = process.env.IronCliw_ROOT?.trim();
+  const override = process.env.IRONCLIW_ROOT?.trim();
   if (override) {
     coreRootCache = override;
     return override;
@@ -109,7 +109,7 @@ function resolveIronCliwRoot(): string {
   }
 
   for (const start of candidates) {
-    for (const name of ["IronCliw"]) {
+    for (const name of ["ironcliw"]) {
       const found = findPackageRoot(start, name);
       if (found) {
         coreRootCache = found;
@@ -118,7 +118,7 @@ function resolveIronCliwRoot(): string {
     }
   }
 
-  throw new Error("Unable to resolve core root. Set IronCliw_ROOT to the package root.");
+  throw new Error("Unable to resolve core root. Set IRONCLIW_ROOT to the package root.");
 }
 
 async function importCoreExtensionAPI(): Promise<{

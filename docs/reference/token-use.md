@@ -58,7 +58,7 @@ Use these in chat:
 Other surfaces:
 
 - **TUI/Web TUI:** `/status` + `/usage` are supported.
-- **CLI:** `IronCliw status --usage` and `IronCliw channels list` show
+- **CLI:** `ironcliw status --usage` and `ironcliw channels list` show
   provider quota windows (not per-response costs).
 
 ## Cost estimation (when shown)

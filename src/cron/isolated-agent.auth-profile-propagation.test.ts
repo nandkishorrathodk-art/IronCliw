@@ -24,8 +24,8 @@ describe("runCronIsolatedAgentTurn auth profile propagation (#20624)", () => {
 
       // 2. Write auth-profiles.json in the agent directory
       //    resolveAgentDir returns <stateDir>/agents/main/agent
-      //    stateDir = <home>/.IronCliw
-      const agentDir = path.join(home, ".IronCliw", "agents", "main", "agent");
+      //    stateDir = <home>/.ironcliw
+      const agentDir = path.join(home, ".ironcliw", "agents", "main", "agent");
       await fs.mkdir(agentDir, { recursive: true });
       await fs.writeFile(
         path.join(agentDir, "auth-profiles.json"),
@@ -59,7 +59,7 @@ describe("runCronIsolatedAgentTurn auth profile propagation (#20624)", () => {
         agents: {
           defaults: {
             model: { primary: "openrouter/moonshotai/kimi-k2.5" },
-            workspace: path.join(home, "IronCliw"),
+            workspace: path.join(home, "ironcliw"),
           },
         },
       });

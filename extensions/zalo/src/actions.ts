@@ -2,8 +2,8 @@ import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
   IronCliwConfig,
-} from "IronCliw/plugin-sdk/zalo";
-import { extractToolSend, jsonResult, readStringParam } from "IronCliw/plugin-sdk/zalo";
+} from "ironcliw/plugin-sdk/zalo";
+import { extractToolSend, jsonResult, readStringParam } from "ironcliw/plugin-sdk/zalo";
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";
 

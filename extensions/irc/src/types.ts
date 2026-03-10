@@ -1,4 +1,4 @@
-import type { BaseProbeResult } from "IronCliw/plugin-sdk/irc";
+import type { BaseProbeResult } from "ironcliw/plugin-sdk/irc";
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,
@@ -8,7 +8,7 @@ import type {
   GroupToolPolicyConfig,
   MarkdownConfig,
   IronCliwConfig,
-} from "IronCliw/plugin-sdk/irc";
+} from "ironcliw/plugin-sdk/irc";
 
 export type IrcChannelConfig = {
   requireMention?: boolean;

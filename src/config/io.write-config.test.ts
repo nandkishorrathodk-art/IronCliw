@@ -20,7 +20,7 @@ describe("config io write", () => {
   }
 
   beforeAll(async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-config-io-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-config-io-"));
   });
 
   afterAll(async () => {
@@ -33,7 +33,7 @@ describe("config io write", () => {
     env?: NodeJS.ProcessEnv;
     logger?: { warn: (msg: string) => void; error: (msg: string) => void };
   }) {
-    const configPath = path.join(params.home, ".IronCliw", "IronCliw.json");
+    const configPath = path.join(params.home, ".ironcliw", "ironcliw.json");
     await fs.mkdir(path.dirname(configPath), { recursive: true });
     await fs.writeFile(configPath, JSON.stringify(params.initialConfig, null, 2), "utf-8");
 
@@ -80,7 +80,7 @@ describe("config io write", () => {
         error: vi.fn(),
       },
     });
-    const auditPath = path.join(params.home, ".IronCliw", "logs", "config-audit.jsonl");
+    const auditPath = path.join(params.home, ".ironcliw", "logs", "config-audit.jsonl");
     const next = structuredClone(snapshot.config);
     const gateway =
       next.gateway && typeof next.gateway === "object"
@@ -160,10 +160,10 @@ describe("config io write", () => {
       } satisfies IronCliwConfig;
 
       await expect(io.writeConfigFile(invalidConfig)).rejects.toThrow(
-        "IronCliw config set channels.telegram.allowFrom '[\"*\"]'",
+        "ironcliw config set channels.telegram.allowFrom '[\"*\"]'",
       );
       await expect(io.writeConfigFile(invalidConfig)).rejects.toThrow(
-        'IronCliw config set channels.telegram.dmPolicy "pairing"',
+        'ironcliw config set channels.telegram.dmPolicy "pairing"',
       );
     });
   });
@@ -198,7 +198,7 @@ describe("config io write", () => {
 
   it("does not mutate caller config when unsetPaths is applied on first write", async () => {
     await withSuiteHome(async (home) => {
-      const configPath = path.join(home, ".IronCliw", "IronCliw.json");
+      const configPath = path.join(home, ".ironcliw", "ironcliw.json");
       const io = createConfigIO({
         env: {} as NodeJS.ProcessEnv,
         homedir: () => home,
@@ -365,7 +365,7 @@ describe("config io write", () => {
 
   it("keeps env refs in arrays when appending entries", async () => {
     await withSuiteHome(async (home) => {
-      const configPath = path.join(home, ".IronCliw", "IronCliw.json");
+      const configPath = path.join(home, ".ironcliw", "ironcliw.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,
@@ -516,9 +516,9 @@ describe("config io write", () => {
         initialConfig: { gateway: { mode: "local" } },
         gatewayPatch: { bind: "loopback" },
         env: {
-          IronCliw_WATCH_MODE: "1",
-          IronCliw_WATCH_SESSION: "watch-session-1",
-          IronCliw_WATCH_COMMAND: "gateway --force",
+          IRONCLIW_WATCH_MODE: "1",
+          IRONCLIW_WATCH_SESSION: "watch-session-1",
+          IRONCLIW_WATCH_COMMAND: "gateway --force",
         } as NodeJS.ProcessEnv,
       });
       expect(last.watchMode).toBe(true);

@@ -1,4 +1,4 @@
-import { fetchWithSsrFGuard } from "IronCliw/plugin-sdk/voice-call";
+import { fetchWithSsrFGuard } from "ironcliw/plugin-sdk/voice-call";
 
 type GuardedJsonApiRequestParams = {
   url: string;

@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `IronCliw agent` (send one agent turn via the Gateway)"
+summary: "CLI reference for `ironcliw agent` (send one agent turn via the Gateway)"
 read_when:
   - You want to run one agent turn from scripts (optionally deliver reply)
 title: "agent"
 ---
 
-# `IronCliw agent`
+# `ironcliw agent`
 
 Run an agent turn via the Gateway (use `--local` for embedded).
 Use `--agent <id>` to target a configured agent directly.
@@ -17,8 +17,12 @@ Related:
 ## Examples
 
 ```bash
-IronCliw agent --to +15555550123 --message "status update" --deliver
-IronCliw agent --agent ops --message "Summarize logs"
-IronCliw agent --session-id 1234 --message "Summarize inbox" --thinking medium
-IronCliw agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+ironcliw agent --to +15555550123 --message "status update" --deliver
+ironcliw agent --agent ops --message "Summarize logs"
+ironcliw agent --session-id 1234 --message "Summarize inbox" --thinking medium
+ironcliw agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```
+
+## Notes
+
+- When this command triggers `models.json` regeneration, SecretRef-managed provider credentials are persisted as non-secret markers (for example env var names or `secretref-managed`), not resolved secret plaintext.

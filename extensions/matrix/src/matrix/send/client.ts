@@ -1,5 +1,5 @@
 import type { MatrixClient } from "@vector-im/matrix-bot-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "IronCliw/plugin-sdk/account-id";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "ironcliw/plugin-sdk/account-id";
 import { getMatrixRuntime } from "../../runtime.js";
 import type { CoreConfig } from "../../types.js";
 import { getActiveMatrixClient, getAnyActiveMatrixClient } from "../active-client.js";
@@ -80,7 +80,7 @@ export async function resolveMatrixClient(opts: {
       return { client: anyActive, stopOnDone: false };
     }
   }
-  const shouldShareClient = Boolean(process.env.IronCliw_GATEWAY_PORT);
+  const shouldShareClient = Boolean(process.env.IRONCLIW_GATEWAY_PORT);
   if (shouldShareClient) {
     const client = await resolveSharedMatrixClient({
       timeoutMs: opts.timeoutMs,

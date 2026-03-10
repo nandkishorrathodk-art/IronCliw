@@ -18,7 +18,7 @@ vi.mock("../config/config.js", async (importOriginal) => {
 });
 
 import "./test-helpers/fast-core-tools.js";
-import { createIronCliwTools } from "./IronCliw-tools.js";
+import { createIronCliwTools } from "./ironcliw-tools.js";
 
 function getSessionsHistoryTool(options?: { sandboxed?: boolean }) {
   const tool = createIronCliwTools({

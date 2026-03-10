@@ -7,7 +7,7 @@ import {
   ReplyRuntimeConfigSchemaShape,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "IronCliw/plugin-sdk/irc";
+} from "ironcliw/plugin-sdk/irc";
 import { z } from "zod";
 
 const IrcGroupSchema = z

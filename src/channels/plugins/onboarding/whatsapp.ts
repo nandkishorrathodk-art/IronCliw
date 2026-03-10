@@ -337,7 +337,7 @@ export const whatsappOnboardingAdapter: ChannelOnboardingAdapter = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("IronCliw channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("ironcliw channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

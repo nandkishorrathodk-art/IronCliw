@@ -99,9 +99,9 @@ function makeRemotePasswordGatewayConfig(remotePassword: string, localPassword =
 
 describe("callGateway url resolution", () => {
   const envSnapshot = captureEnv([
-    "IronCliw_ALLOW_INSECURE_PRIVATE_WS",
-    "IronCliw_GATEWAY_URL",
-    "IronCliw_GATEWAY_TOKEN",
+    "IRONCLIW_ALLOW_INSECURE_PRIVATE_WS",
+    "IRONCLIW_GATEWAY_URL",
+    "IRONCLIW_GATEWAY_TOKEN",
     "CLAWDBOT_GATEWAY_TOKEN",
   ]);
 
@@ -197,14 +197,14 @@ describe("callGateway url resolution", () => {
     expect(lastClientOptions?.token).toBe("explicit-token");
   });
 
-  it("uses IronCliw_GATEWAY_URL env override in remote mode when remote URL is missing", async () => {
+  it("uses IRONCLIW_GATEWAY_URL env override in remote mode when remote URL is missing", async () => {
     loadConfig.mockReturnValue({
       gateway: { mode: "remote", bind: "loopback", remote: {} },
     });
     resolveGatewayPort.mockReturnValue(18789);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
-    process.env.IronCliw_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
-    process.env.IronCliw_GATEWAY_TOKEN = "env-token";
+    process.env.IRONCLIW_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token";
 
     await callGateway({
       method: "health",
@@ -232,8 +232,8 @@ describe("callGateway url resolution", () => {
     } as unknown as IronCliwConfig);
     resolveGatewayPort.mockReturnValue(18789);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
-    process.env.IronCliw_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
-    process.env.IronCliw_GATEWAY_TOKEN = "env-token";
+    process.env.IRONCLIW_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token";
 
     await callGateway({
       method: "health",
@@ -256,8 +256,8 @@ describe("callGateway url resolution", () => {
     });
     setGatewayNetworkDefaults(18789);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
-    process.env.IronCliw_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
-    process.env.IronCliw_GATEWAY_TOKEN = "env-token";
+    process.env.IRONCLIW_GATEWAY_URL = "wss://gateway-in-container.internal:9443/ws";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token";
 
     await callGateway({
       method: "health",
@@ -404,24 +404,24 @@ describe("buildGatewayConnectionDetails", () => {
     expect(details.remoteFallbackNote).toBeUndefined();
   });
 
-  it("uses env IronCliw_GATEWAY_URL when set", () => {
+  it("uses env IRONCLIW_GATEWAY_URL when set", () => {
     loadConfig.mockReturnValue({ gateway: { mode: "local", bind: "loopback" } });
     resolveGatewayPort.mockReturnValue(18800);
     pickPrimaryTailnetIPv4.mockReturnValue(undefined);
-    const prevUrl = process.env.IronCliw_GATEWAY_URL;
+    const prevUrl = process.env.IRONCLIW_GATEWAY_URL;
     try {
-      process.env.IronCliw_GATEWAY_URL = "wss://browser-gateway.local:9443/ws";
+      process.env.IRONCLIW_GATEWAY_URL = "wss://browser-gateway.local:9443/ws";
 
       const details = buildGatewayConnectionDetails();
 
       expect(details.url).toBe("wss://browser-gateway.local:9443/ws");
-      expect(details.urlSource).toBe("env IronCliw_GATEWAY_URL");
+      expect(details.urlSource).toBe("env IRONCLIW_GATEWAY_URL");
       expect(details.bindDetail).toBeUndefined();
     } finally {
       if (prevUrl === undefined) {
-        delete process.env.IronCliw_GATEWAY_URL;
+        delete process.env.IRONCLIW_GATEWAY_URL;
       } else {
-        process.env.IronCliw_GATEWAY_URL = prevUrl;
+        process.env.IRONCLIW_GATEWAY_URL = prevUrl;
       }
     }
   });
@@ -448,11 +448,11 @@ describe("buildGatewayConnectionDetails", () => {
     expect((thrown as Error).message).toContain("plaintext ws://");
     expect((thrown as Error).message).toContain("wss://");
     expect((thrown as Error).message).toContain("Tailscale Serve/Funnel");
-    expect((thrown as Error).message).toContain("IronCliw doctor --fix");
+    expect((thrown as Error).message).toContain("ironcliw doctor --fix");
   });
 
-  it("allows ws:// private remote URLs only when IronCliw_ALLOW_INSECURE_PRIVATE_WS=1", () => {
-    process.env.IronCliw_ALLOW_INSECURE_PRIVATE_WS = "1";
+  it("allows ws:// private remote URLs only when IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1", () => {
+    process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS = "1";
     loadConfig.mockReturnValue({
       gateway: {
         mode: "remote",
@@ -465,6 +465,23 @@ describe("buildGatewayConnectionDetails", () => {
     const details = buildGatewayConnectionDetails();
 
     expect(details.url).toBe("ws://10.0.0.8:18789");
+    expect(details.urlSource).toBe("config gateway.remote.url");
+  });
+
+  it("allows ws:// hostname remote URLs when IRONCLIW_ALLOW_INSECURE_PRIVATE_WS=1", () => {
+    process.env.IRONCLIW_ALLOW_INSECURE_PRIVATE_WS = "1";
+    loadConfig.mockReturnValue({
+      gateway: {
+        mode: "remote",
+        bind: "loopback",
+        remote: { url: "ws://ironcliw-gateway.ai:18789" },
+      },
+    });
+    resolveGatewayPort.mockReturnValue(18789);
+
+    const details = buildGatewayConnectionDetails();
+
+    expect(details.url).toBe("ws://ironcliw-gateway.ai:18789");
     expect(details.urlSource).toBe("config gateway.remote.url");
   });
 
@@ -572,9 +589,9 @@ describe("callGateway url override auth requirements", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv([
-      "IronCliw_GATEWAY_TOKEN",
-      "IronCliw_GATEWAY_PASSWORD",
-      "IronCliw_GATEWAY_URL",
+      "IRONCLIW_GATEWAY_TOKEN",
+      "IRONCLIW_GATEWAY_PASSWORD",
+      "IRONCLIW_GATEWAY_URL",
       "CLAWDBOT_GATEWAY_URL",
     ]);
     resetGatewayCallMocks();
@@ -586,8 +603,8 @@ describe("callGateway url override auth requirements", () => {
   });
 
   it("throws when url override is set without explicit credentials", async () => {
-    process.env.IronCliw_GATEWAY_TOKEN = "env-token";
-    process.env.IronCliw_GATEWAY_PASSWORD = "env-password";
+    process.env.IRONCLIW_GATEWAY_TOKEN = "env-token";
+    process.env.IRONCLIW_GATEWAY_PASSWORD = "env-password";
     loadConfig.mockReturnValue({
       gateway: {
         mode: "local",
@@ -601,7 +618,7 @@ describe("callGateway url override auth requirements", () => {
   });
 
   it("throws when env URL override is set without env credentials", async () => {
-    process.env.IronCliw_GATEWAY_URL = "wss://override.example/ws";
+    process.env.IRONCLIW_GATEWAY_URL = "wss://override.example/ws";
     loadConfig.mockReturnValue({
       gateway: {
         mode: "local",
@@ -618,16 +635,16 @@ describe("callGateway password resolution", () => {
   const explicitAuthCases = [
     {
       label: "password",
-      authKey: "password",
-      envKey: "IronCliw_GATEWAY_PASSWORD",
+      authKey: "password", // pragma: allowlist secret
+      envKey: "IRONCLIW_GATEWAY_PASSWORD",
       envValue: "from-env",
       configValue: "from-config",
       explicitValue: "explicit-password",
     },
     {
       label: "token",
-      authKey: "token",
-      envKey: "IronCliw_GATEWAY_TOKEN",
+      authKey: "token", // pragma: allowlist secret
+      envKey: "IRONCLIW_GATEWAY_TOKEN",
       envValue: "env-token",
       configValue: "local-token",
       explicitValue: "explicit-token",
@@ -636,15 +653,15 @@ describe("callGateway password resolution", () => {
 
   beforeEach(() => {
     envSnapshot = captureEnv([
-      "IronCliw_GATEWAY_PASSWORD",
-      "IronCliw_GATEWAY_TOKEN",
+      "IRONCLIW_GATEWAY_PASSWORD",
+      "IRONCLIW_GATEWAY_TOKEN",
       "LOCAL_REF_PASSWORD",
       "REMOTE_REF_TOKEN",
       "REMOTE_REF_PASSWORD",
     ]);
     resetGatewayCallMocks();
-    delete process.env.IronCliw_GATEWAY_PASSWORD;
-    delete process.env.IronCliw_GATEWAY_TOKEN;
+    delete process.env.IRONCLIW_GATEWAY_PASSWORD;
+    delete process.env.IRONCLIW_GATEWAY_TOKEN;
     delete process.env.LOCAL_REF_PASSWORD;
     delete process.env.REMOTE_REF_TOKEN;
     delete process.env.REMOTE_REF_PASSWORD;
@@ -694,7 +711,7 @@ describe("callGateway password resolution", () => {
     },
   ])("$label", async ({ envPassword, config, expectedPassword }) => {
     if (envPassword !== undefined) {
-      process.env.IronCliw_GATEWAY_PASSWORD = envPassword;
+      process.env.IRONCLIW_GATEWAY_PASSWORD = envPassword;
     }
     loadConfig.mockReturnValue(config);
 
@@ -704,7 +721,7 @@ describe("callGateway password resolution", () => {
   });
 
   it("resolves gateway.auth.password SecretInput refs for gateway calls", async () => {
-    process.env.LOCAL_REF_PASSWORD = "resolved-local-ref-password";
+    process.env.LOCAL_REF_PASSWORD = "resolved-local-ref-password"; // pragma: allowlist secret
     loadConfig.mockReturnValue({
       gateway: {
         mode: "local",
@@ -727,7 +744,7 @@ describe("callGateway password resolution", () => {
   });
 
   it("does not resolve local password ref when env password takes precedence", async () => {
-    process.env.IronCliw_GATEWAY_PASSWORD = "from-env";
+    process.env.IRONCLIW_GATEWAY_PASSWORD = "from-env";
     loadConfig.mockReturnValue({
       gateway: {
         mode: "local",
@@ -770,6 +787,30 @@ describe("callGateway password resolution", () => {
     await callGateway({ method: "health" });
 
     expect(lastClientOptions?.token).toBe("token-auth");
+  });
+
+  it("resolves local password ref before unresolved local token ref can block auth", async () => {
+    process.env.LOCAL_FALLBACK_PASSWORD = "resolved-local-fallback-password"; // pragma: allowlist secret
+    loadConfig.mockReturnValue({
+      gateway: {
+        mode: "local",
+        bind: "loopback",
+        auth: {
+          token: { source: "env", provider: "default", id: "MISSING_LOCAL_REF_TOKEN" },
+          password: { source: "env", provider: "default", id: "LOCAL_FALLBACK_PASSWORD" },
+        },
+      },
+      secrets: {
+        providers: {
+          default: { source: "env" },
+        },
+      },
+    } as unknown as IronCliwConfig);
+
+    await callGateway({ method: "health" });
+
+    expect(lastClientOptions?.token).toBeUndefined();
+    expect(lastClientOptions?.password).toBe("resolved-local-fallback-password"); // pragma: allowlist secret
   });
 
   it.each(["none", "trusted-proxy"] as const)(
@@ -849,7 +890,7 @@ describe("callGateway password resolution", () => {
   });
 
   it("resolves gateway.remote.password SecretInput refs when remote password is required", async () => {
-    process.env.REMOTE_REF_PASSWORD = "resolved-remote-ref-password";
+    process.env.REMOTE_REF_PASSWORD = "resolved-remote-ref-password"; // pragma: allowlist secret
     loadConfig.mockReturnValue({
       gateway: {
         mode: "remote",
@@ -881,7 +922,7 @@ describe("callGateway password resolution", () => {
         remote: {
           url: "wss://remote.example:18789",
           token: { source: "env", provider: "default", id: "MISSING_REMOTE_TOKEN" },
-          password: "remote-password",
+          password: "remote-password", // pragma: allowlist secret
         },
       },
       secrets: {

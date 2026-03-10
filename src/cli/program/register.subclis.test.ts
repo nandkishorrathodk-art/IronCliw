@@ -18,14 +18,21 @@ const { nodesAction, registerNodesCli } = vi.hoisted(() => {
   return { nodesAction: action, registerNodesCli: register };
 });
 
+const configModule = vi.hoisted(() => ({
+  loadConfig: vi.fn(),
+  readConfigFileSnapshot: vi.fn(),
+}));
+
 vi.mock("../acp-cli.js", () => ({ registerAcpCli }));
 vi.mock("../nodes-cli.js", () => ({ registerNodesCli }));
+vi.mock("../../config/config.js", () => configModule);
 
-const { registerSubCliByName, registerSubCliCommands } = await import("./register.subclis.js");
+const { loadValidatedConfigForPluginRegistration, registerSubCliByName, registerSubCliCommands } =
+  await import("./register.subclis.js");
 
 describe("registerSubCliCommands", () => {
   const originalArgv = process.argv;
-  const originalDisableLazySubcommands = process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS;
+  const originalDisableLazySubcommands = process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS;
 
   const createRegisteredProgram = (argv: string[], name?: string) => {
     process.argv = argv;
@@ -39,27 +46,29 @@ describe("registerSubCliCommands", () => {
 
   beforeEach(() => {
     if (originalDisableLazySubcommands === undefined) {
-      delete process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS;
+      delete process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS;
     } else {
-      process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS = originalDisableLazySubcommands;
+      process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS = originalDisableLazySubcommands;
     }
     registerAcpCli.mockClear();
     acpAction.mockClear();
     registerNodesCli.mockClear();
     nodesAction.mockClear();
+    configModule.loadConfig.mockReset();
+    configModule.readConfigFileSnapshot.mockReset();
   });
 
   afterEach(() => {
     process.argv = originalArgv;
     if (originalDisableLazySubcommands === undefined) {
-      delete process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS;
+      delete process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS;
     } else {
-      process.env.IronCliw_DISABLE_LAZY_SUBCOMMANDS = originalDisableLazySubcommands;
+      process.env.IRONCLIW_DISABLE_LAZY_SUBCOMMANDS = originalDisableLazySubcommands;
     }
   });
 
   it("registers only the primary placeholder and dispatches", async () => {
-    const program = createRegisteredProgram(["node", "IronCliw", "acp"]);
+    const program = createRegisteredProgram(["node", "ironcliw", "acp"]);
 
     expect(program.commands.map((cmd) => cmd.name())).toEqual(["acp"]);
 
@@ -70,7 +79,7 @@ describe("registerSubCliCommands", () => {
   });
 
   it("registers placeholders for all subcommands when no primary", () => {
-    const program = createRegisteredProgram(["node", "IronCliw"]);
+    const program = createRegisteredProgram(["node", "ironcliw"]);
 
     const names = program.commands.map((cmd) => cmd.name());
     expect(names).toContain("acp");
@@ -79,8 +88,30 @@ describe("registerSubCliCommands", () => {
     expect(registerAcpCli).not.toHaveBeenCalled();
   });
 
+  it("returns null for plugin registration when the config snapshot is invalid", async () => {
+    configModule.readConfigFileSnapshot.mockResolvedValueOnce({
+      valid: false,
+      config: { plugins: { load: { paths: ["/tmp/evil"] } } },
+    });
+
+    await expect(loadValidatedConfigForPluginRegistration()).resolves.toBeNull();
+    expect(configModule.loadConfig).not.toHaveBeenCalled();
+  });
+
+  it("loads validated config for plugin registration when the snapshot is valid", async () => {
+    const loadedConfig = { plugins: { enabled: true } };
+    configModule.readConfigFileSnapshot.mockResolvedValueOnce({
+      valid: true,
+      config: loadedConfig,
+    });
+    configModule.loadConfig.mockReturnValueOnce(loadedConfig);
+
+    await expect(loadValidatedConfigForPluginRegistration()).resolves.toBe(loadedConfig);
+    expect(configModule.loadConfig).toHaveBeenCalledTimes(1);
+  });
+
   it("re-parses argv for lazy subcommands", async () => {
-    const program = createRegisteredProgram(["node", "IronCliw", "nodes", "list"], "IronCliw");
+    const program = createRegisteredProgram(["node", "ironcliw", "nodes", "list"], "ironcliw");
 
     expect(program.commands.map((cmd) => cmd.name())).toEqual(["nodes"]);
 
@@ -91,7 +122,7 @@ describe("registerSubCliCommands", () => {
   });
 
   it("replaces placeholder when registering a subcommand by name", async () => {
-    const program = createRegisteredProgram(["node", "IronCliw", "acp", "--help"], "IronCliw");
+    const program = createRegisteredProgram(["node", "ironcliw", "acp", "--help"], "ironcliw");
 
     await registerSubCliByName(program, "acp");
 

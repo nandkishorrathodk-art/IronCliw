@@ -64,7 +64,7 @@ ssh-copy-id -i ~/.ssh/id_rsa <REMOTE_USER>@<REMOTE_IP>
 ### 步骤 3：设置 Gateway 网关令牌
 
 ```bash
-launchctl setenv IronCliw_GATEWAY_TOKEN "<your-token>"
+launchctl setenv IRONCLIW_GATEWAY_TOKEN "<your-token>"
 ```
 
 ### 步骤 4：启动 SSH 隧道
@@ -125,7 +125,7 @@ launchctl bootstrap gui/$UID ~/Library/LaunchAgents/bot.molt.ssh-tunnel.plist
 - 崩溃时重新启动
 - 在后台持续运行
 
-旧版注意事项：如果存在任何遗留的 `com.IronCliw.ssh-tunnel` LaunchAgent，请将其删除。
+旧版注意事项：如果存在任何遗留的 `com.ironcliw.ssh-tunnel` LaunchAgent，请将其删除。
 
 ---
 

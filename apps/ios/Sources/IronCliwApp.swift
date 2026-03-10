@@ -15,9 +15,9 @@ private struct PendingWatchPromptAction {
 
 @MainActor
 final class IronCliwAppDelegate: NSObject, UIApplicationDelegate, @preconcurrency UNUserNotificationCenterDelegate {
-    private let logger = Logger(subsystem: "ai.IronCliw.ios", category: "Push")
-    private let backgroundWakeLogger = Logger(subsystem: "ai.IronCliw.ios", category: "BackgroundWake")
-    private static let wakeRefreshTaskIdentifier = "ai.IronCliw.ios.bgrefresh"
+    private let logger = Logger(subsystem: "ai.ironcliw.ios", category: "Push")
+    private let backgroundWakeLogger = Logger(subsystem: "ai.ironcliw.ios", category: "BackgroundWake")
+    private static let wakeRefreshTaskIdentifier = "ai.ironcliw.ios.bgrefresh"
     private var backgroundWakeTask: Task<Bool, Never>?
     private var pendingAPNsDeviceToken: Data?
     private var pendingWatchPromptActions: [PendingWatchPromptAction] = []
@@ -263,20 +263,20 @@ final class IronCliwAppDelegate: NSObject, UIApplicationDelegate, @preconcurrenc
 }
 
 enum WatchPromptNotificationBridge {
-    static let typeKey = "IronCliw.type"
+    static let typeKey = "ironcliw.type"
     static let typeValue = "watch.prompt"
-    static let promptIDKey = "IronCliw.watch.promptId"
-    static let sessionKeyKey = "IronCliw.watch.sessionKey"
-    static let actionPrimaryIDKey = "IronCliw.watch.action.primary.id"
-    static let actionPrimaryLabelKey = "IronCliw.watch.action.primary.label"
-    static let actionSecondaryIDKey = "IronCliw.watch.action.secondary.id"
-    static let actionSecondaryLabelKey = "IronCliw.watch.action.secondary.label"
-    static let actionPrimaryIdentifier = "IronCliw.watch.action.primary"
-    static let actionSecondaryIdentifier = "IronCliw.watch.action.secondary"
-    static let actionIdentifierPrefix = "IronCliw.watch.action."
-    static let actionIDKeyPrefix = "IronCliw.watch.action.id."
-    static let actionLabelKeyPrefix = "IronCliw.watch.action.label."
-    static let categoryPrefix = "IronCliw.watch.prompt.category."
+    static let promptIDKey = "ironcliw.watch.promptId"
+    static let sessionKeyKey = "ironcliw.watch.sessionKey"
+    static let actionPrimaryIDKey = "ironcliw.watch.action.primary.id"
+    static let actionPrimaryLabelKey = "ironcliw.watch.action.primary.label"
+    static let actionSecondaryIDKey = "ironcliw.watch.action.secondary.id"
+    static let actionSecondaryLabelKey = "ironcliw.watch.action.secondary.label"
+    static let actionPrimaryIdentifier = "ironcliw.watch.action.primary"
+    static let actionSecondaryIdentifier = "ironcliw.watch.action.secondary"
+    static let actionIdentifierPrefix = "ironcliw.watch.action."
+    static let actionIDKeyPrefix = "ironcliw.watch.action.id."
+    static let actionLabelKeyPrefix = "ironcliw.watch.action.label."
+    static let categoryPrefix = "ironcliw.watch.prompt.category."
 
     @MainActor
     static func scheduleMirroredWatchPromptNotificationIfNeeded(

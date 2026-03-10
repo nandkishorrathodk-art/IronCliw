@@ -5,7 +5,7 @@ import Foundation
 import OSLog
 
 struct IOSGatewayChatTransport: IronCliwChatTransport, Sendable {
-    private static let logger = Logger(subsystem: "ai.IronCliw", category: "ios.chat.transport")
+    private static let logger = Logger(subsystem: "ai.ironcliw", category: "ios.chat.transport")
     private let gateway: GatewayNodeSession
 
     init(gateway: GatewayNodeSession) {

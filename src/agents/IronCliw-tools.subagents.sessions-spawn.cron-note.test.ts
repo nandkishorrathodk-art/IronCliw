@@ -5,7 +5,7 @@ import {
   getSessionsSpawnTool,
   resetSessionsSpawnConfigOverride,
   setupSessionsSpawnGatewayMock,
-} from "./IronCliw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./ironcliw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 import { SUBAGENT_SPAWN_ACCEPTED_NOTE } from "./subagent-spawn.js";
 

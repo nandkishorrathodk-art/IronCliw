@@ -46,7 +46,7 @@ describe("Agent-specific tool filtering", () => {
       patch: string;
     }) => Promise<void>,
   ) {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "IronCliw-pi-tools-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "ironcliw-pi-tools-"));
     const escapedPath = path.join(
       path.dirname(workspaceDir),
       `escaped-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}.txt`,
@@ -115,7 +115,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "main",
-            workspace: "~/IronCliw",
+            workspace: "~/ironcliw",
             ...(params.agentTools ? { tools: params.agentTools } : {}),
           },
         ],
@@ -243,7 +243,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "restricted",
-            workspace: "~/IronCliw-restricted",
+            workspace: "~/ironcliw-restricted",
             tools: {
               allow: ["read"], // Agent override: only read
               deny: ["exec", "write", "edit"],
@@ -321,12 +321,12 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "main",
-            workspace: "~/IronCliw",
+            workspace: "~/ironcliw",
             // No tools restriction - all tools available
           },
           {
             id: "family",
-            workspace: "~/IronCliw-family",
+            workspace: "~/ironcliw-family",
             tools: {
               allow: ["read"],
               deny: ["exec", "write", "edit", "process"],
@@ -531,7 +531,7 @@ describe("Agent-specific tool filtering", () => {
         list: [
           {
             id: "work",
-            workspace: "~/IronCliw-work",
+            workspace: "~/ironcliw-work",
             tools: {
               deny: ["exec", "process"], // Agent deny (override)
             },

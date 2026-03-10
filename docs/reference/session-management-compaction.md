@@ -57,8 +57,8 @@ IronCliw persists sessions in two layers:
 
 Per agent, on the Gateway host:
 
-- Store: `~/.IronCliw/agents/<agentId>/sessions/sessions.json`
-- Transcripts: `~/.IronCliw/agents/<agentId>/sessions/<sessionId>.jsonl`
+- Store: `~/.ironcliw/agents/<agentId>/sessions/sessions.json`
+- Transcripts: `~/.ironcliw/agents/<agentId>/sessions/<sessionId>.jsonl`
   - Telegram topic sessions: `.../<sessionId>-topic-<threadId>.jsonl`
 
 IronCliw resolves these via `src/config/sessions.ts`.
@@ -88,8 +88,8 @@ In `mode: "warn"`, IronCliw reports potential evictions but does not mutate the 
 Run maintenance on demand:
 
 ```bash
-IronCliw sessions cleanup --dry-run
-IronCliw sessions cleanup --enforce
+ironcliw sessions cleanup --dry-run
+ironcliw sessions cleanup --enforce
 ```
 
 ---
@@ -99,7 +99,7 @@ IronCliw sessions cleanup --enforce
 Isolated cron runs also create session entries/transcripts, and they have dedicated retention controls:
 
 - `cron.sessionRetention` (default `24h`) prunes old isolated cron run sessions from the session store (`false` disables).
-- `cron.runLog.maxBytes` + `cron.runLog.keepLines` prune `~/.IronCliw/cron/runs/<jobId>.jsonl` files (defaults: `2_000_000` bytes and `2000` lines).
+- `cron.runLog.maxBytes` + `cron.runLog.keepLines` prune `~/.ironcliw/cron/runs/<jobId>.jsonl` files (defaults: `2_000_000` bytes and `2000` lines).
 
 ---
 
@@ -261,8 +261,8 @@ Implementation: `ensurePiCompactionReserveTokens()` in `src/agents/pi-settings.t
 You can observe compaction and session state via:
 
 - `/status` (in any chat session)
-- `IronCliw status` (CLI)
-- `IronCliw sessions` / `sessions --json`
+- `ironcliw status` (CLI)
+- `ironcliw sessions` / `sessions --json`
 - Verbose mode: `🧹 Auto-compaction complete` + compaction count
 
 ---
@@ -316,7 +316,7 @@ flush logic lives on the Gateway side today.
 ## Troubleshooting checklist
 
 - Session key wrong? Start with [/concepts/session](/concepts/session) and confirm the `sessionKey` in `/status`.
-- Store vs transcript mismatch? Confirm the Gateway host and the store path from `IronCliw status`.
+- Store vs transcript mismatch? Confirm the Gateway host and the store path from `ironcliw status`.
 - Compaction spam? Check:
   - model context window (too small)
   - compaction settings (`reserveTokens` too high for the model window can cause earlier compaction)

@@ -1,4 +1,4 @@
-const DEFAULT_TAGLINE = "The Iron Grip of AI Automation.";
+const DEFAULT_TAGLINE = "All your chats, one IronCliw.";
 export type TaglineMode = "random" | "default" | "off";
 
 const HOLIDAY_TAGLINES = {
@@ -24,7 +24,7 @@ const HOLIDAY_TAGLINES = {
 } as const;
 
 const TAGLINES: string[] = [
-  "Your terminal just got an iron grip—type something and let the bot crush the busywork.",
+  "Your terminal just grew iron arms—type something and let the bot crush the busywork.",
   "Welcome to the command line: where dreams compile and confidence segfaults.",
   'I run on caffeine, JSON5, and the audacity of "it worked on my machine."',
   "Gateway online—please keep hands, feet, and appendages inside the shell at all times.",
@@ -41,7 +41,7 @@ const TAGLINES: string[] = [
   "Hot reload for config, cold sweat for deploys.",
   "I'm the assistant your terminal demanded, not the one your sleep schedule requested.",
   "I keep secrets like a vault... unless you print them in debug logs again.",
-  "Automation with an iron grip: minimal fuss, maximal efficiency.",
+  "Automation with iron grip: minimal fuss, maximal force.",
   "I'm basically a Swiss Army knife, but with more opinions and fewer sharp edges.",
   "If you're lost, run doctor; if you're brave, run prod; if you're wise, run tests.",
   "Your task has been queued; your dignity has been deprecated.",
@@ -60,11 +60,11 @@ const TAGLINES: string[] = [
   "Your config is valid, your assumptions are not.",
   "I don't just autocomplete—I auto-commit (emotionally), then ask you to review (logically).",
   'Less clicking, more shipping, fewer "where did that file go" moments.',
-  "Iron in, commit out—let's ship something mildly responsible.",
-  "I'll secure your workflow like a steel vault: unbreakable, reliable, effective.",
-  "Shell yeah—I'm here to grip the toil and leave you the glory.",
+  "Iron out, commit in—let's ship something mildly responsible.",
+  "I'll sharpen your workflow like forged iron: precise, durable, effective.",
+  "Shell yeah—I'm here to crush the toil and leave you the glory.",
   "If it's repetitive, I'll automate it; if it's hard, I'll bring jokes and a rollback plan.",
-  "The only robot in your contacts you actually want to hear from. 🦾",
+  "The only iron grip in your contacts you actually want. 🦾",
   'WhatsApp automation without the "please accept our new privacy policy".',
   "iMessage green bubble energy, but for everyone.",
   "No $999 stand required.",
@@ -74,17 +74,17 @@ const TAGLINES: string[] = [
   "Greetings, Professor Falken",
   "I don't sleep, I just enter low-power mode and dream of clean diffs.",
   "Your personal assistant, minus the passive-aggressive calendar reminders.",
-  "Built with steel, for humans. Don't question the hierarchy.",
+  "Built with iron, for humans. Don't question the hierarchy.",
   "I've seen your commit messages. We'll work on that together.",
   "More integrations than your therapist's intake form.",
   "Running on your hardware, reading your logs, judging nothing (mostly).",
-  "The only open-source project where the mascot could crush the competition.",
+  "The only open-source project where the mascot could eat the competition.",
   "Self-hosted, self-updating, self-aware (just kidding... unless?).",
   "I autocomplete your thoughts—just slower and with more API calls.",
   "Somewhere between 'hello world' and 'oh god what have I built.'",
   "Your .zshrc wishes it could do what I do.",
   "I've read more man pages than any human should—so you don't have to.",
-  "Powered by open source, sustained by steel and good documentation.",
+  "Powered by open source, sustained by spite and good documentation.",
   "I'm the middleware between your ambition and your attention span.",
   "Finally, a use for that always-on Mac Mini under your desk.",
   "Like having a senior engineer on call, except I don't bill hourly or sigh audibly.",
@@ -95,11 +95,11 @@ const TAGLINES: string[] = [
   "Open source means you can see exactly how I judge your config.",
   "I've survived more breaking changes than your last three relationships.",
   "Runs on a Raspberry Pi. Dreams of a rack in Iceland.",
-  "The iron in your shell. 🦾",
+  "The iron grip in your shell. 🦾",
   "Alexa, but with taste.",
   "I'm not AI-powered, I'm AI-possessed. Big difference.",
   "Deployed locally, trusted globally, debugged eternally.",
-  "You had me at 'IronCliw gateway start.'",
+  "You had me at 'ironcliw gateway start.'",
   HOLIDAY_TAGLINES.newYear,
   HOLIDAY_TAGLINES.lunarNewYear,
   HOLIDAY_TAGLINES.christmas,
@@ -269,7 +269,7 @@ export function pickTagline(options: TaglineOptions = {}): string {
     return DEFAULT_TAGLINE;
   }
   const env = options.env ?? process.env;
-  const override = env?.IronCliw_TAGLINE_INDEX;
+  const override = env?.IRONCLIW_TAGLINE_INDEX;
   if (override !== undefined) {
     const parsed = Number.parseInt(override, 10);
     if (!Number.isNaN(parsed) && parsed >= 0) {

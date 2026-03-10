@@ -37,14 +37,14 @@ export async function ensureMediaHosted(
   if (needsServerStart && !opts.startServer) {
     await fs.rm(saved.path).catch(() => {});
     throw new Error(
-      `Media hosting requires the webhook/Funnel server. Start \`${formatCliCommand("IronCliw webhook")}\`/\`${formatCliCommand("IronCliw up")}\` or re-run with --serve-media.`,
+      `Media hosting requires the webhook/Funnel server. Start \`${formatCliCommand("ironcliw webhook")}\`/\`${formatCliCommand("ironcliw up")}\` or re-run with --serve-media.`,
     );
   }
   if (needsServerStart && opts.startServer) {
     if (!mediaServer) {
       mediaServer = await startMediaServer(port, TTL_MS, runtime);
       logInfo(
-        `🦾 Started temporary media host on http://localhost:${port}/media/:id (TTL ${TTL_MS / 1000}s)`,
+        `🦞 Started temporary media host on http://localhost:${port}/media/:id (TTL ${TTL_MS / 1000}s)`,
         runtime,
       );
       mediaServer.unref?.();

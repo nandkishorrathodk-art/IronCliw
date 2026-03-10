@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
-import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-IronCliw-dir.js";
+import { resolvePreferredIronCliwTmpDir } from "../infra/tmp-ironcliw-dir.js";
 import { resolveSandboxedMediaSource } from "./sandbox-paths.js";
 
 async function withSandboxRoot<T>(run: (sandboxDir: string) => Promise<T>) {
@@ -30,7 +30,7 @@ function makeTmpProbePath(prefix: string): string {
 
 async function withOutsideHardlinkInIronCliwTmp<T>(
   params: {
-    IronCliwTmpDir: string;
+    ironCliwTmpDir: string;
     hardlinkPrefix: string;
     symlinkPrefix?: string;
   },
@@ -38,16 +38,16 @@ async function withOutsideHardlinkInIronCliwTmp<T>(
 ): Promise<void> {
   const outsideDir = await fs.mkdtemp(path.join(process.cwd(), "sandbox-media-hardlink-outside-"));
   const outsideFile = path.join(outsideDir, "outside-secret.txt");
-  const hardlinkPath = path.join(params.IronCliwTmpDir, makeTmpProbePath(params.hardlinkPrefix));
+  const hardlinkPath = path.join(params.ironCliwTmpDir, makeTmpProbePath(params.hardlinkPrefix));
   const symlinkPath = params.symlinkPrefix
-    ? path.join(params.IronCliwTmpDir, makeTmpProbePath(params.symlinkPrefix))
+    ? path.join(params.ironCliwTmpDir, makeTmpProbePath(params.symlinkPrefix))
     : undefined;
   try {
-    if (isPathInside(params.IronCliwTmpDir, outsideFile)) {
+    if (isPathInside(params.ironCliwTmpDir, outsideFile)) {
       return;
     }
     await fs.writeFile(outsideFile, "secret", "utf8");
-    await fs.mkdir(params.IronCliwTmpDir, { recursive: true });
+    await fs.mkdir(params.ironCliwTmpDir, { recursive: true });
     try {
       await fs.link(outsideFile, hardlinkPath);
     } catch (err) {
@@ -70,24 +70,24 @@ async function withOutsideHardlinkInIronCliwTmp<T>(
 }
 
 describe("resolveSandboxedMediaSource", () => {
-  const IronCliwTmpDir = resolvePreferredIronCliwTmpDir();
+  const ironCliwTmpDir = resolvePreferredIronCliwTmpDir();
 
   // Group 1: /tmp paths (the bug fix)
   it.each([
     {
       name: "absolute paths under preferred IronCliw tmp root",
-      media: path.join(IronCliwTmpDir, "image.png"),
-      expected: path.join(IronCliwTmpDir, "image.png"),
+      media: path.join(ironCliwTmpDir, "image.png"),
+      expected: path.join(ironCliwTmpDir, "image.png"),
     },
     {
       name: "file:// URLs pointing to preferred IronCliw tmp root",
-      media: pathToFileURL(path.join(IronCliwTmpDir, "photo.png")).href,
-      expected: path.join(IronCliwTmpDir, "photo.png"),
+      media: pathToFileURL(path.join(ironCliwTmpDir, "photo.png")).href,
+      expected: path.join(ironCliwTmpDir, "photo.png"),
     },
     {
       name: "nested paths under preferred IronCliw tmp root",
-      media: path.join(IronCliwTmpDir, "subdir", "deep", "file.png"),
-      expected: path.join(IronCliwTmpDir, "subdir", "deep", "file.png"),
+      media: path.join(ironCliwTmpDir, "subdir", "deep", "file.png"),
+      expected: path.join(ironCliwTmpDir, "subdir", "deep", "file.png"),
     },
   ])("allows $name", async ({ media, expected }) => {
     await withSandboxRoot(async (sandboxDir) => {
@@ -144,12 +144,12 @@ describe("resolveSandboxedMediaSource", () => {
     },
     {
       name: "path traversal through tmpdir",
-      media: path.join(IronCliwTmpDir, "..", "etc", "passwd"),
+      media: path.join(ironCliwTmpDir, "..", "etc", "passwd"),
       expected: /sandbox/i,
     },
     {
-      name: "absolute paths under host tmp outside IronCliw tmp root",
-      media: path.join(os.tmpdir(), "outside-IronCliw", "passwd"),
+      name: "absolute paths under host tmp outside ironcliw tmp root",
+      media: path.join(os.tmpdir(), "outside-ironcliw", "passwd"),
       expected: /sandbox/i,
     },
     {
@@ -178,14 +178,14 @@ describe("resolveSandboxedMediaSource", () => {
       return;
     }
     const outsideTmpTarget = path.resolve(process.cwd(), "package.json");
-    if (isPathInside(IronCliwTmpDir, outsideTmpTarget)) {
+    if (isPathInside(ironCliwTmpDir, outsideTmpTarget)) {
       return;
     }
 
     await withSandboxRoot(async (sandboxDir) => {
       await fs.access(outsideTmpTarget);
-      await fs.mkdir(IronCliwTmpDir, { recursive: true });
-      const symlinkPath = path.join(IronCliwTmpDir, `tmp-link-escape-${process.pid}`);
+      await fs.mkdir(ironCliwTmpDir, { recursive: true });
+      const symlinkPath = path.join(ironCliwTmpDir, `tmp-link-escape-${process.pid}`);
       await fs.symlink(outsideTmpTarget, symlinkPath);
       try {
         await expectSandboxRejection(symlinkPath, sandboxDir, /symlink|sandbox/i);
@@ -221,7 +221,7 @@ describe("resolveSandboxedMediaSource", () => {
     }
     await withOutsideHardlinkInIronCliwTmp(
       {
-        IronCliwTmpDir,
+        ironCliwTmpDir,
         hardlinkPrefix: "sandbox-media-hardlink",
       },
       async ({ hardlinkPath }) => {
@@ -238,7 +238,7 @@ describe("resolveSandboxedMediaSource", () => {
     }
     await withOutsideHardlinkInIronCliwTmp(
       {
-        IronCliwTmpDir,
+        ironCliwTmpDir,
         hardlinkPrefix: "sandbox-media-hardlink-target",
         symlinkPrefix: "sandbox-media-hardlink-symlink",
       },

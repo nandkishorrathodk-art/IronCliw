@@ -20,24 +20,16 @@ const run = (cwd: string, cmd: string, args: string[] = [], env?: NodeJS.Process
 
 describe("git-hooks/pre-commit (integration)", () => {
   it("does not treat staged filenames as git-add flags (e.g. --all)", () => {
-    const dir = mkdtempSync(path.join(os.tmpdir(), "IronCliw-pre-commit-"));
+    const dir = mkdtempSync(path.join(os.tmpdir(), "ironcliw-pre-commit-"));
     run(dir, "git", ["init", "-q", "--initial-branch=main"]);
 
     // Use the real hook script and lightweight helper stubs.
     mkdirSync(path.join(dir, "git-hooks"), { recursive: true });
     mkdirSync(path.join(dir, "scripts", "pre-commit"), { recursive: true });
-    try {
-      symlinkSync(
-        path.join(process.cwd(), "git-hooks", "pre-commit"),
-        path.join(dir, "git-hooks", "pre-commit"),
-      );
-    } catch (err) {
-      if (process.platform === "win32" && (err as { code: string }).code === "EPERM") {
-        console.warn("Skipping symlink test on Windows due to missing privileges");
-        return;
-      }
-      throw err;
-    }
+    symlinkSync(
+      path.join(process.cwd(), "git-hooks", "pre-commit"),
+      path.join(dir, "git-hooks", "pre-commit"),
+    );
     writeFileSync(
       path.join(dir, "scripts", "pre-commit", "run-node-tool.sh"),
       "#!/usr/bin/env bash\nexit 0\n",

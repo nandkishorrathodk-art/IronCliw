@@ -3,10 +3,10 @@ import { expect } from "vitest";
 
 export const IS_WINDOWS = process.platform === "win32";
 
-export function resolveConfigPathFromTempState(fileName = "IronCliw.json"): string {
-  const stateDir = process.env.IronCliw_STATE_DIR?.trim();
+export function resolveConfigPathFromTempState(fileName = "ironcliw.json"): string {
+  const stateDir = process.env.IRONCLIW_STATE_DIR?.trim();
   if (!stateDir) {
-    throw new Error("Expected IronCliw_STATE_DIR to be set by withTempHome");
+    throw new Error("Expected IRONCLIW_STATE_DIR to be set by withTempHome");
   }
   return path.join(stateDir, fileName);
 }

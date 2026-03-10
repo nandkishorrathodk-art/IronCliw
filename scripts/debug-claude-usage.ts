@@ -46,9 +46,9 @@ const parseArgs = (): Args => {
 
 const loadAuthProfiles = (agentId: string) => {
   const stateRoot =
-    process.env.IronCliw_STATE_DIR?.trim() ||
+    process.env.IRONCLIW_STATE_DIR?.trim() ||
     process.env.CLAWDBOT_STATE_DIR?.trim() ||
-    path.join(os.homedir(), ".IronCliw");
+    path.join(os.homedir(), ".ironcliw");
   const authPath = path.join(stateRoot, "agents", agentId, "agent", "auth-profiles.json");
   if (!fs.existsSync(authPath)) {
     throw new Error(`Missing: ${authPath}`);
@@ -83,7 +83,7 @@ const fetchAnthropicOAuthUsage = async (token: string) => {
       Accept: "application/json",
       "anthropic-version": "2023-06-01",
       "anthropic-beta": "oauth-2025-04-20",
-      "User-Agent": "IronCliw-debug",
+      "User-Agent": "ironcliw-debug",
     },
   });
   const text = await res.text();

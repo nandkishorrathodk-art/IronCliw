@@ -1,78 +1,78 @@
 ---
-summary: "CLI reference for `IronCliw devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `ironcliw devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `IronCliw devices`
+# `ironcliw devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `IronCliw devices list`
+### `ironcliw devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-IronCliw devices list
-IronCliw devices list --json
+ironcliw devices list
+ironcliw devices list --json
 ```
 
-### `IronCliw devices remove <deviceId>`
+### `ironcliw devices remove <deviceId>`
 
 Remove one paired device entry.
 
 ```
-IronCliw devices remove <deviceId>
-IronCliw devices remove <deviceId> --json
+ironcliw devices remove <deviceId>
+ironcliw devices remove <deviceId> --json
 ```
 
-### `IronCliw devices clear --yes [--pending]`
+### `ironcliw devices clear --yes [--pending]`
 
 Clear paired devices in bulk.
 
 ```
-IronCliw devices clear --yes
-IronCliw devices clear --yes --pending
-IronCliw devices clear --yes --pending --json
+ironcliw devices clear --yes
+ironcliw devices clear --yes --pending
+ironcliw devices clear --yes --pending --json
 ```
 
-### `IronCliw devices approve [requestId] [--latest]`
+### `ironcliw devices approve [requestId] [--latest]`
 
 Approve a pending device pairing request. If `requestId` is omitted, IronCliw
 automatically approves the most recent pending request.
 
 ```
-IronCliw devices approve
-IronCliw devices approve <requestId>
-IronCliw devices approve --latest
+ironcliw devices approve
+ironcliw devices approve <requestId>
+ironcliw devices approve --latest
 ```
 
-### `IronCliw devices reject <requestId>`
+### `ironcliw devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-IronCliw devices reject <requestId>
+ironcliw devices reject <requestId>
 ```
 
-### `IronCliw devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `ironcliw devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-IronCliw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+ironcliw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `IronCliw devices revoke --device <id> --role <role>`
+### `ironcliw devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-IronCliw devices revoke --device <deviceId> --role node
+ironcliw devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

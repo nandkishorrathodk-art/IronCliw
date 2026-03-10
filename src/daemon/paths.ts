@@ -31,12 +31,12 @@ export function resolveUserPathWithHome(input: string, home?: string): string {
 }
 
 export function resolveGatewayStateDir(env: Record<string, string | undefined>): string {
-  const override = env.IronCliw_STATE_DIR?.trim();
+  const override = env.IRONCLIW_STATE_DIR?.trim();
   if (override) {
     const home = override.startsWith("~") ? resolveHomeDir(env) : undefined;
     return resolveUserPathWithHome(override, home);
   }
   const home = resolveHomeDir(env);
-  const suffix = resolveGatewayProfileSuffix(env.IronCliw_PROFILE);
-  return path.join(home, `.IronCliw${suffix}`);
+  const suffix = resolveGatewayProfileSuffix(env.IRONCLIW_PROFILE);
+  return path.join(home, `.ironcliw${suffix}`);
 }
